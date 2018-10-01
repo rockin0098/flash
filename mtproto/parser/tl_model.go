@@ -32,30 +32,6 @@ type TLParam struct {
 	Type string `json:"type"`
 }
 
-// var tlLexer = lexer.Must(lexer.Regexp(`(\s+)` +
-// 	`|(?P<AnyID>[a-zA-Z0-9_]*)` +
-// 	`|(?P<Annotation>\/\/[^\n]*)`))
-
-// type TLSchema struct {
-// 	TLTypes     []*TLLine `{ @@ }`
-// 	TLFunctions []*TLLine `{ @@ }`
-// }
-
-// type TLLine struct {
-// 	Name   string     `@Ident"#"`
-// 	UID    int64      `@Int`
-// 	Fields []*TLField `{ @@ }`
-// 	Value  string     ` "=" @Ident`
-// }
-
-// type TLField struct {
-// 	Name string `@Ident":"`
-// 	// VectorType string ` ( "Vector<"@Ident">" `
-// 	// SimpleType string ` | @Ident )`
-// 	VectorType string ` [ "Vector<"@Ident">" `
-// 	SimpleType string ` | @Ident ] `
-// }
-
 var TLContent = `// Core types (no need to gen)
 
 //vector#1cb5c415 {t:Type} # [ t ] = Vector t;
