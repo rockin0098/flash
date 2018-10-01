@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/rockin0098/flash/base/daemon"
 	"github.com/sirupsen/logrus"
-	"gitlab.99safe.org/Shadow/shadow-framework/daemon"
 	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
