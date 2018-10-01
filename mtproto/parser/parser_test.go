@@ -14,8 +14,8 @@ func TestMain(m *testing.M) {
 }
 
 func TestParseTL(t *testing.T) {
-	schema := ParseTL(TLContent)
-	Log.Infof("schema = %v", FormatStruct(schema))
+	layer := ParseTLLayer(TLContent)
+	Log.Infof("layer = %v", FormatStruct(layer))
 }
 
 func TestTrimAnnotation(t *testing.T) {

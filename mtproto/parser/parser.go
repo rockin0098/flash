@@ -11,14 +11,13 @@ type EnumLineType int
 
 const (
 	_ EnumLineType = iota
-	LineTypes
+	LineConstructors
 	LineFunctions
 	LineDeclaration
 )
 
 func trimLine(line string) string {
-	trimchars := " \t\n\r"
-	return strings.Trim(line, trimchars)
+	return strings.TrimSpace(line)
 }
 
 func trimAnnotation(line string) string {
@@ -39,15 +38,40 @@ func checkLineType(line string) EnumLineType {
 	if strings.Contains(line, "---functions---") {
 		return LineFunctions
 	} else if strings.Contains(line, "---types---") {
-		return LineTypes
+		return LineConstructors
 	} else {
 		return LineDeclaration
 	}
 }
 
-func parseField(field string) *TLField {
-	return &TLField{
-		Name: field,
+func parseTLParam(param string) *TLParam {
+
+	if len(param) == 0 ||
+		len(param) == 1 ||
+		param == "#" ||
+		!strings.Contains(param, ":") {
+		return nil
+	}
+
+	if string(param[0]) == "{" {
+		return nil
+	}
+
+	name := ""
+	dtype := ""
+
+	ps := strings.Split(param, ":")
+	if len(ps) == 2 {
+		name = ps[0]
+		dtype = ps[1]
+	} else {
+		Log.Error("param = ", param)
+		return nil
+	}
+
+	return &TLParam{
+		Name: name,
+		Type: dtype,
 	}
 }
 
@@ -77,57 +101,82 @@ func parseTLLine(line string) *TLLine {
 	mid := sub[:si]
 	tail := sub[si+1:]
 
-	value := trimLine(tail)
-	value = strings.Replace(value, ";", "", -1)
+	rtype := trimLine(tail)
+	rtype = strings.Replace(rtype, ";", "", -1)
 
-	var fields []*TLField
+	var params []*TLParam
 	ms := strings.Split(mid, " ")
 	for _, m := range ms {
 		m = trimLine(m)
 		if len(m) > 0 {
-			fd := parseField(m)
-			fields = append(fields, fd)
+			para := parseTLParam(m)
+			if para != nil {
+				params = append(params, para)
+			}
 		}
 	}
 
 	return &TLLine{
-		Name:   name,
-		UID:    uid,
-		Fields: fields,
-		Value:  value,
+		Predicate: name,
+		ID:        uid,
+		Params:    params,
+		Type:      rtype,
 	}
 }
 
-func ParseTL(tl string) *TLSchema {
+func ParseTLLayer(tl string) *TLLayer {
 
-	currLineType := LineTypes
-	var tlTypes []*TLLine
-	var tlFunctions []*TLLine
+	currLineType := LineConstructors
+	var tlConstructors []*TLConstructor
+	var tlMethods []*TLMethod
+	var layer string
+	typeMap := make(map[string]*TLConstructor)
 
 	lines := strings.Split(tl, "\n")
 	for _, line := range lines {
+
+		layerAnnotation := "// LAYER"
+		if strings.Contains(line, layerAnnotation) {
+			idx := strings.Index(line, layerAnnotation)
+			layer = strings.TrimSpace(string(line[idx+len(layerAnnotation):]))
+		}
+
 		trimline := trimAnnotation(line)
 		if len(trimline) > 0 { // 含有内容
 			// Log.Info(trimline)
 			lineType := checkLineType(line)
-			if lineType == LineTypes {
-				currLineType = LineTypes
+			if lineType == LineConstructors {
+				currLineType = LineConstructors
 			} else if lineType == LineFunctions {
 				currLineType = LineFunctions
 			} else {
 				tlline := parseTLLine(trimline)
-				if currLineType == LineTypes {
-					tlTypes = append(tlTypes, tlline)
+				if currLineType == LineConstructors {
+					constructor := (*TLConstructor)(tlline)
+					tlConstructors = append(tlConstructors, constructor)
+					typeMap[constructor.Predicate] = constructor
 				} else if currLineType == LineFunctions {
-					tlFunctions = append(tlFunctions, tlline)
+					tlMethod := &TLMethod{
+						ID:     tlline.ID,
+						Method: tlline.Predicate,
+						Params: tlline.Params,
+						Type:   tlline.Type,
+					}
+					tlMethods = append(tlMethods, tlMethod)
 				}
 			}
 		}
 	}
 
-	return &TLSchema{
-		TLTypes:     tlTypes,
-		TLFunctions: tlFunctions,
+	schema := &TLSchema{
+		Constructors: tlConstructors,
+		Methods:      tlMethods,
+	}
+
+	return &TLLayer{
+		Layer:   layer,
+		TypeMap: typeMap,
+		Schema:  schema,
 	}
 }
 
@@ -138,6 +187,6 @@ func ParserEntry() {
 	Log.Infof("############ TL Parser ############")
 	Log.Infof("###################################")
 
-	schema := ParseTL(TLContent)
-	Log.Infof("schema = %v", FormatStruct(schema))
+	layer := ParseTLLayer(TLContent)
+	Log.Infof("layer = %v", FormatStruct(layer))
 }

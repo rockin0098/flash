@@ -1,21 +1,35 @@
 package parser
 
+type TLLayer struct {
+	Layer   string
+	TypeMap map[string]*TLConstructor // 记录类型
+	Schema  *TLSchema
+}
+
 type TLSchema struct {
-	TLTypes     []*TLLine
-	TLFunctions []*TLLine
+	Constructors []*TLConstructor `json:"constructors"`
+	Methods      []*TLMethod      `json:"methods"`
 }
 
-type TLLine struct {
-	Name   string
-	UID    string
-	Fields []*TLField
-	Value  string
+type TLConstructor struct {
+	ID        string     `json:"id"`
+	Predicate string     `json:"predicate"`
+	Params    []*TLParam `json:"params"`
+	Type      string     `json:"type"`
 }
 
-type TLField struct {
-	Name       string
-	VectorType string
-	SimpleType string
+type TLMethod struct {
+	ID     string     `json:"id"`
+	Method string     `json:"method"`
+	Params []*TLParam `json:"params"`
+	Type   string     `json:"type"`
+}
+
+type TLLine TLConstructor
+
+type TLParam struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
 }
 
 // var tlLexer = lexer.Must(lexer.Regexp(`(\s+)` +
