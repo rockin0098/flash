@@ -2,7 +2,7 @@ package parser
 
 type TLLayer struct {
 	Layer   string
-	TypeMap map[string]*TLConstructor // 记录类型
+	TypeMap map[string]*TLConstructor //
 	Schema  *TLSchema
 }
 
