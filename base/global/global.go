@@ -2,7 +2,9 @@ package global
 
 import (
 	"bytes"
+	"encoding/hex"
 	json2 "encoding/json"
+	"fmt"
 	"net/url"
 	"os"
 	"os/exec"
@@ -83,6 +85,32 @@ func UnserializeJson(jsonstr string, st interface{}) {
 		Log.Error("parse json failed, err = %v", err)
 		panic(err)
 	}
+}
+
+func HexBuffer(buffer []byte) string {
+	s := hex.EncodeToString(buffer)
+
+	n := 8
+	m := 8
+
+	c := 0
+	slen := len(s)
+	if slen%n == 0 {
+		c = slen / n
+	} else {
+		c = (slen / n) + 1
+	}
+
+	res := ""
+	for i := 0; i < c; i++ {
+		res = res + s[i:i+8] + " "
+		if (i+1)%m == 0 {
+			res = res + "\n"
+		}
+	}
+
+	res = fmt.Sprintf("\n====================================================\n%v\n====================================================\n", res)
+	return res
 }
 
 func GetProgName() string {

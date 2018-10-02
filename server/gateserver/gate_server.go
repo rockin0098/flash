@@ -1,4 +1,4 @@
-package gate_server
+package gateserver
 
 import (
 	"time"
@@ -28,6 +28,12 @@ func GateEntry() {
 	tcpserver := NewTcpServer(":5222")
 	grm := grmon.GetGRMon()
 	grm.Go("TcpServer", tcpserver.Run)
+
+	// tcpserver2 := NewTcpServer(":8800")
+	// grm.Go("TcpServer2", tcpserver2.Run)
+
+	// tcpserver3 := NewTcpServer(":12345")
+	// grm.Go("TcpServer3", tcpserver3.Run)
 
 	Log.Infof("keep main func here ... ...")
 	for {
