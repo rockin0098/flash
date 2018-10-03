@@ -43,9 +43,9 @@ func (s *TTcpServer) Run() {
 
 func (s *TTcpServer) Handler(conn net.Conn) {
 	remote := conn.RemoteAddr().String()
-	proto := mtproto.NewMTProto(conn)
+	proto := mtproto.NewMTProto(conn, conn)
 	for {
-		msg, err := proto.Receive()
+		msg, err := proto.Read()
 		if err != nil {
 			Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remote, err)
 			return

@@ -6,18 +6,18 @@ import (
 	"github.com/rockin0098/flash/mtproto/tl"
 )
 
-type TUnencryptedMessage struct {
+type UnencryptedMessage struct {
 	NeedAck   bool
 	MessageID int64
 	TLObject  tl.TLObject
 }
 
-func (m *TUnencryptedMessage) Encode() ([]byte, error) {
+func (m *UnencryptedMessage) Encode() ([]byte, error) {
 
 	return nil, nil
 }
 
-func (m *TUnencryptedMessage) Decode(b []byte) error {
+func (m *UnencryptedMessage) Decode(b []byte) error {
 
 	dc := NewMTDecodeBuffer(b)
 	// m.authKeyId = dc.Long()
@@ -49,7 +49,7 @@ func (m *TUnencryptedMessage) Decode(b []byte) error {
 	return dc.err
 }
 
-type TEncryptedMessage struct {
+type EncryptedMessage struct {
 	authKeyID int64
 	NeedAck   bool
 
@@ -61,12 +61,12 @@ type TEncryptedMessage struct {
 	TLObject  tl.TLObject
 }
 
-func (m *TEncryptedMessage) Encode() ([]byte, error) {
+func (m *EncryptedMessage) Encode() ([]byte, error) {
 
 	return nil, nil
 }
 
-func (m *TEncryptedMessage) Decode(authKey []byte, b []byte) error {
+func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 
 	return nil
 }
