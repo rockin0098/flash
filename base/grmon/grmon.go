@@ -34,9 +34,9 @@ func (s *TGRMon) removeGR(name string) {
 
 func (s *TGRMon) Go(name string, fn interface{}, args ...interface{}) {
 
-	defer s.catchPanic()
-
 	go func() {
+
+		defer s.catchPanic()
 
 		s.addGR(name)
 		defer s.removeGR(name)
@@ -53,9 +53,10 @@ func (s *TGRMon) Go(name string, fn interface{}, args ...interface{}) {
 
 func (s *TGRMon) GoLoop(name string, fn interface{}, args ...interface{}) {
 
-	defer s.catchPanic()
-
 	go func() {
+
+		defer s.catchPanic()
+
 		s.addGR(name)
 		defer s.removeGR(name)
 

@@ -1,6 +1,7 @@
 package gateserver
 
 import (
+	"bufio"
 	"net"
 
 	"github.com/rockin0098/flash/base/grmon"
@@ -42,15 +43,17 @@ func (s *TTcpServer) Run() {
 }
 
 func (s *TTcpServer) Handler(conn net.Conn) {
-	remote := conn.RemoteAddr().String()
-	proto := mtproto.NewMTProto(conn, conn)
+	remoteAddr := conn.RemoteAddr()
+	localAddr := conn.LocalAddr()
+
 	for {
-		msg, err := proto.Read()
+		proto := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr)
+		err := proto.Read()
 		if err != nil {
-			Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remote, err)
+			Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
 			return
 		}
 		// Log.Debugf("s:[%v], remote : %v, receive data : %v", s.addr, remote, HexBuffer(buffer[:n]))
-		Log.Debugf("s:[%v], remote : %v, receive msg : %v", s.addr, remote, msg)
+		// Log.Debugf("s:[%v], remote : %v, receive msg : %v", s.addr, remote)
 	}
 }

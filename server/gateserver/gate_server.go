@@ -19,7 +19,7 @@ func GateEntry() {
 	UseMaxCpu()
 
 	Log.Infof("#############################################")
-	Log.Infof("############ " + SERVER_NAME + " ############")
+	Log.Infof("################ " + SERVER_NAME + " #################")
 	Log.Infof("#############################################")
 	// Log.Infof("BUILD_VERSION = %v", version.BUILD_VERSION)
 	// Log.Infof("APPLICATION_VERSION = %v", version.APPLICATION_VERSION)
