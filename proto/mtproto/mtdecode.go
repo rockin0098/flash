@@ -5,6 +5,8 @@ import (
 	"errors"
 	"math"
 	"math/big"
+
+	"github.com/rockin0098/flash/proto/mtproto/tl"
 )
 
 type MTDecodeBuffer struct {
@@ -285,23 +287,23 @@ func (m *MTDecodeBuffer) Vector() []TLObject {
 }
 */
 
-// func (m *MTDecodeBuffer) Object() (r tl.TLObject) {
-// 	classID := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
+func (m *MTDecodeBuffer) Object() (r tl.TLObject) {
+	// classID := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
 
-// 	r = NewTLObjectByClassID(classID)
-// 	if r == nil {
-// 		glog.Errorf("Can't find registed classId: %d", classID)
-// 		return nil
-// 	}
+	// r = NewTLObjectByClassID(classID)
+	// if r == nil {
+	// 	glog.Errorf("Can't find registed classId: %d", classID)
+	// 	return nil
+	// }
 
-// 	glog.Infof("NewTLObjectByClassID, classID: %x", uint32(classID))
+	// glog.Infof("NewTLObjectByClassID, classID: %x", uint32(classID))
 
-// 	err := r.(TLObject).Decode(m)
-// 	if err != nil {
-// 		glog.Error("Object(", classID, ") decode error: ", err, "")
-// 	}
-// 	return
-// }
+	// err := r.(TLObject).Decode(m)
+	// if err != nil {
+	// 	glog.Error("Object(", classID, ") decode error: ", err, "")
+	// }
+	return nil
+}

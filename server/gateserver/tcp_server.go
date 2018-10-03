@@ -5,7 +5,8 @@ import (
 	"net"
 
 	"github.com/rockin0098/flash/base/grmon"
-	"github.com/rockin0098/flash/mtproto"
+	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/process"
 
 	// . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
@@ -38,22 +39,28 @@ func (s *TTcpServer) Run() {
 		}
 		Log.Debugf("s:[%v] accept connection from %v", s.addr, conn.RemoteAddr().String())
 		grm := grmon.GetGRMon()
-		grm.Go("tcp_handler", func() { s.Handler(conn) })
+		grm.Go("tcp_handler", func() { s.ConnectionHandler(conn) })
 	}
 }
 
-func (s *TTcpServer) Handler(conn net.Conn) {
+func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr()
 	localAddr := conn.LocalAddr()
 
 	for {
-		proto := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr)
-		err := proto.Read()
+		mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr)
+		err := mtp.Read()
 		if err != nil {
 			Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
+			conn.Close()
 			return
 		}
-		// Log.Debugf("s:[%v], remote : %v, receive data : %v", s.addr, remote, HexBuffer(buffer[:n]))
-		// Log.Debugf("s:[%v], remote : %v, receive msg : %v", s.addr, remote)
+
+		err = process.MTProtoProcess(mtp)
+		if err != nil {
+			Log.Error(err)
+			conn.Close()
+			return
+		}
 	}
 }

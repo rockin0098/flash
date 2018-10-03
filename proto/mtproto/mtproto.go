@@ -9,7 +9,7 @@ import (
 	"net"
 
 	"github.com/rockin0098/flash/base/crypto"
-	. "github.com/rockin0098/flash/base/global"
+	// . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
 )
 
@@ -68,6 +68,10 @@ func (s *MTProto) RemoteAddr() net.Addr {
 
 func (s *MTProto) LocalAddr() net.Addr {
 	return s.localAddr
+}
+
+func (s *MTProto) Message() MTProtoMessage {
+	return s.message
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -257,11 +261,6 @@ func (s *MTProto) ReadMTProtoApp() error {
 		}
 		left -= n
 	}
-	if size > 10240 {
-		Log.Info("ReadFull2: ", hex.EncodeToString(buf[:256]))
-	} else {
-		Log.Info("ReadFull2: ", hex.EncodeToString(buf))
-	}
 
 	// 截断QuickAck消息，客户端有问题
 	if size == 4 {
@@ -274,7 +273,7 @@ func (s *MTProto) ReadMTProtoApp() error {
 	message := NewRawMessage(TRANSPORT_TCP, authKeyID, 0)
 	message.Decode(buf)
 
-	Log.Infof("message = %v", FormatStruct(message))
+	Log.Debugf("message.Payload = %v", hex.EncodeToString(message.Payload))
 	s.message = message
 
 	return nil

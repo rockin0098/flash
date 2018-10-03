@@ -7,7 +7,7 @@ import (
 
 	"github.com/rockin0098/flash/base/crypto"
 	. "github.com/rockin0098/flash/base/logger"
-	"github.com/rockin0098/flash/mtproto/tl"
+	"github.com/rockin0098/flash/proto/mtproto/tl"
 )
 
 type MTProtoMessage interface {
@@ -16,9 +16,9 @@ type MTProtoMessage interface {
 }
 
 type RawMessage struct {
-	transportType int
-	authKeyID     int64 // 由原始数据解压获得
-	quickAckID    int32 // EncryptedMessage，则可能存在
+	TransportType int
+	AuthKeyID     int64 // 由原始数据解压获得
+	QuickAckID    int32 // EncryptedMessage，则可能存在
 
 	// 原始数据
 	Payload []byte
@@ -26,9 +26,9 @@ type RawMessage struct {
 
 func NewRawMessage(transportType int, authKeyID int64, quickAckID int32) *RawMessage {
 	return &RawMessage{
-		transportType: transportType,
-		authKeyID:     authKeyID,
-		quickAckID:    quickAckID,
+		TransportType: transportType,
+		AuthKeyID:     authKeyID,
+		QuickAckID:    quickAckID,
 	}
 }
 
@@ -75,8 +75,8 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 		return fmt.Errorf("message len: %d (need %d)", messageLen, dc.size-12)
 	}
 
-	// m.Object = dc.Object()
-	// if m.Object == nil {
+	m.TLObject = dc.Object()
+	// if m.TLObject == nil {
 	// 	return fmt.Errorf("decode object is nil")
 	// }
 
@@ -86,10 +86,10 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 }
 
 type EncryptedMessage struct {
-	authKeyID int64
+	AuthKeyID int64
 	NeedAck   bool
 
-	msgKey    []byte
+	MsgKey    []byte
 	Salt      int64
 	SessionID int64
 	MessageID int64
