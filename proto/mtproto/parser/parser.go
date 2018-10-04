@@ -215,5 +215,6 @@ func ParserEntry() {
 	layer.OutputDir = output
 	// Log.Infof("layer = %v", FormatStruct(layer))
 
-	layer.GenerateTLObjectClassConst()
+	// layer.GenerateTLObjectClassConst()
+	layer.GenerateTLObjectAll()
 }

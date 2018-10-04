@@ -1,7 +1,8 @@
 package tl
 
 type TLObject interface {
-	Encode()
+	Encode() []byte
+	Decode(b []byte)
 }
 
 func NewTLObject() TLObject {

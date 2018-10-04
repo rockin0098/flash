@@ -295,7 +295,11 @@ type TLClassID struct {
 	ClassID int32
 }
 
-func (t *TLClassID) Encode() {}
+func (t *TLClassID) Encode() []byte {
+	return nil
+}
+
+func (t *TLClassID) Decode(b []byte) {}
 
 func (m *MTDecodeBuffer) TLObject() (r tl.TLObject) {
 	classID := m.Int()

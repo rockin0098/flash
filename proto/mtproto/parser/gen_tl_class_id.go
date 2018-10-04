@@ -47,15 +47,15 @@ func (t *TLLayer) GenerateTLObjectClassConst() {
 			line.ID = fmt.Sprintf("%08s", line.ID)
 		}
 
-		Log.Infof("name:%v, line.ID:%v ", line.Predicate, line.ID)
+		// Log.Infof("name:%v, line.ID:%v ", line.Predicate, line.ID)
 		idbytes, err := hex.DecodeString(line.ID)
 		if err != nil {
 			Log.Error(err)
 			os.Exit(-1)
 		}
-		Log.Infof("name:%v, line.ID:%v, idbytes %v: ", line.Predicate, line.ID, hex.EncodeToString(idbytes))
+		// Log.Infof("name:%v, line.ID:%v, idbytes %v: ", line.Predicate, line.ID, hex.EncodeToString(idbytes))
 		lineid := int32(binary.BigEndian.Uint32(idbytes))
-		Log.Infof("name:%v, line.ID:%v, lineid %v: ", line.Predicate, line.ID, lineid)
+		// Log.Infof("name:%v, line.ID:%v, lineid %v: ", line.Predicate, line.ID, lineid)
 
 		line.Predicate = strings.Replace(line.Predicate, ".", "_", -1)
 
