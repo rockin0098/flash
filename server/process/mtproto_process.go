@@ -5,9 +5,10 @@ import (
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/lproto"
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/session"
 )
 
-func MTProtoProcess(mtp *mtproto.MTProto) error {
+func MTProtoProcess(sess *session.Session, mtp *mtproto.MTProto) error {
 
 	raw := mtp.Message().(*mtproto.RawMessage)
 

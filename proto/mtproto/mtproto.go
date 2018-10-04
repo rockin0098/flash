@@ -45,6 +45,7 @@ const (
 type MTProto struct {
 	reader     *bufio.Reader
 	writer     io.Writer
+	respChan   chan interface{}
 	message    MTProtoMessage
 	e          *crypto.AesCTR128Encrypt
 	d          *crypto.AesCTR128Encrypt
@@ -53,10 +54,11 @@ type MTProto struct {
 	// AuthKey []byte
 }
 
-func NewMTProto(reader *bufio.Reader, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr) *MTProto {
+func NewMTProto(reader *bufio.Reader, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, respChan chan interface{}) *MTProto {
 	return &MTProto{
 		reader:     reader,
 		writer:     writer,
+		respChan:   respChan,
 		remoteAddr: remoteAddr,
 		localAddr:  localAddr,
 	}

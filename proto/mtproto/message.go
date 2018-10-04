@@ -2,6 +2,7 @@ package mtproto
 
 import (
 	"bufio"
+	"encoding/hex"
 	"fmt"
 	"io"
 
@@ -55,12 +56,15 @@ func (m *UnencryptedMessage) Encode() ([]byte, error) {
 
 func (m *UnencryptedMessage) Decode(b []byte) error {
 
+	Log.Infof("UnencryptedMessage decode = %v", hex.EncodeToString(b))
+
 	dc := NewMTDecodeBuffer(b)
 	// m.authKeyId = dc.Long()
 	m.MessageID = dc.Long()
 
-	// glog.Info("messageId:", m.messageId)
-	// mod := m.messageId & 3
+	Log.Info("messageId:", m.MessageID)
+	Log.Infof("dc: buffer:%v, off:%v, size:%v, err:%v", hex.EncodeToString(dc.buffer), dc.off, dc.size, dc.err)
+	// mod := m.messageID & 3
 	// if mod != 1 && mod != 3 {
 	// 	return fmt.Errorf("Wrong bits of message_id: %d", mod)
 	// }
@@ -75,7 +79,7 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 		return fmt.Errorf("message len: %d (need %d)", messageLen, dc.size-12)
 	}
 
-	m.TLObject = dc.Object()
+	m.TLObject = dc.TLObject()
 	// if m.TLObject == nil {
 	// 	return fmt.Errorf("decode object is nil")
 	// }

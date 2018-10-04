@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/big"
 
+	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto/tl"
 )
 
@@ -17,7 +18,7 @@ type MTDecodeBuffer struct {
 }
 
 func NewMTDecodeBuffer(b []byte) *MTDecodeBuffer {
-	return &MTDecodeBuffer{buffer: b}
+	return &MTDecodeBuffer{buffer: b, off: 0, size: len(b), err: nil}
 }
 
 func (m *MTDecodeBuffer) GetError() error {
@@ -287,11 +288,23 @@ func (m *MTDecodeBuffer) Vector() []TLObject {
 }
 */
 
-func (m *MTDecodeBuffer) Object() (r tl.TLObject) {
-	// classID := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
+type TLClassID struct {
+	ClassID int32
+}
+
+func (t *TLClassID) Encode() {}
+
+func (m *MTDecodeBuffer) TLObject() (r tl.TLObject) {
+	classID := m.Int()
+	if m.err != nil {
+		return nil
+	}
+
+	Log.Infof("TLObject, classID: %x", uint32(classID))
+
+	return &TLClassID{
+		ClassID: classID,
+	}
 
 	// r = NewTLObjectByClassID(classID)
 	// if r == nil {

@@ -7,3 +7,8 @@ type TLObject interface {
 func NewTLObject() TLObject {
 	return nil
 }
+
+type TLObjectClassID struct{}
+
+func (t *TLObjectClassID) Encode() {
+}

@@ -7,6 +7,7 @@ import (
 	"github.com/rockin0098/flash/base/grmon"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/process"
+	"github.com/rockin0098/flash/server/session"
 
 	// . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
@@ -47,20 +48,48 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr()
 	localAddr := conn.LocalAddr()
 
-	for {
-		mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr)
-		err := mtp.Read()
-		if err != nil {
-			Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
-			conn.Close()
-			return
-		}
+	sess := session.NewSession(conn)
+	MAX_RESP_CHAN_LEN := 4096
+	respChan := make(chan interface{}, MAX_RESP_CHAN_LEN)
 
-		err = process.MTProtoProcess(mtp)
-		if err != nil {
-			Log.Error(err)
-			conn.Close()
-			return
+	grm := grmon.GetGRMon()
+	grm.Go("tcp_read", func() {
+		for {
+			mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr, respChan)
+			err := mtp.Read()
+			if err != nil {
+				Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
+				conn.Close()
+				return
+			}
+
+			// 暂时没有控制并发数量
+			grm.Go("tcp_worker", func() {
+				err = process.MTProtoProcess(sess, mtp)
+				if err != nil {
+					Log.Error(err)
+					conn.Close()
+					return
+				}
+			})
 		}
-	}
+	})
+
+	grm.Go("tcp_write", func() {
+		for {
+			data := <-respChan
+			databytes := data.([]byte)
+			nlen := len(databytes)
+			left := nlen
+			for left > 0 {
+				n, err := conn.Write(databytes)
+				if err != nil {
+					Log.Error(err)
+					conn.Close()
+					return
+				}
+				left = left - n
+			}
+		}
+	})
 }

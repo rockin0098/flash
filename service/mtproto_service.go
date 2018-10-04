@@ -23,12 +23,14 @@ func (s *MTProtoService) MessageProcess(raw *mtproto.RawMessage) (interface{}, e
 		raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
 
 	if raw.AuthKeyID == 0 { // 未加密的消息, 握手消息
-		// unencryptedMessage := &mtproto.UnencryptedMessage{}
-		// err := unencryptedMessage.Decode(raw.Payload)
-		// if err != nil {
-		// 	Log.Error(err)
-		// 	return nil, err
-		// }
+		unencryptedMessage := &mtproto.UnencryptedMessage{}
+		err := unencryptedMessage.Decode(raw.Payload[8:])
+		if err != nil {
+			Log.Error(err)
+			return nil, err
+		}
+
+		Log.Debugf("unencryptedMessage = %+v", unencryptedMessage)
 
 	} else {
 
