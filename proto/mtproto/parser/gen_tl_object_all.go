@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-
-	. "github.com/rockin0098/flash/base/logger"
+	// . "github.com/rockin0098/flash/base/logger"
 )
 
 var tlobject_output_file = "tl.object.all.go"
 var tlobject_template = `
-package tl
+package mtproto
 
 %v
 
@@ -22,25 +21,88 @@ func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
 	for _, p := range params {
 		name := p.Name
 		tp := convertDataType(p.Type)
-		s := fmt.Sprintf("_%s %s\n", name, tp)
+		s := fmt.Sprintf("%s %s\n", convertFieldName(name), tp)
 		res = res + s
 	}
 
 	return res
 }
 
+func (t *TLLayer) generateOneTLObjectSetterGetter(objName string, params []*TLParam) string {
+
+	res := ""
+	for _, p := range params {
+		name := p.Name
+		fname := convertFieldName(name)
+		tp := convertDataType(p.Type)
+		s := fmt.Sprintf(`
+		func (t *%v)%s(%s %s) {
+			t.%s = %s
+		}
+		`, objName, convertSetterName(name), fname, tp, fname, fname)
+
+		g := fmt.Sprintf(`
+		func (t *%v)%s() %s {
+			return t.%s
+		}
+		`, objName, convertGetterName(name), tp, fname)
+
+		res = res + s + g
+	}
+
+	return res
+}
+
+func (t *TLLayer) generateOneTLObjectDecode(params []*TLParam) string {
+
+	if len(params) == 0 {
+		return ""
+	}
+
+	res := "dc := NewMTPDecodeBuffer(b)\n\n"
+	for _, p := range params {
+		if p.Type == "#" {
+			continue
+		}
+		res = res + convertDecodeField(p)
+	}
+
+	return res
+}
+
+func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) string {
+
+	if len(params) == 0 {
+		return "return nil"
+	}
+
+	res := "ec := NewMTPEncodeBuffer()\n\n"
+	res = res + fmt.Sprintf("ec.Int(int32(TL_CLASS_%v))\n", tlname)
+	for _, p := range params {
+		if p.Type == "#" {
+			continue
+		}
+		res = res + convertEncodeField(p)
+	}
+
+	res = res + "\nreturn ec.GetBuffer()"
+
+	return res
+}
+
 func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
-	seperator := fmt.Sprintf("//====%v#%v====", line.Predicate, line.ID)
-
-	objname := strings.Replace(line.Predicate, ".", "_", -1)
-	objname = "TL_" + objname
+	tlname := strings.Replace(line.Predicate, ".", "_", -1)
+	objname := "TL_" + tlname
 
 	defstr := fmt.Sprintf(`
+		// %v#%v
 		type %v struct {
 			%v
 		}
-	`, objname, t.generateOneTLObjectFields(line.Params))
+	`, line.Predicate, line.ID, objname, t.generateOneTLObjectFields(line.Params))
+
+	sgstr := t.generateOneTLObjectSetterGetter(objname, line.Params)
 
 	newfuncname := fmt.Sprintf("New_%v", objname)
 	newfuncstr := fmt.Sprintf(`
@@ -51,13 +113,15 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	encodestr := fmt.Sprintf(`
 		func (t *%v)Encode() []byte {
-			return nil
+			%s
 		}
-	`, objname)
+	`, objname, t.generateOneTLObjectEncode(tlname, line.Params))
 
 	decodestr := fmt.Sprintf(`
-		func (t *%v)Decode(b []byte) {}
-	`, objname)
+		func (t *%v)Decode(b []byte) {
+			%s
+		}
+	`, objname, t.generateOneTLObjectDecode(line.Params))
 
 	res := fmt.Sprintf(`
 		%v
@@ -65,7 +129,7 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 		%v
 		%v
 		%v
-	`, seperator, defstr, newfuncstr, encodestr, decodestr)
+	`, defstr, sgstr, newfuncstr, encodestr, decodestr)
 
 	return res
 }
@@ -75,7 +139,7 @@ func (t *TLLayer) GenerateTLObjectAll() {
 
 	ss := ""
 	for _, line := range lines {
-		Log.Infof("predicate = %v", line.Predicate)
+		// Log.Infof("predicate = %v", line.Predicate)
 		s := t.generateOneTLObject(line)
 		ss = ss + s
 	}

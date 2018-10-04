@@ -13,12 +13,13 @@ import (
 
 var classid_output_file = "tl.class.id.go"
 var classid_template = `
-package tl
+package mtproto
 
 type TL_CLASS_ID int32
 
 const (
 	TL_CLASS_UNKNOWN TL_CLASS_ID = 0
+	TL_CLASS_ipPort  TL_CLASS_ID = 1 // 临时处理
 	%v
 )
 

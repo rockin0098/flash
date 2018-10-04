@@ -3,29 +3,29 @@ package mtproto
 import (
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"math"
 	"math/big"
 
 	. "github.com/rockin0098/flash/base/logger"
-	"github.com/rockin0098/flash/proto/mtproto/tl"
 )
 
-type MTDecodeBuffer struct {
+type MTPDecodeBuffer struct {
 	buffer []byte
 	off    int
 	size   int
 	err    error
 }
 
-func NewMTDecodeBuffer(b []byte) *MTDecodeBuffer {
-	return &MTDecodeBuffer{buffer: b, off: 0, size: len(b), err: nil}
+func NewMTPDecodeBuffer(b []byte) *MTPDecodeBuffer {
+	return &MTPDecodeBuffer{buffer: b, off: 0, size: len(b), err: nil}
 }
 
-func (m *MTDecodeBuffer) GetError() error {
+func (m *MTPDecodeBuffer) GetError() error {
 	return m.err
 }
 
-func (m *MTDecodeBuffer) Long() int64 {
+func (m *MTPDecodeBuffer) Long() int64 {
 	if m.err != nil {
 		return 0
 	}
@@ -38,7 +38,7 @@ func (m *MTDecodeBuffer) Long() int64 {
 	return x
 }
 
-func (m *MTDecodeBuffer) Double() float64 {
+func (m *MTPDecodeBuffer) Double() float64 {
 	if m.err != nil {
 		return 0
 	}
@@ -51,7 +51,7 @@ func (m *MTDecodeBuffer) Double() float64 {
 	return x
 }
 
-func (m *MTDecodeBuffer) Int() int32 {
+func (m *MTPDecodeBuffer) Int() int32 {
 	if m.err != nil {
 		return 0
 	}
@@ -64,7 +64,7 @@ func (m *MTDecodeBuffer) Int() int32 {
 	return int32(x)
 }
 
-func (m *MTDecodeBuffer) UInt() uint32 {
+func (m *MTPDecodeBuffer) UInt() uint32 {
 	if m.err != nil {
 		return 0
 	}
@@ -77,7 +77,7 @@ func (m *MTDecodeBuffer) UInt() uint32 {
 	return x
 }
 
-func (m *MTDecodeBuffer) Bytes(size int) []byte {
+func (m *MTPDecodeBuffer) Bytes(size int) []byte {
 	if m.err != nil {
 		return nil
 	}
@@ -91,7 +91,7 @@ func (m *MTDecodeBuffer) Bytes(size int) []byte {
 	return x
 }
 
-func (m *MTDecodeBuffer) StringBytes() []byte {
+func (m *MTPDecodeBuffer) StringBytes() []byte {
 	if m.err != nil {
 		return nil
 	}
@@ -131,7 +131,7 @@ func (m *MTDecodeBuffer) StringBytes() []byte {
 	return x
 }
 
-func (m *MTDecodeBuffer) String() string {
+func (m *MTPDecodeBuffer) String() string {
 	b := m.StringBytes()
 	if m.err != nil {
 		return ""
@@ -140,7 +140,7 @@ func (m *MTDecodeBuffer) String() string {
 	return x
 }
 
-func (m *MTDecodeBuffer) BigInt() *big.Int {
+func (m *MTPDecodeBuffer) BigInt() *big.Int {
 	b := m.StringBytes()
 	if m.err != nil {
 		return nil
@@ -152,115 +152,113 @@ func (m *MTDecodeBuffer) BigInt() *big.Int {
 	return x
 }
 
-func (m *MTDecodeBuffer) VectorInt() []int32 {
-	return nil
-	// constructor := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if constructor != int32(TLConstructor_CRC32_vector) {
-	// 	m.err = fmt.Errorf("DecodeVectorInt: Wrong constructor (0x%08x)", constructor)
-	// 	return nil
-	// }
-	// size := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if size < 0 {
-	// 	m.err = errors.New("DecodeVectorInt: Wrong size")
-	// 	return nil
-	// }
-	// x := make([]int32, size)
-	// i := int32(0)
-	// for i < size {
-	// 	y := m.Int()
-	// 	if m.err != nil {
-	// 		return nil
-	// 	}
-	// 	x[i] = y
-	// 	i++
-	// }
-	// return x
+func (m *MTPDecodeBuffer) VectorInt() []int32 {
+
+	constructor := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if constructor != int32(TL_CLASS_vector) {
+		m.err = fmt.Errorf("DecodeVectorInt: Wrong constructor (0x%08x)", constructor)
+		return nil
+	}
+	size := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if size < 0 {
+		m.err = errors.New("DecodeVectorInt: Wrong size")
+		return nil
+	}
+	x := make([]int32, size)
+	i := int32(0)
+	for i < size {
+		y := m.Int()
+		if m.err != nil {
+			return nil
+		}
+		x[i] = y
+		i++
+	}
+	return x
 }
 
-func (m *MTDecodeBuffer) VectorLong() []int64 {
-	return nil
-	// constructor := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if constructor != int32(TLConstructor_CRC32_vector) {
-	// 	m.err = fmt.Errorf("DecodeVectorLong: Wrong constructor (0x%08x)", constructor)
-	// 	return nil
-	// }
-	// size := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if size < 0 {
-	// 	m.err = errors.New("DecodeVectorLong: Wrong size")
-	// 	return nil
-	// }
-	// x := make([]int64, size)
-	// i := int32(0)
-	// for i < size {
-	// 	y := m.Long()
-	// 	if m.err != nil {
-	// 		return nil
-	// 	}
-	// 	x[i] = y
-	// 	i++
-	// }
-	// return x
+func (m *MTPDecodeBuffer) VectorLong() []int64 {
+	constructor := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if constructor != int32(TL_CLASS_vector) {
+		m.err = fmt.Errorf("DecodeVectorLong: Wrong constructor (0x%08x)", constructor)
+		return nil
+	}
+	size := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if size < 0 {
+		m.err = errors.New("DecodeVectorLong: Wrong size")
+		return nil
+	}
+	x := make([]int64, size)
+	i := int32(0)
+	for i < size {
+		y := m.Long()
+		if m.err != nil {
+			return nil
+		}
+		x[i] = y
+		i++
+	}
+	return x
 }
 
-func (m *MTDecodeBuffer) VectorString() []string {
-	return nil
-	// constructor := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if constructor != int32(TLConstructor_CRC32_vector) {
-	// 	m.err = fmt.Errorf("DecodeVectorString: Wrong constructor (0x%08x)", constructor)
-	// 	return nil
-	// }
-	// size := m.Int()
-	// if m.err != nil {
-	// 	return nil
-	// }
-	// if size < 0 {
-	// 	m.err = errors.New("DecodeVectorString: Wrong size")
-	// 	return nil
-	// }
-	// x := make([]string, size)
-	// i := int32(0)
-	// for i < size {
-	// 	y := m.String()
-	// 	if m.err != nil {
-	// 		return nil
-	// 	}
-	// 	x[i] = y
-	// 	i++
-	// }
-	// return x
+func (m *MTPDecodeBuffer) VectorString() []string {
+	constructor := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if constructor != int32(TL_CLASS_vector) {
+		m.err = fmt.Errorf("DecodeVectorString: Wrong constructor (0x%08x)", constructor)
+		return nil
+	}
+	size := m.Int()
+	if m.err != nil {
+		return nil
+	}
+	if size < 0 {
+		m.err = errors.New("DecodeVectorString: Wrong size")
+		return nil
+	}
+	x := make([]string, size)
+	i := int32(0)
+	for i < size {
+		y := m.String()
+		if m.err != nil {
+			return nil
+		}
+		x[i] = y
+		i++
+	}
+	return x
 }
 
-func (m *MTDecodeBuffer) Bool() bool {
-	// constructor := m.Int()
-	// if m.err != nil {
-	// 	return false
-	// }
-	// switch constructor {
-	// case int32(TLConstructor_CRC32_boolTrue):
-	// 	return true
-	// case int32(TLConstructor_CRC32_boolFalse):
-	// 	return false
-	// }
+func (m *MTPDecodeBuffer) Bool() bool {
+	constructor := m.Int()
+	if m.err != nil {
+		return false
+	}
+	switch constructor {
+	case int32(TL_CLASS_boolTrue):
+		return true
+	case int32(TL_CLASS_boolFalse):
+		return false
+	}
 	return false
 }
 
 /*
-func (m *MTDecodeBuffer) Vector() []TLObject {
+func (m *MTPDecodeBuffer) Vector() []TLObject {
 	constructor := m.Int()
 	if m.err != nil {
 		return nil
@@ -301,7 +299,7 @@ func (t *TLClassID) Encode() []byte {
 
 func (t *TLClassID) Decode(b []byte) {}
 
-func (m *MTDecodeBuffer) TLObject() (r tl.TLObject) {
+func (m *MTPDecodeBuffer) TLObject() (r TLObject) {
 	classID := m.Int()
 	if m.err != nil {
 		return nil

@@ -196,9 +196,9 @@ func ParserEntry() {
 	output := ""
 
 	if len(os.Args) != 2 {
-		Log.Info("\nUseage : tlparser [input file] [output dir]\nexample: tlparser ./proto/mtproto/parser/schema/schema.layer73.tl ./proto/mtproto/parser/tl/\n")
+		Log.Info("\nUseage : tlparser [input file] [output dir]\nexample: tlparser ./proto/mtproto/schema/schema.layer73.tl ./proto/mtproto/\n")
 		input = "./proto/mtproto/schema/schema.layer73.tl"
-		output = "./proto/mtproto/tl/"
+		output = "./proto/mtproto/"
 	} else {
 		input = os.Args[0]
 		output = os.Args[1]

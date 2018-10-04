@@ -1,4 +1,4 @@
-package tl
+package mtproto
 
 type TLObject interface {
 	Encode() []byte

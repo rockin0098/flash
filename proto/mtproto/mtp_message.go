@@ -8,7 +8,6 @@ import (
 
 	"github.com/rockin0098/flash/base/crypto"
 	. "github.com/rockin0098/flash/base/logger"
-	"github.com/rockin0098/flash/proto/mtproto/tl"
 )
 
 type MTProtoMessage interface {
@@ -46,7 +45,7 @@ func (m *RawMessage) Decode(b []byte) error {
 type UnencryptedMessage struct {
 	NeedAck   bool
 	MessageID int64
-	TLObject  tl.TLObject
+	TLObject  TLObject
 }
 
 func (m *UnencryptedMessage) Encode() ([]byte, error) {
@@ -58,7 +57,7 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 
 	Log.Infof("UnencryptedMessage decode = %v", hex.EncodeToString(b))
 
-	dc := NewMTDecodeBuffer(b)
+	dc := NewMTPDecodeBuffer(b)
 	// m.authKeyId = dc.Long()
 	m.MessageID = dc.Long()
 
@@ -94,7 +93,7 @@ type EncryptedMessage struct {
 	SessionID int64
 	MessageID int64
 	SeqNo     int32
-	TLObject  tl.TLObject
+	TLObject  TLObject
 }
 
 func (m *EncryptedMessage) Encode() ([]byte, error) {

@@ -1,9 +1,10 @@
-package tl
+package mtproto
 
 type TL_CLASS_ID int32
 
 const (
 	TL_CLASS_UNKNOWN                                          TL_CLASS_ID = 0
+	TL_CLASS_ipPort                                           TL_CLASS_ID = 1 // 临时处理
 	TL_CLASS_resPQ                                            TL_CLASS_ID = 85337187
 	TL_CLASS_p_q_inner_data                                   TL_CLASS_ID = -2083955988
 	TL_CLASS_server_DH_params_fail                            TL_CLASS_ID = 2043348061
