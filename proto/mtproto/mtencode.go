@@ -79,42 +79,42 @@ func (e *MTEncodeBuffer) Bytes(s []byte) {
 	e.buffer = append(e.buffer, s...)
 }
 
-// func (e *MTEncodeBuffer) VectorInt(v []int32) {
-// 	x := make([]byte, 4+4+len(v)*4)
-// 	var c = int32(TLConstructor_CRC32_vector)
-// 	binary.LittleEndian.PutUint32(x, uint32(c))
-// 	binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
-// 	i := 8
-// 	for _, v := range v {
-// 		binary.LittleEndian.PutUint32(x[i:], uint32(v))
-// 		i += 4
-// 	}
-// 	e.buffer = append(e.buffer, x...)
-// }
+func (e *MTEncodeBuffer) VectorInt(v []int32) {
+	// x := make([]byte, 4+4+len(v)*4)
+	// var c = int32(TLConstructor_CRC32_vector)
+	// binary.LittleEndian.PutUint32(x, uint32(c))
+	// binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
+	// i := 8
+	// for _, v := range v {
+	// 	binary.LittleEndian.PutUint32(x[i:], uint32(v))
+	// 	i += 4
+	// }
+	// e.buffer = append(e.buffer, x...)
+}
 
-// func (e *MTEncodeBuffer) VectorLong(v []int64) {
-// 	x := make([]byte, 4+4+len(v)*8)
-// 	var c = int32(TLConstructor_CRC32_vector)
-// 	binary.LittleEndian.PutUint32(x, uint32(c))
-// 	binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
-// 	i := 8
-// 	for _, v := range v {
-// 		binary.LittleEndian.PutUint64(x[i:], uint64(v))
-// 		i += 8
-// 	}
-// 	e.buffer = append(e.buffer, x...)
-// }
+func (e *MTEncodeBuffer) VectorLong(v []int64) {
+	// x := make([]byte, 4+4+len(v)*8)
+	// var c = int32(TLConstructor_CRC32_vector)
+	// binary.LittleEndian.PutUint32(x, uint32(c))
+	// binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
+	// i := 8
+	// for _, v := range v {
+	// 	binary.LittleEndian.PutUint64(x[i:], uint64(v))
+	// 	i += 8
+	// }
+	// e.buffer = append(e.buffer, x...)
+}
 
-// func (e *MTEncodeBuffer) VectorString(v []string) {
-// 	x := make([]byte, 8)
-// 	var c = int32(TLConstructor_CRC32_vector)
-// 	binary.LittleEndian.PutUint32(x, uint32(c))
-// 	binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
-// 	e.buffer = append(e.buffer, x...)
-// 	for _, v := range v {
-// 		e.String(v)
-// 	}
-// }
+func (e *MTEncodeBuffer) VectorString(v []string) {
+	// x := make([]byte, 8)
+	// var c = int32(TLConstructor_CRC32_vector)
+	// binary.LittleEndian.PutUint32(x, uint32(c))
+	// binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
+	// e.buffer = append(e.buffer, x...)
+	// for _, v := range v {
+	// 	e.String(v)
+	// }
+}
 
 /*
 func (e *MTEncodeBuffer) Vector(v []TLObject) {

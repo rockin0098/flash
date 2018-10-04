@@ -152,109 +152,112 @@ func (m *MTDecodeBuffer) BigInt() *big.Int {
 	return x
 }
 
-// func (m *MTDecodeBuffer) VectorInt() []int32 {
-// 	constructor := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if constructor != int32(TLConstructor_CRC32_vector) {
-// 		m.err = fmt.Errorf("DecodeVectorInt: Wrong constructor (0x%08x)", constructor)
-// 		return nil
-// 	}
-// 	size := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if size < 0 {
-// 		m.err = errors.New("DecodeVectorInt: Wrong size")
-// 		return nil
-// 	}
-// 	x := make([]int32, size)
-// 	i := int32(0)
-// 	for i < size {
-// 		y := m.Int()
-// 		if m.err != nil {
-// 			return nil
-// 		}
-// 		x[i] = y
-// 		i++
-// 	}
-// 	return x
-// }
+func (m *MTDecodeBuffer) VectorInt() []int32 {
+	return nil
+	// constructor := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if constructor != int32(TLConstructor_CRC32_vector) {
+	// 	m.err = fmt.Errorf("DecodeVectorInt: Wrong constructor (0x%08x)", constructor)
+	// 	return nil
+	// }
+	// size := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if size < 0 {
+	// 	m.err = errors.New("DecodeVectorInt: Wrong size")
+	// 	return nil
+	// }
+	// x := make([]int32, size)
+	// i := int32(0)
+	// for i < size {
+	// 	y := m.Int()
+	// 	if m.err != nil {
+	// 		return nil
+	// 	}
+	// 	x[i] = y
+	// 	i++
+	// }
+	// return x
+}
 
-// func (m *MTDecodeBuffer) VectorLong() []int64 {
-// 	constructor := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if constructor != int32(TLConstructor_CRC32_vector) {
-// 		m.err = fmt.Errorf("DecodeVectorLong: Wrong constructor (0x%08x)", constructor)
-// 		return nil
-// 	}
-// 	size := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if size < 0 {
-// 		m.err = errors.New("DecodeVectorLong: Wrong size")
-// 		return nil
-// 	}
-// 	x := make([]int64, size)
-// 	i := int32(0)
-// 	for i < size {
-// 		y := m.Long()
-// 		if m.err != nil {
-// 			return nil
-// 		}
-// 		x[i] = y
-// 		i++
-// 	}
-// 	return x
-// }
+func (m *MTDecodeBuffer) VectorLong() []int64 {
+	return nil
+	// constructor := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if constructor != int32(TLConstructor_CRC32_vector) {
+	// 	m.err = fmt.Errorf("DecodeVectorLong: Wrong constructor (0x%08x)", constructor)
+	// 	return nil
+	// }
+	// size := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if size < 0 {
+	// 	m.err = errors.New("DecodeVectorLong: Wrong size")
+	// 	return nil
+	// }
+	// x := make([]int64, size)
+	// i := int32(0)
+	// for i < size {
+	// 	y := m.Long()
+	// 	if m.err != nil {
+	// 		return nil
+	// 	}
+	// 	x[i] = y
+	// 	i++
+	// }
+	// return x
+}
 
-// func (m *MTDecodeBuffer) VectorString() []string {
-// 	constructor := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if constructor != int32(TLConstructor_CRC32_vector) {
-// 		m.err = fmt.Errorf("DecodeVectorString: Wrong constructor (0x%08x)", constructor)
-// 		return nil
-// 	}
-// 	size := m.Int()
-// 	if m.err != nil {
-// 		return nil
-// 	}
-// 	if size < 0 {
-// 		m.err = errors.New("DecodeVectorString: Wrong size")
-// 		return nil
-// 	}
-// 	x := make([]string, size)
-// 	i := int32(0)
-// 	for i < size {
-// 		y := m.String()
-// 		if m.err != nil {
-// 			return nil
-// 		}
-// 		x[i] = y
-// 		i++
-// 	}
-// 	return x
-// }
+func (m *MTDecodeBuffer) VectorString() []string {
+	return nil
+	// constructor := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if constructor != int32(TLConstructor_CRC32_vector) {
+	// 	m.err = fmt.Errorf("DecodeVectorString: Wrong constructor (0x%08x)", constructor)
+	// 	return nil
+	// }
+	// size := m.Int()
+	// if m.err != nil {
+	// 	return nil
+	// }
+	// if size < 0 {
+	// 	m.err = errors.New("DecodeVectorString: Wrong size")
+	// 	return nil
+	// }
+	// x := make([]string, size)
+	// i := int32(0)
+	// for i < size {
+	// 	y := m.String()
+	// 	if m.err != nil {
+	// 		return nil
+	// 	}
+	// 	x[i] = y
+	// 	i++
+	// }
+	// return x
+}
 
-// func (m *MTDecodeBuffer) Bool() bool {
-// 	constructor := m.Int()
-// 	if m.err != nil {
-// 		return false
-// 	}
-// 	switch constructor {
-// 	case int32(TLConstructor_CRC32_boolTrue):
-// 		return true
-// 	case int32(TLConstructor_CRC32_boolFalse):
-// 		return false
-// 	}
-// 	return false
-// }
+func (m *MTDecodeBuffer) Bool() bool {
+	// constructor := m.Int()
+	// if m.err != nil {
+	// 	return false
+	// }
+	// switch constructor {
+	// case int32(TLConstructor_CRC32_boolTrue):
+	// 	return true
+	// case int32(TLConstructor_CRC32_boolFalse):
+	// 	return false
+	// }
+	return false
+}
 
 /*
 func (m *MTDecodeBuffer) Vector() []TLObject {

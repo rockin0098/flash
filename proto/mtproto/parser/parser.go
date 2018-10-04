@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"io/ioutil"
+	"os"
 	"strings"
 
 	. "github.com/rockin0098/flash/base/global"
@@ -129,6 +131,7 @@ func ParseTLLayer(tl string) *TLLayer {
 	currLineType := LineConstructors
 	var tlConstructors []*TLConstructor
 	var tlMethods []*TLMethod
+	var tllines []*TLLine
 	var layer string
 	typeMap := make(map[string]*TLConstructor)
 
@@ -151,6 +154,7 @@ func ParseTLLayer(tl string) *TLLayer {
 				currLineType = LineFunctions
 			} else {
 				tlline := parseTLLine(trimline)
+				tllines = append(tllines, tlline)
 				if currLineType == LineConstructors {
 					constructor := (*TLConstructor)(tlline)
 					tlConstructors = append(tlConstructors, constructor)
@@ -177,6 +181,7 @@ func ParseTLLayer(tl string) *TLLayer {
 		Layer:   layer,
 		TypeMap: typeMap,
 		Schema:  schema,
+		Lines:   tllines,
 	}
 }
 
@@ -187,6 +192,28 @@ func ParserEntry() {
 	Log.Infof("############ TL Parser ############")
 	Log.Infof("###################################")
 
-	layer := ParseTLLayer(TLContent)
-	Log.Infof("layer = %v", FormatStruct(layer))
+	input := ""
+	output := ""
+
+	if len(os.Args) != 2 {
+		Log.Info("\nUseage : tlparser [input file] [output dir]\nexample: tlparser ./proto/mtproto/parser/schema/schema.layer73.tl ./proto/mtproto/parser/tl/\n")
+		input = "./proto/mtproto/schema/schema.layer73.tl"
+		output = "./proto/mtproto/tl/"
+	} else {
+		input = os.Args[0]
+		output = os.Args[1]
+	}
+
+	content, err := ioutil.ReadFile(input)
+	if err != nil {
+		Log.Warnf("read input file failed, err = %v", err)
+		return
+	}
+
+	// layer := ParseTLLayer(TLContent)
+	layer := ParseTLLayer(string(content))
+	layer.OutputDir = output
+	// Log.Infof("layer = %v", FormatStruct(layer))
+
+	layer.GenerateTLObjectClassConst()
 }

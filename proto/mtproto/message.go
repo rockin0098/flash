@@ -64,10 +64,6 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 
 	Log.Info("messageId:", m.MessageID)
 	Log.Infof("dc: buffer:%v, off:%v, size:%v, err:%v", hex.EncodeToString(dc.buffer), dc.off, dc.size, dc.err)
-	// mod := m.messageID & 3
-	// if mod != 1 && mod != 3 {
-	// 	return fmt.Errorf("Wrong bits of message_id: %d", mod)
-	// }
 
 	messageLen := dc.Int()
 	if messageLen < 4 {
