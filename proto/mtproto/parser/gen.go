@@ -1,12 +1,32 @@
 package parser
 
 import (
+	"encoding/binary"
+	"encoding/hex"
 	"fmt"
-	// . "github.com/rockin0098/flash/base/logger"
+
+	. "github.com/rockin0098/flash/base/logger"
 )
 
 func convertFieldName(field string) string {
 	return "_" + field
+}
+
+func convertCRC32(crc32 string) uint32 {
+
+	if len(crc32) < 8 {
+		crc32 = fmt.Sprintf("%08s", crc32)
+	}
+
+	idbytes, err := hex.DecodeString(crc32)
+	if err != nil {
+		Log.Error(err)
+		return 0
+	}
+
+	crc32int := binary.BigEndian.Uint32(idbytes)
+
+	return crc32int
 }
 
 func convertDataType(in string) string {
@@ -22,10 +42,19 @@ func convertDataType(in string) string {
 	case "Bool":
 		return "bool"
 	default:
-		return "[]byte"
+		return "TLObject"
 	}
 }
 
+func convertGetterName(name string) string {
+	return fmt.Sprintf("Get_%s", name)
+}
+
+func convertSetterName(name string) string {
+	return fmt.Sprintf("Set_%s", name)
+}
+
+// 复合类型应该用 TLObject 处理
 func convertDecodeField(param *TLParam) string {
 
 	name := param.Name
@@ -59,14 +88,7 @@ func convertDecodeField(param *TLParam) string {
 	return s
 }
 
-func convertGetterName(name string) string {
-	return fmt.Sprintf("Get_%s", name)
-}
-
-func convertSetterName(name string) string {
-	return fmt.Sprintf("Set_%s", name)
-}
-
+// 复合类型应该用 TLObject 处理
 func convertEncodeField(param *TLParam) string {
 
 	name := param.Name

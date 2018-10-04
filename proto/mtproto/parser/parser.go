@@ -1,8 +1,11 @@
 package parser
 
 import (
+	"fmt"
+	"hash/crc32"
 	"io/ioutil"
 	"os"
+	"regexp"
 	"strings"
 
 	. "github.com/rockin0098/flash/base/global"
@@ -17,6 +20,23 @@ const (
 	LineFunctions
 	LineDeclaration
 )
+
+func calculateCRC32(name, params, restype string) uint32 {
+	cleanline := fmt.Sprintf("%s%s= %s", name, params, restype)
+	cleanline = regexp.MustCompile(" [a-zA-Z0-9_]+\\:flags\\.[0-9]+\\?true").ReplaceAllString(cleanline, "")
+	cleanline = strings.Replace(cleanline, "<", " ", -1)
+	cleanline = strings.Replace(cleanline, ">", " ", -1)
+	cleanline = strings.Replace(cleanline, "  ", " ", -1)
+	cleanline = regexp.MustCompile("^ ").ReplaceAllString(cleanline, "")
+	cleanline = regexp.MustCompile(" $").ReplaceAllString(cleanline, "")
+	cleanline = strings.Replace(cleanline, ":bytes ", ":string ", -1)
+	cleanline = strings.Replace(cleanline, "?bytes ", "?string ", -1)
+	cleanline = strings.Replace(cleanline, "{", "", -1)
+	cleanline = strings.Replace(cleanline, "}", "", -1)
+
+	// 通过cleanline计算出typeid并进行验证
+	return crc32.ChecksumIEEE([]byte(cleanline))
+}
 
 func trimLine(line string) string {
 	return strings.TrimSpace(line)
@@ -118,11 +138,15 @@ func parseTLLine(line string) *TLLine {
 		}
 	}
 
+	// 手工重新计算crc32
+	crc32 := calculateCRC32(name, mid, rtype)
+
 	return &TLLine{
 		Predicate: name,
 		ID:        uid,
 		Params:    params,
 		Type:      rtype,
+		CRC32:     crc32,
 	}
 }
 
@@ -147,6 +171,7 @@ func ParseTLLayer(tl string) *TLLayer {
 		trimline := trimAnnotation(line)
 		if len(trimline) > 0 { // 含有内容
 			// Log.Info(trimline)
+
 			lineType := checkLineType(line)
 			if lineType == LineConstructors {
 				currLineType = LineConstructors
@@ -154,6 +179,17 @@ func ParseTLLayer(tl string) *TLLayer {
 				currLineType = LineFunctions
 			} else {
 				tlline := parseTLLine(trimline)
+				if len(tlline.ID) > 0 { // 校验crc
+					iduint32 := convertCRC32(tlline.ID)
+					if tlline.CRC32 != iduint32 {
+						Log.Errorf("crc32 not match, ID = %v, recalculated crc32 = %v",
+							iduint32, tlline.CRC32)
+						continue
+					}
+				} else {
+					tlline.ID = fmt.Sprintf("%x", tlline.CRC32)
+				}
+
 				tllines = append(tllines, tlline)
 				if currLineType == LineConstructors {
 					constructor := (*TLConstructor)(tlline)

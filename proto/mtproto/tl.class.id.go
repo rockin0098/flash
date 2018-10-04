@@ -4,7 +4,6 @@ type TL_CLASS_ID int32
 
 const (
 	TL_CLASS_UNKNOWN                                          TL_CLASS_ID = 0
-	TL_CLASS_ipPort                                           TL_CLASS_ID = 1 // 临时处理
 	TL_CLASS_resPQ                                            TL_CLASS_ID = 85337187
 	TL_CLASS_p_q_inner_data                                   TL_CLASS_ID = -2083955988
 	TL_CLASS_server_DH_params_fail                            TL_CLASS_ID = 2043348061
@@ -41,6 +40,7 @@ const (
 	TL_CLASS_destroy_session_none                             TL_CLASS_ID = 1658015945
 	TL_CLASS_new_session_created                              TL_CLASS_ID = -1631450872
 	TL_CLASS_http_wait                                        TL_CLASS_ID = -1835453025
+	TL_CLASS_ipPort                                           TL_CLASS_ID = -734810765
 	TL_CLASS_help_configSimple                                TL_CLASS_ID = -644365371
 	TL_CLASS_rpc_drop_answer                                  TL_CLASS_ID = 1491380032
 	TL_CLASS_get_future_salts                                 TL_CLASS_ID = -1188971260
@@ -930,6 +930,7 @@ var TL_CLASS_NAME = map[int32]string{
 	1658015945:  "TL_CLASS_destroy_session_none",
 	-1631450872: "TL_CLASS_new_session_created",
 	-1835453025: "TL_CLASS_http_wait",
+	-734810765:  "TL_CLASS_ipPort",
 	-644365371:  "TL_CLASS_help_configSimple",
 	1491380032:  "TL_CLASS_rpc_drop_answer",
 	-1188971260: "TL_CLASS_get_future_salts",
@@ -1819,6 +1820,7 @@ var TL_CLASS_NAME_ID = map[string]int32{
 	"TL_CLASS_destroy_session_none":                             1658015945,
 	"TL_CLASS_new_session_created":                              -1631450872,
 	"TL_CLASS_http_wait":                                        -1835453025,
+	"TL_CLASS_ipPort":                                           -734810765,
 	"TL_CLASS_help_configSimple":                                -644365371,
 	"TL_CLASS_rpc_drop_answer":                                  1491380032,
 	"TL_CLASS_get_future_salts":                                 -1188971260,

@@ -18,6 +18,7 @@ type TLConstructor struct {
 	Predicate string     `json:"predicate"`
 	Params    []*TLParam `json:"params"`
 	Type      string     `json:"type"`
+	CRC32     uint32
 }
 
 type TLMethod struct {
@@ -25,6 +26,7 @@ type TLMethod struct {
 	Method string     `json:"method"`
 	Params []*TLParam `json:"params"`
 	Type   string     `json:"type"`
+	CRC32  int32
 }
 
 type TLLine TLConstructor

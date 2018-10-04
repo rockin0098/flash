@@ -1,14 +1,10 @@
 package parser
 
 import (
-	"encoding/binary"
-	"encoding/hex"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strings"
-
-	. "github.com/rockin0098/flash/base/logger"
+	// . "github.com/rockin0098/flash/base/logger"
 )
 
 var classid_output_file = "tl.class.id.go"
@@ -19,7 +15,6 @@ type TL_CLASS_ID int32
 
 const (
 	TL_CLASS_UNKNOWN TL_CLASS_ID = 0
-	TL_CLASS_ipPort  TL_CLASS_ID = 1 // 临时处理
 	%v
 )
 
@@ -45,20 +40,7 @@ func (t *TLLayer) GenerateTLObjectClassConst() {
 			continue
 		}
 
-		if len(line.ID) < 8 {
-			line.ID = fmt.Sprintf("%08s", line.ID)
-		}
-
-		// Log.Infof("name:%v, line.ID:%v ", line.Predicate, line.ID)
-		idbytes, err := hex.DecodeString(line.ID)
-		if err != nil {
-			Log.Error(err)
-			os.Exit(-1)
-		}
-		// Log.Infof("name:%v, line.ID:%v, idbytes %v: ", line.Predicate, line.ID, hex.EncodeToString(idbytes))
-		lineid := int32(binary.BigEndian.Uint32(idbytes))
-		// Log.Infof("name:%v, line.ID:%v, lineid %v: ", line.Predicate, line.ID, lineid)
-
+		lineid := int32(convertCRC32(line.ID))
 		line.Predicate = strings.Replace(line.Predicate, ".", "_", -1)
 
 		constLine := fmt.Sprintf("TL_CLASS_%v TL_CLASS_ID = %d\n", line.Predicate, lineid)

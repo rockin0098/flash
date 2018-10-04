@@ -257,6 +257,22 @@ func (m *MTPDecodeBuffer) Bool() bool {
 	return false
 }
 
+// func (m *MTPDecodeBuffer) TLObject() TLObject {
+// 	// constructor := m.Int()
+// 	// if m.err != nil {
+// 	// 	return nil
+// 	// }
+// 	// switch constructor {
+// 	// case int32(TL_CLASS_boolTrue):
+// 	// 	return true
+// 	// case int32(TL_CLASS_boolFalse):
+// 	// 	return false
+// 	// }
+// 	// return false
+
+// 	return nil
+// }
+
 /*
 func (m *MTPDecodeBuffer) Vector() []TLObject {
 	constructor := m.Int()

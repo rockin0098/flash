@@ -79,15 +79,6 @@ func (e *MTPEncodeBuffer) Bytes(s []byte) {
 	e.buffer = append(e.buffer, s...)
 }
 
-// 临时处理, 需要调整
-func (e *MTPEncodeBuffer) Bool(b bool) {
-	val := int16(0)
-	if b {
-		val = 1
-	}
-	e.Int16(val)
-}
-
 func (e *MTPEncodeBuffer) VectorInt(v []int32) {
 	x := make([]byte, 4+4+len(v)*4)
 	var c = int32(TL_CLASS_vector)
@@ -123,6 +114,10 @@ func (e *MTPEncodeBuffer) VectorString(v []string) {
 	for _, v := range v {
 		e.String(v)
 	}
+}
+
+func (e *MTPEncodeBuffer) TLObject(obj TLObject) {
+	e.buffer = append(e.buffer, obj.Encode()...)
 }
 
 /*

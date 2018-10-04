@@ -2,25 +2,25 @@ package mtproto
 
 // resPQ#05162463
 type TL_resPQ struct {
-	_nonce                          []byte
-	_server_nonce                   []byte
+	_nonce                          TLObject
+	_server_nonce                   TLObject
 	_pq                             string
-	_server_public_key_fingerprints []byte
+	_server_public_key_fingerprints TLObject
 }
 
-func (t *TL_resPQ) Set_nonce(_nonce []byte) {
+func (t *TL_resPQ) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_resPQ) Get_nonce() []byte {
+func (t *TL_resPQ) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_resPQ) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_resPQ) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_resPQ) Get_server_nonce() []byte {
+func (t *TL_resPQ) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -32,11 +32,11 @@ func (t *TL_resPQ) Get_pq() string {
 	return t._pq
 }
 
-func (t *TL_resPQ) Set_server_public_key_fingerprints(_server_public_key_fingerprints []byte) {
+func (t *TL_resPQ) Set_server_public_key_fingerprints(_server_public_key_fingerprints TLObject) {
 	t._server_public_key_fingerprints = _server_public_key_fingerprints
 }
 
-func (t *TL_resPQ) Get_server_public_key_fingerprints() []byte {
+func (t *TL_resPQ) Get_server_public_key_fingerprints() TLObject {
 	return t._server_public_key_fingerprints
 }
 
@@ -71,9 +71,9 @@ type TL_p_q_inner_data struct {
 	_pq           string
 	_p            string
 	_q            string
-	_nonce        []byte
-	_server_nonce []byte
-	_new_nonce    []byte
+	_nonce        TLObject
+	_server_nonce TLObject
+	_new_nonce    TLObject
 }
 
 func (t *TL_p_q_inner_data) Set_pq(_pq string) {
@@ -100,27 +100,27 @@ func (t *TL_p_q_inner_data) Get_q() string {
 	return t._q
 }
 
-func (t *TL_p_q_inner_data) Set_nonce(_nonce []byte) {
+func (t *TL_p_q_inner_data) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_p_q_inner_data) Get_nonce() []byte {
+func (t *TL_p_q_inner_data) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_p_q_inner_data) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_p_q_inner_data) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_p_q_inner_data) Get_server_nonce() []byte {
+func (t *TL_p_q_inner_data) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
-func (t *TL_p_q_inner_data) Set_new_nonce(_new_nonce []byte) {
+func (t *TL_p_q_inner_data) Set_new_nonce(_new_nonce TLObject) {
 	t._new_nonce = _new_nonce
 }
 
-func (t *TL_p_q_inner_data) Get_new_nonce() []byte {
+func (t *TL_p_q_inner_data) Get_new_nonce() TLObject {
 	return t._new_nonce
 }
 
@@ -156,32 +156,32 @@ func (t *TL_p_q_inner_data) Decode(b []byte) {
 
 // server_DH_params_fail#79cb045d
 type TL_server_DH_params_fail struct {
-	_nonce          []byte
-	_server_nonce   []byte
-	_new_nonce_hash []byte
+	_nonce          TLObject
+	_server_nonce   TLObject
+	_new_nonce_hash TLObject
 }
 
-func (t *TL_server_DH_params_fail) Set_nonce(_nonce []byte) {
+func (t *TL_server_DH_params_fail) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_server_DH_params_fail) Get_nonce() []byte {
+func (t *TL_server_DH_params_fail) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_server_DH_params_fail) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_server_DH_params_fail) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_server_DH_params_fail) Get_server_nonce() []byte {
+func (t *TL_server_DH_params_fail) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
-func (t *TL_server_DH_params_fail) Set_new_nonce_hash(_new_nonce_hash []byte) {
+func (t *TL_server_DH_params_fail) Set_new_nonce_hash(_new_nonce_hash TLObject) {
 	t._new_nonce_hash = _new_nonce_hash
 }
 
-func (t *TL_server_DH_params_fail) Get_new_nonce_hash() []byte {
+func (t *TL_server_DH_params_fail) Get_new_nonce_hash() TLObject {
 	return t._new_nonce_hash
 }
 
@@ -211,24 +211,24 @@ func (t *TL_server_DH_params_fail) Decode(b []byte) {
 
 // server_DH_params_ok#d0e8075c
 type TL_server_DH_params_ok struct {
-	_nonce            []byte
-	_server_nonce     []byte
+	_nonce            TLObject
+	_server_nonce     TLObject
 	_encrypted_answer string
 }
 
-func (t *TL_server_DH_params_ok) Set_nonce(_nonce []byte) {
+func (t *TL_server_DH_params_ok) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_server_DH_params_ok) Get_nonce() []byte {
+func (t *TL_server_DH_params_ok) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_server_DH_params_ok) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_server_DH_params_ok) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_server_DH_params_ok) Get_server_nonce() []byte {
+func (t *TL_server_DH_params_ok) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -266,27 +266,27 @@ func (t *TL_server_DH_params_ok) Decode(b []byte) {
 
 // server_DH_inner_data#b5890dba
 type TL_server_DH_inner_data struct {
-	_nonce        []byte
-	_server_nonce []byte
+	_nonce        TLObject
+	_server_nonce TLObject
 	_g            int32
 	_dh_prime     string
 	_g_a          string
 	_server_time  int32
 }
 
-func (t *TL_server_DH_inner_data) Set_nonce(_nonce []byte) {
+func (t *TL_server_DH_inner_data) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_server_DH_inner_data) Get_nonce() []byte {
+func (t *TL_server_DH_inner_data) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_server_DH_inner_data) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_server_DH_inner_data) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_server_DH_inner_data) Get_server_nonce() []byte {
+func (t *TL_server_DH_inner_data) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -354,25 +354,25 @@ func (t *TL_server_DH_inner_data) Decode(b []byte) {
 
 // client_DH_inner_data#6643b654
 type TL_client_DH_inner_data struct {
-	_nonce        []byte
-	_server_nonce []byte
+	_nonce        TLObject
+	_server_nonce TLObject
 	_retry_id     int64
 	_g_b          string
 }
 
-func (t *TL_client_DH_inner_data) Set_nonce(_nonce []byte) {
+func (t *TL_client_DH_inner_data) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_client_DH_inner_data) Get_nonce() []byte {
+func (t *TL_client_DH_inner_data) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_client_DH_inner_data) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_client_DH_inner_data) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_client_DH_inner_data) Get_server_nonce() []byte {
+func (t *TL_client_DH_inner_data) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -420,32 +420,32 @@ func (t *TL_client_DH_inner_data) Decode(b []byte) {
 
 // dh_gen_ok#3bcbf734
 type TL_dh_gen_ok struct {
-	_nonce           []byte
-	_server_nonce    []byte
-	_new_nonce_hash1 []byte
+	_nonce           TLObject
+	_server_nonce    TLObject
+	_new_nonce_hash1 TLObject
 }
 
-func (t *TL_dh_gen_ok) Set_nonce(_nonce []byte) {
+func (t *TL_dh_gen_ok) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_dh_gen_ok) Get_nonce() []byte {
+func (t *TL_dh_gen_ok) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_dh_gen_ok) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_dh_gen_ok) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_dh_gen_ok) Get_server_nonce() []byte {
+func (t *TL_dh_gen_ok) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
-func (t *TL_dh_gen_ok) Set_new_nonce_hash1(_new_nonce_hash1 []byte) {
+func (t *TL_dh_gen_ok) Set_new_nonce_hash1(_new_nonce_hash1 TLObject) {
 	t._new_nonce_hash1 = _new_nonce_hash1
 }
 
-func (t *TL_dh_gen_ok) Get_new_nonce_hash1() []byte {
+func (t *TL_dh_gen_ok) Get_new_nonce_hash1() TLObject {
 	return t._new_nonce_hash1
 }
 
@@ -475,32 +475,32 @@ func (t *TL_dh_gen_ok) Decode(b []byte) {
 
 // dh_gen_retry#46dc1fb9
 type TL_dh_gen_retry struct {
-	_nonce           []byte
-	_server_nonce    []byte
-	_new_nonce_hash2 []byte
+	_nonce           TLObject
+	_server_nonce    TLObject
+	_new_nonce_hash2 TLObject
 }
 
-func (t *TL_dh_gen_retry) Set_nonce(_nonce []byte) {
+func (t *TL_dh_gen_retry) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_dh_gen_retry) Get_nonce() []byte {
+func (t *TL_dh_gen_retry) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_dh_gen_retry) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_dh_gen_retry) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_dh_gen_retry) Get_server_nonce() []byte {
+func (t *TL_dh_gen_retry) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
-func (t *TL_dh_gen_retry) Set_new_nonce_hash2(_new_nonce_hash2 []byte) {
+func (t *TL_dh_gen_retry) Set_new_nonce_hash2(_new_nonce_hash2 TLObject) {
 	t._new_nonce_hash2 = _new_nonce_hash2
 }
 
-func (t *TL_dh_gen_retry) Get_new_nonce_hash2() []byte {
+func (t *TL_dh_gen_retry) Get_new_nonce_hash2() TLObject {
 	return t._new_nonce_hash2
 }
 
@@ -530,32 +530,32 @@ func (t *TL_dh_gen_retry) Decode(b []byte) {
 
 // dh_gen_fail#a69dae02
 type TL_dh_gen_fail struct {
-	_nonce           []byte
-	_server_nonce    []byte
-	_new_nonce_hash3 []byte
+	_nonce           TLObject
+	_server_nonce    TLObject
+	_new_nonce_hash3 TLObject
 }
 
-func (t *TL_dh_gen_fail) Set_nonce(_nonce []byte) {
+func (t *TL_dh_gen_fail) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_dh_gen_fail) Get_nonce() []byte {
+func (t *TL_dh_gen_fail) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_dh_gen_fail) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_dh_gen_fail) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_dh_gen_fail) Get_server_nonce() []byte {
+func (t *TL_dh_gen_fail) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
-func (t *TL_dh_gen_fail) Set_new_nonce_hash3(_new_nonce_hash3 []byte) {
+func (t *TL_dh_gen_fail) Set_new_nonce_hash3(_new_nonce_hash3 TLObject) {
 	t._new_nonce_hash3 = _new_nonce_hash3
 }
 
-func (t *TL_dh_gen_fail) Get_new_nonce_hash3() []byte {
+func (t *TL_dh_gen_fail) Get_new_nonce_hash3() TLObject {
 	return t._new_nonce_hash3
 }
 
@@ -633,14 +633,14 @@ func (t *TL_destroy_auth_key_fail) Decode(b []byte) {
 
 // req_pq#60469778
 type TL_req_pq struct {
-	_nonce []byte
+	_nonce TLObject
 }
 
-func (t *TL_req_pq) Set_nonce(_nonce []byte) {
+func (t *TL_req_pq) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_req_pq) Get_nonce() []byte {
+func (t *TL_req_pq) Get_nonce() TLObject {
 	return t._nonce
 }
 
@@ -666,27 +666,27 @@ func (t *TL_req_pq) Decode(b []byte) {
 
 // req_DH_params#d712e4be
 type TL_req_DH_params struct {
-	_nonce                  []byte
-	_server_nonce           []byte
+	_nonce                  TLObject
+	_server_nonce           TLObject
 	_p                      string
 	_q                      string
 	_public_key_fingerprint int64
 	_encrypted_data         string
 }
 
-func (t *TL_req_DH_params) Set_nonce(_nonce []byte) {
+func (t *TL_req_DH_params) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_req_DH_params) Get_nonce() []byte {
+func (t *TL_req_DH_params) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_req_DH_params) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_req_DH_params) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_req_DH_params) Get_server_nonce() []byte {
+func (t *TL_req_DH_params) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -754,24 +754,24 @@ func (t *TL_req_DH_params) Decode(b []byte) {
 
 // set_client_DH_params#f5045f1f
 type TL_set_client_DH_params struct {
-	_nonce          []byte
-	_server_nonce   []byte
+	_nonce          TLObject
+	_server_nonce   TLObject
 	_encrypted_data string
 }
 
-func (t *TL_set_client_DH_params) Set_nonce(_nonce []byte) {
+func (t *TL_set_client_DH_params) Set_nonce(_nonce TLObject) {
 	t._nonce = _nonce
 }
 
-func (t *TL_set_client_DH_params) Get_nonce() []byte {
+func (t *TL_set_client_DH_params) Get_nonce() TLObject {
 	return t._nonce
 }
 
-func (t *TL_set_client_DH_params) Set_server_nonce(_server_nonce []byte) {
+func (t *TL_set_client_DH_params) Set_server_nonce(_server_nonce TLObject) {
 	t._server_nonce = _server_nonce
 }
 
-func (t *TL_set_client_DH_params) Get_server_nonce() []byte {
+func (t *TL_set_client_DH_params) Get_server_nonce() TLObject {
 	return t._server_nonce
 }
 
@@ -825,14 +825,14 @@ func (t *TL_destroy_auth_key) Decode(b []byte) {
 
 // msgs_ack#62d6b459
 type TL_msgs_ack struct {
-	_msg_ids []byte
+	_msg_ids TLObject
 }
 
-func (t *TL_msgs_ack) Set_msg_ids(_msg_ids []byte) {
+func (t *TL_msgs_ack) Set_msg_ids(_msg_ids TLObject) {
 	t._msg_ids = _msg_ids
 }
 
-func (t *TL_msgs_ack) Get_msg_ids() []byte {
+func (t *TL_msgs_ack) Get_msg_ids() TLObject {
 	return t._msg_ids
 }
 
@@ -979,14 +979,14 @@ func (t *TL_bad_server_salt) Decode(b []byte) {
 
 // msgs_state_req#da69fb52
 type TL_msgs_state_req struct {
-	_msg_ids []byte
+	_msg_ids TLObject
 }
 
-func (t *TL_msgs_state_req) Set_msg_ids(_msg_ids []byte) {
+func (t *TL_msgs_state_req) Set_msg_ids(_msg_ids TLObject) {
 	t._msg_ids = _msg_ids
 }
 
-func (t *TL_msgs_state_req) Get_msg_ids() []byte {
+func (t *TL_msgs_state_req) Get_msg_ids() TLObject {
 	return t._msg_ids
 }
 
@@ -1056,15 +1056,15 @@ func (t *TL_msgs_state_info) Decode(b []byte) {
 
 // msgs_all_info#8cc0d131
 type TL_msgs_all_info struct {
-	_msg_ids []byte
+	_msg_ids TLObject
 	_info    string
 }
 
-func (t *TL_msgs_all_info) Set_msg_ids(_msg_ids []byte) {
+func (t *TL_msgs_all_info) Set_msg_ids(_msg_ids TLObject) {
 	t._msg_ids = _msg_ids
 }
 
-func (t *TL_msgs_all_info) Get_msg_ids() []byte {
+func (t *TL_msgs_all_info) Get_msg_ids() TLObject {
 	return t._msg_ids
 }
 
@@ -1221,14 +1221,14 @@ func (t *TL_msg_new_detailed_info) Decode(b []byte) {
 
 // msg_resend_req#7d861a08
 type TL_msg_resend_req struct {
-	_msg_ids []byte
+	_msg_ids TLObject
 }
 
-func (t *TL_msg_resend_req) Set_msg_ids(_msg_ids []byte) {
+func (t *TL_msg_resend_req) Set_msg_ids(_msg_ids TLObject) {
 	t._msg_ids = _msg_ids
 }
 
-func (t *TL_msg_resend_req) Get_msg_ids() []byte {
+func (t *TL_msg_resend_req) Get_msg_ids() TLObject {
 	return t._msg_ids
 }
 
@@ -1442,7 +1442,7 @@ func (t *TL_future_salt) Decode(b []byte) {
 type TL_future_salts struct {
 	_req_msg_id int64
 	_now        int32
-	_salts      []byte
+	_salts      TLObject
 }
 
 func (t *TL_future_salts) Set_req_msg_id(_req_msg_id int64) {
@@ -1461,11 +1461,11 @@ func (t *TL_future_salts) Get_now() int32 {
 	return t._now
 }
 
-func (t *TL_future_salts) Set_salts(_salts []byte) {
+func (t *TL_future_salts) Set_salts(_salts TLObject) {
 	t._salts = _salts
 }
 
-func (t *TL_future_salts) Get_salts() []byte {
+func (t *TL_future_salts) Get_salts() TLObject {
 	return t._salts
 }
 
@@ -1713,7 +1713,7 @@ func (t *TL_http_wait) Decode(b []byte) {
 
 }
 
-// ipPort#
+// ipPort#d433ad73
 type TL_ipPort struct {
 	_ipv4 int32
 	_port int32
@@ -1762,7 +1762,7 @@ type TL_help_configSimple struct {
 	_date         int32
 	_expires      int32
 	_dc_id        int32
-	_ip_port_list []byte
+	_ip_port_list TLObject
 }
 
 func (t *TL_help_configSimple) Set_date(_date int32) {
@@ -1789,11 +1789,11 @@ func (t *TL_help_configSimple) Get_dc_id() int32 {
 	return t._dc_id
 }
 
-func (t *TL_help_configSimple) Set_ip_port_list(_ip_port_list []byte) {
+func (t *TL_help_configSimple) Set_ip_port_list(_ip_port_list TLObject) {
 	t._ip_port_list = _ip_port_list
 }
 
-func (t *TL_help_configSimple) Get_ip_port_list() []byte {
+func (t *TL_help_configSimple) Get_ip_port_list() TLObject {
 	return t._ip_port_list
 }
 
@@ -2634,26 +2634,26 @@ func (t *TL_inputMediaEmpty) Decode(b []byte) {
 
 // inputMediaUploadedPhoto#2f37e231
 type TL_inputMediaUploadedPhoto struct {
-	_flags       []byte
-	_file        []byte
+	_flags       TLObject
+	_file        TLObject
 	_caption     string
-	_stickers    []byte
-	_ttl_seconds []byte
+	_stickers    TLObject
+	_ttl_seconds TLObject
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_flags(_flags []byte) {
+func (t *TL_inputMediaUploadedPhoto) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_flags() []byte {
+func (t *TL_inputMediaUploadedPhoto) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_file(_file []byte) {
+func (t *TL_inputMediaUploadedPhoto) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_file() []byte {
+func (t *TL_inputMediaUploadedPhoto) Get_file() TLObject {
 	return t._file
 }
 
@@ -2665,19 +2665,19 @@ func (t *TL_inputMediaUploadedPhoto) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_stickers(_stickers []byte) {
+func (t *TL_inputMediaUploadedPhoto) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_stickers() []byte {
+func (t *TL_inputMediaUploadedPhoto) Get_stickers() TLObject {
 	return t._stickers
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaUploadedPhoto) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaUploadedPhoto) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -2709,25 +2709,25 @@ func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) {
 
 // inputMediaPhoto#81fa373a
 type TL_inputMediaPhoto struct {
-	_flags       []byte
-	_id          []byte
+	_flags       TLObject
+	_id          TLObject
 	_caption     string
-	_ttl_seconds []byte
+	_ttl_seconds TLObject
 }
 
-func (t *TL_inputMediaPhoto) Set_flags(_flags []byte) {
+func (t *TL_inputMediaPhoto) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaPhoto) Get_flags() []byte {
+func (t *TL_inputMediaPhoto) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputMediaPhoto) Set_id(_id []byte) {
+func (t *TL_inputMediaPhoto) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputMediaPhoto) Get_id() []byte {
+func (t *TL_inputMediaPhoto) Get_id() TLObject {
 	return t._id
 }
 
@@ -2739,11 +2739,11 @@ func (t *TL_inputMediaPhoto) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaPhoto) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaPhoto) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaPhoto) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaPhoto) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -2773,14 +2773,14 @@ func (t *TL_inputMediaPhoto) Decode(b []byte) {
 
 // inputMediaGeoPoint#f9c44144
 type TL_inputMediaGeoPoint struct {
-	_geo_point []byte
+	_geo_point TLObject
 }
 
-func (t *TL_inputMediaGeoPoint) Set_geo_point(_geo_point []byte) {
+func (t *TL_inputMediaGeoPoint) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_inputMediaGeoPoint) Get_geo_point() []byte {
+func (t *TL_inputMediaGeoPoint) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -2861,46 +2861,46 @@ func (t *TL_inputMediaContact) Decode(b []byte) {
 
 // inputMediaUploadedDocument#e39621fd
 type TL_inputMediaUploadedDocument struct {
-	_flags         []byte
-	_nosound_video []byte
-	_file          []byte
-	_thumb         []byte
+	_flags         TLObject
+	_nosound_video TLObject
+	_file          TLObject
+	_thumb         TLObject
 	_mime_type     string
-	_attributes    []byte
+	_attributes    TLObject
 	_caption       string
-	_stickers      []byte
-	_ttl_seconds   []byte
+	_stickers      TLObject
+	_ttl_seconds   TLObject
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_flags(_flags []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_flags() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_nosound_video(_nosound_video []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_nosound_video(_nosound_video TLObject) {
 	t._nosound_video = _nosound_video
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_nosound_video() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_nosound_video() TLObject {
 	return t._nosound_video
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_file(_file []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_file() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_file() TLObject {
 	return t._file
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_thumb(_thumb []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_thumb(_thumb TLObject) {
 	t._thumb = _thumb
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_thumb() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_thumb() TLObject {
 	return t._thumb
 }
 
@@ -2912,11 +2912,11 @@ func (t *TL_inputMediaUploadedDocument) Get_mime_type() string {
 	return t._mime_type
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_attributes(_attributes []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_attributes(_attributes TLObject) {
 	t._attributes = _attributes
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_attributes() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_attributes() TLObject {
 	return t._attributes
 }
 
@@ -2928,19 +2928,19 @@ func (t *TL_inputMediaUploadedDocument) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_stickers(_stickers []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_stickers() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_stickers() TLObject {
 	return t._stickers
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaUploadedDocument) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaUploadedDocument) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -2980,25 +2980,25 @@ func (t *TL_inputMediaUploadedDocument) Decode(b []byte) {
 
 // inputMediaDocument#5acb668e
 type TL_inputMediaDocument struct {
-	_flags       []byte
-	_id          []byte
+	_flags       TLObject
+	_id          TLObject
 	_caption     string
-	_ttl_seconds []byte
+	_ttl_seconds TLObject
 }
 
-func (t *TL_inputMediaDocument) Set_flags(_flags []byte) {
+func (t *TL_inputMediaDocument) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaDocument) Get_flags() []byte {
+func (t *TL_inputMediaDocument) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputMediaDocument) Set_id(_id []byte) {
+func (t *TL_inputMediaDocument) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputMediaDocument) Get_id() []byte {
+func (t *TL_inputMediaDocument) Get_id() TLObject {
 	return t._id
 }
 
@@ -3010,11 +3010,11 @@ func (t *TL_inputMediaDocument) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaDocument) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaDocument) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaDocument) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaDocument) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -3044,7 +3044,7 @@ func (t *TL_inputMediaDocument) Decode(b []byte) {
 
 // inputMediaVenue#c13d1c11
 type TL_inputMediaVenue struct {
-	_geo_point  []byte
+	_geo_point  TLObject
 	_title      string
 	_address    string
 	_provider   string
@@ -3052,11 +3052,11 @@ type TL_inputMediaVenue struct {
 	_venue_type string
 }
 
-func (t *TL_inputMediaVenue) Set_geo_point(_geo_point []byte) {
+func (t *TL_inputMediaVenue) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_inputMediaVenue) Get_geo_point() []byte {
+func (t *TL_inputMediaVenue) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -3174,19 +3174,19 @@ func (t *TL_inputMediaGifExternal) Decode(b []byte) {
 
 }
 
-// inputMediaPhotoExternal#0922aec1
+// inputMediaPhotoExternal#922aec1
 type TL_inputMediaPhotoExternal struct {
-	_flags       []byte
+	_flags       TLObject
 	_url         string
 	_caption     string
-	_ttl_seconds []byte
+	_ttl_seconds TLObject
 }
 
-func (t *TL_inputMediaPhotoExternal) Set_flags(_flags []byte) {
+func (t *TL_inputMediaPhotoExternal) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaPhotoExternal) Get_flags() []byte {
+func (t *TL_inputMediaPhotoExternal) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -3206,11 +3206,11 @@ func (t *TL_inputMediaPhotoExternal) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaPhotoExternal) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaPhotoExternal) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaPhotoExternal) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaPhotoExternal) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -3240,17 +3240,17 @@ func (t *TL_inputMediaPhotoExternal) Decode(b []byte) {
 
 // inputMediaDocumentExternal#b6f74335
 type TL_inputMediaDocumentExternal struct {
-	_flags       []byte
+	_flags       TLObject
 	_url         string
 	_caption     string
-	_ttl_seconds []byte
+	_ttl_seconds TLObject
 }
 
-func (t *TL_inputMediaDocumentExternal) Set_flags(_flags []byte) {
+func (t *TL_inputMediaDocumentExternal) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaDocumentExternal) Get_flags() []byte {
+func (t *TL_inputMediaDocumentExternal) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -3270,11 +3270,11 @@ func (t *TL_inputMediaDocumentExternal) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputMediaDocumentExternal) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_inputMediaDocumentExternal) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_inputMediaDocumentExternal) Get_ttl_seconds() []byte {
+func (t *TL_inputMediaDocumentExternal) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -3304,14 +3304,14 @@ func (t *TL_inputMediaDocumentExternal) Decode(b []byte) {
 
 // inputMediaGame#d33f43f3
 type TL_inputMediaGame struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_inputMediaGame) Set_id(_id []byte) {
+func (t *TL_inputMediaGame) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputMediaGame) Get_id() []byte {
+func (t *TL_inputMediaGame) Get_id() TLObject {
 	return t._id
 }
 
@@ -3337,22 +3337,22 @@ func (t *TL_inputMediaGame) Decode(b []byte) {
 
 // inputMediaInvoice#f4e096c3
 type TL_inputMediaInvoice struct {
-	_flags         []byte
+	_flags         TLObject
 	_title         string
 	_description   string
-	_photo         []byte
-	_invoice       []byte
-	_payload       []byte
+	_photo         TLObject
+	_invoice       TLObject
+	_payload       TLObject
 	_provider      string
-	_provider_data []byte
+	_provider_data TLObject
 	_start_param   string
 }
 
-func (t *TL_inputMediaInvoice) Set_flags(_flags []byte) {
+func (t *TL_inputMediaInvoice) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMediaInvoice) Get_flags() []byte {
+func (t *TL_inputMediaInvoice) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -3372,27 +3372,27 @@ func (t *TL_inputMediaInvoice) Get_description() string {
 	return t._description
 }
 
-func (t *TL_inputMediaInvoice) Set_photo(_photo []byte) {
+func (t *TL_inputMediaInvoice) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_inputMediaInvoice) Get_photo() []byte {
+func (t *TL_inputMediaInvoice) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_inputMediaInvoice) Set_invoice(_invoice []byte) {
+func (t *TL_inputMediaInvoice) Set_invoice(_invoice TLObject) {
 	t._invoice = _invoice
 }
 
-func (t *TL_inputMediaInvoice) Get_invoice() []byte {
+func (t *TL_inputMediaInvoice) Get_invoice() TLObject {
 	return t._invoice
 }
 
-func (t *TL_inputMediaInvoice) Set_payload(_payload []byte) {
+func (t *TL_inputMediaInvoice) Set_payload(_payload TLObject) {
 	t._payload = _payload
 }
 
-func (t *TL_inputMediaInvoice) Get_payload() []byte {
+func (t *TL_inputMediaInvoice) Get_payload() TLObject {
 	return t._payload
 }
 
@@ -3404,11 +3404,11 @@ func (t *TL_inputMediaInvoice) Get_provider() string {
 	return t._provider
 }
 
-func (t *TL_inputMediaInvoice) Set_provider_data(_provider_data []byte) {
+func (t *TL_inputMediaInvoice) Set_provider_data(_provider_data TLObject) {
 	t._provider_data = _provider_data
 }
 
-func (t *TL_inputMediaInvoice) Get_provider_data() []byte {
+func (t *TL_inputMediaInvoice) Get_provider_data() TLObject {
 	return t._provider_data
 }
 
@@ -3456,15 +3456,15 @@ func (t *TL_inputMediaInvoice) Decode(b []byte) {
 
 // inputMediaGeoLive#7b1a118f
 type TL_inputMediaGeoLive struct {
-	_geo_point []byte
+	_geo_point TLObject
 	_period    int32
 }
 
-func (t *TL_inputMediaGeoLive) Set_geo_point(_geo_point []byte) {
+func (t *TL_inputMediaGeoLive) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_inputMediaGeoLive) Get_geo_point() []byte {
+func (t *TL_inputMediaGeoLive) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -3516,14 +3516,14 @@ func (t *TL_inputChatPhotoEmpty) Decode(b []byte) {
 
 // inputChatUploadedPhoto#927c55b4
 type TL_inputChatUploadedPhoto struct {
-	_file []byte
+	_file TLObject
 }
 
-func (t *TL_inputChatUploadedPhoto) Set_file(_file []byte) {
+func (t *TL_inputChatUploadedPhoto) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_inputChatUploadedPhoto) Get_file() []byte {
+func (t *TL_inputChatUploadedPhoto) Get_file() TLObject {
 	return t._file
 }
 
@@ -3549,14 +3549,14 @@ func (t *TL_inputChatUploadedPhoto) Decode(b []byte) {
 
 // inputChatPhoto#8953ad37
 type TL_inputChatPhoto struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_inputChatPhoto) Set_id(_id []byte) {
+func (t *TL_inputChatPhoto) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputChatPhoto) Get_id() []byte {
+func (t *TL_inputChatPhoto) Get_id() TLObject {
 	return t._id
 }
 
@@ -4051,7 +4051,7 @@ func (t *TL_storage_filePartial) Decode(b []byte) {
 
 }
 
-// storage_fileJpeg#007efe0e
+// storage_fileJpeg#7efe0e
 type TL_storage_fileJpeg struct {
 }
 
@@ -4083,7 +4083,7 @@ func (t *TL_storage_fileGif) Decode(b []byte) {
 
 }
 
-// storage_filePng#0a4f63c0
+// storage_filePng#a4f63c0
 type TL_storage_filePng struct {
 }
 
@@ -4335,125 +4335,125 @@ func (t *TL_userEmpty) Decode(b []byte) {
 
 // user#2e13f4c3
 type TL_user struct {
-	_flags                  []byte
-	_self                   []byte
-	_contact                []byte
-	_mutual_contact         []byte
-	_deleted                []byte
-	_bot                    []byte
-	_bot_chat_history       []byte
-	_bot_nochats            []byte
-	_verified               []byte
-	_restricted             []byte
-	_min                    []byte
-	_bot_inline_geo         []byte
+	_flags                  TLObject
+	_self                   TLObject
+	_contact                TLObject
+	_mutual_contact         TLObject
+	_deleted                TLObject
+	_bot                    TLObject
+	_bot_chat_history       TLObject
+	_bot_nochats            TLObject
+	_verified               TLObject
+	_restricted             TLObject
+	_min                    TLObject
+	_bot_inline_geo         TLObject
 	_id                     int32
-	_access_hash            []byte
-	_first_name             []byte
-	_last_name              []byte
-	_username               []byte
-	_phone                  []byte
-	_photo                  []byte
-	_status                 []byte
-	_bot_info_version       []byte
-	_restriction_reason     []byte
-	_bot_inline_placeholder []byte
-	_lang_code              []byte
+	_access_hash            TLObject
+	_first_name             TLObject
+	_last_name              TLObject
+	_username               TLObject
+	_phone                  TLObject
+	_photo                  TLObject
+	_status                 TLObject
+	_bot_info_version       TLObject
+	_restriction_reason     TLObject
+	_bot_inline_placeholder TLObject
+	_lang_code              TLObject
 }
 
-func (t *TL_user) Set_flags(_flags []byte) {
+func (t *TL_user) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_user) Get_flags() []byte {
+func (t *TL_user) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_user) Set_self(_self []byte) {
+func (t *TL_user) Set_self(_self TLObject) {
 	t._self = _self
 }
 
-func (t *TL_user) Get_self() []byte {
+func (t *TL_user) Get_self() TLObject {
 	return t._self
 }
 
-func (t *TL_user) Set_contact(_contact []byte) {
+func (t *TL_user) Set_contact(_contact TLObject) {
 	t._contact = _contact
 }
 
-func (t *TL_user) Get_contact() []byte {
+func (t *TL_user) Get_contact() TLObject {
 	return t._contact
 }
 
-func (t *TL_user) Set_mutual_contact(_mutual_contact []byte) {
+func (t *TL_user) Set_mutual_contact(_mutual_contact TLObject) {
 	t._mutual_contact = _mutual_contact
 }
 
-func (t *TL_user) Get_mutual_contact() []byte {
+func (t *TL_user) Get_mutual_contact() TLObject {
 	return t._mutual_contact
 }
 
-func (t *TL_user) Set_deleted(_deleted []byte) {
+func (t *TL_user) Set_deleted(_deleted TLObject) {
 	t._deleted = _deleted
 }
 
-func (t *TL_user) Get_deleted() []byte {
+func (t *TL_user) Get_deleted() TLObject {
 	return t._deleted
 }
 
-func (t *TL_user) Set_bot(_bot []byte) {
+func (t *TL_user) Set_bot(_bot TLObject) {
 	t._bot = _bot
 }
 
-func (t *TL_user) Get_bot() []byte {
+func (t *TL_user) Get_bot() TLObject {
 	return t._bot
 }
 
-func (t *TL_user) Set_bot_chat_history(_bot_chat_history []byte) {
+func (t *TL_user) Set_bot_chat_history(_bot_chat_history TLObject) {
 	t._bot_chat_history = _bot_chat_history
 }
 
-func (t *TL_user) Get_bot_chat_history() []byte {
+func (t *TL_user) Get_bot_chat_history() TLObject {
 	return t._bot_chat_history
 }
 
-func (t *TL_user) Set_bot_nochats(_bot_nochats []byte) {
+func (t *TL_user) Set_bot_nochats(_bot_nochats TLObject) {
 	t._bot_nochats = _bot_nochats
 }
 
-func (t *TL_user) Get_bot_nochats() []byte {
+func (t *TL_user) Get_bot_nochats() TLObject {
 	return t._bot_nochats
 }
 
-func (t *TL_user) Set_verified(_verified []byte) {
+func (t *TL_user) Set_verified(_verified TLObject) {
 	t._verified = _verified
 }
 
-func (t *TL_user) Get_verified() []byte {
+func (t *TL_user) Get_verified() TLObject {
 	return t._verified
 }
 
-func (t *TL_user) Set_restricted(_restricted []byte) {
+func (t *TL_user) Set_restricted(_restricted TLObject) {
 	t._restricted = _restricted
 }
 
-func (t *TL_user) Get_restricted() []byte {
+func (t *TL_user) Get_restricted() TLObject {
 	return t._restricted
 }
 
-func (t *TL_user) Set_min(_min []byte) {
+func (t *TL_user) Set_min(_min TLObject) {
 	t._min = _min
 }
 
-func (t *TL_user) Get_min() []byte {
+func (t *TL_user) Get_min() TLObject {
 	return t._min
 }
 
-func (t *TL_user) Set_bot_inline_geo(_bot_inline_geo []byte) {
+func (t *TL_user) Set_bot_inline_geo(_bot_inline_geo TLObject) {
 	t._bot_inline_geo = _bot_inline_geo
 }
 
-func (t *TL_user) Get_bot_inline_geo() []byte {
+func (t *TL_user) Get_bot_inline_geo() TLObject {
 	return t._bot_inline_geo
 }
 
@@ -4465,91 +4465,91 @@ func (t *TL_user) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_user) Set_access_hash(_access_hash []byte) {
+func (t *TL_user) Set_access_hash(_access_hash TLObject) {
 	t._access_hash = _access_hash
 }
 
-func (t *TL_user) Get_access_hash() []byte {
+func (t *TL_user) Get_access_hash() TLObject {
 	return t._access_hash
 }
 
-func (t *TL_user) Set_first_name(_first_name []byte) {
+func (t *TL_user) Set_first_name(_first_name TLObject) {
 	t._first_name = _first_name
 }
 
-func (t *TL_user) Get_first_name() []byte {
+func (t *TL_user) Get_first_name() TLObject {
 	return t._first_name
 }
 
-func (t *TL_user) Set_last_name(_last_name []byte) {
+func (t *TL_user) Set_last_name(_last_name TLObject) {
 	t._last_name = _last_name
 }
 
-func (t *TL_user) Get_last_name() []byte {
+func (t *TL_user) Get_last_name() TLObject {
 	return t._last_name
 }
 
-func (t *TL_user) Set_username(_username []byte) {
+func (t *TL_user) Set_username(_username TLObject) {
 	t._username = _username
 }
 
-func (t *TL_user) Get_username() []byte {
+func (t *TL_user) Get_username() TLObject {
 	return t._username
 }
 
-func (t *TL_user) Set_phone(_phone []byte) {
+func (t *TL_user) Set_phone(_phone TLObject) {
 	t._phone = _phone
 }
 
-func (t *TL_user) Get_phone() []byte {
+func (t *TL_user) Get_phone() TLObject {
 	return t._phone
 }
 
-func (t *TL_user) Set_photo(_photo []byte) {
+func (t *TL_user) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_user) Get_photo() []byte {
+func (t *TL_user) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_user) Set_status(_status []byte) {
+func (t *TL_user) Set_status(_status TLObject) {
 	t._status = _status
 }
 
-func (t *TL_user) Get_status() []byte {
+func (t *TL_user) Get_status() TLObject {
 	return t._status
 }
 
-func (t *TL_user) Set_bot_info_version(_bot_info_version []byte) {
+func (t *TL_user) Set_bot_info_version(_bot_info_version TLObject) {
 	t._bot_info_version = _bot_info_version
 }
 
-func (t *TL_user) Get_bot_info_version() []byte {
+func (t *TL_user) Get_bot_info_version() TLObject {
 	return t._bot_info_version
 }
 
-func (t *TL_user) Set_restriction_reason(_restriction_reason []byte) {
+func (t *TL_user) Set_restriction_reason(_restriction_reason TLObject) {
 	t._restriction_reason = _restriction_reason
 }
 
-func (t *TL_user) Get_restriction_reason() []byte {
+func (t *TL_user) Get_restriction_reason() TLObject {
 	return t._restriction_reason
 }
 
-func (t *TL_user) Set_bot_inline_placeholder(_bot_inline_placeholder []byte) {
+func (t *TL_user) Set_bot_inline_placeholder(_bot_inline_placeholder TLObject) {
 	t._bot_inline_placeholder = _bot_inline_placeholder
 }
 
-func (t *TL_user) Get_bot_inline_placeholder() []byte {
+func (t *TL_user) Get_bot_inline_placeholder() TLObject {
 	return t._bot_inline_placeholder
 }
 
-func (t *TL_user) Set_lang_code(_lang_code []byte) {
+func (t *TL_user) Set_lang_code(_lang_code TLObject) {
 	t._lang_code = _lang_code
 }
 
-func (t *TL_user) Get_lang_code() []byte {
+func (t *TL_user) Get_lang_code() TLObject {
 	return t._lang_code
 }
 
@@ -4636,8 +4636,8 @@ func (t *TL_userProfilePhotoEmpty) Decode(b []byte) {
 // userProfilePhoto#d559d8c8
 type TL_userProfilePhoto struct {
 	_photo_id    int64
-	_photo_small []byte
-	_photo_big   []byte
+	_photo_small TLObject
+	_photo_big   TLObject
 }
 
 func (t *TL_userProfilePhoto) Set_photo_id(_photo_id int64) {
@@ -4648,19 +4648,19 @@ func (t *TL_userProfilePhoto) Get_photo_id() int64 {
 	return t._photo_id
 }
 
-func (t *TL_userProfilePhoto) Set_photo_small(_photo_small []byte) {
+func (t *TL_userProfilePhoto) Set_photo_small(_photo_small TLObject) {
 	t._photo_small = _photo_small
 }
 
-func (t *TL_userProfilePhoto) Get_photo_small() []byte {
+func (t *TL_userProfilePhoto) Get_photo_small() TLObject {
 	return t._photo_small
 }
 
-func (t *TL_userProfilePhoto) Set_photo_big(_photo_big []byte) {
+func (t *TL_userProfilePhoto) Set_photo_big(_photo_big TLObject) {
 	t._photo_big = _photo_big
 }
 
-func (t *TL_userProfilePhoto) Get_photo_big() []byte {
+func (t *TL_userProfilePhoto) Get_photo_big() TLObject {
 	return t._photo_big
 }
 
@@ -4688,7 +4688,7 @@ func (t *TL_userProfilePhoto) Decode(b []byte) {
 
 }
 
-// userStatusEmpty#09d05049
+// userStatusEmpty#9d05049
 type TL_userStatusEmpty struct {
 }
 
@@ -4737,7 +4737,7 @@ func (t *TL_userStatusOnline) Decode(b []byte) {
 
 }
 
-// userStatusOffline#008c703f
+// userStatusOffline#8c703f
 type TL_userStatusOffline struct {
 	_was_online int32
 }
@@ -4786,7 +4786,7 @@ func (t *TL_userStatusRecently) Decode(b []byte) {
 
 }
 
-// userStatusLastWeek#07bf09fc
+// userStatusLastWeek#7bf09fc
 type TL_userStatusLastWeek struct {
 }
 
@@ -4853,75 +4853,75 @@ func (t *TL_chatEmpty) Decode(b []byte) {
 
 // chat#d91cdd54
 type TL_chat struct {
-	_flags              []byte
-	_creator            []byte
-	_kicked             []byte
-	_left               []byte
-	_admins_enabled     []byte
-	_admin              []byte
-	_deactivated        []byte
+	_flags              TLObject
+	_creator            TLObject
+	_kicked             TLObject
+	_left               TLObject
+	_admins_enabled     TLObject
+	_admin              TLObject
+	_deactivated        TLObject
 	_id                 int32
 	_title              string
-	_photo              []byte
+	_photo              TLObject
 	_participants_count int32
 	_date               int32
 	_version            int32
-	_migrated_to        []byte
+	_migrated_to        TLObject
 }
 
-func (t *TL_chat) Set_flags(_flags []byte) {
+func (t *TL_chat) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_chat) Get_flags() []byte {
+func (t *TL_chat) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_chat) Set_creator(_creator []byte) {
+func (t *TL_chat) Set_creator(_creator TLObject) {
 	t._creator = _creator
 }
 
-func (t *TL_chat) Get_creator() []byte {
+func (t *TL_chat) Get_creator() TLObject {
 	return t._creator
 }
 
-func (t *TL_chat) Set_kicked(_kicked []byte) {
+func (t *TL_chat) Set_kicked(_kicked TLObject) {
 	t._kicked = _kicked
 }
 
-func (t *TL_chat) Get_kicked() []byte {
+func (t *TL_chat) Get_kicked() TLObject {
 	return t._kicked
 }
 
-func (t *TL_chat) Set_left(_left []byte) {
+func (t *TL_chat) Set_left(_left TLObject) {
 	t._left = _left
 }
 
-func (t *TL_chat) Get_left() []byte {
+func (t *TL_chat) Get_left() TLObject {
 	return t._left
 }
 
-func (t *TL_chat) Set_admins_enabled(_admins_enabled []byte) {
+func (t *TL_chat) Set_admins_enabled(_admins_enabled TLObject) {
 	t._admins_enabled = _admins_enabled
 }
 
-func (t *TL_chat) Get_admins_enabled() []byte {
+func (t *TL_chat) Get_admins_enabled() TLObject {
 	return t._admins_enabled
 }
 
-func (t *TL_chat) Set_admin(_admin []byte) {
+func (t *TL_chat) Set_admin(_admin TLObject) {
 	t._admin = _admin
 }
 
-func (t *TL_chat) Get_admin() []byte {
+func (t *TL_chat) Get_admin() TLObject {
 	return t._admin
 }
 
-func (t *TL_chat) Set_deactivated(_deactivated []byte) {
+func (t *TL_chat) Set_deactivated(_deactivated TLObject) {
 	t._deactivated = _deactivated
 }
 
-func (t *TL_chat) Get_deactivated() []byte {
+func (t *TL_chat) Get_deactivated() TLObject {
 	return t._deactivated
 }
 
@@ -4941,11 +4941,11 @@ func (t *TL_chat) Get_title() string {
 	return t._title
 }
 
-func (t *TL_chat) Set_photo(_photo []byte) {
+func (t *TL_chat) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_chat) Get_photo() []byte {
+func (t *TL_chat) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -4973,11 +4973,11 @@ func (t *TL_chat) Get_version() int32 {
 	return t._version
 }
 
-func (t *TL_chat) Set_migrated_to(_migrated_to []byte) {
+func (t *TL_chat) Set_migrated_to(_migrated_to TLObject) {
 	t._migrated_to = _migrated_to
 }
 
-func (t *TL_chat) Get_migrated_to() []byte {
+func (t *TL_chat) Get_migrated_to() TLObject {
 	return t._migrated_to
 }
 
@@ -5025,7 +5025,7 @@ func (t *TL_chat) Decode(b []byte) {
 
 }
 
-// chatForbidden#07328bdb
+// chatForbidden#7328bdb
 type TL_chatForbidden struct {
 	_id    int32
 	_title string
@@ -5071,115 +5071,115 @@ func (t *TL_chatForbidden) Decode(b []byte) {
 
 // channel#450b7115
 type TL_channel struct {
-	_flags              []byte
-	_creator            []byte
-	_left               []byte
-	_editor             []byte
-	_broadcast          []byte
-	_verified           []byte
-	_megagroup          []byte
-	_restricted         []byte
-	_democracy          []byte
-	_signatures         []byte
-	_min                []byte
+	_flags              TLObject
+	_creator            TLObject
+	_left               TLObject
+	_editor             TLObject
+	_broadcast          TLObject
+	_verified           TLObject
+	_megagroup          TLObject
+	_restricted         TLObject
+	_democracy          TLObject
+	_signatures         TLObject
+	_min                TLObject
 	_id                 int32
-	_access_hash        []byte
+	_access_hash        TLObject
 	_title              string
-	_username           []byte
-	_photo              []byte
+	_username           TLObject
+	_photo              TLObject
 	_date               int32
 	_version            int32
-	_restriction_reason []byte
-	_admin_rights       []byte
-	_banned_rights      []byte
-	_participants_count []byte
+	_restriction_reason TLObject
+	_admin_rights       TLObject
+	_banned_rights      TLObject
+	_participants_count TLObject
 }
 
-func (t *TL_channel) Set_flags(_flags []byte) {
+func (t *TL_channel) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channel) Get_flags() []byte {
+func (t *TL_channel) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channel) Set_creator(_creator []byte) {
+func (t *TL_channel) Set_creator(_creator TLObject) {
 	t._creator = _creator
 }
 
-func (t *TL_channel) Get_creator() []byte {
+func (t *TL_channel) Get_creator() TLObject {
 	return t._creator
 }
 
-func (t *TL_channel) Set_left(_left []byte) {
+func (t *TL_channel) Set_left(_left TLObject) {
 	t._left = _left
 }
 
-func (t *TL_channel) Get_left() []byte {
+func (t *TL_channel) Get_left() TLObject {
 	return t._left
 }
 
-func (t *TL_channel) Set_editor(_editor []byte) {
+func (t *TL_channel) Set_editor(_editor TLObject) {
 	t._editor = _editor
 }
 
-func (t *TL_channel) Get_editor() []byte {
+func (t *TL_channel) Get_editor() TLObject {
 	return t._editor
 }
 
-func (t *TL_channel) Set_broadcast(_broadcast []byte) {
+func (t *TL_channel) Set_broadcast(_broadcast TLObject) {
 	t._broadcast = _broadcast
 }
 
-func (t *TL_channel) Get_broadcast() []byte {
+func (t *TL_channel) Get_broadcast() TLObject {
 	return t._broadcast
 }
 
-func (t *TL_channel) Set_verified(_verified []byte) {
+func (t *TL_channel) Set_verified(_verified TLObject) {
 	t._verified = _verified
 }
 
-func (t *TL_channel) Get_verified() []byte {
+func (t *TL_channel) Get_verified() TLObject {
 	return t._verified
 }
 
-func (t *TL_channel) Set_megagroup(_megagroup []byte) {
+func (t *TL_channel) Set_megagroup(_megagroup TLObject) {
 	t._megagroup = _megagroup
 }
 
-func (t *TL_channel) Get_megagroup() []byte {
+func (t *TL_channel) Get_megagroup() TLObject {
 	return t._megagroup
 }
 
-func (t *TL_channel) Set_restricted(_restricted []byte) {
+func (t *TL_channel) Set_restricted(_restricted TLObject) {
 	t._restricted = _restricted
 }
 
-func (t *TL_channel) Get_restricted() []byte {
+func (t *TL_channel) Get_restricted() TLObject {
 	return t._restricted
 }
 
-func (t *TL_channel) Set_democracy(_democracy []byte) {
+func (t *TL_channel) Set_democracy(_democracy TLObject) {
 	t._democracy = _democracy
 }
 
-func (t *TL_channel) Get_democracy() []byte {
+func (t *TL_channel) Get_democracy() TLObject {
 	return t._democracy
 }
 
-func (t *TL_channel) Set_signatures(_signatures []byte) {
+func (t *TL_channel) Set_signatures(_signatures TLObject) {
 	t._signatures = _signatures
 }
 
-func (t *TL_channel) Get_signatures() []byte {
+func (t *TL_channel) Get_signatures() TLObject {
 	return t._signatures
 }
 
-func (t *TL_channel) Set_min(_min []byte) {
+func (t *TL_channel) Set_min(_min TLObject) {
 	t._min = _min
 }
 
-func (t *TL_channel) Get_min() []byte {
+func (t *TL_channel) Get_min() TLObject {
 	return t._min
 }
 
@@ -5191,11 +5191,11 @@ func (t *TL_channel) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_channel) Set_access_hash(_access_hash []byte) {
+func (t *TL_channel) Set_access_hash(_access_hash TLObject) {
 	t._access_hash = _access_hash
 }
 
-func (t *TL_channel) Get_access_hash() []byte {
+func (t *TL_channel) Get_access_hash() TLObject {
 	return t._access_hash
 }
 
@@ -5207,19 +5207,19 @@ func (t *TL_channel) Get_title() string {
 	return t._title
 }
 
-func (t *TL_channel) Set_username(_username []byte) {
+func (t *TL_channel) Set_username(_username TLObject) {
 	t._username = _username
 }
 
-func (t *TL_channel) Get_username() []byte {
+func (t *TL_channel) Get_username() TLObject {
 	return t._username
 }
 
-func (t *TL_channel) Set_photo(_photo []byte) {
+func (t *TL_channel) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_channel) Get_photo() []byte {
+func (t *TL_channel) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -5239,35 +5239,35 @@ func (t *TL_channel) Get_version() int32 {
 	return t._version
 }
 
-func (t *TL_channel) Set_restriction_reason(_restriction_reason []byte) {
+func (t *TL_channel) Set_restriction_reason(_restriction_reason TLObject) {
 	t._restriction_reason = _restriction_reason
 }
 
-func (t *TL_channel) Get_restriction_reason() []byte {
+func (t *TL_channel) Get_restriction_reason() TLObject {
 	return t._restriction_reason
 }
 
-func (t *TL_channel) Set_admin_rights(_admin_rights []byte) {
+func (t *TL_channel) Set_admin_rights(_admin_rights TLObject) {
 	t._admin_rights = _admin_rights
 }
 
-func (t *TL_channel) Get_admin_rights() []byte {
+func (t *TL_channel) Get_admin_rights() TLObject {
 	return t._admin_rights
 }
 
-func (t *TL_channel) Set_banned_rights(_banned_rights []byte) {
+func (t *TL_channel) Set_banned_rights(_banned_rights TLObject) {
 	t._banned_rights = _banned_rights
 }
 
-func (t *TL_channel) Get_banned_rights() []byte {
+func (t *TL_channel) Get_banned_rights() TLObject {
 	return t._banned_rights
 }
 
-func (t *TL_channel) Set_participants_count(_participants_count []byte) {
+func (t *TL_channel) Set_participants_count(_participants_count TLObject) {
 	t._participants_count = _participants_count
 }
 
-func (t *TL_channel) Get_participants_count() []byte {
+func (t *TL_channel) Get_participants_count() TLObject {
 	return t._participants_count
 }
 
@@ -5333,36 +5333,36 @@ func (t *TL_channel) Decode(b []byte) {
 
 // channelForbidden#289da732
 type TL_channelForbidden struct {
-	_flags       []byte
-	_broadcast   []byte
-	_megagroup   []byte
+	_flags       TLObject
+	_broadcast   TLObject
+	_megagroup   TLObject
 	_id          int32
 	_access_hash int64
 	_title       string
-	_until_date  []byte
+	_until_date  TLObject
 }
 
-func (t *TL_channelForbidden) Set_flags(_flags []byte) {
+func (t *TL_channelForbidden) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelForbidden) Get_flags() []byte {
+func (t *TL_channelForbidden) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelForbidden) Set_broadcast(_broadcast []byte) {
+func (t *TL_channelForbidden) Set_broadcast(_broadcast TLObject) {
 	t._broadcast = _broadcast
 }
 
-func (t *TL_channelForbidden) Get_broadcast() []byte {
+func (t *TL_channelForbidden) Get_broadcast() TLObject {
 	return t._broadcast
 }
 
-func (t *TL_channelForbidden) Set_megagroup(_megagroup []byte) {
+func (t *TL_channelForbidden) Set_megagroup(_megagroup TLObject) {
 	t._megagroup = _megagroup
 }
 
-func (t *TL_channelForbidden) Get_megagroup() []byte {
+func (t *TL_channelForbidden) Get_megagroup() TLObject {
 	return t._megagroup
 }
 
@@ -5390,11 +5390,11 @@ func (t *TL_channelForbidden) Get_title() string {
 	return t._title
 }
 
-func (t *TL_channelForbidden) Set_until_date(_until_date []byte) {
+func (t *TL_channelForbidden) Set_until_date(_until_date TLObject) {
 	t._until_date = _until_date
 }
 
-func (t *TL_channelForbidden) Get_until_date() []byte {
+func (t *TL_channelForbidden) Get_until_date() TLObject {
 	return t._until_date
 }
 
@@ -5431,11 +5431,11 @@ func (t *TL_channelForbidden) Decode(b []byte) {
 // chatFull#2e02a614
 type TL_chatFull struct {
 	_id              int32
-	_participants    []byte
-	_chat_photo      []byte
-	_notify_settings []byte
-	_exported_invite []byte
-	_bot_info        []byte
+	_participants    TLObject
+	_chat_photo      TLObject
+	_notify_settings TLObject
+	_exported_invite TLObject
+	_bot_info        TLObject
 }
 
 func (t *TL_chatFull) Set_id(_id int32) {
@@ -5446,43 +5446,43 @@ func (t *TL_chatFull) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_chatFull) Set_participants(_participants []byte) {
+func (t *TL_chatFull) Set_participants(_participants TLObject) {
 	t._participants = _participants
 }
 
-func (t *TL_chatFull) Get_participants() []byte {
+func (t *TL_chatFull) Get_participants() TLObject {
 	return t._participants
 }
 
-func (t *TL_chatFull) Set_chat_photo(_chat_photo []byte) {
+func (t *TL_chatFull) Set_chat_photo(_chat_photo TLObject) {
 	t._chat_photo = _chat_photo
 }
 
-func (t *TL_chatFull) Get_chat_photo() []byte {
+func (t *TL_chatFull) Get_chat_photo() TLObject {
 	return t._chat_photo
 }
 
-func (t *TL_chatFull) Set_notify_settings(_notify_settings []byte) {
+func (t *TL_chatFull) Set_notify_settings(_notify_settings TLObject) {
 	t._notify_settings = _notify_settings
 }
 
-func (t *TL_chatFull) Get_notify_settings() []byte {
+func (t *TL_chatFull) Get_notify_settings() TLObject {
 	return t._notify_settings
 }
 
-func (t *TL_chatFull) Set_exported_invite(_exported_invite []byte) {
+func (t *TL_chatFull) Set_exported_invite(_exported_invite TLObject) {
 	t._exported_invite = _exported_invite
 }
 
-func (t *TL_chatFull) Get_exported_invite() []byte {
+func (t *TL_chatFull) Get_exported_invite() TLObject {
 	return t._exported_invite
 }
 
-func (t *TL_chatFull) Set_bot_info(_bot_info []byte) {
+func (t *TL_chatFull) Set_bot_info(_bot_info TLObject) {
 	t._bot_info = _bot_info
 }
 
-func (t *TL_chatFull) Get_bot_info() []byte {
+func (t *TL_chatFull) Get_bot_info() TLObject {
 	return t._bot_info
 }
 
@@ -5518,68 +5518,68 @@ func (t *TL_chatFull) Decode(b []byte) {
 
 // channelFull#76af5481
 type TL_channelFull struct {
-	_flags                 []byte
-	_can_view_participants []byte
-	_can_set_username      []byte
-	_can_set_stickers      []byte
-	_hidden_prehistory     []byte
+	_flags                 TLObject
+	_can_view_participants TLObject
+	_can_set_username      TLObject
+	_can_set_stickers      TLObject
+	_hidden_prehistory     TLObject
 	_id                    int32
 	_about                 string
-	_participants_count    []byte
-	_admins_count          []byte
-	_kicked_count          []byte
-	_banned_count          []byte
+	_participants_count    TLObject
+	_admins_count          TLObject
+	_kicked_count          TLObject
+	_banned_count          TLObject
 	_read_inbox_max_id     int32
 	_read_outbox_max_id    int32
 	_unread_count          int32
-	_chat_photo            []byte
-	_notify_settings       []byte
-	_exported_invite       []byte
-	_bot_info              []byte
-	_migrated_from_chat_id []byte
-	_migrated_from_max_id  []byte
-	_pinned_msg_id         []byte
-	_stickerset            []byte
-	_available_min_id      []byte
+	_chat_photo            TLObject
+	_notify_settings       TLObject
+	_exported_invite       TLObject
+	_bot_info              TLObject
+	_migrated_from_chat_id TLObject
+	_migrated_from_max_id  TLObject
+	_pinned_msg_id         TLObject
+	_stickerset            TLObject
+	_available_min_id      TLObject
 }
 
-func (t *TL_channelFull) Set_flags(_flags []byte) {
+func (t *TL_channelFull) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelFull) Get_flags() []byte {
+func (t *TL_channelFull) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelFull) Set_can_view_participants(_can_view_participants []byte) {
+func (t *TL_channelFull) Set_can_view_participants(_can_view_participants TLObject) {
 	t._can_view_participants = _can_view_participants
 }
 
-func (t *TL_channelFull) Get_can_view_participants() []byte {
+func (t *TL_channelFull) Get_can_view_participants() TLObject {
 	return t._can_view_participants
 }
 
-func (t *TL_channelFull) Set_can_set_username(_can_set_username []byte) {
+func (t *TL_channelFull) Set_can_set_username(_can_set_username TLObject) {
 	t._can_set_username = _can_set_username
 }
 
-func (t *TL_channelFull) Get_can_set_username() []byte {
+func (t *TL_channelFull) Get_can_set_username() TLObject {
 	return t._can_set_username
 }
 
-func (t *TL_channelFull) Set_can_set_stickers(_can_set_stickers []byte) {
+func (t *TL_channelFull) Set_can_set_stickers(_can_set_stickers TLObject) {
 	t._can_set_stickers = _can_set_stickers
 }
 
-func (t *TL_channelFull) Get_can_set_stickers() []byte {
+func (t *TL_channelFull) Get_can_set_stickers() TLObject {
 	return t._can_set_stickers
 }
 
-func (t *TL_channelFull) Set_hidden_prehistory(_hidden_prehistory []byte) {
+func (t *TL_channelFull) Set_hidden_prehistory(_hidden_prehistory TLObject) {
 	t._hidden_prehistory = _hidden_prehistory
 }
 
-func (t *TL_channelFull) Get_hidden_prehistory() []byte {
+func (t *TL_channelFull) Get_hidden_prehistory() TLObject {
 	return t._hidden_prehistory
 }
 
@@ -5599,35 +5599,35 @@ func (t *TL_channelFull) Get_about() string {
 	return t._about
 }
 
-func (t *TL_channelFull) Set_participants_count(_participants_count []byte) {
+func (t *TL_channelFull) Set_participants_count(_participants_count TLObject) {
 	t._participants_count = _participants_count
 }
 
-func (t *TL_channelFull) Get_participants_count() []byte {
+func (t *TL_channelFull) Get_participants_count() TLObject {
 	return t._participants_count
 }
 
-func (t *TL_channelFull) Set_admins_count(_admins_count []byte) {
+func (t *TL_channelFull) Set_admins_count(_admins_count TLObject) {
 	t._admins_count = _admins_count
 }
 
-func (t *TL_channelFull) Get_admins_count() []byte {
+func (t *TL_channelFull) Get_admins_count() TLObject {
 	return t._admins_count
 }
 
-func (t *TL_channelFull) Set_kicked_count(_kicked_count []byte) {
+func (t *TL_channelFull) Set_kicked_count(_kicked_count TLObject) {
 	t._kicked_count = _kicked_count
 }
 
-func (t *TL_channelFull) Get_kicked_count() []byte {
+func (t *TL_channelFull) Get_kicked_count() TLObject {
 	return t._kicked_count
 }
 
-func (t *TL_channelFull) Set_banned_count(_banned_count []byte) {
+func (t *TL_channelFull) Set_banned_count(_banned_count TLObject) {
 	t._banned_count = _banned_count
 }
 
-func (t *TL_channelFull) Get_banned_count() []byte {
+func (t *TL_channelFull) Get_banned_count() TLObject {
 	return t._banned_count
 }
 
@@ -5655,75 +5655,75 @@ func (t *TL_channelFull) Get_unread_count() int32 {
 	return t._unread_count
 }
 
-func (t *TL_channelFull) Set_chat_photo(_chat_photo []byte) {
+func (t *TL_channelFull) Set_chat_photo(_chat_photo TLObject) {
 	t._chat_photo = _chat_photo
 }
 
-func (t *TL_channelFull) Get_chat_photo() []byte {
+func (t *TL_channelFull) Get_chat_photo() TLObject {
 	return t._chat_photo
 }
 
-func (t *TL_channelFull) Set_notify_settings(_notify_settings []byte) {
+func (t *TL_channelFull) Set_notify_settings(_notify_settings TLObject) {
 	t._notify_settings = _notify_settings
 }
 
-func (t *TL_channelFull) Get_notify_settings() []byte {
+func (t *TL_channelFull) Get_notify_settings() TLObject {
 	return t._notify_settings
 }
 
-func (t *TL_channelFull) Set_exported_invite(_exported_invite []byte) {
+func (t *TL_channelFull) Set_exported_invite(_exported_invite TLObject) {
 	t._exported_invite = _exported_invite
 }
 
-func (t *TL_channelFull) Get_exported_invite() []byte {
+func (t *TL_channelFull) Get_exported_invite() TLObject {
 	return t._exported_invite
 }
 
-func (t *TL_channelFull) Set_bot_info(_bot_info []byte) {
+func (t *TL_channelFull) Set_bot_info(_bot_info TLObject) {
 	t._bot_info = _bot_info
 }
 
-func (t *TL_channelFull) Get_bot_info() []byte {
+func (t *TL_channelFull) Get_bot_info() TLObject {
 	return t._bot_info
 }
 
-func (t *TL_channelFull) Set_migrated_from_chat_id(_migrated_from_chat_id []byte) {
+func (t *TL_channelFull) Set_migrated_from_chat_id(_migrated_from_chat_id TLObject) {
 	t._migrated_from_chat_id = _migrated_from_chat_id
 }
 
-func (t *TL_channelFull) Get_migrated_from_chat_id() []byte {
+func (t *TL_channelFull) Get_migrated_from_chat_id() TLObject {
 	return t._migrated_from_chat_id
 }
 
-func (t *TL_channelFull) Set_migrated_from_max_id(_migrated_from_max_id []byte) {
+func (t *TL_channelFull) Set_migrated_from_max_id(_migrated_from_max_id TLObject) {
 	t._migrated_from_max_id = _migrated_from_max_id
 }
 
-func (t *TL_channelFull) Get_migrated_from_max_id() []byte {
+func (t *TL_channelFull) Get_migrated_from_max_id() TLObject {
 	return t._migrated_from_max_id
 }
 
-func (t *TL_channelFull) Set_pinned_msg_id(_pinned_msg_id []byte) {
+func (t *TL_channelFull) Set_pinned_msg_id(_pinned_msg_id TLObject) {
 	t._pinned_msg_id = _pinned_msg_id
 }
 
-func (t *TL_channelFull) Get_pinned_msg_id() []byte {
+func (t *TL_channelFull) Get_pinned_msg_id() TLObject {
 	return t._pinned_msg_id
 }
 
-func (t *TL_channelFull) Set_stickerset(_stickerset []byte) {
+func (t *TL_channelFull) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_channelFull) Get_stickerset() []byte {
+func (t *TL_channelFull) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
-func (t *TL_channelFull) Set_available_min_id(_available_min_id []byte) {
+func (t *TL_channelFull) Set_available_min_id(_available_min_id TLObject) {
 	t._available_min_id = _available_min_id
 }
 
-func (t *TL_channelFull) Get_available_min_id() []byte {
+func (t *TL_channelFull) Get_available_min_id() TLObject {
 	return t._available_min_id
 }
 
@@ -5934,16 +5934,16 @@ func (t *TL_chatParticipantAdmin) Decode(b []byte) {
 
 // chatParticipantsForbidden#fc900c2b
 type TL_chatParticipantsForbidden struct {
-	_flags            []byte
+	_flags            TLObject
 	_chat_id          int32
-	_self_participant []byte
+	_self_participant TLObject
 }
 
-func (t *TL_chatParticipantsForbidden) Set_flags(_flags []byte) {
+func (t *TL_chatParticipantsForbidden) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_chatParticipantsForbidden) Get_flags() []byte {
+func (t *TL_chatParticipantsForbidden) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -5955,11 +5955,11 @@ func (t *TL_chatParticipantsForbidden) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_chatParticipantsForbidden) Set_self_participant(_self_participant []byte) {
+func (t *TL_chatParticipantsForbidden) Set_self_participant(_self_participant TLObject) {
 	t._self_participant = _self_participant
 }
 
-func (t *TL_chatParticipantsForbidden) Get_self_participant() []byte {
+func (t *TL_chatParticipantsForbidden) Get_self_participant() TLObject {
 	return t._self_participant
 }
 
@@ -5988,7 +5988,7 @@ func (t *TL_chatParticipantsForbidden) Decode(b []byte) {
 // chatParticipants#3f460fed
 type TL_chatParticipants struct {
 	_chat_id      int32
-	_participants []byte
+	_participants TLObject
 	_version      int32
 }
 
@@ -6000,11 +6000,11 @@ func (t *TL_chatParticipants) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_chatParticipants) Set_participants(_participants []byte) {
+func (t *TL_chatParticipants) Set_participants(_participants TLObject) {
 	t._participants = _participants
 }
 
-func (t *TL_chatParticipants) Get_participants() []byte {
+func (t *TL_chatParticipants) Get_participants() TLObject {
 	return t._participants
 }
 
@@ -6058,23 +6058,23 @@ func (t *TL_chatPhotoEmpty) Decode(b []byte) {
 
 // chatPhoto#6153276a
 type TL_chatPhoto struct {
-	_photo_small []byte
-	_photo_big   []byte
+	_photo_small TLObject
+	_photo_big   TLObject
 }
 
-func (t *TL_chatPhoto) Set_photo_small(_photo_small []byte) {
+func (t *TL_chatPhoto) Set_photo_small(_photo_small TLObject) {
 	t._photo_small = _photo_small
 }
 
-func (t *TL_chatPhoto) Get_photo_small() []byte {
+func (t *TL_chatPhoto) Get_photo_small() TLObject {
 	return t._photo_small
 }
 
-func (t *TL_chatPhoto) Set_photo_big(_photo_big []byte) {
+func (t *TL_chatPhoto) Set_photo_big(_photo_big TLObject) {
 	t._photo_big = _photo_big
 }
 
-func (t *TL_chatPhoto) Get_photo_big() []byte {
+func (t *TL_chatPhoto) Get_photo_big() TLObject {
 	return t._photo_big
 }
 
@@ -6135,74 +6135,74 @@ func (t *TL_messageEmpty) Decode(b []byte) {
 
 // message#44f9b43d
 type TL_message struct {
-	_flags           []byte
-	_out             []byte
-	_mentioned       []byte
-	_media_unread    []byte
-	_silent          []byte
-	_post            []byte
+	_flags           TLObject
+	_out             TLObject
+	_mentioned       TLObject
+	_media_unread    TLObject
+	_silent          TLObject
+	_post            TLObject
 	_id              int32
-	_from_id         []byte
-	_to_id           []byte
-	_fwd_from        []byte
-	_via_bot_id      []byte
-	_reply_to_msg_id []byte
+	_from_id         TLObject
+	_to_id           TLObject
+	_fwd_from        TLObject
+	_via_bot_id      TLObject
+	_reply_to_msg_id TLObject
 	_date            int32
 	_message         string
-	_media           []byte
-	_reply_markup    []byte
-	_entities        []byte
-	_views           []byte
-	_edit_date       []byte
-	_post_author     []byte
-	_grouped_id      []byte
+	_media           TLObject
+	_reply_markup    TLObject
+	_entities        TLObject
+	_views           TLObject
+	_edit_date       TLObject
+	_post_author     TLObject
+	_grouped_id      TLObject
 }
 
-func (t *TL_message) Set_flags(_flags []byte) {
+func (t *TL_message) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_message) Get_flags() []byte {
+func (t *TL_message) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_message) Set_out(_out []byte) {
+func (t *TL_message) Set_out(_out TLObject) {
 	t._out = _out
 }
 
-func (t *TL_message) Get_out() []byte {
+func (t *TL_message) Get_out() TLObject {
 	return t._out
 }
 
-func (t *TL_message) Set_mentioned(_mentioned []byte) {
+func (t *TL_message) Set_mentioned(_mentioned TLObject) {
 	t._mentioned = _mentioned
 }
 
-func (t *TL_message) Get_mentioned() []byte {
+func (t *TL_message) Get_mentioned() TLObject {
 	return t._mentioned
 }
 
-func (t *TL_message) Set_media_unread(_media_unread []byte) {
+func (t *TL_message) Set_media_unread(_media_unread TLObject) {
 	t._media_unread = _media_unread
 }
 
-func (t *TL_message) Get_media_unread() []byte {
+func (t *TL_message) Get_media_unread() TLObject {
 	return t._media_unread
 }
 
-func (t *TL_message) Set_silent(_silent []byte) {
+func (t *TL_message) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_message) Get_silent() []byte {
+func (t *TL_message) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_message) Set_post(_post []byte) {
+func (t *TL_message) Set_post(_post TLObject) {
 	t._post = _post
 }
 
-func (t *TL_message) Get_post() []byte {
+func (t *TL_message) Get_post() TLObject {
 	return t._post
 }
 
@@ -6214,43 +6214,43 @@ func (t *TL_message) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_message) Set_from_id(_from_id []byte) {
+func (t *TL_message) Set_from_id(_from_id TLObject) {
 	t._from_id = _from_id
 }
 
-func (t *TL_message) Get_from_id() []byte {
+func (t *TL_message) Get_from_id() TLObject {
 	return t._from_id
 }
 
-func (t *TL_message) Set_to_id(_to_id []byte) {
+func (t *TL_message) Set_to_id(_to_id TLObject) {
 	t._to_id = _to_id
 }
 
-func (t *TL_message) Get_to_id() []byte {
+func (t *TL_message) Get_to_id() TLObject {
 	return t._to_id
 }
 
-func (t *TL_message) Set_fwd_from(_fwd_from []byte) {
+func (t *TL_message) Set_fwd_from(_fwd_from TLObject) {
 	t._fwd_from = _fwd_from
 }
 
-func (t *TL_message) Get_fwd_from() []byte {
+func (t *TL_message) Get_fwd_from() TLObject {
 	return t._fwd_from
 }
 
-func (t *TL_message) Set_via_bot_id(_via_bot_id []byte) {
+func (t *TL_message) Set_via_bot_id(_via_bot_id TLObject) {
 	t._via_bot_id = _via_bot_id
 }
 
-func (t *TL_message) Get_via_bot_id() []byte {
+func (t *TL_message) Get_via_bot_id() TLObject {
 	return t._via_bot_id
 }
 
-func (t *TL_message) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_message) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_message) Get_reply_to_msg_id() []byte {
+func (t *TL_message) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
@@ -6270,59 +6270,59 @@ func (t *TL_message) Get_message() string {
 	return t._message
 }
 
-func (t *TL_message) Set_media(_media []byte) {
+func (t *TL_message) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_message) Get_media() []byte {
+func (t *TL_message) Get_media() TLObject {
 	return t._media
 }
 
-func (t *TL_message) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_message) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_message) Get_reply_markup() []byte {
+func (t *TL_message) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
-func (t *TL_message) Set_entities(_entities []byte) {
+func (t *TL_message) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_message) Get_entities() []byte {
+func (t *TL_message) Get_entities() TLObject {
 	return t._entities
 }
 
-func (t *TL_message) Set_views(_views []byte) {
+func (t *TL_message) Set_views(_views TLObject) {
 	t._views = _views
 }
 
-func (t *TL_message) Get_views() []byte {
+func (t *TL_message) Get_views() TLObject {
 	return t._views
 }
 
-func (t *TL_message) Set_edit_date(_edit_date []byte) {
+func (t *TL_message) Set_edit_date(_edit_date TLObject) {
 	t._edit_date = _edit_date
 }
 
-func (t *TL_message) Get_edit_date() []byte {
+func (t *TL_message) Get_edit_date() TLObject {
 	return t._edit_date
 }
 
-func (t *TL_message) Set_post_author(_post_author []byte) {
+func (t *TL_message) Set_post_author(_post_author TLObject) {
 	t._post_author = _post_author
 }
 
-func (t *TL_message) Get_post_author() []byte {
+func (t *TL_message) Get_post_author() TLObject {
 	return t._post_author
 }
 
-func (t *TL_message) Set_grouped_id(_grouped_id []byte) {
+func (t *TL_message) Set_grouped_id(_grouped_id TLObject) {
 	t._grouped_id = _grouped_id
 }
 
-func (t *TL_message) Get_grouped_id() []byte {
+func (t *TL_message) Get_grouped_id() TLObject {
 	return t._grouped_id
 }
 
@@ -6386,65 +6386,65 @@ func (t *TL_message) Decode(b []byte) {
 
 // messageService#9e19a1f6
 type TL_messageService struct {
-	_flags           []byte
-	_out             []byte
-	_mentioned       []byte
-	_media_unread    []byte
-	_silent          []byte
-	_post            []byte
+	_flags           TLObject
+	_out             TLObject
+	_mentioned       TLObject
+	_media_unread    TLObject
+	_silent          TLObject
+	_post            TLObject
 	_id              int32
-	_from_id         []byte
-	_to_id           []byte
-	_reply_to_msg_id []byte
+	_from_id         TLObject
+	_to_id           TLObject
+	_reply_to_msg_id TLObject
 	_date            int32
-	_action          []byte
+	_action          TLObject
 }
 
-func (t *TL_messageService) Set_flags(_flags []byte) {
+func (t *TL_messageService) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageService) Get_flags() []byte {
+func (t *TL_messageService) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messageService) Set_out(_out []byte) {
+func (t *TL_messageService) Set_out(_out TLObject) {
 	t._out = _out
 }
 
-func (t *TL_messageService) Get_out() []byte {
+func (t *TL_messageService) Get_out() TLObject {
 	return t._out
 }
 
-func (t *TL_messageService) Set_mentioned(_mentioned []byte) {
+func (t *TL_messageService) Set_mentioned(_mentioned TLObject) {
 	t._mentioned = _mentioned
 }
 
-func (t *TL_messageService) Get_mentioned() []byte {
+func (t *TL_messageService) Get_mentioned() TLObject {
 	return t._mentioned
 }
 
-func (t *TL_messageService) Set_media_unread(_media_unread []byte) {
+func (t *TL_messageService) Set_media_unread(_media_unread TLObject) {
 	t._media_unread = _media_unread
 }
 
-func (t *TL_messageService) Get_media_unread() []byte {
+func (t *TL_messageService) Get_media_unread() TLObject {
 	return t._media_unread
 }
 
-func (t *TL_messageService) Set_silent(_silent []byte) {
+func (t *TL_messageService) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messageService) Get_silent() []byte {
+func (t *TL_messageService) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messageService) Set_post(_post []byte) {
+func (t *TL_messageService) Set_post(_post TLObject) {
 	t._post = _post
 }
 
-func (t *TL_messageService) Get_post() []byte {
+func (t *TL_messageService) Get_post() TLObject {
 	return t._post
 }
 
@@ -6456,27 +6456,27 @@ func (t *TL_messageService) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_messageService) Set_from_id(_from_id []byte) {
+func (t *TL_messageService) Set_from_id(_from_id TLObject) {
 	t._from_id = _from_id
 }
 
-func (t *TL_messageService) Get_from_id() []byte {
+func (t *TL_messageService) Get_from_id() TLObject {
 	return t._from_id
 }
 
-func (t *TL_messageService) Set_to_id(_to_id []byte) {
+func (t *TL_messageService) Set_to_id(_to_id TLObject) {
 	t._to_id = _to_id
 }
 
-func (t *TL_messageService) Get_to_id() []byte {
+func (t *TL_messageService) Get_to_id() TLObject {
 	return t._to_id
 }
 
-func (t *TL_messageService) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messageService) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messageService) Get_reply_to_msg_id() []byte {
+func (t *TL_messageService) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
@@ -6488,11 +6488,11 @@ func (t *TL_messageService) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_messageService) Set_action(_action []byte) {
+func (t *TL_messageService) Set_action(_action TLObject) {
 	t._action = _action
 }
 
-func (t *TL_messageService) Get_action() []byte {
+func (t *TL_messageService) Get_action() TLObject {
 	return t._action
 }
 
@@ -6554,41 +6554,41 @@ func (t *TL_messageMediaEmpty) Decode(b []byte) {
 
 // messageMediaPhoto#b5223b0f
 type TL_messageMediaPhoto struct {
-	_flags       []byte
-	_photo       []byte
-	_caption     []byte
-	_ttl_seconds []byte
+	_flags       TLObject
+	_photo       TLObject
+	_caption     TLObject
+	_ttl_seconds TLObject
 }
 
-func (t *TL_messageMediaPhoto) Set_flags(_flags []byte) {
+func (t *TL_messageMediaPhoto) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageMediaPhoto) Get_flags() []byte {
+func (t *TL_messageMediaPhoto) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messageMediaPhoto) Set_photo(_photo []byte) {
+func (t *TL_messageMediaPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_messageMediaPhoto) Get_photo() []byte {
+func (t *TL_messageMediaPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_messageMediaPhoto) Set_caption(_caption []byte) {
+func (t *TL_messageMediaPhoto) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_messageMediaPhoto) Get_caption() []byte {
+func (t *TL_messageMediaPhoto) Get_caption() TLObject {
 	return t._caption
 }
 
-func (t *TL_messageMediaPhoto) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_messageMediaPhoto) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_messageMediaPhoto) Get_ttl_seconds() []byte {
+func (t *TL_messageMediaPhoto) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -6618,14 +6618,14 @@ func (t *TL_messageMediaPhoto) Decode(b []byte) {
 
 // messageMediaGeo#56e0d474
 type TL_messageMediaGeo struct {
-	_geo []byte
+	_geo TLObject
 }
 
-func (t *TL_messageMediaGeo) Set_geo(_geo []byte) {
+func (t *TL_messageMediaGeo) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_messageMediaGeo) Get_geo() []byte {
+func (t *TL_messageMediaGeo) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -6733,41 +6733,41 @@ func (t *TL_messageMediaUnsupported) Decode(b []byte) {
 
 // messageMediaDocument#7c4414d3
 type TL_messageMediaDocument struct {
-	_flags       []byte
-	_document    []byte
-	_caption     []byte
-	_ttl_seconds []byte
+	_flags       TLObject
+	_document    TLObject
+	_caption     TLObject
+	_ttl_seconds TLObject
 }
 
-func (t *TL_messageMediaDocument) Set_flags(_flags []byte) {
+func (t *TL_messageMediaDocument) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageMediaDocument) Get_flags() []byte {
+func (t *TL_messageMediaDocument) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messageMediaDocument) Set_document(_document []byte) {
+func (t *TL_messageMediaDocument) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_messageMediaDocument) Get_document() []byte {
+func (t *TL_messageMediaDocument) Get_document() TLObject {
 	return t._document
 }
 
-func (t *TL_messageMediaDocument) Set_caption(_caption []byte) {
+func (t *TL_messageMediaDocument) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_messageMediaDocument) Get_caption() []byte {
+func (t *TL_messageMediaDocument) Get_caption() TLObject {
 	return t._caption
 }
 
-func (t *TL_messageMediaDocument) Set_ttl_seconds(_ttl_seconds []byte) {
+func (t *TL_messageMediaDocument) Set_ttl_seconds(_ttl_seconds TLObject) {
 	t._ttl_seconds = _ttl_seconds
 }
 
-func (t *TL_messageMediaDocument) Get_ttl_seconds() []byte {
+func (t *TL_messageMediaDocument) Get_ttl_seconds() TLObject {
 	return t._ttl_seconds
 }
 
@@ -6797,14 +6797,14 @@ func (t *TL_messageMediaDocument) Decode(b []byte) {
 
 // messageMediaWebPage#a32dd600
 type TL_messageMediaWebPage struct {
-	_webpage []byte
+	_webpage TLObject
 }
 
-func (t *TL_messageMediaWebPage) Set_webpage(_webpage []byte) {
+func (t *TL_messageMediaWebPage) Set_webpage(_webpage TLObject) {
 	t._webpage = _webpage
 }
 
-func (t *TL_messageMediaWebPage) Get_webpage() []byte {
+func (t *TL_messageMediaWebPage) Get_webpage() TLObject {
 	return t._webpage
 }
 
@@ -6830,7 +6830,7 @@ func (t *TL_messageMediaWebPage) Decode(b []byte) {
 
 // messageMediaVenue#2ec0533f
 type TL_messageMediaVenue struct {
-	_geo        []byte
+	_geo        TLObject
 	_title      string
 	_address    string
 	_provider   string
@@ -6838,11 +6838,11 @@ type TL_messageMediaVenue struct {
 	_venue_type string
 }
 
-func (t *TL_messageMediaVenue) Set_geo(_geo []byte) {
+func (t *TL_messageMediaVenue) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_messageMediaVenue) Get_geo() []byte {
+func (t *TL_messageMediaVenue) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -6918,14 +6918,14 @@ func (t *TL_messageMediaVenue) Decode(b []byte) {
 
 // messageMediaGame#fdb19008
 type TL_messageMediaGame struct {
-	_game []byte
+	_game TLObject
 }
 
-func (t *TL_messageMediaGame) Set_game(_game []byte) {
+func (t *TL_messageMediaGame) Set_game(_game TLObject) {
 	t._game = _game
 }
 
-func (t *TL_messageMediaGame) Get_game() []byte {
+func (t *TL_messageMediaGame) Get_game() TLObject {
 	return t._game
 }
 
@@ -6951,39 +6951,39 @@ func (t *TL_messageMediaGame) Decode(b []byte) {
 
 // messageMediaInvoice#84551347
 type TL_messageMediaInvoice struct {
-	_flags                      []byte
-	_shipping_address_requested []byte
-	_test                       []byte
+	_flags                      TLObject
+	_shipping_address_requested TLObject
+	_test                       TLObject
 	_title                      string
 	_description                string
-	_photo                      []byte
-	_receipt_msg_id             []byte
+	_photo                      TLObject
+	_receipt_msg_id             TLObject
 	_currency                   string
 	_total_amount               int64
 	_start_param                string
 }
 
-func (t *TL_messageMediaInvoice) Set_flags(_flags []byte) {
+func (t *TL_messageMediaInvoice) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageMediaInvoice) Get_flags() []byte {
+func (t *TL_messageMediaInvoice) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messageMediaInvoice) Set_shipping_address_requested(_shipping_address_requested []byte) {
+func (t *TL_messageMediaInvoice) Set_shipping_address_requested(_shipping_address_requested TLObject) {
 	t._shipping_address_requested = _shipping_address_requested
 }
 
-func (t *TL_messageMediaInvoice) Get_shipping_address_requested() []byte {
+func (t *TL_messageMediaInvoice) Get_shipping_address_requested() TLObject {
 	return t._shipping_address_requested
 }
 
-func (t *TL_messageMediaInvoice) Set_test(_test []byte) {
+func (t *TL_messageMediaInvoice) Set_test(_test TLObject) {
 	t._test = _test
 }
 
-func (t *TL_messageMediaInvoice) Get_test() []byte {
+func (t *TL_messageMediaInvoice) Get_test() TLObject {
 	return t._test
 }
 
@@ -7003,19 +7003,19 @@ func (t *TL_messageMediaInvoice) Get_description() string {
 	return t._description
 }
 
-func (t *TL_messageMediaInvoice) Set_photo(_photo []byte) {
+func (t *TL_messageMediaInvoice) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_messageMediaInvoice) Get_photo() []byte {
+func (t *TL_messageMediaInvoice) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_messageMediaInvoice) Set_receipt_msg_id(_receipt_msg_id []byte) {
+func (t *TL_messageMediaInvoice) Set_receipt_msg_id(_receipt_msg_id TLObject) {
 	t._receipt_msg_id = _receipt_msg_id
 }
 
-func (t *TL_messageMediaInvoice) Get_receipt_msg_id() []byte {
+func (t *TL_messageMediaInvoice) Get_receipt_msg_id() TLObject {
 	return t._receipt_msg_id
 }
 
@@ -7081,15 +7081,15 @@ func (t *TL_messageMediaInvoice) Decode(b []byte) {
 
 // messageMediaGeoLive#7c3c2609
 type TL_messageMediaGeoLive struct {
-	_geo    []byte
+	_geo    TLObject
 	_period int32
 }
 
-func (t *TL_messageMediaGeoLive) Set_geo(_geo []byte) {
+func (t *TL_messageMediaGeoLive) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_messageMediaGeoLive) Get_geo() []byte {
+func (t *TL_messageMediaGeoLive) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -7142,7 +7142,7 @@ func (t *TL_messageActionEmpty) Decode(b []byte) {
 // messageActionChatCreate#a6638b9a
 type TL_messageActionChatCreate struct {
 	_title string
-	_users []byte
+	_users TLObject
 }
 
 func (t *TL_messageActionChatCreate) Set_title(_title string) {
@@ -7153,11 +7153,11 @@ func (t *TL_messageActionChatCreate) Get_title() string {
 	return t._title
 }
 
-func (t *TL_messageActionChatCreate) Set_users(_users []byte) {
+func (t *TL_messageActionChatCreate) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messageActionChatCreate) Get_users() []byte {
+func (t *TL_messageActionChatCreate) Get_users() TLObject {
 	return t._users
 }
 
@@ -7218,14 +7218,14 @@ func (t *TL_messageActionChatEditTitle) Decode(b []byte) {
 
 // messageActionChatEditPhoto#7fcb13a8
 type TL_messageActionChatEditPhoto struct {
-	_photo []byte
+	_photo TLObject
 }
 
-func (t *TL_messageActionChatEditPhoto) Set_photo(_photo []byte) {
+func (t *TL_messageActionChatEditPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_messageActionChatEditPhoto) Get_photo() []byte {
+func (t *TL_messageActionChatEditPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -7267,14 +7267,14 @@ func (t *TL_messageActionChatDeletePhoto) Decode(b []byte) {
 
 // messageActionChatAddUser#488a7337
 type TL_messageActionChatAddUser struct {
-	_users []byte
+	_users TLObject
 }
 
-func (t *TL_messageActionChatAddUser) Set_users(_users []byte) {
+func (t *TL_messageActionChatAddUser) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messageActionChatAddUser) Get_users() []byte {
+func (t *TL_messageActionChatAddUser) Get_users() TLObject {
 	return t._users
 }
 
@@ -7552,20 +7552,20 @@ func (t *TL_messageActionGameScore) Decode(b []byte) {
 
 // messageActionPaymentSentMe#8f31b327
 type TL_messageActionPaymentSentMe struct {
-	_flags              []byte
+	_flags              TLObject
 	_currency           string
 	_total_amount       int64
-	_payload            []byte
-	_info               []byte
-	_shipping_option_id []byte
-	_charge             []byte
+	_payload            TLObject
+	_info               TLObject
+	_shipping_option_id TLObject
+	_charge             TLObject
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_flags(_flags []byte) {
+func (t *TL_messageActionPaymentSentMe) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_flags() []byte {
+func (t *TL_messageActionPaymentSentMe) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -7585,35 +7585,35 @@ func (t *TL_messageActionPaymentSentMe) Get_total_amount() int64 {
 	return t._total_amount
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_payload(_payload []byte) {
+func (t *TL_messageActionPaymentSentMe) Set_payload(_payload TLObject) {
 	t._payload = _payload
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_payload() []byte {
+func (t *TL_messageActionPaymentSentMe) Get_payload() TLObject {
 	return t._payload
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_info(_info []byte) {
+func (t *TL_messageActionPaymentSentMe) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_info() []byte {
+func (t *TL_messageActionPaymentSentMe) Get_info() TLObject {
 	return t._info
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_shipping_option_id(_shipping_option_id []byte) {
+func (t *TL_messageActionPaymentSentMe) Set_shipping_option_id(_shipping_option_id TLObject) {
 	t._shipping_option_id = _shipping_option_id
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_shipping_option_id() []byte {
+func (t *TL_messageActionPaymentSentMe) Get_shipping_option_id() TLObject {
 	return t._shipping_option_id
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_charge(_charge []byte) {
+func (t *TL_messageActionPaymentSentMe) Set_charge(_charge TLObject) {
 	t._charge = _charge
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_charge() []byte {
+func (t *TL_messageActionPaymentSentMe) Get_charge() TLObject {
 	return t._charge
 }
 
@@ -7693,17 +7693,17 @@ func (t *TL_messageActionPaymentSent) Decode(b []byte) {
 
 // messageActionPhoneCall#80e11a7f
 type TL_messageActionPhoneCall struct {
-	_flags    []byte
+	_flags    TLObject
 	_call_id  int64
-	_reason   []byte
-	_duration []byte
+	_reason   TLObject
+	_duration TLObject
 }
 
-func (t *TL_messageActionPhoneCall) Set_flags(_flags []byte) {
+func (t *TL_messageActionPhoneCall) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageActionPhoneCall) Get_flags() []byte {
+func (t *TL_messageActionPhoneCall) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -7715,19 +7715,19 @@ func (t *TL_messageActionPhoneCall) Get_call_id() int64 {
 	return t._call_id
 }
 
-func (t *TL_messageActionPhoneCall) Set_reason(_reason []byte) {
+func (t *TL_messageActionPhoneCall) Set_reason(_reason TLObject) {
 	t._reason = _reason
 }
 
-func (t *TL_messageActionPhoneCall) Get_reason() []byte {
+func (t *TL_messageActionPhoneCall) Get_reason() TLObject {
 	return t._reason
 }
 
-func (t *TL_messageActionPhoneCall) Set_duration(_duration []byte) {
+func (t *TL_messageActionPhoneCall) Set_duration(_duration TLObject) {
 	t._duration = _duration
 }
 
-func (t *TL_messageActionPhoneCall) Get_duration() []byte {
+func (t *TL_messageActionPhoneCall) Get_duration() TLObject {
 	return t._duration
 }
 
@@ -7806,40 +7806,40 @@ func (t *TL_messageActionCustomAction) Decode(b []byte) {
 
 // dialog#e4def5db
 type TL_dialog struct {
-	_flags                 []byte
-	_pinned                []byte
-	_peer                  []byte
+	_flags                 TLObject
+	_pinned                TLObject
+	_peer                  TLObject
 	_top_message           int32
 	_read_inbox_max_id     int32
 	_read_outbox_max_id    int32
 	_unread_count          int32
 	_unread_mentions_count int32
-	_notify_settings       []byte
-	_pts                   []byte
-	_draft                 []byte
+	_notify_settings       TLObject
+	_pts                   TLObject
+	_draft                 TLObject
 }
 
-func (t *TL_dialog) Set_flags(_flags []byte) {
+func (t *TL_dialog) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_dialog) Get_flags() []byte {
+func (t *TL_dialog) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_dialog) Set_pinned(_pinned []byte) {
+func (t *TL_dialog) Set_pinned(_pinned TLObject) {
 	t._pinned = _pinned
 }
 
-func (t *TL_dialog) Get_pinned() []byte {
+func (t *TL_dialog) Get_pinned() TLObject {
 	return t._pinned
 }
 
-func (t *TL_dialog) Set_peer(_peer []byte) {
+func (t *TL_dialog) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_dialog) Get_peer() []byte {
+func (t *TL_dialog) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -7883,27 +7883,27 @@ func (t *TL_dialog) Get_unread_mentions_count() int32 {
 	return t._unread_mentions_count
 }
 
-func (t *TL_dialog) Set_notify_settings(_notify_settings []byte) {
+func (t *TL_dialog) Set_notify_settings(_notify_settings TLObject) {
 	t._notify_settings = _notify_settings
 }
 
-func (t *TL_dialog) Get_notify_settings() []byte {
+func (t *TL_dialog) Get_notify_settings() TLObject {
 	return t._notify_settings
 }
 
-func (t *TL_dialog) Set_pts(_pts []byte) {
+func (t *TL_dialog) Set_pts(_pts TLObject) {
 	t._pts = _pts
 }
 
-func (t *TL_dialog) Get_pts() []byte {
+func (t *TL_dialog) Get_pts() TLObject {
 	return t._pts
 }
 
-func (t *TL_dialog) Set_draft(_draft []byte) {
+func (t *TL_dialog) Set_draft(_draft TLObject) {
 	t._draft = _draft
 }
 
-func (t *TL_dialog) Get_draft() []byte {
+func (t *TL_dialog) Get_draft() TLObject {
 	return t._draft
 }
 
@@ -7980,27 +7980,27 @@ func (t *TL_photoEmpty) Decode(b []byte) {
 
 // photo#9288dd29
 type TL_photo struct {
-	_flags        []byte
-	_has_stickers []byte
+	_flags        TLObject
+	_has_stickers TLObject
 	_id           int64
 	_access_hash  int64
 	_date         int32
-	_sizes        []byte
+	_sizes        TLObject
 }
 
-func (t *TL_photo) Set_flags(_flags []byte) {
+func (t *TL_photo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_photo) Get_flags() []byte {
+func (t *TL_photo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_photo) Set_has_stickers(_has_stickers []byte) {
+func (t *TL_photo) Set_has_stickers(_has_stickers TLObject) {
 	t._has_stickers = _has_stickers
 }
 
-func (t *TL_photo) Get_has_stickers() []byte {
+func (t *TL_photo) Get_has_stickers() TLObject {
 	return t._has_stickers
 }
 
@@ -8028,11 +8028,11 @@ func (t *TL_photo) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_photo) Set_sizes(_sizes []byte) {
+func (t *TL_photo) Set_sizes(_sizes TLObject) {
 	t._sizes = _sizes
 }
 
-func (t *TL_photo) Get_sizes() []byte {
+func (t *TL_photo) Get_sizes() TLObject {
 	return t._sizes
 }
 
@@ -8064,7 +8064,7 @@ func (t *TL_photo) Decode(b []byte) {
 
 }
 
-// photoSizeEmpty#0e17e23c
+// photoSizeEmpty#e17e23c
 type TL_photoSizeEmpty struct {
 	_type string
 }
@@ -8100,7 +8100,7 @@ func (t *TL_photoSizeEmpty) Decode(b []byte) {
 // photoSize#77bfb61b
 type TL_photoSize struct {
 	_type     string
-	_location []byte
+	_location TLObject
 	_w        int32
 	_h        int32
 	_size     int32
@@ -8114,11 +8114,11 @@ func (t *TL_photoSize) Get_type() string {
 	return t._type
 }
 
-func (t *TL_photoSize) Set_location(_location []byte) {
+func (t *TL_photoSize) Set_location(_location TLObject) {
 	t._location = _location
 }
 
-func (t *TL_photoSize) Get_location() []byte {
+func (t *TL_photoSize) Get_location() TLObject {
 	return t._location
 }
 
@@ -8177,10 +8177,10 @@ func (t *TL_photoSize) Decode(b []byte) {
 // photoCachedSize#e9a734fa
 type TL_photoCachedSize struct {
 	_type     string
-	_location []byte
+	_location TLObject
 	_w        int32
 	_h        int32
-	_bytes    []byte
+	_bytes    TLObject
 }
 
 func (t *TL_photoCachedSize) Set_type(_type string) {
@@ -8191,11 +8191,11 @@ func (t *TL_photoCachedSize) Get_type() string {
 	return t._type
 }
 
-func (t *TL_photoCachedSize) Set_location(_location []byte) {
+func (t *TL_photoCachedSize) Set_location(_location TLObject) {
 	t._location = _location
 }
 
-func (t *TL_photoCachedSize) Get_location() []byte {
+func (t *TL_photoCachedSize) Get_location() TLObject {
 	return t._location
 }
 
@@ -8215,11 +8215,11 @@ func (t *TL_photoCachedSize) Get_h() int32 {
 	return t._h
 }
 
-func (t *TL_photoCachedSize) Set_bytes(_bytes []byte) {
+func (t *TL_photoCachedSize) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_photoCachedSize) Get_bytes() []byte {
+func (t *TL_photoCachedSize) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -8346,35 +8346,35 @@ func (t *TL_auth_checkedPhone) Decode(b []byte) {
 
 // auth_sentCode#5e002502
 type TL_auth_sentCode struct {
-	_flags            []byte
-	_phone_registered []byte
-	_type             []byte
+	_flags            TLObject
+	_phone_registered TLObject
+	_type             TLObject
 	_phone_code_hash  string
-	_next_type        []byte
-	_timeout          []byte
+	_next_type        TLObject
+	_timeout          TLObject
 }
 
-func (t *TL_auth_sentCode) Set_flags(_flags []byte) {
+func (t *TL_auth_sentCode) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_auth_sentCode) Get_flags() []byte {
+func (t *TL_auth_sentCode) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_auth_sentCode) Set_phone_registered(_phone_registered []byte) {
+func (t *TL_auth_sentCode) Set_phone_registered(_phone_registered TLObject) {
 	t._phone_registered = _phone_registered
 }
 
-func (t *TL_auth_sentCode) Get_phone_registered() []byte {
+func (t *TL_auth_sentCode) Get_phone_registered() TLObject {
 	return t._phone_registered
 }
 
-func (t *TL_auth_sentCode) Set_type(_type []byte) {
+func (t *TL_auth_sentCode) Set_type(_type TLObject) {
 	t._type = _type
 }
 
-func (t *TL_auth_sentCode) Get_type() []byte {
+func (t *TL_auth_sentCode) Get_type() TLObject {
 	return t._type
 }
 
@@ -8386,19 +8386,19 @@ func (t *TL_auth_sentCode) Get_phone_code_hash() string {
 	return t._phone_code_hash
 }
 
-func (t *TL_auth_sentCode) Set_next_type(_next_type []byte) {
+func (t *TL_auth_sentCode) Set_next_type(_next_type TLObject) {
 	t._next_type = _next_type
 }
 
-func (t *TL_auth_sentCode) Get_next_type() []byte {
+func (t *TL_auth_sentCode) Get_next_type() TLObject {
 	return t._next_type
 }
 
-func (t *TL_auth_sentCode) Set_timeout(_timeout []byte) {
+func (t *TL_auth_sentCode) Set_timeout(_timeout TLObject) {
 	t._timeout = _timeout
 }
 
-func (t *TL_auth_sentCode) Get_timeout() []byte {
+func (t *TL_auth_sentCode) Get_timeout() TLObject {
 	return t._timeout
 }
 
@@ -8432,32 +8432,32 @@ func (t *TL_auth_sentCode) Decode(b []byte) {
 
 // auth_authorization#cd050916
 type TL_auth_authorization struct {
-	_flags        []byte
-	_tmp_sessions []byte
-	_user         []byte
+	_flags        TLObject
+	_tmp_sessions TLObject
+	_user         TLObject
 }
 
-func (t *TL_auth_authorization) Set_flags(_flags []byte) {
+func (t *TL_auth_authorization) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_auth_authorization) Get_flags() []byte {
+func (t *TL_auth_authorization) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_auth_authorization) Set_tmp_sessions(_tmp_sessions []byte) {
+func (t *TL_auth_authorization) Set_tmp_sessions(_tmp_sessions TLObject) {
 	t._tmp_sessions = _tmp_sessions
 }
 
-func (t *TL_auth_authorization) Get_tmp_sessions() []byte {
+func (t *TL_auth_authorization) Get_tmp_sessions() TLObject {
 	return t._tmp_sessions
 }
 
-func (t *TL_auth_authorization) Set_user(_user []byte) {
+func (t *TL_auth_authorization) Set_user(_user TLObject) {
 	t._user = _user
 }
 
-func (t *TL_auth_authorization) Get_user() []byte {
+func (t *TL_auth_authorization) Get_user() TLObject {
 	return t._user
 }
 
@@ -8486,7 +8486,7 @@ func (t *TL_auth_authorization) Decode(b []byte) {
 // auth_exportedAuthorization#df969c2d
 type TL_auth_exportedAuthorization struct {
 	_id    int32
-	_bytes []byte
+	_bytes TLObject
 }
 
 func (t *TL_auth_exportedAuthorization) Set_id(_id int32) {
@@ -8497,11 +8497,11 @@ func (t *TL_auth_exportedAuthorization) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_auth_exportedAuthorization) Set_bytes(_bytes []byte) {
+func (t *TL_auth_exportedAuthorization) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_auth_exportedAuthorization) Get_bytes() []byte {
+func (t *TL_auth_exportedAuthorization) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -8529,14 +8529,14 @@ func (t *TL_auth_exportedAuthorization) Decode(b []byte) {
 
 // inputNotifyPeer#b8bc5b0c
 type TL_inputNotifyPeer struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_inputNotifyPeer) Set_peer(_peer []byte) {
+func (t *TL_inputNotifyPeer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_inputNotifyPeer) Get_peer() []byte {
+func (t *TL_inputNotifyPeer) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -8642,34 +8642,34 @@ func (t *TL_inputPeerNotifyEventsAll) Decode(b []byte) {
 
 // inputPeerNotifySettings#38935eb2
 type TL_inputPeerNotifySettings struct {
-	_flags         []byte
-	_show_previews []byte
-	_silent        []byte
+	_flags         TLObject
+	_show_previews TLObject
+	_silent        TLObject
 	_mute_until    int32
 	_sound         string
 }
 
-func (t *TL_inputPeerNotifySettings) Set_flags(_flags []byte) {
+func (t *TL_inputPeerNotifySettings) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputPeerNotifySettings) Get_flags() []byte {
+func (t *TL_inputPeerNotifySettings) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputPeerNotifySettings) Set_show_previews(_show_previews []byte) {
+func (t *TL_inputPeerNotifySettings) Set_show_previews(_show_previews TLObject) {
 	t._show_previews = _show_previews
 }
 
-func (t *TL_inputPeerNotifySettings) Get_show_previews() []byte {
+func (t *TL_inputPeerNotifySettings) Get_show_previews() TLObject {
 	return t._show_previews
 }
 
-func (t *TL_inputPeerNotifySettings) Set_silent(_silent []byte) {
+func (t *TL_inputPeerNotifySettings) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_inputPeerNotifySettings) Get_silent() []byte {
+func (t *TL_inputPeerNotifySettings) Get_silent() TLObject {
 	return t._silent
 }
 
@@ -8765,34 +8765,34 @@ func (t *TL_peerNotifySettingsEmpty) Decode(b []byte) {
 
 // peerNotifySettings#9acda4c0
 type TL_peerNotifySettings struct {
-	_flags         []byte
-	_show_previews []byte
-	_silent        []byte
+	_flags         TLObject
+	_show_previews TLObject
+	_silent        TLObject
 	_mute_until    int32
 	_sound         string
 }
 
-func (t *TL_peerNotifySettings) Set_flags(_flags []byte) {
+func (t *TL_peerNotifySettings) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_peerNotifySettings) Get_flags() []byte {
+func (t *TL_peerNotifySettings) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_peerNotifySettings) Set_show_previews(_show_previews []byte) {
+func (t *TL_peerNotifySettings) Set_show_previews(_show_previews TLObject) {
 	t._show_previews = _show_previews
 }
 
-func (t *TL_peerNotifySettings) Get_show_previews() []byte {
+func (t *TL_peerNotifySettings) Get_show_previews() TLObject {
 	return t._show_previews
 }
 
-func (t *TL_peerNotifySettings) Set_silent(_silent []byte) {
+func (t *TL_peerNotifySettings) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_peerNotifySettings) Get_silent() []byte {
+func (t *TL_peerNotifySettings) Get_silent() TLObject {
 	return t._silent
 }
 
@@ -8840,23 +8840,23 @@ func (t *TL_peerNotifySettings) Decode(b []byte) {
 
 // peerSettings#818426cd
 type TL_peerSettings struct {
-	_flags       []byte
-	_report_spam []byte
+	_flags       TLObject
+	_report_spam TLObject
 }
 
-func (t *TL_peerSettings) Set_flags(_flags []byte) {
+func (t *TL_peerSettings) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_peerSettings) Get_flags() []byte {
+func (t *TL_peerSettings) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_peerSettings) Set_report_spam(_report_spam []byte) {
+func (t *TL_peerSettings) Set_report_spam(_report_spam TLObject) {
 	t._report_spam = _report_spam
 }
 
-func (t *TL_peerSettings) Get_report_spam() []byte {
+func (t *TL_peerSettings) Get_report_spam() TLObject {
 	return t._report_spam
 }
 
@@ -8884,7 +8884,7 @@ func (t *TL_peerSettings) Decode(b []byte) {
 type TL_wallPaper struct {
 	_id    int32
 	_title string
-	_sizes []byte
+	_sizes TLObject
 	_color int32
 }
 
@@ -8904,11 +8904,11 @@ func (t *TL_wallPaper) Get_title() string {
 	return t._title
 }
 
-func (t *TL_wallPaper) Set_sizes(_sizes []byte) {
+func (t *TL_wallPaper) Set_sizes(_sizes TLObject) {
 	t._sizes = _sizes
 }
 
-func (t *TL_wallPaper) Get_sizes() []byte {
+func (t *TL_wallPaper) Get_sizes() TLObject {
 	return t._sizes
 }
 
@@ -9093,98 +9093,98 @@ func (t *TL_inputReportReasonOther) Decode(b []byte) {
 
 }
 
-// userFull#0f220f3f
+// userFull#f220f3f
 type TL_userFull struct {
-	_flags                 []byte
-	_blocked               []byte
-	_phone_calls_available []byte
-	_phone_calls_private   []byte
-	_user                  []byte
-	_about                 []byte
-	_link                  []byte
-	_profile_photo         []byte
-	_notify_settings       []byte
-	_bot_info              []byte
+	_flags                 TLObject
+	_blocked               TLObject
+	_phone_calls_available TLObject
+	_phone_calls_private   TLObject
+	_user                  TLObject
+	_about                 TLObject
+	_link                  TLObject
+	_profile_photo         TLObject
+	_notify_settings       TLObject
+	_bot_info              TLObject
 	_common_chats_count    int32
 }
 
-func (t *TL_userFull) Set_flags(_flags []byte) {
+func (t *TL_userFull) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_userFull) Get_flags() []byte {
+func (t *TL_userFull) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_userFull) Set_blocked(_blocked []byte) {
+func (t *TL_userFull) Set_blocked(_blocked TLObject) {
 	t._blocked = _blocked
 }
 
-func (t *TL_userFull) Get_blocked() []byte {
+func (t *TL_userFull) Get_blocked() TLObject {
 	return t._blocked
 }
 
-func (t *TL_userFull) Set_phone_calls_available(_phone_calls_available []byte) {
+func (t *TL_userFull) Set_phone_calls_available(_phone_calls_available TLObject) {
 	t._phone_calls_available = _phone_calls_available
 }
 
-func (t *TL_userFull) Get_phone_calls_available() []byte {
+func (t *TL_userFull) Get_phone_calls_available() TLObject {
 	return t._phone_calls_available
 }
 
-func (t *TL_userFull) Set_phone_calls_private(_phone_calls_private []byte) {
+func (t *TL_userFull) Set_phone_calls_private(_phone_calls_private TLObject) {
 	t._phone_calls_private = _phone_calls_private
 }
 
-func (t *TL_userFull) Get_phone_calls_private() []byte {
+func (t *TL_userFull) Get_phone_calls_private() TLObject {
 	return t._phone_calls_private
 }
 
-func (t *TL_userFull) Set_user(_user []byte) {
+func (t *TL_userFull) Set_user(_user TLObject) {
 	t._user = _user
 }
 
-func (t *TL_userFull) Get_user() []byte {
+func (t *TL_userFull) Get_user() TLObject {
 	return t._user
 }
 
-func (t *TL_userFull) Set_about(_about []byte) {
+func (t *TL_userFull) Set_about(_about TLObject) {
 	t._about = _about
 }
 
-func (t *TL_userFull) Get_about() []byte {
+func (t *TL_userFull) Get_about() TLObject {
 	return t._about
 }
 
-func (t *TL_userFull) Set_link(_link []byte) {
+func (t *TL_userFull) Set_link(_link TLObject) {
 	t._link = _link
 }
 
-func (t *TL_userFull) Get_link() []byte {
+func (t *TL_userFull) Get_link() TLObject {
 	return t._link
 }
 
-func (t *TL_userFull) Set_profile_photo(_profile_photo []byte) {
+func (t *TL_userFull) Set_profile_photo(_profile_photo TLObject) {
 	t._profile_photo = _profile_photo
 }
 
-func (t *TL_userFull) Get_profile_photo() []byte {
+func (t *TL_userFull) Get_profile_photo() TLObject {
 	return t._profile_photo
 }
 
-func (t *TL_userFull) Set_notify_settings(_notify_settings []byte) {
+func (t *TL_userFull) Set_notify_settings(_notify_settings TLObject) {
 	t._notify_settings = _notify_settings
 }
 
-func (t *TL_userFull) Get_notify_settings() []byte {
+func (t *TL_userFull) Get_notify_settings() TLObject {
 	return t._notify_settings
 }
 
-func (t *TL_userFull) Set_bot_info(_bot_info []byte) {
+func (t *TL_userFull) Set_bot_info(_bot_info TLObject) {
 	t._bot_info = _bot_info
 }
 
-func (t *TL_userFull) Get_bot_info() []byte {
+func (t *TL_userFull) Get_bot_info() TLObject {
 	return t._bot_info
 }
 
@@ -9369,7 +9369,7 @@ func (t *TL_contactBlocked) Decode(b []byte) {
 // contactStatus#d3680c61
 type TL_contactStatus struct {
 	_user_id int32
-	_status  []byte
+	_status  TLObject
 }
 
 func (t *TL_contactStatus) Set_user_id(_user_id int32) {
@@ -9380,11 +9380,11 @@ func (t *TL_contactStatus) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_contactStatus) Set_status(_status []byte) {
+func (t *TL_contactStatus) Set_status(_status TLObject) {
 	t._status = _status
 }
 
-func (t *TL_contactStatus) Get_status() []byte {
+func (t *TL_contactStatus) Get_status() TLObject {
 	return t._status
 }
 
@@ -9412,32 +9412,32 @@ func (t *TL_contactStatus) Decode(b []byte) {
 
 // contacts_link#3ace484c
 type TL_contacts_link struct {
-	_my_link      []byte
-	_foreign_link []byte
-	_user         []byte
+	_my_link      TLObject
+	_foreign_link TLObject
+	_user         TLObject
 }
 
-func (t *TL_contacts_link) Set_my_link(_my_link []byte) {
+func (t *TL_contacts_link) Set_my_link(_my_link TLObject) {
 	t._my_link = _my_link
 }
 
-func (t *TL_contacts_link) Get_my_link() []byte {
+func (t *TL_contacts_link) Get_my_link() TLObject {
 	return t._my_link
 }
 
-func (t *TL_contacts_link) Set_foreign_link(_foreign_link []byte) {
+func (t *TL_contacts_link) Set_foreign_link(_foreign_link TLObject) {
 	t._foreign_link = _foreign_link
 }
 
-func (t *TL_contacts_link) Get_foreign_link() []byte {
+func (t *TL_contacts_link) Get_foreign_link() TLObject {
 	return t._foreign_link
 }
 
-func (t *TL_contacts_link) Set_user(_user []byte) {
+func (t *TL_contacts_link) Set_user(_user TLObject) {
 	t._user = _user
 }
 
-func (t *TL_contacts_link) Get_user() []byte {
+func (t *TL_contacts_link) Get_user() TLObject {
 	return t._user
 }
 
@@ -9483,16 +9483,16 @@ func (t *TL_contacts_contactsNotModified) Decode(b []byte) {
 
 // contacts_contacts#eae87e42
 type TL_contacts_contacts struct {
-	_contacts    []byte
+	_contacts    TLObject
 	_saved_count int32
-	_users       []byte
+	_users       TLObject
 }
 
-func (t *TL_contacts_contacts) Set_contacts(_contacts []byte) {
+func (t *TL_contacts_contacts) Set_contacts(_contacts TLObject) {
 	t._contacts = _contacts
 }
 
-func (t *TL_contacts_contacts) Get_contacts() []byte {
+func (t *TL_contacts_contacts) Get_contacts() TLObject {
 	return t._contacts
 }
 
@@ -9504,11 +9504,11 @@ func (t *TL_contacts_contacts) Get_saved_count() int32 {
 	return t._saved_count
 }
 
-func (t *TL_contacts_contacts) Set_users(_users []byte) {
+func (t *TL_contacts_contacts) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_contacts) Get_users() []byte {
+func (t *TL_contacts_contacts) Get_users() TLObject {
 	return t._users
 }
 
@@ -9538,41 +9538,41 @@ func (t *TL_contacts_contacts) Decode(b []byte) {
 
 // contacts_importedContacts#77d01c3b
 type TL_contacts_importedContacts struct {
-	_imported        []byte
-	_popular_invites []byte
-	_retry_contacts  []byte
-	_users           []byte
+	_imported        TLObject
+	_popular_invites TLObject
+	_retry_contacts  TLObject
+	_users           TLObject
 }
 
-func (t *TL_contacts_importedContacts) Set_imported(_imported []byte) {
+func (t *TL_contacts_importedContacts) Set_imported(_imported TLObject) {
 	t._imported = _imported
 }
 
-func (t *TL_contacts_importedContacts) Get_imported() []byte {
+func (t *TL_contacts_importedContacts) Get_imported() TLObject {
 	return t._imported
 }
 
-func (t *TL_contacts_importedContacts) Set_popular_invites(_popular_invites []byte) {
+func (t *TL_contacts_importedContacts) Set_popular_invites(_popular_invites TLObject) {
 	t._popular_invites = _popular_invites
 }
 
-func (t *TL_contacts_importedContacts) Get_popular_invites() []byte {
+func (t *TL_contacts_importedContacts) Get_popular_invites() TLObject {
 	return t._popular_invites
 }
 
-func (t *TL_contacts_importedContacts) Set_retry_contacts(_retry_contacts []byte) {
+func (t *TL_contacts_importedContacts) Set_retry_contacts(_retry_contacts TLObject) {
 	t._retry_contacts = _retry_contacts
 }
 
-func (t *TL_contacts_importedContacts) Get_retry_contacts() []byte {
+func (t *TL_contacts_importedContacts) Get_retry_contacts() TLObject {
 	return t._retry_contacts
 }
 
-func (t *TL_contacts_importedContacts) Set_users(_users []byte) {
+func (t *TL_contacts_importedContacts) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_importedContacts) Get_users() []byte {
+func (t *TL_contacts_importedContacts) Get_users() TLObject {
 	return t._users
 }
 
@@ -9604,23 +9604,23 @@ func (t *TL_contacts_importedContacts) Decode(b []byte) {
 
 // contacts_blocked#1c138d15
 type TL_contacts_blocked struct {
-	_blocked []byte
-	_users   []byte
+	_blocked TLObject
+	_users   TLObject
 }
 
-func (t *TL_contacts_blocked) Set_blocked(_blocked []byte) {
+func (t *TL_contacts_blocked) Set_blocked(_blocked TLObject) {
 	t._blocked = _blocked
 }
 
-func (t *TL_contacts_blocked) Get_blocked() []byte {
+func (t *TL_contacts_blocked) Get_blocked() TLObject {
 	return t._blocked
 }
 
-func (t *TL_contacts_blocked) Set_users(_users []byte) {
+func (t *TL_contacts_blocked) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_blocked) Get_users() []byte {
+func (t *TL_contacts_blocked) Get_users() TLObject {
 	return t._users
 }
 
@@ -9649,8 +9649,8 @@ func (t *TL_contacts_blocked) Decode(b []byte) {
 // contacts_blockedSlice#900802a1
 type TL_contacts_blockedSlice struct {
 	_count   int32
-	_blocked []byte
-	_users   []byte
+	_blocked TLObject
+	_users   TLObject
 }
 
 func (t *TL_contacts_blockedSlice) Set_count(_count int32) {
@@ -9661,19 +9661,19 @@ func (t *TL_contacts_blockedSlice) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_contacts_blockedSlice) Set_blocked(_blocked []byte) {
+func (t *TL_contacts_blockedSlice) Set_blocked(_blocked TLObject) {
 	t._blocked = _blocked
 }
 
-func (t *TL_contacts_blockedSlice) Get_blocked() []byte {
+func (t *TL_contacts_blockedSlice) Get_blocked() TLObject {
 	return t._blocked
 }
 
-func (t *TL_contacts_blockedSlice) Set_users(_users []byte) {
+func (t *TL_contacts_blockedSlice) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_blockedSlice) Get_users() []byte {
+func (t *TL_contacts_blockedSlice) Get_users() TLObject {
 	return t._users
 }
 
@@ -9703,41 +9703,41 @@ func (t *TL_contacts_blockedSlice) Decode(b []byte) {
 
 // messages_dialogs#15ba6c40
 type TL_messages_dialogs struct {
-	_dialogs  []byte
-	_messages []byte
-	_chats    []byte
-	_users    []byte
+	_dialogs  TLObject
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
 }
 
-func (t *TL_messages_dialogs) Set_dialogs(_dialogs []byte) {
+func (t *TL_messages_dialogs) Set_dialogs(_dialogs TLObject) {
 	t._dialogs = _dialogs
 }
 
-func (t *TL_messages_dialogs) Get_dialogs() []byte {
+func (t *TL_messages_dialogs) Get_dialogs() TLObject {
 	return t._dialogs
 }
 
-func (t *TL_messages_dialogs) Set_messages(_messages []byte) {
+func (t *TL_messages_dialogs) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_dialogs) Get_messages() []byte {
+func (t *TL_messages_dialogs) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_dialogs) Set_chats(_chats []byte) {
+func (t *TL_messages_dialogs) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_dialogs) Get_chats() []byte {
+func (t *TL_messages_dialogs) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_dialogs) Set_users(_users []byte) {
+func (t *TL_messages_dialogs) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_dialogs) Get_users() []byte {
+func (t *TL_messages_dialogs) Get_users() TLObject {
 	return t._users
 }
 
@@ -9770,10 +9770,10 @@ func (t *TL_messages_dialogs) Decode(b []byte) {
 // messages_dialogsSlice#71e094f3
 type TL_messages_dialogsSlice struct {
 	_count    int32
-	_dialogs  []byte
-	_messages []byte
-	_chats    []byte
-	_users    []byte
+	_dialogs  TLObject
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
 }
 
 func (t *TL_messages_dialogsSlice) Set_count(_count int32) {
@@ -9784,35 +9784,35 @@ func (t *TL_messages_dialogsSlice) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_messages_dialogsSlice) Set_dialogs(_dialogs []byte) {
+func (t *TL_messages_dialogsSlice) Set_dialogs(_dialogs TLObject) {
 	t._dialogs = _dialogs
 }
 
-func (t *TL_messages_dialogsSlice) Get_dialogs() []byte {
+func (t *TL_messages_dialogsSlice) Get_dialogs() TLObject {
 	return t._dialogs
 }
 
-func (t *TL_messages_dialogsSlice) Set_messages(_messages []byte) {
+func (t *TL_messages_dialogsSlice) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_dialogsSlice) Get_messages() []byte {
+func (t *TL_messages_dialogsSlice) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_dialogsSlice) Set_chats(_chats []byte) {
+func (t *TL_messages_dialogsSlice) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_dialogsSlice) Get_chats() []byte {
+func (t *TL_messages_dialogsSlice) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_dialogsSlice) Set_users(_users []byte) {
+func (t *TL_messages_dialogsSlice) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_dialogsSlice) Get_users() []byte {
+func (t *TL_messages_dialogsSlice) Get_users() TLObject {
 	return t._users
 }
 
@@ -9846,32 +9846,32 @@ func (t *TL_messages_dialogsSlice) Decode(b []byte) {
 
 // messages_messages#8c718e87
 type TL_messages_messages struct {
-	_messages []byte
-	_chats    []byte
-	_users    []byte
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
 }
 
-func (t *TL_messages_messages) Set_messages(_messages []byte) {
+func (t *TL_messages_messages) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_messages) Get_messages() []byte {
+func (t *TL_messages_messages) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_messages) Set_chats(_chats []byte) {
+func (t *TL_messages_messages) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_messages) Get_chats() []byte {
+func (t *TL_messages_messages) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_messages) Set_users(_users []byte) {
+func (t *TL_messages_messages) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_messages) Get_users() []byte {
+func (t *TL_messages_messages) Get_users() TLObject {
 	return t._users
 }
 
@@ -9899,12 +9899,12 @@ func (t *TL_messages_messages) Decode(b []byte) {
 
 }
 
-// messages_messagesSlice#0b446ae3
+// messages_messagesSlice#b446ae3
 type TL_messages_messagesSlice struct {
 	_count    int32
-	_messages []byte
-	_chats    []byte
-	_users    []byte
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
 }
 
 func (t *TL_messages_messagesSlice) Set_count(_count int32) {
@@ -9915,27 +9915,27 @@ func (t *TL_messages_messagesSlice) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_messages_messagesSlice) Set_messages(_messages []byte) {
+func (t *TL_messages_messagesSlice) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_messagesSlice) Get_messages() []byte {
+func (t *TL_messages_messagesSlice) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_messagesSlice) Set_chats(_chats []byte) {
+func (t *TL_messages_messagesSlice) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_messagesSlice) Get_chats() []byte {
+func (t *TL_messages_messagesSlice) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_messagesSlice) Set_users(_users []byte) {
+func (t *TL_messages_messagesSlice) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_messagesSlice) Get_users() []byte {
+func (t *TL_messages_messagesSlice) Get_users() TLObject {
 	return t._users
 }
 
@@ -9967,19 +9967,19 @@ func (t *TL_messages_messagesSlice) Decode(b []byte) {
 
 // messages_channelMessages#99262e37
 type TL_messages_channelMessages struct {
-	_flags    []byte
+	_flags    TLObject
 	_pts      int32
 	_count    int32
-	_messages []byte
-	_chats    []byte
-	_users    []byte
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
 }
 
-func (t *TL_messages_channelMessages) Set_flags(_flags []byte) {
+func (t *TL_messages_channelMessages) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_channelMessages) Get_flags() []byte {
+func (t *TL_messages_channelMessages) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -9999,27 +9999,27 @@ func (t *TL_messages_channelMessages) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_messages_channelMessages) Set_messages(_messages []byte) {
+func (t *TL_messages_channelMessages) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_channelMessages) Get_messages() []byte {
+func (t *TL_messages_channelMessages) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_channelMessages) Set_chats(_chats []byte) {
+func (t *TL_messages_channelMessages) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_channelMessages) Get_chats() []byte {
+func (t *TL_messages_channelMessages) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_channelMessages) Set_users(_users []byte) {
+func (t *TL_messages_channelMessages) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_channelMessages) Get_users() []byte {
+func (t *TL_messages_channelMessages) Get_users() TLObject {
 	return t._users
 }
 
@@ -10086,14 +10086,14 @@ func (t *TL_messages_messagesNotModified) Decode(b []byte) {
 
 // messages_chats#64ff9fd5
 type TL_messages_chats struct {
-	_chats []byte
+	_chats TLObject
 }
 
-func (t *TL_messages_chats) Set_chats(_chats []byte) {
+func (t *TL_messages_chats) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_chats) Get_chats() []byte {
+func (t *TL_messages_chats) Get_chats() TLObject {
 	return t._chats
 }
 
@@ -10120,7 +10120,7 @@ func (t *TL_messages_chats) Decode(b []byte) {
 // messages_chatsSlice#9cd81144
 type TL_messages_chatsSlice struct {
 	_count int32
-	_chats []byte
+	_chats TLObject
 }
 
 func (t *TL_messages_chatsSlice) Set_count(_count int32) {
@@ -10131,11 +10131,11 @@ func (t *TL_messages_chatsSlice) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_messages_chatsSlice) Set_chats(_chats []byte) {
+func (t *TL_messages_chatsSlice) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_chatsSlice) Get_chats() []byte {
+func (t *TL_messages_chatsSlice) Get_chats() TLObject {
 	return t._chats
 }
 
@@ -10163,32 +10163,32 @@ func (t *TL_messages_chatsSlice) Decode(b []byte) {
 
 // messages_chatFull#e5d7d19c
 type TL_messages_chatFull struct {
-	_full_chat []byte
-	_chats     []byte
-	_users     []byte
+	_full_chat TLObject
+	_chats     TLObject
+	_users     TLObject
 }
 
-func (t *TL_messages_chatFull) Set_full_chat(_full_chat []byte) {
+func (t *TL_messages_chatFull) Set_full_chat(_full_chat TLObject) {
 	t._full_chat = _full_chat
 }
 
-func (t *TL_messages_chatFull) Get_full_chat() []byte {
+func (t *TL_messages_chatFull) Get_full_chat() TLObject {
 	return t._full_chat
 }
 
-func (t *TL_messages_chatFull) Set_chats(_chats []byte) {
+func (t *TL_messages_chatFull) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_chatFull) Get_chats() []byte {
+func (t *TL_messages_chatFull) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_chatFull) Set_users(_users []byte) {
+func (t *TL_messages_chatFull) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_chatFull) Get_users() []byte {
+func (t *TL_messages_chatFull) Get_users() TLObject {
 	return t._users
 }
 
@@ -10433,23 +10433,23 @@ func (t *TL_inputMessagesFilterChatPhotos) Decode(b []byte) {
 
 // inputMessagesFilterPhoneCalls#80c99768
 type TL_inputMessagesFilterPhoneCalls struct {
-	_flags  []byte
-	_missed []byte
+	_flags  TLObject
+	_missed TLObject
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Set_flags(_flags []byte) {
+func (t *TL_inputMessagesFilterPhoneCalls) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Get_flags() []byte {
+func (t *TL_inputMessagesFilterPhoneCalls) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Set_missed(_missed []byte) {
+func (t *TL_inputMessagesFilterPhoneCalls) Set_missed(_missed TLObject) {
 	t._missed = _missed
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Get_missed() []byte {
+func (t *TL_inputMessagesFilterPhoneCalls) Get_missed() TLObject {
 	return t._missed
 }
 
@@ -10555,16 +10555,16 @@ func (t *TL_inputMessagesFilterContacts) Decode(b []byte) {
 
 // updateNewMessage#1f2b0afd
 type TL_updateNewMessage struct {
-	_message   []byte
+	_message   TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateNewMessage) Set_message(_message []byte) {
+func (t *TL_updateNewMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_updateNewMessage) Get_message() []byte {
+func (t *TL_updateNewMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -10654,16 +10654,16 @@ func (t *TL_updateMessageID) Decode(b []byte) {
 
 // updateDeleteMessages#a20db0e5
 type TL_updateDeleteMessages struct {
-	_messages  []byte
+	_messages  TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateDeleteMessages) Set_messages(_messages []byte) {
+func (t *TL_updateDeleteMessages) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_updateDeleteMessages) Get_messages() []byte {
+func (t *TL_updateDeleteMessages) Get_messages() TLObject {
 	return t._messages
 }
 
@@ -10710,7 +10710,7 @@ func (t *TL_updateDeleteMessages) Decode(b []byte) {
 // updateUserTyping#5c486927
 type TL_updateUserTyping struct {
 	_user_id int32
-	_action  []byte
+	_action  TLObject
 }
 
 func (t *TL_updateUserTyping) Set_user_id(_user_id int32) {
@@ -10721,11 +10721,11 @@ func (t *TL_updateUserTyping) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateUserTyping) Set_action(_action []byte) {
+func (t *TL_updateUserTyping) Set_action(_action TLObject) {
 	t._action = _action
 }
 
-func (t *TL_updateUserTyping) Get_action() []byte {
+func (t *TL_updateUserTyping) Get_action() TLObject {
 	return t._action
 }
 
@@ -10755,7 +10755,7 @@ func (t *TL_updateUserTyping) Decode(b []byte) {
 type TL_updateChatUserTyping struct {
 	_chat_id int32
 	_user_id int32
-	_action  []byte
+	_action  TLObject
 }
 
 func (t *TL_updateChatUserTyping) Set_chat_id(_chat_id int32) {
@@ -10774,11 +10774,11 @@ func (t *TL_updateChatUserTyping) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateChatUserTyping) Set_action(_action []byte) {
+func (t *TL_updateChatUserTyping) Set_action(_action TLObject) {
 	t._action = _action
 }
 
-func (t *TL_updateChatUserTyping) Get_action() []byte {
+func (t *TL_updateChatUserTyping) Get_action() TLObject {
 	return t._action
 }
 
@@ -10806,16 +10806,16 @@ func (t *TL_updateChatUserTyping) Decode(b []byte) {
 
 }
 
-// updateChatParticipants#07761198
+// updateChatParticipants#7761198
 type TL_updateChatParticipants struct {
-	_participants []byte
+	_participants TLObject
 }
 
-func (t *TL_updateChatParticipants) Set_participants(_participants []byte) {
+func (t *TL_updateChatParticipants) Set_participants(_participants TLObject) {
 	t._participants = _participants
 }
 
-func (t *TL_updateChatParticipants) Get_participants() []byte {
+func (t *TL_updateChatParticipants) Get_participants() TLObject {
 	return t._participants
 }
 
@@ -10842,7 +10842,7 @@ func (t *TL_updateChatParticipants) Decode(b []byte) {
 // updateUserStatus#1bfbd823
 type TL_updateUserStatus struct {
 	_user_id int32
-	_status  []byte
+	_status  TLObject
 }
 
 func (t *TL_updateUserStatus) Set_user_id(_user_id int32) {
@@ -10853,11 +10853,11 @@ func (t *TL_updateUserStatus) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateUserStatus) Set_status(_status []byte) {
+func (t *TL_updateUserStatus) Set_status(_status TLObject) {
 	t._status = _status
 }
 
-func (t *TL_updateUserStatus) Get_status() []byte {
+func (t *TL_updateUserStatus) Get_status() TLObject {
 	return t._status
 }
 
@@ -10953,7 +10953,7 @@ func (t *TL_updateUserName) Decode(b []byte) {
 type TL_updateUserPhoto struct {
 	_user_id  int32
 	_date     int32
-	_photo    []byte
+	_photo    TLObject
 	_previous bool
 }
 
@@ -10973,11 +10973,11 @@ func (t *TL_updateUserPhoto) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_updateUserPhoto) Set_photo(_photo []byte) {
+func (t *TL_updateUserPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_updateUserPhoto) Get_photo() []byte {
+func (t *TL_updateUserPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -11062,8 +11062,8 @@ func (t *TL_updateContactRegistered) Decode(b []byte) {
 // updateContactLink#9d2e67c5
 type TL_updateContactLink struct {
 	_user_id      int32
-	_my_link      []byte
-	_foreign_link []byte
+	_my_link      TLObject
+	_foreign_link TLObject
 }
 
 func (t *TL_updateContactLink) Set_user_id(_user_id int32) {
@@ -11074,19 +11074,19 @@ func (t *TL_updateContactLink) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateContactLink) Set_my_link(_my_link []byte) {
+func (t *TL_updateContactLink) Set_my_link(_my_link TLObject) {
 	t._my_link = _my_link
 }
 
-func (t *TL_updateContactLink) Get_my_link() []byte {
+func (t *TL_updateContactLink) Get_my_link() TLObject {
 	return t._my_link
 }
 
-func (t *TL_updateContactLink) Set_foreign_link(_foreign_link []byte) {
+func (t *TL_updateContactLink) Set_foreign_link(_foreign_link TLObject) {
 	t._foreign_link = _foreign_link
 }
 
-func (t *TL_updateContactLink) Get_foreign_link() []byte {
+func (t *TL_updateContactLink) Get_foreign_link() TLObject {
 	return t._foreign_link
 }
 
@@ -11116,15 +11116,15 @@ func (t *TL_updateContactLink) Decode(b []byte) {
 
 // updateNewEncryptedMessage#12bcbd9a
 type TL_updateNewEncryptedMessage struct {
-	_message []byte
+	_message TLObject
 	_qts     int32
 }
 
-func (t *TL_updateNewEncryptedMessage) Set_message(_message []byte) {
+func (t *TL_updateNewEncryptedMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_updateNewEncryptedMessage) Get_message() []byte {
+func (t *TL_updateNewEncryptedMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -11193,15 +11193,15 @@ func (t *TL_updateEncryptedChatTyping) Decode(b []byte) {
 
 // updateEncryption#b4a2e88d
 type TL_updateEncryption struct {
-	_chat []byte
+	_chat TLObject
 	_date int32
 }
 
-func (t *TL_updateEncryption) Set_chat(_chat []byte) {
+func (t *TL_updateEncryption) Set_chat(_chat TLObject) {
 	t._chat = _chat
 }
 
-func (t *TL_updateEncryption) Get_chat() []byte {
+func (t *TL_updateEncryption) Get_chat() TLObject {
 	return t._chat
 }
 
@@ -11424,14 +11424,14 @@ func (t *TL_updateChatParticipantDelete) Decode(b []byte) {
 
 // updateDcOptions#8e5e9873
 type TL_updateDcOptions struct {
-	_dc_options []byte
+	_dc_options TLObject
 }
 
-func (t *TL_updateDcOptions) Set_dc_options(_dc_options []byte) {
+func (t *TL_updateDcOptions) Set_dc_options(_dc_options TLObject) {
 	t._dc_options = _dc_options
 }
 
-func (t *TL_updateDcOptions) Get_dc_options() []byte {
+func (t *TL_updateDcOptions) Get_dc_options() TLObject {
 	return t._dc_options
 }
 
@@ -11501,23 +11501,23 @@ func (t *TL_updateUserBlocked) Decode(b []byte) {
 
 // updateNotifySettings#bec268ef
 type TL_updateNotifySettings struct {
-	_peer            []byte
-	_notify_settings []byte
+	_peer            TLObject
+	_notify_settings TLObject
 }
 
-func (t *TL_updateNotifySettings) Set_peer(_peer []byte) {
+func (t *TL_updateNotifySettings) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateNotifySettings) Get_peer() []byte {
+func (t *TL_updateNotifySettings) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_updateNotifySettings) Set_notify_settings(_notify_settings []byte) {
+func (t *TL_updateNotifySettings) Set_notify_settings(_notify_settings TLObject) {
 	t._notify_settings = _notify_settings
 }
 
-func (t *TL_updateNotifySettings) Get_notify_settings() []byte {
+func (t *TL_updateNotifySettings) Get_notify_settings() TLObject {
 	return t._notify_settings
 }
 
@@ -11545,36 +11545,36 @@ func (t *TL_updateNotifySettings) Decode(b []byte) {
 
 // updateServiceNotification#ebe46819
 type TL_updateServiceNotification struct {
-	_flags      []byte
-	_popup      []byte
-	_inbox_date []byte
+	_flags      TLObject
+	_popup      TLObject
+	_inbox_date TLObject
 	_type       string
 	_message    string
-	_media      []byte
-	_entities   []byte
+	_media      TLObject
+	_entities   TLObject
 }
 
-func (t *TL_updateServiceNotification) Set_flags(_flags []byte) {
+func (t *TL_updateServiceNotification) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateServiceNotification) Get_flags() []byte {
+func (t *TL_updateServiceNotification) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateServiceNotification) Set_popup(_popup []byte) {
+func (t *TL_updateServiceNotification) Set_popup(_popup TLObject) {
 	t._popup = _popup
 }
 
-func (t *TL_updateServiceNotification) Get_popup() []byte {
+func (t *TL_updateServiceNotification) Get_popup() TLObject {
 	return t._popup
 }
 
-func (t *TL_updateServiceNotification) Set_inbox_date(_inbox_date []byte) {
+func (t *TL_updateServiceNotification) Set_inbox_date(_inbox_date TLObject) {
 	t._inbox_date = _inbox_date
 }
 
-func (t *TL_updateServiceNotification) Get_inbox_date() []byte {
+func (t *TL_updateServiceNotification) Get_inbox_date() TLObject {
 	return t._inbox_date
 }
 
@@ -11594,19 +11594,19 @@ func (t *TL_updateServiceNotification) Get_message() string {
 	return t._message
 }
 
-func (t *TL_updateServiceNotification) Set_media(_media []byte) {
+func (t *TL_updateServiceNotification) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_updateServiceNotification) Get_media() []byte {
+func (t *TL_updateServiceNotification) Get_media() TLObject {
 	return t._media
 }
 
-func (t *TL_updateServiceNotification) Set_entities(_entities []byte) {
+func (t *TL_updateServiceNotification) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_updateServiceNotification) Get_entities() []byte {
+func (t *TL_updateServiceNotification) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -11642,23 +11642,23 @@ func (t *TL_updateServiceNotification) Decode(b []byte) {
 
 // updatePrivacy#ee3b272a
 type TL_updatePrivacy struct {
-	_key   []byte
-	_rules []byte
+	_key   TLObject
+	_rules TLObject
 }
 
-func (t *TL_updatePrivacy) Set_key(_key []byte) {
+func (t *TL_updatePrivacy) Set_key(_key TLObject) {
 	t._key = _key
 }
 
-func (t *TL_updatePrivacy) Get_key() []byte {
+func (t *TL_updatePrivacy) Get_key() TLObject {
 	return t._key
 }
 
-func (t *TL_updatePrivacy) Set_rules(_rules []byte) {
+func (t *TL_updatePrivacy) Set_rules(_rules TLObject) {
 	t._rules = _rules
 }
 
-func (t *TL_updatePrivacy) Get_rules() []byte {
+func (t *TL_updatePrivacy) Get_rules() TLObject {
 	return t._rules
 }
 
@@ -11730,17 +11730,17 @@ func (t *TL_updateUserPhone) Decode(b []byte) {
 
 // updateReadHistoryInbox#9961fd5c
 type TL_updateReadHistoryInbox struct {
-	_peer      []byte
+	_peer      TLObject
 	_max_id    int32
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateReadHistoryInbox) Set_peer(_peer []byte) {
+func (t *TL_updateReadHistoryInbox) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateReadHistoryInbox) Get_peer() []byte {
+func (t *TL_updateReadHistoryInbox) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -11796,17 +11796,17 @@ func (t *TL_updateReadHistoryInbox) Decode(b []byte) {
 
 // updateReadHistoryOutbox#2f2f21bf
 type TL_updateReadHistoryOutbox struct {
-	_peer      []byte
+	_peer      TLObject
 	_max_id    int32
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateReadHistoryOutbox) Set_peer(_peer []byte) {
+func (t *TL_updateReadHistoryOutbox) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateReadHistoryOutbox) Get_peer() []byte {
+func (t *TL_updateReadHistoryOutbox) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -11862,16 +11862,16 @@ func (t *TL_updateReadHistoryOutbox) Decode(b []byte) {
 
 // updateWebPage#7f891213
 type TL_updateWebPage struct {
-	_webpage   []byte
+	_webpage   TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateWebPage) Set_webpage(_webpage []byte) {
+func (t *TL_updateWebPage) Set_webpage(_webpage TLObject) {
 	t._webpage = _webpage
 }
 
-func (t *TL_updateWebPage) Get_webpage() []byte {
+func (t *TL_updateWebPage) Get_webpage() TLObject {
 	return t._webpage
 }
 
@@ -11917,16 +11917,16 @@ func (t *TL_updateWebPage) Decode(b []byte) {
 
 // updateReadMessagesContents#68c13933
 type TL_updateReadMessagesContents struct {
-	_messages  []byte
+	_messages  TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateReadMessagesContents) Set_messages(_messages []byte) {
+func (t *TL_updateReadMessagesContents) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_updateReadMessagesContents) Get_messages() []byte {
+func (t *TL_updateReadMessagesContents) Get_messages() TLObject {
 	return t._messages
 }
 
@@ -11972,16 +11972,16 @@ func (t *TL_updateReadMessagesContents) Decode(b []byte) {
 
 // updateChannelTooLong#eb0467fb
 type TL_updateChannelTooLong struct {
-	_flags      []byte
+	_flags      TLObject
 	_channel_id int32
-	_pts        []byte
+	_pts        TLObject
 }
 
-func (t *TL_updateChannelTooLong) Set_flags(_flags []byte) {
+func (t *TL_updateChannelTooLong) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateChannelTooLong) Get_flags() []byte {
+func (t *TL_updateChannelTooLong) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -11993,11 +11993,11 @@ func (t *TL_updateChannelTooLong) Get_channel_id() int32 {
 	return t._channel_id
 }
 
-func (t *TL_updateChannelTooLong) Set_pts(_pts []byte) {
+func (t *TL_updateChannelTooLong) Set_pts(_pts TLObject) {
 	t._pts = _pts
 }
 
-func (t *TL_updateChannelTooLong) Get_pts() []byte {
+func (t *TL_updateChannelTooLong) Get_pts() TLObject {
 	return t._pts
 }
 
@@ -12058,16 +12058,16 @@ func (t *TL_updateChannel) Decode(b []byte) {
 
 // updateNewChannelMessage#62ba04d9
 type TL_updateNewChannelMessage struct {
-	_message   []byte
+	_message   TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateNewChannelMessage) Set_message(_message []byte) {
+func (t *TL_updateNewChannelMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_updateNewChannelMessage) Get_message() []byte {
+func (t *TL_updateNewChannelMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -12158,7 +12158,7 @@ func (t *TL_updateReadChannelInbox) Decode(b []byte) {
 // updateDeleteChannelMessages#c37521c9
 type TL_updateDeleteChannelMessages struct {
 	_channel_id int32
-	_messages   []byte
+	_messages   TLObject
 	_pts        int32
 	_pts_count  int32
 }
@@ -12171,11 +12171,11 @@ func (t *TL_updateDeleteChannelMessages) Get_channel_id() int32 {
 	return t._channel_id
 }
 
-func (t *TL_updateDeleteChannelMessages) Set_messages(_messages []byte) {
+func (t *TL_updateDeleteChannelMessages) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_updateDeleteChannelMessages) Get_messages() []byte {
+func (t *TL_updateDeleteChannelMessages) Get_messages() TLObject {
 	return t._messages
 }
 
@@ -12399,14 +12399,14 @@ func (t *TL_updateChatParticipantAdmin) Decode(b []byte) {
 
 // updateNewStickerSet#688a30aa
 type TL_updateNewStickerSet struct {
-	_stickerset []byte
+	_stickerset TLObject
 }
 
-func (t *TL_updateNewStickerSet) Set_stickerset(_stickerset []byte) {
+func (t *TL_updateNewStickerSet) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_updateNewStickerSet) Get_stickerset() []byte {
+func (t *TL_updateNewStickerSet) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
@@ -12430,34 +12430,34 @@ func (t *TL_updateNewStickerSet) Decode(b []byte) {
 
 }
 
-// updateStickerSetsOrder#0bb2d201
+// updateStickerSetsOrder#bb2d201
 type TL_updateStickerSetsOrder struct {
-	_flags []byte
-	_masks []byte
-	_order []byte
+	_flags TLObject
+	_masks TLObject
+	_order TLObject
 }
 
-func (t *TL_updateStickerSetsOrder) Set_flags(_flags []byte) {
+func (t *TL_updateStickerSetsOrder) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateStickerSetsOrder) Get_flags() []byte {
+func (t *TL_updateStickerSetsOrder) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateStickerSetsOrder) Set_masks(_masks []byte) {
+func (t *TL_updateStickerSetsOrder) Set_masks(_masks TLObject) {
 	t._masks = _masks
 }
 
-func (t *TL_updateStickerSetsOrder) Get_masks() []byte {
+func (t *TL_updateStickerSetsOrder) Get_masks() TLObject {
 	return t._masks
 }
 
-func (t *TL_updateStickerSetsOrder) Set_order(_order []byte) {
+func (t *TL_updateStickerSetsOrder) Set_order(_order TLObject) {
 	t._order = _order
 }
 
-func (t *TL_updateStickerSetsOrder) Get_order() []byte {
+func (t *TL_updateStickerSetsOrder) Get_order() TLObject {
 	return t._order
 }
 
@@ -12517,19 +12517,19 @@ func (t *TL_updateSavedGifs) Decode(b []byte) {
 
 // updateBotInlineQuery#54826690
 type TL_updateBotInlineQuery struct {
-	_flags    []byte
+	_flags    TLObject
 	_query_id int64
 	_user_id  int32
 	_query    string
-	_geo      []byte
+	_geo      TLObject
 	_offset   string
 }
 
-func (t *TL_updateBotInlineQuery) Set_flags(_flags []byte) {
+func (t *TL_updateBotInlineQuery) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateBotInlineQuery) Get_flags() []byte {
+func (t *TL_updateBotInlineQuery) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -12557,11 +12557,11 @@ func (t *TL_updateBotInlineQuery) Get_query() string {
 	return t._query
 }
 
-func (t *TL_updateBotInlineQuery) Set_geo(_geo []byte) {
+func (t *TL_updateBotInlineQuery) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_updateBotInlineQuery) Get_geo() []byte {
+func (t *TL_updateBotInlineQuery) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -12601,21 +12601,21 @@ func (t *TL_updateBotInlineQuery) Decode(b []byte) {
 
 }
 
-// updateBotInlineSend#0e48f964
+// updateBotInlineSend#e48f964
 type TL_updateBotInlineSend struct {
-	_flags   []byte
+	_flags   TLObject
 	_user_id int32
 	_query   string
-	_geo     []byte
+	_geo     TLObject
 	_id      string
-	_msg_id  []byte
+	_msg_id  TLObject
 }
 
-func (t *TL_updateBotInlineSend) Set_flags(_flags []byte) {
+func (t *TL_updateBotInlineSend) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateBotInlineSend) Get_flags() []byte {
+func (t *TL_updateBotInlineSend) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -12635,11 +12635,11 @@ func (t *TL_updateBotInlineSend) Get_query() string {
 	return t._query
 }
 
-func (t *TL_updateBotInlineSend) Set_geo(_geo []byte) {
+func (t *TL_updateBotInlineSend) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_updateBotInlineSend) Get_geo() []byte {
+func (t *TL_updateBotInlineSend) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -12651,11 +12651,11 @@ func (t *TL_updateBotInlineSend) Get_id() string {
 	return t._id
 }
 
-func (t *TL_updateBotInlineSend) Set_msg_id(_msg_id []byte) {
+func (t *TL_updateBotInlineSend) Set_msg_id(_msg_id TLObject) {
 	t._msg_id = _msg_id
 }
 
-func (t *TL_updateBotInlineSend) Get_msg_id() []byte {
+func (t *TL_updateBotInlineSend) Get_msg_id() TLObject {
 	return t._msg_id
 }
 
@@ -12689,16 +12689,16 @@ func (t *TL_updateBotInlineSend) Decode(b []byte) {
 
 // updateEditChannelMessage#1b3f4df7
 type TL_updateEditChannelMessage struct {
-	_message   []byte
+	_message   TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateEditChannelMessage) Set_message(_message []byte) {
+func (t *TL_updateEditChannelMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_updateEditChannelMessage) Get_message() []byte {
+func (t *TL_updateEditChannelMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -12788,21 +12788,21 @@ func (t *TL_updateChannelPinnedMessage) Decode(b []byte) {
 
 // updateBotCallbackQuery#e73547e1
 type TL_updateBotCallbackQuery struct {
-	_flags           []byte
+	_flags           TLObject
 	_query_id        int64
 	_user_id         int32
-	_peer            []byte
+	_peer            TLObject
 	_msg_id          int32
 	_chat_instance   int64
-	_data            []byte
-	_game_short_name []byte
+	_data            TLObject
+	_game_short_name TLObject
 }
 
-func (t *TL_updateBotCallbackQuery) Set_flags(_flags []byte) {
+func (t *TL_updateBotCallbackQuery) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateBotCallbackQuery) Get_flags() []byte {
+func (t *TL_updateBotCallbackQuery) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -12822,11 +12822,11 @@ func (t *TL_updateBotCallbackQuery) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateBotCallbackQuery) Set_peer(_peer []byte) {
+func (t *TL_updateBotCallbackQuery) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateBotCallbackQuery) Get_peer() []byte {
+func (t *TL_updateBotCallbackQuery) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -12846,19 +12846,19 @@ func (t *TL_updateBotCallbackQuery) Get_chat_instance() int64 {
 	return t._chat_instance
 }
 
-func (t *TL_updateBotCallbackQuery) Set_data(_data []byte) {
+func (t *TL_updateBotCallbackQuery) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_updateBotCallbackQuery) Get_data() []byte {
+func (t *TL_updateBotCallbackQuery) Get_data() TLObject {
 	return t._data
 }
 
-func (t *TL_updateBotCallbackQuery) Set_game_short_name(_game_short_name []byte) {
+func (t *TL_updateBotCallbackQuery) Set_game_short_name(_game_short_name TLObject) {
 	t._game_short_name = _game_short_name
 }
 
-func (t *TL_updateBotCallbackQuery) Get_game_short_name() []byte {
+func (t *TL_updateBotCallbackQuery) Get_game_short_name() TLObject {
 	return t._game_short_name
 }
 
@@ -12896,16 +12896,16 @@ func (t *TL_updateBotCallbackQuery) Decode(b []byte) {
 
 // updateEditMessage#e40370a3
 type TL_updateEditMessage struct {
-	_message   []byte
+	_message   TLObject
 	_pts       int32
 	_pts_count int32
 }
 
-func (t *TL_updateEditMessage) Set_message(_message []byte) {
+func (t *TL_updateEditMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_updateEditMessage) Get_message() []byte {
+func (t *TL_updateEditMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -12951,20 +12951,20 @@ func (t *TL_updateEditMessage) Decode(b []byte) {
 
 // updateInlineBotCallbackQuery#f9d27a5a
 type TL_updateInlineBotCallbackQuery struct {
-	_flags           []byte
+	_flags           TLObject
 	_query_id        int64
 	_user_id         int32
-	_msg_id          []byte
+	_msg_id          TLObject
 	_chat_instance   int64
-	_data            []byte
-	_game_short_name []byte
+	_data            TLObject
+	_game_short_name TLObject
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_flags(_flags []byte) {
+func (t *TL_updateInlineBotCallbackQuery) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_flags() []byte {
+func (t *TL_updateInlineBotCallbackQuery) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -12984,11 +12984,11 @@ func (t *TL_updateInlineBotCallbackQuery) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_msg_id(_msg_id []byte) {
+func (t *TL_updateInlineBotCallbackQuery) Set_msg_id(_msg_id TLObject) {
 	t._msg_id = _msg_id
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_msg_id() []byte {
+func (t *TL_updateInlineBotCallbackQuery) Get_msg_id() TLObject {
 	return t._msg_id
 }
 
@@ -13000,19 +13000,19 @@ func (t *TL_updateInlineBotCallbackQuery) Get_chat_instance() int64 {
 	return t._chat_instance
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_data(_data []byte) {
+func (t *TL_updateInlineBotCallbackQuery) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_data() []byte {
+func (t *TL_updateInlineBotCallbackQuery) Get_data() TLObject {
 	return t._data
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_game_short_name(_game_short_name []byte) {
+func (t *TL_updateInlineBotCallbackQuery) Set_game_short_name(_game_short_name TLObject) {
 	t._game_short_name = _game_short_name
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_game_short_name() []byte {
+func (t *TL_updateInlineBotCallbackQuery) Get_game_short_name() TLObject {
 	return t._game_short_name
 }
 
@@ -13092,23 +13092,23 @@ func (t *TL_updateReadChannelOutbox) Decode(b []byte) {
 
 // updateDraftMessage#ee2bb969
 type TL_updateDraftMessage struct {
-	_peer  []byte
-	_draft []byte
+	_peer  TLObject
+	_draft TLObject
 }
 
-func (t *TL_updateDraftMessage) Set_peer(_peer []byte) {
+func (t *TL_updateDraftMessage) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateDraftMessage) Get_peer() []byte {
+func (t *TL_updateDraftMessage) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_updateDraftMessage) Set_draft(_draft []byte) {
+func (t *TL_updateDraftMessage) Set_draft(_draft TLObject) {
 	t._draft = _draft
 }
 
-func (t *TL_updateDraftMessage) Get_draft() []byte {
+func (t *TL_updateDraftMessage) Get_draft() TLObject {
 	return t._draft
 }
 
@@ -13201,7 +13201,7 @@ func (t *TL_updatePtsChanged) Decode(b []byte) {
 // updateChannelWebPage#40771900
 type TL_updateChannelWebPage struct {
 	_channel_id int32
-	_webpage    []byte
+	_webpage    TLObject
 	_pts        int32
 	_pts_count  int32
 }
@@ -13214,11 +13214,11 @@ func (t *TL_updateChannelWebPage) Get_channel_id() int32 {
 	return t._channel_id
 }
 
-func (t *TL_updateChannelWebPage) Set_webpage(_webpage []byte) {
+func (t *TL_updateChannelWebPage) Set_webpage(_webpage TLObject) {
 	t._webpage = _webpage
 }
 
-func (t *TL_updateChannelWebPage) Get_webpage() []byte {
+func (t *TL_updateChannelWebPage) Get_webpage() TLObject {
 	return t._webpage
 }
 
@@ -13266,32 +13266,32 @@ func (t *TL_updateChannelWebPage) Decode(b []byte) {
 
 // updateDialogPinned#d711a2cc
 type TL_updateDialogPinned struct {
-	_flags  []byte
-	_pinned []byte
-	_peer   []byte
+	_flags  TLObject
+	_pinned TLObject
+	_peer   TLObject
 }
 
-func (t *TL_updateDialogPinned) Set_flags(_flags []byte) {
+func (t *TL_updateDialogPinned) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateDialogPinned) Get_flags() []byte {
+func (t *TL_updateDialogPinned) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateDialogPinned) Set_pinned(_pinned []byte) {
+func (t *TL_updateDialogPinned) Set_pinned(_pinned TLObject) {
 	t._pinned = _pinned
 }
 
-func (t *TL_updateDialogPinned) Get_pinned() []byte {
+func (t *TL_updateDialogPinned) Get_pinned() TLObject {
 	return t._pinned
 }
 
-func (t *TL_updateDialogPinned) Set_peer(_peer []byte) {
+func (t *TL_updateDialogPinned) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_updateDialogPinned) Get_peer() []byte {
+func (t *TL_updateDialogPinned) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -13319,23 +13319,23 @@ func (t *TL_updateDialogPinned) Decode(b []byte) {
 
 // updatePinnedDialogs#d8caf68d
 type TL_updatePinnedDialogs struct {
-	_flags []byte
-	_order []byte
+	_flags TLObject
+	_order TLObject
 }
 
-func (t *TL_updatePinnedDialogs) Set_flags(_flags []byte) {
+func (t *TL_updatePinnedDialogs) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updatePinnedDialogs) Get_flags() []byte {
+func (t *TL_updatePinnedDialogs) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updatePinnedDialogs) Set_order(_order []byte) {
+func (t *TL_updatePinnedDialogs) Set_order(_order TLObject) {
 	t._order = _order
 }
 
-func (t *TL_updatePinnedDialogs) Get_order() []byte {
+func (t *TL_updatePinnedDialogs) Get_order() TLObject {
 	return t._order
 }
 
@@ -13361,14 +13361,14 @@ func (t *TL_updatePinnedDialogs) Decode(b []byte) {
 
 // updateBotWebhookJSON#8317c0c3
 type TL_updateBotWebhookJSON struct {
-	_data []byte
+	_data TLObject
 }
 
-func (t *TL_updateBotWebhookJSON) Set_data(_data []byte) {
+func (t *TL_updateBotWebhookJSON) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_updateBotWebhookJSON) Get_data() []byte {
+func (t *TL_updateBotWebhookJSON) Get_data() TLObject {
 	return t._data
 }
 
@@ -13395,7 +13395,7 @@ func (t *TL_updateBotWebhookJSON) Decode(b []byte) {
 // updateBotWebhookJSONQuery#9b9240a6
 type TL_updateBotWebhookJSONQuery struct {
 	_query_id int64
-	_data     []byte
+	_data     TLObject
 	_timeout  int32
 }
 
@@ -13407,11 +13407,11 @@ func (t *TL_updateBotWebhookJSONQuery) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_updateBotWebhookJSONQuery) Set_data(_data []byte) {
+func (t *TL_updateBotWebhookJSONQuery) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_updateBotWebhookJSONQuery) Get_data() []byte {
+func (t *TL_updateBotWebhookJSONQuery) Get_data() TLObject {
 	return t._data
 }
 
@@ -13451,8 +13451,8 @@ func (t *TL_updateBotWebhookJSONQuery) Decode(b []byte) {
 type TL_updateBotShippingQuery struct {
 	_query_id         int64
 	_user_id          int32
-	_payload          []byte
-	_shipping_address []byte
+	_payload          TLObject
+	_shipping_address TLObject
 }
 
 func (t *TL_updateBotShippingQuery) Set_query_id(_query_id int64) {
@@ -13471,19 +13471,19 @@ func (t *TL_updateBotShippingQuery) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateBotShippingQuery) Set_payload(_payload []byte) {
+func (t *TL_updateBotShippingQuery) Set_payload(_payload TLObject) {
 	t._payload = _payload
 }
 
-func (t *TL_updateBotShippingQuery) Get_payload() []byte {
+func (t *TL_updateBotShippingQuery) Get_payload() TLObject {
 	return t._payload
 }
 
-func (t *TL_updateBotShippingQuery) Set_shipping_address(_shipping_address []byte) {
+func (t *TL_updateBotShippingQuery) Set_shipping_address(_shipping_address TLObject) {
 	t._shipping_address = _shipping_address
 }
 
-func (t *TL_updateBotShippingQuery) Get_shipping_address() []byte {
+func (t *TL_updateBotShippingQuery) Get_shipping_address() TLObject {
 	return t._shipping_address
 }
 
@@ -13515,21 +13515,21 @@ func (t *TL_updateBotShippingQuery) Decode(b []byte) {
 
 // updateBotPrecheckoutQuery#5d2f3aa9
 type TL_updateBotPrecheckoutQuery struct {
-	_flags              []byte
+	_flags              TLObject
 	_query_id           int64
 	_user_id            int32
-	_payload            []byte
-	_info               []byte
-	_shipping_option_id []byte
+	_payload            TLObject
+	_info               TLObject
+	_shipping_option_id TLObject
 	_currency           string
 	_total_amount       int64
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_flags(_flags []byte) {
+func (t *TL_updateBotPrecheckoutQuery) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_flags() []byte {
+func (t *TL_updateBotPrecheckoutQuery) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -13549,27 +13549,27 @@ func (t *TL_updateBotPrecheckoutQuery) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_payload(_payload []byte) {
+func (t *TL_updateBotPrecheckoutQuery) Set_payload(_payload TLObject) {
 	t._payload = _payload
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_payload() []byte {
+func (t *TL_updateBotPrecheckoutQuery) Get_payload() TLObject {
 	return t._payload
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_info(_info []byte) {
+func (t *TL_updateBotPrecheckoutQuery) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_info() []byte {
+func (t *TL_updateBotPrecheckoutQuery) Get_info() TLObject {
 	return t._info
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_shipping_option_id(_shipping_option_id []byte) {
+func (t *TL_updateBotPrecheckoutQuery) Set_shipping_option_id(_shipping_option_id TLObject) {
 	t._shipping_option_id = _shipping_option_id
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_shipping_option_id() []byte {
+func (t *TL_updateBotPrecheckoutQuery) Get_shipping_option_id() TLObject {
 	return t._shipping_option_id
 }
 
@@ -13623,14 +13623,14 @@ func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) {
 
 // updatePhoneCall#ab0f6b1e
 type TL_updatePhoneCall struct {
-	_phone_call []byte
+	_phone_call TLObject
 }
 
-func (t *TL_updatePhoneCall) Set_phone_call(_phone_call []byte) {
+func (t *TL_updatePhoneCall) Set_phone_call(_phone_call TLObject) {
 	t._phone_call = _phone_call
 }
 
-func (t *TL_updatePhoneCall) Get_phone_call() []byte {
+func (t *TL_updatePhoneCall) Get_phone_call() TLObject {
 	return t._phone_call
 }
 
@@ -13672,14 +13672,14 @@ func (t *TL_updateLangPackTooLong) Decode(b []byte) {
 
 // updateLangPack#56022f4d
 type TL_updateLangPack struct {
-	_difference []byte
+	_difference TLObject
 }
 
-func (t *TL_updateLangPack) Set_difference(_difference []byte) {
+func (t *TL_updateLangPack) Set_difference(_difference TLObject) {
 	t._difference = _difference
 }
 
-func (t *TL_updateLangPack) Get_difference() []byte {
+func (t *TL_updateLangPack) Get_difference() TLObject {
 	return t._difference
 }
 
@@ -13722,7 +13722,7 @@ func (t *TL_updateFavedStickers) Decode(b []byte) {
 // updateChannelReadMessagesContents#89893b45
 type TL_updateChannelReadMessagesContents struct {
 	_channel_id int32
-	_messages   []byte
+	_messages   TLObject
 }
 
 func (t *TL_updateChannelReadMessagesContents) Set_channel_id(_channel_id int32) {
@@ -13733,11 +13733,11 @@ func (t *TL_updateChannelReadMessagesContents) Get_channel_id() int32 {
 	return t._channel_id
 }
 
-func (t *TL_updateChannelReadMessagesContents) Set_messages(_messages []byte) {
+func (t *TL_updateChannelReadMessagesContents) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_updateChannelReadMessagesContents) Get_messages() []byte {
+func (t *TL_updateChannelReadMessagesContents) Get_messages() TLObject {
 	return t._messages
 }
 
@@ -13944,61 +13944,61 @@ func (t *TL_updates_differenceEmpty) Decode(b []byte) {
 
 }
 
-// updates_difference#00f49ca0
+// updates_difference#f49ca0
 type TL_updates_difference struct {
-	_new_messages           []byte
-	_new_encrypted_messages []byte
-	_other_updates          []byte
-	_chats                  []byte
-	_users                  []byte
-	_state                  []byte
+	_new_messages           TLObject
+	_new_encrypted_messages TLObject
+	_other_updates          TLObject
+	_chats                  TLObject
+	_users                  TLObject
+	_state                  TLObject
 }
 
-func (t *TL_updates_difference) Set_new_messages(_new_messages []byte) {
+func (t *TL_updates_difference) Set_new_messages(_new_messages TLObject) {
 	t._new_messages = _new_messages
 }
 
-func (t *TL_updates_difference) Get_new_messages() []byte {
+func (t *TL_updates_difference) Get_new_messages() TLObject {
 	return t._new_messages
 }
 
-func (t *TL_updates_difference) Set_new_encrypted_messages(_new_encrypted_messages []byte) {
+func (t *TL_updates_difference) Set_new_encrypted_messages(_new_encrypted_messages TLObject) {
 	t._new_encrypted_messages = _new_encrypted_messages
 }
 
-func (t *TL_updates_difference) Get_new_encrypted_messages() []byte {
+func (t *TL_updates_difference) Get_new_encrypted_messages() TLObject {
 	return t._new_encrypted_messages
 }
 
-func (t *TL_updates_difference) Set_other_updates(_other_updates []byte) {
+func (t *TL_updates_difference) Set_other_updates(_other_updates TLObject) {
 	t._other_updates = _other_updates
 }
 
-func (t *TL_updates_difference) Get_other_updates() []byte {
+func (t *TL_updates_difference) Get_other_updates() TLObject {
 	return t._other_updates
 }
 
-func (t *TL_updates_difference) Set_chats(_chats []byte) {
+func (t *TL_updates_difference) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updates_difference) Get_chats() []byte {
+func (t *TL_updates_difference) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_updates_difference) Set_users(_users []byte) {
+func (t *TL_updates_difference) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updates_difference) Get_users() []byte {
+func (t *TL_updates_difference) Get_users() TLObject {
 	return t._users
 }
 
-func (t *TL_updates_difference) Set_state(_state []byte) {
+func (t *TL_updates_difference) Set_state(_state TLObject) {
 	t._state = _state
 }
 
-func (t *TL_updates_difference) Get_state() []byte {
+func (t *TL_updates_difference) Get_state() TLObject {
 	return t._state
 }
 
@@ -14034,59 +14034,59 @@ func (t *TL_updates_difference) Decode(b []byte) {
 
 // updates_differenceSlice#a8fb1981
 type TL_updates_differenceSlice struct {
-	_new_messages           []byte
-	_new_encrypted_messages []byte
-	_other_updates          []byte
-	_chats                  []byte
-	_users                  []byte
-	_intermediate_state     []byte
+	_new_messages           TLObject
+	_new_encrypted_messages TLObject
+	_other_updates          TLObject
+	_chats                  TLObject
+	_users                  TLObject
+	_intermediate_state     TLObject
 }
 
-func (t *TL_updates_differenceSlice) Set_new_messages(_new_messages []byte) {
+func (t *TL_updates_differenceSlice) Set_new_messages(_new_messages TLObject) {
 	t._new_messages = _new_messages
 }
 
-func (t *TL_updates_differenceSlice) Get_new_messages() []byte {
+func (t *TL_updates_differenceSlice) Get_new_messages() TLObject {
 	return t._new_messages
 }
 
-func (t *TL_updates_differenceSlice) Set_new_encrypted_messages(_new_encrypted_messages []byte) {
+func (t *TL_updates_differenceSlice) Set_new_encrypted_messages(_new_encrypted_messages TLObject) {
 	t._new_encrypted_messages = _new_encrypted_messages
 }
 
-func (t *TL_updates_differenceSlice) Get_new_encrypted_messages() []byte {
+func (t *TL_updates_differenceSlice) Get_new_encrypted_messages() TLObject {
 	return t._new_encrypted_messages
 }
 
-func (t *TL_updates_differenceSlice) Set_other_updates(_other_updates []byte) {
+func (t *TL_updates_differenceSlice) Set_other_updates(_other_updates TLObject) {
 	t._other_updates = _other_updates
 }
 
-func (t *TL_updates_differenceSlice) Get_other_updates() []byte {
+func (t *TL_updates_differenceSlice) Get_other_updates() TLObject {
 	return t._other_updates
 }
 
-func (t *TL_updates_differenceSlice) Set_chats(_chats []byte) {
+func (t *TL_updates_differenceSlice) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updates_differenceSlice) Get_chats() []byte {
+func (t *TL_updates_differenceSlice) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_updates_differenceSlice) Set_users(_users []byte) {
+func (t *TL_updates_differenceSlice) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updates_differenceSlice) Get_users() []byte {
+func (t *TL_updates_differenceSlice) Get_users() TLObject {
 	return t._users
 }
 
-func (t *TL_updates_differenceSlice) Set_intermediate_state(_intermediate_state []byte) {
+func (t *TL_updates_differenceSlice) Set_intermediate_state(_intermediate_state TLObject) {
 	t._intermediate_state = _intermediate_state
 }
 
-func (t *TL_updates_differenceSlice) Get_intermediate_state() []byte {
+func (t *TL_updates_differenceSlice) Get_intermediate_state() TLObject {
 	return t._intermediate_state
 }
 
@@ -14171,60 +14171,60 @@ func (t *TL_updatesTooLong) Decode(b []byte) {
 
 // updateShortMessage#914fbf11
 type TL_updateShortMessage struct {
-	_flags           []byte
-	_out             []byte
-	_mentioned       []byte
-	_media_unread    []byte
-	_silent          []byte
+	_flags           TLObject
+	_out             TLObject
+	_mentioned       TLObject
+	_media_unread    TLObject
+	_silent          TLObject
 	_id              int32
 	_user_id         int32
 	_message         string
 	_pts             int32
 	_pts_count       int32
 	_date            int32
-	_fwd_from        []byte
-	_via_bot_id      []byte
-	_reply_to_msg_id []byte
-	_entities        []byte
+	_fwd_from        TLObject
+	_via_bot_id      TLObject
+	_reply_to_msg_id TLObject
+	_entities        TLObject
 }
 
-func (t *TL_updateShortMessage) Set_flags(_flags []byte) {
+func (t *TL_updateShortMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateShortMessage) Get_flags() []byte {
+func (t *TL_updateShortMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateShortMessage) Set_out(_out []byte) {
+func (t *TL_updateShortMessage) Set_out(_out TLObject) {
 	t._out = _out
 }
 
-func (t *TL_updateShortMessage) Get_out() []byte {
+func (t *TL_updateShortMessage) Get_out() TLObject {
 	return t._out
 }
 
-func (t *TL_updateShortMessage) Set_mentioned(_mentioned []byte) {
+func (t *TL_updateShortMessage) Set_mentioned(_mentioned TLObject) {
 	t._mentioned = _mentioned
 }
 
-func (t *TL_updateShortMessage) Get_mentioned() []byte {
+func (t *TL_updateShortMessage) Get_mentioned() TLObject {
 	return t._mentioned
 }
 
-func (t *TL_updateShortMessage) Set_media_unread(_media_unread []byte) {
+func (t *TL_updateShortMessage) Set_media_unread(_media_unread TLObject) {
 	t._media_unread = _media_unread
 }
 
-func (t *TL_updateShortMessage) Get_media_unread() []byte {
+func (t *TL_updateShortMessage) Get_media_unread() TLObject {
 	return t._media_unread
 }
 
-func (t *TL_updateShortMessage) Set_silent(_silent []byte) {
+func (t *TL_updateShortMessage) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_updateShortMessage) Get_silent() []byte {
+func (t *TL_updateShortMessage) Get_silent() TLObject {
 	return t._silent
 }
 
@@ -14276,35 +14276,35 @@ func (t *TL_updateShortMessage) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_updateShortMessage) Set_fwd_from(_fwd_from []byte) {
+func (t *TL_updateShortMessage) Set_fwd_from(_fwd_from TLObject) {
 	t._fwd_from = _fwd_from
 }
 
-func (t *TL_updateShortMessage) Get_fwd_from() []byte {
+func (t *TL_updateShortMessage) Get_fwd_from() TLObject {
 	return t._fwd_from
 }
 
-func (t *TL_updateShortMessage) Set_via_bot_id(_via_bot_id []byte) {
+func (t *TL_updateShortMessage) Set_via_bot_id(_via_bot_id TLObject) {
 	t._via_bot_id = _via_bot_id
 }
 
-func (t *TL_updateShortMessage) Get_via_bot_id() []byte {
+func (t *TL_updateShortMessage) Get_via_bot_id() TLObject {
 	return t._via_bot_id
 }
 
-func (t *TL_updateShortMessage) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_updateShortMessage) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_updateShortMessage) Get_reply_to_msg_id() []byte {
+func (t *TL_updateShortMessage) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
-func (t *TL_updateShortMessage) Set_entities(_entities []byte) {
+func (t *TL_updateShortMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_updateShortMessage) Get_entities() []byte {
+func (t *TL_updateShortMessage) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -14356,11 +14356,11 @@ func (t *TL_updateShortMessage) Decode(b []byte) {
 
 // updateShortChatMessage#16812688
 type TL_updateShortChatMessage struct {
-	_flags           []byte
-	_out             []byte
-	_mentioned       []byte
-	_media_unread    []byte
-	_silent          []byte
+	_flags           TLObject
+	_out             TLObject
+	_mentioned       TLObject
+	_media_unread    TLObject
+	_silent          TLObject
 	_id              int32
 	_from_id         int32
 	_chat_id         int32
@@ -14368,49 +14368,49 @@ type TL_updateShortChatMessage struct {
 	_pts             int32
 	_pts_count       int32
 	_date            int32
-	_fwd_from        []byte
-	_via_bot_id      []byte
-	_reply_to_msg_id []byte
-	_entities        []byte
+	_fwd_from        TLObject
+	_via_bot_id      TLObject
+	_reply_to_msg_id TLObject
+	_entities        TLObject
 }
 
-func (t *TL_updateShortChatMessage) Set_flags(_flags []byte) {
+func (t *TL_updateShortChatMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateShortChatMessage) Get_flags() []byte {
+func (t *TL_updateShortChatMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateShortChatMessage) Set_out(_out []byte) {
+func (t *TL_updateShortChatMessage) Set_out(_out TLObject) {
 	t._out = _out
 }
 
-func (t *TL_updateShortChatMessage) Get_out() []byte {
+func (t *TL_updateShortChatMessage) Get_out() TLObject {
 	return t._out
 }
 
-func (t *TL_updateShortChatMessage) Set_mentioned(_mentioned []byte) {
+func (t *TL_updateShortChatMessage) Set_mentioned(_mentioned TLObject) {
 	t._mentioned = _mentioned
 }
 
-func (t *TL_updateShortChatMessage) Get_mentioned() []byte {
+func (t *TL_updateShortChatMessage) Get_mentioned() TLObject {
 	return t._mentioned
 }
 
-func (t *TL_updateShortChatMessage) Set_media_unread(_media_unread []byte) {
+func (t *TL_updateShortChatMessage) Set_media_unread(_media_unread TLObject) {
 	t._media_unread = _media_unread
 }
 
-func (t *TL_updateShortChatMessage) Get_media_unread() []byte {
+func (t *TL_updateShortChatMessage) Get_media_unread() TLObject {
 	return t._media_unread
 }
 
-func (t *TL_updateShortChatMessage) Set_silent(_silent []byte) {
+func (t *TL_updateShortChatMessage) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_updateShortChatMessage) Get_silent() []byte {
+func (t *TL_updateShortChatMessage) Get_silent() TLObject {
 	return t._silent
 }
 
@@ -14470,35 +14470,35 @@ func (t *TL_updateShortChatMessage) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_updateShortChatMessage) Set_fwd_from(_fwd_from []byte) {
+func (t *TL_updateShortChatMessage) Set_fwd_from(_fwd_from TLObject) {
 	t._fwd_from = _fwd_from
 }
 
-func (t *TL_updateShortChatMessage) Get_fwd_from() []byte {
+func (t *TL_updateShortChatMessage) Get_fwd_from() TLObject {
 	return t._fwd_from
 }
 
-func (t *TL_updateShortChatMessage) Set_via_bot_id(_via_bot_id []byte) {
+func (t *TL_updateShortChatMessage) Set_via_bot_id(_via_bot_id TLObject) {
 	t._via_bot_id = _via_bot_id
 }
 
-func (t *TL_updateShortChatMessage) Get_via_bot_id() []byte {
+func (t *TL_updateShortChatMessage) Get_via_bot_id() TLObject {
 	return t._via_bot_id
 }
 
-func (t *TL_updateShortChatMessage) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_updateShortChatMessage) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_updateShortChatMessage) Get_reply_to_msg_id() []byte {
+func (t *TL_updateShortChatMessage) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
-func (t *TL_updateShortChatMessage) Set_entities(_entities []byte) {
+func (t *TL_updateShortChatMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_updateShortChatMessage) Get_entities() []byte {
+func (t *TL_updateShortChatMessage) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -14552,15 +14552,15 @@ func (t *TL_updateShortChatMessage) Decode(b []byte) {
 
 // updateShort#78d4dec1
 type TL_updateShort struct {
-	_update []byte
+	_update TLObject
 	_date   int32
 }
 
-func (t *TL_updateShort) Set_update(_update []byte) {
+func (t *TL_updateShort) Set_update(_update TLObject) {
 	t._update = _update
 }
 
-func (t *TL_updateShort) Get_update() []byte {
+func (t *TL_updateShort) Get_update() TLObject {
 	return t._update
 }
 
@@ -14596,35 +14596,35 @@ func (t *TL_updateShort) Decode(b []byte) {
 
 // updatesCombined#725b04c3
 type TL_updatesCombined struct {
-	_updates   []byte
-	_users     []byte
-	_chats     []byte
+	_updates   TLObject
+	_users     TLObject
+	_chats     TLObject
 	_date      int32
 	_seq_start int32
 	_seq       int32
 }
 
-func (t *TL_updatesCombined) Set_updates(_updates []byte) {
+func (t *TL_updatesCombined) Set_updates(_updates TLObject) {
 	t._updates = _updates
 }
 
-func (t *TL_updatesCombined) Get_updates() []byte {
+func (t *TL_updatesCombined) Get_updates() TLObject {
 	return t._updates
 }
 
-func (t *TL_updatesCombined) Set_users(_users []byte) {
+func (t *TL_updatesCombined) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updatesCombined) Get_users() []byte {
+func (t *TL_updatesCombined) Get_users() TLObject {
 	return t._users
 }
 
-func (t *TL_updatesCombined) Set_chats(_chats []byte) {
+func (t *TL_updatesCombined) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updatesCombined) Get_chats() []byte {
+func (t *TL_updatesCombined) Get_chats() TLObject {
 	return t._chats
 }
 
@@ -14684,34 +14684,34 @@ func (t *TL_updatesCombined) Decode(b []byte) {
 
 // updates#74ae4240
 type TL_updates struct {
-	_updates []byte
-	_users   []byte
-	_chats   []byte
+	_updates TLObject
+	_users   TLObject
+	_chats   TLObject
 	_date    int32
 	_seq     int32
 }
 
-func (t *TL_updates) Set_updates(_updates []byte) {
+func (t *TL_updates) Set_updates(_updates TLObject) {
 	t._updates = _updates
 }
 
-func (t *TL_updates) Get_updates() []byte {
+func (t *TL_updates) Get_updates() TLObject {
 	return t._updates
 }
 
-func (t *TL_updates) Set_users(_users []byte) {
+func (t *TL_updates) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updates) Get_users() []byte {
+func (t *TL_updates) Get_users() TLObject {
 	return t._users
 }
 
-func (t *TL_updates) Set_chats(_chats []byte) {
+func (t *TL_updates) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updates) Get_chats() []byte {
+func (t *TL_updates) Get_chats() TLObject {
 	return t._chats
 }
 
@@ -14761,29 +14761,29 @@ func (t *TL_updates) Decode(b []byte) {
 
 // updateShortSentMessage#11f1331c
 type TL_updateShortSentMessage struct {
-	_flags     []byte
-	_out       []byte
+	_flags     TLObject
+	_out       TLObject
 	_id        int32
 	_pts       int32
 	_pts_count int32
 	_date      int32
-	_media     []byte
-	_entities  []byte
+	_media     TLObject
+	_entities  TLObject
 }
 
-func (t *TL_updateShortSentMessage) Set_flags(_flags []byte) {
+func (t *TL_updateShortSentMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updateShortSentMessage) Get_flags() []byte {
+func (t *TL_updateShortSentMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updateShortSentMessage) Set_out(_out []byte) {
+func (t *TL_updateShortSentMessage) Set_out(_out TLObject) {
 	t._out = _out
 }
 
-func (t *TL_updateShortSentMessage) Get_out() []byte {
+func (t *TL_updateShortSentMessage) Get_out() TLObject {
 	return t._out
 }
 
@@ -14819,19 +14819,19 @@ func (t *TL_updateShortSentMessage) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_updateShortSentMessage) Set_media(_media []byte) {
+func (t *TL_updateShortSentMessage) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_updateShortSentMessage) Get_media() []byte {
+func (t *TL_updateShortSentMessage) Get_media() TLObject {
 	return t._media
 }
 
-func (t *TL_updateShortSentMessage) Set_entities(_entities []byte) {
+func (t *TL_updateShortSentMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_updateShortSentMessage) Get_entities() []byte {
+func (t *TL_updateShortSentMessage) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -14869,23 +14869,23 @@ func (t *TL_updateShortSentMessage) Decode(b []byte) {
 
 // photos_photos#8dca6aa5
 type TL_photos_photos struct {
-	_photos []byte
-	_users  []byte
+	_photos TLObject
+	_users  TLObject
 }
 
-func (t *TL_photos_photos) Set_photos(_photos []byte) {
+func (t *TL_photos_photos) Set_photos(_photos TLObject) {
 	t._photos = _photos
 }
 
-func (t *TL_photos_photos) Get_photos() []byte {
+func (t *TL_photos_photos) Get_photos() TLObject {
 	return t._photos
 }
 
-func (t *TL_photos_photos) Set_users(_users []byte) {
+func (t *TL_photos_photos) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_photos_photos) Get_users() []byte {
+func (t *TL_photos_photos) Get_users() TLObject {
 	return t._users
 }
 
@@ -14914,8 +14914,8 @@ func (t *TL_photos_photos) Decode(b []byte) {
 // photos_photosSlice#15051f54
 type TL_photos_photosSlice struct {
 	_count  int32
-	_photos []byte
-	_users  []byte
+	_photos TLObject
+	_users  TLObject
 }
 
 func (t *TL_photos_photosSlice) Set_count(_count int32) {
@@ -14926,19 +14926,19 @@ func (t *TL_photos_photosSlice) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_photos_photosSlice) Set_photos(_photos []byte) {
+func (t *TL_photos_photosSlice) Set_photos(_photos TLObject) {
 	t._photos = _photos
 }
 
-func (t *TL_photos_photosSlice) Get_photos() []byte {
+func (t *TL_photos_photosSlice) Get_photos() TLObject {
 	return t._photos
 }
 
-func (t *TL_photos_photosSlice) Set_users(_users []byte) {
+func (t *TL_photos_photosSlice) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_photos_photosSlice) Get_users() []byte {
+func (t *TL_photos_photosSlice) Get_users() TLObject {
 	return t._users
 }
 
@@ -14968,23 +14968,23 @@ func (t *TL_photos_photosSlice) Decode(b []byte) {
 
 // photos_photo#20212ca8
 type TL_photos_photo struct {
-	_photo []byte
-	_users []byte
+	_photo TLObject
+	_users TLObject
 }
 
-func (t *TL_photos_photo) Set_photo(_photo []byte) {
+func (t *TL_photos_photo) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_photos_photo) Get_photo() []byte {
+func (t *TL_photos_photo) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_photos_photo) Set_users(_users []byte) {
+func (t *TL_photos_photo) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_photos_photo) Get_users() []byte {
+func (t *TL_photos_photo) Get_users() TLObject {
 	return t._users
 }
 
@@ -15010,18 +15010,18 @@ func (t *TL_photos_photo) Decode(b []byte) {
 
 }
 
-// upload_file#096a18d5
+// upload_file#96a18d5
 type TL_upload_file struct {
-	_type  []byte
+	_type  TLObject
 	_mtime int32
-	_bytes []byte
+	_bytes TLObject
 }
 
-func (t *TL_upload_file) Set_type(_type []byte) {
+func (t *TL_upload_file) Set_type(_type TLObject) {
 	t._type = _type
 }
 
-func (t *TL_upload_file) Get_type() []byte {
+func (t *TL_upload_file) Get_type() TLObject {
 	return t._type
 }
 
@@ -15033,11 +15033,11 @@ func (t *TL_upload_file) Get_mtime() int32 {
 	return t._mtime
 }
 
-func (t *TL_upload_file) Set_bytes(_bytes []byte) {
+func (t *TL_upload_file) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_upload_file) Get_bytes() []byte {
+func (t *TL_upload_file) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -15068,10 +15068,10 @@ func (t *TL_upload_file) Decode(b []byte) {
 // upload_fileCdnRedirect#ea52fe5a
 type TL_upload_fileCdnRedirect struct {
 	_dc_id           int32
-	_file_token      []byte
-	_encryption_key  []byte
-	_encryption_iv   []byte
-	_cdn_file_hashes []byte
+	_file_token      TLObject
+	_encryption_key  TLObject
+	_encryption_iv   TLObject
+	_cdn_file_hashes TLObject
 }
 
 func (t *TL_upload_fileCdnRedirect) Set_dc_id(_dc_id int32) {
@@ -15082,35 +15082,35 @@ func (t *TL_upload_fileCdnRedirect) Get_dc_id() int32 {
 	return t._dc_id
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_file_token(_file_token []byte) {
+func (t *TL_upload_fileCdnRedirect) Set_file_token(_file_token TLObject) {
 	t._file_token = _file_token
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_file_token() []byte {
+func (t *TL_upload_fileCdnRedirect) Get_file_token() TLObject {
 	return t._file_token
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_encryption_key(_encryption_key []byte) {
+func (t *TL_upload_fileCdnRedirect) Set_encryption_key(_encryption_key TLObject) {
 	t._encryption_key = _encryption_key
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_encryption_key() []byte {
+func (t *TL_upload_fileCdnRedirect) Get_encryption_key() TLObject {
 	return t._encryption_key
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_encryption_iv(_encryption_iv []byte) {
+func (t *TL_upload_fileCdnRedirect) Set_encryption_iv(_encryption_iv TLObject) {
 	t._encryption_iv = _encryption_iv
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_encryption_iv() []byte {
+func (t *TL_upload_fileCdnRedirect) Get_encryption_iv() TLObject {
 	return t._encryption_iv
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_cdn_file_hashes(_cdn_file_hashes []byte) {
+func (t *TL_upload_fileCdnRedirect) Set_cdn_file_hashes(_cdn_file_hashes TLObject) {
 	t._cdn_file_hashes = _cdn_file_hashes
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_cdn_file_hashes() []byte {
+func (t *TL_upload_fileCdnRedirect) Get_cdn_file_hashes() TLObject {
 	return t._cdn_file_hashes
 }
 
@@ -15142,64 +15142,64 @@ func (t *TL_upload_fileCdnRedirect) Decode(b []byte) {
 
 }
 
-// dcOption#05d8c6cc
+// dcOption#5d8c6cc
 type TL_dcOption struct {
-	_flags      []byte
-	_ipv6       []byte
-	_media_only []byte
-	_tcpo_only  []byte
-	_cdn        []byte
-	_static     []byte
+	_flags      TLObject
+	_ipv6       TLObject
+	_media_only TLObject
+	_tcpo_only  TLObject
+	_cdn        TLObject
+	_static     TLObject
 	_id         int32
 	_ip_address string
 	_port       int32
 }
 
-func (t *TL_dcOption) Set_flags(_flags []byte) {
+func (t *TL_dcOption) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_dcOption) Get_flags() []byte {
+func (t *TL_dcOption) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_dcOption) Set_ipv6(_ipv6 []byte) {
+func (t *TL_dcOption) Set_ipv6(_ipv6 TLObject) {
 	t._ipv6 = _ipv6
 }
 
-func (t *TL_dcOption) Get_ipv6() []byte {
+func (t *TL_dcOption) Get_ipv6() TLObject {
 	return t._ipv6
 }
 
-func (t *TL_dcOption) Set_media_only(_media_only []byte) {
+func (t *TL_dcOption) Set_media_only(_media_only TLObject) {
 	t._media_only = _media_only
 }
 
-func (t *TL_dcOption) Get_media_only() []byte {
+func (t *TL_dcOption) Get_media_only() TLObject {
 	return t._media_only
 }
 
-func (t *TL_dcOption) Set_tcpo_only(_tcpo_only []byte) {
+func (t *TL_dcOption) Set_tcpo_only(_tcpo_only TLObject) {
 	t._tcpo_only = _tcpo_only
 }
 
-func (t *TL_dcOption) Get_tcpo_only() []byte {
+func (t *TL_dcOption) Get_tcpo_only() TLObject {
 	return t._tcpo_only
 }
 
-func (t *TL_dcOption) Set_cdn(_cdn []byte) {
+func (t *TL_dcOption) Set_cdn(_cdn TLObject) {
 	t._cdn = _cdn
 }
 
-func (t *TL_dcOption) Get_cdn() []byte {
+func (t *TL_dcOption) Get_cdn() TLObject {
 	return t._cdn
 }
 
-func (t *TL_dcOption) Set_static(_static []byte) {
+func (t *TL_dcOption) Set_static(_static TLObject) {
 	t._static = _static
 }
 
-func (t *TL_dcOption) Get_static() []byte {
+func (t *TL_dcOption) Get_static() TLObject {
 	return t._static
 }
 
@@ -15263,14 +15263,14 @@ func (t *TL_dcOption) Decode(b []byte) {
 
 // config#9c840964
 type TL_config struct {
-	_flags                      []byte
-	_phonecalls_enabled         []byte
-	_default_p2p_contacts       []byte
+	_flags                      TLObject
+	_phonecalls_enabled         TLObject
+	_default_p2p_contacts       TLObject
 	_date                       int32
 	_expires                    int32
 	_test_mode                  bool
 	_this_dc                    int32
-	_dc_options                 []byte
+	_dc_options                 TLObject
 	_chat_size_max              int32
 	_megagroup_size_max         int32
 	_forwarded_count_max        int32
@@ -15289,39 +15289,39 @@ type TL_config struct {
 	_stickers_recent_limit      int32
 	_stickers_faved_limit       int32
 	_channels_read_media_period int32
-	_tmp_sessions               []byte
+	_tmp_sessions               TLObject
 	_pinned_dialogs_count_max   int32
 	_call_receive_timeout_ms    int32
 	_call_ring_timeout_ms       int32
 	_call_connect_timeout_ms    int32
 	_call_packet_timeout_ms     int32
 	_me_url_prefix              string
-	_suggested_lang_code        []byte
-	_lang_pack_version          []byte
-	_disabled_features          []byte
+	_suggested_lang_code        TLObject
+	_lang_pack_version          TLObject
+	_disabled_features          TLObject
 }
 
-func (t *TL_config) Set_flags(_flags []byte) {
+func (t *TL_config) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_config) Get_flags() []byte {
+func (t *TL_config) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_config) Set_phonecalls_enabled(_phonecalls_enabled []byte) {
+func (t *TL_config) Set_phonecalls_enabled(_phonecalls_enabled TLObject) {
 	t._phonecalls_enabled = _phonecalls_enabled
 }
 
-func (t *TL_config) Get_phonecalls_enabled() []byte {
+func (t *TL_config) Get_phonecalls_enabled() TLObject {
 	return t._phonecalls_enabled
 }
 
-func (t *TL_config) Set_default_p2p_contacts(_default_p2p_contacts []byte) {
+func (t *TL_config) Set_default_p2p_contacts(_default_p2p_contacts TLObject) {
 	t._default_p2p_contacts = _default_p2p_contacts
 }
 
-func (t *TL_config) Get_default_p2p_contacts() []byte {
+func (t *TL_config) Get_default_p2p_contacts() TLObject {
 	return t._default_p2p_contacts
 }
 
@@ -15357,11 +15357,11 @@ func (t *TL_config) Get_this_dc() int32 {
 	return t._this_dc
 }
 
-func (t *TL_config) Set_dc_options(_dc_options []byte) {
+func (t *TL_config) Set_dc_options(_dc_options TLObject) {
 	t._dc_options = _dc_options
 }
 
-func (t *TL_config) Get_dc_options() []byte {
+func (t *TL_config) Get_dc_options() TLObject {
 	return t._dc_options
 }
 
@@ -15509,11 +15509,11 @@ func (t *TL_config) Get_channels_read_media_period() int32 {
 	return t._channels_read_media_period
 }
 
-func (t *TL_config) Set_tmp_sessions(_tmp_sessions []byte) {
+func (t *TL_config) Set_tmp_sessions(_tmp_sessions TLObject) {
 	t._tmp_sessions = _tmp_sessions
 }
 
-func (t *TL_config) Get_tmp_sessions() []byte {
+func (t *TL_config) Get_tmp_sessions() TLObject {
 	return t._tmp_sessions
 }
 
@@ -15565,27 +15565,27 @@ func (t *TL_config) Get_me_url_prefix() string {
 	return t._me_url_prefix
 }
 
-func (t *TL_config) Set_suggested_lang_code(_suggested_lang_code []byte) {
+func (t *TL_config) Set_suggested_lang_code(_suggested_lang_code TLObject) {
 	t._suggested_lang_code = _suggested_lang_code
 }
 
-func (t *TL_config) Get_suggested_lang_code() []byte {
+func (t *TL_config) Get_suggested_lang_code() TLObject {
 	return t._suggested_lang_code
 }
 
-func (t *TL_config) Set_lang_pack_version(_lang_pack_version []byte) {
+func (t *TL_config) Set_lang_pack_version(_lang_pack_version TLObject) {
 	t._lang_pack_version = _lang_pack_version
 }
 
-func (t *TL_config) Get_lang_pack_version() []byte {
+func (t *TL_config) Get_lang_pack_version() TLObject {
 	return t._lang_pack_version
 }
 
-func (t *TL_config) Set_disabled_features(_disabled_features []byte) {
+func (t *TL_config) Set_disabled_features(_disabled_features TLObject) {
 	t._disabled_features = _disabled_features
 }
 
-func (t *TL_config) Get_disabled_features() []byte {
+func (t *TL_config) Get_disabled_features() TLObject {
 	return t._disabled_features
 }
 
@@ -15964,7 +15964,7 @@ type TL_encryptedChatRequested struct {
 	_date           int32
 	_admin_id       int32
 	_participant_id int32
-	_g_a            []byte
+	_g_a            TLObject
 }
 
 func (t *TL_encryptedChatRequested) Set_id(_id int32) {
@@ -16007,11 +16007,11 @@ func (t *TL_encryptedChatRequested) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_encryptedChatRequested) Set_g_a(_g_a []byte) {
+func (t *TL_encryptedChatRequested) Set_g_a(_g_a TLObject) {
 	t._g_a = _g_a
 }
 
-func (t *TL_encryptedChatRequested) Get_g_a() []byte {
+func (t *TL_encryptedChatRequested) Get_g_a() TLObject {
 	return t._g_a
 }
 
@@ -16052,7 +16052,7 @@ type TL_encryptedChat struct {
 	_date            int32
 	_admin_id        int32
 	_participant_id  int32
-	_g_a_or_b        []byte
+	_g_a_or_b        TLObject
 	_key_fingerprint int64
 }
 
@@ -16096,11 +16096,11 @@ func (t *TL_encryptedChat) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_encryptedChat) Set_g_a_or_b(_g_a_or_b []byte) {
+func (t *TL_encryptedChat) Set_g_a_or_b(_g_a_or_b TLObject) {
 	t._g_a_or_b = _g_a_or_b
 }
 
-func (t *TL_encryptedChat) Get_g_a_or_b() []byte {
+func (t *TL_encryptedChat) Get_g_a_or_b() TLObject {
 	return t._g_a_or_b
 }
 
@@ -16500,8 +16500,8 @@ type TL_encryptedMessage struct {
 	_random_id int64
 	_chat_id   int32
 	_date      int32
-	_bytes     []byte
-	_file      []byte
+	_bytes     TLObject
+	_file      TLObject
 }
 
 func (t *TL_encryptedMessage) Set_random_id(_random_id int64) {
@@ -16528,19 +16528,19 @@ func (t *TL_encryptedMessage) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_encryptedMessage) Set_bytes(_bytes []byte) {
+func (t *TL_encryptedMessage) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_encryptedMessage) Get_bytes() []byte {
+func (t *TL_encryptedMessage) Get_bytes() TLObject {
 	return t._bytes
 }
 
-func (t *TL_encryptedMessage) Set_file(_file []byte) {
+func (t *TL_encryptedMessage) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_encryptedMessage) Get_file() []byte {
+func (t *TL_encryptedMessage) Get_file() TLObject {
 	return t._file
 }
 
@@ -16577,7 +16577,7 @@ type TL_encryptedMessageService struct {
 	_random_id int64
 	_chat_id   int32
 	_date      int32
-	_bytes     []byte
+	_bytes     TLObject
 }
 
 func (t *TL_encryptedMessageService) Set_random_id(_random_id int64) {
@@ -16604,11 +16604,11 @@ func (t *TL_encryptedMessageService) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_encryptedMessageService) Set_bytes(_bytes []byte) {
+func (t *TL_encryptedMessageService) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_encryptedMessageService) Get_bytes() []byte {
+func (t *TL_encryptedMessageService) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -16640,14 +16640,14 @@ func (t *TL_encryptedMessageService) Decode(b []byte) {
 
 // messages_dhConfigNotModified#c0e24635
 type TL_messages_dhConfigNotModified struct {
-	_random []byte
+	_random TLObject
 }
 
-func (t *TL_messages_dhConfigNotModified) Set_random(_random []byte) {
+func (t *TL_messages_dhConfigNotModified) Set_random(_random TLObject) {
 	t._random = _random
 }
 
-func (t *TL_messages_dhConfigNotModified) Get_random() []byte {
+func (t *TL_messages_dhConfigNotModified) Get_random() TLObject {
 	return t._random
 }
 
@@ -16674,9 +16674,9 @@ func (t *TL_messages_dhConfigNotModified) Decode(b []byte) {
 // messages_dhConfig#2c221edd
 type TL_messages_dhConfig struct {
 	_g       int32
-	_p       []byte
+	_p       TLObject
 	_version int32
-	_random  []byte
+	_random  TLObject
 }
 
 func (t *TL_messages_dhConfig) Set_g(_g int32) {
@@ -16687,11 +16687,11 @@ func (t *TL_messages_dhConfig) Get_g() int32 {
 	return t._g
 }
 
-func (t *TL_messages_dhConfig) Set_p(_p []byte) {
+func (t *TL_messages_dhConfig) Set_p(_p TLObject) {
 	t._p = _p
 }
 
-func (t *TL_messages_dhConfig) Get_p() []byte {
+func (t *TL_messages_dhConfig) Get_p() TLObject {
 	return t._p
 }
 
@@ -16703,11 +16703,11 @@ func (t *TL_messages_dhConfig) Get_version() int32 {
 	return t._version
 }
 
-func (t *TL_messages_dhConfig) Set_random(_random []byte) {
+func (t *TL_messages_dhConfig) Set_random(_random TLObject) {
 	t._random = _random
 }
 
-func (t *TL_messages_dhConfig) Get_random() []byte {
+func (t *TL_messages_dhConfig) Get_random() TLObject {
 	return t._random
 }
 
@@ -16773,7 +16773,7 @@ func (t *TL_messages_sentEncryptedMessage) Decode(b []byte) {
 // messages_sentEncryptedFile#9493ff32
 type TL_messages_sentEncryptedFile struct {
 	_date int32
-	_file []byte
+	_file TLObject
 }
 
 func (t *TL_messages_sentEncryptedFile) Set_date(_date int32) {
@@ -16784,11 +16784,11 @@ func (t *TL_messages_sentEncryptedFile) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_messages_sentEncryptedFile) Set_file(_file []byte) {
+func (t *TL_messages_sentEncryptedFile) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_messages_sentEncryptedFile) Get_file() []byte {
+func (t *TL_messages_sentEncryptedFile) Get_file() TLObject {
 	return t._file
 }
 
@@ -16914,10 +16914,10 @@ type TL_document struct {
 	_date        int32
 	_mime_type   string
 	_size        int32
-	_thumb       []byte
+	_thumb       TLObject
 	_dc_id       int32
 	_version     int32
-	_attributes  []byte
+	_attributes  TLObject
 }
 
 func (t *TL_document) Set_id(_id int64) {
@@ -16960,11 +16960,11 @@ func (t *TL_document) Get_size() int32 {
 	return t._size
 }
 
-func (t *TL_document) Set_thumb(_thumb []byte) {
+func (t *TL_document) Set_thumb(_thumb TLObject) {
 	t._thumb = _thumb
 }
 
-func (t *TL_document) Get_thumb() []byte {
+func (t *TL_document) Get_thumb() TLObject {
 	return t._thumb
 }
 
@@ -16984,11 +16984,11 @@ func (t *TL_document) Get_version() int32 {
 	return t._version
 }
 
-func (t *TL_document) Set_attributes(_attributes []byte) {
+func (t *TL_document) Set_attributes(_attributes TLObject) {
 	t._attributes = _attributes
 }
 
-func (t *TL_document) Get_attributes() []byte {
+func (t *TL_document) Get_attributes() TLObject {
 	return t._attributes
 }
 
@@ -17031,7 +17031,7 @@ func (t *TL_document) Decode(b []byte) {
 // help_support#17c6b5f6
 type TL_help_support struct {
 	_phone_number string
-	_user         []byte
+	_user         TLObject
 }
 
 func (t *TL_help_support) Set_phone_number(_phone_number string) {
@@ -17042,11 +17042,11 @@ func (t *TL_help_support) Get_phone_number() string {
 	return t._phone_number
 }
 
-func (t *TL_help_support) Set_user(_user []byte) {
+func (t *TL_help_support) Set_user(_user TLObject) {
 	t._user = _user
 }
 
-func (t *TL_help_support) Get_user() []byte {
+func (t *TL_help_support) Get_user() TLObject {
 	return t._user
 }
 
@@ -17074,14 +17074,14 @@ func (t *TL_help_support) Decode(b []byte) {
 
 // notifyPeer#9fd40bd8
 type TL_notifyPeer struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_notifyPeer) Set_peer(_peer []byte) {
+func (t *TL_notifyPeer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_notifyPeer) Get_peer() []byte {
+func (t *TL_notifyPeer) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -17448,32 +17448,32 @@ func (t *TL_sendMessageUploadRoundAction) Decode(b []byte) {
 
 // contacts_found#1aa1f784
 type TL_contacts_found struct {
-	_results []byte
-	_chats   []byte
-	_users   []byte
+	_results TLObject
+	_chats   TLObject
+	_users   TLObject
 }
 
-func (t *TL_contacts_found) Set_results(_results []byte) {
+func (t *TL_contacts_found) Set_results(_results TLObject) {
 	t._results = _results
 }
 
-func (t *TL_contacts_found) Get_results() []byte {
+func (t *TL_contacts_found) Get_results() TLObject {
 	return t._results
 }
 
-func (t *TL_contacts_found) Set_chats(_chats []byte) {
+func (t *TL_contacts_found) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_contacts_found) Get_chats() []byte {
+func (t *TL_contacts_found) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_contacts_found) Set_users(_users []byte) {
+func (t *TL_contacts_found) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_found) Get_users() []byte {
+func (t *TL_contacts_found) Get_users() TLObject {
 	return t._users
 }
 
@@ -17597,7 +17597,7 @@ func (t *TL_privacyKeyPhoneCall) Decode(b []byte) {
 
 }
 
-// inputPrivacyValueAllowContacts#0d09e07b
+// inputPrivacyValueAllowContacts#d09e07b
 type TL_inputPrivacyValueAllowContacts struct {
 }
 
@@ -17631,14 +17631,14 @@ func (t *TL_inputPrivacyValueAllowAll) Decode(b []byte) {
 
 // inputPrivacyValueAllowUsers#131cc67f
 type TL_inputPrivacyValueAllowUsers struct {
-	_users []byte
+	_users TLObject
 }
 
-func (t *TL_inputPrivacyValueAllowUsers) Set_users(_users []byte) {
+func (t *TL_inputPrivacyValueAllowUsers) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_inputPrivacyValueAllowUsers) Get_users() []byte {
+func (t *TL_inputPrivacyValueAllowUsers) Get_users() TLObject {
 	return t._users
 }
 
@@ -17662,7 +17662,7 @@ func (t *TL_inputPrivacyValueAllowUsers) Decode(b []byte) {
 
 }
 
-// inputPrivacyValueDisallowContacts#0ba52007
+// inputPrivacyValueDisallowContacts#ba52007
 type TL_inputPrivacyValueDisallowContacts struct {
 }
 
@@ -17696,14 +17696,14 @@ func (t *TL_inputPrivacyValueDisallowAll) Decode(b []byte) {
 
 // inputPrivacyValueDisallowUsers#90110467
 type TL_inputPrivacyValueDisallowUsers struct {
-	_users []byte
+	_users TLObject
 }
 
-func (t *TL_inputPrivacyValueDisallowUsers) Set_users(_users []byte) {
+func (t *TL_inputPrivacyValueDisallowUsers) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_inputPrivacyValueDisallowUsers) Get_users() []byte {
+func (t *TL_inputPrivacyValueDisallowUsers) Get_users() TLObject {
 	return t._users
 }
 
@@ -17761,14 +17761,14 @@ func (t *TL_privacyValueAllowAll) Decode(b []byte) {
 
 // privacyValueAllowUsers#4d5bbe0c
 type TL_privacyValueAllowUsers struct {
-	_users []byte
+	_users TLObject
 }
 
-func (t *TL_privacyValueAllowUsers) Set_users(_users []byte) {
+func (t *TL_privacyValueAllowUsers) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_privacyValueAllowUsers) Get_users() []byte {
+func (t *TL_privacyValueAllowUsers) Get_users() TLObject {
 	return t._users
 }
 
@@ -17824,16 +17824,16 @@ func (t *TL_privacyValueDisallowAll) Decode(b []byte) {
 
 }
 
-// privacyValueDisallowUsers#0c7f49b7
+// privacyValueDisallowUsers#c7f49b7
 type TL_privacyValueDisallowUsers struct {
-	_users []byte
+	_users TLObject
 }
 
-func (t *TL_privacyValueDisallowUsers) Set_users(_users []byte) {
+func (t *TL_privacyValueDisallowUsers) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_privacyValueDisallowUsers) Get_users() []byte {
+func (t *TL_privacyValueDisallowUsers) Get_users() TLObject {
 	return t._users
 }
 
@@ -17859,23 +17859,23 @@ func (t *TL_privacyValueDisallowUsers) Decode(b []byte) {
 
 // account_privacyRules#554abb6f
 type TL_account_privacyRules struct {
-	_rules []byte
-	_users []byte
+	_rules TLObject
+	_users TLObject
 }
 
-func (t *TL_account_privacyRules) Set_rules(_rules []byte) {
+func (t *TL_account_privacyRules) Set_rules(_rules TLObject) {
 	t._rules = _rules
 }
 
-func (t *TL_account_privacyRules) Get_rules() []byte {
+func (t *TL_account_privacyRules) Get_rules() TLObject {
 	return t._rules
 }
 
-func (t *TL_account_privacyRules) Set_users(_users []byte) {
+func (t *TL_account_privacyRules) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_account_privacyRules) Get_users() []byte {
+func (t *TL_account_privacyRules) Get_users() TLObject {
 	return t._users
 }
 
@@ -17996,26 +17996,26 @@ func (t *TL_documentAttributeAnimated) Decode(b []byte) {
 
 // documentAttributeSticker#6319d612
 type TL_documentAttributeSticker struct {
-	_flags       []byte
-	_mask        []byte
+	_flags       TLObject
+	_mask        TLObject
 	_alt         string
-	_stickerset  []byte
-	_mask_coords []byte
+	_stickerset  TLObject
+	_mask_coords TLObject
 }
 
-func (t *TL_documentAttributeSticker) Set_flags(_flags []byte) {
+func (t *TL_documentAttributeSticker) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_documentAttributeSticker) Get_flags() []byte {
+func (t *TL_documentAttributeSticker) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_documentAttributeSticker) Set_mask(_mask []byte) {
+func (t *TL_documentAttributeSticker) Set_mask(_mask TLObject) {
 	t._mask = _mask
 }
 
-func (t *TL_documentAttributeSticker) Get_mask() []byte {
+func (t *TL_documentAttributeSticker) Get_mask() TLObject {
 	return t._mask
 }
 
@@ -18027,19 +18027,19 @@ func (t *TL_documentAttributeSticker) Get_alt() string {
 	return t._alt
 }
 
-func (t *TL_documentAttributeSticker) Set_stickerset(_stickerset []byte) {
+func (t *TL_documentAttributeSticker) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_documentAttributeSticker) Get_stickerset() []byte {
+func (t *TL_documentAttributeSticker) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
-func (t *TL_documentAttributeSticker) Set_mask_coords(_mask_coords []byte) {
+func (t *TL_documentAttributeSticker) Set_mask_coords(_mask_coords TLObject) {
 	t._mask_coords = _mask_coords
 }
 
-func (t *TL_documentAttributeSticker) Get_mask_coords() []byte {
+func (t *TL_documentAttributeSticker) Get_mask_coords() TLObject {
 	return t._mask_coords
 }
 
@@ -18069,28 +18069,28 @@ func (t *TL_documentAttributeSticker) Decode(b []byte) {
 
 }
 
-// documentAttributeVideo#0ef02ce6
+// documentAttributeVideo#ef02ce6
 type TL_documentAttributeVideo struct {
-	_flags         []byte
-	_round_message []byte
+	_flags         TLObject
+	_round_message TLObject
 	_duration      int32
 	_w             int32
 	_h             int32
 }
 
-func (t *TL_documentAttributeVideo) Set_flags(_flags []byte) {
+func (t *TL_documentAttributeVideo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_documentAttributeVideo) Get_flags() []byte {
+func (t *TL_documentAttributeVideo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_documentAttributeVideo) Set_round_message(_round_message []byte) {
+func (t *TL_documentAttributeVideo) Set_round_message(_round_message TLObject) {
 	t._round_message = _round_message
 }
 
-func (t *TL_documentAttributeVideo) Get_round_message() []byte {
+func (t *TL_documentAttributeVideo) Get_round_message() TLObject {
 	return t._round_message
 }
 
@@ -18146,27 +18146,27 @@ func (t *TL_documentAttributeVideo) Decode(b []byte) {
 
 // documentAttributeAudio#9852f9c6
 type TL_documentAttributeAudio struct {
-	_flags     []byte
-	_voice     []byte
+	_flags     TLObject
+	_voice     TLObject
 	_duration  int32
-	_title     []byte
-	_performer []byte
-	_waveform  []byte
+	_title     TLObject
+	_performer TLObject
+	_waveform  TLObject
 }
 
-func (t *TL_documentAttributeAudio) Set_flags(_flags []byte) {
+func (t *TL_documentAttributeAudio) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_documentAttributeAudio) Get_flags() []byte {
+func (t *TL_documentAttributeAudio) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_documentAttributeAudio) Set_voice(_voice []byte) {
+func (t *TL_documentAttributeAudio) Set_voice(_voice TLObject) {
 	t._voice = _voice
 }
 
-func (t *TL_documentAttributeAudio) Get_voice() []byte {
+func (t *TL_documentAttributeAudio) Get_voice() TLObject {
 	return t._voice
 }
 
@@ -18178,27 +18178,27 @@ func (t *TL_documentAttributeAudio) Get_duration() int32 {
 	return t._duration
 }
 
-func (t *TL_documentAttributeAudio) Set_title(_title []byte) {
+func (t *TL_documentAttributeAudio) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_documentAttributeAudio) Get_title() []byte {
+func (t *TL_documentAttributeAudio) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_documentAttributeAudio) Set_performer(_performer []byte) {
+func (t *TL_documentAttributeAudio) Set_performer(_performer TLObject) {
 	t._performer = _performer
 }
 
-func (t *TL_documentAttributeAudio) Get_performer() []byte {
+func (t *TL_documentAttributeAudio) Get_performer() TLObject {
 	return t._performer
 }
 
-func (t *TL_documentAttributeAudio) Set_waveform(_waveform []byte) {
+func (t *TL_documentAttributeAudio) Set_waveform(_waveform TLObject) {
 	t._waveform = _waveform
 }
 
-func (t *TL_documentAttributeAudio) Get_waveform() []byte {
+func (t *TL_documentAttributeAudio) Get_waveform() TLObject {
 	return t._waveform
 }
 
@@ -18298,7 +18298,7 @@ func (t *TL_messages_stickersNotModified) Decode(b []byte) {
 // messages_stickers#8a8ecd32
 type TL_messages_stickers struct {
 	_hash     string
-	_stickers []byte
+	_stickers TLObject
 }
 
 func (t *TL_messages_stickers) Set_hash(_hash string) {
@@ -18309,11 +18309,11 @@ func (t *TL_messages_stickers) Get_hash() string {
 	return t._hash
 }
 
-func (t *TL_messages_stickers) Set_stickers(_stickers []byte) {
+func (t *TL_messages_stickers) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_messages_stickers) Get_stickers() []byte {
+func (t *TL_messages_stickers) Get_stickers() TLObject {
 	return t._stickers
 }
 
@@ -18342,7 +18342,7 @@ func (t *TL_messages_stickers) Decode(b []byte) {
 // stickerPack#12b299d4
 type TL_stickerPack struct {
 	_emoticon  string
-	_documents []byte
+	_documents TLObject
 }
 
 func (t *TL_stickerPack) Set_emoticon(_emoticon string) {
@@ -18353,11 +18353,11 @@ func (t *TL_stickerPack) Get_emoticon() string {
 	return t._emoticon
 }
 
-func (t *TL_stickerPack) Set_documents(_documents []byte) {
+func (t *TL_stickerPack) Set_documents(_documents TLObject) {
 	t._documents = _documents
 }
 
-func (t *TL_stickerPack) Get_documents() []byte {
+func (t *TL_stickerPack) Get_documents() TLObject {
 	return t._documents
 }
 
@@ -18402,7 +18402,7 @@ func (t *TL_messages_allStickersNotModified) Decode(b []byte) {
 // messages_allStickers#edfd405f
 type TL_messages_allStickers struct {
 	_hash int32
-	_sets []byte
+	_sets TLObject
 }
 
 func (t *TL_messages_allStickers) Set_hash(_hash int32) {
@@ -18413,11 +18413,11 @@ func (t *TL_messages_allStickers) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_messages_allStickers) Set_sets(_sets []byte) {
+func (t *TL_messages_allStickers) Set_sets(_sets TLObject) {
 	t._sets = _sets
 }
 
-func (t *TL_messages_allStickers) Get_sets() []byte {
+func (t *TL_messages_allStickers) Get_sets() TLObject {
 	return t._sets
 }
 
@@ -18674,31 +18674,31 @@ func (t *TL_webPagePending) Decode(b []byte) {
 
 // webPage#5f07b4bc
 type TL_webPage struct {
-	_flags        []byte
+	_flags        TLObject
 	_id           int64
 	_url          string
 	_display_url  string
 	_hash         int32
-	_type         []byte
-	_site_name    []byte
-	_title        []byte
-	_description  []byte
-	_photo        []byte
-	_embed_url    []byte
-	_embed_type   []byte
-	_embed_width  []byte
-	_embed_height []byte
-	_duration     []byte
-	_author       []byte
-	_document     []byte
-	_cached_page  []byte
+	_type         TLObject
+	_site_name    TLObject
+	_title        TLObject
+	_description  TLObject
+	_photo        TLObject
+	_embed_url    TLObject
+	_embed_type   TLObject
+	_embed_width  TLObject
+	_embed_height TLObject
+	_duration     TLObject
+	_author       TLObject
+	_document     TLObject
+	_cached_page  TLObject
 }
 
-func (t *TL_webPage) Set_flags(_flags []byte) {
+func (t *TL_webPage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_webPage) Get_flags() []byte {
+func (t *TL_webPage) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -18734,107 +18734,107 @@ func (t *TL_webPage) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_webPage) Set_type(_type []byte) {
+func (t *TL_webPage) Set_type(_type TLObject) {
 	t._type = _type
 }
 
-func (t *TL_webPage) Get_type() []byte {
+func (t *TL_webPage) Get_type() TLObject {
 	return t._type
 }
 
-func (t *TL_webPage) Set_site_name(_site_name []byte) {
+func (t *TL_webPage) Set_site_name(_site_name TLObject) {
 	t._site_name = _site_name
 }
 
-func (t *TL_webPage) Get_site_name() []byte {
+func (t *TL_webPage) Get_site_name() TLObject {
 	return t._site_name
 }
 
-func (t *TL_webPage) Set_title(_title []byte) {
+func (t *TL_webPage) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_webPage) Get_title() []byte {
+func (t *TL_webPage) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_webPage) Set_description(_description []byte) {
+func (t *TL_webPage) Set_description(_description TLObject) {
 	t._description = _description
 }
 
-func (t *TL_webPage) Get_description() []byte {
+func (t *TL_webPage) Get_description() TLObject {
 	return t._description
 }
 
-func (t *TL_webPage) Set_photo(_photo []byte) {
+func (t *TL_webPage) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_webPage) Get_photo() []byte {
+func (t *TL_webPage) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_webPage) Set_embed_url(_embed_url []byte) {
+func (t *TL_webPage) Set_embed_url(_embed_url TLObject) {
 	t._embed_url = _embed_url
 }
 
-func (t *TL_webPage) Get_embed_url() []byte {
+func (t *TL_webPage) Get_embed_url() TLObject {
 	return t._embed_url
 }
 
-func (t *TL_webPage) Set_embed_type(_embed_type []byte) {
+func (t *TL_webPage) Set_embed_type(_embed_type TLObject) {
 	t._embed_type = _embed_type
 }
 
-func (t *TL_webPage) Get_embed_type() []byte {
+func (t *TL_webPage) Get_embed_type() TLObject {
 	return t._embed_type
 }
 
-func (t *TL_webPage) Set_embed_width(_embed_width []byte) {
+func (t *TL_webPage) Set_embed_width(_embed_width TLObject) {
 	t._embed_width = _embed_width
 }
 
-func (t *TL_webPage) Get_embed_width() []byte {
+func (t *TL_webPage) Get_embed_width() TLObject {
 	return t._embed_width
 }
 
-func (t *TL_webPage) Set_embed_height(_embed_height []byte) {
+func (t *TL_webPage) Set_embed_height(_embed_height TLObject) {
 	t._embed_height = _embed_height
 }
 
-func (t *TL_webPage) Get_embed_height() []byte {
+func (t *TL_webPage) Get_embed_height() TLObject {
 	return t._embed_height
 }
 
-func (t *TL_webPage) Set_duration(_duration []byte) {
+func (t *TL_webPage) Set_duration(_duration TLObject) {
 	t._duration = _duration
 }
 
-func (t *TL_webPage) Get_duration() []byte {
+func (t *TL_webPage) Get_duration() TLObject {
 	return t._duration
 }
 
-func (t *TL_webPage) Set_author(_author []byte) {
+func (t *TL_webPage) Set_author(_author TLObject) {
 	t._author = _author
 }
 
-func (t *TL_webPage) Get_author() []byte {
+func (t *TL_webPage) Get_author() TLObject {
 	return t._author
 }
 
-func (t *TL_webPage) Set_document(_document []byte) {
+func (t *TL_webPage) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_webPage) Get_document() []byte {
+func (t *TL_webPage) Get_document() TLObject {
 	return t._document
 }
 
-func (t *TL_webPage) Set_cached_page(_cached_page []byte) {
+func (t *TL_webPage) Set_cached_page(_cached_page TLObject) {
 	t._cached_page = _cached_page
 }
 
-func (t *TL_webPage) Get_cached_page() []byte {
+func (t *TL_webPage) Get_cached_page() TLObject {
 	return t._cached_page
 }
 
@@ -19073,14 +19073,14 @@ func (t *TL_authorization) Decode(b []byte) {
 
 // account_authorizations#1250abde
 type TL_account_authorizations struct {
-	_authorizations []byte
+	_authorizations TLObject
 }
 
-func (t *TL_account_authorizations) Set_authorizations(_authorizations []byte) {
+func (t *TL_account_authorizations) Set_authorizations(_authorizations TLObject) {
 	t._authorizations = _authorizations
 }
 
-func (t *TL_account_authorizations) Get_authorizations() []byte {
+func (t *TL_account_authorizations) Get_authorizations() TLObject {
 	return t._authorizations
 }
 
@@ -19106,15 +19106,15 @@ func (t *TL_account_authorizations) Decode(b []byte) {
 
 // account_noPassword#96dabc18
 type TL_account_noPassword struct {
-	_new_salt                  []byte
+	_new_salt                  TLObject
 	_email_unconfirmed_pattern string
 }
 
-func (t *TL_account_noPassword) Set_new_salt(_new_salt []byte) {
+func (t *TL_account_noPassword) Set_new_salt(_new_salt TLObject) {
 	t._new_salt = _new_salt
 }
 
-func (t *TL_account_noPassword) Get_new_salt() []byte {
+func (t *TL_account_noPassword) Get_new_salt() TLObject {
 	return t._new_salt
 }
 
@@ -19150,26 +19150,26 @@ func (t *TL_account_noPassword) Decode(b []byte) {
 
 // account_password#7c18141c
 type TL_account_password struct {
-	_current_salt              []byte
-	_new_salt                  []byte
+	_current_salt              TLObject
+	_new_salt                  TLObject
 	_hint                      string
 	_has_recovery              bool
 	_email_unconfirmed_pattern string
 }
 
-func (t *TL_account_password) Set_current_salt(_current_salt []byte) {
+func (t *TL_account_password) Set_current_salt(_current_salt TLObject) {
 	t._current_salt = _current_salt
 }
 
-func (t *TL_account_password) Get_current_salt() []byte {
+func (t *TL_account_password) Get_current_salt() TLObject {
 	return t._current_salt
 }
 
-func (t *TL_account_password) Set_new_salt(_new_salt []byte) {
+func (t *TL_account_password) Set_new_salt(_new_salt TLObject) {
 	t._new_salt = _new_salt
 }
 
-func (t *TL_account_password) Get_new_salt() []byte {
+func (t *TL_account_password) Get_new_salt() TLObject {
 	return t._new_salt
 }
 
@@ -19260,50 +19260,50 @@ func (t *TL_account_passwordSettings) Decode(b []byte) {
 
 // account_passwordInputSettings#86916deb
 type TL_account_passwordInputSettings struct {
-	_flags             []byte
-	_new_salt          []byte
-	_new_password_hash []byte
-	_hint              []byte
-	_email             []byte
+	_flags             TLObject
+	_new_salt          TLObject
+	_new_password_hash TLObject
+	_hint              TLObject
+	_email             TLObject
 }
 
-func (t *TL_account_passwordInputSettings) Set_flags(_flags []byte) {
+func (t *TL_account_passwordInputSettings) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_account_passwordInputSettings) Get_flags() []byte {
+func (t *TL_account_passwordInputSettings) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_account_passwordInputSettings) Set_new_salt(_new_salt []byte) {
+func (t *TL_account_passwordInputSettings) Set_new_salt(_new_salt TLObject) {
 	t._new_salt = _new_salt
 }
 
-func (t *TL_account_passwordInputSettings) Get_new_salt() []byte {
+func (t *TL_account_passwordInputSettings) Get_new_salt() TLObject {
 	return t._new_salt
 }
 
-func (t *TL_account_passwordInputSettings) Set_new_password_hash(_new_password_hash []byte) {
+func (t *TL_account_passwordInputSettings) Set_new_password_hash(_new_password_hash TLObject) {
 	t._new_password_hash = _new_password_hash
 }
 
-func (t *TL_account_passwordInputSettings) Get_new_password_hash() []byte {
+func (t *TL_account_passwordInputSettings) Get_new_password_hash() TLObject {
 	return t._new_password_hash
 }
 
-func (t *TL_account_passwordInputSettings) Set_hint(_hint []byte) {
+func (t *TL_account_passwordInputSettings) Set_hint(_hint TLObject) {
 	t._hint = _hint
 }
 
-func (t *TL_account_passwordInputSettings) Get_hint() []byte {
+func (t *TL_account_passwordInputSettings) Get_hint() TLObject {
 	return t._hint
 }
 
-func (t *TL_account_passwordInputSettings) Set_email(_email []byte) {
+func (t *TL_account_passwordInputSettings) Set_email(_email TLObject) {
 	t._email = _email
 }
 
-func (t *TL_account_passwordInputSettings) Get_email() []byte {
+func (t *TL_account_passwordInputSettings) Get_email() TLObject {
 	return t._email
 }
 
@@ -19461,14 +19461,14 @@ func (t *TL_chatInviteExported) Decode(b []byte) {
 
 // chatInviteAlready#5a686d7c
 type TL_chatInviteAlready struct {
-	_chat []byte
+	_chat TLObject
 }
 
-func (t *TL_chatInviteAlready) Set_chat(_chat []byte) {
+func (t *TL_chatInviteAlready) Set_chat(_chat TLObject) {
 	t._chat = _chat
 }
 
-func (t *TL_chatInviteAlready) Get_chat() []byte {
+func (t *TL_chatInviteAlready) Get_chat() TLObject {
 	return t._chat
 }
 
@@ -19494,54 +19494,54 @@ func (t *TL_chatInviteAlready) Decode(b []byte) {
 
 // chatInvite#db74f558
 type TL_chatInvite struct {
-	_flags              []byte
-	_channel            []byte
-	_broadcast          []byte
-	_public             []byte
-	_megagroup          []byte
+	_flags              TLObject
+	_channel            TLObject
+	_broadcast          TLObject
+	_public             TLObject
+	_megagroup          TLObject
 	_title              string
-	_photo              []byte
+	_photo              TLObject
 	_participants_count int32
-	_participants       []byte
+	_participants       TLObject
 }
 
-func (t *TL_chatInvite) Set_flags(_flags []byte) {
+func (t *TL_chatInvite) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_chatInvite) Get_flags() []byte {
+func (t *TL_chatInvite) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_chatInvite) Set_channel(_channel []byte) {
+func (t *TL_chatInvite) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_chatInvite) Get_channel() []byte {
+func (t *TL_chatInvite) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_chatInvite) Set_broadcast(_broadcast []byte) {
+func (t *TL_chatInvite) Set_broadcast(_broadcast TLObject) {
 	t._broadcast = _broadcast
 }
 
-func (t *TL_chatInvite) Get_broadcast() []byte {
+func (t *TL_chatInvite) Get_broadcast() TLObject {
 	return t._broadcast
 }
 
-func (t *TL_chatInvite) Set_public(_public []byte) {
+func (t *TL_chatInvite) Set_public(_public TLObject) {
 	t._public = _public
 }
 
-func (t *TL_chatInvite) Get_public() []byte {
+func (t *TL_chatInvite) Get_public() TLObject {
 	return t._public
 }
 
-func (t *TL_chatInvite) Set_megagroup(_megagroup []byte) {
+func (t *TL_chatInvite) Set_megagroup(_megagroup TLObject) {
 	t._megagroup = _megagroup
 }
 
-func (t *TL_chatInvite) Get_megagroup() []byte {
+func (t *TL_chatInvite) Get_megagroup() TLObject {
 	return t._megagroup
 }
 
@@ -19553,11 +19553,11 @@ func (t *TL_chatInvite) Get_title() string {
 	return t._title
 }
 
-func (t *TL_chatInvite) Set_photo(_photo []byte) {
+func (t *TL_chatInvite) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_chatInvite) Get_photo() []byte {
+func (t *TL_chatInvite) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -19569,11 +19569,11 @@ func (t *TL_chatInvite) Get_participants_count() int32 {
 	return t._participants_count
 }
 
-func (t *TL_chatInvite) Set_participants(_participants []byte) {
+func (t *TL_chatInvite) Set_participants(_participants TLObject) {
 	t._participants = _participants
 }
 
-func (t *TL_chatInvite) Get_participants() []byte {
+func (t *TL_chatInvite) Get_participants() TLObject {
 	return t._participants
 }
 
@@ -19706,11 +19706,11 @@ func (t *TL_inputStickerSetShortName) Decode(b []byte) {
 
 // stickerSet#cd303b41
 type TL_stickerSet struct {
-	_flags       []byte
-	_installed   []byte
-	_archived    []byte
-	_official    []byte
-	_masks       []byte
+	_flags       TLObject
+	_installed   TLObject
+	_archived    TLObject
+	_official    TLObject
+	_masks       TLObject
 	_id          int64
 	_access_hash int64
 	_title       string
@@ -19719,43 +19719,43 @@ type TL_stickerSet struct {
 	_hash        int32
 }
 
-func (t *TL_stickerSet) Set_flags(_flags []byte) {
+func (t *TL_stickerSet) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_stickerSet) Get_flags() []byte {
+func (t *TL_stickerSet) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_stickerSet) Set_installed(_installed []byte) {
+func (t *TL_stickerSet) Set_installed(_installed TLObject) {
 	t._installed = _installed
 }
 
-func (t *TL_stickerSet) Get_installed() []byte {
+func (t *TL_stickerSet) Get_installed() TLObject {
 	return t._installed
 }
 
-func (t *TL_stickerSet) Set_archived(_archived []byte) {
+func (t *TL_stickerSet) Set_archived(_archived TLObject) {
 	t._archived = _archived
 }
 
-func (t *TL_stickerSet) Get_archived() []byte {
+func (t *TL_stickerSet) Get_archived() TLObject {
 	return t._archived
 }
 
-func (t *TL_stickerSet) Set_official(_official []byte) {
+func (t *TL_stickerSet) Set_official(_official TLObject) {
 	t._official = _official
 }
 
-func (t *TL_stickerSet) Get_official() []byte {
+func (t *TL_stickerSet) Get_official() TLObject {
 	return t._official
 }
 
-func (t *TL_stickerSet) Set_masks(_masks []byte) {
+func (t *TL_stickerSet) Set_masks(_masks TLObject) {
 	t._masks = _masks
 }
 
-func (t *TL_stickerSet) Get_masks() []byte {
+func (t *TL_stickerSet) Get_masks() TLObject {
 	return t._masks
 }
 
@@ -19847,32 +19847,32 @@ func (t *TL_stickerSet) Decode(b []byte) {
 
 // messages_stickerSet#b60a24a6
 type TL_messages_stickerSet struct {
-	_set       []byte
-	_packs     []byte
-	_documents []byte
+	_set       TLObject
+	_packs     TLObject
+	_documents TLObject
 }
 
-func (t *TL_messages_stickerSet) Set_set(_set []byte) {
+func (t *TL_messages_stickerSet) Set_set(_set TLObject) {
 	t._set = _set
 }
 
-func (t *TL_messages_stickerSet) Get_set() []byte {
+func (t *TL_messages_stickerSet) Get_set() TLObject {
 	return t._set
 }
 
-func (t *TL_messages_stickerSet) Set_packs(_packs []byte) {
+func (t *TL_messages_stickerSet) Set_packs(_packs TLObject) {
 	t._packs = _packs
 }
 
-func (t *TL_messages_stickerSet) Get_packs() []byte {
+func (t *TL_messages_stickerSet) Get_packs() TLObject {
 	return t._packs
 }
 
-func (t *TL_messages_stickerSet) Set_documents(_documents []byte) {
+func (t *TL_messages_stickerSet) Set_documents(_documents TLObject) {
 	t._documents = _documents
 }
 
-func (t *TL_messages_stickerSet) Get_documents() []byte {
+func (t *TL_messages_stickerSet) Get_documents() TLObject {
 	return t._documents
 }
 
@@ -19948,7 +19948,7 @@ func (t *TL_botCommand) Decode(b []byte) {
 type TL_botInfo struct {
 	_user_id     int32
 	_description string
-	_commands    []byte
+	_commands    TLObject
 }
 
 func (t *TL_botInfo) Set_user_id(_user_id int32) {
@@ -19967,11 +19967,11 @@ func (t *TL_botInfo) Get_description() string {
 	return t._description
 }
 
-func (t *TL_botInfo) Set_commands(_commands []byte) {
+func (t *TL_botInfo) Set_commands(_commands TLObject) {
 	t._commands = _commands
 }
 
-func (t *TL_botInfo) Get_commands() []byte {
+func (t *TL_botInfo) Get_commands() TLObject {
 	return t._commands
 }
 
@@ -20079,7 +20079,7 @@ func (t *TL_keyboardButtonUrl) Decode(b []byte) {
 // keyboardButtonCallback#683a5e46
 type TL_keyboardButtonCallback struct {
 	_text string
-	_data []byte
+	_data TLObject
 }
 
 func (t *TL_keyboardButtonCallback) Set_text(_text string) {
@@ -20090,11 +20090,11 @@ func (t *TL_keyboardButtonCallback) Get_text() string {
 	return t._text
 }
 
-func (t *TL_keyboardButtonCallback) Set_data(_data []byte) {
+func (t *TL_keyboardButtonCallback) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_keyboardButtonCallback) Get_data() []byte {
+func (t *TL_keyboardButtonCallback) Get_data() TLObject {
 	return t._data
 }
 
@@ -20186,27 +20186,27 @@ func (t *TL_keyboardButtonRequestGeoLocation) Decode(b []byte) {
 
 }
 
-// keyboardButtonSwitchInline#0568a748
+// keyboardButtonSwitchInline#568a748
 type TL_keyboardButtonSwitchInline struct {
-	_flags     []byte
-	_same_peer []byte
+	_flags     TLObject
+	_same_peer TLObject
 	_text      string
 	_query     string
 }
 
-func (t *TL_keyboardButtonSwitchInline) Set_flags(_flags []byte) {
+func (t *TL_keyboardButtonSwitchInline) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_keyboardButtonSwitchInline) Get_flags() []byte {
+func (t *TL_keyboardButtonSwitchInline) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_keyboardButtonSwitchInline) Set_same_peer(_same_peer []byte) {
+func (t *TL_keyboardButtonSwitchInline) Set_same_peer(_same_peer TLObject) {
 	t._same_peer = _same_peer
 }
 
-func (t *TL_keyboardButtonSwitchInline) Get_same_peer() []byte {
+func (t *TL_keyboardButtonSwitchInline) Get_same_peer() TLObject {
 	return t._same_peer
 }
 
@@ -20318,14 +20318,14 @@ func (t *TL_keyboardButtonBuy) Decode(b []byte) {
 
 // keyboardButtonRow#77608b83
 type TL_keyboardButtonRow struct {
-	_buttons []byte
+	_buttons TLObject
 }
 
-func (t *TL_keyboardButtonRow) Set_buttons(_buttons []byte) {
+func (t *TL_keyboardButtonRow) Set_buttons(_buttons TLObject) {
 	t._buttons = _buttons
 }
 
-func (t *TL_keyboardButtonRow) Get_buttons() []byte {
+func (t *TL_keyboardButtonRow) Get_buttons() TLObject {
 	return t._buttons
 }
 
@@ -20351,23 +20351,23 @@ func (t *TL_keyboardButtonRow) Decode(b []byte) {
 
 // replyKeyboardHide#a03e5b85
 type TL_replyKeyboardHide struct {
-	_flags     []byte
-	_selective []byte
+	_flags     TLObject
+	_selective TLObject
 }
 
-func (t *TL_replyKeyboardHide) Set_flags(_flags []byte) {
+func (t *TL_replyKeyboardHide) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_replyKeyboardHide) Get_flags() []byte {
+func (t *TL_replyKeyboardHide) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_replyKeyboardHide) Set_selective(_selective []byte) {
+func (t *TL_replyKeyboardHide) Set_selective(_selective TLObject) {
 	t._selective = _selective
 }
 
-func (t *TL_replyKeyboardHide) Get_selective() []byte {
+func (t *TL_replyKeyboardHide) Get_selective() TLObject {
 	return t._selective
 }
 
@@ -20393,32 +20393,32 @@ func (t *TL_replyKeyboardHide) Decode(b []byte) {
 
 // replyKeyboardForceReply#f4108aa0
 type TL_replyKeyboardForceReply struct {
-	_flags      []byte
-	_single_use []byte
-	_selective  []byte
+	_flags      TLObject
+	_single_use TLObject
+	_selective  TLObject
 }
 
-func (t *TL_replyKeyboardForceReply) Set_flags(_flags []byte) {
+func (t *TL_replyKeyboardForceReply) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_replyKeyboardForceReply) Get_flags() []byte {
+func (t *TL_replyKeyboardForceReply) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_replyKeyboardForceReply) Set_single_use(_single_use []byte) {
+func (t *TL_replyKeyboardForceReply) Set_single_use(_single_use TLObject) {
 	t._single_use = _single_use
 }
 
-func (t *TL_replyKeyboardForceReply) Get_single_use() []byte {
+func (t *TL_replyKeyboardForceReply) Get_single_use() TLObject {
 	return t._single_use
 }
 
-func (t *TL_replyKeyboardForceReply) Set_selective(_selective []byte) {
+func (t *TL_replyKeyboardForceReply) Set_selective(_selective TLObject) {
 	t._selective = _selective
 }
 
-func (t *TL_replyKeyboardForceReply) Get_selective() []byte {
+func (t *TL_replyKeyboardForceReply) Get_selective() TLObject {
 	return t._selective
 }
 
@@ -20446,50 +20446,50 @@ func (t *TL_replyKeyboardForceReply) Decode(b []byte) {
 
 // replyKeyboardMarkup#3502758c
 type TL_replyKeyboardMarkup struct {
-	_flags      []byte
-	_resize     []byte
-	_single_use []byte
-	_selective  []byte
-	_rows       []byte
+	_flags      TLObject
+	_resize     TLObject
+	_single_use TLObject
+	_selective  TLObject
+	_rows       TLObject
 }
 
-func (t *TL_replyKeyboardMarkup) Set_flags(_flags []byte) {
+func (t *TL_replyKeyboardMarkup) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_replyKeyboardMarkup) Get_flags() []byte {
+func (t *TL_replyKeyboardMarkup) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_replyKeyboardMarkup) Set_resize(_resize []byte) {
+func (t *TL_replyKeyboardMarkup) Set_resize(_resize TLObject) {
 	t._resize = _resize
 }
 
-func (t *TL_replyKeyboardMarkup) Get_resize() []byte {
+func (t *TL_replyKeyboardMarkup) Get_resize() TLObject {
 	return t._resize
 }
 
-func (t *TL_replyKeyboardMarkup) Set_single_use(_single_use []byte) {
+func (t *TL_replyKeyboardMarkup) Set_single_use(_single_use TLObject) {
 	t._single_use = _single_use
 }
 
-func (t *TL_replyKeyboardMarkup) Get_single_use() []byte {
+func (t *TL_replyKeyboardMarkup) Get_single_use() TLObject {
 	return t._single_use
 }
 
-func (t *TL_replyKeyboardMarkup) Set_selective(_selective []byte) {
+func (t *TL_replyKeyboardMarkup) Set_selective(_selective TLObject) {
 	t._selective = _selective
 }
 
-func (t *TL_replyKeyboardMarkup) Get_selective() []byte {
+func (t *TL_replyKeyboardMarkup) Get_selective() TLObject {
 	return t._selective
 }
 
-func (t *TL_replyKeyboardMarkup) Set_rows(_rows []byte) {
+func (t *TL_replyKeyboardMarkup) Set_rows(_rows TLObject) {
 	t._rows = _rows
 }
 
-func (t *TL_replyKeyboardMarkup) Get_rows() []byte {
+func (t *TL_replyKeyboardMarkup) Get_rows() TLObject {
 	return t._rows
 }
 
@@ -20521,14 +20521,14 @@ func (t *TL_replyKeyboardMarkup) Decode(b []byte) {
 
 // replyInlineMarkup#48a30254
 type TL_replyInlineMarkup struct {
-	_rows []byte
+	_rows TLObject
 }
 
-func (t *TL_replyInlineMarkup) Set_rows(_rows []byte) {
+func (t *TL_replyInlineMarkup) Set_rows(_rows TLObject) {
 	t._rows = _rows
 }
 
-func (t *TL_replyInlineMarkup) Get_rows() []byte {
+func (t *TL_replyInlineMarkup) Get_rows() TLObject {
 	return t._rows
 }
 
@@ -21117,7 +21117,7 @@ func (t *TL_messageEntityMentionName) Decode(b []byte) {
 type TL_inputMessageEntityMentionName struct {
 	_offset  int32
 	_length  int32
-	_user_id []byte
+	_user_id TLObject
 }
 
 func (t *TL_inputMessageEntityMentionName) Set_offset(_offset int32) {
@@ -21136,11 +21136,11 @@ func (t *TL_inputMessageEntityMentionName) Get_length() int32 {
 	return t._length
 }
 
-func (t *TL_inputMessageEntityMentionName) Set_user_id(_user_id []byte) {
+func (t *TL_inputMessageEntityMentionName) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_inputMessageEntityMentionName) Get_user_id() []byte {
+func (t *TL_inputMessageEntityMentionName) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -21230,32 +21230,32 @@ func (t *TL_inputChannel) Decode(b []byte) {
 
 // contacts_resolvedPeer#7f077ad9
 type TL_contacts_resolvedPeer struct {
-	_peer  []byte
-	_chats []byte
-	_users []byte
+	_peer  TLObject
+	_chats TLObject
+	_users TLObject
 }
 
-func (t *TL_contacts_resolvedPeer) Set_peer(_peer []byte) {
+func (t *TL_contacts_resolvedPeer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_contacts_resolvedPeer) Get_peer() []byte {
+func (t *TL_contacts_resolvedPeer) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_contacts_resolvedPeer) Set_chats(_chats []byte) {
+func (t *TL_contacts_resolvedPeer) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_contacts_resolvedPeer) Get_chats() []byte {
+func (t *TL_contacts_resolvedPeer) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_contacts_resolvedPeer) Set_users(_users []byte) {
+func (t *TL_contacts_resolvedPeer) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_resolvedPeer) Get_users() []byte {
+func (t *TL_contacts_resolvedPeer) Get_users() TLObject {
 	return t._users
 }
 
@@ -21283,7 +21283,7 @@ func (t *TL_contacts_resolvedPeer) Decode(b []byte) {
 
 }
 
-// messageRange#0ae30253
+// messageRange#ae30253
 type TL_messageRange struct {
 	_min_id int32
 	_max_id int32
@@ -21329,25 +21329,25 @@ func (t *TL_messageRange) Decode(b []byte) {
 
 // updates_channelDifferenceEmpty#3e11affb
 type TL_updates_channelDifferenceEmpty struct {
-	_flags   []byte
-	_final   []byte
+	_flags   TLObject
+	_final   TLObject
 	_pts     int32
-	_timeout []byte
+	_timeout TLObject
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Set_flags(_flags []byte) {
+func (t *TL_updates_channelDifferenceEmpty) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Get_flags() []byte {
+func (t *TL_updates_channelDifferenceEmpty) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Set_final(_final []byte) {
+func (t *TL_updates_channelDifferenceEmpty) Set_final(_final TLObject) {
 	t._final = _final
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Get_final() []byte {
+func (t *TL_updates_channelDifferenceEmpty) Get_final() TLObject {
 	return t._final
 }
 
@@ -21359,11 +21359,11 @@ func (t *TL_updates_channelDifferenceEmpty) Get_pts() int32 {
 	return t._pts
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Set_timeout(_timeout []byte) {
+func (t *TL_updates_channelDifferenceEmpty) Set_timeout(_timeout TLObject) {
 	t._timeout = _timeout
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Get_timeout() []byte {
+func (t *TL_updates_channelDifferenceEmpty) Get_timeout() TLObject {
 	return t._timeout
 }
 
@@ -21393,33 +21393,33 @@ func (t *TL_updates_channelDifferenceEmpty) Decode(b []byte) {
 
 // updates_channelDifferenceTooLong#6a9d7b35
 type TL_updates_channelDifferenceTooLong struct {
-	_flags                 []byte
-	_final                 []byte
+	_flags                 TLObject
+	_final                 TLObject
 	_pts                   int32
-	_timeout               []byte
+	_timeout               TLObject
 	_top_message           int32
 	_read_inbox_max_id     int32
 	_read_outbox_max_id    int32
 	_unread_count          int32
 	_unread_mentions_count int32
-	_messages              []byte
-	_chats                 []byte
-	_users                 []byte
+	_messages              TLObject
+	_chats                 TLObject
+	_users                 TLObject
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_flags(_flags []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_flags() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_final(_final []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_final(_final TLObject) {
 	t._final = _final
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_final() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_final() TLObject {
 	return t._final
 }
 
@@ -21431,11 +21431,11 @@ func (t *TL_updates_channelDifferenceTooLong) Get_pts() int32 {
 	return t._pts
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_timeout(_timeout []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_timeout(_timeout TLObject) {
 	t._timeout = _timeout
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_timeout() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_timeout() TLObject {
 	return t._timeout
 }
 
@@ -21479,27 +21479,27 @@ func (t *TL_updates_channelDifferenceTooLong) Get_unread_mentions_count() int32 
 	return t._unread_mentions_count
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_messages(_messages []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_messages() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_chats(_chats []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_chats() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_users(_users []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_users() []byte {
+func (t *TL_updates_channelDifferenceTooLong) Get_users() TLObject {
 	return t._users
 }
 
@@ -21545,29 +21545,29 @@ func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) {
 
 // updates_channelDifference#2064674e
 type TL_updates_channelDifference struct {
-	_flags         []byte
-	_final         []byte
+	_flags         TLObject
+	_final         TLObject
 	_pts           int32
-	_timeout       []byte
-	_new_messages  []byte
-	_other_updates []byte
-	_chats         []byte
-	_users         []byte
+	_timeout       TLObject
+	_new_messages  TLObject
+	_other_updates TLObject
+	_chats         TLObject
+	_users         TLObject
 }
 
-func (t *TL_updates_channelDifference) Set_flags(_flags []byte) {
+func (t *TL_updates_channelDifference) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updates_channelDifference) Get_flags() []byte {
+func (t *TL_updates_channelDifference) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updates_channelDifference) Set_final(_final []byte) {
+func (t *TL_updates_channelDifference) Set_final(_final TLObject) {
 	t._final = _final
 }
 
-func (t *TL_updates_channelDifference) Get_final() []byte {
+func (t *TL_updates_channelDifference) Get_final() TLObject {
 	return t._final
 }
 
@@ -21579,43 +21579,43 @@ func (t *TL_updates_channelDifference) Get_pts() int32 {
 	return t._pts
 }
 
-func (t *TL_updates_channelDifference) Set_timeout(_timeout []byte) {
+func (t *TL_updates_channelDifference) Set_timeout(_timeout TLObject) {
 	t._timeout = _timeout
 }
 
-func (t *TL_updates_channelDifference) Get_timeout() []byte {
+func (t *TL_updates_channelDifference) Get_timeout() TLObject {
 	return t._timeout
 }
 
-func (t *TL_updates_channelDifference) Set_new_messages(_new_messages []byte) {
+func (t *TL_updates_channelDifference) Set_new_messages(_new_messages TLObject) {
 	t._new_messages = _new_messages
 }
 
-func (t *TL_updates_channelDifference) Get_new_messages() []byte {
+func (t *TL_updates_channelDifference) Get_new_messages() TLObject {
 	return t._new_messages
 }
 
-func (t *TL_updates_channelDifference) Set_other_updates(_other_updates []byte) {
+func (t *TL_updates_channelDifference) Set_other_updates(_other_updates TLObject) {
 	t._other_updates = _other_updates
 }
 
-func (t *TL_updates_channelDifference) Get_other_updates() []byte {
+func (t *TL_updates_channelDifference) Get_other_updates() TLObject {
 	return t._other_updates
 }
 
-func (t *TL_updates_channelDifference) Set_chats(_chats []byte) {
+func (t *TL_updates_channelDifference) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_updates_channelDifference) Get_chats() []byte {
+func (t *TL_updates_channelDifference) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_updates_channelDifference) Set_users(_users []byte) {
+func (t *TL_updates_channelDifference) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_updates_channelDifference) Get_users() []byte {
+func (t *TL_updates_channelDifference) Get_users() TLObject {
 	return t._users
 }
 
@@ -21669,32 +21669,32 @@ func (t *TL_channelMessagesFilterEmpty) Decode(b []byte) {
 
 // channelMessagesFilter#cd77d957
 type TL_channelMessagesFilter struct {
-	_flags                []byte
-	_exclude_new_messages []byte
-	_ranges               []byte
+	_flags                TLObject
+	_exclude_new_messages TLObject
+	_ranges               TLObject
 }
 
-func (t *TL_channelMessagesFilter) Set_flags(_flags []byte) {
+func (t *TL_channelMessagesFilter) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelMessagesFilter) Get_flags() []byte {
+func (t *TL_channelMessagesFilter) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelMessagesFilter) Set_exclude_new_messages(_exclude_new_messages []byte) {
+func (t *TL_channelMessagesFilter) Set_exclude_new_messages(_exclude_new_messages TLObject) {
 	t._exclude_new_messages = _exclude_new_messages
 }
 
-func (t *TL_channelMessagesFilter) Get_exclude_new_messages() []byte {
+func (t *TL_channelMessagesFilter) Get_exclude_new_messages() TLObject {
 	return t._exclude_new_messages
 }
 
-func (t *TL_channelMessagesFilter) Set_ranges(_ranges []byte) {
+func (t *TL_channelMessagesFilter) Set_ranges(_ranges TLObject) {
 	t._ranges = _ranges
 }
 
-func (t *TL_channelMessagesFilter) Get_ranges() []byte {
+func (t *TL_channelMessagesFilter) Get_ranges() TLObject {
 	return t._ranges
 }
 
@@ -21854,28 +21854,28 @@ func (t *TL_channelParticipantCreator) Decode(b []byte) {
 
 // channelParticipantAdmin#a82fa898
 type TL_channelParticipantAdmin struct {
-	_flags        []byte
-	_can_edit     []byte
+	_flags        TLObject
+	_can_edit     TLObject
 	_user_id      int32
 	_inviter_id   int32
 	_promoted_by  int32
 	_date         int32
-	_admin_rights []byte
+	_admin_rights TLObject
 }
 
-func (t *TL_channelParticipantAdmin) Set_flags(_flags []byte) {
+func (t *TL_channelParticipantAdmin) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelParticipantAdmin) Get_flags() []byte {
+func (t *TL_channelParticipantAdmin) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelParticipantAdmin) Set_can_edit(_can_edit []byte) {
+func (t *TL_channelParticipantAdmin) Set_can_edit(_can_edit TLObject) {
 	t._can_edit = _can_edit
 }
 
-func (t *TL_channelParticipantAdmin) Get_can_edit() []byte {
+func (t *TL_channelParticipantAdmin) Get_can_edit() TLObject {
 	return t._can_edit
 }
 
@@ -21911,11 +21911,11 @@ func (t *TL_channelParticipantAdmin) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_channelParticipantAdmin) Set_admin_rights(_admin_rights []byte) {
+func (t *TL_channelParticipantAdmin) Set_admin_rights(_admin_rights TLObject) {
 	t._admin_rights = _admin_rights
 }
 
-func (t *TL_channelParticipantAdmin) Get_admin_rights() []byte {
+func (t *TL_channelParticipantAdmin) Get_admin_rights() TLObject {
 	return t._admin_rights
 }
 
@@ -21951,27 +21951,27 @@ func (t *TL_channelParticipantAdmin) Decode(b []byte) {
 
 // channelParticipantBanned#222c1886
 type TL_channelParticipantBanned struct {
-	_flags         []byte
-	_left          []byte
+	_flags         TLObject
+	_left          TLObject
 	_user_id       int32
 	_kicked_by     int32
 	_date          int32
-	_banned_rights []byte
+	_banned_rights TLObject
 }
 
-func (t *TL_channelParticipantBanned) Set_flags(_flags []byte) {
+func (t *TL_channelParticipantBanned) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelParticipantBanned) Get_flags() []byte {
+func (t *TL_channelParticipantBanned) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelParticipantBanned) Set_left(_left []byte) {
+func (t *TL_channelParticipantBanned) Set_left(_left TLObject) {
 	t._left = _left
 }
 
-func (t *TL_channelParticipantBanned) Get_left() []byte {
+func (t *TL_channelParticipantBanned) Get_left() TLObject {
 	return t._left
 }
 
@@ -21999,11 +21999,11 @@ func (t *TL_channelParticipantBanned) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_channelParticipantBanned) Set_banned_rights(_banned_rights []byte) {
+func (t *TL_channelParticipantBanned) Set_banned_rights(_banned_rights TLObject) {
 	t._banned_rights = _banned_rights
 }
 
-func (t *TL_channelParticipantBanned) Get_banned_rights() []byte {
+func (t *TL_channelParticipantBanned) Get_banned_rights() TLObject {
 	return t._banned_rights
 }
 
@@ -22149,7 +22149,7 @@ func (t *TL_channelParticipantsBanned) Decode(b []byte) {
 
 }
 
-// channelParticipantsSearch#0656ac4b
+// channelParticipantsSearch#656ac4b
 type TL_channelParticipantsSearch struct {
 	_q string
 }
@@ -22185,8 +22185,8 @@ func (t *TL_channelParticipantsSearch) Decode(b []byte) {
 // channels_channelParticipants#f56ee2a8
 type TL_channels_channelParticipants struct {
 	_count        int32
-	_participants []byte
-	_users        []byte
+	_participants TLObject
+	_users        TLObject
 }
 
 func (t *TL_channels_channelParticipants) Set_count(_count int32) {
@@ -22197,19 +22197,19 @@ func (t *TL_channels_channelParticipants) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_channels_channelParticipants) Set_participants(_participants []byte) {
+func (t *TL_channels_channelParticipants) Set_participants(_participants TLObject) {
 	t._participants = _participants
 }
 
-func (t *TL_channels_channelParticipants) Get_participants() []byte {
+func (t *TL_channels_channelParticipants) Get_participants() TLObject {
 	return t._participants
 }
 
-func (t *TL_channels_channelParticipants) Set_users(_users []byte) {
+func (t *TL_channels_channelParticipants) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_channels_channelParticipants) Get_users() []byte {
+func (t *TL_channels_channelParticipants) Get_users() TLObject {
 	return t._users
 }
 
@@ -22255,23 +22255,23 @@ func (t *TL_channels_channelParticipantsNotModified) Decode(b []byte) {
 
 // channels_channelParticipant#d0d9b163
 type TL_channels_channelParticipant struct {
-	_participant []byte
-	_users       []byte
+	_participant TLObject
+	_users       TLObject
 }
 
-func (t *TL_channels_channelParticipant) Set_participant(_participant []byte) {
+func (t *TL_channels_channelParticipant) Set_participant(_participant TLObject) {
 	t._participant = _participant
 }
 
-func (t *TL_channels_channelParticipant) Get_participant() []byte {
+func (t *TL_channels_channelParticipant) Get_participant() TLObject {
 	return t._participant
 }
 
-func (t *TL_channels_channelParticipant) Set_users(_users []byte) {
+func (t *TL_channels_channelParticipant) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_channels_channelParticipant) Get_users() []byte {
+func (t *TL_channels_channelParticipant) Get_users() TLObject {
 	return t._users
 }
 
@@ -22421,8 +22421,8 @@ func (t *TL_foundGif) Decode(b []byte) {
 // foundGifCached#9c750409
 type TL_foundGifCached struct {
 	_url      string
-	_photo    []byte
-	_document []byte
+	_photo    TLObject
+	_document TLObject
 }
 
 func (t *TL_foundGifCached) Set_url(_url string) {
@@ -22433,19 +22433,19 @@ func (t *TL_foundGifCached) Get_url() string {
 	return t._url
 }
 
-func (t *TL_foundGifCached) Set_photo(_photo []byte) {
+func (t *TL_foundGifCached) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_foundGifCached) Get_photo() []byte {
+func (t *TL_foundGifCached) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_foundGifCached) Set_document(_document []byte) {
+func (t *TL_foundGifCached) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_foundGifCached) Get_document() []byte {
+func (t *TL_foundGifCached) Get_document() TLObject {
 	return t._document
 }
 
@@ -22476,7 +22476,7 @@ func (t *TL_foundGifCached) Decode(b []byte) {
 // messages_foundGifs#450a1c0a
 type TL_messages_foundGifs struct {
 	_next_offset int32
-	_results     []byte
+	_results     TLObject
 }
 
 func (t *TL_messages_foundGifs) Set_next_offset(_next_offset int32) {
@@ -22487,11 +22487,11 @@ func (t *TL_messages_foundGifs) Get_next_offset() int32 {
 	return t._next_offset
 }
 
-func (t *TL_messages_foundGifs) Set_results(_results []byte) {
+func (t *TL_messages_foundGifs) Set_results(_results TLObject) {
 	t._results = _results
 }
 
-func (t *TL_messages_foundGifs) Get_results() []byte {
+func (t *TL_messages_foundGifs) Get_results() TLObject {
 	return t._results
 }
 
@@ -22536,7 +22536,7 @@ func (t *TL_messages_savedGifsNotModified) Decode(b []byte) {
 // messages_savedGifs#2e0709a5
 type TL_messages_savedGifs struct {
 	_hash int32
-	_gifs []byte
+	_gifs TLObject
 }
 
 func (t *TL_messages_savedGifs) Set_hash(_hash int32) {
@@ -22547,11 +22547,11 @@ func (t *TL_messages_savedGifs) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_messages_savedGifs) Set_gifs(_gifs []byte) {
+func (t *TL_messages_savedGifs) Set_gifs(_gifs TLObject) {
 	t._gifs = _gifs
 }
 
-func (t *TL_messages_savedGifs) Get_gifs() []byte {
+func (t *TL_messages_savedGifs) Get_gifs() TLObject {
 	return t._gifs
 }
 
@@ -22579,16 +22579,16 @@ func (t *TL_messages_savedGifs) Decode(b []byte) {
 
 // inputBotInlineMessageMediaAuto#292fed13
 type TL_inputBotInlineMessageMediaAuto struct {
-	_flags        []byte
+	_flags        TLObject
 	_caption      string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageMediaAuto) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageMediaAuto) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -22600,11 +22600,11 @@ func (t *TL_inputBotInlineMessageMediaAuto) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageMediaAuto) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageMediaAuto) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22632,26 +22632,26 @@ func (t *TL_inputBotInlineMessageMediaAuto) Decode(b []byte) {
 
 // inputBotInlineMessageText#3dcd7a87
 type TL_inputBotInlineMessageText struct {
-	_flags        []byte
-	_no_webpage   []byte
+	_flags        TLObject
+	_no_webpage   TLObject
 	_message      string
-	_entities     []byte
-	_reply_markup []byte
+	_entities     TLObject
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageText) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageText) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageText) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageText) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputBotInlineMessageText) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_inputBotInlineMessageText) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_inputBotInlineMessageText) Get_no_webpage() []byte {
+func (t *TL_inputBotInlineMessageText) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
@@ -22663,19 +22663,19 @@ func (t *TL_inputBotInlineMessageText) Get_message() string {
 	return t._message
 }
 
-func (t *TL_inputBotInlineMessageText) Set_entities(_entities []byte) {
+func (t *TL_inputBotInlineMessageText) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_inputBotInlineMessageText) Get_entities() []byte {
+func (t *TL_inputBotInlineMessageText) Get_entities() TLObject {
 	return t._entities
 }
 
-func (t *TL_inputBotInlineMessageText) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageText) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageText) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageText) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22707,25 +22707,25 @@ func (t *TL_inputBotInlineMessageText) Decode(b []byte) {
 
 // inputBotInlineMessageMediaGeo#c1b15d65
 type TL_inputBotInlineMessageMediaGeo struct {
-	_flags        []byte
-	_geo_point    []byte
+	_flags        TLObject
+	_geo_point    TLObject
 	_period       int32
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageMediaGeo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageMediaGeo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Set_geo_point(_geo_point []byte) {
+func (t *TL_inputBotInlineMessageMediaGeo) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Get_geo_point() []byte {
+func (t *TL_inputBotInlineMessageMediaGeo) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -22737,11 +22737,11 @@ func (t *TL_inputBotInlineMessageMediaGeo) Get_period() int32 {
 	return t._period
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageMediaGeo) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageMediaGeo) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22771,28 +22771,28 @@ func (t *TL_inputBotInlineMessageMediaGeo) Decode(b []byte) {
 
 // inputBotInlineMessageMediaVenue#aaafadc8
 type TL_inputBotInlineMessageMediaVenue struct {
-	_flags        []byte
-	_geo_point    []byte
+	_flags        TLObject
+	_geo_point    TLObject
 	_title        string
 	_address      string
 	_provider     string
 	_venue_id     string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageMediaVenue) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageMediaVenue) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Set_geo_point(_geo_point []byte) {
+func (t *TL_inputBotInlineMessageMediaVenue) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Get_geo_point() []byte {
+func (t *TL_inputBotInlineMessageMediaVenue) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -22828,11 +22828,11 @@ func (t *TL_inputBotInlineMessageMediaVenue) Get_venue_id() string {
 	return t._venue_id
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageMediaVenue) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageMediaVenue) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22868,18 +22868,18 @@ func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) {
 
 // inputBotInlineMessageMediaContact#2daf01a7
 type TL_inputBotInlineMessageMediaContact struct {
-	_flags        []byte
+	_flags        TLObject
 	_phone_number string
 	_first_name   string
 	_last_name    string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageMediaContact) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageMediaContact) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -22907,11 +22907,11 @@ func (t *TL_inputBotInlineMessageMediaContact) Get_last_name() string {
 	return t._last_name
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageMediaContact) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageMediaContact) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22943,23 +22943,23 @@ func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) {
 
 // inputBotInlineMessageGame#4b425864
 type TL_inputBotInlineMessageGame struct {
-	_flags        []byte
-	_reply_markup []byte
+	_flags        TLObject
+	_reply_markup TLObject
 }
 
-func (t *TL_inputBotInlineMessageGame) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineMessageGame) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineMessageGame) Get_flags() []byte {
+func (t *TL_inputBotInlineMessageGame) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputBotInlineMessageGame) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_inputBotInlineMessageGame) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_inputBotInlineMessageGame) Get_reply_markup() []byte {
+func (t *TL_inputBotInlineMessageGame) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -22985,26 +22985,26 @@ func (t *TL_inputBotInlineMessageGame) Decode(b []byte) {
 
 // inputBotInlineResult#2cbbe15a
 type TL_inputBotInlineResult struct {
-	_flags        []byte
+	_flags        TLObject
 	_id           string
 	_type         string
-	_title        []byte
-	_description  []byte
-	_url          []byte
-	_thumb_url    []byte
-	_content_url  []byte
-	_content_type []byte
-	_w            []byte
-	_h            []byte
-	_duration     []byte
-	_send_message []byte
+	_title        TLObject
+	_description  TLObject
+	_url          TLObject
+	_thumb_url    TLObject
+	_content_url  TLObject
+	_content_type TLObject
+	_w            TLObject
+	_h            TLObject
+	_duration     TLObject
+	_send_message TLObject
 }
 
-func (t *TL_inputBotInlineResult) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineResult) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineResult) Get_flags() []byte {
+func (t *TL_inputBotInlineResult) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23024,83 +23024,83 @@ func (t *TL_inputBotInlineResult) Get_type() string {
 	return t._type
 }
 
-func (t *TL_inputBotInlineResult) Set_title(_title []byte) {
+func (t *TL_inputBotInlineResult) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_inputBotInlineResult) Get_title() []byte {
+func (t *TL_inputBotInlineResult) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_inputBotInlineResult) Set_description(_description []byte) {
+func (t *TL_inputBotInlineResult) Set_description(_description TLObject) {
 	t._description = _description
 }
 
-func (t *TL_inputBotInlineResult) Get_description() []byte {
+func (t *TL_inputBotInlineResult) Get_description() TLObject {
 	return t._description
 }
 
-func (t *TL_inputBotInlineResult) Set_url(_url []byte) {
+func (t *TL_inputBotInlineResult) Set_url(_url TLObject) {
 	t._url = _url
 }
 
-func (t *TL_inputBotInlineResult) Get_url() []byte {
+func (t *TL_inputBotInlineResult) Get_url() TLObject {
 	return t._url
 }
 
-func (t *TL_inputBotInlineResult) Set_thumb_url(_thumb_url []byte) {
+func (t *TL_inputBotInlineResult) Set_thumb_url(_thumb_url TLObject) {
 	t._thumb_url = _thumb_url
 }
 
-func (t *TL_inputBotInlineResult) Get_thumb_url() []byte {
+func (t *TL_inputBotInlineResult) Get_thumb_url() TLObject {
 	return t._thumb_url
 }
 
-func (t *TL_inputBotInlineResult) Set_content_url(_content_url []byte) {
+func (t *TL_inputBotInlineResult) Set_content_url(_content_url TLObject) {
 	t._content_url = _content_url
 }
 
-func (t *TL_inputBotInlineResult) Get_content_url() []byte {
+func (t *TL_inputBotInlineResult) Get_content_url() TLObject {
 	return t._content_url
 }
 
-func (t *TL_inputBotInlineResult) Set_content_type(_content_type []byte) {
+func (t *TL_inputBotInlineResult) Set_content_type(_content_type TLObject) {
 	t._content_type = _content_type
 }
 
-func (t *TL_inputBotInlineResult) Get_content_type() []byte {
+func (t *TL_inputBotInlineResult) Get_content_type() TLObject {
 	return t._content_type
 }
 
-func (t *TL_inputBotInlineResult) Set_w(_w []byte) {
+func (t *TL_inputBotInlineResult) Set_w(_w TLObject) {
 	t._w = _w
 }
 
-func (t *TL_inputBotInlineResult) Get_w() []byte {
+func (t *TL_inputBotInlineResult) Get_w() TLObject {
 	return t._w
 }
 
-func (t *TL_inputBotInlineResult) Set_h(_h []byte) {
+func (t *TL_inputBotInlineResult) Set_h(_h TLObject) {
 	t._h = _h
 }
 
-func (t *TL_inputBotInlineResult) Get_h() []byte {
+func (t *TL_inputBotInlineResult) Get_h() TLObject {
 	return t._h
 }
 
-func (t *TL_inputBotInlineResult) Set_duration(_duration []byte) {
+func (t *TL_inputBotInlineResult) Set_duration(_duration TLObject) {
 	t._duration = _duration
 }
 
-func (t *TL_inputBotInlineResult) Get_duration() []byte {
+func (t *TL_inputBotInlineResult) Get_duration() TLObject {
 	return t._duration
 }
 
-func (t *TL_inputBotInlineResult) Set_send_message(_send_message []byte) {
+func (t *TL_inputBotInlineResult) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_inputBotInlineResult) Get_send_message() []byte {
+func (t *TL_inputBotInlineResult) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -23150,8 +23150,8 @@ func (t *TL_inputBotInlineResult) Decode(b []byte) {
 type TL_inputBotInlineResultPhoto struct {
 	_id           string
 	_type         string
-	_photo        []byte
-	_send_message []byte
+	_photo        TLObject
+	_send_message TLObject
 }
 
 func (t *TL_inputBotInlineResultPhoto) Set_id(_id string) {
@@ -23170,19 +23170,19 @@ func (t *TL_inputBotInlineResultPhoto) Get_type() string {
 	return t._type
 }
 
-func (t *TL_inputBotInlineResultPhoto) Set_photo(_photo []byte) {
+func (t *TL_inputBotInlineResultPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_inputBotInlineResultPhoto) Get_photo() []byte {
+func (t *TL_inputBotInlineResultPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_inputBotInlineResultPhoto) Set_send_message(_send_message []byte) {
+func (t *TL_inputBotInlineResultPhoto) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_inputBotInlineResultPhoto) Get_send_message() []byte {
+func (t *TL_inputBotInlineResultPhoto) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -23214,20 +23214,20 @@ func (t *TL_inputBotInlineResultPhoto) Decode(b []byte) {
 
 // inputBotInlineResultDocument#fff8fdc4
 type TL_inputBotInlineResultDocument struct {
-	_flags        []byte
+	_flags        TLObject
 	_id           string
 	_type         string
-	_title        []byte
-	_description  []byte
-	_document     []byte
-	_send_message []byte
+	_title        TLObject
+	_description  TLObject
+	_document     TLObject
+	_send_message TLObject
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_flags(_flags []byte) {
+func (t *TL_inputBotInlineResultDocument) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_flags() []byte {
+func (t *TL_inputBotInlineResultDocument) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23247,35 +23247,35 @@ func (t *TL_inputBotInlineResultDocument) Get_type() string {
 	return t._type
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_title(_title []byte) {
+func (t *TL_inputBotInlineResultDocument) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_title() []byte {
+func (t *TL_inputBotInlineResultDocument) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_description(_description []byte) {
+func (t *TL_inputBotInlineResultDocument) Set_description(_description TLObject) {
 	t._description = _description
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_description() []byte {
+func (t *TL_inputBotInlineResultDocument) Get_description() TLObject {
 	return t._description
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_document(_document []byte) {
+func (t *TL_inputBotInlineResultDocument) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_document() []byte {
+func (t *TL_inputBotInlineResultDocument) Get_document() TLObject {
 	return t._document
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_send_message(_send_message []byte) {
+func (t *TL_inputBotInlineResultDocument) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_send_message() []byte {
+func (t *TL_inputBotInlineResultDocument) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -23313,7 +23313,7 @@ func (t *TL_inputBotInlineResultDocument) Decode(b []byte) {
 type TL_inputBotInlineResultGame struct {
 	_id           string
 	_short_name   string
-	_send_message []byte
+	_send_message TLObject
 }
 
 func (t *TL_inputBotInlineResultGame) Set_id(_id string) {
@@ -23332,11 +23332,11 @@ func (t *TL_inputBotInlineResultGame) Get_short_name() string {
 	return t._short_name
 }
 
-func (t *TL_inputBotInlineResultGame) Set_send_message(_send_message []byte) {
+func (t *TL_inputBotInlineResultGame) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_inputBotInlineResultGame) Get_send_message() []byte {
+func (t *TL_inputBotInlineResultGame) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -23364,18 +23364,18 @@ func (t *TL_inputBotInlineResultGame) Decode(b []byte) {
 
 }
 
-// botInlineMessageMediaAuto#0a74b15b
+// botInlineMessageMediaAuto#a74b15b
 type TL_botInlineMessageMediaAuto struct {
-	_flags        []byte
+	_flags        TLObject
 	_caption      string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_botInlineMessageMediaAuto) Set_flags(_flags []byte) {
+func (t *TL_botInlineMessageMediaAuto) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMessageMediaAuto) Get_flags() []byte {
+func (t *TL_botInlineMessageMediaAuto) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23387,11 +23387,11 @@ func (t *TL_botInlineMessageMediaAuto) Get_caption() string {
 	return t._caption
 }
 
-func (t *TL_botInlineMessageMediaAuto) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_botInlineMessageMediaAuto) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_botInlineMessageMediaAuto) Get_reply_markup() []byte {
+func (t *TL_botInlineMessageMediaAuto) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -23419,26 +23419,26 @@ func (t *TL_botInlineMessageMediaAuto) Decode(b []byte) {
 
 // botInlineMessageText#8c7f65e2
 type TL_botInlineMessageText struct {
-	_flags        []byte
-	_no_webpage   []byte
+	_flags        TLObject
+	_no_webpage   TLObject
 	_message      string
-	_entities     []byte
-	_reply_markup []byte
+	_entities     TLObject
+	_reply_markup TLObject
 }
 
-func (t *TL_botInlineMessageText) Set_flags(_flags []byte) {
+func (t *TL_botInlineMessageText) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMessageText) Get_flags() []byte {
+func (t *TL_botInlineMessageText) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_botInlineMessageText) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_botInlineMessageText) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_botInlineMessageText) Get_no_webpage() []byte {
+func (t *TL_botInlineMessageText) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
@@ -23450,19 +23450,19 @@ func (t *TL_botInlineMessageText) Get_message() string {
 	return t._message
 }
 
-func (t *TL_botInlineMessageText) Set_entities(_entities []byte) {
+func (t *TL_botInlineMessageText) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_botInlineMessageText) Get_entities() []byte {
+func (t *TL_botInlineMessageText) Get_entities() TLObject {
 	return t._entities
 }
 
-func (t *TL_botInlineMessageText) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_botInlineMessageText) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_botInlineMessageText) Get_reply_markup() []byte {
+func (t *TL_botInlineMessageText) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -23494,25 +23494,25 @@ func (t *TL_botInlineMessageText) Decode(b []byte) {
 
 // botInlineMessageMediaGeo#b722de65
 type TL_botInlineMessageMediaGeo struct {
-	_flags        []byte
-	_geo          []byte
+	_flags        TLObject
+	_geo          TLObject
 	_period       int32
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_botInlineMessageMediaGeo) Set_flags(_flags []byte) {
+func (t *TL_botInlineMessageMediaGeo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMessageMediaGeo) Get_flags() []byte {
+func (t *TL_botInlineMessageMediaGeo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_botInlineMessageMediaGeo) Set_geo(_geo []byte) {
+func (t *TL_botInlineMessageMediaGeo) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_botInlineMessageMediaGeo) Get_geo() []byte {
+func (t *TL_botInlineMessageMediaGeo) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -23524,11 +23524,11 @@ func (t *TL_botInlineMessageMediaGeo) Get_period() int32 {
 	return t._period
 }
 
-func (t *TL_botInlineMessageMediaGeo) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_botInlineMessageMediaGeo) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_botInlineMessageMediaGeo) Get_reply_markup() []byte {
+func (t *TL_botInlineMessageMediaGeo) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -23558,28 +23558,28 @@ func (t *TL_botInlineMessageMediaGeo) Decode(b []byte) {
 
 // botInlineMessageMediaVenue#4366232e
 type TL_botInlineMessageMediaVenue struct {
-	_flags        []byte
-	_geo          []byte
+	_flags        TLObject
+	_geo          TLObject
 	_title        string
 	_address      string
 	_provider     string
 	_venue_id     string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_botInlineMessageMediaVenue) Set_flags(_flags []byte) {
+func (t *TL_botInlineMessageMediaVenue) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMessageMediaVenue) Get_flags() []byte {
+func (t *TL_botInlineMessageMediaVenue) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_botInlineMessageMediaVenue) Set_geo(_geo []byte) {
+func (t *TL_botInlineMessageMediaVenue) Set_geo(_geo TLObject) {
 	t._geo = _geo
 }
 
-func (t *TL_botInlineMessageMediaVenue) Get_geo() []byte {
+func (t *TL_botInlineMessageMediaVenue) Get_geo() TLObject {
 	return t._geo
 }
 
@@ -23615,11 +23615,11 @@ func (t *TL_botInlineMessageMediaVenue) Get_venue_id() string {
 	return t._venue_id
 }
 
-func (t *TL_botInlineMessageMediaVenue) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_botInlineMessageMediaVenue) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_botInlineMessageMediaVenue) Get_reply_markup() []byte {
+func (t *TL_botInlineMessageMediaVenue) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -23655,18 +23655,18 @@ func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) {
 
 // botInlineMessageMediaContact#35edb4d4
 type TL_botInlineMessageMediaContact struct {
-	_flags        []byte
+	_flags        TLObject
 	_phone_number string
 	_first_name   string
 	_last_name    string
-	_reply_markup []byte
+	_reply_markup TLObject
 }
 
-func (t *TL_botInlineMessageMediaContact) Set_flags(_flags []byte) {
+func (t *TL_botInlineMessageMediaContact) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMessageMediaContact) Get_flags() []byte {
+func (t *TL_botInlineMessageMediaContact) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23694,11 +23694,11 @@ func (t *TL_botInlineMessageMediaContact) Get_last_name() string {
 	return t._last_name
 }
 
-func (t *TL_botInlineMessageMediaContact) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_botInlineMessageMediaContact) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_botInlineMessageMediaContact) Get_reply_markup() []byte {
+func (t *TL_botInlineMessageMediaContact) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -23730,26 +23730,26 @@ func (t *TL_botInlineMessageMediaContact) Decode(b []byte) {
 
 // botInlineResult#9bebaeb9
 type TL_botInlineResult struct {
-	_flags        []byte
+	_flags        TLObject
 	_id           string
 	_type         string
-	_title        []byte
-	_description  []byte
-	_url          []byte
-	_thumb_url    []byte
-	_content_url  []byte
-	_content_type []byte
-	_w            []byte
-	_h            []byte
-	_duration     []byte
-	_send_message []byte
+	_title        TLObject
+	_description  TLObject
+	_url          TLObject
+	_thumb_url    TLObject
+	_content_url  TLObject
+	_content_type TLObject
+	_w            TLObject
+	_h            TLObject
+	_duration     TLObject
+	_send_message TLObject
 }
 
-func (t *TL_botInlineResult) Set_flags(_flags []byte) {
+func (t *TL_botInlineResult) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineResult) Get_flags() []byte {
+func (t *TL_botInlineResult) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23769,83 +23769,83 @@ func (t *TL_botInlineResult) Get_type() string {
 	return t._type
 }
 
-func (t *TL_botInlineResult) Set_title(_title []byte) {
+func (t *TL_botInlineResult) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_botInlineResult) Get_title() []byte {
+func (t *TL_botInlineResult) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_botInlineResult) Set_description(_description []byte) {
+func (t *TL_botInlineResult) Set_description(_description TLObject) {
 	t._description = _description
 }
 
-func (t *TL_botInlineResult) Get_description() []byte {
+func (t *TL_botInlineResult) Get_description() TLObject {
 	return t._description
 }
 
-func (t *TL_botInlineResult) Set_url(_url []byte) {
+func (t *TL_botInlineResult) Set_url(_url TLObject) {
 	t._url = _url
 }
 
-func (t *TL_botInlineResult) Get_url() []byte {
+func (t *TL_botInlineResult) Get_url() TLObject {
 	return t._url
 }
 
-func (t *TL_botInlineResult) Set_thumb_url(_thumb_url []byte) {
+func (t *TL_botInlineResult) Set_thumb_url(_thumb_url TLObject) {
 	t._thumb_url = _thumb_url
 }
 
-func (t *TL_botInlineResult) Get_thumb_url() []byte {
+func (t *TL_botInlineResult) Get_thumb_url() TLObject {
 	return t._thumb_url
 }
 
-func (t *TL_botInlineResult) Set_content_url(_content_url []byte) {
+func (t *TL_botInlineResult) Set_content_url(_content_url TLObject) {
 	t._content_url = _content_url
 }
 
-func (t *TL_botInlineResult) Get_content_url() []byte {
+func (t *TL_botInlineResult) Get_content_url() TLObject {
 	return t._content_url
 }
 
-func (t *TL_botInlineResult) Set_content_type(_content_type []byte) {
+func (t *TL_botInlineResult) Set_content_type(_content_type TLObject) {
 	t._content_type = _content_type
 }
 
-func (t *TL_botInlineResult) Get_content_type() []byte {
+func (t *TL_botInlineResult) Get_content_type() TLObject {
 	return t._content_type
 }
 
-func (t *TL_botInlineResult) Set_w(_w []byte) {
+func (t *TL_botInlineResult) Set_w(_w TLObject) {
 	t._w = _w
 }
 
-func (t *TL_botInlineResult) Get_w() []byte {
+func (t *TL_botInlineResult) Get_w() TLObject {
 	return t._w
 }
 
-func (t *TL_botInlineResult) Set_h(_h []byte) {
+func (t *TL_botInlineResult) Set_h(_h TLObject) {
 	t._h = _h
 }
 
-func (t *TL_botInlineResult) Get_h() []byte {
+func (t *TL_botInlineResult) Get_h() TLObject {
 	return t._h
 }
 
-func (t *TL_botInlineResult) Set_duration(_duration []byte) {
+func (t *TL_botInlineResult) Set_duration(_duration TLObject) {
 	t._duration = _duration
 }
 
-func (t *TL_botInlineResult) Get_duration() []byte {
+func (t *TL_botInlineResult) Get_duration() TLObject {
 	return t._duration
 }
 
-func (t *TL_botInlineResult) Set_send_message(_send_message []byte) {
+func (t *TL_botInlineResult) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_botInlineResult) Get_send_message() []byte {
+func (t *TL_botInlineResult) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -23893,21 +23893,21 @@ func (t *TL_botInlineResult) Decode(b []byte) {
 
 // botInlineMediaResult#17db940b
 type TL_botInlineMediaResult struct {
-	_flags        []byte
+	_flags        TLObject
 	_id           string
 	_type         string
-	_photo        []byte
-	_document     []byte
-	_title        []byte
-	_description  []byte
-	_send_message []byte
+	_photo        TLObject
+	_document     TLObject
+	_title        TLObject
+	_description  TLObject
+	_send_message TLObject
 }
 
-func (t *TL_botInlineMediaResult) Set_flags(_flags []byte) {
+func (t *TL_botInlineMediaResult) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_botInlineMediaResult) Get_flags() []byte {
+func (t *TL_botInlineMediaResult) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -23927,43 +23927,43 @@ func (t *TL_botInlineMediaResult) Get_type() string {
 	return t._type
 }
 
-func (t *TL_botInlineMediaResult) Set_photo(_photo []byte) {
+func (t *TL_botInlineMediaResult) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_botInlineMediaResult) Get_photo() []byte {
+func (t *TL_botInlineMediaResult) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_botInlineMediaResult) Set_document(_document []byte) {
+func (t *TL_botInlineMediaResult) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_botInlineMediaResult) Get_document() []byte {
+func (t *TL_botInlineMediaResult) Get_document() TLObject {
 	return t._document
 }
 
-func (t *TL_botInlineMediaResult) Set_title(_title []byte) {
+func (t *TL_botInlineMediaResult) Set_title(_title TLObject) {
 	t._title = _title
 }
 
-func (t *TL_botInlineMediaResult) Get_title() []byte {
+func (t *TL_botInlineMediaResult) Get_title() TLObject {
 	return t._title
 }
 
-func (t *TL_botInlineMediaResult) Set_description(_description []byte) {
+func (t *TL_botInlineMediaResult) Set_description(_description TLObject) {
 	t._description = _description
 }
 
-func (t *TL_botInlineMediaResult) Get_description() []byte {
+func (t *TL_botInlineMediaResult) Get_description() TLObject {
 	return t._description
 }
 
-func (t *TL_botInlineMediaResult) Set_send_message(_send_message []byte) {
+func (t *TL_botInlineMediaResult) Set_send_message(_send_message TLObject) {
 	t._send_message = _send_message
 }
 
-func (t *TL_botInlineMediaResult) Get_send_message() []byte {
+func (t *TL_botInlineMediaResult) Get_send_message() TLObject {
 	return t._send_message
 }
 
@@ -24001,29 +24001,29 @@ func (t *TL_botInlineMediaResult) Decode(b []byte) {
 
 // messages_botResults#947ca848
 type TL_messages_botResults struct {
-	_flags       []byte
-	_gallery     []byte
+	_flags       TLObject
+	_gallery     TLObject
 	_query_id    int64
-	_next_offset []byte
-	_switch_pm   []byte
-	_results     []byte
+	_next_offset TLObject
+	_switch_pm   TLObject
+	_results     TLObject
 	_cache_time  int32
-	_users       []byte
+	_users       TLObject
 }
 
-func (t *TL_messages_botResults) Set_flags(_flags []byte) {
+func (t *TL_messages_botResults) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_botResults) Get_flags() []byte {
+func (t *TL_messages_botResults) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_botResults) Set_gallery(_gallery []byte) {
+func (t *TL_messages_botResults) Set_gallery(_gallery TLObject) {
 	t._gallery = _gallery
 }
 
-func (t *TL_messages_botResults) Get_gallery() []byte {
+func (t *TL_messages_botResults) Get_gallery() TLObject {
 	return t._gallery
 }
 
@@ -24035,27 +24035,27 @@ func (t *TL_messages_botResults) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_messages_botResults) Set_next_offset(_next_offset []byte) {
+func (t *TL_messages_botResults) Set_next_offset(_next_offset TLObject) {
 	t._next_offset = _next_offset
 }
 
-func (t *TL_messages_botResults) Get_next_offset() []byte {
+func (t *TL_messages_botResults) Get_next_offset() TLObject {
 	return t._next_offset
 }
 
-func (t *TL_messages_botResults) Set_switch_pm(_switch_pm []byte) {
+func (t *TL_messages_botResults) Set_switch_pm(_switch_pm TLObject) {
 	t._switch_pm = _switch_pm
 }
 
-func (t *TL_messages_botResults) Get_switch_pm() []byte {
+func (t *TL_messages_botResults) Get_switch_pm() TLObject {
 	return t._switch_pm
 }
 
-func (t *TL_messages_botResults) Set_results(_results []byte) {
+func (t *TL_messages_botResults) Set_results(_results TLObject) {
 	t._results = _results
 }
 
-func (t *TL_messages_botResults) Get_results() []byte {
+func (t *TL_messages_botResults) Get_results() TLObject {
 	return t._results
 }
 
@@ -24067,11 +24067,11 @@ func (t *TL_messages_botResults) Get_cache_time() int32 {
 	return t._cache_time
 }
 
-func (t *TL_messages_botResults) Set_users(_users []byte) {
+func (t *TL_messages_botResults) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_botResults) Get_users() []byte {
+func (t *TL_messages_botResults) Get_users() TLObject {
 	return t._users
 }
 
@@ -24142,29 +24142,29 @@ func (t *TL_exportedMessageLink) Decode(b []byte) {
 
 // messageFwdHeader#559ebe6d
 type TL_messageFwdHeader struct {
-	_flags             []byte
-	_from_id           []byte
+	_flags             TLObject
+	_from_id           TLObject
 	_date              int32
-	_channel_id        []byte
-	_channel_post      []byte
-	_post_author       []byte
-	_saved_from_peer   []byte
-	_saved_from_msg_id []byte
+	_channel_id        TLObject
+	_channel_post      TLObject
+	_post_author       TLObject
+	_saved_from_peer   TLObject
+	_saved_from_msg_id TLObject
 }
 
-func (t *TL_messageFwdHeader) Set_flags(_flags []byte) {
+func (t *TL_messageFwdHeader) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messageFwdHeader) Get_flags() []byte {
+func (t *TL_messageFwdHeader) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messageFwdHeader) Set_from_id(_from_id []byte) {
+func (t *TL_messageFwdHeader) Set_from_id(_from_id TLObject) {
 	t._from_id = _from_id
 }
 
-func (t *TL_messageFwdHeader) Get_from_id() []byte {
+func (t *TL_messageFwdHeader) Get_from_id() TLObject {
 	return t._from_id
 }
 
@@ -24176,43 +24176,43 @@ func (t *TL_messageFwdHeader) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_messageFwdHeader) Set_channel_id(_channel_id []byte) {
+func (t *TL_messageFwdHeader) Set_channel_id(_channel_id TLObject) {
 	t._channel_id = _channel_id
 }
 
-func (t *TL_messageFwdHeader) Get_channel_id() []byte {
+func (t *TL_messageFwdHeader) Get_channel_id() TLObject {
 	return t._channel_id
 }
 
-func (t *TL_messageFwdHeader) Set_channel_post(_channel_post []byte) {
+func (t *TL_messageFwdHeader) Set_channel_post(_channel_post TLObject) {
 	t._channel_post = _channel_post
 }
 
-func (t *TL_messageFwdHeader) Get_channel_post() []byte {
+func (t *TL_messageFwdHeader) Get_channel_post() TLObject {
 	return t._channel_post
 }
 
-func (t *TL_messageFwdHeader) Set_post_author(_post_author []byte) {
+func (t *TL_messageFwdHeader) Set_post_author(_post_author TLObject) {
 	t._post_author = _post_author
 }
 
-func (t *TL_messageFwdHeader) Get_post_author() []byte {
+func (t *TL_messageFwdHeader) Get_post_author() TLObject {
 	return t._post_author
 }
 
-func (t *TL_messageFwdHeader) Set_saved_from_peer(_saved_from_peer []byte) {
+func (t *TL_messageFwdHeader) Set_saved_from_peer(_saved_from_peer TLObject) {
 	t._saved_from_peer = _saved_from_peer
 }
 
-func (t *TL_messageFwdHeader) Get_saved_from_peer() []byte {
+func (t *TL_messageFwdHeader) Get_saved_from_peer() TLObject {
 	return t._saved_from_peer
 }
 
-func (t *TL_messageFwdHeader) Set_saved_from_msg_id(_saved_from_msg_id []byte) {
+func (t *TL_messageFwdHeader) Set_saved_from_msg_id(_saved_from_msg_id TLObject) {
 	t._saved_from_msg_id = _saved_from_msg_id
 }
 
-func (t *TL_messageFwdHeader) Get_saved_from_msg_id() []byte {
+func (t *TL_messageFwdHeader) Get_saved_from_msg_id() TLObject {
 	return t._saved_from_msg_id
 }
 
@@ -24430,60 +24430,60 @@ func (t *TL_auth_sentCodeTypeFlashCall) Decode(b []byte) {
 
 // messages_botCallbackAnswer#36585ea4
 type TL_messages_botCallbackAnswer struct {
-	_flags      []byte
-	_alert      []byte
-	_has_url    []byte
-	_native_ui  []byte
-	_message    []byte
-	_url        []byte
+	_flags      TLObject
+	_alert      TLObject
+	_has_url    TLObject
+	_native_ui  TLObject
+	_message    TLObject
+	_url        TLObject
 	_cache_time int32
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_flags(_flags []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_flags() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_alert(_alert []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_alert(_alert TLObject) {
 	t._alert = _alert
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_alert() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_alert() TLObject {
 	return t._alert
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_has_url(_has_url []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_has_url(_has_url TLObject) {
 	t._has_url = _has_url
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_has_url() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_has_url() TLObject {
 	return t._has_url
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_native_ui(_native_ui []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_native_ui(_native_ui TLObject) {
 	t._native_ui = _native_ui
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_native_ui() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_native_ui() TLObject {
 	return t._native_ui
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_message(_message []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_message() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_message() TLObject {
 	return t._message
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_url(_url []byte) {
+func (t *TL_messages_botCallbackAnswer) Set_url(_url TLObject) {
 	t._url = _url
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_url() []byte {
+func (t *TL_messages_botCallbackAnswer) Get_url() TLObject {
 	return t._url
 }
 
@@ -24527,23 +24527,23 @@ func (t *TL_messages_botCallbackAnswer) Decode(b []byte) {
 
 // messages_messageEditData#26b5dde6
 type TL_messages_messageEditData struct {
-	_flags   []byte
-	_caption []byte
+	_flags   TLObject
+	_caption TLObject
 }
 
-func (t *TL_messages_messageEditData) Set_flags(_flags []byte) {
+func (t *TL_messages_messageEditData) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_messageEditData) Get_flags() []byte {
+func (t *TL_messages_messageEditData) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_messageEditData) Set_caption(_caption []byte) {
+func (t *TL_messages_messageEditData) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_messages_messageEditData) Get_caption() []byte {
+func (t *TL_messages_messageEditData) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -24668,50 +24668,50 @@ func (t *TL_inlineBotSwitchPM) Decode(b []byte) {
 
 // messages_peerDialogs#3371c354
 type TL_messages_peerDialogs struct {
-	_dialogs  []byte
-	_messages []byte
-	_chats    []byte
-	_users    []byte
-	_state    []byte
+	_dialogs  TLObject
+	_messages TLObject
+	_chats    TLObject
+	_users    TLObject
+	_state    TLObject
 }
 
-func (t *TL_messages_peerDialogs) Set_dialogs(_dialogs []byte) {
+func (t *TL_messages_peerDialogs) Set_dialogs(_dialogs TLObject) {
 	t._dialogs = _dialogs
 }
 
-func (t *TL_messages_peerDialogs) Get_dialogs() []byte {
+func (t *TL_messages_peerDialogs) Get_dialogs() TLObject {
 	return t._dialogs
 }
 
-func (t *TL_messages_peerDialogs) Set_messages(_messages []byte) {
+func (t *TL_messages_peerDialogs) Set_messages(_messages TLObject) {
 	t._messages = _messages
 }
 
-func (t *TL_messages_peerDialogs) Get_messages() []byte {
+func (t *TL_messages_peerDialogs) Get_messages() TLObject {
 	return t._messages
 }
 
-func (t *TL_messages_peerDialogs) Set_chats(_chats []byte) {
+func (t *TL_messages_peerDialogs) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_messages_peerDialogs) Get_chats() []byte {
+func (t *TL_messages_peerDialogs) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_messages_peerDialogs) Set_users(_users []byte) {
+func (t *TL_messages_peerDialogs) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_peerDialogs) Get_users() []byte {
+func (t *TL_messages_peerDialogs) Get_users() TLObject {
 	return t._users
 }
 
-func (t *TL_messages_peerDialogs) Set_state(_state []byte) {
+func (t *TL_messages_peerDialogs) Set_state(_state TLObject) {
 	t._state = _state
 }
 
-func (t *TL_messages_peerDialogs) Get_state() []byte {
+func (t *TL_messages_peerDialogs) Get_state() TLObject {
 	return t._state
 }
 
@@ -24745,15 +24745,15 @@ func (t *TL_messages_peerDialogs) Decode(b []byte) {
 
 // topPeer#edcdc05b
 type TL_topPeer struct {
-	_peer   []byte
+	_peer   TLObject
 	_rating float64
 }
 
-func (t *TL_topPeer) Set_peer(_peer []byte) {
+func (t *TL_topPeer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_topPeer) Get_peer() []byte {
+func (t *TL_topPeer) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -24819,7 +24819,7 @@ func (t *TL_topPeerCategoryBotsInline) Decode(b []byte) {
 
 }
 
-// topPeerCategoryCorrespondents#0637b7ed
+// topPeerCategoryCorrespondents#637b7ed
 type TL_topPeerCategoryCorrespondents struct {
 }
 
@@ -24885,16 +24885,16 @@ func (t *TL_topPeerCategoryPhoneCalls) Decode(b []byte) {
 
 // topPeerCategoryPeers#fb834291
 type TL_topPeerCategoryPeers struct {
-	_category []byte
+	_category TLObject
 	_count    int32
-	_peers    []byte
+	_peers    TLObject
 }
 
-func (t *TL_topPeerCategoryPeers) Set_category(_category []byte) {
+func (t *TL_topPeerCategoryPeers) Set_category(_category TLObject) {
 	t._category = _category
 }
 
-func (t *TL_topPeerCategoryPeers) Get_category() []byte {
+func (t *TL_topPeerCategoryPeers) Get_category() TLObject {
 	return t._category
 }
 
@@ -24906,11 +24906,11 @@ func (t *TL_topPeerCategoryPeers) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_topPeerCategoryPeers) Set_peers(_peers []byte) {
+func (t *TL_topPeerCategoryPeers) Set_peers(_peers TLObject) {
 	t._peers = _peers
 }
 
-func (t *TL_topPeerCategoryPeers) Get_peers() []byte {
+func (t *TL_topPeerCategoryPeers) Get_peers() TLObject {
 	return t._peers
 }
 
@@ -24956,32 +24956,32 @@ func (t *TL_contacts_topPeersNotModified) Decode(b []byte) {
 
 // contacts_topPeers#70b772a8
 type TL_contacts_topPeers struct {
-	_categories []byte
-	_chats      []byte
-	_users      []byte
+	_categories TLObject
+	_chats      TLObject
+	_users      TLObject
 }
 
-func (t *TL_contacts_topPeers) Set_categories(_categories []byte) {
+func (t *TL_contacts_topPeers) Set_categories(_categories TLObject) {
 	t._categories = _categories
 }
 
-func (t *TL_contacts_topPeers) Get_categories() []byte {
+func (t *TL_contacts_topPeers) Get_categories() TLObject {
 	return t._categories
 }
 
-func (t *TL_contacts_topPeers) Set_chats(_chats []byte) {
+func (t *TL_contacts_topPeers) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_contacts_topPeers) Get_chats() []byte {
+func (t *TL_contacts_topPeers) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_contacts_topPeers) Set_users(_users []byte) {
+func (t *TL_contacts_topPeers) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_contacts_topPeers) Get_users() []byte {
+func (t *TL_contacts_topPeers) Get_users() TLObject {
 	return t._users
 }
 
@@ -25027,35 +25027,35 @@ func (t *TL_draftMessageEmpty) Decode(b []byte) {
 
 // draftMessage#fd8e711f
 type TL_draftMessage struct {
-	_flags           []byte
-	_no_webpage      []byte
-	_reply_to_msg_id []byte
+	_flags           TLObject
+	_no_webpage      TLObject
+	_reply_to_msg_id TLObject
 	_message         string
-	_entities        []byte
+	_entities        TLObject
 	_date            int32
 }
 
-func (t *TL_draftMessage) Set_flags(_flags []byte) {
+func (t *TL_draftMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_draftMessage) Get_flags() []byte {
+func (t *TL_draftMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_draftMessage) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_draftMessage) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_draftMessage) Get_no_webpage() []byte {
+func (t *TL_draftMessage) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
-func (t *TL_draftMessage) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_draftMessage) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_draftMessage) Get_reply_to_msg_id() []byte {
+func (t *TL_draftMessage) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
@@ -25067,11 +25067,11 @@ func (t *TL_draftMessage) Get_message() string {
 	return t._message
 }
 
-func (t *TL_draftMessage) Set_entities(_entities []byte) {
+func (t *TL_draftMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_draftMessage) Get_entities() []byte {
+func (t *TL_draftMessage) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -25111,7 +25111,7 @@ func (t *TL_draftMessage) Decode(b []byte) {
 
 }
 
-// messages_featuredStickersNotModified#04ede3cf
+// messages_featuredStickersNotModified#4ede3cf
 type TL_messages_featuredStickersNotModified struct {
 }
 
@@ -25130,8 +25130,8 @@ func (t *TL_messages_featuredStickersNotModified) Decode(b []byte) {
 // messages_featuredStickers#f89d88e5
 type TL_messages_featuredStickers struct {
 	_hash   int32
-	_sets   []byte
-	_unread []byte
+	_sets   TLObject
+	_unread TLObject
 }
 
 func (t *TL_messages_featuredStickers) Set_hash(_hash int32) {
@@ -25142,19 +25142,19 @@ func (t *TL_messages_featuredStickers) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_messages_featuredStickers) Set_sets(_sets []byte) {
+func (t *TL_messages_featuredStickers) Set_sets(_sets TLObject) {
 	t._sets = _sets
 }
 
-func (t *TL_messages_featuredStickers) Get_sets() []byte {
+func (t *TL_messages_featuredStickers) Get_sets() TLObject {
 	return t._sets
 }
 
-func (t *TL_messages_featuredStickers) Set_unread(_unread []byte) {
+func (t *TL_messages_featuredStickers) Set_unread(_unread TLObject) {
 	t._unread = _unread
 }
 
-func (t *TL_messages_featuredStickers) Get_unread() []byte {
+func (t *TL_messages_featuredStickers) Get_unread() TLObject {
 	return t._unread
 }
 
@@ -25182,7 +25182,7 @@ func (t *TL_messages_featuredStickers) Decode(b []byte) {
 
 }
 
-// messages_recentStickersNotModified#0b17f890
+// messages_recentStickersNotModified#b17f890
 type TL_messages_recentStickersNotModified struct {
 }
 
@@ -25201,7 +25201,7 @@ func (t *TL_messages_recentStickersNotModified) Decode(b []byte) {
 // messages_recentStickers#5ce20970
 type TL_messages_recentStickers struct {
 	_hash     int32
-	_stickers []byte
+	_stickers TLObject
 }
 
 func (t *TL_messages_recentStickers) Set_hash(_hash int32) {
@@ -25212,11 +25212,11 @@ func (t *TL_messages_recentStickers) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_messages_recentStickers) Set_stickers(_stickers []byte) {
+func (t *TL_messages_recentStickers) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_messages_recentStickers) Get_stickers() []byte {
+func (t *TL_messages_recentStickers) Get_stickers() TLObject {
 	return t._stickers
 }
 
@@ -25245,7 +25245,7 @@ func (t *TL_messages_recentStickers) Decode(b []byte) {
 // messages_archivedStickers#4fcba9c8
 type TL_messages_archivedStickers struct {
 	_count int32
-	_sets  []byte
+	_sets  TLObject
 }
 
 func (t *TL_messages_archivedStickers) Set_count(_count int32) {
@@ -25256,11 +25256,11 @@ func (t *TL_messages_archivedStickers) Get_count() int32 {
 	return t._count
 }
 
-func (t *TL_messages_archivedStickers) Set_sets(_sets []byte) {
+func (t *TL_messages_archivedStickers) Set_sets(_sets TLObject) {
 	t._sets = _sets
 }
 
-func (t *TL_messages_archivedStickers) Get_sets() []byte {
+func (t *TL_messages_archivedStickers) Get_sets() TLObject {
 	return t._sets
 }
 
@@ -25304,14 +25304,14 @@ func (t *TL_messages_stickerSetInstallResultSuccess) Decode(b []byte) {
 
 // messages_stickerSetInstallResultArchive#35e410a8
 type TL_messages_stickerSetInstallResultArchive struct {
-	_sets []byte
+	_sets TLObject
 }
 
-func (t *TL_messages_stickerSetInstallResultArchive) Set_sets(_sets []byte) {
+func (t *TL_messages_stickerSetInstallResultArchive) Set_sets(_sets TLObject) {
 	t._sets = _sets
 }
 
-func (t *TL_messages_stickerSetInstallResultArchive) Get_sets() []byte {
+func (t *TL_messages_stickerSetInstallResultArchive) Get_sets() TLObject {
 	return t._sets
 }
 
@@ -25337,23 +25337,23 @@ func (t *TL_messages_stickerSetInstallResultArchive) Decode(b []byte) {
 
 // stickerSetCovered#6410a5d2
 type TL_stickerSetCovered struct {
-	_set   []byte
-	_cover []byte
+	_set   TLObject
+	_cover TLObject
 }
 
-func (t *TL_stickerSetCovered) Set_set(_set []byte) {
+func (t *TL_stickerSetCovered) Set_set(_set TLObject) {
 	t._set = _set
 }
 
-func (t *TL_stickerSetCovered) Get_set() []byte {
+func (t *TL_stickerSetCovered) Get_set() TLObject {
 	return t._set
 }
 
-func (t *TL_stickerSetCovered) Set_cover(_cover []byte) {
+func (t *TL_stickerSetCovered) Set_cover(_cover TLObject) {
 	t._cover = _cover
 }
 
-func (t *TL_stickerSetCovered) Get_cover() []byte {
+func (t *TL_stickerSetCovered) Get_cover() TLObject {
 	return t._cover
 }
 
@@ -25381,23 +25381,23 @@ func (t *TL_stickerSetCovered) Decode(b []byte) {
 
 // stickerSetMultiCovered#3407e51b
 type TL_stickerSetMultiCovered struct {
-	_set    []byte
-	_covers []byte
+	_set    TLObject
+	_covers TLObject
 }
 
-func (t *TL_stickerSetMultiCovered) Set_set(_set []byte) {
+func (t *TL_stickerSetMultiCovered) Set_set(_set TLObject) {
 	t._set = _set
 }
 
-func (t *TL_stickerSetMultiCovered) Get_set() []byte {
+func (t *TL_stickerSetMultiCovered) Get_set() TLObject {
 	return t._set
 }
 
-func (t *TL_stickerSetMultiCovered) Set_covers(_covers []byte) {
+func (t *TL_stickerSetMultiCovered) Set_covers(_covers TLObject) {
 	t._covers = _covers
 }
 
-func (t *TL_stickerSetMultiCovered) Get_covers() []byte {
+func (t *TL_stickerSetMultiCovered) Get_covers() TLObject {
 	return t._covers
 }
 
@@ -25491,14 +25491,14 @@ func (t *TL_maskCoords) Decode(b []byte) {
 
 // inputStickeredMediaPhoto#4a992157
 type TL_inputStickeredMediaPhoto struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_inputStickeredMediaPhoto) Set_id(_id []byte) {
+func (t *TL_inputStickeredMediaPhoto) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputStickeredMediaPhoto) Get_id() []byte {
+func (t *TL_inputStickeredMediaPhoto) Get_id() TLObject {
 	return t._id
 }
 
@@ -25522,16 +25522,16 @@ func (t *TL_inputStickeredMediaPhoto) Decode(b []byte) {
 
 }
 
-// inputStickeredMediaDocument#0438865b
+// inputStickeredMediaDocument#438865b
 type TL_inputStickeredMediaDocument struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_inputStickeredMediaDocument) Set_id(_id []byte) {
+func (t *TL_inputStickeredMediaDocument) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_inputStickeredMediaDocument) Get_id() []byte {
+func (t *TL_inputStickeredMediaDocument) Get_id() TLObject {
 	return t._id
 }
 
@@ -25557,21 +25557,21 @@ func (t *TL_inputStickeredMediaDocument) Decode(b []byte) {
 
 // game#bdf9653b
 type TL_game struct {
-	_flags       []byte
+	_flags       TLObject
 	_id          int64
 	_access_hash int64
 	_short_name  string
 	_title       string
 	_description string
-	_photo       []byte
-	_document    []byte
+	_photo       TLObject
+	_document    TLObject
 }
 
-func (t *TL_game) Set_flags(_flags []byte) {
+func (t *TL_game) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_game) Get_flags() []byte {
+func (t *TL_game) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -25615,19 +25615,19 @@ func (t *TL_game) Get_description() string {
 	return t._description
 }
 
-func (t *TL_game) Set_photo(_photo []byte) {
+func (t *TL_game) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_game) Get_photo() []byte {
+func (t *TL_game) Get_photo() TLObject {
 	return t._photo
 }
 
-func (t *TL_game) Set_document(_document []byte) {
+func (t *TL_game) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_game) Get_document() []byte {
+func (t *TL_game) Get_document() TLObject {
 	return t._document
 }
 
@@ -25663,7 +25663,7 @@ func (t *TL_game) Decode(b []byte) {
 
 }
 
-// inputGameID#032c3e77
+// inputGameID#32c3e77
 type TL_inputGameID struct {
 	_id          int64
 	_access_hash int64
@@ -25709,15 +25709,15 @@ func (t *TL_inputGameID) Decode(b []byte) {
 
 // inputGameShortName#c331e80a
 type TL_inputGameShortName struct {
-	_bot_id     []byte
+	_bot_id     TLObject
 	_short_name string
 }
 
-func (t *TL_inputGameShortName) Set_bot_id(_bot_id []byte) {
+func (t *TL_inputGameShortName) Set_bot_id(_bot_id TLObject) {
 	t._bot_id = _bot_id
 }
 
-func (t *TL_inputGameShortName) Get_bot_id() []byte {
+func (t *TL_inputGameShortName) Get_bot_id() TLObject {
 	return t._bot_id
 }
 
@@ -25808,23 +25808,23 @@ func (t *TL_highScore) Decode(b []byte) {
 
 // messages_highScores#9a3bfd99
 type TL_messages_highScores struct {
-	_scores []byte
-	_users  []byte
+	_scores TLObject
+	_users  TLObject
 }
 
-func (t *TL_messages_highScores) Set_scores(_scores []byte) {
+func (t *TL_messages_highScores) Set_scores(_scores TLObject) {
 	t._scores = _scores
 }
 
-func (t *TL_messages_highScores) Get_scores() []byte {
+func (t *TL_messages_highScores) Get_scores() TLObject {
 	return t._scores
 }
 
-func (t *TL_messages_highScores) Set_users(_users []byte) {
+func (t *TL_messages_highScores) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_highScores) Get_users() []byte {
+func (t *TL_messages_highScores) Get_users() TLObject {
 	return t._users
 }
 
@@ -25901,14 +25901,14 @@ func (t *TL_textPlain) Decode(b []byte) {
 
 // textBold#6724abc4
 type TL_textBold struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_textBold) Set_text(_text []byte) {
+func (t *TL_textBold) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textBold) Get_text() []byte {
+func (t *TL_textBold) Get_text() TLObject {
 	return t._text
 }
 
@@ -25934,14 +25934,14 @@ func (t *TL_textBold) Decode(b []byte) {
 
 // textItalic#d912a59c
 type TL_textItalic struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_textItalic) Set_text(_text []byte) {
+func (t *TL_textItalic) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textItalic) Get_text() []byte {
+func (t *TL_textItalic) Get_text() TLObject {
 	return t._text
 }
 
@@ -25967,14 +25967,14 @@ func (t *TL_textItalic) Decode(b []byte) {
 
 // textUnderline#c12622c4
 type TL_textUnderline struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_textUnderline) Set_text(_text []byte) {
+func (t *TL_textUnderline) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textUnderline) Get_text() []byte {
+func (t *TL_textUnderline) Get_text() TLObject {
 	return t._text
 }
 
@@ -26000,14 +26000,14 @@ func (t *TL_textUnderline) Decode(b []byte) {
 
 // textStrike#9bf8bb95
 type TL_textStrike struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_textStrike) Set_text(_text []byte) {
+func (t *TL_textStrike) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textStrike) Get_text() []byte {
+func (t *TL_textStrike) Get_text() TLObject {
 	return t._text
 }
 
@@ -26033,14 +26033,14 @@ func (t *TL_textStrike) Decode(b []byte) {
 
 // textFixed#6c3f19b9
 type TL_textFixed struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_textFixed) Set_text(_text []byte) {
+func (t *TL_textFixed) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textFixed) Get_text() []byte {
+func (t *TL_textFixed) Get_text() TLObject {
 	return t._text
 }
 
@@ -26066,16 +26066,16 @@ func (t *TL_textFixed) Decode(b []byte) {
 
 // textUrl#3c2884c1
 type TL_textUrl struct {
-	_text       []byte
+	_text       TLObject
 	_url        string
 	_webpage_id int64
 }
 
-func (t *TL_textUrl) Set_text(_text []byte) {
+func (t *TL_textUrl) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textUrl) Get_text() []byte {
+func (t *TL_textUrl) Get_text() TLObject {
 	return t._text
 }
 
@@ -26121,15 +26121,15 @@ func (t *TL_textUrl) Decode(b []byte) {
 
 // textEmail#de5a0dd6
 type TL_textEmail struct {
-	_text  []byte
+	_text  TLObject
 	_email string
 }
 
-func (t *TL_textEmail) Set_text(_text []byte) {
+func (t *TL_textEmail) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_textEmail) Get_text() []byte {
+func (t *TL_textEmail) Get_text() TLObject {
 	return t._text
 }
 
@@ -26165,14 +26165,14 @@ func (t *TL_textEmail) Decode(b []byte) {
 
 // textConcat#7e6260d7
 type TL_textConcat struct {
-	_texts []byte
+	_texts TLObject
 }
 
-func (t *TL_textConcat) Set_texts(_texts []byte) {
+func (t *TL_textConcat) Set_texts(_texts TLObject) {
 	t._texts = _texts
 }
 
-func (t *TL_textConcat) Get_texts() []byte {
+func (t *TL_textConcat) Get_texts() TLObject {
 	return t._texts
 }
 
@@ -26214,14 +26214,14 @@ func (t *TL_pageBlockUnsupported) Decode(b []byte) {
 
 // pageBlockTitle#70abc3fd
 type TL_pageBlockTitle struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockTitle) Set_text(_text []byte) {
+func (t *TL_pageBlockTitle) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockTitle) Get_text() []byte {
+func (t *TL_pageBlockTitle) Get_text() TLObject {
 	return t._text
 }
 
@@ -26247,14 +26247,14 @@ func (t *TL_pageBlockTitle) Decode(b []byte) {
 
 // pageBlockSubtitle#8ffa9a1f
 type TL_pageBlockSubtitle struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockSubtitle) Set_text(_text []byte) {
+func (t *TL_pageBlockSubtitle) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockSubtitle) Get_text() []byte {
+func (t *TL_pageBlockSubtitle) Get_text() TLObject {
 	return t._text
 }
 
@@ -26280,15 +26280,15 @@ func (t *TL_pageBlockSubtitle) Decode(b []byte) {
 
 // pageBlockAuthorDate#baafe5e0
 type TL_pageBlockAuthorDate struct {
-	_author         []byte
+	_author         TLObject
 	_published_date int32
 }
 
-func (t *TL_pageBlockAuthorDate) Set_author(_author []byte) {
+func (t *TL_pageBlockAuthorDate) Set_author(_author TLObject) {
 	t._author = _author
 }
 
-func (t *TL_pageBlockAuthorDate) Get_author() []byte {
+func (t *TL_pageBlockAuthorDate) Get_author() TLObject {
 	return t._author
 }
 
@@ -26324,14 +26324,14 @@ func (t *TL_pageBlockAuthorDate) Decode(b []byte) {
 
 // pageBlockHeader#bfd064ec
 type TL_pageBlockHeader struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockHeader) Set_text(_text []byte) {
+func (t *TL_pageBlockHeader) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockHeader) Get_text() []byte {
+func (t *TL_pageBlockHeader) Get_text() TLObject {
 	return t._text
 }
 
@@ -26357,14 +26357,14 @@ func (t *TL_pageBlockHeader) Decode(b []byte) {
 
 // pageBlockSubheader#f12bb6e1
 type TL_pageBlockSubheader struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockSubheader) Set_text(_text []byte) {
+func (t *TL_pageBlockSubheader) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockSubheader) Get_text() []byte {
+func (t *TL_pageBlockSubheader) Get_text() TLObject {
 	return t._text
 }
 
@@ -26390,14 +26390,14 @@ func (t *TL_pageBlockSubheader) Decode(b []byte) {
 
 // pageBlockParagraph#467a0766
 type TL_pageBlockParagraph struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockParagraph) Set_text(_text []byte) {
+func (t *TL_pageBlockParagraph) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockParagraph) Get_text() []byte {
+func (t *TL_pageBlockParagraph) Get_text() TLObject {
 	return t._text
 }
 
@@ -26423,15 +26423,15 @@ func (t *TL_pageBlockParagraph) Decode(b []byte) {
 
 // pageBlockPreformatted#c070d93e
 type TL_pageBlockPreformatted struct {
-	_text     []byte
+	_text     TLObject
 	_language string
 }
 
-func (t *TL_pageBlockPreformatted) Set_text(_text []byte) {
+func (t *TL_pageBlockPreformatted) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockPreformatted) Get_text() []byte {
+func (t *TL_pageBlockPreformatted) Get_text() TLObject {
 	return t._text
 }
 
@@ -26467,14 +26467,14 @@ func (t *TL_pageBlockPreformatted) Decode(b []byte) {
 
 // pageBlockFooter#48870999
 type TL_pageBlockFooter struct {
-	_text []byte
+	_text TLObject
 }
 
-func (t *TL_pageBlockFooter) Set_text(_text []byte) {
+func (t *TL_pageBlockFooter) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockFooter) Get_text() []byte {
+func (t *TL_pageBlockFooter) Get_text() TLObject {
 	return t._text
 }
 
@@ -26550,7 +26550,7 @@ func (t *TL_pageBlockAnchor) Decode(b []byte) {
 // pageBlockList#3a58c7f4
 type TL_pageBlockList struct {
 	_ordered bool
-	_items   []byte
+	_items   TLObject
 }
 
 func (t *TL_pageBlockList) Set_ordered(_ordered bool) {
@@ -26561,11 +26561,11 @@ func (t *TL_pageBlockList) Get_ordered() bool {
 	return t._ordered
 }
 
-func (t *TL_pageBlockList) Set_items(_items []byte) {
+func (t *TL_pageBlockList) Set_items(_items TLObject) {
 	t._items = _items
 }
 
-func (t *TL_pageBlockList) Get_items() []byte {
+func (t *TL_pageBlockList) Get_items() TLObject {
 	return t._items
 }
 
@@ -26593,23 +26593,23 @@ func (t *TL_pageBlockList) Decode(b []byte) {
 
 // pageBlockBlockquote#263d7c26
 type TL_pageBlockBlockquote struct {
-	_text    []byte
-	_caption []byte
+	_text    TLObject
+	_caption TLObject
 }
 
-func (t *TL_pageBlockBlockquote) Set_text(_text []byte) {
+func (t *TL_pageBlockBlockquote) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockBlockquote) Get_text() []byte {
+func (t *TL_pageBlockBlockquote) Get_text() TLObject {
 	return t._text
 }
 
-func (t *TL_pageBlockBlockquote) Set_caption(_caption []byte) {
+func (t *TL_pageBlockBlockquote) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockBlockquote) Get_caption() []byte {
+func (t *TL_pageBlockBlockquote) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -26637,23 +26637,23 @@ func (t *TL_pageBlockBlockquote) Decode(b []byte) {
 
 // pageBlockPullquote#4f4456d3
 type TL_pageBlockPullquote struct {
-	_text    []byte
-	_caption []byte
+	_text    TLObject
+	_caption TLObject
 }
 
-func (t *TL_pageBlockPullquote) Set_text(_text []byte) {
+func (t *TL_pageBlockPullquote) Set_text(_text TLObject) {
 	t._text = _text
 }
 
-func (t *TL_pageBlockPullquote) Get_text() []byte {
+func (t *TL_pageBlockPullquote) Get_text() TLObject {
 	return t._text
 }
 
-func (t *TL_pageBlockPullquote) Set_caption(_caption []byte) {
+func (t *TL_pageBlockPullquote) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockPullquote) Get_caption() []byte {
+func (t *TL_pageBlockPullquote) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -26682,7 +26682,7 @@ func (t *TL_pageBlockPullquote) Decode(b []byte) {
 // pageBlockPhoto#e9c69982
 type TL_pageBlockPhoto struct {
 	_photo_id int64
-	_caption  []byte
+	_caption  TLObject
 }
 
 func (t *TL_pageBlockPhoto) Set_photo_id(_photo_id int64) {
@@ -26693,11 +26693,11 @@ func (t *TL_pageBlockPhoto) Get_photo_id() int64 {
 	return t._photo_id
 }
 
-func (t *TL_pageBlockPhoto) Set_caption(_caption []byte) {
+func (t *TL_pageBlockPhoto) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockPhoto) Get_caption() []byte {
+func (t *TL_pageBlockPhoto) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -26725,34 +26725,34 @@ func (t *TL_pageBlockPhoto) Decode(b []byte) {
 
 // pageBlockVideo#d9d71866
 type TL_pageBlockVideo struct {
-	_flags    []byte
-	_autoplay []byte
-	_loop     []byte
+	_flags    TLObject
+	_autoplay TLObject
+	_loop     TLObject
 	_video_id int64
-	_caption  []byte
+	_caption  TLObject
 }
 
-func (t *TL_pageBlockVideo) Set_flags(_flags []byte) {
+func (t *TL_pageBlockVideo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_pageBlockVideo) Get_flags() []byte {
+func (t *TL_pageBlockVideo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_pageBlockVideo) Set_autoplay(_autoplay []byte) {
+func (t *TL_pageBlockVideo) Set_autoplay(_autoplay TLObject) {
 	t._autoplay = _autoplay
 }
 
-func (t *TL_pageBlockVideo) Get_autoplay() []byte {
+func (t *TL_pageBlockVideo) Get_autoplay() TLObject {
 	return t._autoplay
 }
 
-func (t *TL_pageBlockVideo) Set_loop(_loop []byte) {
+func (t *TL_pageBlockVideo) Set_loop(_loop TLObject) {
 	t._loop = _loop
 }
 
-func (t *TL_pageBlockVideo) Get_loop() []byte {
+func (t *TL_pageBlockVideo) Get_loop() TLObject {
 	return t._loop
 }
 
@@ -26764,11 +26764,11 @@ func (t *TL_pageBlockVideo) Get_video_id() int64 {
 	return t._video_id
 }
 
-func (t *TL_pageBlockVideo) Set_caption(_caption []byte) {
+func (t *TL_pageBlockVideo) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockVideo) Get_caption() []byte {
+func (t *TL_pageBlockVideo) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -26800,14 +26800,14 @@ func (t *TL_pageBlockVideo) Decode(b []byte) {
 
 // pageBlockCover#39f23300
 type TL_pageBlockCover struct {
-	_cover []byte
+	_cover TLObject
 }
 
-func (t *TL_pageBlockCover) Set_cover(_cover []byte) {
+func (t *TL_pageBlockCover) Set_cover(_cover TLObject) {
 	t._cover = _cover
 }
 
-func (t *TL_pageBlockCover) Get_cover() []byte {
+func (t *TL_pageBlockCover) Get_cover() TLObject {
 	return t._cover
 }
 
@@ -26833,62 +26833,62 @@ func (t *TL_pageBlockCover) Decode(b []byte) {
 
 // pageBlockEmbed#cde200d1
 type TL_pageBlockEmbed struct {
-	_flags           []byte
-	_full_width      []byte
-	_allow_scrolling []byte
-	_url             []byte
-	_html            []byte
-	_poster_photo_id []byte
+	_flags           TLObject
+	_full_width      TLObject
+	_allow_scrolling TLObject
+	_url             TLObject
+	_html            TLObject
+	_poster_photo_id TLObject
 	_w               int32
 	_h               int32
-	_caption         []byte
+	_caption         TLObject
 }
 
-func (t *TL_pageBlockEmbed) Set_flags(_flags []byte) {
+func (t *TL_pageBlockEmbed) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_pageBlockEmbed) Get_flags() []byte {
+func (t *TL_pageBlockEmbed) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_pageBlockEmbed) Set_full_width(_full_width []byte) {
+func (t *TL_pageBlockEmbed) Set_full_width(_full_width TLObject) {
 	t._full_width = _full_width
 }
 
-func (t *TL_pageBlockEmbed) Get_full_width() []byte {
+func (t *TL_pageBlockEmbed) Get_full_width() TLObject {
 	return t._full_width
 }
 
-func (t *TL_pageBlockEmbed) Set_allow_scrolling(_allow_scrolling []byte) {
+func (t *TL_pageBlockEmbed) Set_allow_scrolling(_allow_scrolling TLObject) {
 	t._allow_scrolling = _allow_scrolling
 }
 
-func (t *TL_pageBlockEmbed) Get_allow_scrolling() []byte {
+func (t *TL_pageBlockEmbed) Get_allow_scrolling() TLObject {
 	return t._allow_scrolling
 }
 
-func (t *TL_pageBlockEmbed) Set_url(_url []byte) {
+func (t *TL_pageBlockEmbed) Set_url(_url TLObject) {
 	t._url = _url
 }
 
-func (t *TL_pageBlockEmbed) Get_url() []byte {
+func (t *TL_pageBlockEmbed) Get_url() TLObject {
 	return t._url
 }
 
-func (t *TL_pageBlockEmbed) Set_html(_html []byte) {
+func (t *TL_pageBlockEmbed) Set_html(_html TLObject) {
 	t._html = _html
 }
 
-func (t *TL_pageBlockEmbed) Get_html() []byte {
+func (t *TL_pageBlockEmbed) Get_html() TLObject {
 	return t._html
 }
 
-func (t *TL_pageBlockEmbed) Set_poster_photo_id(_poster_photo_id []byte) {
+func (t *TL_pageBlockEmbed) Set_poster_photo_id(_poster_photo_id TLObject) {
 	t._poster_photo_id = _poster_photo_id
 }
 
-func (t *TL_pageBlockEmbed) Get_poster_photo_id() []byte {
+func (t *TL_pageBlockEmbed) Get_poster_photo_id() TLObject {
 	return t._poster_photo_id
 }
 
@@ -26908,11 +26908,11 @@ func (t *TL_pageBlockEmbed) Get_h() int32 {
 	return t._h
 }
 
-func (t *TL_pageBlockEmbed) Set_caption(_caption []byte) {
+func (t *TL_pageBlockEmbed) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockEmbed) Get_caption() []byte {
+func (t *TL_pageBlockEmbed) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -26957,8 +26957,8 @@ type TL_pageBlockEmbedPost struct {
 	_author_photo_id int64
 	_author          string
 	_date            int32
-	_blocks          []byte
-	_caption         []byte
+	_blocks          TLObject
+	_caption         TLObject
 }
 
 func (t *TL_pageBlockEmbedPost) Set_url(_url string) {
@@ -27001,19 +27001,19 @@ func (t *TL_pageBlockEmbedPost) Get_date() int32 {
 	return t._date
 }
 
-func (t *TL_pageBlockEmbedPost) Set_blocks(_blocks []byte) {
+func (t *TL_pageBlockEmbedPost) Set_blocks(_blocks TLObject) {
 	t._blocks = _blocks
 }
 
-func (t *TL_pageBlockEmbedPost) Get_blocks() []byte {
+func (t *TL_pageBlockEmbedPost) Get_blocks() TLObject {
 	return t._blocks
 }
 
-func (t *TL_pageBlockEmbedPost) Set_caption(_caption []byte) {
+func (t *TL_pageBlockEmbedPost) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockEmbedPost) Get_caption() []byte {
+func (t *TL_pageBlockEmbedPost) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -27049,25 +27049,25 @@ func (t *TL_pageBlockEmbedPost) Decode(b []byte) {
 
 }
 
-// pageBlockCollage#08b31c4f
+// pageBlockCollage#8b31c4f
 type TL_pageBlockCollage struct {
-	_items   []byte
-	_caption []byte
+	_items   TLObject
+	_caption TLObject
 }
 
-func (t *TL_pageBlockCollage) Set_items(_items []byte) {
+func (t *TL_pageBlockCollage) Set_items(_items TLObject) {
 	t._items = _items
 }
 
-func (t *TL_pageBlockCollage) Get_items() []byte {
+func (t *TL_pageBlockCollage) Get_items() TLObject {
 	return t._items
 }
 
-func (t *TL_pageBlockCollage) Set_caption(_caption []byte) {
+func (t *TL_pageBlockCollage) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockCollage) Get_caption() []byte {
+func (t *TL_pageBlockCollage) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -27095,23 +27095,23 @@ func (t *TL_pageBlockCollage) Decode(b []byte) {
 
 // pageBlockSlideshow#130c8963
 type TL_pageBlockSlideshow struct {
-	_items   []byte
-	_caption []byte
+	_items   TLObject
+	_caption TLObject
 }
 
-func (t *TL_pageBlockSlideshow) Set_items(_items []byte) {
+func (t *TL_pageBlockSlideshow) Set_items(_items TLObject) {
 	t._items = _items
 }
 
-func (t *TL_pageBlockSlideshow) Get_items() []byte {
+func (t *TL_pageBlockSlideshow) Get_items() TLObject {
 	return t._items
 }
 
-func (t *TL_pageBlockSlideshow) Set_caption(_caption []byte) {
+func (t *TL_pageBlockSlideshow) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockSlideshow) Get_caption() []byte {
+func (t *TL_pageBlockSlideshow) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -27139,14 +27139,14 @@ func (t *TL_pageBlockSlideshow) Decode(b []byte) {
 
 // pageBlockChannel#ef1751b5
 type TL_pageBlockChannel struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_pageBlockChannel) Set_channel(_channel []byte) {
+func (t *TL_pageBlockChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_pageBlockChannel) Get_channel() []byte {
+func (t *TL_pageBlockChannel) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -27173,7 +27173,7 @@ func (t *TL_pageBlockChannel) Decode(b []byte) {
 // pageBlockAudio#31b81a7f
 type TL_pageBlockAudio struct {
 	_audio_id int64
-	_caption  []byte
+	_caption  TLObject
 }
 
 func (t *TL_pageBlockAudio) Set_audio_id(_audio_id int64) {
@@ -27184,11 +27184,11 @@ func (t *TL_pageBlockAudio) Get_audio_id() int64 {
 	return t._audio_id
 }
 
-func (t *TL_pageBlockAudio) Set_caption(_caption []byte) {
+func (t *TL_pageBlockAudio) Set_caption(_caption TLObject) {
 	t._caption = _caption
 }
 
-func (t *TL_pageBlockAudio) Get_caption() []byte {
+func (t *TL_pageBlockAudio) Get_caption() TLObject {
 	return t._caption
 }
 
@@ -27216,32 +27216,32 @@ func (t *TL_pageBlockAudio) Decode(b []byte) {
 
 // pagePart#8e3f9ebe
 type TL_pagePart struct {
-	_blocks    []byte
-	_photos    []byte
-	_documents []byte
+	_blocks    TLObject
+	_photos    TLObject
+	_documents TLObject
 }
 
-func (t *TL_pagePart) Set_blocks(_blocks []byte) {
+func (t *TL_pagePart) Set_blocks(_blocks TLObject) {
 	t._blocks = _blocks
 }
 
-func (t *TL_pagePart) Get_blocks() []byte {
+func (t *TL_pagePart) Get_blocks() TLObject {
 	return t._blocks
 }
 
-func (t *TL_pagePart) Set_photos(_photos []byte) {
+func (t *TL_pagePart) Set_photos(_photos TLObject) {
 	t._photos = _photos
 }
 
-func (t *TL_pagePart) Get_photos() []byte {
+func (t *TL_pagePart) Get_photos() TLObject {
 	return t._photos
 }
 
-func (t *TL_pagePart) Set_documents(_documents []byte) {
+func (t *TL_pagePart) Set_documents(_documents TLObject) {
 	t._documents = _documents
 }
 
-func (t *TL_pagePart) Get_documents() []byte {
+func (t *TL_pagePart) Get_documents() TLObject {
 	return t._documents
 }
 
@@ -27271,32 +27271,32 @@ func (t *TL_pagePart) Decode(b []byte) {
 
 // pageFull#556ec7aa
 type TL_pageFull struct {
-	_blocks    []byte
-	_photos    []byte
-	_documents []byte
+	_blocks    TLObject
+	_photos    TLObject
+	_documents TLObject
 }
 
-func (t *TL_pageFull) Set_blocks(_blocks []byte) {
+func (t *TL_pageFull) Set_blocks(_blocks TLObject) {
 	t._blocks = _blocks
 }
 
-func (t *TL_pageFull) Get_blocks() []byte {
+func (t *TL_pageFull) Get_blocks() TLObject {
 	return t._blocks
 }
 
-func (t *TL_pageFull) Set_photos(_photos []byte) {
+func (t *TL_pageFull) Set_photos(_photos TLObject) {
 	t._photos = _photos
 }
 
-func (t *TL_pageFull) Get_photos() []byte {
+func (t *TL_pageFull) Get_photos() TLObject {
 	return t._photos
 }
 
-func (t *TL_pageFull) Set_documents(_documents []byte) {
+func (t *TL_pageFull) Set_documents(_documents TLObject) {
 	t._documents = _documents
 }
 
-func (t *TL_pageFull) Get_documents() []byte {
+func (t *TL_pageFull) Get_documents() TLObject {
 	return t._documents
 }
 
@@ -27467,88 +27467,88 @@ func (t *TL_labeledPrice) Decode(b []byte) {
 
 // invoice#c30aa358
 type TL_invoice struct {
-	_flags                      []byte
-	_test                       []byte
-	_name_requested             []byte
-	_phone_requested            []byte
-	_email_requested            []byte
-	_shipping_address_requested []byte
-	_flexible                   []byte
-	_phone_to_provider          []byte
-	_email_to_provider          []byte
+	_flags                      TLObject
+	_test                       TLObject
+	_name_requested             TLObject
+	_phone_requested            TLObject
+	_email_requested            TLObject
+	_shipping_address_requested TLObject
+	_flexible                   TLObject
+	_phone_to_provider          TLObject
+	_email_to_provider          TLObject
 	_currency                   string
-	_prices                     []byte
+	_prices                     TLObject
 }
 
-func (t *TL_invoice) Set_flags(_flags []byte) {
+func (t *TL_invoice) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_invoice) Get_flags() []byte {
+func (t *TL_invoice) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_invoice) Set_test(_test []byte) {
+func (t *TL_invoice) Set_test(_test TLObject) {
 	t._test = _test
 }
 
-func (t *TL_invoice) Get_test() []byte {
+func (t *TL_invoice) Get_test() TLObject {
 	return t._test
 }
 
-func (t *TL_invoice) Set_name_requested(_name_requested []byte) {
+func (t *TL_invoice) Set_name_requested(_name_requested TLObject) {
 	t._name_requested = _name_requested
 }
 
-func (t *TL_invoice) Get_name_requested() []byte {
+func (t *TL_invoice) Get_name_requested() TLObject {
 	return t._name_requested
 }
 
-func (t *TL_invoice) Set_phone_requested(_phone_requested []byte) {
+func (t *TL_invoice) Set_phone_requested(_phone_requested TLObject) {
 	t._phone_requested = _phone_requested
 }
 
-func (t *TL_invoice) Get_phone_requested() []byte {
+func (t *TL_invoice) Get_phone_requested() TLObject {
 	return t._phone_requested
 }
 
-func (t *TL_invoice) Set_email_requested(_email_requested []byte) {
+func (t *TL_invoice) Set_email_requested(_email_requested TLObject) {
 	t._email_requested = _email_requested
 }
 
-func (t *TL_invoice) Get_email_requested() []byte {
+func (t *TL_invoice) Get_email_requested() TLObject {
 	return t._email_requested
 }
 
-func (t *TL_invoice) Set_shipping_address_requested(_shipping_address_requested []byte) {
+func (t *TL_invoice) Set_shipping_address_requested(_shipping_address_requested TLObject) {
 	t._shipping_address_requested = _shipping_address_requested
 }
 
-func (t *TL_invoice) Get_shipping_address_requested() []byte {
+func (t *TL_invoice) Get_shipping_address_requested() TLObject {
 	return t._shipping_address_requested
 }
 
-func (t *TL_invoice) Set_flexible(_flexible []byte) {
+func (t *TL_invoice) Set_flexible(_flexible TLObject) {
 	t._flexible = _flexible
 }
 
-func (t *TL_invoice) Get_flexible() []byte {
+func (t *TL_invoice) Get_flexible() TLObject {
 	return t._flexible
 }
 
-func (t *TL_invoice) Set_phone_to_provider(_phone_to_provider []byte) {
+func (t *TL_invoice) Set_phone_to_provider(_phone_to_provider TLObject) {
 	t._phone_to_provider = _phone_to_provider
 }
 
-func (t *TL_invoice) Get_phone_to_provider() []byte {
+func (t *TL_invoice) Get_phone_to_provider() TLObject {
 	return t._phone_to_provider
 }
 
-func (t *TL_invoice) Set_email_to_provider(_email_to_provider []byte) {
+func (t *TL_invoice) Set_email_to_provider(_email_to_provider TLObject) {
 	t._email_to_provider = _email_to_provider
 }
 
-func (t *TL_invoice) Get_email_to_provider() []byte {
+func (t *TL_invoice) Get_email_to_provider() TLObject {
 	return t._email_to_provider
 }
 
@@ -27560,11 +27560,11 @@ func (t *TL_invoice) Get_currency() string {
 	return t._currency
 }
 
-func (t *TL_invoice) Set_prices(_prices []byte) {
+func (t *TL_invoice) Set_prices(_prices TLObject) {
 	t._prices = _prices
 }
 
-func (t *TL_invoice) Get_prices() []byte {
+func (t *TL_invoice) Get_prices() TLObject {
 	return t._prices
 }
 
@@ -27740,50 +27740,50 @@ func (t *TL_postAddress) Decode(b []byte) {
 
 // paymentRequestedInfo#909c3f94
 type TL_paymentRequestedInfo struct {
-	_flags            []byte
-	_name             []byte
-	_phone            []byte
-	_email            []byte
-	_shipping_address []byte
+	_flags            TLObject
+	_name             TLObject
+	_phone            TLObject
+	_email            TLObject
+	_shipping_address TLObject
 }
 
-func (t *TL_paymentRequestedInfo) Set_flags(_flags []byte) {
+func (t *TL_paymentRequestedInfo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_paymentRequestedInfo) Get_flags() []byte {
+func (t *TL_paymentRequestedInfo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_paymentRequestedInfo) Set_name(_name []byte) {
+func (t *TL_paymentRequestedInfo) Set_name(_name TLObject) {
 	t._name = _name
 }
 
-func (t *TL_paymentRequestedInfo) Get_name() []byte {
+func (t *TL_paymentRequestedInfo) Get_name() TLObject {
 	return t._name
 }
 
-func (t *TL_paymentRequestedInfo) Set_phone(_phone []byte) {
+func (t *TL_paymentRequestedInfo) Set_phone(_phone TLObject) {
 	t._phone = _phone
 }
 
-func (t *TL_paymentRequestedInfo) Get_phone() []byte {
+func (t *TL_paymentRequestedInfo) Get_phone() TLObject {
 	return t._phone
 }
 
-func (t *TL_paymentRequestedInfo) Set_email(_email []byte) {
+func (t *TL_paymentRequestedInfo) Set_email(_email TLObject) {
 	t._email = _email
 }
 
-func (t *TL_paymentRequestedInfo) Get_email() []byte {
+func (t *TL_paymentRequestedInfo) Get_email() TLObject {
 	return t._email
 }
 
-func (t *TL_paymentRequestedInfo) Set_shipping_address(_shipping_address []byte) {
+func (t *TL_paymentRequestedInfo) Set_shipping_address(_shipping_address TLObject) {
 	t._shipping_address = _shipping_address
 }
 
-func (t *TL_paymentRequestedInfo) Get_shipping_address() []byte {
+func (t *TL_paymentRequestedInfo) Get_shipping_address() TLObject {
 	return t._shipping_address
 }
 
@@ -27863,7 +27863,7 @@ type TL_webDocument struct {
 	_access_hash int64
 	_size        int32
 	_mime_type   string
-	_attributes  []byte
+	_attributes  TLObject
 	_dc_id       int32
 }
 
@@ -27899,11 +27899,11 @@ func (t *TL_webDocument) Get_mime_type() string {
 	return t._mime_type
 }
 
-func (t *TL_webDocument) Set_attributes(_attributes []byte) {
+func (t *TL_webDocument) Set_attributes(_attributes TLObject) {
 	t._attributes = _attributes
 }
 
-func (t *TL_webDocument) Get_attributes() []byte {
+func (t *TL_webDocument) Get_attributes() TLObject {
 	return t._attributes
 }
 
@@ -27950,7 +27950,7 @@ type TL_inputWebDocument struct {
 	_url        string
 	_size       int32
 	_mime_type  string
-	_attributes []byte
+	_attributes TLObject
 }
 
 func (t *TL_inputWebDocument) Set_url(_url string) {
@@ -27977,11 +27977,11 @@ func (t *TL_inputWebDocument) Get_mime_type() string {
 	return t._mime_type
 }
 
-func (t *TL_inputWebDocument) Set_attributes(_attributes []byte) {
+func (t *TL_inputWebDocument) Set_attributes(_attributes TLObject) {
 	t._attributes = _attributes
 }
 
-func (t *TL_inputWebDocument) Get_attributes() []byte {
+func (t *TL_inputWebDocument) Get_attributes() TLObject {
 	return t._attributes
 }
 
@@ -28059,9 +28059,9 @@ func (t *TL_inputWebFileLocation) Decode(b []byte) {
 type TL_upload_webFile struct {
 	_size      int32
 	_mime_type string
-	_file_type []byte
+	_file_type TLObject
 	_mtime     int32
-	_bytes     []byte
+	_bytes     TLObject
 }
 
 func (t *TL_upload_webFile) Set_size(_size int32) {
@@ -28080,11 +28080,11 @@ func (t *TL_upload_webFile) Get_mime_type() string {
 	return t._mime_type
 }
 
-func (t *TL_upload_webFile) Set_file_type(_file_type []byte) {
+func (t *TL_upload_webFile) Set_file_type(_file_type TLObject) {
 	t._file_type = _file_type
 }
 
-func (t *TL_upload_webFile) Get_file_type() []byte {
+func (t *TL_upload_webFile) Get_file_type() TLObject {
 	return t._file_type
 }
 
@@ -28096,11 +28096,11 @@ func (t *TL_upload_webFile) Get_mtime() int32 {
 	return t._mtime
 }
 
-func (t *TL_upload_webFile) Set_bytes(_bytes []byte) {
+func (t *TL_upload_webFile) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_upload_webFile) Get_bytes() []byte {
+func (t *TL_upload_webFile) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -28134,41 +28134,41 @@ func (t *TL_upload_webFile) Decode(b []byte) {
 
 // payments_paymentForm#3f56aea3
 type TL_payments_paymentForm struct {
-	_flags                []byte
-	_can_save_credentials []byte
-	_password_missing     []byte
+	_flags                TLObject
+	_can_save_credentials TLObject
+	_password_missing     TLObject
 	_bot_id               int32
-	_invoice              []byte
+	_invoice              TLObject
 	_provider_id          int32
 	_url                  string
-	_native_provider      []byte
-	_native_params        []byte
-	_saved_info           []byte
-	_saved_credentials    []byte
-	_users                []byte
+	_native_provider      TLObject
+	_native_params        TLObject
+	_saved_info           TLObject
+	_saved_credentials    TLObject
+	_users                TLObject
 }
 
-func (t *TL_payments_paymentForm) Set_flags(_flags []byte) {
+func (t *TL_payments_paymentForm) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_paymentForm) Get_flags() []byte {
+func (t *TL_payments_paymentForm) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_payments_paymentForm) Set_can_save_credentials(_can_save_credentials []byte) {
+func (t *TL_payments_paymentForm) Set_can_save_credentials(_can_save_credentials TLObject) {
 	t._can_save_credentials = _can_save_credentials
 }
 
-func (t *TL_payments_paymentForm) Get_can_save_credentials() []byte {
+func (t *TL_payments_paymentForm) Get_can_save_credentials() TLObject {
 	return t._can_save_credentials
 }
 
-func (t *TL_payments_paymentForm) Set_password_missing(_password_missing []byte) {
+func (t *TL_payments_paymentForm) Set_password_missing(_password_missing TLObject) {
 	t._password_missing = _password_missing
 }
 
-func (t *TL_payments_paymentForm) Get_password_missing() []byte {
+func (t *TL_payments_paymentForm) Get_password_missing() TLObject {
 	return t._password_missing
 }
 
@@ -28180,11 +28180,11 @@ func (t *TL_payments_paymentForm) Get_bot_id() int32 {
 	return t._bot_id
 }
 
-func (t *TL_payments_paymentForm) Set_invoice(_invoice []byte) {
+func (t *TL_payments_paymentForm) Set_invoice(_invoice TLObject) {
 	t._invoice = _invoice
 }
 
-func (t *TL_payments_paymentForm) Get_invoice() []byte {
+func (t *TL_payments_paymentForm) Get_invoice() TLObject {
 	return t._invoice
 }
 
@@ -28204,43 +28204,43 @@ func (t *TL_payments_paymentForm) Get_url() string {
 	return t._url
 }
 
-func (t *TL_payments_paymentForm) Set_native_provider(_native_provider []byte) {
+func (t *TL_payments_paymentForm) Set_native_provider(_native_provider TLObject) {
 	t._native_provider = _native_provider
 }
 
-func (t *TL_payments_paymentForm) Get_native_provider() []byte {
+func (t *TL_payments_paymentForm) Get_native_provider() TLObject {
 	return t._native_provider
 }
 
-func (t *TL_payments_paymentForm) Set_native_params(_native_params []byte) {
+func (t *TL_payments_paymentForm) Set_native_params(_native_params TLObject) {
 	t._native_params = _native_params
 }
 
-func (t *TL_payments_paymentForm) Get_native_params() []byte {
+func (t *TL_payments_paymentForm) Get_native_params() TLObject {
 	return t._native_params
 }
 
-func (t *TL_payments_paymentForm) Set_saved_info(_saved_info []byte) {
+func (t *TL_payments_paymentForm) Set_saved_info(_saved_info TLObject) {
 	t._saved_info = _saved_info
 }
 
-func (t *TL_payments_paymentForm) Get_saved_info() []byte {
+func (t *TL_payments_paymentForm) Get_saved_info() TLObject {
 	return t._saved_info
 }
 
-func (t *TL_payments_paymentForm) Set_saved_credentials(_saved_credentials []byte) {
+func (t *TL_payments_paymentForm) Set_saved_credentials(_saved_credentials TLObject) {
 	t._saved_credentials = _saved_credentials
 }
 
-func (t *TL_payments_paymentForm) Get_saved_credentials() []byte {
+func (t *TL_payments_paymentForm) Get_saved_credentials() TLObject {
 	return t._saved_credentials
 }
 
-func (t *TL_payments_paymentForm) Set_users(_users []byte) {
+func (t *TL_payments_paymentForm) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_payments_paymentForm) Get_users() []byte {
+func (t *TL_payments_paymentForm) Get_users() TLObject {
 	return t._users
 }
 
@@ -28286,32 +28286,32 @@ func (t *TL_payments_paymentForm) Decode(b []byte) {
 
 // payments_validatedRequestedInfo#d1451883
 type TL_payments_validatedRequestedInfo struct {
-	_flags            []byte
-	_id               []byte
-	_shipping_options []byte
+	_flags            TLObject
+	_id               TLObject
+	_shipping_options TLObject
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_flags(_flags []byte) {
+func (t *TL_payments_validatedRequestedInfo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_flags() []byte {
+func (t *TL_payments_validatedRequestedInfo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_id(_id []byte) {
+func (t *TL_payments_validatedRequestedInfo) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_id() []byte {
+func (t *TL_payments_validatedRequestedInfo) Get_id() TLObject {
 	return t._id
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_shipping_options(_shipping_options []byte) {
+func (t *TL_payments_validatedRequestedInfo) Set_shipping_options(_shipping_options TLObject) {
 	t._shipping_options = _shipping_options
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_shipping_options() []byte {
+func (t *TL_payments_validatedRequestedInfo) Get_shipping_options() TLObject {
 	return t._shipping_options
 }
 
@@ -28339,14 +28339,14 @@ func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) {
 
 // payments_paymentResult#4e5f810d
 type TL_payments_paymentResult struct {
-	_updates []byte
+	_updates TLObject
 }
 
-func (t *TL_payments_paymentResult) Set_updates(_updates []byte) {
+func (t *TL_payments_paymentResult) Set_updates(_updates TLObject) {
 	t._updates = _updates
 }
 
-func (t *TL_payments_paymentResult) Get_updates() []byte {
+func (t *TL_payments_paymentResult) Get_updates() TLObject {
 	return t._updates
 }
 
@@ -28405,24 +28405,24 @@ func (t *TL_payments_paymentVerficationNeeded) Decode(b []byte) {
 
 // payments_paymentReceipt#500911e1
 type TL_payments_paymentReceipt struct {
-	_flags             []byte
+	_flags             TLObject
 	_date              int32
 	_bot_id            int32
-	_invoice           []byte
+	_invoice           TLObject
 	_provider_id       int32
-	_info              []byte
-	_shipping          []byte
+	_info              TLObject
+	_shipping          TLObject
 	_currency          string
 	_total_amount      int64
 	_credentials_title string
-	_users             []byte
+	_users             TLObject
 }
 
-func (t *TL_payments_paymentReceipt) Set_flags(_flags []byte) {
+func (t *TL_payments_paymentReceipt) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_paymentReceipt) Get_flags() []byte {
+func (t *TL_payments_paymentReceipt) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -28442,11 +28442,11 @@ func (t *TL_payments_paymentReceipt) Get_bot_id() int32 {
 	return t._bot_id
 }
 
-func (t *TL_payments_paymentReceipt) Set_invoice(_invoice []byte) {
+func (t *TL_payments_paymentReceipt) Set_invoice(_invoice TLObject) {
 	t._invoice = _invoice
 }
 
-func (t *TL_payments_paymentReceipt) Get_invoice() []byte {
+func (t *TL_payments_paymentReceipt) Get_invoice() TLObject {
 	return t._invoice
 }
 
@@ -28458,19 +28458,19 @@ func (t *TL_payments_paymentReceipt) Get_provider_id() int32 {
 	return t._provider_id
 }
 
-func (t *TL_payments_paymentReceipt) Set_info(_info []byte) {
+func (t *TL_payments_paymentReceipt) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_payments_paymentReceipt) Get_info() []byte {
+func (t *TL_payments_paymentReceipt) Get_info() TLObject {
 	return t._info
 }
 
-func (t *TL_payments_paymentReceipt) Set_shipping(_shipping []byte) {
+func (t *TL_payments_paymentReceipt) Set_shipping(_shipping TLObject) {
 	t._shipping = _shipping
 }
 
-func (t *TL_payments_paymentReceipt) Get_shipping() []byte {
+func (t *TL_payments_paymentReceipt) Get_shipping() TLObject {
 	return t._shipping
 }
 
@@ -28498,11 +28498,11 @@ func (t *TL_payments_paymentReceipt) Get_credentials_title() string {
 	return t._credentials_title
 }
 
-func (t *TL_payments_paymentReceipt) Set_users(_users []byte) {
+func (t *TL_payments_paymentReceipt) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_payments_paymentReceipt) Get_users() []byte {
+func (t *TL_payments_paymentReceipt) Get_users() TLObject {
 	return t._users
 }
 
@@ -28546,32 +28546,32 @@ func (t *TL_payments_paymentReceipt) Decode(b []byte) {
 
 // payments_savedInfo#fb8fe43c
 type TL_payments_savedInfo struct {
-	_flags                 []byte
-	_has_saved_credentials []byte
-	_saved_info            []byte
+	_flags                 TLObject
+	_has_saved_credentials TLObject
+	_saved_info            TLObject
 }
 
-func (t *TL_payments_savedInfo) Set_flags(_flags []byte) {
+func (t *TL_payments_savedInfo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_savedInfo) Get_flags() []byte {
+func (t *TL_payments_savedInfo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_payments_savedInfo) Set_has_saved_credentials(_has_saved_credentials []byte) {
+func (t *TL_payments_savedInfo) Set_has_saved_credentials(_has_saved_credentials TLObject) {
 	t._has_saved_credentials = _has_saved_credentials
 }
 
-func (t *TL_payments_savedInfo) Get_has_saved_credentials() []byte {
+func (t *TL_payments_savedInfo) Get_has_saved_credentials() TLObject {
 	return t._has_saved_credentials
 }
 
-func (t *TL_payments_savedInfo) Set_saved_info(_saved_info []byte) {
+func (t *TL_payments_savedInfo) Set_saved_info(_saved_info TLObject) {
 	t._saved_info = _saved_info
 }
 
-func (t *TL_payments_savedInfo) Get_saved_info() []byte {
+func (t *TL_payments_savedInfo) Get_saved_info() TLObject {
 	return t._saved_info
 }
 
@@ -28600,7 +28600,7 @@ func (t *TL_payments_savedInfo) Decode(b []byte) {
 // inputPaymentCredentialsSaved#c10eb2cf
 type TL_inputPaymentCredentialsSaved struct {
 	_id           string
-	_tmp_password []byte
+	_tmp_password TLObject
 }
 
 func (t *TL_inputPaymentCredentialsSaved) Set_id(_id string) {
@@ -28611,11 +28611,11 @@ func (t *TL_inputPaymentCredentialsSaved) Get_id() string {
 	return t._id
 }
 
-func (t *TL_inputPaymentCredentialsSaved) Set_tmp_password(_tmp_password []byte) {
+func (t *TL_inputPaymentCredentialsSaved) Set_tmp_password(_tmp_password TLObject) {
 	t._tmp_password = _tmp_password
 }
 
-func (t *TL_inputPaymentCredentialsSaved) Get_tmp_password() []byte {
+func (t *TL_inputPaymentCredentialsSaved) Get_tmp_password() TLObject {
 	return t._tmp_password
 }
 
@@ -28643,32 +28643,32 @@ func (t *TL_inputPaymentCredentialsSaved) Decode(b []byte) {
 
 // inputPaymentCredentials#3417d728
 type TL_inputPaymentCredentials struct {
-	_flags []byte
-	_save  []byte
-	_data  []byte
+	_flags TLObject
+	_save  TLObject
+	_data  TLObject
 }
 
-func (t *TL_inputPaymentCredentials) Set_flags(_flags []byte) {
+func (t *TL_inputPaymentCredentials) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputPaymentCredentials) Get_flags() []byte {
+func (t *TL_inputPaymentCredentials) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputPaymentCredentials) Set_save(_save []byte) {
+func (t *TL_inputPaymentCredentials) Set_save(_save TLObject) {
 	t._save = _save
 }
 
-func (t *TL_inputPaymentCredentials) Get_save() []byte {
+func (t *TL_inputPaymentCredentials) Get_save() TLObject {
 	return t._save
 }
 
-func (t *TL_inputPaymentCredentials) Set_data(_data []byte) {
+func (t *TL_inputPaymentCredentials) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_inputPaymentCredentials) Get_data() []byte {
+func (t *TL_inputPaymentCredentials) Get_data() TLObject {
 	return t._data
 }
 
@@ -28694,16 +28694,16 @@ func (t *TL_inputPaymentCredentials) Decode(b []byte) {
 
 }
 
-// inputPaymentCredentialsApplePay#0aa1c39f
+// inputPaymentCredentialsApplePay#aa1c39f
 type TL_inputPaymentCredentialsApplePay struct {
-	_payment_data []byte
+	_payment_data TLObject
 }
 
-func (t *TL_inputPaymentCredentialsApplePay) Set_payment_data(_payment_data []byte) {
+func (t *TL_inputPaymentCredentialsApplePay) Set_payment_data(_payment_data TLObject) {
 	t._payment_data = _payment_data
 }
 
-func (t *TL_inputPaymentCredentialsApplePay) Get_payment_data() []byte {
+func (t *TL_inputPaymentCredentialsApplePay) Get_payment_data() TLObject {
 	return t._payment_data
 }
 
@@ -28729,14 +28729,14 @@ func (t *TL_inputPaymentCredentialsApplePay) Decode(b []byte) {
 
 // inputPaymentCredentialsAndroidPay#795667a6
 type TL_inputPaymentCredentialsAndroidPay struct {
-	_payment_token []byte
+	_payment_token TLObject
 }
 
-func (t *TL_inputPaymentCredentialsAndroidPay) Set_payment_token(_payment_token []byte) {
+func (t *TL_inputPaymentCredentialsAndroidPay) Set_payment_token(_payment_token TLObject) {
 	t._payment_token = _payment_token
 }
 
-func (t *TL_inputPaymentCredentialsAndroidPay) Get_payment_token() []byte {
+func (t *TL_inputPaymentCredentialsAndroidPay) Get_payment_token() TLObject {
 	return t._payment_token
 }
 
@@ -28762,15 +28762,15 @@ func (t *TL_inputPaymentCredentialsAndroidPay) Decode(b []byte) {
 
 // account_tmpPassword#db64fd34
 type TL_account_tmpPassword struct {
-	_tmp_password []byte
+	_tmp_password TLObject
 	_valid_until  int32
 }
 
-func (t *TL_account_tmpPassword) Set_tmp_password(_tmp_password []byte) {
+func (t *TL_account_tmpPassword) Set_tmp_password(_tmp_password TLObject) {
 	t._tmp_password = _tmp_password
 }
 
-func (t *TL_account_tmpPassword) Get_tmp_password() []byte {
+func (t *TL_account_tmpPassword) Get_tmp_password() TLObject {
 	return t._tmp_password
 }
 
@@ -28808,7 +28808,7 @@ func (t *TL_account_tmpPassword) Decode(b []byte) {
 type TL_shippingOption struct {
 	_id     string
 	_title  string
-	_prices []byte
+	_prices TLObject
 }
 
 func (t *TL_shippingOption) Set_id(_id string) {
@@ -28827,11 +28827,11 @@ func (t *TL_shippingOption) Get_title() string {
 	return t._title
 }
 
-func (t *TL_shippingOption) Set_prices(_prices []byte) {
+func (t *TL_shippingOption) Set_prices(_prices TLObject) {
 	t._prices = _prices
 }
 
-func (t *TL_shippingOption) Get_prices() []byte {
+func (t *TL_shippingOption) Get_prices() TLObject {
 	return t._prices
 }
 
@@ -28861,25 +28861,25 @@ func (t *TL_shippingOption) Decode(b []byte) {
 
 // inputStickerSetItem#ffa0a496
 type TL_inputStickerSetItem struct {
-	_flags       []byte
-	_document    []byte
+	_flags       TLObject
+	_document    TLObject
 	_emoji       string
-	_mask_coords []byte
+	_mask_coords TLObject
 }
 
-func (t *TL_inputStickerSetItem) Set_flags(_flags []byte) {
+func (t *TL_inputStickerSetItem) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_inputStickerSetItem) Get_flags() []byte {
+func (t *TL_inputStickerSetItem) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_inputStickerSetItem) Set_document(_document []byte) {
+func (t *TL_inputStickerSetItem) Set_document(_document TLObject) {
 	t._document = _document
 }
 
-func (t *TL_inputStickerSetItem) Get_document() []byte {
+func (t *TL_inputStickerSetItem) Get_document() TLObject {
 	return t._document
 }
 
@@ -28891,11 +28891,11 @@ func (t *TL_inputStickerSetItem) Get_emoji() string {
 	return t._emoji
 }
 
-func (t *TL_inputStickerSetItem) Set_mask_coords(_mask_coords []byte) {
+func (t *TL_inputStickerSetItem) Set_mask_coords(_mask_coords TLObject) {
 	t._mask_coords = _mask_coords
 }
 
-func (t *TL_inputStickerSetItem) Get_mask_coords() []byte {
+func (t *TL_inputStickerSetItem) Get_mask_coords() TLObject {
 	return t._mask_coords
 }
 
@@ -29002,21 +29002,21 @@ func (t *TL_phoneCallEmpty) Decode(b []byte) {
 
 // phoneCallWaiting#1b8f4ad1
 type TL_phoneCallWaiting struct {
-	_flags          []byte
+	_flags          TLObject
 	_id             int64
 	_access_hash    int64
 	_date           int32
 	_admin_id       int32
 	_participant_id int32
-	_protocol       []byte
-	_receive_date   []byte
+	_protocol       TLObject
+	_receive_date   TLObject
 }
 
-func (t *TL_phoneCallWaiting) Set_flags(_flags []byte) {
+func (t *TL_phoneCallWaiting) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_phoneCallWaiting) Get_flags() []byte {
+func (t *TL_phoneCallWaiting) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -29060,19 +29060,19 @@ func (t *TL_phoneCallWaiting) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_phoneCallWaiting) Set_protocol(_protocol []byte) {
+func (t *TL_phoneCallWaiting) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phoneCallWaiting) Get_protocol() []byte {
+func (t *TL_phoneCallWaiting) Get_protocol() TLObject {
 	return t._protocol
 }
 
-func (t *TL_phoneCallWaiting) Set_receive_date(_receive_date []byte) {
+func (t *TL_phoneCallWaiting) Set_receive_date(_receive_date TLObject) {
 	t._receive_date = _receive_date
 }
 
-func (t *TL_phoneCallWaiting) Get_receive_date() []byte {
+func (t *TL_phoneCallWaiting) Get_receive_date() TLObject {
 	return t._receive_date
 }
 
@@ -29115,8 +29115,8 @@ type TL_phoneCallRequested struct {
 	_date           int32
 	_admin_id       int32
 	_participant_id int32
-	_g_a_hash       []byte
-	_protocol       []byte
+	_g_a_hash       TLObject
+	_protocol       TLObject
 }
 
 func (t *TL_phoneCallRequested) Set_id(_id int64) {
@@ -29159,19 +29159,19 @@ func (t *TL_phoneCallRequested) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_phoneCallRequested) Set_g_a_hash(_g_a_hash []byte) {
+func (t *TL_phoneCallRequested) Set_g_a_hash(_g_a_hash TLObject) {
 	t._g_a_hash = _g_a_hash
 }
 
-func (t *TL_phoneCallRequested) Get_g_a_hash() []byte {
+func (t *TL_phoneCallRequested) Get_g_a_hash() TLObject {
 	return t._g_a_hash
 }
 
-func (t *TL_phoneCallRequested) Set_protocol(_protocol []byte) {
+func (t *TL_phoneCallRequested) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phoneCallRequested) Get_protocol() []byte {
+func (t *TL_phoneCallRequested) Get_protocol() TLObject {
 	return t._protocol
 }
 
@@ -29214,8 +29214,8 @@ type TL_phoneCallAccepted struct {
 	_date           int32
 	_admin_id       int32
 	_participant_id int32
-	_g_b            []byte
-	_protocol       []byte
+	_g_b            TLObject
+	_protocol       TLObject
 }
 
 func (t *TL_phoneCallAccepted) Set_id(_id int64) {
@@ -29258,19 +29258,19 @@ func (t *TL_phoneCallAccepted) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_phoneCallAccepted) Set_g_b(_g_b []byte) {
+func (t *TL_phoneCallAccepted) Set_g_b(_g_b TLObject) {
 	t._g_b = _g_b
 }
 
-func (t *TL_phoneCallAccepted) Get_g_b() []byte {
+func (t *TL_phoneCallAccepted) Get_g_b() TLObject {
 	return t._g_b
 }
 
-func (t *TL_phoneCallAccepted) Set_protocol(_protocol []byte) {
+func (t *TL_phoneCallAccepted) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phoneCallAccepted) Get_protocol() []byte {
+func (t *TL_phoneCallAccepted) Get_protocol() TLObject {
 	return t._protocol
 }
 
@@ -29313,11 +29313,11 @@ type TL_phoneCall struct {
 	_date                    int32
 	_admin_id                int32
 	_participant_id          int32
-	_g_a_or_b                []byte
+	_g_a_or_b                TLObject
 	_key_fingerprint         int64
-	_protocol                []byte
-	_connection              []byte
-	_alternative_connections []byte
+	_protocol                TLObject
+	_connection              TLObject
+	_alternative_connections TLObject
 	_start_date              int32
 }
 
@@ -29361,11 +29361,11 @@ func (t *TL_phoneCall) Get_participant_id() int32 {
 	return t._participant_id
 }
 
-func (t *TL_phoneCall) Set_g_a_or_b(_g_a_or_b []byte) {
+func (t *TL_phoneCall) Set_g_a_or_b(_g_a_or_b TLObject) {
 	t._g_a_or_b = _g_a_or_b
 }
 
-func (t *TL_phoneCall) Get_g_a_or_b() []byte {
+func (t *TL_phoneCall) Get_g_a_or_b() TLObject {
 	return t._g_a_or_b
 }
 
@@ -29377,27 +29377,27 @@ func (t *TL_phoneCall) Get_key_fingerprint() int64 {
 	return t._key_fingerprint
 }
 
-func (t *TL_phoneCall) Set_protocol(_protocol []byte) {
+func (t *TL_phoneCall) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phoneCall) Get_protocol() []byte {
+func (t *TL_phoneCall) Get_protocol() TLObject {
 	return t._protocol
 }
 
-func (t *TL_phoneCall) Set_connection(_connection []byte) {
+func (t *TL_phoneCall) Set_connection(_connection TLObject) {
 	t._connection = _connection
 }
 
-func (t *TL_phoneCall) Get_connection() []byte {
+func (t *TL_phoneCall) Get_connection() TLObject {
 	return t._connection
 }
 
-func (t *TL_phoneCall) Set_alternative_connections(_alternative_connections []byte) {
+func (t *TL_phoneCall) Set_alternative_connections(_alternative_connections TLObject) {
 	t._alternative_connections = _alternative_connections
 }
 
-func (t *TL_phoneCall) Get_alternative_connections() []byte {
+func (t *TL_phoneCall) Get_alternative_connections() TLObject {
 	return t._alternative_connections
 }
 
@@ -29451,35 +29451,35 @@ func (t *TL_phoneCall) Decode(b []byte) {
 
 // phoneCallDiscarded#50ca4de1
 type TL_phoneCallDiscarded struct {
-	_flags       []byte
-	_need_rating []byte
-	_need_debug  []byte
+	_flags       TLObject
+	_need_rating TLObject
+	_need_debug  TLObject
 	_id          int64
-	_reason      []byte
-	_duration    []byte
+	_reason      TLObject
+	_duration    TLObject
 }
 
-func (t *TL_phoneCallDiscarded) Set_flags(_flags []byte) {
+func (t *TL_phoneCallDiscarded) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_phoneCallDiscarded) Get_flags() []byte {
+func (t *TL_phoneCallDiscarded) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_phoneCallDiscarded) Set_need_rating(_need_rating []byte) {
+func (t *TL_phoneCallDiscarded) Set_need_rating(_need_rating TLObject) {
 	t._need_rating = _need_rating
 }
 
-func (t *TL_phoneCallDiscarded) Get_need_rating() []byte {
+func (t *TL_phoneCallDiscarded) Get_need_rating() TLObject {
 	return t._need_rating
 }
 
-func (t *TL_phoneCallDiscarded) Set_need_debug(_need_debug []byte) {
+func (t *TL_phoneCallDiscarded) Set_need_debug(_need_debug TLObject) {
 	t._need_debug = _need_debug
 }
 
-func (t *TL_phoneCallDiscarded) Get_need_debug() []byte {
+func (t *TL_phoneCallDiscarded) Get_need_debug() TLObject {
 	return t._need_debug
 }
 
@@ -29491,19 +29491,19 @@ func (t *TL_phoneCallDiscarded) Get_id() int64 {
 	return t._id
 }
 
-func (t *TL_phoneCallDiscarded) Set_reason(_reason []byte) {
+func (t *TL_phoneCallDiscarded) Set_reason(_reason TLObject) {
 	t._reason = _reason
 }
 
-func (t *TL_phoneCallDiscarded) Get_reason() []byte {
+func (t *TL_phoneCallDiscarded) Get_reason() TLObject {
 	return t._reason
 }
 
-func (t *TL_phoneCallDiscarded) Set_duration(_duration []byte) {
+func (t *TL_phoneCallDiscarded) Set_duration(_duration TLObject) {
 	t._duration = _duration
 }
 
-func (t *TL_phoneCallDiscarded) Get_duration() []byte {
+func (t *TL_phoneCallDiscarded) Get_duration() TLObject {
 	return t._duration
 }
 
@@ -29541,7 +29541,7 @@ type TL_phoneConnection struct {
 	_ip       string
 	_ipv6     string
 	_port     int32
-	_peer_tag []byte
+	_peer_tag TLObject
 }
 
 func (t *TL_phoneConnection) Set_id(_id int64) {
@@ -29576,11 +29576,11 @@ func (t *TL_phoneConnection) Get_port() int32 {
 	return t._port
 }
 
-func (t *TL_phoneConnection) Set_peer_tag(_peer_tag []byte) {
+func (t *TL_phoneConnection) Set_peer_tag(_peer_tag TLObject) {
 	t._peer_tag = _peer_tag
 }
 
-func (t *TL_phoneConnection) Get_peer_tag() []byte {
+func (t *TL_phoneConnection) Get_peer_tag() TLObject {
 	return t._peer_tag
 }
 
@@ -29614,34 +29614,34 @@ func (t *TL_phoneConnection) Decode(b []byte) {
 
 // phoneCallProtocol#a2bb35cb
 type TL_phoneCallProtocol struct {
-	_flags         []byte
-	_udp_p2p       []byte
-	_udp_reflector []byte
+	_flags         TLObject
+	_udp_p2p       TLObject
+	_udp_reflector TLObject
 	_min_layer     int32
 	_max_layer     int32
 }
 
-func (t *TL_phoneCallProtocol) Set_flags(_flags []byte) {
+func (t *TL_phoneCallProtocol) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_phoneCallProtocol) Get_flags() []byte {
+func (t *TL_phoneCallProtocol) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_phoneCallProtocol) Set_udp_p2p(_udp_p2p []byte) {
+func (t *TL_phoneCallProtocol) Set_udp_p2p(_udp_p2p TLObject) {
 	t._udp_p2p = _udp_p2p
 }
 
-func (t *TL_phoneCallProtocol) Get_udp_p2p() []byte {
+func (t *TL_phoneCallProtocol) Get_udp_p2p() TLObject {
 	return t._udp_p2p
 }
 
-func (t *TL_phoneCallProtocol) Set_udp_reflector(_udp_reflector []byte) {
+func (t *TL_phoneCallProtocol) Set_udp_reflector(_udp_reflector TLObject) {
 	t._udp_reflector = _udp_reflector
 }
 
-func (t *TL_phoneCallProtocol) Get_udp_reflector() []byte {
+func (t *TL_phoneCallProtocol) Get_udp_reflector() TLObject {
 	return t._udp_reflector
 }
 
@@ -29689,23 +29689,23 @@ func (t *TL_phoneCallProtocol) Decode(b []byte) {
 
 // phone_phoneCall#ec82e140
 type TL_phone_phoneCall struct {
-	_phone_call []byte
-	_users      []byte
+	_phone_call TLObject
+	_users      TLObject
 }
 
-func (t *TL_phone_phoneCall) Set_phone_call(_phone_call []byte) {
+func (t *TL_phone_phoneCall) Set_phone_call(_phone_call TLObject) {
 	t._phone_call = _phone_call
 }
 
-func (t *TL_phone_phoneCall) Get_phone_call() []byte {
+func (t *TL_phone_phoneCall) Get_phone_call() TLObject {
 	return t._phone_call
 }
 
-func (t *TL_phone_phoneCall) Set_users(_users []byte) {
+func (t *TL_phone_phoneCall) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_phone_phoneCall) Get_users() []byte {
+func (t *TL_phone_phoneCall) Get_users() TLObject {
 	return t._users
 }
 
@@ -29733,14 +29733,14 @@ func (t *TL_phone_phoneCall) Decode(b []byte) {
 
 // upload_cdnFileReuploadNeeded#eea8e46e
 type TL_upload_cdnFileReuploadNeeded struct {
-	_request_token []byte
+	_request_token TLObject
 }
 
-func (t *TL_upload_cdnFileReuploadNeeded) Set_request_token(_request_token []byte) {
+func (t *TL_upload_cdnFileReuploadNeeded) Set_request_token(_request_token TLObject) {
 	t._request_token = _request_token
 }
 
-func (t *TL_upload_cdnFileReuploadNeeded) Get_request_token() []byte {
+func (t *TL_upload_cdnFileReuploadNeeded) Get_request_token() TLObject {
 	return t._request_token
 }
 
@@ -29766,14 +29766,14 @@ func (t *TL_upload_cdnFileReuploadNeeded) Decode(b []byte) {
 
 // upload_cdnFile#a99fca4f
 type TL_upload_cdnFile struct {
-	_bytes []byte
+	_bytes TLObject
 }
 
-func (t *TL_upload_cdnFile) Set_bytes(_bytes []byte) {
+func (t *TL_upload_cdnFile) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_upload_cdnFile) Get_bytes() []byte {
+func (t *TL_upload_cdnFile) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -29843,14 +29843,14 @@ func (t *TL_cdnPublicKey) Decode(b []byte) {
 
 // cdnConfig#5725e40a
 type TL_cdnConfig struct {
-	_public_keys []byte
+	_public_keys TLObject
 }
 
-func (t *TL_cdnConfig) Set_public_keys(_public_keys []byte) {
+func (t *TL_cdnConfig) Set_public_keys(_public_keys TLObject) {
 	t._public_keys = _public_keys
 }
 
-func (t *TL_cdnConfig) Get_public_keys() []byte {
+func (t *TL_cdnConfig) Get_public_keys() TLObject {
 	return t._public_keys
 }
 
@@ -29920,21 +29920,21 @@ func (t *TL_langPackString) Decode(b []byte) {
 
 // langPackStringPluralized#6c47ac9f
 type TL_langPackStringPluralized struct {
-	_flags       []byte
+	_flags       TLObject
 	_key         string
-	_zero_value  []byte
-	_one_value   []byte
-	_two_value   []byte
-	_few_value   []byte
-	_many_value  []byte
+	_zero_value  TLObject
+	_one_value   TLObject
+	_two_value   TLObject
+	_few_value   TLObject
+	_many_value  TLObject
 	_other_value string
 }
 
-func (t *TL_langPackStringPluralized) Set_flags(_flags []byte) {
+func (t *TL_langPackStringPluralized) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_langPackStringPluralized) Get_flags() []byte {
+func (t *TL_langPackStringPluralized) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -29946,43 +29946,43 @@ func (t *TL_langPackStringPluralized) Get_key() string {
 	return t._key
 }
 
-func (t *TL_langPackStringPluralized) Set_zero_value(_zero_value []byte) {
+func (t *TL_langPackStringPluralized) Set_zero_value(_zero_value TLObject) {
 	t._zero_value = _zero_value
 }
 
-func (t *TL_langPackStringPluralized) Get_zero_value() []byte {
+func (t *TL_langPackStringPluralized) Get_zero_value() TLObject {
 	return t._zero_value
 }
 
-func (t *TL_langPackStringPluralized) Set_one_value(_one_value []byte) {
+func (t *TL_langPackStringPluralized) Set_one_value(_one_value TLObject) {
 	t._one_value = _one_value
 }
 
-func (t *TL_langPackStringPluralized) Get_one_value() []byte {
+func (t *TL_langPackStringPluralized) Get_one_value() TLObject {
 	return t._one_value
 }
 
-func (t *TL_langPackStringPluralized) Set_two_value(_two_value []byte) {
+func (t *TL_langPackStringPluralized) Set_two_value(_two_value TLObject) {
 	t._two_value = _two_value
 }
 
-func (t *TL_langPackStringPluralized) Get_two_value() []byte {
+func (t *TL_langPackStringPluralized) Get_two_value() TLObject {
 	return t._two_value
 }
 
-func (t *TL_langPackStringPluralized) Set_few_value(_few_value []byte) {
+func (t *TL_langPackStringPluralized) Set_few_value(_few_value TLObject) {
 	t._few_value = _few_value
 }
 
-func (t *TL_langPackStringPluralized) Get_few_value() []byte {
+func (t *TL_langPackStringPluralized) Get_few_value() TLObject {
 	return t._few_value
 }
 
-func (t *TL_langPackStringPluralized) Set_many_value(_many_value []byte) {
+func (t *TL_langPackStringPluralized) Set_many_value(_many_value TLObject) {
 	t._many_value = _many_value
 }
 
-func (t *TL_langPackStringPluralized) Get_many_value() []byte {
+func (t *TL_langPackStringPluralized) Get_many_value() TLObject {
 	return t._many_value
 }
 
@@ -30064,7 +30064,7 @@ type TL_langPackDifference struct {
 	_lang_code    string
 	_from_version int32
 	_version      int32
-	_strings      []byte
+	_strings      TLObject
 }
 
 func (t *TL_langPackDifference) Set_lang_code(_lang_code string) {
@@ -30091,11 +30091,11 @@ func (t *TL_langPackDifference) Get_version() int32 {
 	return t._version
 }
 
-func (t *TL_langPackDifference) Set_strings(_strings []byte) {
+func (t *TL_langPackDifference) Set_strings(_strings TLObject) {
 	t._strings = _strings
 }
 
-func (t *TL_langPackDifference) Get_strings() []byte {
+func (t *TL_langPackDifference) Get_strings() TLObject {
 	return t._strings
 }
 
@@ -30182,95 +30182,95 @@ func (t *TL_langPackLanguage) Decode(b []byte) {
 
 // channelAdminRights#5d7ceba5
 type TL_channelAdminRights struct {
-	_flags           []byte
-	_change_info     []byte
-	_post_messages   []byte
-	_edit_messages   []byte
-	_delete_messages []byte
-	_ban_users       []byte
-	_invite_users    []byte
-	_invite_link     []byte
-	_pin_messages    []byte
-	_add_admins      []byte
+	_flags           TLObject
+	_change_info     TLObject
+	_post_messages   TLObject
+	_edit_messages   TLObject
+	_delete_messages TLObject
+	_ban_users       TLObject
+	_invite_users    TLObject
+	_invite_link     TLObject
+	_pin_messages    TLObject
+	_add_admins      TLObject
 }
 
-func (t *TL_channelAdminRights) Set_flags(_flags []byte) {
+func (t *TL_channelAdminRights) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelAdminRights) Get_flags() []byte {
+func (t *TL_channelAdminRights) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelAdminRights) Set_change_info(_change_info []byte) {
+func (t *TL_channelAdminRights) Set_change_info(_change_info TLObject) {
 	t._change_info = _change_info
 }
 
-func (t *TL_channelAdminRights) Get_change_info() []byte {
+func (t *TL_channelAdminRights) Get_change_info() TLObject {
 	return t._change_info
 }
 
-func (t *TL_channelAdminRights) Set_post_messages(_post_messages []byte) {
+func (t *TL_channelAdminRights) Set_post_messages(_post_messages TLObject) {
 	t._post_messages = _post_messages
 }
 
-func (t *TL_channelAdminRights) Get_post_messages() []byte {
+func (t *TL_channelAdminRights) Get_post_messages() TLObject {
 	return t._post_messages
 }
 
-func (t *TL_channelAdminRights) Set_edit_messages(_edit_messages []byte) {
+func (t *TL_channelAdminRights) Set_edit_messages(_edit_messages TLObject) {
 	t._edit_messages = _edit_messages
 }
 
-func (t *TL_channelAdminRights) Get_edit_messages() []byte {
+func (t *TL_channelAdminRights) Get_edit_messages() TLObject {
 	return t._edit_messages
 }
 
-func (t *TL_channelAdminRights) Set_delete_messages(_delete_messages []byte) {
+func (t *TL_channelAdminRights) Set_delete_messages(_delete_messages TLObject) {
 	t._delete_messages = _delete_messages
 }
 
-func (t *TL_channelAdminRights) Get_delete_messages() []byte {
+func (t *TL_channelAdminRights) Get_delete_messages() TLObject {
 	return t._delete_messages
 }
 
-func (t *TL_channelAdminRights) Set_ban_users(_ban_users []byte) {
+func (t *TL_channelAdminRights) Set_ban_users(_ban_users TLObject) {
 	t._ban_users = _ban_users
 }
 
-func (t *TL_channelAdminRights) Get_ban_users() []byte {
+func (t *TL_channelAdminRights) Get_ban_users() TLObject {
 	return t._ban_users
 }
 
-func (t *TL_channelAdminRights) Set_invite_users(_invite_users []byte) {
+func (t *TL_channelAdminRights) Set_invite_users(_invite_users TLObject) {
 	t._invite_users = _invite_users
 }
 
-func (t *TL_channelAdminRights) Get_invite_users() []byte {
+func (t *TL_channelAdminRights) Get_invite_users() TLObject {
 	return t._invite_users
 }
 
-func (t *TL_channelAdminRights) Set_invite_link(_invite_link []byte) {
+func (t *TL_channelAdminRights) Set_invite_link(_invite_link TLObject) {
 	t._invite_link = _invite_link
 }
 
-func (t *TL_channelAdminRights) Get_invite_link() []byte {
+func (t *TL_channelAdminRights) Get_invite_link() TLObject {
 	return t._invite_link
 }
 
-func (t *TL_channelAdminRights) Set_pin_messages(_pin_messages []byte) {
+func (t *TL_channelAdminRights) Set_pin_messages(_pin_messages TLObject) {
 	t._pin_messages = _pin_messages
 }
 
-func (t *TL_channelAdminRights) Get_pin_messages() []byte {
+func (t *TL_channelAdminRights) Get_pin_messages() TLObject {
 	return t._pin_messages
 }
 
-func (t *TL_channelAdminRights) Set_add_admins(_add_admins []byte) {
+func (t *TL_channelAdminRights) Set_add_admins(_add_admins TLObject) {
 	t._add_admins = _add_admins
 }
 
-func (t *TL_channelAdminRights) Get_add_admins() []byte {
+func (t *TL_channelAdminRights) Get_add_admins() TLObject {
 	return t._add_admins
 }
 
@@ -30312,87 +30312,87 @@ func (t *TL_channelAdminRights) Decode(b []byte) {
 
 // channelBannedRights#58cf4249
 type TL_channelBannedRights struct {
-	_flags         []byte
-	_view_messages []byte
-	_send_messages []byte
-	_send_media    []byte
-	_send_stickers []byte
-	_send_gifs     []byte
-	_send_games    []byte
-	_send_inline   []byte
-	_embed_links   []byte
+	_flags         TLObject
+	_view_messages TLObject
+	_send_messages TLObject
+	_send_media    TLObject
+	_send_stickers TLObject
+	_send_gifs     TLObject
+	_send_games    TLObject
+	_send_inline   TLObject
+	_embed_links   TLObject
 	_until_date    int32
 }
 
-func (t *TL_channelBannedRights) Set_flags(_flags []byte) {
+func (t *TL_channelBannedRights) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelBannedRights) Get_flags() []byte {
+func (t *TL_channelBannedRights) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelBannedRights) Set_view_messages(_view_messages []byte) {
+func (t *TL_channelBannedRights) Set_view_messages(_view_messages TLObject) {
 	t._view_messages = _view_messages
 }
 
-func (t *TL_channelBannedRights) Get_view_messages() []byte {
+func (t *TL_channelBannedRights) Get_view_messages() TLObject {
 	return t._view_messages
 }
 
-func (t *TL_channelBannedRights) Set_send_messages(_send_messages []byte) {
+func (t *TL_channelBannedRights) Set_send_messages(_send_messages TLObject) {
 	t._send_messages = _send_messages
 }
 
-func (t *TL_channelBannedRights) Get_send_messages() []byte {
+func (t *TL_channelBannedRights) Get_send_messages() TLObject {
 	return t._send_messages
 }
 
-func (t *TL_channelBannedRights) Set_send_media(_send_media []byte) {
+func (t *TL_channelBannedRights) Set_send_media(_send_media TLObject) {
 	t._send_media = _send_media
 }
 
-func (t *TL_channelBannedRights) Get_send_media() []byte {
+func (t *TL_channelBannedRights) Get_send_media() TLObject {
 	return t._send_media
 }
 
-func (t *TL_channelBannedRights) Set_send_stickers(_send_stickers []byte) {
+func (t *TL_channelBannedRights) Set_send_stickers(_send_stickers TLObject) {
 	t._send_stickers = _send_stickers
 }
 
-func (t *TL_channelBannedRights) Get_send_stickers() []byte {
+func (t *TL_channelBannedRights) Get_send_stickers() TLObject {
 	return t._send_stickers
 }
 
-func (t *TL_channelBannedRights) Set_send_gifs(_send_gifs []byte) {
+func (t *TL_channelBannedRights) Set_send_gifs(_send_gifs TLObject) {
 	t._send_gifs = _send_gifs
 }
 
-func (t *TL_channelBannedRights) Get_send_gifs() []byte {
+func (t *TL_channelBannedRights) Get_send_gifs() TLObject {
 	return t._send_gifs
 }
 
-func (t *TL_channelBannedRights) Set_send_games(_send_games []byte) {
+func (t *TL_channelBannedRights) Set_send_games(_send_games TLObject) {
 	t._send_games = _send_games
 }
 
-func (t *TL_channelBannedRights) Get_send_games() []byte {
+func (t *TL_channelBannedRights) Get_send_games() TLObject {
 	return t._send_games
 }
 
-func (t *TL_channelBannedRights) Set_send_inline(_send_inline []byte) {
+func (t *TL_channelBannedRights) Set_send_inline(_send_inline TLObject) {
 	t._send_inline = _send_inline
 }
 
-func (t *TL_channelBannedRights) Get_send_inline() []byte {
+func (t *TL_channelBannedRights) Get_send_inline() TLObject {
 	return t._send_inline
 }
 
-func (t *TL_channelBannedRights) Set_embed_links(_embed_links []byte) {
+func (t *TL_channelBannedRights) Set_embed_links(_embed_links TLObject) {
 	t._embed_links = _embed_links
 }
 
-func (t *TL_channelBannedRights) Get_embed_links() []byte {
+func (t *TL_channelBannedRights) Get_embed_links() TLObject {
 	return t._embed_links
 }
 
@@ -30574,23 +30574,23 @@ func (t *TL_channelAdminLogEventActionChangeUsername) Decode(b []byte) {
 
 // channelAdminLogEventActionChangePhoto#b82f55c3
 type TL_channelAdminLogEventActionChangePhoto struct {
-	_prev_photo []byte
-	_new_photo  []byte
+	_prev_photo TLObject
+	_new_photo  TLObject
 }
 
-func (t *TL_channelAdminLogEventActionChangePhoto) Set_prev_photo(_prev_photo []byte) {
+func (t *TL_channelAdminLogEventActionChangePhoto) Set_prev_photo(_prev_photo TLObject) {
 	t._prev_photo = _prev_photo
 }
 
-func (t *TL_channelAdminLogEventActionChangePhoto) Get_prev_photo() []byte {
+func (t *TL_channelAdminLogEventActionChangePhoto) Get_prev_photo() TLObject {
 	return t._prev_photo
 }
 
-func (t *TL_channelAdminLogEventActionChangePhoto) Set_new_photo(_new_photo []byte) {
+func (t *TL_channelAdminLogEventActionChangePhoto) Set_new_photo(_new_photo TLObject) {
 	t._new_photo = _new_photo
 }
 
-func (t *TL_channelAdminLogEventActionChangePhoto) Get_new_photo() []byte {
+func (t *TL_channelAdminLogEventActionChangePhoto) Get_new_photo() TLObject {
 	return t._new_photo
 }
 
@@ -30684,14 +30684,14 @@ func (t *TL_channelAdminLogEventActionToggleSignatures) Decode(b []byte) {
 
 // channelAdminLogEventActionUpdatePinned#e9e82c18
 type TL_channelAdminLogEventActionUpdatePinned struct {
-	_message []byte
+	_message TLObject
 }
 
-func (t *TL_channelAdminLogEventActionUpdatePinned) Set_message(_message []byte) {
+func (t *TL_channelAdminLogEventActionUpdatePinned) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_channelAdminLogEventActionUpdatePinned) Get_message() []byte {
+func (t *TL_channelAdminLogEventActionUpdatePinned) Get_message() TLObject {
 	return t._message
 }
 
@@ -30717,23 +30717,23 @@ func (t *TL_channelAdminLogEventActionUpdatePinned) Decode(b []byte) {
 
 // channelAdminLogEventActionEditMessage#709b2405
 type TL_channelAdminLogEventActionEditMessage struct {
-	_prev_message []byte
-	_new_message  []byte
+	_prev_message TLObject
+	_new_message  TLObject
 }
 
-func (t *TL_channelAdminLogEventActionEditMessage) Set_prev_message(_prev_message []byte) {
+func (t *TL_channelAdminLogEventActionEditMessage) Set_prev_message(_prev_message TLObject) {
 	t._prev_message = _prev_message
 }
 
-func (t *TL_channelAdminLogEventActionEditMessage) Get_prev_message() []byte {
+func (t *TL_channelAdminLogEventActionEditMessage) Get_prev_message() TLObject {
 	return t._prev_message
 }
 
-func (t *TL_channelAdminLogEventActionEditMessage) Set_new_message(_new_message []byte) {
+func (t *TL_channelAdminLogEventActionEditMessage) Set_new_message(_new_message TLObject) {
 	t._new_message = _new_message
 }
 
-func (t *TL_channelAdminLogEventActionEditMessage) Get_new_message() []byte {
+func (t *TL_channelAdminLogEventActionEditMessage) Get_new_message() TLObject {
 	return t._new_message
 }
 
@@ -30761,14 +30761,14 @@ func (t *TL_channelAdminLogEventActionEditMessage) Decode(b []byte) {
 
 // channelAdminLogEventActionDeleteMessage#42e047bb
 type TL_channelAdminLogEventActionDeleteMessage struct {
-	_message []byte
+	_message TLObject
 }
 
-func (t *TL_channelAdminLogEventActionDeleteMessage) Set_message(_message []byte) {
+func (t *TL_channelAdminLogEventActionDeleteMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_channelAdminLogEventActionDeleteMessage) Get_message() []byte {
+func (t *TL_channelAdminLogEventActionDeleteMessage) Get_message() TLObject {
 	return t._message
 }
 
@@ -30826,14 +30826,14 @@ func (t *TL_channelAdminLogEventActionParticipantLeave) Decode(b []byte) {
 
 // channelAdminLogEventActionParticipantInvite#e31c34d8
 type TL_channelAdminLogEventActionParticipantInvite struct {
-	_participant []byte
+	_participant TLObject
 }
 
-func (t *TL_channelAdminLogEventActionParticipantInvite) Set_participant(_participant []byte) {
+func (t *TL_channelAdminLogEventActionParticipantInvite) Set_participant(_participant TLObject) {
 	t._participant = _participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantInvite) Get_participant() []byte {
+func (t *TL_channelAdminLogEventActionParticipantInvite) Get_participant() TLObject {
 	return t._participant
 }
 
@@ -30859,23 +30859,23 @@ func (t *TL_channelAdminLogEventActionParticipantInvite) Decode(b []byte) {
 
 // channelAdminLogEventActionParticipantToggleBan#e6d83d7e
 type TL_channelAdminLogEventActionParticipantToggleBan struct {
-	_prev_participant []byte
-	_new_participant  []byte
+	_prev_participant TLObject
+	_new_participant  TLObject
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleBan) Set_prev_participant(_prev_participant []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) Set_prev_participant(_prev_participant TLObject) {
 	t._prev_participant = _prev_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleBan) Get_prev_participant() []byte {
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) Get_prev_participant() TLObject {
 	return t._prev_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleBan) Set_new_participant(_new_participant []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) Set_new_participant(_new_participant TLObject) {
 	t._new_participant = _new_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleBan) Get_new_participant() []byte {
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) Get_new_participant() TLObject {
 	return t._new_participant
 }
 
@@ -30903,23 +30903,23 @@ func (t *TL_channelAdminLogEventActionParticipantToggleBan) Decode(b []byte) {
 
 // channelAdminLogEventActionParticipantToggleAdmin#d5676710
 type TL_channelAdminLogEventActionParticipantToggleAdmin struct {
-	_prev_participant []byte
-	_new_participant  []byte
+	_prev_participant TLObject
+	_new_participant  TLObject
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Set_prev_participant(_prev_participant []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Set_prev_participant(_prev_participant TLObject) {
 	t._prev_participant = _prev_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Get_prev_participant() []byte {
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Get_prev_participant() TLObject {
 	return t._prev_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Set_new_participant(_new_participant []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Set_new_participant(_new_participant TLObject) {
 	t._new_participant = _new_participant
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Get_new_participant() []byte {
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Get_new_participant() TLObject {
 	return t._new_participant
 }
 
@@ -30947,23 +30947,23 @@ func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Decode(b []byte) {
 
 // channelAdminLogEventActionChangeStickerSet#b1c3caa7
 type TL_channelAdminLogEventActionChangeStickerSet struct {
-	_prev_stickerset []byte
-	_new_stickerset  []byte
+	_prev_stickerset TLObject
+	_new_stickerset  TLObject
 }
 
-func (t *TL_channelAdminLogEventActionChangeStickerSet) Set_prev_stickerset(_prev_stickerset []byte) {
+func (t *TL_channelAdminLogEventActionChangeStickerSet) Set_prev_stickerset(_prev_stickerset TLObject) {
 	t._prev_stickerset = _prev_stickerset
 }
 
-func (t *TL_channelAdminLogEventActionChangeStickerSet) Get_prev_stickerset() []byte {
+func (t *TL_channelAdminLogEventActionChangeStickerSet) Get_prev_stickerset() TLObject {
 	return t._prev_stickerset
 }
 
-func (t *TL_channelAdminLogEventActionChangeStickerSet) Set_new_stickerset(_new_stickerset []byte) {
+func (t *TL_channelAdminLogEventActionChangeStickerSet) Set_new_stickerset(_new_stickerset TLObject) {
 	t._new_stickerset = _new_stickerset
 }
 
-func (t *TL_channelAdminLogEventActionChangeStickerSet) Get_new_stickerset() []byte {
+func (t *TL_channelAdminLogEventActionChangeStickerSet) Get_new_stickerset() TLObject {
 	return t._new_stickerset
 }
 
@@ -31027,7 +31027,7 @@ type TL_channelAdminLogEvent struct {
 	_id      int64
 	_date    int32
 	_user_id int32
-	_action  []byte
+	_action  TLObject
 }
 
 func (t *TL_channelAdminLogEvent) Set_id(_id int64) {
@@ -31054,11 +31054,11 @@ func (t *TL_channelAdminLogEvent) Get_user_id() int32 {
 	return t._user_id
 }
 
-func (t *TL_channelAdminLogEvent) Set_action(_action []byte) {
+func (t *TL_channelAdminLogEvent) Set_action(_action TLObject) {
 	t._action = _action
 }
 
-func (t *TL_channelAdminLogEvent) Get_action() []byte {
+func (t *TL_channelAdminLogEvent) Get_action() TLObject {
 	return t._action
 }
 
@@ -31090,32 +31090,32 @@ func (t *TL_channelAdminLogEvent) Decode(b []byte) {
 
 // channels_adminLogResults#ed8af74d
 type TL_channels_adminLogResults struct {
-	_events []byte
-	_chats  []byte
-	_users  []byte
+	_events TLObject
+	_chats  TLObject
+	_users  TLObject
 }
 
-func (t *TL_channels_adminLogResults) Set_events(_events []byte) {
+func (t *TL_channels_adminLogResults) Set_events(_events TLObject) {
 	t._events = _events
 }
 
-func (t *TL_channels_adminLogResults) Get_events() []byte {
+func (t *TL_channels_adminLogResults) Get_events() TLObject {
 	return t._events
 }
 
-func (t *TL_channels_adminLogResults) Set_chats(_chats []byte) {
+func (t *TL_channels_adminLogResults) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_channels_adminLogResults) Get_chats() []byte {
+func (t *TL_channels_adminLogResults) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_channels_adminLogResults) Set_users(_users []byte) {
+func (t *TL_channels_adminLogResults) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_channels_adminLogResults) Get_users() []byte {
+func (t *TL_channels_adminLogResults) Get_users() TLObject {
 	return t._users
 }
 
@@ -31145,140 +31145,140 @@ func (t *TL_channels_adminLogResults) Decode(b []byte) {
 
 // channelAdminLogEventsFilter#ea107ae4
 type TL_channelAdminLogEventsFilter struct {
-	_flags    []byte
-	_join     []byte
-	_leave    []byte
-	_invite   []byte
-	_ban      []byte
-	_unban    []byte
-	_kick     []byte
-	_unkick   []byte
-	_promote  []byte
-	_demote   []byte
-	_info     []byte
-	_settings []byte
-	_pinned   []byte
-	_edit     []byte
-	_delete   []byte
+	_flags    TLObject
+	_join     TLObject
+	_leave    TLObject
+	_invite   TLObject
+	_ban      TLObject
+	_unban    TLObject
+	_kick     TLObject
+	_unkick   TLObject
+	_promote  TLObject
+	_demote   TLObject
+	_info     TLObject
+	_settings TLObject
+	_pinned   TLObject
+	_edit     TLObject
+	_delete   TLObject
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_flags(_flags []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_flags() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_join(_join []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_join(_join TLObject) {
 	t._join = _join
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_join() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_join() TLObject {
 	return t._join
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_leave(_leave []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_leave(_leave TLObject) {
 	t._leave = _leave
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_leave() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_leave() TLObject {
 	return t._leave
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_invite(_invite []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_invite(_invite TLObject) {
 	t._invite = _invite
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_invite() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_invite() TLObject {
 	return t._invite
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_ban(_ban []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_ban(_ban TLObject) {
 	t._ban = _ban
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_ban() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_ban() TLObject {
 	return t._ban
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_unban(_unban []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_unban(_unban TLObject) {
 	t._unban = _unban
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_unban() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_unban() TLObject {
 	return t._unban
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_kick(_kick []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_kick(_kick TLObject) {
 	t._kick = _kick
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_kick() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_kick() TLObject {
 	return t._kick
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_unkick(_unkick []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_unkick(_unkick TLObject) {
 	t._unkick = _unkick
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_unkick() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_unkick() TLObject {
 	return t._unkick
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_promote(_promote []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_promote(_promote TLObject) {
 	t._promote = _promote
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_promote() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_promote() TLObject {
 	return t._promote
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_demote(_demote []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_demote(_demote TLObject) {
 	t._demote = _demote
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_demote() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_demote() TLObject {
 	return t._demote
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_info(_info []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_info() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_info() TLObject {
 	return t._info
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_settings(_settings []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_settings(_settings TLObject) {
 	t._settings = _settings
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_settings() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_settings() TLObject {
 	return t._settings
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_pinned(_pinned []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_pinned(_pinned TLObject) {
 	t._pinned = _pinned
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_pinned() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_pinned() TLObject {
 	return t._pinned
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_edit(_edit []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_edit(_edit TLObject) {
 	t._edit = _edit
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_edit() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_edit() TLObject {
 	return t._edit
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_delete(_delete []byte) {
+func (t *TL_channelAdminLogEventsFilter) Set_delete(_delete TLObject) {
 	t._delete = _delete
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_delete() []byte {
+func (t *TL_channelAdminLogEventsFilter) Get_delete() TLObject {
 	return t._delete
 }
 
@@ -31376,7 +31376,7 @@ func (t *TL_popularContact) Decode(b []byte) {
 type TL_cdnFileHash struct {
 	_offset int32
 	_limit  int32
-	_hash   []byte
+	_hash   TLObject
 }
 
 func (t *TL_cdnFileHash) Set_offset(_offset int32) {
@@ -31395,11 +31395,11 @@ func (t *TL_cdnFileHash) Get_limit() int32 {
 	return t._limit
 }
 
-func (t *TL_cdnFileHash) Set_hash(_hash []byte) {
+func (t *TL_cdnFileHash) Set_hash(_hash TLObject) {
 	t._hash = _hash
 }
 
-func (t *TL_cdnFileHash) Get_hash() []byte {
+func (t *TL_cdnFileHash) Get_hash() TLObject {
 	return t._hash
 }
 
@@ -31446,8 +31446,8 @@ func (t *TL_messages_favedStickersNotModified) Decode(b []byte) {
 // messages_favedStickers#f37f2f16
 type TL_messages_favedStickers struct {
 	_hash     int32
-	_packs    []byte
-	_stickers []byte
+	_packs    TLObject
+	_stickers TLObject
 }
 
 func (t *TL_messages_favedStickers) Set_hash(_hash int32) {
@@ -31458,19 +31458,19 @@ func (t *TL_messages_favedStickers) Get_hash() int32 {
 	return t._hash
 }
 
-func (t *TL_messages_favedStickers) Set_packs(_packs []byte) {
+func (t *TL_messages_favedStickers) Set_packs(_packs TLObject) {
 	t._packs = _packs
 }
 
-func (t *TL_messages_favedStickers) Get_packs() []byte {
+func (t *TL_messages_favedStickers) Get_packs() TLObject {
 	return t._packs
 }
 
-func (t *TL_messages_favedStickers) Set_stickers(_stickers []byte) {
+func (t *TL_messages_favedStickers) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_messages_favedStickers) Get_stickers() []byte {
+func (t *TL_messages_favedStickers) Get_stickers() TLObject {
 	return t._stickers
 }
 
@@ -31622,7 +31622,7 @@ func (t *TL_recentMeUrlChat) Decode(b []byte) {
 // recentMeUrlChatInvite#eb49081d
 type TL_recentMeUrlChatInvite struct {
 	_url         string
-	_chat_invite []byte
+	_chat_invite TLObject
 }
 
 func (t *TL_recentMeUrlChatInvite) Set_url(_url string) {
@@ -31633,11 +31633,11 @@ func (t *TL_recentMeUrlChatInvite) Get_url() string {
 	return t._url
 }
 
-func (t *TL_recentMeUrlChatInvite) Set_chat_invite(_chat_invite []byte) {
+func (t *TL_recentMeUrlChatInvite) Set_chat_invite(_chat_invite TLObject) {
 	t._chat_invite = _chat_invite
 }
 
-func (t *TL_recentMeUrlChatInvite) Get_chat_invite() []byte {
+func (t *TL_recentMeUrlChatInvite) Get_chat_invite() TLObject {
 	return t._chat_invite
 }
 
@@ -31666,7 +31666,7 @@ func (t *TL_recentMeUrlChatInvite) Decode(b []byte) {
 // recentMeUrlStickerSet#bc0a57dc
 type TL_recentMeUrlStickerSet struct {
 	_url string
-	_set []byte
+	_set TLObject
 }
 
 func (t *TL_recentMeUrlStickerSet) Set_url(_url string) {
@@ -31677,11 +31677,11 @@ func (t *TL_recentMeUrlStickerSet) Get_url() string {
 	return t._url
 }
 
-func (t *TL_recentMeUrlStickerSet) Set_set(_set []byte) {
+func (t *TL_recentMeUrlStickerSet) Set_set(_set TLObject) {
 	t._set = _set
 }
 
-func (t *TL_recentMeUrlStickerSet) Get_set() []byte {
+func (t *TL_recentMeUrlStickerSet) Get_set() TLObject {
 	return t._set
 }
 
@@ -31707,34 +31707,34 @@ func (t *TL_recentMeUrlStickerSet) Decode(b []byte) {
 
 }
 
-// help_recentMeUrls#0e0310d7
+// help_recentMeUrls#e0310d7
 type TL_help_recentMeUrls struct {
-	_urls  []byte
-	_chats []byte
-	_users []byte
+	_urls  TLObject
+	_chats TLObject
+	_users TLObject
 }
 
-func (t *TL_help_recentMeUrls) Set_urls(_urls []byte) {
+func (t *TL_help_recentMeUrls) Set_urls(_urls TLObject) {
 	t._urls = _urls
 }
 
-func (t *TL_help_recentMeUrls) Get_urls() []byte {
+func (t *TL_help_recentMeUrls) Get_urls() TLObject {
 	return t._urls
 }
 
-func (t *TL_help_recentMeUrls) Set_chats(_chats []byte) {
+func (t *TL_help_recentMeUrls) Set_chats(_chats TLObject) {
 	t._chats = _chats
 }
 
-func (t *TL_help_recentMeUrls) Get_chats() []byte {
+func (t *TL_help_recentMeUrls) Get_chats() TLObject {
 	return t._chats
 }
 
-func (t *TL_help_recentMeUrls) Set_users(_users []byte) {
+func (t *TL_help_recentMeUrls) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_help_recentMeUrls) Get_users() []byte {
+func (t *TL_help_recentMeUrls) Get_users() TLObject {
 	return t._users
 }
 
@@ -31764,15 +31764,15 @@ func (t *TL_help_recentMeUrls) Decode(b []byte) {
 
 // inputSingleMedia#5eaa7809
 type TL_inputSingleMedia struct {
-	_media     []byte
+	_media     TLObject
 	_random_id int64
 }
 
-func (t *TL_inputSingleMedia) Set_media(_media []byte) {
+func (t *TL_inputSingleMedia) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_inputSingleMedia) Get_media() []byte {
+func (t *TL_inputSingleMedia) Get_media() TLObject {
 	return t._media
 }
 
@@ -31809,7 +31809,7 @@ func (t *TL_inputSingleMedia) Decode(b []byte) {
 // invokeAfterMsg#cb9f372d
 type TL_invokeAfterMsg struct {
 	_msg_id int64
-	_query  []byte
+	_query  TLObject
 }
 
 func (t *TL_invokeAfterMsg) Set_msg_id(_msg_id int64) {
@@ -31820,11 +31820,11 @@ func (t *TL_invokeAfterMsg) Get_msg_id() int64 {
 	return t._msg_id
 }
 
-func (t *TL_invokeAfterMsg) Set_query(_query []byte) {
+func (t *TL_invokeAfterMsg) Set_query(_query TLObject) {
 	t._query = _query
 }
 
-func (t *TL_invokeAfterMsg) Get_query() []byte {
+func (t *TL_invokeAfterMsg) Get_query() TLObject {
 	return t._query
 }
 
@@ -31852,23 +31852,23 @@ func (t *TL_invokeAfterMsg) Decode(b []byte) {
 
 // invokeAfterMsgs#3dc4b4f0
 type TL_invokeAfterMsgs struct {
-	_msg_ids []byte
-	_query   []byte
+	_msg_ids TLObject
+	_query   TLObject
 }
 
-func (t *TL_invokeAfterMsgs) Set_msg_ids(_msg_ids []byte) {
+func (t *TL_invokeAfterMsgs) Set_msg_ids(_msg_ids TLObject) {
 	t._msg_ids = _msg_ids
 }
 
-func (t *TL_invokeAfterMsgs) Get_msg_ids() []byte {
+func (t *TL_invokeAfterMsgs) Get_msg_ids() TLObject {
 	return t._msg_ids
 }
 
-func (t *TL_invokeAfterMsgs) Set_query(_query []byte) {
+func (t *TL_invokeAfterMsgs) Set_query(_query TLObject) {
 	t._query = _query
 }
 
-func (t *TL_invokeAfterMsgs) Get_query() []byte {
+func (t *TL_invokeAfterMsgs) Get_query() TLObject {
 	return t._query
 }
 
@@ -31903,7 +31903,7 @@ type TL_initConnection struct {
 	_system_lang_code string
 	_lang_pack        string
 	_lang_code        string
-	_query            []byte
+	_query            TLObject
 }
 
 func (t *TL_initConnection) Set_api_id(_api_id int32) {
@@ -31962,11 +31962,11 @@ func (t *TL_initConnection) Get_lang_code() string {
 	return t._lang_code
 }
 
-func (t *TL_initConnection) Set_query(_query []byte) {
+func (t *TL_initConnection) Set_query(_query TLObject) {
 	t._query = _query
 }
 
-func (t *TL_initConnection) Get_query() []byte {
+func (t *TL_initConnection) Get_query() TLObject {
 	return t._query
 }
 
@@ -32007,7 +32007,7 @@ func (t *TL_initConnection) Decode(b []byte) {
 // invokeWithLayer#da9b0d0d
 type TL_invokeWithLayer struct {
 	_layer int32
-	_query []byte
+	_query TLObject
 }
 
 func (t *TL_invokeWithLayer) Set_layer(_layer int32) {
@@ -32018,11 +32018,11 @@ func (t *TL_invokeWithLayer) Get_layer() int32 {
 	return t._layer
 }
 
-func (t *TL_invokeWithLayer) Set_query(_query []byte) {
+func (t *TL_invokeWithLayer) Set_query(_query TLObject) {
 	t._query = _query
 }
 
-func (t *TL_invokeWithLayer) Get_query() []byte {
+func (t *TL_invokeWithLayer) Get_query() TLObject {
 	return t._query
 }
 
@@ -32050,14 +32050,14 @@ func (t *TL_invokeWithLayer) Decode(b []byte) {
 
 // invokeWithoutUpdates#bf9459b7
 type TL_invokeWithoutUpdates struct {
-	_query []byte
+	_query TLObject
 }
 
-func (t *TL_invokeWithoutUpdates) Set_query(_query []byte) {
+func (t *TL_invokeWithoutUpdates) Set_query(_query TLObject) {
 	t._query = _query
 }
 
-func (t *TL_invokeWithoutUpdates) Get_query() []byte {
+func (t *TL_invokeWithoutUpdates) Get_query() TLObject {
 	return t._query
 }
 
@@ -32116,27 +32116,27 @@ func (t *TL_auth_checkPhone) Decode(b []byte) {
 
 // auth_sendCode#86aef0ec
 type TL_auth_sendCode struct {
-	_flags           []byte
-	_allow_flashcall []byte
+	_flags           TLObject
+	_allow_flashcall TLObject
 	_phone_number    string
-	_current_number  []byte
+	_current_number  TLObject
 	_api_id          int32
 	_api_hash        string
 }
 
-func (t *TL_auth_sendCode) Set_flags(_flags []byte) {
+func (t *TL_auth_sendCode) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_auth_sendCode) Get_flags() []byte {
+func (t *TL_auth_sendCode) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_auth_sendCode) Set_allow_flashcall(_allow_flashcall []byte) {
+func (t *TL_auth_sendCode) Set_allow_flashcall(_allow_flashcall TLObject) {
 	t._allow_flashcall = _allow_flashcall
 }
 
-func (t *TL_auth_sendCode) Get_allow_flashcall() []byte {
+func (t *TL_auth_sendCode) Get_allow_flashcall() TLObject {
 	return t._allow_flashcall
 }
 
@@ -32148,11 +32148,11 @@ func (t *TL_auth_sendCode) Get_phone_number() string {
 	return t._phone_number
 }
 
-func (t *TL_auth_sendCode) Set_current_number(_current_number []byte) {
+func (t *TL_auth_sendCode) Set_current_number(_current_number TLObject) {
 	t._current_number = _current_number
 }
 
-func (t *TL_auth_sendCode) Get_current_number() []byte {
+func (t *TL_auth_sendCode) Get_current_number() TLObject {
 	return t._current_number
 }
 
@@ -32366,15 +32366,15 @@ func (t *TL_auth_resetAuthorizations) Decode(b []byte) {
 
 // auth_sendInvites#771c1d97
 type TL_auth_sendInvites struct {
-	_phone_numbers []byte
+	_phone_numbers TLObject
 	_message       string
 }
 
-func (t *TL_auth_sendInvites) Set_phone_numbers(_phone_numbers []byte) {
+func (t *TL_auth_sendInvites) Set_phone_numbers(_phone_numbers TLObject) {
 	t._phone_numbers = _phone_numbers
 }
 
-func (t *TL_auth_sendInvites) Get_phone_numbers() []byte {
+func (t *TL_auth_sendInvites) Get_phone_numbers() TLObject {
 	return t._phone_numbers
 }
 
@@ -32444,7 +32444,7 @@ func (t *TL_auth_exportAuthorization) Decode(b []byte) {
 // auth_importAuthorization#e3ef9613
 type TL_auth_importAuthorization struct {
 	_id    int32
-	_bytes []byte
+	_bytes TLObject
 }
 
 func (t *TL_auth_importAuthorization) Set_id(_id int32) {
@@ -32455,11 +32455,11 @@ func (t *TL_auth_importAuthorization) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_auth_importAuthorization) Set_bytes(_bytes []byte) {
+func (t *TL_auth_importAuthorization) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_auth_importAuthorization) Get_bytes() []byte {
+func (t *TL_auth_importAuthorization) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -32490,7 +32490,7 @@ type TL_auth_bindTempAuthKey struct {
 	_perm_auth_key_id  int64
 	_nonce             int64
 	_expires_at        int32
-	_encrypted_message []byte
+	_encrypted_message TLObject
 }
 
 func (t *TL_auth_bindTempAuthKey) Set_perm_auth_key_id(_perm_auth_key_id int64) {
@@ -32517,11 +32517,11 @@ func (t *TL_auth_bindTempAuthKey) Get_expires_at() int32 {
 	return t._expires_at
 }
 
-func (t *TL_auth_bindTempAuthKey) Set_encrypted_message(_encrypted_message []byte) {
+func (t *TL_auth_bindTempAuthKey) Set_encrypted_message(_encrypted_message TLObject) {
 	t._encrypted_message = _encrypted_message
 }
 
-func (t *TL_auth_bindTempAuthKey) Get_encrypted_message() []byte {
+func (t *TL_auth_bindTempAuthKey) Get_encrypted_message() TLObject {
 	return t._encrypted_message
 }
 
@@ -32617,16 +32617,16 @@ func (t *TL_auth_importBotAuthorization) Decode(b []byte) {
 
 }
 
-// auth_checkPassword#0a63011e
+// auth_checkPassword#a63011e
 type TL_auth_checkPassword struct {
-	_password_hash []byte
+	_password_hash TLObject
 }
 
-func (t *TL_auth_checkPassword) Set_password_hash(_password_hash []byte) {
+func (t *TL_auth_checkPassword) Set_password_hash(_password_hash TLObject) {
 	t._password_hash = _password_hash
 }
 
-func (t *TL_auth_checkPassword) Get_password_hash() []byte {
+func (t *TL_auth_checkPassword) Get_password_hash() TLObject {
 	return t._password_hash
 }
 
@@ -32789,14 +32789,14 @@ func (t *TL_auth_cancelCode) Decode(b []byte) {
 
 // auth_dropTempAuthKeys#8e48a188
 type TL_auth_dropTempAuthKeys struct {
-	_except_auth_keys []byte
+	_except_auth_keys TLObject
 }
 
-func (t *TL_auth_dropTempAuthKeys) Set_except_auth_keys(_except_auth_keys []byte) {
+func (t *TL_auth_dropTempAuthKeys) Set_except_auth_keys(_except_auth_keys TLObject) {
 	t._except_auth_keys = _except_auth_keys
 }
 
-func (t *TL_auth_dropTempAuthKeys) Get_except_auth_keys() []byte {
+func (t *TL_auth_dropTempAuthKeys) Get_except_auth_keys() TLObject {
 	return t._except_auth_keys
 }
 
@@ -32910,23 +32910,23 @@ func (t *TL_account_unregisterDevice) Decode(b []byte) {
 
 // account_updateNotifySettings#84be5b93
 type TL_account_updateNotifySettings struct {
-	_peer     []byte
-	_settings []byte
+	_peer     TLObject
+	_settings TLObject
 }
 
-func (t *TL_account_updateNotifySettings) Set_peer(_peer []byte) {
+func (t *TL_account_updateNotifySettings) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_account_updateNotifySettings) Get_peer() []byte {
+func (t *TL_account_updateNotifySettings) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_account_updateNotifySettings) Set_settings(_settings []byte) {
+func (t *TL_account_updateNotifySettings) Set_settings(_settings TLObject) {
 	t._settings = _settings
 }
 
-func (t *TL_account_updateNotifySettings) Get_settings() []byte {
+func (t *TL_account_updateNotifySettings) Get_settings() TLObject {
 	return t._settings
 }
 
@@ -32954,14 +32954,14 @@ func (t *TL_account_updateNotifySettings) Decode(b []byte) {
 
 // account_getNotifySettings#12b3ad31
 type TL_account_getNotifySettings struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_account_getNotifySettings) Set_peer(_peer []byte) {
+func (t *TL_account_getNotifySettings) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_account_getNotifySettings) Get_peer() []byte {
+func (t *TL_account_getNotifySettings) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -33003,41 +33003,41 @@ func (t *TL_account_resetNotifySettings) Decode(b []byte) {
 
 // account_updateProfile#78515775
 type TL_account_updateProfile struct {
-	_flags      []byte
-	_first_name []byte
-	_last_name  []byte
-	_about      []byte
+	_flags      TLObject
+	_first_name TLObject
+	_last_name  TLObject
+	_about      TLObject
 }
 
-func (t *TL_account_updateProfile) Set_flags(_flags []byte) {
+func (t *TL_account_updateProfile) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_account_updateProfile) Get_flags() []byte {
+func (t *TL_account_updateProfile) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_account_updateProfile) Set_first_name(_first_name []byte) {
+func (t *TL_account_updateProfile) Set_first_name(_first_name TLObject) {
 	t._first_name = _first_name
 }
 
-func (t *TL_account_updateProfile) Get_first_name() []byte {
+func (t *TL_account_updateProfile) Get_first_name() TLObject {
 	return t._first_name
 }
 
-func (t *TL_account_updateProfile) Set_last_name(_last_name []byte) {
+func (t *TL_account_updateProfile) Set_last_name(_last_name TLObject) {
 	t._last_name = _last_name
 }
 
-func (t *TL_account_updateProfile) Get_last_name() []byte {
+func (t *TL_account_updateProfile) Get_last_name() TLObject {
 	return t._last_name
 }
 
-func (t *TL_account_updateProfile) Set_about(_about []byte) {
+func (t *TL_account_updateProfile) Set_about(_about TLObject) {
 	t._about = _about
 }
 
-func (t *TL_account_updateProfile) Get_about() []byte {
+func (t *TL_account_updateProfile) Get_about() TLObject {
 	return t._about
 }
 
@@ -33116,23 +33116,23 @@ func (t *TL_account_getWallPapers) Decode(b []byte) {
 
 // account_reportPeer#ae189d5f
 type TL_account_reportPeer struct {
-	_peer   []byte
-	_reason []byte
+	_peer   TLObject
+	_reason TLObject
 }
 
-func (t *TL_account_reportPeer) Set_peer(_peer []byte) {
+func (t *TL_account_reportPeer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_account_reportPeer) Get_peer() []byte {
+func (t *TL_account_reportPeer) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_account_reportPeer) Set_reason(_reason []byte) {
+func (t *TL_account_reportPeer) Set_reason(_reason TLObject) {
 	t._reason = _reason
 }
 
-func (t *TL_account_reportPeer) Get_reason() []byte {
+func (t *TL_account_reportPeer) Get_reason() TLObject {
 	return t._reason
 }
 
@@ -33226,14 +33226,14 @@ func (t *TL_account_updateUsername) Decode(b []byte) {
 
 // account_getPrivacy#dadbc950
 type TL_account_getPrivacy struct {
-	_key []byte
+	_key TLObject
 }
 
-func (t *TL_account_getPrivacy) Set_key(_key []byte) {
+func (t *TL_account_getPrivacy) Set_key(_key TLObject) {
 	t._key = _key
 }
 
-func (t *TL_account_getPrivacy) Get_key() []byte {
+func (t *TL_account_getPrivacy) Get_key() TLObject {
 	return t._key
 }
 
@@ -33259,23 +33259,23 @@ func (t *TL_account_getPrivacy) Decode(b []byte) {
 
 // account_setPrivacy#c9f81ce8
 type TL_account_setPrivacy struct {
-	_key   []byte
-	_rules []byte
+	_key   TLObject
+	_rules TLObject
 }
 
-func (t *TL_account_setPrivacy) Set_key(_key []byte) {
+func (t *TL_account_setPrivacy) Set_key(_key TLObject) {
 	t._key = _key
 }
 
-func (t *TL_account_setPrivacy) Get_key() []byte {
+func (t *TL_account_setPrivacy) Get_key() TLObject {
 	return t._key
 }
 
-func (t *TL_account_setPrivacy) Set_rules(_rules []byte) {
+func (t *TL_account_setPrivacy) Set_rules(_rules TLObject) {
 	t._rules = _rules
 }
 
-func (t *TL_account_setPrivacy) Get_rules() []byte {
+func (t *TL_account_setPrivacy) Get_rules() TLObject {
 	return t._rules
 }
 
@@ -33334,7 +33334,7 @@ func (t *TL_account_deleteAccount) Decode(b []byte) {
 
 }
 
-// account_getAccountTTL#08fc711d
+// account_getAccountTTL#8fc711d
 type TL_account_getAccountTTL struct {
 }
 
@@ -33352,14 +33352,14 @@ func (t *TL_account_getAccountTTL) Decode(b []byte) {
 
 // account_setAccountTTL#2442485e
 type TL_account_setAccountTTL struct {
-	_ttl []byte
+	_ttl TLObject
 }
 
-func (t *TL_account_setAccountTTL) Set_ttl(_ttl []byte) {
+func (t *TL_account_setAccountTTL) Set_ttl(_ttl TLObject) {
 	t._ttl = _ttl
 }
 
-func (t *TL_account_setAccountTTL) Get_ttl() []byte {
+func (t *TL_account_setAccountTTL) Get_ttl() TLObject {
 	return t._ttl
 }
 
@@ -33383,27 +33383,27 @@ func (t *TL_account_setAccountTTL) Decode(b []byte) {
 
 }
 
-// account_sendChangePhoneCode#08e57deb
+// account_sendChangePhoneCode#8e57deb
 type TL_account_sendChangePhoneCode struct {
-	_flags           []byte
-	_allow_flashcall []byte
+	_flags           TLObject
+	_allow_flashcall TLObject
 	_phone_number    string
-	_current_number  []byte
+	_current_number  TLObject
 }
 
-func (t *TL_account_sendChangePhoneCode) Set_flags(_flags []byte) {
+func (t *TL_account_sendChangePhoneCode) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_account_sendChangePhoneCode) Get_flags() []byte {
+func (t *TL_account_sendChangePhoneCode) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_account_sendChangePhoneCode) Set_allow_flashcall(_allow_flashcall []byte) {
+func (t *TL_account_sendChangePhoneCode) Set_allow_flashcall(_allow_flashcall TLObject) {
 	t._allow_flashcall = _allow_flashcall
 }
 
-func (t *TL_account_sendChangePhoneCode) Get_allow_flashcall() []byte {
+func (t *TL_account_sendChangePhoneCode) Get_allow_flashcall() TLObject {
 	return t._allow_flashcall
 }
 
@@ -33415,11 +33415,11 @@ func (t *TL_account_sendChangePhoneCode) Get_phone_number() string {
 	return t._phone_number
 }
 
-func (t *TL_account_sendChangePhoneCode) Set_current_number(_current_number []byte) {
+func (t *TL_account_sendChangePhoneCode) Set_current_number(_current_number TLObject) {
 	t._current_number = _current_number
 }
 
-func (t *TL_account_sendChangePhoneCode) Get_current_number() []byte {
+func (t *TL_account_sendChangePhoneCode) Get_current_number() TLObject {
 	return t._current_number
 }
 
@@ -33602,14 +33602,14 @@ func (t *TL_account_getPassword) Decode(b []byte) {
 
 // account_getPasswordSettings#bc8d11bb
 type TL_account_getPasswordSettings struct {
-	_current_password_hash []byte
+	_current_password_hash TLObject
 }
 
-func (t *TL_account_getPasswordSettings) Set_current_password_hash(_current_password_hash []byte) {
+func (t *TL_account_getPasswordSettings) Set_current_password_hash(_current_password_hash TLObject) {
 	t._current_password_hash = _current_password_hash
 }
 
-func (t *TL_account_getPasswordSettings) Get_current_password_hash() []byte {
+func (t *TL_account_getPasswordSettings) Get_current_password_hash() TLObject {
 	return t._current_password_hash
 }
 
@@ -33635,23 +33635,23 @@ func (t *TL_account_getPasswordSettings) Decode(b []byte) {
 
 // account_updatePasswordSettings#fa7c4b86
 type TL_account_updatePasswordSettings struct {
-	_current_password_hash []byte
-	_new_settings          []byte
+	_current_password_hash TLObject
+	_new_settings          TLObject
 }
 
-func (t *TL_account_updatePasswordSettings) Set_current_password_hash(_current_password_hash []byte) {
+func (t *TL_account_updatePasswordSettings) Set_current_password_hash(_current_password_hash TLObject) {
 	t._current_password_hash = _current_password_hash
 }
 
-func (t *TL_account_updatePasswordSettings) Get_current_password_hash() []byte {
+func (t *TL_account_updatePasswordSettings) Get_current_password_hash() TLObject {
 	return t._current_password_hash
 }
 
-func (t *TL_account_updatePasswordSettings) Set_new_settings(_new_settings []byte) {
+func (t *TL_account_updatePasswordSettings) Set_new_settings(_new_settings TLObject) {
 	t._new_settings = _new_settings
 }
 
-func (t *TL_account_updatePasswordSettings) Get_new_settings() []byte {
+func (t *TL_account_updatePasswordSettings) Get_new_settings() TLObject {
 	return t._new_settings
 }
 
@@ -33679,25 +33679,25 @@ func (t *TL_account_updatePasswordSettings) Decode(b []byte) {
 
 // account_sendConfirmPhoneCode#1516d7bd
 type TL_account_sendConfirmPhoneCode struct {
-	_flags           []byte
-	_allow_flashcall []byte
+	_flags           TLObject
+	_allow_flashcall TLObject
 	_hash            string
-	_current_number  []byte
+	_current_number  TLObject
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Set_flags(_flags []byte) {
+func (t *TL_account_sendConfirmPhoneCode) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Get_flags() []byte {
+func (t *TL_account_sendConfirmPhoneCode) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Set_allow_flashcall(_allow_flashcall []byte) {
+func (t *TL_account_sendConfirmPhoneCode) Set_allow_flashcall(_allow_flashcall TLObject) {
 	t._allow_flashcall = _allow_flashcall
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Get_allow_flashcall() []byte {
+func (t *TL_account_sendConfirmPhoneCode) Get_allow_flashcall() TLObject {
 	return t._allow_flashcall
 }
 
@@ -33709,11 +33709,11 @@ func (t *TL_account_sendConfirmPhoneCode) Get_hash() string {
 	return t._hash
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Set_current_number(_current_number []byte) {
+func (t *TL_account_sendConfirmPhoneCode) Set_current_number(_current_number TLObject) {
 	t._current_number = _current_number
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Get_current_number() []byte {
+func (t *TL_account_sendConfirmPhoneCode) Get_current_number() TLObject {
 	return t._current_number
 }
 
@@ -33787,15 +33787,15 @@ func (t *TL_account_confirmPhone) Decode(b []byte) {
 
 // account_getTmpPassword#4a82327e
 type TL_account_getTmpPassword struct {
-	_password_hash []byte
+	_password_hash TLObject
 	_period        int32
 }
 
-func (t *TL_account_getTmpPassword) Set_password_hash(_password_hash []byte) {
+func (t *TL_account_getTmpPassword) Set_password_hash(_password_hash TLObject) {
 	t._password_hash = _password_hash
 }
 
-func (t *TL_account_getTmpPassword) Get_password_hash() []byte {
+func (t *TL_account_getTmpPassword) Get_password_hash() TLObject {
 	return t._password_hash
 }
 
@@ -33829,16 +33829,16 @@ func (t *TL_account_getTmpPassword) Decode(b []byte) {
 
 }
 
-// users_getUsers#0d91a548
+// users_getUsers#d91a548
 type TL_users_getUsers struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_users_getUsers) Set_id(_id []byte) {
+func (t *TL_users_getUsers) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_users_getUsers) Get_id() []byte {
+func (t *TL_users_getUsers) Get_id() TLObject {
 	return t._id
 }
 
@@ -33864,14 +33864,14 @@ func (t *TL_users_getUsers) Decode(b []byte) {
 
 // users_getFullUser#ca30a5b1
 type TL_users_getFullUser struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_users_getFullUser) Set_id(_id []byte) {
+func (t *TL_users_getFullUser) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_users_getFullUser) Get_id() []byte {
+func (t *TL_users_getFullUser) Get_id() TLObject {
 	return t._id
 }
 
@@ -33946,14 +33946,14 @@ func (t *TL_contacts_getContacts) Decode(b []byte) {
 
 // contacts_importContacts#2c800be5
 type TL_contacts_importContacts struct {
-	_contacts []byte
+	_contacts TLObject
 }
 
-func (t *TL_contacts_importContacts) Set_contacts(_contacts []byte) {
+func (t *TL_contacts_importContacts) Set_contacts(_contacts TLObject) {
 	t._contacts = _contacts
 }
 
-func (t *TL_contacts_importContacts) Get_contacts() []byte {
+func (t *TL_contacts_importContacts) Get_contacts() TLObject {
 	return t._contacts
 }
 
@@ -33979,14 +33979,14 @@ func (t *TL_contacts_importContacts) Decode(b []byte) {
 
 // contacts_deleteContact#8e953744
 type TL_contacts_deleteContact struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_contacts_deleteContact) Set_id(_id []byte) {
+func (t *TL_contacts_deleteContact) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_contacts_deleteContact) Get_id() []byte {
+func (t *TL_contacts_deleteContact) Get_id() TLObject {
 	return t._id
 }
 
@@ -34012,14 +34012,14 @@ func (t *TL_contacts_deleteContact) Decode(b []byte) {
 
 // contacts_deleteContacts#59ab389e
 type TL_contacts_deleteContacts struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_contacts_deleteContacts) Set_id(_id []byte) {
+func (t *TL_contacts_deleteContacts) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_contacts_deleteContacts) Get_id() []byte {
+func (t *TL_contacts_deleteContacts) Get_id() TLObject {
 	return t._id
 }
 
@@ -34045,14 +34045,14 @@ func (t *TL_contacts_deleteContacts) Decode(b []byte) {
 
 // contacts_block#332b49fc
 type TL_contacts_block struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_contacts_block) Set_id(_id []byte) {
+func (t *TL_contacts_block) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_contacts_block) Get_id() []byte {
+func (t *TL_contacts_block) Get_id() TLObject {
 	return t._id
 }
 
@@ -34078,14 +34078,14 @@ func (t *TL_contacts_block) Decode(b []byte) {
 
 // contacts_unblock#e54100bd
 type TL_contacts_unblock struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_contacts_unblock) Set_id(_id []byte) {
+func (t *TL_contacts_unblock) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_contacts_unblock) Get_id() []byte {
+func (t *TL_contacts_unblock) Get_id() TLObject {
 	return t._id
 }
 
@@ -34171,14 +34171,14 @@ func (t *TL_contacts_exportCard) Decode(b []byte) {
 
 // contacts_importCard#4fe196fe
 type TL_contacts_importCard struct {
-	_export_card []byte
+	_export_card TLObject
 }
 
-func (t *TL_contacts_importCard) Set_export_card(_export_card []byte) {
+func (t *TL_contacts_importCard) Set_export_card(_export_card TLObject) {
 	t._export_card = _export_card
 }
 
-func (t *TL_contacts_importCard) Get_export_card() []byte {
+func (t *TL_contacts_importCard) Get_export_card() TLObject {
 	return t._export_card
 }
 
@@ -34281,71 +34281,71 @@ func (t *TL_contacts_resolveUsername) Decode(b []byte) {
 
 // contacts_getTopPeers#d4982db5
 type TL_contacts_getTopPeers struct {
-	_flags          []byte
-	_correspondents []byte
-	_bots_pm        []byte
-	_bots_inline    []byte
-	_phone_calls    []byte
-	_groups         []byte
-	_channels       []byte
+	_flags          TLObject
+	_correspondents TLObject
+	_bots_pm        TLObject
+	_bots_inline    TLObject
+	_phone_calls    TLObject
+	_groups         TLObject
+	_channels       TLObject
 	_offset         int32
 	_limit          int32
 	_hash           int32
 }
 
-func (t *TL_contacts_getTopPeers) Set_flags(_flags []byte) {
+func (t *TL_contacts_getTopPeers) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_contacts_getTopPeers) Get_flags() []byte {
+func (t *TL_contacts_getTopPeers) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_contacts_getTopPeers) Set_correspondents(_correspondents []byte) {
+func (t *TL_contacts_getTopPeers) Set_correspondents(_correspondents TLObject) {
 	t._correspondents = _correspondents
 }
 
-func (t *TL_contacts_getTopPeers) Get_correspondents() []byte {
+func (t *TL_contacts_getTopPeers) Get_correspondents() TLObject {
 	return t._correspondents
 }
 
-func (t *TL_contacts_getTopPeers) Set_bots_pm(_bots_pm []byte) {
+func (t *TL_contacts_getTopPeers) Set_bots_pm(_bots_pm TLObject) {
 	t._bots_pm = _bots_pm
 }
 
-func (t *TL_contacts_getTopPeers) Get_bots_pm() []byte {
+func (t *TL_contacts_getTopPeers) Get_bots_pm() TLObject {
 	return t._bots_pm
 }
 
-func (t *TL_contacts_getTopPeers) Set_bots_inline(_bots_inline []byte) {
+func (t *TL_contacts_getTopPeers) Set_bots_inline(_bots_inline TLObject) {
 	t._bots_inline = _bots_inline
 }
 
-func (t *TL_contacts_getTopPeers) Get_bots_inline() []byte {
+func (t *TL_contacts_getTopPeers) Get_bots_inline() TLObject {
 	return t._bots_inline
 }
 
-func (t *TL_contacts_getTopPeers) Set_phone_calls(_phone_calls []byte) {
+func (t *TL_contacts_getTopPeers) Set_phone_calls(_phone_calls TLObject) {
 	t._phone_calls = _phone_calls
 }
 
-func (t *TL_contacts_getTopPeers) Get_phone_calls() []byte {
+func (t *TL_contacts_getTopPeers) Get_phone_calls() TLObject {
 	return t._phone_calls
 }
 
-func (t *TL_contacts_getTopPeers) Set_groups(_groups []byte) {
+func (t *TL_contacts_getTopPeers) Set_groups(_groups TLObject) {
 	t._groups = _groups
 }
 
-func (t *TL_contacts_getTopPeers) Get_groups() []byte {
+func (t *TL_contacts_getTopPeers) Get_groups() TLObject {
 	return t._groups
 }
 
-func (t *TL_contacts_getTopPeers) Set_channels(_channels []byte) {
+func (t *TL_contacts_getTopPeers) Set_channels(_channels TLObject) {
 	t._channels = _channels
 }
 
-func (t *TL_contacts_getTopPeers) Get_channels() []byte {
+func (t *TL_contacts_getTopPeers) Get_channels() TLObject {
 	return t._channels
 }
 
@@ -34411,23 +34411,23 @@ func (t *TL_contacts_getTopPeers) Decode(b []byte) {
 
 // contacts_resetTopPeerRating#1ae373ac
 type TL_contacts_resetTopPeerRating struct {
-	_category []byte
-	_peer     []byte
+	_category TLObject
+	_peer     TLObject
 }
 
-func (t *TL_contacts_resetTopPeerRating) Set_category(_category []byte) {
+func (t *TL_contacts_resetTopPeerRating) Set_category(_category TLObject) {
 	t._category = _category
 }
 
-func (t *TL_contacts_resetTopPeerRating) Get_category() []byte {
+func (t *TL_contacts_resetTopPeerRating) Get_category() TLObject {
 	return t._category
 }
 
-func (t *TL_contacts_resetTopPeerRating) Set_peer(_peer []byte) {
+func (t *TL_contacts_resetTopPeerRating) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_contacts_resetTopPeerRating) Get_peer() []byte {
+func (t *TL_contacts_resetTopPeerRating) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -34471,14 +34471,14 @@ func (t *TL_contacts_resetSaved) Decode(b []byte) {
 
 // messages_getMessages#4222fa74
 type TL_messages_getMessages struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_messages_getMessages) Set_id(_id []byte) {
+func (t *TL_messages_getMessages) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_getMessages) Get_id() []byte {
+func (t *TL_messages_getMessages) Get_id() TLObject {
 	return t._id
 }
 
@@ -34504,27 +34504,27 @@ func (t *TL_messages_getMessages) Decode(b []byte) {
 
 // messages_getDialogs#191ba9c5
 type TL_messages_getDialogs struct {
-	_flags          []byte
-	_exclude_pinned []byte
+	_flags          TLObject
+	_exclude_pinned TLObject
 	_offset_date    int32
 	_offset_id      int32
-	_offset_peer    []byte
+	_offset_peer    TLObject
 	_limit          int32
 }
 
-func (t *TL_messages_getDialogs) Set_flags(_flags []byte) {
+func (t *TL_messages_getDialogs) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_getDialogs) Get_flags() []byte {
+func (t *TL_messages_getDialogs) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_getDialogs) Set_exclude_pinned(_exclude_pinned []byte) {
+func (t *TL_messages_getDialogs) Set_exclude_pinned(_exclude_pinned TLObject) {
 	t._exclude_pinned = _exclude_pinned
 }
 
-func (t *TL_messages_getDialogs) Get_exclude_pinned() []byte {
+func (t *TL_messages_getDialogs) Get_exclude_pinned() TLObject {
 	return t._exclude_pinned
 }
 
@@ -34544,11 +34544,11 @@ func (t *TL_messages_getDialogs) Get_offset_id() int32 {
 	return t._offset_id
 }
 
-func (t *TL_messages_getDialogs) Set_offset_peer(_offset_peer []byte) {
+func (t *TL_messages_getDialogs) Set_offset_peer(_offset_peer TLObject) {
 	t._offset_peer = _offset_peer
 }
 
-func (t *TL_messages_getDialogs) Get_offset_peer() []byte {
+func (t *TL_messages_getDialogs) Get_offset_peer() TLObject {
 	return t._offset_peer
 }
 
@@ -34590,7 +34590,7 @@ func (t *TL_messages_getDialogs) Decode(b []byte) {
 
 // messages_getHistory#dcbb8260
 type TL_messages_getHistory struct {
-	_peer        []byte
+	_peer        TLObject
 	_offset_id   int32
 	_offset_date int32
 	_add_offset  int32
@@ -34600,11 +34600,11 @@ type TL_messages_getHistory struct {
 	_hash        int32
 }
 
-func (t *TL_messages_getHistory) Set_peer(_peer []byte) {
+func (t *TL_messages_getHistory) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getHistory) Get_peer() []byte {
+func (t *TL_messages_getHistory) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -34698,13 +34698,13 @@ func (t *TL_messages_getHistory) Decode(b []byte) {
 
 }
 
-// messages_search#039e9ea0
+// messages_search#39e9ea0
 type TL_messages_search struct {
-	_flags      []byte
-	_peer       []byte
+	_flags      TLObject
+	_peer       TLObject
 	_q          string
-	_from_id    []byte
-	_filter     []byte
+	_from_id    TLObject
+	_filter     TLObject
 	_min_date   int32
 	_max_date   int32
 	_offset_id  int32
@@ -34714,19 +34714,19 @@ type TL_messages_search struct {
 	_min_id     int32
 }
 
-func (t *TL_messages_search) Set_flags(_flags []byte) {
+func (t *TL_messages_search) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_search) Get_flags() []byte {
+func (t *TL_messages_search) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_search) Set_peer(_peer []byte) {
+func (t *TL_messages_search) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_search) Get_peer() []byte {
+func (t *TL_messages_search) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -34738,19 +34738,19 @@ func (t *TL_messages_search) Get_q() string {
 	return t._q
 }
 
-func (t *TL_messages_search) Set_from_id(_from_id []byte) {
+func (t *TL_messages_search) Set_from_id(_from_id TLObject) {
 	t._from_id = _from_id
 }
 
-func (t *TL_messages_search) Get_from_id() []byte {
+func (t *TL_messages_search) Get_from_id() TLObject {
 	return t._from_id
 }
 
-func (t *TL_messages_search) Set_filter(_filter []byte) {
+func (t *TL_messages_search) Set_filter(_filter TLObject) {
 	t._filter = _filter
 }
 
-func (t *TL_messages_search) Get_filter() []byte {
+func (t *TL_messages_search) Get_filter() TLObject {
 	return t._filter
 }
 
@@ -34850,17 +34850,17 @@ func (t *TL_messages_search) Decode(b []byte) {
 
 }
 
-// messages_readHistory#0e306d3a
+// messages_readHistory#e306d3a
 type TL_messages_readHistory struct {
-	_peer   []byte
+	_peer   TLObject
 	_max_id int32
 }
 
-func (t *TL_messages_readHistory) Set_peer(_peer []byte) {
+func (t *TL_messages_readHistory) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_readHistory) Get_peer() []byte {
+func (t *TL_messages_readHistory) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -34896,33 +34896,33 @@ func (t *TL_messages_readHistory) Decode(b []byte) {
 
 // messages_deleteHistory#1c015b09
 type TL_messages_deleteHistory struct {
-	_flags      []byte
-	_just_clear []byte
-	_peer       []byte
+	_flags      TLObject
+	_just_clear TLObject
+	_peer       TLObject
 	_max_id     int32
 }
 
-func (t *TL_messages_deleteHistory) Set_flags(_flags []byte) {
+func (t *TL_messages_deleteHistory) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_deleteHistory) Get_flags() []byte {
+func (t *TL_messages_deleteHistory) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_deleteHistory) Set_just_clear(_just_clear []byte) {
+func (t *TL_messages_deleteHistory) Set_just_clear(_just_clear TLObject) {
 	t._just_clear = _just_clear
 }
 
-func (t *TL_messages_deleteHistory) Get_just_clear() []byte {
+func (t *TL_messages_deleteHistory) Get_just_clear() TLObject {
 	return t._just_clear
 }
 
-func (t *TL_messages_deleteHistory) Set_peer(_peer []byte) {
+func (t *TL_messages_deleteHistory) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_deleteHistory) Get_peer() []byte {
+func (t *TL_messages_deleteHistory) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -34960,32 +34960,32 @@ func (t *TL_messages_deleteHistory) Decode(b []byte) {
 
 // messages_deleteMessages#e58e95d2
 type TL_messages_deleteMessages struct {
-	_flags  []byte
-	_revoke []byte
-	_id     []byte
+	_flags  TLObject
+	_revoke TLObject
+	_id     TLObject
 }
 
-func (t *TL_messages_deleteMessages) Set_flags(_flags []byte) {
+func (t *TL_messages_deleteMessages) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_deleteMessages) Get_flags() []byte {
+func (t *TL_messages_deleteMessages) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_deleteMessages) Set_revoke(_revoke []byte) {
+func (t *TL_messages_deleteMessages) Set_revoke(_revoke TLObject) {
 	t._revoke = _revoke
 }
 
-func (t *TL_messages_deleteMessages) Get_revoke() []byte {
+func (t *TL_messages_deleteMessages) Get_revoke() TLObject {
 	return t._revoke
 }
 
-func (t *TL_messages_deleteMessages) Set_id(_id []byte) {
+func (t *TL_messages_deleteMessages) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_deleteMessages) Get_id() []byte {
+func (t *TL_messages_deleteMessages) Get_id() TLObject {
 	return t._id
 }
 
@@ -35011,7 +35011,7 @@ func (t *TL_messages_deleteMessages) Decode(b []byte) {
 
 }
 
-// messages_receivedMessages#05a954c0
+// messages_receivedMessages#5a954c0
 type TL_messages_receivedMessages struct {
 	_max_id int32
 }
@@ -35046,23 +35046,23 @@ func (t *TL_messages_receivedMessages) Decode(b []byte) {
 
 // messages_setTyping#a3825e50
 type TL_messages_setTyping struct {
-	_peer   []byte
-	_action []byte
+	_peer   TLObject
+	_action TLObject
 }
 
-func (t *TL_messages_setTyping) Set_peer(_peer []byte) {
+func (t *TL_messages_setTyping) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_setTyping) Get_peer() []byte {
+func (t *TL_messages_setTyping) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_setTyping) Set_action(_action []byte) {
+func (t *TL_messages_setTyping) Set_action(_action TLObject) {
 	t._action = _action
 }
 
-func (t *TL_messages_setTyping) Get_action() []byte {
+func (t *TL_messages_setTyping) Get_action() TLObject {
 	return t._action
 }
 
@@ -35090,72 +35090,72 @@ func (t *TL_messages_setTyping) Decode(b []byte) {
 
 // messages_sendMessage#fa88427a
 type TL_messages_sendMessage struct {
-	_flags           []byte
-	_no_webpage      []byte
-	_silent          []byte
-	_background      []byte
-	_clear_draft     []byte
-	_peer            []byte
-	_reply_to_msg_id []byte
+	_flags           TLObject
+	_no_webpage      TLObject
+	_silent          TLObject
+	_background      TLObject
+	_clear_draft     TLObject
+	_peer            TLObject
+	_reply_to_msg_id TLObject
 	_message         string
 	_random_id       int64
-	_reply_markup    []byte
-	_entities        []byte
+	_reply_markup    TLObject
+	_entities        TLObject
 }
 
-func (t *TL_messages_sendMessage) Set_flags(_flags []byte) {
+func (t *TL_messages_sendMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_sendMessage) Get_flags() []byte {
+func (t *TL_messages_sendMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_sendMessage) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_messages_sendMessage) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_messages_sendMessage) Get_no_webpage() []byte {
+func (t *TL_messages_sendMessage) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
-func (t *TL_messages_sendMessage) Set_silent(_silent []byte) {
+func (t *TL_messages_sendMessage) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messages_sendMessage) Get_silent() []byte {
+func (t *TL_messages_sendMessage) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messages_sendMessage) Set_background(_background []byte) {
+func (t *TL_messages_sendMessage) Set_background(_background TLObject) {
 	t._background = _background
 }
 
-func (t *TL_messages_sendMessage) Get_background() []byte {
+func (t *TL_messages_sendMessage) Get_background() TLObject {
 	return t._background
 }
 
-func (t *TL_messages_sendMessage) Set_clear_draft(_clear_draft []byte) {
+func (t *TL_messages_sendMessage) Set_clear_draft(_clear_draft TLObject) {
 	t._clear_draft = _clear_draft
 }
 
-func (t *TL_messages_sendMessage) Get_clear_draft() []byte {
+func (t *TL_messages_sendMessage) Get_clear_draft() TLObject {
 	return t._clear_draft
 }
 
-func (t *TL_messages_sendMessage) Set_peer(_peer []byte) {
+func (t *TL_messages_sendMessage) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendMessage) Get_peer() []byte {
+func (t *TL_messages_sendMessage) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_sendMessage) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messages_sendMessage) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messages_sendMessage) Get_reply_to_msg_id() []byte {
+func (t *TL_messages_sendMessage) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
@@ -35175,19 +35175,19 @@ func (t *TL_messages_sendMessage) Get_random_id() int64 {
 	return t._random_id
 }
 
-func (t *TL_messages_sendMessage) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_messages_sendMessage) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_messages_sendMessage) Get_reply_markup() []byte {
+func (t *TL_messages_sendMessage) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
-func (t *TL_messages_sendMessage) Set_entities(_entities []byte) {
+func (t *TL_messages_sendMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_messages_sendMessage) Get_entities() []byte {
+func (t *TL_messages_sendMessage) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -35231,70 +35231,70 @@ func (t *TL_messages_sendMessage) Decode(b []byte) {
 
 // messages_sendMedia#c8f16791
 type TL_messages_sendMedia struct {
-	_flags           []byte
-	_silent          []byte
-	_background      []byte
-	_clear_draft     []byte
-	_peer            []byte
-	_reply_to_msg_id []byte
-	_media           []byte
+	_flags           TLObject
+	_silent          TLObject
+	_background      TLObject
+	_clear_draft     TLObject
+	_peer            TLObject
+	_reply_to_msg_id TLObject
+	_media           TLObject
 	_random_id       int64
-	_reply_markup    []byte
+	_reply_markup    TLObject
 }
 
-func (t *TL_messages_sendMedia) Set_flags(_flags []byte) {
+func (t *TL_messages_sendMedia) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_sendMedia) Get_flags() []byte {
+func (t *TL_messages_sendMedia) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_sendMedia) Set_silent(_silent []byte) {
+func (t *TL_messages_sendMedia) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messages_sendMedia) Get_silent() []byte {
+func (t *TL_messages_sendMedia) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messages_sendMedia) Set_background(_background []byte) {
+func (t *TL_messages_sendMedia) Set_background(_background TLObject) {
 	t._background = _background
 }
 
-func (t *TL_messages_sendMedia) Get_background() []byte {
+func (t *TL_messages_sendMedia) Get_background() TLObject {
 	return t._background
 }
 
-func (t *TL_messages_sendMedia) Set_clear_draft(_clear_draft []byte) {
+func (t *TL_messages_sendMedia) Set_clear_draft(_clear_draft TLObject) {
 	t._clear_draft = _clear_draft
 }
 
-func (t *TL_messages_sendMedia) Get_clear_draft() []byte {
+func (t *TL_messages_sendMedia) Get_clear_draft() TLObject {
 	return t._clear_draft
 }
 
-func (t *TL_messages_sendMedia) Set_peer(_peer []byte) {
+func (t *TL_messages_sendMedia) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendMedia) Get_peer() []byte {
+func (t *TL_messages_sendMedia) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_sendMedia) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messages_sendMedia) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messages_sendMedia) Get_reply_to_msg_id() []byte {
+func (t *TL_messages_sendMedia) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
-func (t *TL_messages_sendMedia) Set_media(_media []byte) {
+func (t *TL_messages_sendMedia) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_messages_sendMedia) Get_media() []byte {
+func (t *TL_messages_sendMedia) Get_media() TLObject {
 	return t._media
 }
 
@@ -35306,11 +35306,11 @@ func (t *TL_messages_sendMedia) Get_random_id() int64 {
 	return t._random_id
 }
 
-func (t *TL_messages_sendMedia) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_messages_sendMedia) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_messages_sendMedia) Get_reply_markup() []byte {
+func (t *TL_messages_sendMedia) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
@@ -35350,86 +35350,86 @@ func (t *TL_messages_sendMedia) Decode(b []byte) {
 
 // messages_forwardMessages#708e0195
 type TL_messages_forwardMessages struct {
-	_flags         []byte
-	_silent        []byte
-	_background    []byte
-	_with_my_score []byte
-	_grouped       []byte
-	_from_peer     []byte
-	_id            []byte
-	_random_id     []byte
-	_to_peer       []byte
+	_flags         TLObject
+	_silent        TLObject
+	_background    TLObject
+	_with_my_score TLObject
+	_grouped       TLObject
+	_from_peer     TLObject
+	_id            TLObject
+	_random_id     TLObject
+	_to_peer       TLObject
 }
 
-func (t *TL_messages_forwardMessages) Set_flags(_flags []byte) {
+func (t *TL_messages_forwardMessages) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_forwardMessages) Get_flags() []byte {
+func (t *TL_messages_forwardMessages) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_forwardMessages) Set_silent(_silent []byte) {
+func (t *TL_messages_forwardMessages) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messages_forwardMessages) Get_silent() []byte {
+func (t *TL_messages_forwardMessages) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messages_forwardMessages) Set_background(_background []byte) {
+func (t *TL_messages_forwardMessages) Set_background(_background TLObject) {
 	t._background = _background
 }
 
-func (t *TL_messages_forwardMessages) Get_background() []byte {
+func (t *TL_messages_forwardMessages) Get_background() TLObject {
 	return t._background
 }
 
-func (t *TL_messages_forwardMessages) Set_with_my_score(_with_my_score []byte) {
+func (t *TL_messages_forwardMessages) Set_with_my_score(_with_my_score TLObject) {
 	t._with_my_score = _with_my_score
 }
 
-func (t *TL_messages_forwardMessages) Get_with_my_score() []byte {
+func (t *TL_messages_forwardMessages) Get_with_my_score() TLObject {
 	return t._with_my_score
 }
 
-func (t *TL_messages_forwardMessages) Set_grouped(_grouped []byte) {
+func (t *TL_messages_forwardMessages) Set_grouped(_grouped TLObject) {
 	t._grouped = _grouped
 }
 
-func (t *TL_messages_forwardMessages) Get_grouped() []byte {
+func (t *TL_messages_forwardMessages) Get_grouped() TLObject {
 	return t._grouped
 }
 
-func (t *TL_messages_forwardMessages) Set_from_peer(_from_peer []byte) {
+func (t *TL_messages_forwardMessages) Set_from_peer(_from_peer TLObject) {
 	t._from_peer = _from_peer
 }
 
-func (t *TL_messages_forwardMessages) Get_from_peer() []byte {
+func (t *TL_messages_forwardMessages) Get_from_peer() TLObject {
 	return t._from_peer
 }
 
-func (t *TL_messages_forwardMessages) Set_id(_id []byte) {
+func (t *TL_messages_forwardMessages) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_forwardMessages) Get_id() []byte {
+func (t *TL_messages_forwardMessages) Get_id() TLObject {
 	return t._id
 }
 
-func (t *TL_messages_forwardMessages) Set_random_id(_random_id []byte) {
+func (t *TL_messages_forwardMessages) Set_random_id(_random_id TLObject) {
 	t._random_id = _random_id
 }
 
-func (t *TL_messages_forwardMessages) Get_random_id() []byte {
+func (t *TL_messages_forwardMessages) Get_random_id() TLObject {
 	return t._random_id
 }
 
-func (t *TL_messages_forwardMessages) Set_to_peer(_to_peer []byte) {
+func (t *TL_messages_forwardMessages) Set_to_peer(_to_peer TLObject) {
 	t._to_peer = _to_peer
 }
 
-func (t *TL_messages_forwardMessages) Get_to_peer() []byte {
+func (t *TL_messages_forwardMessages) Get_to_peer() TLObject {
 	return t._to_peer
 }
 
@@ -35469,14 +35469,14 @@ func (t *TL_messages_forwardMessages) Decode(b []byte) {
 
 // messages_reportSpam#cf1592db
 type TL_messages_reportSpam struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_messages_reportSpam) Set_peer(_peer []byte) {
+func (t *TL_messages_reportSpam) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_reportSpam) Get_peer() []byte {
+func (t *TL_messages_reportSpam) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -35502,14 +35502,14 @@ func (t *TL_messages_reportSpam) Decode(b []byte) {
 
 // messages_hideReportSpam#a8f1709b
 type TL_messages_hideReportSpam struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_messages_hideReportSpam) Set_peer(_peer []byte) {
+func (t *TL_messages_hideReportSpam) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_hideReportSpam) Get_peer() []byte {
+func (t *TL_messages_hideReportSpam) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -35535,14 +35535,14 @@ func (t *TL_messages_hideReportSpam) Decode(b []byte) {
 
 // messages_getPeerSettings#3672e09c
 type TL_messages_getPeerSettings struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_messages_getPeerSettings) Set_peer(_peer []byte) {
+func (t *TL_messages_getPeerSettings) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getPeerSettings) Get_peer() []byte {
+func (t *TL_messages_getPeerSettings) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -35568,14 +35568,14 @@ func (t *TL_messages_getPeerSettings) Decode(b []byte) {
 
 // messages_getChats#3c6aa187
 type TL_messages_getChats struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_messages_getChats) Set_id(_id []byte) {
+func (t *TL_messages_getChats) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_getChats) Get_id() []byte {
+func (t *TL_messages_getChats) Get_id() TLObject {
 	return t._id
 }
 
@@ -35679,7 +35679,7 @@ func (t *TL_messages_editChatTitle) Decode(b []byte) {
 // messages_editChatPhoto#ca4c79d8
 type TL_messages_editChatPhoto struct {
 	_chat_id int32
-	_photo   []byte
+	_photo   TLObject
 }
 
 func (t *TL_messages_editChatPhoto) Set_chat_id(_chat_id int32) {
@@ -35690,11 +35690,11 @@ func (t *TL_messages_editChatPhoto) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_messages_editChatPhoto) Set_photo(_photo []byte) {
+func (t *TL_messages_editChatPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_messages_editChatPhoto) Get_photo() []byte {
+func (t *TL_messages_editChatPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -35723,7 +35723,7 @@ func (t *TL_messages_editChatPhoto) Decode(b []byte) {
 // messages_addChatUser#f9a0aa09
 type TL_messages_addChatUser struct {
 	_chat_id   int32
-	_user_id   []byte
+	_user_id   TLObject
 	_fwd_limit int32
 }
 
@@ -35735,11 +35735,11 @@ func (t *TL_messages_addChatUser) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_messages_addChatUser) Set_user_id(_user_id []byte) {
+func (t *TL_messages_addChatUser) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_addChatUser) Get_user_id() []byte {
+func (t *TL_messages_addChatUser) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -35778,7 +35778,7 @@ func (t *TL_messages_addChatUser) Decode(b []byte) {
 // messages_deleteChatUser#e0611f16
 type TL_messages_deleteChatUser struct {
 	_chat_id int32
-	_user_id []byte
+	_user_id TLObject
 }
 
 func (t *TL_messages_deleteChatUser) Set_chat_id(_chat_id int32) {
@@ -35789,11 +35789,11 @@ func (t *TL_messages_deleteChatUser) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_messages_deleteChatUser) Set_user_id(_user_id []byte) {
+func (t *TL_messages_deleteChatUser) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_deleteChatUser) Get_user_id() []byte {
+func (t *TL_messages_deleteChatUser) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -35819,17 +35819,17 @@ func (t *TL_messages_deleteChatUser) Decode(b []byte) {
 
 }
 
-// messages_createChat#09cb126e
+// messages_createChat#9cb126e
 type TL_messages_createChat struct {
-	_users []byte
+	_users TLObject
 	_title string
 }
 
-func (t *TL_messages_createChat) Set_users(_users []byte) {
+func (t *TL_messages_createChat) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_messages_createChat) Get_users() []byte {
+func (t *TL_messages_createChat) Get_users() TLObject {
 	return t._users
 }
 
@@ -35865,16 +35865,16 @@ func (t *TL_messages_createChat) Decode(b []byte) {
 
 // messages_forwardMessage#33963bf9
 type TL_messages_forwardMessage struct {
-	_peer      []byte
+	_peer      TLObject
 	_id        int32
 	_random_id int64
 }
 
-func (t *TL_messages_forwardMessage) Set_peer(_peer []byte) {
+func (t *TL_messages_forwardMessage) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_forwardMessage) Get_peer() []byte {
+func (t *TL_messages_forwardMessage) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -35964,16 +35964,16 @@ func (t *TL_messages_getDhConfig) Decode(b []byte) {
 
 // messages_requestEncryption#f64daf43
 type TL_messages_requestEncryption struct {
-	_user_id   []byte
+	_user_id   TLObject
 	_random_id int32
-	_g_a       []byte
+	_g_a       TLObject
 }
 
-func (t *TL_messages_requestEncryption) Set_user_id(_user_id []byte) {
+func (t *TL_messages_requestEncryption) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_requestEncryption) Get_user_id() []byte {
+func (t *TL_messages_requestEncryption) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -35985,11 +35985,11 @@ func (t *TL_messages_requestEncryption) Get_random_id() int32 {
 	return t._random_id
 }
 
-func (t *TL_messages_requestEncryption) Set_g_a(_g_a []byte) {
+func (t *TL_messages_requestEncryption) Set_g_a(_g_a TLObject) {
 	t._g_a = _g_a
 }
 
-func (t *TL_messages_requestEncryption) Get_g_a() []byte {
+func (t *TL_messages_requestEncryption) Get_g_a() TLObject {
 	return t._g_a
 }
 
@@ -36019,24 +36019,24 @@ func (t *TL_messages_requestEncryption) Decode(b []byte) {
 
 // messages_acceptEncryption#3dbc0415
 type TL_messages_acceptEncryption struct {
-	_peer            []byte
-	_g_b             []byte
+	_peer            TLObject
+	_g_b             TLObject
 	_key_fingerprint int64
 }
 
-func (t *TL_messages_acceptEncryption) Set_peer(_peer []byte) {
+func (t *TL_messages_acceptEncryption) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_acceptEncryption) Get_peer() []byte {
+func (t *TL_messages_acceptEncryption) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_acceptEncryption) Set_g_b(_g_b []byte) {
+func (t *TL_messages_acceptEncryption) Set_g_b(_g_b TLObject) {
 	t._g_b = _g_b
 }
 
-func (t *TL_messages_acceptEncryption) Get_g_b() []byte {
+func (t *TL_messages_acceptEncryption) Get_g_b() TLObject {
 	return t._g_b
 }
 
@@ -36107,15 +36107,15 @@ func (t *TL_messages_discardEncryption) Decode(b []byte) {
 
 // messages_setEncryptedTyping#791451ed
 type TL_messages_setEncryptedTyping struct {
-	_peer   []byte
+	_peer   TLObject
 	_typing bool
 }
 
-func (t *TL_messages_setEncryptedTyping) Set_peer(_peer []byte) {
+func (t *TL_messages_setEncryptedTyping) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_setEncryptedTyping) Get_peer() []byte {
+func (t *TL_messages_setEncryptedTyping) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36151,15 +36151,15 @@ func (t *TL_messages_setEncryptedTyping) Decode(b []byte) {
 
 // messages_readEncryptedHistory#7f4b690a
 type TL_messages_readEncryptedHistory struct {
-	_peer     []byte
+	_peer     TLObject
 	_max_date int32
 }
 
-func (t *TL_messages_readEncryptedHistory) Set_peer(_peer []byte) {
+func (t *TL_messages_readEncryptedHistory) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_readEncryptedHistory) Get_peer() []byte {
+func (t *TL_messages_readEncryptedHistory) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36195,16 +36195,16 @@ func (t *TL_messages_readEncryptedHistory) Decode(b []byte) {
 
 // messages_sendEncrypted#a9776773
 type TL_messages_sendEncrypted struct {
-	_peer      []byte
+	_peer      TLObject
 	_random_id int64
-	_data      []byte
+	_data      TLObject
 }
 
-func (t *TL_messages_sendEncrypted) Set_peer(_peer []byte) {
+func (t *TL_messages_sendEncrypted) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendEncrypted) Get_peer() []byte {
+func (t *TL_messages_sendEncrypted) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36216,11 +36216,11 @@ func (t *TL_messages_sendEncrypted) Get_random_id() int64 {
 	return t._random_id
 }
 
-func (t *TL_messages_sendEncrypted) Set_data(_data []byte) {
+func (t *TL_messages_sendEncrypted) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_messages_sendEncrypted) Get_data() []byte {
+func (t *TL_messages_sendEncrypted) Get_data() TLObject {
 	return t._data
 }
 
@@ -36250,17 +36250,17 @@ func (t *TL_messages_sendEncrypted) Decode(b []byte) {
 
 // messages_sendEncryptedFile#9a901b66
 type TL_messages_sendEncryptedFile struct {
-	_peer      []byte
+	_peer      TLObject
 	_random_id int64
-	_data      []byte
-	_file      []byte
+	_data      TLObject
+	_file      TLObject
 }
 
-func (t *TL_messages_sendEncryptedFile) Set_peer(_peer []byte) {
+func (t *TL_messages_sendEncryptedFile) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendEncryptedFile) Get_peer() []byte {
+func (t *TL_messages_sendEncryptedFile) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36272,19 +36272,19 @@ func (t *TL_messages_sendEncryptedFile) Get_random_id() int64 {
 	return t._random_id
 }
 
-func (t *TL_messages_sendEncryptedFile) Set_data(_data []byte) {
+func (t *TL_messages_sendEncryptedFile) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_messages_sendEncryptedFile) Get_data() []byte {
+func (t *TL_messages_sendEncryptedFile) Get_data() TLObject {
 	return t._data
 }
 
-func (t *TL_messages_sendEncryptedFile) Set_file(_file []byte) {
+func (t *TL_messages_sendEncryptedFile) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_messages_sendEncryptedFile) Get_file() []byte {
+func (t *TL_messages_sendEncryptedFile) Get_file() TLObject {
 	return t._file
 }
 
@@ -36316,16 +36316,16 @@ func (t *TL_messages_sendEncryptedFile) Decode(b []byte) {
 
 // messages_sendEncryptedService#32d439a4
 type TL_messages_sendEncryptedService struct {
-	_peer      []byte
+	_peer      TLObject
 	_random_id int64
-	_data      []byte
+	_data      TLObject
 }
 
-func (t *TL_messages_sendEncryptedService) Set_peer(_peer []byte) {
+func (t *TL_messages_sendEncryptedService) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendEncryptedService) Get_peer() []byte {
+func (t *TL_messages_sendEncryptedService) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36337,11 +36337,11 @@ func (t *TL_messages_sendEncryptedService) Get_random_id() int64 {
 	return t._random_id
 }
 
-func (t *TL_messages_sendEncryptedService) Set_data(_data []byte) {
+func (t *TL_messages_sendEncryptedService) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_messages_sendEncryptedService) Get_data() []byte {
+func (t *TL_messages_sendEncryptedService) Get_data() TLObject {
 	return t._data
 }
 
@@ -36404,14 +36404,14 @@ func (t *TL_messages_receivedQueue) Decode(b []byte) {
 
 // messages_reportEncryptedSpam#4b0c8c0f
 type TL_messages_reportEncryptedSpam struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_messages_reportEncryptedSpam) Set_peer(_peer []byte) {
+func (t *TL_messages_reportEncryptedSpam) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_reportEncryptedSpam) Get_peer() []byte {
+func (t *TL_messages_reportEncryptedSpam) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36437,14 +36437,14 @@ func (t *TL_messages_reportEncryptedSpam) Decode(b []byte) {
 
 // messages_readMessageContents#36a73f77
 type TL_messages_readMessageContents struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_messages_readMessageContents) Set_id(_id []byte) {
+func (t *TL_messages_readMessageContents) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_readMessageContents) Get_id() []byte {
+func (t *TL_messages_readMessageContents) Get_id() TLObject {
 	return t._id
 }
 
@@ -36635,14 +36635,14 @@ func (t *TL_messages_importChatInvite) Decode(b []byte) {
 
 // messages_getStickerSet#2619a90e
 type TL_messages_getStickerSet struct {
-	_stickerset []byte
+	_stickerset TLObject
 }
 
-func (t *TL_messages_getStickerSet) Set_stickerset(_stickerset []byte) {
+func (t *TL_messages_getStickerSet) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_messages_getStickerSet) Get_stickerset() []byte {
+func (t *TL_messages_getStickerSet) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
@@ -36668,15 +36668,15 @@ func (t *TL_messages_getStickerSet) Decode(b []byte) {
 
 // messages_installStickerSet#c78fe460
 type TL_messages_installStickerSet struct {
-	_stickerset []byte
+	_stickerset TLObject
 	_archived   bool
 }
 
-func (t *TL_messages_installStickerSet) Set_stickerset(_stickerset []byte) {
+func (t *TL_messages_installStickerSet) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_messages_installStickerSet) Get_stickerset() []byte {
+func (t *TL_messages_installStickerSet) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
@@ -36712,14 +36712,14 @@ func (t *TL_messages_installStickerSet) Decode(b []byte) {
 
 // messages_uninstallStickerSet#f96e55de
 type TL_messages_uninstallStickerSet struct {
-	_stickerset []byte
+	_stickerset TLObject
 }
 
-func (t *TL_messages_uninstallStickerSet) Set_stickerset(_stickerset []byte) {
+func (t *TL_messages_uninstallStickerSet) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_messages_uninstallStickerSet) Get_stickerset() []byte {
+func (t *TL_messages_uninstallStickerSet) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
@@ -36745,25 +36745,25 @@ func (t *TL_messages_uninstallStickerSet) Decode(b []byte) {
 
 // messages_startBot#e6df7378
 type TL_messages_startBot struct {
-	_bot         []byte
-	_peer        []byte
+	_bot         TLObject
+	_peer        TLObject
 	_random_id   int64
 	_start_param string
 }
 
-func (t *TL_messages_startBot) Set_bot(_bot []byte) {
+func (t *TL_messages_startBot) Set_bot(_bot TLObject) {
 	t._bot = _bot
 }
 
-func (t *TL_messages_startBot) Get_bot() []byte {
+func (t *TL_messages_startBot) Get_bot() TLObject {
 	return t._bot
 }
 
-func (t *TL_messages_startBot) Set_peer(_peer []byte) {
+func (t *TL_messages_startBot) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_startBot) Get_peer() []byte {
+func (t *TL_messages_startBot) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -36811,24 +36811,24 @@ func (t *TL_messages_startBot) Decode(b []byte) {
 
 // messages_getMessagesViews#c4c8a55d
 type TL_messages_getMessagesViews struct {
-	_peer      []byte
-	_id        []byte
+	_peer      TLObject
+	_id        TLObject
 	_increment bool
 }
 
-func (t *TL_messages_getMessagesViews) Set_peer(_peer []byte) {
+func (t *TL_messages_getMessagesViews) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getMessagesViews) Get_peer() []byte {
+func (t *TL_messages_getMessagesViews) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_getMessagesViews) Set_id(_id []byte) {
+func (t *TL_messages_getMessagesViews) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_getMessagesViews) Get_id() []byte {
+func (t *TL_messages_getMessagesViews) Get_id() TLObject {
 	return t._id
 }
 
@@ -36911,7 +36911,7 @@ func (t *TL_messages_toggleChatAdmins) Decode(b []byte) {
 // messages_editChatAdmin#a9e69f2e
 type TL_messages_editChatAdmin struct {
 	_chat_id  int32
-	_user_id  []byte
+	_user_id  TLObject
 	_is_admin bool
 }
 
@@ -36923,11 +36923,11 @@ func (t *TL_messages_editChatAdmin) Get_chat_id() int32 {
 	return t._chat_id
 }
 
-func (t *TL_messages_editChatAdmin) Set_user_id(_user_id []byte) {
+func (t *TL_messages_editChatAdmin) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_editChatAdmin) Get_user_id() []byte {
+func (t *TL_messages_editChatAdmin) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -37000,7 +37000,7 @@ func (t *TL_messages_migrateChat) Decode(b []byte) {
 type TL_messages_searchGlobal struct {
 	_q           string
 	_offset_date int32
-	_offset_peer []byte
+	_offset_peer TLObject
 	_offset_id   int32
 	_limit       int32
 }
@@ -37021,11 +37021,11 @@ func (t *TL_messages_searchGlobal) Get_offset_date() int32 {
 	return t._offset_date
 }
 
-func (t *TL_messages_searchGlobal) Set_offset_peer(_offset_peer []byte) {
+func (t *TL_messages_searchGlobal) Set_offset_peer(_offset_peer TLObject) {
 	t._offset_peer = _offset_peer
 }
 
-func (t *TL_messages_searchGlobal) Get_offset_peer() []byte {
+func (t *TL_messages_searchGlobal) Get_offset_peer() TLObject {
 	return t._offset_peer
 }
 
@@ -37075,32 +37075,32 @@ func (t *TL_messages_searchGlobal) Decode(b []byte) {
 
 // messages_reorderStickerSets#78337739
 type TL_messages_reorderStickerSets struct {
-	_flags []byte
-	_masks []byte
-	_order []byte
+	_flags TLObject
+	_masks TLObject
+	_order TLObject
 }
 
-func (t *TL_messages_reorderStickerSets) Set_flags(_flags []byte) {
+func (t *TL_messages_reorderStickerSets) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_reorderStickerSets) Get_flags() []byte {
+func (t *TL_messages_reorderStickerSets) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_reorderStickerSets) Set_masks(_masks []byte) {
+func (t *TL_messages_reorderStickerSets) Set_masks(_masks TLObject) {
 	t._masks = _masks
 }
 
-func (t *TL_messages_reorderStickerSets) Get_masks() []byte {
+func (t *TL_messages_reorderStickerSets) Get_masks() TLObject {
 	return t._masks
 }
 
-func (t *TL_messages_reorderStickerSets) Set_order(_order []byte) {
+func (t *TL_messages_reorderStickerSets) Set_order(_order TLObject) {
 	t._order = _order
 }
 
-func (t *TL_messages_reorderStickerSets) Get_order() []byte {
+func (t *TL_messages_reorderStickerSets) Get_order() TLObject {
 	return t._order
 }
 
@@ -37128,16 +37128,16 @@ func (t *TL_messages_reorderStickerSets) Decode(b []byte) {
 
 // messages_getDocumentByHash#338e2464
 type TL_messages_getDocumentByHash struct {
-	_sha256    []byte
+	_sha256    TLObject
 	_size      int32
 	_mime_type string
 }
 
-func (t *TL_messages_getDocumentByHash) Set_sha256(_sha256 []byte) {
+func (t *TL_messages_getDocumentByHash) Set_sha256(_sha256 TLObject) {
 	t._sha256 = _sha256
 }
 
-func (t *TL_messages_getDocumentByHash) Get_sha256() []byte {
+func (t *TL_messages_getDocumentByHash) Get_sha256() TLObject {
 	return t._sha256
 }
 
@@ -37260,15 +37260,15 @@ func (t *TL_messages_getSavedGifs) Decode(b []byte) {
 
 // messages_saveGif#327a30cb
 type TL_messages_saveGif struct {
-	_id     []byte
+	_id     TLObject
 	_unsave bool
 }
 
-func (t *TL_messages_saveGif) Set_id(_id []byte) {
+func (t *TL_messages_saveGif) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_saveGif) Get_id() []byte {
+func (t *TL_messages_saveGif) Get_id() TLObject {
 	return t._id
 }
 
@@ -37304,43 +37304,43 @@ func (t *TL_messages_saveGif) Decode(b []byte) {
 
 // messages_getInlineBotResults#514e999d
 type TL_messages_getInlineBotResults struct {
-	_flags     []byte
-	_bot       []byte
-	_peer      []byte
-	_geo_point []byte
+	_flags     TLObject
+	_bot       TLObject
+	_peer      TLObject
+	_geo_point TLObject
 	_query     string
 	_offset    string
 }
 
-func (t *TL_messages_getInlineBotResults) Set_flags(_flags []byte) {
+func (t *TL_messages_getInlineBotResults) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_getInlineBotResults) Get_flags() []byte {
+func (t *TL_messages_getInlineBotResults) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_getInlineBotResults) Set_bot(_bot []byte) {
+func (t *TL_messages_getInlineBotResults) Set_bot(_bot TLObject) {
 	t._bot = _bot
 }
 
-func (t *TL_messages_getInlineBotResults) Get_bot() []byte {
+func (t *TL_messages_getInlineBotResults) Get_bot() TLObject {
 	return t._bot
 }
 
-func (t *TL_messages_getInlineBotResults) Set_peer(_peer []byte) {
+func (t *TL_messages_getInlineBotResults) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getInlineBotResults) Get_peer() []byte {
+func (t *TL_messages_getInlineBotResults) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_getInlineBotResults) Set_geo_point(_geo_point []byte) {
+func (t *TL_messages_getInlineBotResults) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_messages_getInlineBotResults) Get_geo_point() []byte {
+func (t *TL_messages_getInlineBotResults) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -37390,37 +37390,37 @@ func (t *TL_messages_getInlineBotResults) Decode(b []byte) {
 
 // messages_setInlineBotResults#eb5ea206
 type TL_messages_setInlineBotResults struct {
-	_flags       []byte
-	_gallery     []byte
-	_private     []byte
+	_flags       TLObject
+	_gallery     TLObject
+	_private     TLObject
 	_query_id    int64
-	_results     []byte
+	_results     TLObject
 	_cache_time  int32
-	_next_offset []byte
-	_switch_pm   []byte
+	_next_offset TLObject
+	_switch_pm   TLObject
 }
 
-func (t *TL_messages_setInlineBotResults) Set_flags(_flags []byte) {
+func (t *TL_messages_setInlineBotResults) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setInlineBotResults) Get_flags() []byte {
+func (t *TL_messages_setInlineBotResults) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_setInlineBotResults) Set_gallery(_gallery []byte) {
+func (t *TL_messages_setInlineBotResults) Set_gallery(_gallery TLObject) {
 	t._gallery = _gallery
 }
 
-func (t *TL_messages_setInlineBotResults) Get_gallery() []byte {
+func (t *TL_messages_setInlineBotResults) Get_gallery() TLObject {
 	return t._gallery
 }
 
-func (t *TL_messages_setInlineBotResults) Set_private(_private []byte) {
+func (t *TL_messages_setInlineBotResults) Set_private(_private TLObject) {
 	t._private = _private
 }
 
-func (t *TL_messages_setInlineBotResults) Get_private() []byte {
+func (t *TL_messages_setInlineBotResults) Get_private() TLObject {
 	return t._private
 }
 
@@ -37432,11 +37432,11 @@ func (t *TL_messages_setInlineBotResults) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_messages_setInlineBotResults) Set_results(_results []byte) {
+func (t *TL_messages_setInlineBotResults) Set_results(_results TLObject) {
 	t._results = _results
 }
 
-func (t *TL_messages_setInlineBotResults) Get_results() []byte {
+func (t *TL_messages_setInlineBotResults) Get_results() TLObject {
 	return t._results
 }
 
@@ -37448,19 +37448,19 @@ func (t *TL_messages_setInlineBotResults) Get_cache_time() int32 {
 	return t._cache_time
 }
 
-func (t *TL_messages_setInlineBotResults) Set_next_offset(_next_offset []byte) {
+func (t *TL_messages_setInlineBotResults) Set_next_offset(_next_offset TLObject) {
 	t._next_offset = _next_offset
 }
 
-func (t *TL_messages_setInlineBotResults) Get_next_offset() []byte {
+func (t *TL_messages_setInlineBotResults) Get_next_offset() TLObject {
 	return t._next_offset
 }
 
-func (t *TL_messages_setInlineBotResults) Set_switch_pm(_switch_pm []byte) {
+func (t *TL_messages_setInlineBotResults) Set_switch_pm(_switch_pm TLObject) {
 	t._switch_pm = _switch_pm
 }
 
-func (t *TL_messages_setInlineBotResults) Get_switch_pm() []byte {
+func (t *TL_messages_setInlineBotResults) Get_switch_pm() TLObject {
 	return t._switch_pm
 }
 
@@ -37498,62 +37498,62 @@ func (t *TL_messages_setInlineBotResults) Decode(b []byte) {
 
 // messages_sendInlineBotResult#b16e06fe
 type TL_messages_sendInlineBotResult struct {
-	_flags           []byte
-	_silent          []byte
-	_background      []byte
-	_clear_draft     []byte
-	_peer            []byte
-	_reply_to_msg_id []byte
+	_flags           TLObject
+	_silent          TLObject
+	_background      TLObject
+	_clear_draft     TLObject
+	_peer            TLObject
+	_reply_to_msg_id TLObject
 	_random_id       int64
 	_query_id        int64
 	_id              string
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_flags(_flags []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_flags() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_silent(_silent []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_silent() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_background(_background []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_background(_background TLObject) {
 	t._background = _background
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_background() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_background() TLObject {
 	return t._background
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_clear_draft(_clear_draft []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_clear_draft(_clear_draft TLObject) {
 	t._clear_draft = _clear_draft
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_clear_draft() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_clear_draft() TLObject {
 	return t._clear_draft
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_peer(_peer []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_peer() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messages_sendInlineBotResult) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_reply_to_msg_id() []byte {
+func (t *TL_messages_sendInlineBotResult) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
@@ -37617,15 +37617,15 @@ func (t *TL_messages_sendInlineBotResult) Decode(b []byte) {
 
 // messages_getMessageEditData#fda68d36
 type TL_messages_getMessageEditData struct {
-	_peer []byte
+	_peer TLObject
 	_id   int32
 }
 
-func (t *TL_messages_getMessageEditData) Set_peer(_peer []byte) {
+func (t *TL_messages_getMessageEditData) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getMessageEditData) Get_peer() []byte {
+func (t *TL_messages_getMessageEditData) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -37659,48 +37659,48 @@ func (t *TL_messages_getMessageEditData) Decode(b []byte) {
 
 }
 
-// messages_editMessage#05d1b8dd
+// messages_editMessage#5d1b8dd
 type TL_messages_editMessage struct {
-	_flags         []byte
-	_no_webpage    []byte
-	_stop_geo_live []byte
-	_peer          []byte
+	_flags         TLObject
+	_no_webpage    TLObject
+	_stop_geo_live TLObject
+	_peer          TLObject
 	_id            int32
-	_message       []byte
-	_reply_markup  []byte
-	_entities      []byte
-	_geo_point     []byte
+	_message       TLObject
+	_reply_markup  TLObject
+	_entities      TLObject
+	_geo_point     TLObject
 }
 
-func (t *TL_messages_editMessage) Set_flags(_flags []byte) {
+func (t *TL_messages_editMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_editMessage) Get_flags() []byte {
+func (t *TL_messages_editMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_editMessage) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_messages_editMessage) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_messages_editMessage) Get_no_webpage() []byte {
+func (t *TL_messages_editMessage) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
-func (t *TL_messages_editMessage) Set_stop_geo_live(_stop_geo_live []byte) {
+func (t *TL_messages_editMessage) Set_stop_geo_live(_stop_geo_live TLObject) {
 	t._stop_geo_live = _stop_geo_live
 }
 
-func (t *TL_messages_editMessage) Get_stop_geo_live() []byte {
+func (t *TL_messages_editMessage) Get_stop_geo_live() TLObject {
 	return t._stop_geo_live
 }
 
-func (t *TL_messages_editMessage) Set_peer(_peer []byte) {
+func (t *TL_messages_editMessage) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_editMessage) Get_peer() []byte {
+func (t *TL_messages_editMessage) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -37712,35 +37712,35 @@ func (t *TL_messages_editMessage) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_messages_editMessage) Set_message(_message []byte) {
+func (t *TL_messages_editMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_messages_editMessage) Get_message() []byte {
+func (t *TL_messages_editMessage) Get_message() TLObject {
 	return t._message
 }
 
-func (t *TL_messages_editMessage) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_messages_editMessage) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_messages_editMessage) Get_reply_markup() []byte {
+func (t *TL_messages_editMessage) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
-func (t *TL_messages_editMessage) Set_entities(_entities []byte) {
+func (t *TL_messages_editMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_messages_editMessage) Get_entities() []byte {
+func (t *TL_messages_editMessage) Get_entities() TLObject {
 	return t._entities
 }
 
-func (t *TL_messages_editMessage) Set_geo_point(_geo_point []byte) {
+func (t *TL_messages_editMessage) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_messages_editMessage) Get_geo_point() []byte {
+func (t *TL_messages_editMessage) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -37780,77 +37780,77 @@ func (t *TL_messages_editMessage) Decode(b []byte) {
 
 // messages_editInlineBotMessage#b0e08243
 type TL_messages_editInlineBotMessage struct {
-	_flags         []byte
-	_no_webpage    []byte
-	_stop_geo_live []byte
-	_id            []byte
-	_message       []byte
-	_reply_markup  []byte
-	_entities      []byte
-	_geo_point     []byte
+	_flags         TLObject
+	_no_webpage    TLObject
+	_stop_geo_live TLObject
+	_id            TLObject
+	_message       TLObject
+	_reply_markup  TLObject
+	_entities      TLObject
+	_geo_point     TLObject
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_flags(_flags []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_flags() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_no_webpage() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_stop_geo_live(_stop_geo_live []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_stop_geo_live(_stop_geo_live TLObject) {
 	t._stop_geo_live = _stop_geo_live
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_stop_geo_live() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_stop_geo_live() TLObject {
 	return t._stop_geo_live
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_id(_id []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_id() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_id() TLObject {
 	return t._id
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_message(_message []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_message() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_message() TLObject {
 	return t._message
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_reply_markup(_reply_markup []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_reply_markup(_reply_markup TLObject) {
 	t._reply_markup = _reply_markup
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_reply_markup() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_reply_markup() TLObject {
 	return t._reply_markup
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_entities(_entities []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_entities() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_entities() TLObject {
 	return t._entities
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_geo_point(_geo_point []byte) {
+func (t *TL_messages_editInlineBotMessage) Set_geo_point(_geo_point TLObject) {
 	t._geo_point = _geo_point
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_geo_point() []byte {
+func (t *TL_messages_editInlineBotMessage) Get_geo_point() TLObject {
 	return t._geo_point
 }
 
@@ -37888,34 +37888,34 @@ func (t *TL_messages_editInlineBotMessage) Decode(b []byte) {
 
 // messages_getBotCallbackAnswer#810a9fec
 type TL_messages_getBotCallbackAnswer struct {
-	_flags  []byte
-	_game   []byte
-	_peer   []byte
+	_flags  TLObject
+	_game   TLObject
+	_peer   TLObject
 	_msg_id int32
-	_data   []byte
+	_data   TLObject
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Set_flags(_flags []byte) {
+func (t *TL_messages_getBotCallbackAnswer) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Get_flags() []byte {
+func (t *TL_messages_getBotCallbackAnswer) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Set_game(_game []byte) {
+func (t *TL_messages_getBotCallbackAnswer) Set_game(_game TLObject) {
 	t._game = _game
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Get_game() []byte {
+func (t *TL_messages_getBotCallbackAnswer) Get_game() TLObject {
 	return t._game
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Set_peer(_peer []byte) {
+func (t *TL_messages_getBotCallbackAnswer) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Get_peer() []byte {
+func (t *TL_messages_getBotCallbackAnswer) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -37927,11 +37927,11 @@ func (t *TL_messages_getBotCallbackAnswer) Get_msg_id() int32 {
 	return t._msg_id
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Set_data(_data []byte) {
+func (t *TL_messages_getBotCallbackAnswer) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Get_data() []byte {
+func (t *TL_messages_getBotCallbackAnswer) Get_data() TLObject {
 	return t._data
 }
 
@@ -37963,27 +37963,27 @@ func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) {
 
 // messages_setBotCallbackAnswer#d58f130a
 type TL_messages_setBotCallbackAnswer struct {
-	_flags      []byte
-	_alert      []byte
+	_flags      TLObject
+	_alert      TLObject
 	_query_id   int64
-	_message    []byte
-	_url        []byte
+	_message    TLObject
+	_url        TLObject
 	_cache_time int32
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_flags(_flags []byte) {
+func (t *TL_messages_setBotCallbackAnswer) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_flags() []byte {
+func (t *TL_messages_setBotCallbackAnswer) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_alert(_alert []byte) {
+func (t *TL_messages_setBotCallbackAnswer) Set_alert(_alert TLObject) {
 	t._alert = _alert
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_alert() []byte {
+func (t *TL_messages_setBotCallbackAnswer) Get_alert() TLObject {
 	return t._alert
 }
 
@@ -37995,19 +37995,19 @@ func (t *TL_messages_setBotCallbackAnswer) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_message(_message []byte) {
+func (t *TL_messages_setBotCallbackAnswer) Set_message(_message TLObject) {
 	t._message = _message
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_message() []byte {
+func (t *TL_messages_setBotCallbackAnswer) Get_message() TLObject {
 	return t._message
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_url(_url []byte) {
+func (t *TL_messages_setBotCallbackAnswer) Set_url(_url TLObject) {
 	t._url = _url
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_url() []byte {
+func (t *TL_messages_setBotCallbackAnswer) Get_url() TLObject {
 	return t._url
 }
 
@@ -38049,14 +38049,14 @@ func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) {
 
 // messages_getPeerDialogs#2d9776b9
 type TL_messages_getPeerDialogs struct {
-	_peers []byte
+	_peers TLObject
 }
 
-func (t *TL_messages_getPeerDialogs) Set_peers(_peers []byte) {
+func (t *TL_messages_getPeerDialogs) Set_peers(_peers TLObject) {
 	t._peers = _peers
 }
 
-func (t *TL_messages_getPeerDialogs) Get_peers() []byte {
+func (t *TL_messages_getPeerDialogs) Get_peers() TLObject {
 	return t._peers
 }
 
@@ -38082,43 +38082,43 @@ func (t *TL_messages_getPeerDialogs) Decode(b []byte) {
 
 // messages_saveDraft#bc39e14b
 type TL_messages_saveDraft struct {
-	_flags           []byte
-	_no_webpage      []byte
-	_reply_to_msg_id []byte
-	_peer            []byte
+	_flags           TLObject
+	_no_webpage      TLObject
+	_reply_to_msg_id TLObject
+	_peer            TLObject
 	_message         string
-	_entities        []byte
+	_entities        TLObject
 }
 
-func (t *TL_messages_saveDraft) Set_flags(_flags []byte) {
+func (t *TL_messages_saveDraft) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_saveDraft) Get_flags() []byte {
+func (t *TL_messages_saveDraft) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_saveDraft) Set_no_webpage(_no_webpage []byte) {
+func (t *TL_messages_saveDraft) Set_no_webpage(_no_webpage TLObject) {
 	t._no_webpage = _no_webpage
 }
 
-func (t *TL_messages_saveDraft) Get_no_webpage() []byte {
+func (t *TL_messages_saveDraft) Get_no_webpage() TLObject {
 	return t._no_webpage
 }
 
-func (t *TL_messages_saveDraft) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messages_saveDraft) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messages_saveDraft) Get_reply_to_msg_id() []byte {
+func (t *TL_messages_saveDraft) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
-func (t *TL_messages_saveDraft) Set_peer(_peer []byte) {
+func (t *TL_messages_saveDraft) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_saveDraft) Get_peer() []byte {
+func (t *TL_messages_saveDraft) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -38130,11 +38130,11 @@ func (t *TL_messages_saveDraft) Get_message() string {
 	return t._message
 }
 
-func (t *TL_messages_saveDraft) Set_entities(_entities []byte) {
+func (t *TL_messages_saveDraft) Set_entities(_entities TLObject) {
 	t._entities = _entities
 }
 
-func (t *TL_messages_saveDraft) Get_entities() []byte {
+func (t *TL_messages_saveDraft) Get_entities() TLObject {
 	return t._entities
 }
 
@@ -38217,14 +38217,14 @@ func (t *TL_messages_getFeaturedStickers) Decode(b []byte) {
 
 // messages_readFeaturedStickers#5b118126
 type TL_messages_readFeaturedStickers struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_messages_readFeaturedStickers) Set_id(_id []byte) {
+func (t *TL_messages_readFeaturedStickers) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_readFeaturedStickers) Get_id() []byte {
+func (t *TL_messages_readFeaturedStickers) Get_id() TLObject {
 	return t._id
 }
 
@@ -38250,24 +38250,24 @@ func (t *TL_messages_readFeaturedStickers) Decode(b []byte) {
 
 // messages_getRecentStickers#5ea192c9
 type TL_messages_getRecentStickers struct {
-	_flags    []byte
-	_attached []byte
+	_flags    TLObject
+	_attached TLObject
 	_hash     int32
 }
 
-func (t *TL_messages_getRecentStickers) Set_flags(_flags []byte) {
+func (t *TL_messages_getRecentStickers) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_getRecentStickers) Get_flags() []byte {
+func (t *TL_messages_getRecentStickers) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_getRecentStickers) Set_attached(_attached []byte) {
+func (t *TL_messages_getRecentStickers) Set_attached(_attached TLObject) {
 	t._attached = _attached
 }
 
-func (t *TL_messages_getRecentStickers) Get_attached() []byte {
+func (t *TL_messages_getRecentStickers) Get_attached() TLObject {
 	return t._attached
 }
 
@@ -38303,33 +38303,33 @@ func (t *TL_messages_getRecentStickers) Decode(b []byte) {
 
 // messages_saveRecentSticker#392718f8
 type TL_messages_saveRecentSticker struct {
-	_flags    []byte
-	_attached []byte
-	_id       []byte
+	_flags    TLObject
+	_attached TLObject
+	_id       TLObject
 	_unsave   bool
 }
 
-func (t *TL_messages_saveRecentSticker) Set_flags(_flags []byte) {
+func (t *TL_messages_saveRecentSticker) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_saveRecentSticker) Get_flags() []byte {
+func (t *TL_messages_saveRecentSticker) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_saveRecentSticker) Set_attached(_attached []byte) {
+func (t *TL_messages_saveRecentSticker) Set_attached(_attached TLObject) {
 	t._attached = _attached
 }
 
-func (t *TL_messages_saveRecentSticker) Get_attached() []byte {
+func (t *TL_messages_saveRecentSticker) Get_attached() TLObject {
 	return t._attached
 }
 
-func (t *TL_messages_saveRecentSticker) Set_id(_id []byte) {
+func (t *TL_messages_saveRecentSticker) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_saveRecentSticker) Get_id() []byte {
+func (t *TL_messages_saveRecentSticker) Get_id() TLObject {
 	return t._id
 }
 
@@ -38367,23 +38367,23 @@ func (t *TL_messages_saveRecentSticker) Decode(b []byte) {
 
 // messages_clearRecentStickers#8999602d
 type TL_messages_clearRecentStickers struct {
-	_flags    []byte
-	_attached []byte
+	_flags    TLObject
+	_attached TLObject
 }
 
-func (t *TL_messages_clearRecentStickers) Set_flags(_flags []byte) {
+func (t *TL_messages_clearRecentStickers) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_clearRecentStickers) Get_flags() []byte {
+func (t *TL_messages_clearRecentStickers) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_clearRecentStickers) Set_attached(_attached []byte) {
+func (t *TL_messages_clearRecentStickers) Set_attached(_attached TLObject) {
 	t._attached = _attached
 }
 
-func (t *TL_messages_clearRecentStickers) Get_attached() []byte {
+func (t *TL_messages_clearRecentStickers) Get_attached() TLObject {
 	return t._attached
 }
 
@@ -38409,25 +38409,25 @@ func (t *TL_messages_clearRecentStickers) Decode(b []byte) {
 
 // messages_getArchivedStickers#57f17692
 type TL_messages_getArchivedStickers struct {
-	_flags     []byte
-	_masks     []byte
+	_flags     TLObject
+	_masks     TLObject
 	_offset_id int64
 	_limit     int32
 }
 
-func (t *TL_messages_getArchivedStickers) Set_flags(_flags []byte) {
+func (t *TL_messages_getArchivedStickers) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_getArchivedStickers) Get_flags() []byte {
+func (t *TL_messages_getArchivedStickers) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_getArchivedStickers) Set_masks(_masks []byte) {
+func (t *TL_messages_getArchivedStickers) Set_masks(_masks TLObject) {
 	t._masks = _masks
 }
 
-func (t *TL_messages_getArchivedStickers) Get_masks() []byte {
+func (t *TL_messages_getArchivedStickers) Get_masks() TLObject {
 	return t._masks
 }
 
@@ -38506,14 +38506,14 @@ func (t *TL_messages_getMaskStickers) Decode(b []byte) {
 
 // messages_getAttachedStickers#cc5b67cc
 type TL_messages_getAttachedStickers struct {
-	_media []byte
+	_media TLObject
 }
 
-func (t *TL_messages_getAttachedStickers) Set_media(_media []byte) {
+func (t *TL_messages_getAttachedStickers) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_messages_getAttachedStickers) Get_media() []byte {
+func (t *TL_messages_getAttachedStickers) Get_media() TLObject {
 	return t._media
 }
 
@@ -38539,44 +38539,44 @@ func (t *TL_messages_getAttachedStickers) Decode(b []byte) {
 
 // messages_setGameScore#8ef8ecc0
 type TL_messages_setGameScore struct {
-	_flags        []byte
-	_edit_message []byte
-	_force        []byte
-	_peer         []byte
+	_flags        TLObject
+	_edit_message TLObject
+	_force        TLObject
+	_peer         TLObject
 	_id           int32
-	_user_id      []byte
+	_user_id      TLObject
 	_score        int32
 }
 
-func (t *TL_messages_setGameScore) Set_flags(_flags []byte) {
+func (t *TL_messages_setGameScore) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setGameScore) Get_flags() []byte {
+func (t *TL_messages_setGameScore) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_setGameScore) Set_edit_message(_edit_message []byte) {
+func (t *TL_messages_setGameScore) Set_edit_message(_edit_message TLObject) {
 	t._edit_message = _edit_message
 }
 
-func (t *TL_messages_setGameScore) Get_edit_message() []byte {
+func (t *TL_messages_setGameScore) Get_edit_message() TLObject {
 	return t._edit_message
 }
 
-func (t *TL_messages_setGameScore) Set_force(_force []byte) {
+func (t *TL_messages_setGameScore) Set_force(_force TLObject) {
 	t._force = _force
 }
 
-func (t *TL_messages_setGameScore) Get_force() []byte {
+func (t *TL_messages_setGameScore) Get_force() TLObject {
 	return t._force
 }
 
-func (t *TL_messages_setGameScore) Set_peer(_peer []byte) {
+func (t *TL_messages_setGameScore) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_setGameScore) Get_peer() []byte {
+func (t *TL_messages_setGameScore) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -38588,11 +38588,11 @@ func (t *TL_messages_setGameScore) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_messages_setGameScore) Set_user_id(_user_id []byte) {
+func (t *TL_messages_setGameScore) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_setGameScore) Get_user_id() []byte {
+func (t *TL_messages_setGameScore) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -38636,51 +38636,51 @@ func (t *TL_messages_setGameScore) Decode(b []byte) {
 
 // messages_setInlineGameScore#15ad9f64
 type TL_messages_setInlineGameScore struct {
-	_flags        []byte
-	_edit_message []byte
-	_force        []byte
-	_id           []byte
-	_user_id      []byte
+	_flags        TLObject
+	_edit_message TLObject
+	_force        TLObject
+	_id           TLObject
+	_user_id      TLObject
 	_score        int32
 }
 
-func (t *TL_messages_setInlineGameScore) Set_flags(_flags []byte) {
+func (t *TL_messages_setInlineGameScore) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setInlineGameScore) Get_flags() []byte {
+func (t *TL_messages_setInlineGameScore) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_setInlineGameScore) Set_edit_message(_edit_message []byte) {
+func (t *TL_messages_setInlineGameScore) Set_edit_message(_edit_message TLObject) {
 	t._edit_message = _edit_message
 }
 
-func (t *TL_messages_setInlineGameScore) Get_edit_message() []byte {
+func (t *TL_messages_setInlineGameScore) Get_edit_message() TLObject {
 	return t._edit_message
 }
 
-func (t *TL_messages_setInlineGameScore) Set_force(_force []byte) {
+func (t *TL_messages_setInlineGameScore) Set_force(_force TLObject) {
 	t._force = _force
 }
 
-func (t *TL_messages_setInlineGameScore) Get_force() []byte {
+func (t *TL_messages_setInlineGameScore) Get_force() TLObject {
 	return t._force
 }
 
-func (t *TL_messages_setInlineGameScore) Set_id(_id []byte) {
+func (t *TL_messages_setInlineGameScore) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_setInlineGameScore) Get_id() []byte {
+func (t *TL_messages_setInlineGameScore) Get_id() TLObject {
 	return t._id
 }
 
-func (t *TL_messages_setInlineGameScore) Set_user_id(_user_id []byte) {
+func (t *TL_messages_setInlineGameScore) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_setInlineGameScore) Get_user_id() []byte {
+func (t *TL_messages_setInlineGameScore) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -38722,16 +38722,16 @@ func (t *TL_messages_setInlineGameScore) Decode(b []byte) {
 
 // messages_getGameHighScores#e822649d
 type TL_messages_getGameHighScores struct {
-	_peer    []byte
+	_peer    TLObject
 	_id      int32
-	_user_id []byte
+	_user_id TLObject
 }
 
-func (t *TL_messages_getGameHighScores) Set_peer(_peer []byte) {
+func (t *TL_messages_getGameHighScores) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getGameHighScores) Get_peer() []byte {
+func (t *TL_messages_getGameHighScores) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -38743,11 +38743,11 @@ func (t *TL_messages_getGameHighScores) Get_id() int32 {
 	return t._id
 }
 
-func (t *TL_messages_getGameHighScores) Set_user_id(_user_id []byte) {
+func (t *TL_messages_getGameHighScores) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_getGameHighScores) Get_user_id() []byte {
+func (t *TL_messages_getGameHighScores) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -38775,25 +38775,25 @@ func (t *TL_messages_getGameHighScores) Decode(b []byte) {
 
 }
 
-// messages_getInlineGameHighScores#0f635e1b
+// messages_getInlineGameHighScores#f635e1b
 type TL_messages_getInlineGameHighScores struct {
-	_id      []byte
-	_user_id []byte
+	_id      TLObject
+	_user_id TLObject
 }
 
-func (t *TL_messages_getInlineGameHighScores) Set_id(_id []byte) {
+func (t *TL_messages_getInlineGameHighScores) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_getInlineGameHighScores) Get_id() []byte {
+func (t *TL_messages_getInlineGameHighScores) Get_id() TLObject {
 	return t._id
 }
 
-func (t *TL_messages_getInlineGameHighScores) Set_user_id(_user_id []byte) {
+func (t *TL_messages_getInlineGameHighScores) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_getInlineGameHighScores) Get_user_id() []byte {
+func (t *TL_messages_getInlineGameHighScores) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -38819,18 +38819,18 @@ func (t *TL_messages_getInlineGameHighScores) Decode(b []byte) {
 
 }
 
-// messages_getCommonChats#0d0a48c4
+// messages_getCommonChats#d0a48c4
 type TL_messages_getCommonChats struct {
-	_user_id []byte
+	_user_id TLObject
 	_max_id  int32
 	_limit   int32
 }
 
-func (t *TL_messages_getCommonChats) Set_user_id(_user_id []byte) {
+func (t *TL_messages_getCommonChats) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_messages_getCommonChats) Get_user_id() []byte {
+func (t *TL_messages_getCommonChats) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -38876,14 +38876,14 @@ func (t *TL_messages_getCommonChats) Decode(b []byte) {
 
 // messages_getAllChats#eba80ff0
 type TL_messages_getAllChats struct {
-	_except_ids []byte
+	_except_ids TLObject
 }
 
-func (t *TL_messages_getAllChats) Set_except_ids(_except_ids []byte) {
+func (t *TL_messages_getAllChats) Set_except_ids(_except_ids TLObject) {
 	t._except_ids = _except_ids
 }
 
-func (t *TL_messages_getAllChats) Get_except_ids() []byte {
+func (t *TL_messages_getAllChats) Get_except_ids() TLObject {
 	return t._except_ids
 }
 
@@ -38953,32 +38953,32 @@ func (t *TL_messages_getWebPage) Decode(b []byte) {
 
 // messages_toggleDialogPin#3289be6a
 type TL_messages_toggleDialogPin struct {
-	_flags  []byte
-	_pinned []byte
-	_peer   []byte
+	_flags  TLObject
+	_pinned TLObject
+	_peer   TLObject
 }
 
-func (t *TL_messages_toggleDialogPin) Set_flags(_flags []byte) {
+func (t *TL_messages_toggleDialogPin) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_toggleDialogPin) Get_flags() []byte {
+func (t *TL_messages_toggleDialogPin) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_toggleDialogPin) Set_pinned(_pinned []byte) {
+func (t *TL_messages_toggleDialogPin) Set_pinned(_pinned TLObject) {
 	t._pinned = _pinned
 }
 
-func (t *TL_messages_toggleDialogPin) Get_pinned() []byte {
+func (t *TL_messages_toggleDialogPin) Get_pinned() TLObject {
 	return t._pinned
 }
 
-func (t *TL_messages_toggleDialogPin) Set_peer(_peer []byte) {
+func (t *TL_messages_toggleDialogPin) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_toggleDialogPin) Get_peer() []byte {
+func (t *TL_messages_toggleDialogPin) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -39006,32 +39006,32 @@ func (t *TL_messages_toggleDialogPin) Decode(b []byte) {
 
 // messages_reorderPinnedDialogs#959ff644
 type TL_messages_reorderPinnedDialogs struct {
-	_flags []byte
-	_force []byte
-	_order []byte
+	_flags TLObject
+	_force TLObject
+	_order TLObject
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Set_flags(_flags []byte) {
+func (t *TL_messages_reorderPinnedDialogs) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Get_flags() []byte {
+func (t *TL_messages_reorderPinnedDialogs) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Set_force(_force []byte) {
+func (t *TL_messages_reorderPinnedDialogs) Set_force(_force TLObject) {
 	t._force = _force
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Get_force() []byte {
+func (t *TL_messages_reorderPinnedDialogs) Get_force() TLObject {
 	return t._force
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Set_order(_order []byte) {
+func (t *TL_messages_reorderPinnedDialogs) Set_order(_order TLObject) {
 	t._order = _order
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Get_order() []byte {
+func (t *TL_messages_reorderPinnedDialogs) Get_order() TLObject {
 	return t._order
 }
 
@@ -39075,17 +39075,17 @@ func (t *TL_messages_getPinnedDialogs) Decode(b []byte) {
 
 // messages_setBotShippingResults#e5f672fa
 type TL_messages_setBotShippingResults struct {
-	_flags            []byte
+	_flags            TLObject
 	_query_id         int64
-	_error            []byte
-	_shipping_options []byte
+	_error            TLObject
+	_shipping_options TLObject
 }
 
-func (t *TL_messages_setBotShippingResults) Set_flags(_flags []byte) {
+func (t *TL_messages_setBotShippingResults) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setBotShippingResults) Get_flags() []byte {
+func (t *TL_messages_setBotShippingResults) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -39097,19 +39097,19 @@ func (t *TL_messages_setBotShippingResults) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_messages_setBotShippingResults) Set_error(_error []byte) {
+func (t *TL_messages_setBotShippingResults) Set_error(_error TLObject) {
 	t._error = _error
 }
 
-func (t *TL_messages_setBotShippingResults) Get_error() []byte {
+func (t *TL_messages_setBotShippingResults) Get_error() TLObject {
 	return t._error
 }
 
-func (t *TL_messages_setBotShippingResults) Set_shipping_options(_shipping_options []byte) {
+func (t *TL_messages_setBotShippingResults) Set_shipping_options(_shipping_options TLObject) {
 	t._shipping_options = _shipping_options
 }
 
-func (t *TL_messages_setBotShippingResults) Get_shipping_options() []byte {
+func (t *TL_messages_setBotShippingResults) Get_shipping_options() TLObject {
 	return t._shipping_options
 }
 
@@ -39137,27 +39137,27 @@ func (t *TL_messages_setBotShippingResults) Decode(b []byte) {
 
 }
 
-// messages_setBotPrecheckoutResults#09c2dd95
+// messages_setBotPrecheckoutResults#9c2dd95
 type TL_messages_setBotPrecheckoutResults struct {
-	_flags    []byte
-	_success  []byte
+	_flags    TLObject
+	_success  TLObject
 	_query_id int64
-	_error    []byte
+	_error    TLObject
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Set_flags(_flags []byte) {
+func (t *TL_messages_setBotPrecheckoutResults) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Get_flags() []byte {
+func (t *TL_messages_setBotPrecheckoutResults) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Set_success(_success []byte) {
+func (t *TL_messages_setBotPrecheckoutResults) Set_success(_success TLObject) {
 	t._success = _success
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Get_success() []byte {
+func (t *TL_messages_setBotPrecheckoutResults) Get_success() TLObject {
 	return t._success
 }
 
@@ -39169,11 +39169,11 @@ func (t *TL_messages_setBotPrecheckoutResults) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Set_error(_error []byte) {
+func (t *TL_messages_setBotPrecheckoutResults) Set_error(_error TLObject) {
 	t._error = _error
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Get_error() []byte {
+func (t *TL_messages_setBotPrecheckoutResults) Get_error() TLObject {
 	return t._error
 }
 
@@ -39203,23 +39203,23 @@ func (t *TL_messages_setBotPrecheckoutResults) Decode(b []byte) {
 
 // messages_uploadMedia#519bc2b1
 type TL_messages_uploadMedia struct {
-	_peer  []byte
-	_media []byte
+	_peer  TLObject
+	_media TLObject
 }
 
-func (t *TL_messages_uploadMedia) Set_peer(_peer []byte) {
+func (t *TL_messages_uploadMedia) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_uploadMedia) Get_peer() []byte {
+func (t *TL_messages_uploadMedia) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_uploadMedia) Set_media(_media []byte) {
+func (t *TL_messages_uploadMedia) Set_media(_media TLObject) {
 	t._media = _media
 }
 
-func (t *TL_messages_uploadMedia) Get_media() []byte {
+func (t *TL_messages_uploadMedia) Get_media() TLObject {
 	return t._media
 }
 
@@ -39247,16 +39247,16 @@ func (t *TL_messages_uploadMedia) Decode(b []byte) {
 
 // messages_sendScreenshotNotification#c97df020
 type TL_messages_sendScreenshotNotification struct {
-	_peer            []byte
+	_peer            TLObject
 	_reply_to_msg_id int32
 	_random_id       int64
 }
 
-func (t *TL_messages_sendScreenshotNotification) Set_peer(_peer []byte) {
+func (t *TL_messages_sendScreenshotNotification) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendScreenshotNotification) Get_peer() []byte {
+func (t *TL_messages_sendScreenshotNotification) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -39335,15 +39335,15 @@ func (t *TL_messages_getFavedStickers) Decode(b []byte) {
 
 // messages_faveSticker#b9ffc55b
 type TL_messages_faveSticker struct {
-	_id     []byte
+	_id     TLObject
 	_unfave bool
 }
 
-func (t *TL_messages_faveSticker) Set_id(_id []byte) {
+func (t *TL_messages_faveSticker) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_messages_faveSticker) Get_id() []byte {
+func (t *TL_messages_faveSticker) Get_id() TLObject {
 	return t._id
 }
 
@@ -39379,7 +39379,7 @@ func (t *TL_messages_faveSticker) Decode(b []byte) {
 
 // messages_getUnreadMentions#46578472
 type TL_messages_getUnreadMentions struct {
-	_peer       []byte
+	_peer       TLObject
 	_offset_id  int32
 	_add_offset int32
 	_limit      int32
@@ -39387,11 +39387,11 @@ type TL_messages_getUnreadMentions struct {
 	_min_id     int32
 }
 
-func (t *TL_messages_getUnreadMentions) Set_peer(_peer []byte) {
+func (t *TL_messages_getUnreadMentions) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getUnreadMentions) Get_peer() []byte {
+func (t *TL_messages_getUnreadMentions) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -39465,16 +39465,16 @@ func (t *TL_messages_getUnreadMentions) Decode(b []byte) {
 
 }
 
-// messages_readMentions#0f0189d3
+// messages_readMentions#f0189d3
 type TL_messages_readMentions struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_messages_readMentions) Set_peer(_peer []byte) {
+func (t *TL_messages_readMentions) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_readMentions) Get_peer() []byte {
+func (t *TL_messages_readMentions) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -39500,15 +39500,15 @@ func (t *TL_messages_readMentions) Decode(b []byte) {
 
 // messages_getRecentLocations#249431e2
 type TL_messages_getRecentLocations struct {
-	_peer  []byte
+	_peer  TLObject
 	_limit int32
 }
 
-func (t *TL_messages_getRecentLocations) Set_peer(_peer []byte) {
+func (t *TL_messages_getRecentLocations) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_getRecentLocations) Get_peer() []byte {
+func (t *TL_messages_getRecentLocations) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -39544,68 +39544,68 @@ func (t *TL_messages_getRecentLocations) Decode(b []byte) {
 
 // messages_sendMultiMedia#2095512f
 type TL_messages_sendMultiMedia struct {
-	_flags           []byte
-	_silent          []byte
-	_background      []byte
-	_clear_draft     []byte
-	_peer            []byte
-	_reply_to_msg_id []byte
-	_multi_media     []byte
+	_flags           TLObject
+	_silent          TLObject
+	_background      TLObject
+	_clear_draft     TLObject
+	_peer            TLObject
+	_reply_to_msg_id TLObject
+	_multi_media     TLObject
 }
 
-func (t *TL_messages_sendMultiMedia) Set_flags(_flags []byte) {
+func (t *TL_messages_sendMultiMedia) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_messages_sendMultiMedia) Get_flags() []byte {
+func (t *TL_messages_sendMultiMedia) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_messages_sendMultiMedia) Set_silent(_silent []byte) {
+func (t *TL_messages_sendMultiMedia) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_messages_sendMultiMedia) Get_silent() []byte {
+func (t *TL_messages_sendMultiMedia) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_messages_sendMultiMedia) Set_background(_background []byte) {
+func (t *TL_messages_sendMultiMedia) Set_background(_background TLObject) {
 	t._background = _background
 }
 
-func (t *TL_messages_sendMultiMedia) Get_background() []byte {
+func (t *TL_messages_sendMultiMedia) Get_background() TLObject {
 	return t._background
 }
 
-func (t *TL_messages_sendMultiMedia) Set_clear_draft(_clear_draft []byte) {
+func (t *TL_messages_sendMultiMedia) Set_clear_draft(_clear_draft TLObject) {
 	t._clear_draft = _clear_draft
 }
 
-func (t *TL_messages_sendMultiMedia) Get_clear_draft() []byte {
+func (t *TL_messages_sendMultiMedia) Get_clear_draft() TLObject {
 	return t._clear_draft
 }
 
-func (t *TL_messages_sendMultiMedia) Set_peer(_peer []byte) {
+func (t *TL_messages_sendMultiMedia) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_sendMultiMedia) Get_peer() []byte {
+func (t *TL_messages_sendMultiMedia) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_sendMultiMedia) Set_reply_to_msg_id(_reply_to_msg_id []byte) {
+func (t *TL_messages_sendMultiMedia) Set_reply_to_msg_id(_reply_to_msg_id TLObject) {
 	t._reply_to_msg_id = _reply_to_msg_id
 }
 
-func (t *TL_messages_sendMultiMedia) Get_reply_to_msg_id() []byte {
+func (t *TL_messages_sendMultiMedia) Get_reply_to_msg_id() TLObject {
 	return t._reply_to_msg_id
 }
 
-func (t *TL_messages_sendMultiMedia) Set_multi_media(_multi_media []byte) {
+func (t *TL_messages_sendMultiMedia) Set_multi_media(_multi_media TLObject) {
 	t._multi_media = _multi_media
 }
 
-func (t *TL_messages_sendMultiMedia) Get_multi_media() []byte {
+func (t *TL_messages_sendMultiMedia) Get_multi_media() TLObject {
 	return t._multi_media
 }
 
@@ -39641,23 +39641,23 @@ func (t *TL_messages_sendMultiMedia) Decode(b []byte) {
 
 // messages_uploadEncryptedFile#5057c497
 type TL_messages_uploadEncryptedFile struct {
-	_peer []byte
-	_file []byte
+	_peer TLObject
+	_file TLObject
 }
 
-func (t *TL_messages_uploadEncryptedFile) Set_peer(_peer []byte) {
+func (t *TL_messages_uploadEncryptedFile) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_messages_uploadEncryptedFile) Get_peer() []byte {
+func (t *TL_messages_uploadEncryptedFile) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_messages_uploadEncryptedFile) Set_file(_file []byte) {
+func (t *TL_messages_uploadEncryptedFile) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_messages_uploadEncryptedFile) Get_file() []byte {
+func (t *TL_messages_uploadEncryptedFile) Get_file() TLObject {
 	return t._file
 }
 
@@ -39701,18 +39701,18 @@ func (t *TL_updates_getState) Decode(b []byte) {
 
 // updates_getDifference#25939651
 type TL_updates_getDifference struct {
-	_flags           []byte
+	_flags           TLObject
 	_pts             int32
-	_pts_total_limit []byte
+	_pts_total_limit TLObject
 	_date            int32
 	_qts             int32
 }
 
-func (t *TL_updates_getDifference) Set_flags(_flags []byte) {
+func (t *TL_updates_getDifference) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updates_getDifference) Get_flags() []byte {
+func (t *TL_updates_getDifference) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -39724,11 +39724,11 @@ func (t *TL_updates_getDifference) Get_pts() int32 {
 	return t._pts
 }
 
-func (t *TL_updates_getDifference) Set_pts_total_limit(_pts_total_limit []byte) {
+func (t *TL_updates_getDifference) Set_pts_total_limit(_pts_total_limit TLObject) {
 	t._pts_total_limit = _pts_total_limit
 }
 
-func (t *TL_updates_getDifference) Get_pts_total_limit() []byte {
+func (t *TL_updates_getDifference) Get_pts_total_limit() TLObject {
 	return t._pts_total_limit
 }
 
@@ -39774,45 +39774,45 @@ func (t *TL_updates_getDifference) Decode(b []byte) {
 
 }
 
-// updates_getChannelDifference#03173d78
+// updates_getChannelDifference#3173d78
 type TL_updates_getChannelDifference struct {
-	_flags   []byte
-	_force   []byte
-	_channel []byte
-	_filter  []byte
+	_flags   TLObject
+	_force   TLObject
+	_channel TLObject
+	_filter  TLObject
 	_pts     int32
 	_limit   int32
 }
 
-func (t *TL_updates_getChannelDifference) Set_flags(_flags []byte) {
+func (t *TL_updates_getChannelDifference) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_updates_getChannelDifference) Get_flags() []byte {
+func (t *TL_updates_getChannelDifference) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_updates_getChannelDifference) Set_force(_force []byte) {
+func (t *TL_updates_getChannelDifference) Set_force(_force TLObject) {
 	t._force = _force
 }
 
-func (t *TL_updates_getChannelDifference) Get_force() []byte {
+func (t *TL_updates_getChannelDifference) Get_force() TLObject {
 	return t._force
 }
 
-func (t *TL_updates_getChannelDifference) Set_channel(_channel []byte) {
+func (t *TL_updates_getChannelDifference) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_updates_getChannelDifference) Get_channel() []byte {
+func (t *TL_updates_getChannelDifference) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_updates_getChannelDifference) Set_filter(_filter []byte) {
+func (t *TL_updates_getChannelDifference) Set_filter(_filter TLObject) {
 	t._filter = _filter
 }
 
-func (t *TL_updates_getChannelDifference) Get_filter() []byte {
+func (t *TL_updates_getChannelDifference) Get_filter() TLObject {
 	return t._filter
 }
 
@@ -39862,14 +39862,14 @@ func (t *TL_updates_getChannelDifference) Decode(b []byte) {
 
 // photos_updateProfilePhoto#f0bb5152
 type TL_photos_updateProfilePhoto struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_photos_updateProfilePhoto) Set_id(_id []byte) {
+func (t *TL_photos_updateProfilePhoto) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_photos_updateProfilePhoto) Get_id() []byte {
+func (t *TL_photos_updateProfilePhoto) Get_id() TLObject {
 	return t._id
 }
 
@@ -39895,14 +39895,14 @@ func (t *TL_photos_updateProfilePhoto) Decode(b []byte) {
 
 // photos_uploadProfilePhoto#4f32c098
 type TL_photos_uploadProfilePhoto struct {
-	_file []byte
+	_file TLObject
 }
 
-func (t *TL_photos_uploadProfilePhoto) Set_file(_file []byte) {
+func (t *TL_photos_uploadProfilePhoto) Set_file(_file TLObject) {
 	t._file = _file
 }
 
-func (t *TL_photos_uploadProfilePhoto) Get_file() []byte {
+func (t *TL_photos_uploadProfilePhoto) Get_file() TLObject {
 	return t._file
 }
 
@@ -39928,14 +39928,14 @@ func (t *TL_photos_uploadProfilePhoto) Decode(b []byte) {
 
 // photos_deletePhotos#87cf7f2f
 type TL_photos_deletePhotos struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_photos_deletePhotos) Set_id(_id []byte) {
+func (t *TL_photos_deletePhotos) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_photos_deletePhotos) Get_id() []byte {
+func (t *TL_photos_deletePhotos) Get_id() TLObject {
 	return t._id
 }
 
@@ -39961,17 +39961,17 @@ func (t *TL_photos_deletePhotos) Decode(b []byte) {
 
 // photos_getUserPhotos#91cd32a8
 type TL_photos_getUserPhotos struct {
-	_user_id []byte
+	_user_id TLObject
 	_offset  int32
 	_max_id  int64
 	_limit   int32
 }
 
-func (t *TL_photos_getUserPhotos) Set_user_id(_user_id []byte) {
+func (t *TL_photos_getUserPhotos) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_photos_getUserPhotos) Get_user_id() []byte {
+func (t *TL_photos_getUserPhotos) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -40029,7 +40029,7 @@ func (t *TL_photos_getUserPhotos) Decode(b []byte) {
 type TL_upload_saveFilePart struct {
 	_file_id   int64
 	_file_part int32
-	_bytes     []byte
+	_bytes     TLObject
 }
 
 func (t *TL_upload_saveFilePart) Set_file_id(_file_id int64) {
@@ -40048,11 +40048,11 @@ func (t *TL_upload_saveFilePart) Get_file_part() int32 {
 	return t._file_part
 }
 
-func (t *TL_upload_saveFilePart) Set_bytes(_bytes []byte) {
+func (t *TL_upload_saveFilePart) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_upload_saveFilePart) Get_bytes() []byte {
+func (t *TL_upload_saveFilePart) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -40082,16 +40082,16 @@ func (t *TL_upload_saveFilePart) Decode(b []byte) {
 
 // upload_getFile#e3a6cfb5
 type TL_upload_getFile struct {
-	_location []byte
+	_location TLObject
 	_offset   int32
 	_limit    int32
 }
 
-func (t *TL_upload_getFile) Set_location(_location []byte) {
+func (t *TL_upload_getFile) Set_location(_location TLObject) {
 	t._location = _location
 }
 
-func (t *TL_upload_getFile) Get_location() []byte {
+func (t *TL_upload_getFile) Get_location() TLObject {
 	return t._location
 }
 
@@ -40140,7 +40140,7 @@ type TL_upload_saveBigFilePart struct {
 	_file_id          int64
 	_file_part        int32
 	_file_total_parts int32
-	_bytes            []byte
+	_bytes            TLObject
 }
 
 func (t *TL_upload_saveBigFilePart) Set_file_id(_file_id int64) {
@@ -40167,11 +40167,11 @@ func (t *TL_upload_saveBigFilePart) Get_file_total_parts() int32 {
 	return t._file_total_parts
 }
 
-func (t *TL_upload_saveBigFilePart) Set_bytes(_bytes []byte) {
+func (t *TL_upload_saveBigFilePart) Set_bytes(_bytes TLObject) {
 	t._bytes = _bytes
 }
 
-func (t *TL_upload_saveBigFilePart) Get_bytes() []byte {
+func (t *TL_upload_saveBigFilePart) Get_bytes() TLObject {
 	return t._bytes
 }
 
@@ -40203,16 +40203,16 @@ func (t *TL_upload_saveBigFilePart) Decode(b []byte) {
 
 // upload_getWebFile#24e6818d
 type TL_upload_getWebFile struct {
-	_location []byte
+	_location TLObject
 	_offset   int32
 	_limit    int32
 }
 
-func (t *TL_upload_getWebFile) Set_location(_location []byte) {
+func (t *TL_upload_getWebFile) Set_location(_location TLObject) {
 	t._location = _location
 }
 
-func (t *TL_upload_getWebFile) Get_location() []byte {
+func (t *TL_upload_getWebFile) Get_location() TLObject {
 	return t._location
 }
 
@@ -40258,16 +40258,16 @@ func (t *TL_upload_getWebFile) Decode(b []byte) {
 
 // upload_getCdnFile#2000bcc3
 type TL_upload_getCdnFile struct {
-	_file_token []byte
+	_file_token TLObject
 	_offset     int32
 	_limit      int32
 }
 
-func (t *TL_upload_getCdnFile) Set_file_token(_file_token []byte) {
+func (t *TL_upload_getCdnFile) Set_file_token(_file_token TLObject) {
 	t._file_token = _file_token
 }
 
-func (t *TL_upload_getCdnFile) Get_file_token() []byte {
+func (t *TL_upload_getCdnFile) Get_file_token() TLObject {
 	return t._file_token
 }
 
@@ -40313,23 +40313,23 @@ func (t *TL_upload_getCdnFile) Decode(b []byte) {
 
 // upload_reuploadCdnFile#1af91c09
 type TL_upload_reuploadCdnFile struct {
-	_file_token    []byte
-	_request_token []byte
+	_file_token    TLObject
+	_request_token TLObject
 }
 
-func (t *TL_upload_reuploadCdnFile) Set_file_token(_file_token []byte) {
+func (t *TL_upload_reuploadCdnFile) Set_file_token(_file_token TLObject) {
 	t._file_token = _file_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Get_file_token() []byte {
+func (t *TL_upload_reuploadCdnFile) Get_file_token() TLObject {
 	return t._file_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Set_request_token(_request_token []byte) {
+func (t *TL_upload_reuploadCdnFile) Set_request_token(_request_token TLObject) {
 	t._request_token = _request_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Get_request_token() []byte {
+func (t *TL_upload_reuploadCdnFile) Get_request_token() TLObject {
 	return t._request_token
 }
 
@@ -40357,15 +40357,15 @@ func (t *TL_upload_reuploadCdnFile) Decode(b []byte) {
 
 // upload_getCdnFileHashes#f715c87b
 type TL_upload_getCdnFileHashes struct {
-	_file_token []byte
+	_file_token TLObject
 	_offset     int32
 }
 
-func (t *TL_upload_getCdnFileHashes) Set_file_token(_file_token []byte) {
+func (t *TL_upload_getCdnFileHashes) Set_file_token(_file_token TLObject) {
 	t._file_token = _file_token
 }
 
-func (t *TL_upload_getCdnFileHashes) Get_file_token() []byte {
+func (t *TL_upload_getCdnFileHashes) Get_file_token() TLObject {
 	return t._file_token
 }
 
@@ -40449,14 +40449,14 @@ func (t *TL_help_getAppUpdate) Decode(b []byte) {
 
 // help_saveAppLog#6f02f748
 type TL_help_saveAppLog struct {
-	_events []byte
+	_events TLObject
 }
 
-func (t *TL_help_saveAppLog) Set_events(_events []byte) {
+func (t *TL_help_saveAppLog) Set_events(_events TLObject) {
 	t._events = _events
 }
 
-func (t *TL_help_saveAppLog) Get_events() []byte {
+func (t *TL_help_saveAppLog) Get_events() TLObject {
 	return t._events
 }
 
@@ -40656,15 +40656,15 @@ func (t *TL_help_getRecentMeUrls) Decode(b []byte) {
 
 // channels_readHistory#cc104937
 type TL_channels_readHistory struct {
-	_channel []byte
+	_channel TLObject
 	_max_id  int32
 }
 
-func (t *TL_channels_readHistory) Set_channel(_channel []byte) {
+func (t *TL_channels_readHistory) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_readHistory) Get_channel() []byte {
+func (t *TL_channels_readHistory) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -40700,23 +40700,23 @@ func (t *TL_channels_readHistory) Decode(b []byte) {
 
 // channels_deleteMessages#84c1fd4e
 type TL_channels_deleteMessages struct {
-	_channel []byte
-	_id      []byte
+	_channel TLObject
+	_id      TLObject
 }
 
-func (t *TL_channels_deleteMessages) Set_channel(_channel []byte) {
+func (t *TL_channels_deleteMessages) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_deleteMessages) Get_channel() []byte {
+func (t *TL_channels_deleteMessages) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_deleteMessages) Set_id(_id []byte) {
+func (t *TL_channels_deleteMessages) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_channels_deleteMessages) Get_id() []byte {
+func (t *TL_channels_deleteMessages) Get_id() TLObject {
 	return t._id
 }
 
@@ -40744,23 +40744,23 @@ func (t *TL_channels_deleteMessages) Decode(b []byte) {
 
 // channels_deleteUserHistory#d10dd71b
 type TL_channels_deleteUserHistory struct {
-	_channel []byte
-	_user_id []byte
+	_channel TLObject
+	_user_id TLObject
 }
 
-func (t *TL_channels_deleteUserHistory) Set_channel(_channel []byte) {
+func (t *TL_channels_deleteUserHistory) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_deleteUserHistory) Get_channel() []byte {
+func (t *TL_channels_deleteUserHistory) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_deleteUserHistory) Set_user_id(_user_id []byte) {
+func (t *TL_channels_deleteUserHistory) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_channels_deleteUserHistory) Get_user_id() []byte {
+func (t *TL_channels_deleteUserHistory) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -40788,32 +40788,32 @@ func (t *TL_channels_deleteUserHistory) Decode(b []byte) {
 
 // channels_reportSpam#fe087810
 type TL_channels_reportSpam struct {
-	_channel []byte
-	_user_id []byte
-	_id      []byte
+	_channel TLObject
+	_user_id TLObject
+	_id      TLObject
 }
 
-func (t *TL_channels_reportSpam) Set_channel(_channel []byte) {
+func (t *TL_channels_reportSpam) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_reportSpam) Get_channel() []byte {
+func (t *TL_channels_reportSpam) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_reportSpam) Set_user_id(_user_id []byte) {
+func (t *TL_channels_reportSpam) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_channels_reportSpam) Get_user_id() []byte {
+func (t *TL_channels_reportSpam) Get_user_id() TLObject {
 	return t._user_id
 }
 
-func (t *TL_channels_reportSpam) Set_id(_id []byte) {
+func (t *TL_channels_reportSpam) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_channels_reportSpam) Get_id() []byte {
+func (t *TL_channels_reportSpam) Get_id() TLObject {
 	return t._id
 }
 
@@ -40843,23 +40843,23 @@ func (t *TL_channels_reportSpam) Decode(b []byte) {
 
 // channels_getMessages#93d7b347
 type TL_channels_getMessages struct {
-	_channel []byte
-	_id      []byte
+	_channel TLObject
+	_id      TLObject
 }
 
-func (t *TL_channels_getMessages) Set_channel(_channel []byte) {
+func (t *TL_channels_getMessages) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_getMessages) Get_channel() []byte {
+func (t *TL_channels_getMessages) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_getMessages) Set_id(_id []byte) {
+func (t *TL_channels_getMessages) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_channels_getMessages) Get_id() []byte {
+func (t *TL_channels_getMessages) Get_id() TLObject {
 	return t._id
 }
 
@@ -40887,26 +40887,26 @@ func (t *TL_channels_getMessages) Decode(b []byte) {
 
 // channels_getParticipants#123e05e9
 type TL_channels_getParticipants struct {
-	_channel []byte
-	_filter  []byte
+	_channel TLObject
+	_filter  TLObject
 	_offset  int32
 	_limit   int32
 	_hash    int32
 }
 
-func (t *TL_channels_getParticipants) Set_channel(_channel []byte) {
+func (t *TL_channels_getParticipants) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_getParticipants) Get_channel() []byte {
+func (t *TL_channels_getParticipants) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_getParticipants) Set_filter(_filter []byte) {
+func (t *TL_channels_getParticipants) Set_filter(_filter TLObject) {
 	t._filter = _filter
 }
 
-func (t *TL_channels_getParticipants) Get_filter() []byte {
+func (t *TL_channels_getParticipants) Get_filter() TLObject {
 	return t._filter
 }
 
@@ -40964,23 +40964,23 @@ func (t *TL_channels_getParticipants) Decode(b []byte) {
 
 // channels_getParticipant#546dd7a6
 type TL_channels_getParticipant struct {
-	_channel []byte
-	_user_id []byte
+	_channel TLObject
+	_user_id TLObject
 }
 
-func (t *TL_channels_getParticipant) Set_channel(_channel []byte) {
+func (t *TL_channels_getParticipant) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_getParticipant) Get_channel() []byte {
+func (t *TL_channels_getParticipant) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_getParticipant) Set_user_id(_user_id []byte) {
+func (t *TL_channels_getParticipant) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_channels_getParticipant) Get_user_id() []byte {
+func (t *TL_channels_getParticipant) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -41006,16 +41006,16 @@ func (t *TL_channels_getParticipant) Decode(b []byte) {
 
 }
 
-// channels_getChannels#0a7f6bbb
+// channels_getChannels#a7f6bbb
 type TL_channels_getChannels struct {
-	_id []byte
+	_id TLObject
 }
 
-func (t *TL_channels_getChannels) Set_id(_id []byte) {
+func (t *TL_channels_getChannels) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_channels_getChannels) Get_id() []byte {
+func (t *TL_channels_getChannels) Get_id() TLObject {
 	return t._id
 }
 
@@ -41039,16 +41039,16 @@ func (t *TL_channels_getChannels) Decode(b []byte) {
 
 }
 
-// channels_getFullChannel#08736a09
+// channels_getFullChannel#8736a09
 type TL_channels_getFullChannel struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_channels_getFullChannel) Set_channel(_channel []byte) {
+func (t *TL_channels_getFullChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_getFullChannel) Get_channel() []byte {
+func (t *TL_channels_getFullChannel) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41074,34 +41074,34 @@ func (t *TL_channels_getFullChannel) Decode(b []byte) {
 
 // channels_createChannel#f4893d7f
 type TL_channels_createChannel struct {
-	_flags     []byte
-	_broadcast []byte
-	_megagroup []byte
+	_flags     TLObject
+	_broadcast TLObject
+	_megagroup TLObject
 	_title     string
 	_about     string
 }
 
-func (t *TL_channels_createChannel) Set_flags(_flags []byte) {
+func (t *TL_channels_createChannel) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channels_createChannel) Get_flags() []byte {
+func (t *TL_channels_createChannel) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channels_createChannel) Set_broadcast(_broadcast []byte) {
+func (t *TL_channels_createChannel) Set_broadcast(_broadcast TLObject) {
 	t._broadcast = _broadcast
 }
 
-func (t *TL_channels_createChannel) Get_broadcast() []byte {
+func (t *TL_channels_createChannel) Get_broadcast() TLObject {
 	return t._broadcast
 }
 
-func (t *TL_channels_createChannel) Set_megagroup(_megagroup []byte) {
+func (t *TL_channels_createChannel) Set_megagroup(_megagroup TLObject) {
 	t._megagroup = _megagroup
 }
 
-func (t *TL_channels_createChannel) Get_megagroup() []byte {
+func (t *TL_channels_createChannel) Get_megagroup() TLObject {
 	return t._megagroup
 }
 
@@ -41149,15 +41149,15 @@ func (t *TL_channels_createChannel) Decode(b []byte) {
 
 // channels_editAbout#13e27f1e
 type TL_channels_editAbout struct {
-	_channel []byte
+	_channel TLObject
 	_about   string
 }
 
-func (t *TL_channels_editAbout) Set_channel(_channel []byte) {
+func (t *TL_channels_editAbout) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_editAbout) Get_channel() []byte {
+func (t *TL_channels_editAbout) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41193,32 +41193,32 @@ func (t *TL_channels_editAbout) Decode(b []byte) {
 
 // channels_editAdmin#20b88214
 type TL_channels_editAdmin struct {
-	_channel      []byte
-	_user_id      []byte
-	_admin_rights []byte
+	_channel      TLObject
+	_user_id      TLObject
+	_admin_rights TLObject
 }
 
-func (t *TL_channels_editAdmin) Set_channel(_channel []byte) {
+func (t *TL_channels_editAdmin) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_editAdmin) Get_channel() []byte {
+func (t *TL_channels_editAdmin) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_editAdmin) Set_user_id(_user_id []byte) {
+func (t *TL_channels_editAdmin) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_channels_editAdmin) Get_user_id() []byte {
+func (t *TL_channels_editAdmin) Get_user_id() TLObject {
 	return t._user_id
 }
 
-func (t *TL_channels_editAdmin) Set_admin_rights(_admin_rights []byte) {
+func (t *TL_channels_editAdmin) Set_admin_rights(_admin_rights TLObject) {
 	t._admin_rights = _admin_rights
 }
 
-func (t *TL_channels_editAdmin) Get_admin_rights() []byte {
+func (t *TL_channels_editAdmin) Get_admin_rights() TLObject {
 	return t._admin_rights
 }
 
@@ -41248,15 +41248,15 @@ func (t *TL_channels_editAdmin) Decode(b []byte) {
 
 // channels_editTitle#566decd0
 type TL_channels_editTitle struct {
-	_channel []byte
+	_channel TLObject
 	_title   string
 }
 
-func (t *TL_channels_editTitle) Set_channel(_channel []byte) {
+func (t *TL_channels_editTitle) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_editTitle) Get_channel() []byte {
+func (t *TL_channels_editTitle) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41292,23 +41292,23 @@ func (t *TL_channels_editTitle) Decode(b []byte) {
 
 // channels_editPhoto#f12e57c9
 type TL_channels_editPhoto struct {
-	_channel []byte
-	_photo   []byte
+	_channel TLObject
+	_photo   TLObject
 }
 
-func (t *TL_channels_editPhoto) Set_channel(_channel []byte) {
+func (t *TL_channels_editPhoto) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_editPhoto) Get_channel() []byte {
+func (t *TL_channels_editPhoto) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_editPhoto) Set_photo(_photo []byte) {
+func (t *TL_channels_editPhoto) Set_photo(_photo TLObject) {
 	t._photo = _photo
 }
 
-func (t *TL_channels_editPhoto) Get_photo() []byte {
+func (t *TL_channels_editPhoto) Get_photo() TLObject {
 	return t._photo
 }
 
@@ -41336,15 +41336,15 @@ func (t *TL_channels_editPhoto) Decode(b []byte) {
 
 // channels_checkUsername#10e6bd2c
 type TL_channels_checkUsername struct {
-	_channel  []byte
+	_channel  TLObject
 	_username string
 }
 
-func (t *TL_channels_checkUsername) Set_channel(_channel []byte) {
+func (t *TL_channels_checkUsername) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_checkUsername) Get_channel() []byte {
+func (t *TL_channels_checkUsername) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41380,15 +41380,15 @@ func (t *TL_channels_checkUsername) Decode(b []byte) {
 
 // channels_updateUsername#3514b3de
 type TL_channels_updateUsername struct {
-	_channel  []byte
+	_channel  TLObject
 	_username string
 }
 
-func (t *TL_channels_updateUsername) Set_channel(_channel []byte) {
+func (t *TL_channels_updateUsername) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_updateUsername) Get_channel() []byte {
+func (t *TL_channels_updateUsername) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41424,14 +41424,14 @@ func (t *TL_channels_updateUsername) Decode(b []byte) {
 
 // channels_joinChannel#24b524c5
 type TL_channels_joinChannel struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_channels_joinChannel) Set_channel(_channel []byte) {
+func (t *TL_channels_joinChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_joinChannel) Get_channel() []byte {
+func (t *TL_channels_joinChannel) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41457,14 +41457,14 @@ func (t *TL_channels_joinChannel) Decode(b []byte) {
 
 // channels_leaveChannel#f836aa95
 type TL_channels_leaveChannel struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_channels_leaveChannel) Set_channel(_channel []byte) {
+func (t *TL_channels_leaveChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_leaveChannel) Get_channel() []byte {
+func (t *TL_channels_leaveChannel) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41490,23 +41490,23 @@ func (t *TL_channels_leaveChannel) Decode(b []byte) {
 
 // channels_inviteToChannel#199f3a6c
 type TL_channels_inviteToChannel struct {
-	_channel []byte
-	_users   []byte
+	_channel TLObject
+	_users   TLObject
 }
 
-func (t *TL_channels_inviteToChannel) Set_channel(_channel []byte) {
+func (t *TL_channels_inviteToChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_inviteToChannel) Get_channel() []byte {
+func (t *TL_channels_inviteToChannel) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_inviteToChannel) Set_users(_users []byte) {
+func (t *TL_channels_inviteToChannel) Set_users(_users TLObject) {
 	t._users = _users
 }
 
-func (t *TL_channels_inviteToChannel) Get_users() []byte {
+func (t *TL_channels_inviteToChannel) Get_users() TLObject {
 	return t._users
 }
 
@@ -41534,14 +41534,14 @@ func (t *TL_channels_inviteToChannel) Decode(b []byte) {
 
 // channels_exportInvite#c7560885
 type TL_channels_exportInvite struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_channels_exportInvite) Set_channel(_channel []byte) {
+func (t *TL_channels_exportInvite) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_exportInvite) Get_channel() []byte {
+func (t *TL_channels_exportInvite) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41567,14 +41567,14 @@ func (t *TL_channels_exportInvite) Decode(b []byte) {
 
 // channels_deleteChannel#c0111fe3
 type TL_channels_deleteChannel struct {
-	_channel []byte
+	_channel TLObject
 }
 
-func (t *TL_channels_deleteChannel) Set_channel(_channel []byte) {
+func (t *TL_channels_deleteChannel) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_deleteChannel) Get_channel() []byte {
+func (t *TL_channels_deleteChannel) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41600,15 +41600,15 @@ func (t *TL_channels_deleteChannel) Decode(b []byte) {
 
 // channels_toggleInvites#49609307
 type TL_channels_toggleInvites struct {
-	_channel []byte
+	_channel TLObject
 	_enabled bool
 }
 
-func (t *TL_channels_toggleInvites) Set_channel(_channel []byte) {
+func (t *TL_channels_toggleInvites) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_toggleInvites) Get_channel() []byte {
+func (t *TL_channels_toggleInvites) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41644,15 +41644,15 @@ func (t *TL_channels_toggleInvites) Decode(b []byte) {
 
 // channels_exportMessageLink#c846d22d
 type TL_channels_exportMessageLink struct {
-	_channel []byte
+	_channel TLObject
 	_id      int32
 }
 
-func (t *TL_channels_exportMessageLink) Set_channel(_channel []byte) {
+func (t *TL_channels_exportMessageLink) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_exportMessageLink) Get_channel() []byte {
+func (t *TL_channels_exportMessageLink) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41688,15 +41688,15 @@ func (t *TL_channels_exportMessageLink) Decode(b []byte) {
 
 // channels_toggleSignatures#1f69b606
 type TL_channels_toggleSignatures struct {
-	_channel []byte
+	_channel TLObject
 	_enabled bool
 }
 
-func (t *TL_channels_toggleSignatures) Set_channel(_channel []byte) {
+func (t *TL_channels_toggleSignatures) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_toggleSignatures) Get_channel() []byte {
+func (t *TL_channels_toggleSignatures) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41732,33 +41732,33 @@ func (t *TL_channels_toggleSignatures) Decode(b []byte) {
 
 // channels_updatePinnedMessage#a72ded52
 type TL_channels_updatePinnedMessage struct {
-	_flags   []byte
-	_silent  []byte
-	_channel []byte
+	_flags   TLObject
+	_silent  TLObject
+	_channel TLObject
 	_id      int32
 }
 
-func (t *TL_channels_updatePinnedMessage) Set_flags(_flags []byte) {
+func (t *TL_channels_updatePinnedMessage) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channels_updatePinnedMessage) Get_flags() []byte {
+func (t *TL_channels_updatePinnedMessage) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channels_updatePinnedMessage) Set_silent(_silent []byte) {
+func (t *TL_channels_updatePinnedMessage) Set_silent(_silent TLObject) {
 	t._silent = _silent
 }
 
-func (t *TL_channels_updatePinnedMessage) Get_silent() []byte {
+func (t *TL_channels_updatePinnedMessage) Get_silent() TLObject {
 	return t._silent
 }
 
-func (t *TL_channels_updatePinnedMessage) Set_channel(_channel []byte) {
+func (t *TL_channels_updatePinnedMessage) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_updatePinnedMessage) Get_channel() []byte {
+func (t *TL_channels_updatePinnedMessage) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41812,32 +41812,32 @@ func (t *TL_channels_getAdminedPublicChannels) Decode(b []byte) {
 
 // channels_editBanned#bfd915cd
 type TL_channels_editBanned struct {
-	_channel       []byte
-	_user_id       []byte
-	_banned_rights []byte
+	_channel       TLObject
+	_user_id       TLObject
+	_banned_rights TLObject
 }
 
-func (t *TL_channels_editBanned) Set_channel(_channel []byte) {
+func (t *TL_channels_editBanned) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_editBanned) Get_channel() []byte {
+func (t *TL_channels_editBanned) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_editBanned) Set_user_id(_user_id []byte) {
+func (t *TL_channels_editBanned) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_channels_editBanned) Get_user_id() []byte {
+func (t *TL_channels_editBanned) Get_user_id() TLObject {
 	return t._user_id
 }
 
-func (t *TL_channels_editBanned) Set_banned_rights(_banned_rights []byte) {
+func (t *TL_channels_editBanned) Set_banned_rights(_banned_rights TLObject) {
 	t._banned_rights = _banned_rights
 }
 
-func (t *TL_channels_editBanned) Get_banned_rights() []byte {
+func (t *TL_channels_editBanned) Get_banned_rights() TLObject {
 	return t._banned_rights
 }
 
@@ -41867,29 +41867,29 @@ func (t *TL_channels_editBanned) Decode(b []byte) {
 
 // channels_getAdminLog#33ddf480
 type TL_channels_getAdminLog struct {
-	_flags         []byte
-	_channel       []byte
+	_flags         TLObject
+	_channel       TLObject
 	_q             string
-	_events_filter []byte
-	_admins        []byte
+	_events_filter TLObject
+	_admins        TLObject
 	_max_id        int64
 	_min_id        int64
 	_limit         int32
 }
 
-func (t *TL_channels_getAdminLog) Set_flags(_flags []byte) {
+func (t *TL_channels_getAdminLog) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_channels_getAdminLog) Get_flags() []byte {
+func (t *TL_channels_getAdminLog) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_channels_getAdminLog) Set_channel(_channel []byte) {
+func (t *TL_channels_getAdminLog) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_getAdminLog) Get_channel() []byte {
+func (t *TL_channels_getAdminLog) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -41901,19 +41901,19 @@ func (t *TL_channels_getAdminLog) Get_q() string {
 	return t._q
 }
 
-func (t *TL_channels_getAdminLog) Set_events_filter(_events_filter []byte) {
+func (t *TL_channels_getAdminLog) Set_events_filter(_events_filter TLObject) {
 	t._events_filter = _events_filter
 }
 
-func (t *TL_channels_getAdminLog) Get_events_filter() []byte {
+func (t *TL_channels_getAdminLog) Get_events_filter() TLObject {
 	return t._events_filter
 }
 
-func (t *TL_channels_getAdminLog) Set_admins(_admins []byte) {
+func (t *TL_channels_getAdminLog) Set_admins(_admins TLObject) {
 	t._admins = _admins
 }
 
-func (t *TL_channels_getAdminLog) Get_admins() []byte {
+func (t *TL_channels_getAdminLog) Get_admins() TLObject {
 	return t._admins
 }
 
@@ -41975,23 +41975,23 @@ func (t *TL_channels_getAdminLog) Decode(b []byte) {
 
 // channels_setStickers#ea8ca4f9
 type TL_channels_setStickers struct {
-	_channel    []byte
-	_stickerset []byte
+	_channel    TLObject
+	_stickerset TLObject
 }
 
-func (t *TL_channels_setStickers) Set_channel(_channel []byte) {
+func (t *TL_channels_setStickers) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_setStickers) Get_channel() []byte {
+func (t *TL_channels_setStickers) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_setStickers) Set_stickerset(_stickerset []byte) {
+func (t *TL_channels_setStickers) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_channels_setStickers) Get_stickerset() []byte {
+func (t *TL_channels_setStickers) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
@@ -42019,23 +42019,23 @@ func (t *TL_channels_setStickers) Decode(b []byte) {
 
 // channels_readMessageContents#eab5dc38
 type TL_channels_readMessageContents struct {
-	_channel []byte
-	_id      []byte
+	_channel TLObject
+	_id      TLObject
 }
 
-func (t *TL_channels_readMessageContents) Set_channel(_channel []byte) {
+func (t *TL_channels_readMessageContents) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_readMessageContents) Get_channel() []byte {
+func (t *TL_channels_readMessageContents) Get_channel() TLObject {
 	return t._channel
 }
 
-func (t *TL_channels_readMessageContents) Set_id(_id []byte) {
+func (t *TL_channels_readMessageContents) Set_id(_id TLObject) {
 	t._id = _id
 }
 
-func (t *TL_channels_readMessageContents) Get_id() []byte {
+func (t *TL_channels_readMessageContents) Get_id() TLObject {
 	return t._id
 }
 
@@ -42063,15 +42063,15 @@ func (t *TL_channels_readMessageContents) Decode(b []byte) {
 
 // channels_deleteHistory#af369d42
 type TL_channels_deleteHistory struct {
-	_channel []byte
+	_channel TLObject
 	_max_id  int32
 }
 
-func (t *TL_channels_deleteHistory) Set_channel(_channel []byte) {
+func (t *TL_channels_deleteHistory) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_deleteHistory) Get_channel() []byte {
+func (t *TL_channels_deleteHistory) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -42107,15 +42107,15 @@ func (t *TL_channels_deleteHistory) Decode(b []byte) {
 
 // channels_togglePreHistoryHidden#eabbb94c
 type TL_channels_togglePreHistoryHidden struct {
-	_channel []byte
+	_channel TLObject
 	_enabled bool
 }
 
-func (t *TL_channels_togglePreHistoryHidden) Set_channel(_channel []byte) {
+func (t *TL_channels_togglePreHistoryHidden) Set_channel(_channel TLObject) {
 	t._channel = _channel
 }
 
-func (t *TL_channels_togglePreHistoryHidden) Get_channel() []byte {
+func (t *TL_channels_togglePreHistoryHidden) Get_channel() TLObject {
 	return t._channel
 }
 
@@ -42152,7 +42152,7 @@ func (t *TL_channels_togglePreHistoryHidden) Decode(b []byte) {
 // bots_sendCustomRequest#aa2769ed
 type TL_bots_sendCustomRequest struct {
 	_custom_method string
-	_params        []byte
+	_params        TLObject
 }
 
 func (t *TL_bots_sendCustomRequest) Set_custom_method(_custom_method string) {
@@ -42163,11 +42163,11 @@ func (t *TL_bots_sendCustomRequest) Get_custom_method() string {
 	return t._custom_method
 }
 
-func (t *TL_bots_sendCustomRequest) Set_params(_params []byte) {
+func (t *TL_bots_sendCustomRequest) Set_params(_params TLObject) {
 	t._params = _params
 }
 
-func (t *TL_bots_sendCustomRequest) Get_params() []byte {
+func (t *TL_bots_sendCustomRequest) Get_params() TLObject {
 	return t._params
 }
 
@@ -42196,7 +42196,7 @@ func (t *TL_bots_sendCustomRequest) Decode(b []byte) {
 // bots_answerWebhookJSONQuery#e6213f4d
 type TL_bots_answerWebhookJSONQuery struct {
 	_query_id int64
-	_data     []byte
+	_data     TLObject
 }
 
 func (t *TL_bots_answerWebhookJSONQuery) Set_query_id(_query_id int64) {
@@ -42207,11 +42207,11 @@ func (t *TL_bots_answerWebhookJSONQuery) Get_query_id() int64 {
 	return t._query_id
 }
 
-func (t *TL_bots_answerWebhookJSONQuery) Set_data(_data []byte) {
+func (t *TL_bots_answerWebhookJSONQuery) Set_data(_data TLObject) {
 	t._data = _data
 }
 
-func (t *TL_bots_answerWebhookJSONQuery) Get_data() []byte {
+func (t *TL_bots_answerWebhookJSONQuery) Get_data() TLObject {
 	return t._data
 }
 
@@ -42305,25 +42305,25 @@ func (t *TL_payments_getPaymentReceipt) Decode(b []byte) {
 
 // payments_validateRequestedInfo#770a8e74
 type TL_payments_validateRequestedInfo struct {
-	_flags  []byte
-	_save   []byte
+	_flags  TLObject
+	_save   TLObject
 	_msg_id int32
-	_info   []byte
+	_info   TLObject
 }
 
-func (t *TL_payments_validateRequestedInfo) Set_flags(_flags []byte) {
+func (t *TL_payments_validateRequestedInfo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_validateRequestedInfo) Get_flags() []byte {
+func (t *TL_payments_validateRequestedInfo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_payments_validateRequestedInfo) Set_save(_save []byte) {
+func (t *TL_payments_validateRequestedInfo) Set_save(_save TLObject) {
 	t._save = _save
 }
 
-func (t *TL_payments_validateRequestedInfo) Get_save() []byte {
+func (t *TL_payments_validateRequestedInfo) Get_save() TLObject {
 	return t._save
 }
 
@@ -42335,11 +42335,11 @@ func (t *TL_payments_validateRequestedInfo) Get_msg_id() int32 {
 	return t._msg_id
 }
 
-func (t *TL_payments_validateRequestedInfo) Set_info(_info []byte) {
+func (t *TL_payments_validateRequestedInfo) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_payments_validateRequestedInfo) Get_info() []byte {
+func (t *TL_payments_validateRequestedInfo) Get_info() TLObject {
 	return t._info
 }
 
@@ -42369,18 +42369,18 @@ func (t *TL_payments_validateRequestedInfo) Decode(b []byte) {
 
 // payments_sendPaymentForm#2b8879b3
 type TL_payments_sendPaymentForm struct {
-	_flags              []byte
+	_flags              TLObject
 	_msg_id             int32
-	_requested_info_id  []byte
-	_shipping_option_id []byte
-	_credentials        []byte
+	_requested_info_id  TLObject
+	_shipping_option_id TLObject
+	_credentials        TLObject
 }
 
-func (t *TL_payments_sendPaymentForm) Set_flags(_flags []byte) {
+func (t *TL_payments_sendPaymentForm) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_sendPaymentForm) Get_flags() []byte {
+func (t *TL_payments_sendPaymentForm) Get_flags() TLObject {
 	return t._flags
 }
 
@@ -42392,27 +42392,27 @@ func (t *TL_payments_sendPaymentForm) Get_msg_id() int32 {
 	return t._msg_id
 }
 
-func (t *TL_payments_sendPaymentForm) Set_requested_info_id(_requested_info_id []byte) {
+func (t *TL_payments_sendPaymentForm) Set_requested_info_id(_requested_info_id TLObject) {
 	t._requested_info_id = _requested_info_id
 }
 
-func (t *TL_payments_sendPaymentForm) Get_requested_info_id() []byte {
+func (t *TL_payments_sendPaymentForm) Get_requested_info_id() TLObject {
 	return t._requested_info_id
 }
 
-func (t *TL_payments_sendPaymentForm) Set_shipping_option_id(_shipping_option_id []byte) {
+func (t *TL_payments_sendPaymentForm) Set_shipping_option_id(_shipping_option_id TLObject) {
 	t._shipping_option_id = _shipping_option_id
 }
 
-func (t *TL_payments_sendPaymentForm) Get_shipping_option_id() []byte {
+func (t *TL_payments_sendPaymentForm) Get_shipping_option_id() TLObject {
 	return t._shipping_option_id
 }
 
-func (t *TL_payments_sendPaymentForm) Set_credentials(_credentials []byte) {
+func (t *TL_payments_sendPaymentForm) Set_credentials(_credentials TLObject) {
 	t._credentials = _credentials
 }
 
-func (t *TL_payments_sendPaymentForm) Get_credentials() []byte {
+func (t *TL_payments_sendPaymentForm) Get_credentials() TLObject {
 	return t._credentials
 }
 
@@ -42460,32 +42460,32 @@ func (t *TL_payments_getSavedInfo) Decode(b []byte) {
 
 // payments_clearSavedInfo#d83d70c1
 type TL_payments_clearSavedInfo struct {
-	_flags       []byte
-	_credentials []byte
-	_info        []byte
+	_flags       TLObject
+	_credentials TLObject
+	_info        TLObject
 }
 
-func (t *TL_payments_clearSavedInfo) Set_flags(_flags []byte) {
+func (t *TL_payments_clearSavedInfo) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_payments_clearSavedInfo) Get_flags() []byte {
+func (t *TL_payments_clearSavedInfo) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_payments_clearSavedInfo) Set_credentials(_credentials []byte) {
+func (t *TL_payments_clearSavedInfo) Set_credentials(_credentials TLObject) {
 	t._credentials = _credentials
 }
 
-func (t *TL_payments_clearSavedInfo) Get_credentials() []byte {
+func (t *TL_payments_clearSavedInfo) Get_credentials() TLObject {
 	return t._credentials
 }
 
-func (t *TL_payments_clearSavedInfo) Set_info(_info []byte) {
+func (t *TL_payments_clearSavedInfo) Set_info(_info TLObject) {
 	t._info = _info
 }
 
-func (t *TL_payments_clearSavedInfo) Get_info() []byte {
+func (t *TL_payments_clearSavedInfo) Get_info() TLObject {
 	return t._info
 }
 
@@ -42513,35 +42513,35 @@ func (t *TL_payments_clearSavedInfo) Decode(b []byte) {
 
 // stickers_createStickerSet#9bd86e6a
 type TL_stickers_createStickerSet struct {
-	_flags      []byte
-	_masks      []byte
-	_user_id    []byte
+	_flags      TLObject
+	_masks      TLObject
+	_user_id    TLObject
 	_title      string
 	_short_name string
-	_stickers   []byte
+	_stickers   TLObject
 }
 
-func (t *TL_stickers_createStickerSet) Set_flags(_flags []byte) {
+func (t *TL_stickers_createStickerSet) Set_flags(_flags TLObject) {
 	t._flags = _flags
 }
 
-func (t *TL_stickers_createStickerSet) Get_flags() []byte {
+func (t *TL_stickers_createStickerSet) Get_flags() TLObject {
 	return t._flags
 }
 
-func (t *TL_stickers_createStickerSet) Set_masks(_masks []byte) {
+func (t *TL_stickers_createStickerSet) Set_masks(_masks TLObject) {
 	t._masks = _masks
 }
 
-func (t *TL_stickers_createStickerSet) Get_masks() []byte {
+func (t *TL_stickers_createStickerSet) Get_masks() TLObject {
 	return t._masks
 }
 
-func (t *TL_stickers_createStickerSet) Set_user_id(_user_id []byte) {
+func (t *TL_stickers_createStickerSet) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_stickers_createStickerSet) Get_user_id() []byte {
+func (t *TL_stickers_createStickerSet) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -42561,11 +42561,11 @@ func (t *TL_stickers_createStickerSet) Get_short_name() string {
 	return t._short_name
 }
 
-func (t *TL_stickers_createStickerSet) Set_stickers(_stickers []byte) {
+func (t *TL_stickers_createStickerSet) Set_stickers(_stickers TLObject) {
 	t._stickers = _stickers
 }
 
-func (t *TL_stickers_createStickerSet) Get_stickers() []byte {
+func (t *TL_stickers_createStickerSet) Get_stickers() TLObject {
 	return t._stickers
 }
 
@@ -42599,14 +42599,14 @@ func (t *TL_stickers_createStickerSet) Decode(b []byte) {
 
 // stickers_removeStickerFromSet#f7760f51
 type TL_stickers_removeStickerFromSet struct {
-	_sticker []byte
+	_sticker TLObject
 }
 
-func (t *TL_stickers_removeStickerFromSet) Set_sticker(_sticker []byte) {
+func (t *TL_stickers_removeStickerFromSet) Set_sticker(_sticker TLObject) {
 	t._sticker = _sticker
 }
 
-func (t *TL_stickers_removeStickerFromSet) Get_sticker() []byte {
+func (t *TL_stickers_removeStickerFromSet) Get_sticker() TLObject {
 	return t._sticker
 }
 
@@ -42632,15 +42632,15 @@ func (t *TL_stickers_removeStickerFromSet) Decode(b []byte) {
 
 // stickers_changeStickerPosition#ffb6d4ca
 type TL_stickers_changeStickerPosition struct {
-	_sticker  []byte
+	_sticker  TLObject
 	_position int32
 }
 
-func (t *TL_stickers_changeStickerPosition) Set_sticker(_sticker []byte) {
+func (t *TL_stickers_changeStickerPosition) Set_sticker(_sticker TLObject) {
 	t._sticker = _sticker
 }
 
-func (t *TL_stickers_changeStickerPosition) Get_sticker() []byte {
+func (t *TL_stickers_changeStickerPosition) Get_sticker() TLObject {
 	return t._sticker
 }
 
@@ -42676,23 +42676,23 @@ func (t *TL_stickers_changeStickerPosition) Decode(b []byte) {
 
 // stickers_addStickerToSet#8653febe
 type TL_stickers_addStickerToSet struct {
-	_stickerset []byte
-	_sticker    []byte
+	_stickerset TLObject
+	_sticker    TLObject
 }
 
-func (t *TL_stickers_addStickerToSet) Set_stickerset(_stickerset []byte) {
+func (t *TL_stickers_addStickerToSet) Set_stickerset(_stickerset TLObject) {
 	t._stickerset = _stickerset
 }
 
-func (t *TL_stickers_addStickerToSet) Get_stickerset() []byte {
+func (t *TL_stickers_addStickerToSet) Get_stickerset() TLObject {
 	return t._stickerset
 }
 
-func (t *TL_stickers_addStickerToSet) Set_sticker(_sticker []byte) {
+func (t *TL_stickers_addStickerToSet) Set_sticker(_sticker TLObject) {
 	t._sticker = _sticker
 }
 
-func (t *TL_stickers_addStickerToSet) Get_sticker() []byte {
+func (t *TL_stickers_addStickerToSet) Get_sticker() TLObject {
 	return t._sticker
 }
 
@@ -42736,17 +42736,17 @@ func (t *TL_phone_getCallConfig) Decode(b []byte) {
 
 // phone_requestCall#5b95b3d4
 type TL_phone_requestCall struct {
-	_user_id   []byte
+	_user_id   TLObject
 	_random_id int32
-	_g_a_hash  []byte
-	_protocol  []byte
+	_g_a_hash  TLObject
+	_protocol  TLObject
 }
 
-func (t *TL_phone_requestCall) Set_user_id(_user_id []byte) {
+func (t *TL_phone_requestCall) Set_user_id(_user_id TLObject) {
 	t._user_id = _user_id
 }
 
-func (t *TL_phone_requestCall) Get_user_id() []byte {
+func (t *TL_phone_requestCall) Get_user_id() TLObject {
 	return t._user_id
 }
 
@@ -42758,19 +42758,19 @@ func (t *TL_phone_requestCall) Get_random_id() int32 {
 	return t._random_id
 }
 
-func (t *TL_phone_requestCall) Set_g_a_hash(_g_a_hash []byte) {
+func (t *TL_phone_requestCall) Set_g_a_hash(_g_a_hash TLObject) {
 	t._g_a_hash = _g_a_hash
 }
 
-func (t *TL_phone_requestCall) Get_g_a_hash() []byte {
+func (t *TL_phone_requestCall) Get_g_a_hash() TLObject {
 	return t._g_a_hash
 }
 
-func (t *TL_phone_requestCall) Set_protocol(_protocol []byte) {
+func (t *TL_phone_requestCall) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phone_requestCall) Get_protocol() []byte {
+func (t *TL_phone_requestCall) Get_protocol() TLObject {
 	return t._protocol
 }
 
@@ -42802,32 +42802,32 @@ func (t *TL_phone_requestCall) Decode(b []byte) {
 
 // phone_acceptCall#3bd2b4a0
 type TL_phone_acceptCall struct {
-	_peer     []byte
-	_g_b      []byte
-	_protocol []byte
+	_peer     TLObject
+	_g_b      TLObject
+	_protocol TLObject
 }
 
-func (t *TL_phone_acceptCall) Set_peer(_peer []byte) {
+func (t *TL_phone_acceptCall) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_acceptCall) Get_peer() []byte {
+func (t *TL_phone_acceptCall) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_phone_acceptCall) Set_g_b(_g_b []byte) {
+func (t *TL_phone_acceptCall) Set_g_b(_g_b TLObject) {
 	t._g_b = _g_b
 }
 
-func (t *TL_phone_acceptCall) Get_g_b() []byte {
+func (t *TL_phone_acceptCall) Get_g_b() TLObject {
 	return t._g_b
 }
 
-func (t *TL_phone_acceptCall) Set_protocol(_protocol []byte) {
+func (t *TL_phone_acceptCall) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phone_acceptCall) Get_protocol() []byte {
+func (t *TL_phone_acceptCall) Get_protocol() TLObject {
 	return t._protocol
 }
 
@@ -42857,25 +42857,25 @@ func (t *TL_phone_acceptCall) Decode(b []byte) {
 
 // phone_confirmCall#2efe1722
 type TL_phone_confirmCall struct {
-	_peer            []byte
-	_g_a             []byte
+	_peer            TLObject
+	_g_a             TLObject
 	_key_fingerprint int64
-	_protocol        []byte
+	_protocol        TLObject
 }
 
-func (t *TL_phone_confirmCall) Set_peer(_peer []byte) {
+func (t *TL_phone_confirmCall) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_confirmCall) Get_peer() []byte {
+func (t *TL_phone_confirmCall) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_phone_confirmCall) Set_g_a(_g_a []byte) {
+func (t *TL_phone_confirmCall) Set_g_a(_g_a TLObject) {
 	t._g_a = _g_a
 }
 
-func (t *TL_phone_confirmCall) Get_g_a() []byte {
+func (t *TL_phone_confirmCall) Get_g_a() TLObject {
 	return t._g_a
 }
 
@@ -42887,11 +42887,11 @@ func (t *TL_phone_confirmCall) Get_key_fingerprint() int64 {
 	return t._key_fingerprint
 }
 
-func (t *TL_phone_confirmCall) Set_protocol(_protocol []byte) {
+func (t *TL_phone_confirmCall) Set_protocol(_protocol TLObject) {
 	t._protocol = _protocol
 }
 
-func (t *TL_phone_confirmCall) Get_protocol() []byte {
+func (t *TL_phone_confirmCall) Get_protocol() TLObject {
 	return t._protocol
 }
 
@@ -42923,14 +42923,14 @@ func (t *TL_phone_confirmCall) Decode(b []byte) {
 
 // phone_receivedCall#17d54f61
 type TL_phone_receivedCall struct {
-	_peer []byte
+	_peer TLObject
 }
 
-func (t *TL_phone_receivedCall) Set_peer(_peer []byte) {
+func (t *TL_phone_receivedCall) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_receivedCall) Get_peer() []byte {
+func (t *TL_phone_receivedCall) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -42956,17 +42956,17 @@ func (t *TL_phone_receivedCall) Decode(b []byte) {
 
 // phone_discardCall#78d413a6
 type TL_phone_discardCall struct {
-	_peer          []byte
+	_peer          TLObject
 	_duration      int32
-	_reason        []byte
+	_reason        TLObject
 	_connection_id int64
 }
 
-func (t *TL_phone_discardCall) Set_peer(_peer []byte) {
+func (t *TL_phone_discardCall) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_discardCall) Get_peer() []byte {
+func (t *TL_phone_discardCall) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -42978,11 +42978,11 @@ func (t *TL_phone_discardCall) Get_duration() int32 {
 	return t._duration
 }
 
-func (t *TL_phone_discardCall) Set_reason(_reason []byte) {
+func (t *TL_phone_discardCall) Set_reason(_reason TLObject) {
 	t._reason = _reason
 }
 
-func (t *TL_phone_discardCall) Get_reason() []byte {
+func (t *TL_phone_discardCall) Get_reason() TLObject {
 	return t._reason
 }
 
@@ -43022,16 +43022,16 @@ func (t *TL_phone_discardCall) Decode(b []byte) {
 
 // phone_setCallRating#1c536a34
 type TL_phone_setCallRating struct {
-	_peer    []byte
+	_peer    TLObject
 	_rating  int32
 	_comment string
 }
 
-func (t *TL_phone_setCallRating) Set_peer(_peer []byte) {
+func (t *TL_phone_setCallRating) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_setCallRating) Get_peer() []byte {
+func (t *TL_phone_setCallRating) Get_peer() TLObject {
 	return t._peer
 }
 
@@ -43077,23 +43077,23 @@ func (t *TL_phone_setCallRating) Decode(b []byte) {
 
 // phone_saveCallDebug#277add7e
 type TL_phone_saveCallDebug struct {
-	_peer  []byte
-	_debug []byte
+	_peer  TLObject
+	_debug TLObject
 }
 
-func (t *TL_phone_saveCallDebug) Set_peer(_peer []byte) {
+func (t *TL_phone_saveCallDebug) Set_peer(_peer TLObject) {
 	t._peer = _peer
 }
 
-func (t *TL_phone_saveCallDebug) Get_peer() []byte {
+func (t *TL_phone_saveCallDebug) Get_peer() TLObject {
 	return t._peer
 }
 
-func (t *TL_phone_saveCallDebug) Set_debug(_debug []byte) {
+func (t *TL_phone_saveCallDebug) Set_debug(_debug TLObject) {
 	t._debug = _debug
 }
 
-func (t *TL_phone_saveCallDebug) Get_debug() []byte {
+func (t *TL_phone_saveCallDebug) Get_debug() TLObject {
 	return t._debug
 }
 
@@ -43155,7 +43155,7 @@ func (t *TL_langpack_getLangPack) Decode(b []byte) {
 // langpack_getStrings#2e1ee318
 type TL_langpack_getStrings struct {
 	_lang_code string
-	_keys      []byte
+	_keys      TLObject
 }
 
 func (t *TL_langpack_getStrings) Set_lang_code(_lang_code string) {
@@ -43166,11 +43166,11 @@ func (t *TL_langpack_getStrings) Get_lang_code() string {
 	return t._lang_code
 }
 
-func (t *TL_langpack_getStrings) Set_keys(_keys []byte) {
+func (t *TL_langpack_getStrings) Set_keys(_keys TLObject) {
 	t._keys = _keys
 }
 
-func (t *TL_langpack_getStrings) Get_keys() []byte {
+func (t *TL_langpack_getStrings) Get_keys() TLObject {
 	return t._keys
 }
 
@@ -43196,7 +43196,7 @@ func (t *TL_langpack_getStrings) Decode(b []byte) {
 
 }
 
-// langpack_getDifference#0b2e4d7d
+// langpack_getDifference#b2e4d7d
 type TL_langpack_getDifference struct {
 	_from_version int32
 }
