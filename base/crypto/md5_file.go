@@ -18,11 +18,12 @@
 package crypto
 
 import (
-	"github.com/golang/glog"
 	"crypto/md5"
 	"fmt"
-	"os"
 	"io"
+	"os"
+
+	. "github.com/rockin0098/flash/base/logger"
 )
 
 // TODO(@benqi): remove to baselib
@@ -30,7 +31,7 @@ func CalcMd5File(filename string) (string, error) {
 	// fileName := core.NBFS_DATA_PATH + m.data.FilePath
 	f, err := os.Open(filename)
 	if err != nil {
-		glog.Error(err)
+		Log.Error(err)
 		return "", err
 	}
 
@@ -39,7 +40,7 @@ func CalcMd5File(filename string) (string, error) {
 	md5Hash := md5.New()
 	if _, err := io.Copy(md5Hash, f); err != nil {
 		// fmt.Println("Copy", err)
-		glog.Error("Copy - ", err)
+		Log.Error("Copy - ", err)
 		return "", err
 	}
 
