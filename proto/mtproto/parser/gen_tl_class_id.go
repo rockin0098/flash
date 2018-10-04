@@ -18,6 +18,7 @@ package tl
 type TL_CLASS_ID int32
 
 const (
+	TL_CLASS_UNKNOWN TL_CLASS_ID = 0
 	%v
 )
 

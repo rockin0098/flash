@@ -2,3 +2,4 @@
 
 go run TLParser/main.go
 gofmt -w proto/mtproto/tl/tl.class.id.go
+gofmt -w proto/mtproto/tl/tl.object.all.go

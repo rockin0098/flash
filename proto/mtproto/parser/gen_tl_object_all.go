@@ -16,6 +16,19 @@ package tl
 
 `
 
+func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
+
+	res := ""
+	for _, p := range params {
+		name := p.Name
+		tp := convertDataType(p.Type)
+		s := fmt.Sprintf("_%s %s\n", name, tp)
+		res = res + s
+	}
+
+	return res
+}
+
 func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	seperator := fmt.Sprintf("//====%v#%v====", line.Predicate, line.ID)
@@ -24,16 +37,22 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 	objname = "TL_" + objname
 
 	defstr := fmt.Sprintf(`
-		type %v struct {}
-	`, objname)
+		type %v struct {
+			%v
+		}
+	`, objname, t.generateOneTLObjectFields(line.Params))
 
 	newfuncname := fmt.Sprintf("New_%v", objname)
 	newfuncstr := fmt.Sprintf(`
-		func %v() *%v
-	`, newfuncname, objname)
+		func %v() *%v {
+			return &%v{}
+		}
+	`, newfuncname, objname, objname)
 
 	encodestr := fmt.Sprintf(`
-		func (t *%v)Encode() []byte {}
+		func (t *%v)Encode() []byte {
+			return nil
+		}
 	`, objname)
 
 	decodestr := fmt.Sprintf(`
