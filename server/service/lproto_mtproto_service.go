@@ -41,7 +41,7 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("class type = %v, reflect type = %T", mtproto.TL_CLASS_NAME[tlobj.ClassID()], tlobj)
+	Log.Debugf("class type = %T", tlobj)
 
 	var res interface{}
 	var err error
