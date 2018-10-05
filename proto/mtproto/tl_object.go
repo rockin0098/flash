@@ -9,13 +9,6 @@ func NewTLObject() TLObject {
 	return nil
 }
 
-type TLObjectClassID struct{}
-
-func (t *TLObjectClassID) Encode() {
-	test := TL_CLASS_req_pq
-	_ = test
-}
-
 func NewTLObjectByClassID(classID int32) TLObject {
 	m, ok := tlObjectClassMap[classID]
 	if !ok {
@@ -23,3 +16,14 @@ func NewTLObjectByClassID(classID int32) TLObject {
 	}
 	return m()
 }
+
+// for testing
+type TLObjectClassID struct {
+	ClassID int32
+}
+
+func (t *TLObjectClassID) Encode() []byte {
+	return nil
+}
+
+func (t *TLObjectClassID) Decode(b []byte) {}

@@ -305,16 +305,6 @@ func (m *MTPDecodeBuffer) Vector() []TLObject {
 }
 */
 
-type TLClassID struct {
-	ClassID int32
-}
-
-func (t *TLClassID) Encode() []byte {
-	return nil
-}
-
-func (t *TLClassID) Decode(b []byte) {}
-
 func (m *MTPDecodeBuffer) TLObject() (r TLObject) {
 	classID := m.Int()
 	if m.err != nil {
@@ -323,7 +313,7 @@ func (m *MTPDecodeBuffer) TLObject() (r TLObject) {
 
 	Log.Infof("TLObject, classID: %x", uint32(classID))
 
-	return &TLClassID{
+	return &TLObjectClassID{
 		ClassID: classID,
 	}
 

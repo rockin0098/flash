@@ -157,7 +157,8 @@ func ParseTLLayer(tl string) *TLLayer {
 	var tlMethods []*TLMethod
 	var tllines []*TLLine
 	var layer string
-	typeMap := make(map[string]*TLConstructor)
+	constructorMap := make(map[string]*TLConstructor)
+	rtypeMap := make(map[string]string)
 
 	lines := strings.Split(tl, "\n")
 	for _, line := range lines {
@@ -194,7 +195,8 @@ func ParseTLLayer(tl string) *TLLayer {
 				if currLineType == LineConstructors {
 					constructor := (*TLConstructor)(tlline)
 					tlConstructors = append(tlConstructors, constructor)
-					typeMap[constructor.Predicate] = constructor
+					constructorMap[constructor.Predicate] = constructor
+					rtypeMap[constructor.Type] = constructor.Predicate
 				} else if currLineType == LineFunctions {
 					tlMethod := &TLMethod{
 						ID:     tlline.ID,
@@ -214,10 +216,12 @@ func ParseTLLayer(tl string) *TLLayer {
 	}
 
 	return &TLLayer{
-		Layer:   layer,
-		TypeMap: typeMap,
-		Schema:  schema,
-		Lines:   tllines,
+		Layer:              layer,
+		ConstructorMap:     constructorMap,
+		RTypeMap:           rtypeMap,
+		ExceptFiledTypeMap: map[string]string{},
+		Schema:             schema,
+		Lines:              tllines,
 	}
 }
 
@@ -253,4 +257,8 @@ func ParserEntry() {
 
 	layer.GenerateTLObjectClassConst()
 	layer.GenerateTLObjectAll()
+
+	// for k, _ := range layer.ExceptFiledTypeMap {
+	// 	Log.Debugf("except type : %v", k)
+	// }
 }

@@ -39,9 +39,12 @@ func convertDataType(in string) string {
 		return "int32"
 	case "double":
 		return "float64"
-	case "Bool":
-		return "bool"
-	default:
+	case "bytes":
+		return "int32"
+	case "int128",
+		"int256":
+		return "[]byte"
+	default: // including "!X"
 		return "TLObject"
 	}
 }
@@ -76,10 +79,10 @@ func convertDecodeField(param *TLParam) string {
 		fn = "dc.Bytes(16)"
 	case "int256":
 		fn = "dc.Bytes(32)"
-	case "Bool":
-		fn = "dc.Bool()"
+	case "bytes":
+		fn = "dc.Int()"
 	default:
-		fn = "dc.Bytes(16)"
+		fn = "dc.TLObject()"
 		// Log.Warnf("unknown param type = %v", tp)
 	}
 
@@ -110,12 +113,10 @@ func convertEncodeField(param *TLParam) string {
 		fn = "ec.Bytes(%s)"
 	case "int256":
 		fn = "ec.Bytes(%s)"
-	case "Bool":
-		fn = "ec.Bool(%s)"
-	// case "ipPort": //没有crc值
-	// fn = "ec.Bytes(%s)"
+	case "bytes":
+		fn = "ec.Int(%s)"
 	default:
-		fn = "ec.Bytes(%s)"
+		fn = "ec.TLObject(%s)"
 		// Log.Warnf("unknown param type = %v", tp)
 	}
 

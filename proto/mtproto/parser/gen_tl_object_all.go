@@ -23,6 +23,11 @@ func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
 		tp := convertDataType(p.Type)
 		s := fmt.Sprintf("%s %s\n", convertFieldName(name), tp)
 		res = res + s
+
+		_, ok := t.RTypeMap[p.Type]
+		if !ok {
+			t.ExceptFiledTypeMap[p.Type] = p.Type
+		}
 	}
 
 	return res

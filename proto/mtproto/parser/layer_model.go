@@ -1,11 +1,13 @@
 package parser
 
 type TLLayer struct {
-	Layer     string
-	TypeMap   map[string]*TLConstructor //
-	Schema    *TLSchema
-	Lines     []*TLLine
-	OutputDir string
+	Layer              string
+	ConstructorMap     map[string]*TLConstructor //
+	RTypeMap           map[string]string         //
+	ExceptFiledTypeMap map[string]string
+	Schema             *TLSchema
+	Lines              []*TLLine
+	OutputDir          string
 }
 
 type TLSchema struct {
