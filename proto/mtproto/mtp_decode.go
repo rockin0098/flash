@@ -305,29 +305,34 @@ func (m *MTPDecodeBuffer) Vector() []TLObject {
 }
 */
 
-func (m *MTPDecodeBuffer) TLObject() (r TLObject) {
+func (m *MTPDecodeBuffer) TLObjectClassID() int32 {
+	classID := m.Int()
+	if m.err != nil {
+		return 0
+	}
+
+	className := TL_CLASS_NAME[classID]
+	Log.Infof("TLObject, classID: %x, className: %v", uint32(classID), className)
+
+	return classID
+}
+
+func (m *MTPDecodeBuffer) TLObject() TLObject {
 	classID := m.Int()
 	if m.err != nil {
 		return nil
 	}
 
-	Log.Infof("TLObject, classID: %x", uint32(classID))
+	className := TL_CLASS_NAME[classID]
+	Log.Debugf("TLObject - classID: %x, className: %v", uint32(classID), className)
 
-	return &TLObjectClassID{
-		ClassID: classID,
+	tlo := NewTLObjectByClassID(classID)
+	if tlo == nil {
+		Log.Errorf("Can't find registed classID: %v", classID)
+		return nil
 	}
 
-	// r = NewTLObjectByClassID(classID)
-	// if r == nil {
-	// 	glog.Errorf("Can't find registed classId: %d", classID)
-	// 	return nil
-	// }
+	tlo.Decode(m.buffer[m.off:])
 
-	// glog.Infof("NewTLObjectByClassID, classID: %x", uint32(classID))
-
-	// err := r.(TLObject).Decode(m)
-	// if err != nil {
-	// 	glog.Error("Object(", classID, ") decode error: ", err, "")
-	// }
-	return nil
+	return tlo
 }

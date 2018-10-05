@@ -98,7 +98,8 @@ func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) st
 func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	tlname := strings.Replace(line.Predicate, ".", "_", -1)
-	objname := "TL_" + tlname
+	// objname := "TL_" + tlname
+	objname := convertTLObjectName(line.Predicate)
 
 	defstr := fmt.Sprintf(`
 		// %v#%v
@@ -109,7 +110,8 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	sgstr := t.generateOneTLObjectSetterGetter(objname, line.Params)
 
-	newfuncname := fmt.Sprintf("New_%v", objname)
+	// newfuncname := fmt.Sprintf("New_%v", objname)
+	newfuncname := convertNewTLFuncName(line.Predicate)
 	newfuncstr := fmt.Sprintf(`
 		func %v() *%v {
 			return &%v{}

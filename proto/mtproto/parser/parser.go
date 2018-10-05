@@ -257,6 +257,7 @@ func ParserEntry() {
 
 	layer.GenerateTLObjectClassConst()
 	layer.GenerateTLObjectAll()
+	layer.GenerateTLObjectClassMap()
 
 	// for k, _ := range layer.ExceptFiledTypeMap {
 	// 	Log.Debugf("except type : %v", k)

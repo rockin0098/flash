@@ -61,26 +61,19 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 	// m.authKeyId = dc.Long()
 	m.MessageID = dc.Long()
 
-	Log.Info("messageId:", m.MessageID)
-	Log.Infof("dc: buffer:%v, off:%v, size:%v, err:%v", hex.EncodeToString(dc.buffer), dc.off, dc.size, dc.err)
+	Log.Info("MessageID:", m.MessageID)
 
 	messageLen := dc.Int()
 	if messageLen < 4 {
 		return fmt.Errorf("message len(%d) < 4", messageLen)
 	}
-	// glog.Info("messageLen:", m.messageId)
 
 	if int(messageLen) != dc.size-12 {
 		return fmt.Errorf("message len: %d (need %d)", messageLen, dc.size-12)
 	}
 
 	m.TLObject = dc.TLObject()
-	// if m.TLObject == nil {
-	// 	return fmt.Errorf("decode object is nil")
-	// }
 
-	// proto.Message()
-	// glog.Info("Recved object: ", m.Object.(proto.Message).String())
 	return dc.err
 }
 

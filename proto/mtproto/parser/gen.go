@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"strings"
 
 	. "github.com/rockin0098/flash/base/logger"
 )
@@ -27,6 +28,18 @@ func convertCRC32(crc32 string) uint32 {
 	crc32int := binary.BigEndian.Uint32(idbytes)
 
 	return crc32int
+}
+
+func convertTLObjectName(in string) string {
+	tlname := strings.Replace(in, ".", "_", -1)
+	objname := "TL_" + tlname
+
+	return objname
+}
+
+func convertNewTLFuncName(in string) string {
+	tlobj := convertTLObjectName(in)
+	return "New_" + tlobj
 }
 
 func convertDataType(in string) string {
