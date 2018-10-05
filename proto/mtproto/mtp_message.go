@@ -117,7 +117,7 @@ func NewAesCTR128Stream(reader *bufio.Reader, writer io.Writer, d *crypto.AesCTR
 }
 
 func (this *AesCTR128Stream) Read(p []byte) (int, error) {
-	Log.Debug("entering...")
+	// Log.Debug("entering...")
 	n, err := this.reader.Read(p)
 	if err == nil {
 		this.decrypt.Encrypt(p[:n])

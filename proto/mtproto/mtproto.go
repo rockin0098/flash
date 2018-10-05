@@ -109,7 +109,7 @@ func (s *MTProto) Read() error {
 		Log.Errorf("peek b_0_1 error: %v", err)
 		return err
 	}
-	Log.Debug("b_0_1 : ", hex.EncodeToString(b_0_1))
+	// Log.Debug("b_0_1 : ", hex.EncodeToString(b_0_1))
 
 	if b_0_1[0] == MTPROTO_ABRIDGED_FLAG {
 		Log.Debug("mtproto abridged version.")
@@ -123,11 +123,11 @@ func (s *MTProto) Read() error {
 		Log.Errorf("peek b_1_3 error: %v", err)
 		return err
 	}
-	Log.Debug("1.b_1_3 : ", hex.EncodeToString(b_1_3))
+	// Log.Debug("1.b_1_3 : ", hex.EncodeToString(b_1_3))
 
 	b_1_3 = b_1_3[1:4]
 
-	Log.Debug("2.b_1_3 : ", hex.EncodeToString(b_1_3))
+	// Log.Debug("2.b_1_3 : ", hex.EncodeToString(b_1_3))
 
 	// first uint32
 	val := (uint32(b_1_3[2]) << 24) | (uint32(b_1_3[1]) << 16) | (uint32(b_1_3[0]) << 8) | (uint32(b_0_1[0]))
@@ -190,7 +190,7 @@ func (s *MTProto) Read() error {
 		return errors.New("mtproto buf[56:60]'s byte != 0xef!!")
 	}
 
-	Log.Info("first_bytes_64: ", hex.EncodeToString(b_0_1), hex.EncodeToString(b_1_3), hex.EncodeToString(b_4_60))
+	// Log.Info("first_bytes_64: ", hex.EncodeToString(b_0_1), hex.EncodeToString(b_1_3), hex.EncodeToString(b_4_60))
 	br.Discard(64)
 
 	return s.ReadMTProtoApp()
@@ -235,12 +235,12 @@ func (s *MTProto) ReadMTProtoApp() error {
 		return err
 	}
 
-	Log.Info("first_byte: ", hex.EncodeToString(b[:1]))
+	// Log.Info("first_byte: ", hex.EncodeToString(b[:1]))
 	needAck := bool(b[0]>>7 == 1)
 	_ = needAck
 
 	b[0] = b[0] & 0x7f
-	Log.Info("first_byte2: ", hex.EncodeToString(b[:1]))
+	// Log.Info("first_byte2: ", hex.EncodeToString(b[:1]))
 
 	if b[0] < 0x7f {
 		size = int(b[0]) << 2

@@ -7,6 +7,7 @@ import (
 	// . "github.com/rockin0098/flash/base/logger"
 )
 
+var m_class_id = "M_classID"
 var tlobject_output_file = "tl.object.all.go"
 var tlobject_template = `
 package mtproto
@@ -17,7 +18,7 @@ package mtproto
 
 func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
 
-	res := "_classID int32\n"
+	res := m_class_id + " int32\n"
 	for _, p := range params {
 		name := p.Name
 		tp := convertDataType(p.Type)
@@ -37,10 +38,10 @@ func (t *TLLayer) generateOneTLObjectSetterGetter(objName string, params []*TLPa
 
 	res := `
 		func (t *%v)ClassID() int32 {
-			return t._classID
+			return t.%v
 		}
 	`
-	res = fmt.Sprintf(res, objName)
+	res = fmt.Sprintf(res, objName, m_class_id)
 	for _, p := range params {
 		name := p.Name
 		fname := convertFieldName(name)
@@ -119,10 +120,10 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 	newfuncstr := fmt.Sprintf(`
 		func %v() *%v {
 			return &%v{
-				_classID: %v,
+				%v: %v,
 			}
 		}
-	`, newfuncname, objname, objname, "TL_CLASS_"+tlname)
+	`, newfuncname, objname, objname, m_class_id, "TL_CLASS_"+tlname)
 
 	encodestr := fmt.Sprintf(`
 		func (t *%v)Encode() []byte {

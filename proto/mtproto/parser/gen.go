@@ -10,7 +10,7 @@ import (
 )
 
 func convertFieldName(field string) string {
-	return "_" + field
+	return "M_" + field
 }
 
 func convertCRC32(crc32 string) uint32 {

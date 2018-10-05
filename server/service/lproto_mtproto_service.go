@@ -24,8 +24,6 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 			return nil, err
 		}
 
-		Log.Debugf("unencryptedMessage = %+v", unencryptedMessage)
-
 		return s.MTProtoUnencryptedMessageProcess(sess, unencryptedMessage)
 
 	} else { // 加密消息
@@ -43,15 +41,19 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("class type = %v", mtproto.TL_CLASS_NAME[tlobj.ClassID()])
+	Log.Debugf("class type = %v, reflect type = %T", mtproto.TL_CLASS_NAME[tlobj.ClassID()], tlobj)
+
+	var res interface{}
+	var err error
 
 	switch tl := tlobj.(type) {
-	case *mtproto.TL_resPQ:
+	case *mtproto.TL_req_pq:
+		res, err = s.TL_req_pq_Process(sess, tl)
 	default:
 		Log.Debugf("havent implemented yet, type = %v", mtproto.TL_CLASS_NAME[tl.ClassID()])
 	}
 
-	return nil, nil
+	return res, err
 }
 
 func (s *LProtoService) MTProtoEncryptedMessageProcess(sess *session.Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
