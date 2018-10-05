@@ -78,6 +78,11 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	grm.Go("tcp_write", func() {
 		for {
 			data := <-respChan
+			if data == nil { // 空数据则不处理
+				Log.Warnf("tcp write nil. sess = %+v", sess)
+				continue
+			}
+
 			databytes := data.([]byte)
 			nlen := len(databytes)
 			left := nlen

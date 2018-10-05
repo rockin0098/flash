@@ -243,6 +243,11 @@ func (m *MTPDecodeBuffer) VectorString() []string {
 	return x
 }
 
+func (m *MTPDecodeBuffer) VectorDouble() []float64 {
+	Log.Error("not implemented yet!")
+	return nil
+}
+
 func (m *MTPDecodeBuffer) Bool() bool {
 	constructor := m.Int()
 	if m.err != nil {
@@ -273,13 +278,13 @@ func (m *MTPDecodeBuffer) Bool() bool {
 // 	return nil
 // }
 
-/*
+// temporary, will use better function instead
 func (m *MTPDecodeBuffer) Vector() []TLObject {
 	constructor := m.Int()
 	if m.err != nil {
 		return nil
 	}
-	if constructor != int32(TLConstructor_CRC32_vector) {
+	if constructor != int32(TL_CLASS_vector) {
 		m.err = fmt.Errorf("DecodeVector: Wrong constructor (0x%08x)", constructor)
 		return nil
 	}
@@ -294,7 +299,7 @@ func (m *MTPDecodeBuffer) Vector() []TLObject {
 	x := make([]TLObject, size)
 	i := int32(0)
 	for i < size {
-		y := m.Object()
+		y := m.TLObject()
 		if m.err != nil {
 			return nil
 		}
@@ -303,7 +308,6 @@ func (m *MTPDecodeBuffer) Vector() []TLObject {
 	}
 	return x
 }
-*/
 
 func (m *MTPDecodeBuffer) TLObjectClassID() int32 {
 	classID := m.Int()

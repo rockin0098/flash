@@ -6,7 +6,7 @@ type TL_resPQ struct {
 	M_nonce                          []byte
 	M_server_nonce                   []byte
 	M_pq                             string
-	M_server_public_key_fingerprints TLObject
+	M_server_public_key_fingerprints []int64
 }
 
 func (t *TL_resPQ) ClassID() int32 {
@@ -37,11 +37,11 @@ func (t *TL_resPQ) Get_pq() string {
 	return t.M_pq
 }
 
-func (t *TL_resPQ) Set_server_public_key_fingerprints(M_server_public_key_fingerprints TLObject) {
+func (t *TL_resPQ) Set_server_public_key_fingerprints(M_server_public_key_fingerprints []int64) {
 	t.M_server_public_key_fingerprints = M_server_public_key_fingerprints
 }
 
-func (t *TL_resPQ) Get_server_public_key_fingerprints() TLObject {
+func (t *TL_resPQ) Get_server_public_key_fingerprints() []int64 {
 	return t.M_server_public_key_fingerprints
 }
 
@@ -58,7 +58,7 @@ func (t *TL_resPQ) Encode() []byte {
 	ec.Bytes(t.Get_nonce())
 	ec.Bytes(t.Get_server_nonce())
 	ec.String(t.Get_pq())
-	ec.TLObject(t.Get_server_public_key_fingerprints())
+	ec.VectorLong(t.Get_server_public_key_fingerprints())
 
 	return ec.GetBuffer()
 }
@@ -69,7 +69,7 @@ func (t *TL_resPQ) Decode(b []byte) {
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_pq = dc.String()
-	t.M_server_public_key_fingerprints = dc.TLObject()
+	t.M_server_public_key_fingerprints = dc.VectorLong()
 
 }
 
@@ -938,18 +938,18 @@ func (t *TL_destroy_auth_key) Decode(b []byte) {
 // msgs_ack#62d6b459
 type TL_msgs_ack struct {
 	M_classID int32
-	M_msg_ids TLObject
+	M_msg_ids []int64
 }
 
 func (t *TL_msgs_ack) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_msgs_ack) Set_msg_ids(M_msg_ids TLObject) {
+func (t *TL_msgs_ack) Set_msg_ids(M_msg_ids []int64) {
 	t.M_msg_ids = M_msg_ids
 }
 
-func (t *TL_msgs_ack) Get_msg_ids() TLObject {
+func (t *TL_msgs_ack) Get_msg_ids() []int64 {
 	return t.M_msg_ids
 }
 
@@ -963,7 +963,7 @@ func (t *TL_msgs_ack) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_msgs_ack))
-	ec.TLObject(t.Get_msg_ids())
+	ec.VectorLong(t.Get_msg_ids())
 
 	return ec.GetBuffer()
 }
@@ -971,7 +971,7 @@ func (t *TL_msgs_ack) Encode() []byte {
 func (t *TL_msgs_ack) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_msg_ids = dc.TLObject()
+	t.M_msg_ids = dc.VectorLong()
 
 }
 
@@ -1113,18 +1113,18 @@ func (t *TL_bad_server_salt) Decode(b []byte) {
 // msgs_state_req#da69fb52
 type TL_msgs_state_req struct {
 	M_classID int32
-	M_msg_ids TLObject
+	M_msg_ids []int64
 }
 
 func (t *TL_msgs_state_req) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_msgs_state_req) Set_msg_ids(M_msg_ids TLObject) {
+func (t *TL_msgs_state_req) Set_msg_ids(M_msg_ids []int64) {
 	t.M_msg_ids = M_msg_ids
 }
 
-func (t *TL_msgs_state_req) Get_msg_ids() TLObject {
+func (t *TL_msgs_state_req) Get_msg_ids() []int64 {
 	return t.M_msg_ids
 }
 
@@ -1138,7 +1138,7 @@ func (t *TL_msgs_state_req) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_msgs_state_req))
-	ec.TLObject(t.Get_msg_ids())
+	ec.VectorLong(t.Get_msg_ids())
 
 	return ec.GetBuffer()
 }
@@ -1146,7 +1146,7 @@ func (t *TL_msgs_state_req) Encode() []byte {
 func (t *TL_msgs_state_req) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_msg_ids = dc.TLObject()
+	t.M_msg_ids = dc.VectorLong()
 
 }
 
@@ -1204,7 +1204,7 @@ func (t *TL_msgs_state_info) Decode(b []byte) {
 // msgs_all_info#8cc0d131
 type TL_msgs_all_info struct {
 	M_classID int32
-	M_msg_ids TLObject
+	M_msg_ids []int64
 	M_info    string
 }
 
@@ -1212,11 +1212,11 @@ func (t *TL_msgs_all_info) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_msgs_all_info) Set_msg_ids(M_msg_ids TLObject) {
+func (t *TL_msgs_all_info) Set_msg_ids(M_msg_ids []int64) {
 	t.M_msg_ids = M_msg_ids
 }
 
-func (t *TL_msgs_all_info) Get_msg_ids() TLObject {
+func (t *TL_msgs_all_info) Get_msg_ids() []int64 {
 	return t.M_msg_ids
 }
 
@@ -1238,7 +1238,7 @@ func (t *TL_msgs_all_info) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_msgs_all_info))
-	ec.TLObject(t.Get_msg_ids())
+	ec.VectorLong(t.Get_msg_ids())
 	ec.String(t.Get_info())
 
 	return ec.GetBuffer()
@@ -1247,7 +1247,7 @@ func (t *TL_msgs_all_info) Encode() []byte {
 func (t *TL_msgs_all_info) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_msg_ids = dc.TLObject()
+	t.M_msg_ids = dc.VectorLong()
 	t.M_info = dc.String()
 
 }
@@ -1390,18 +1390,18 @@ func (t *TL_msg_new_detailed_info) Decode(b []byte) {
 // msg_resend_req#7d861a08
 type TL_msg_resend_req struct {
 	M_classID int32
-	M_msg_ids TLObject
+	M_msg_ids []int64
 }
 
 func (t *TL_msg_resend_req) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_msg_resend_req) Set_msg_ids(M_msg_ids TLObject) {
+func (t *TL_msg_resend_req) Set_msg_ids(M_msg_ids []int64) {
 	t.M_msg_ids = M_msg_ids
 }
 
-func (t *TL_msg_resend_req) Get_msg_ids() TLObject {
+func (t *TL_msg_resend_req) Get_msg_ids() []int64 {
 	return t.M_msg_ids
 }
 
@@ -1415,7 +1415,7 @@ func (t *TL_msg_resend_req) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_msg_resend_req))
-	ec.TLObject(t.Get_msg_ids())
+	ec.VectorLong(t.Get_msg_ids())
 
 	return ec.GetBuffer()
 }
@@ -1423,7 +1423,7 @@ func (t *TL_msg_resend_req) Encode() []byte {
 func (t *TL_msg_resend_req) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_msg_ids = dc.TLObject()
+	t.M_msg_ids = dc.VectorLong()
 
 }
 
@@ -1653,7 +1653,7 @@ type TL_future_salts struct {
 	M_classID    int32
 	M_req_msg_id int64
 	M_now        int32
-	M_salts      TLObject
+	M_salts      []TLObject
 }
 
 func (t *TL_future_salts) ClassID() int32 {
@@ -1676,11 +1676,11 @@ func (t *TL_future_salts) Get_now() int32 {
 	return t.M_now
 }
 
-func (t *TL_future_salts) Set_salts(M_salts TLObject) {
+func (t *TL_future_salts) Set_salts(M_salts []TLObject) {
 	t.M_salts = M_salts
 }
 
-func (t *TL_future_salts) Get_salts() TLObject {
+func (t *TL_future_salts) Get_salts() []TLObject {
 	return t.M_salts
 }
 
@@ -1696,7 +1696,7 @@ func (t *TL_future_salts) Encode() []byte {
 	ec.Int(int32(TL_CLASS_future_salts))
 	ec.Long(t.Get_req_msg_id())
 	ec.Int(t.Get_now())
-	ec.TLObject(t.Get_salts())
+	ec.Vector(t.Get_salts())
 
 	return ec.GetBuffer()
 }
@@ -1706,7 +1706,7 @@ func (t *TL_future_salts) Decode(b []byte) {
 
 	t.M_req_msg_id = dc.Long()
 	t.M_now = dc.Int()
-	t.M_salts = dc.TLObject()
+	t.M_salts = dc.Vector()
 
 }
 
@@ -2022,7 +2022,7 @@ type TL_help_configSimple struct {
 	M_date         int32
 	M_expires      int32
 	M_dc_id        int32
-	M_ip_port_list TLObject
+	M_ip_port_list []TLObject
 }
 
 func (t *TL_help_configSimple) ClassID() int32 {
@@ -2053,11 +2053,11 @@ func (t *TL_help_configSimple) Get_dc_id() int32 {
 	return t.M_dc_id
 }
 
-func (t *TL_help_configSimple) Set_ip_port_list(M_ip_port_list TLObject) {
+func (t *TL_help_configSimple) Set_ip_port_list(M_ip_port_list []TLObject) {
 	t.M_ip_port_list = M_ip_port_list
 }
 
-func (t *TL_help_configSimple) Get_ip_port_list() TLObject {
+func (t *TL_help_configSimple) Get_ip_port_list() []TLObject {
 	return t.M_ip_port_list
 }
 
@@ -2074,7 +2074,7 @@ func (t *TL_help_configSimple) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_expires())
 	ec.Int(t.Get_dc_id())
-	ec.TLObject(t.Get_ip_port_list())
+	ec.Vector(t.Get_ip_port_list())
 
 	return ec.GetBuffer()
 }
@@ -2085,7 +2085,7 @@ func (t *TL_help_configSimple) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_expires = dc.Int()
 	t.M_dc_id = dc.Int()
-	t.M_ip_port_list = dc.TLObject()
+	t.M_ip_port_list = dc.Vector()
 
 }
 
@@ -3072,7 +3072,7 @@ type TL_inputMediaUploadedPhoto struct {
 	M_flags       TLObject
 	M_file        TLObject
 	M_caption     string
-	M_stickers    TLObject
+	M_stickers    []TLObject
 	M_ttl_seconds TLObject
 }
 
@@ -3104,11 +3104,11 @@ func (t *TL_inputMediaUploadedPhoto) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_stickers(M_stickers TLObject) {
+func (t *TL_inputMediaUploadedPhoto) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_stickers() TLObject {
+func (t *TL_inputMediaUploadedPhoto) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -3132,7 +3132,7 @@ func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
 	ec.Int(int32(TL_CLASS_inputMediaUploadedPhoto))
 	ec.TLObject(t.Get_file())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_stickers())
 	ec.TLObject(t.Get_ttl_seconds())
 
 	return ec.GetBuffer()
@@ -3143,7 +3143,7 @@ func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) {
 
 	t.M_file = dc.TLObject()
 	t.M_caption = dc.String()
-	t.M_stickers = dc.TLObject()
+	t.M_stickers = dc.Vector()
 	t.M_ttl_seconds = dc.TLObject()
 
 }
@@ -3329,9 +3329,9 @@ type TL_inputMediaUploadedDocument struct {
 	M_file          TLObject
 	M_thumb         TLObject
 	M_mime_type     string
-	M_attributes    TLObject
+	M_attributes    []TLObject
 	M_caption       string
-	M_stickers      TLObject
+	M_stickers      []TLObject
 	M_ttl_seconds   TLObject
 }
 
@@ -3379,11 +3379,11 @@ func (t *TL_inputMediaUploadedDocument) Get_mime_type() string {
 	return t.M_mime_type
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_attributes(M_attributes TLObject) {
+func (t *TL_inputMediaUploadedDocument) Set_attributes(M_attributes []TLObject) {
 	t.M_attributes = M_attributes
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_attributes() TLObject {
+func (t *TL_inputMediaUploadedDocument) Get_attributes() []TLObject {
 	return t.M_attributes
 }
 
@@ -3395,11 +3395,11 @@ func (t *TL_inputMediaUploadedDocument) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_stickers(M_stickers TLObject) {
+func (t *TL_inputMediaUploadedDocument) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_stickers() TLObject {
+func (t *TL_inputMediaUploadedDocument) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -3425,9 +3425,9 @@ func (t *TL_inputMediaUploadedDocument) Encode() []byte {
 	ec.TLObject(t.Get_file())
 	ec.TLObject(t.Get_thumb())
 	ec.String(t.Get_mime_type())
-	ec.TLObject(t.Get_attributes())
+	ec.Vector(t.Get_attributes())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_stickers())
 	ec.TLObject(t.Get_ttl_seconds())
 
 	return ec.GetBuffer()
@@ -3440,9 +3440,9 @@ func (t *TL_inputMediaUploadedDocument) Decode(b []byte) {
 	t.M_file = dc.TLObject()
 	t.M_thumb = dc.TLObject()
 	t.M_mime_type = dc.String()
-	t.M_attributes = dc.TLObject()
+	t.M_attributes = dc.Vector()
 	t.M_caption = dc.String()
-	t.M_stickers = dc.TLObject()
+	t.M_stickers = dc.Vector()
 	t.M_ttl_seconds = dc.TLObject()
 
 }
@@ -3854,7 +3854,7 @@ type TL_inputMediaInvoice struct {
 	M_description   string
 	M_photo         TLObject
 	M_invoice       TLObject
-	M_payload       int32
+	M_payload       TLObject
 	M_provider      string
 	M_provider_data TLObject
 	M_start_param   string
@@ -3904,11 +3904,11 @@ func (t *TL_inputMediaInvoice) Get_invoice() TLObject {
 	return t.M_invoice
 }
 
-func (t *TL_inputMediaInvoice) Set_payload(M_payload int32) {
+func (t *TL_inputMediaInvoice) Set_payload(M_payload TLObject) {
 	t.M_payload = M_payload
 }
 
-func (t *TL_inputMediaInvoice) Get_payload() int32 {
+func (t *TL_inputMediaInvoice) Get_payload() TLObject {
 	return t.M_payload
 }
 
@@ -3950,7 +3950,7 @@ func (t *TL_inputMediaInvoice) Encode() []byte {
 	ec.String(t.Get_description())
 	ec.TLObject(t.Get_photo())
 	ec.TLObject(t.Get_invoice())
-	ec.Int(t.Get_payload())
+	ec.TLObject(t.Get_payload())
 	ec.String(t.Get_provider())
 	ec.TLObject(t.Get_provider_data())
 	ec.String(t.Get_start_param())
@@ -3965,7 +3965,7 @@ func (t *TL_inputMediaInvoice) Decode(b []byte) {
 	t.M_description = dc.String()
 	t.M_photo = dc.TLObject()
 	t.M_invoice = dc.TLObject()
-	t.M_payload = dc.Int()
+	t.M_payload = dc.TLObject()
 	t.M_provider = dc.String()
 	t.M_provider_data = dc.TLObject()
 	t.M_start_param = dc.String()
@@ -6248,7 +6248,7 @@ type TL_chatFull struct {
 	M_chat_photo      TLObject
 	M_notify_settings TLObject
 	M_exported_invite TLObject
-	M_bot_info        TLObject
+	M_bot_info        []TLObject
 }
 
 func (t *TL_chatFull) ClassID() int32 {
@@ -6295,11 +6295,11 @@ func (t *TL_chatFull) Get_exported_invite() TLObject {
 	return t.M_exported_invite
 }
 
-func (t *TL_chatFull) Set_bot_info(M_bot_info TLObject) {
+func (t *TL_chatFull) Set_bot_info(M_bot_info []TLObject) {
 	t.M_bot_info = M_bot_info
 }
 
-func (t *TL_chatFull) Get_bot_info() TLObject {
+func (t *TL_chatFull) Get_bot_info() []TLObject {
 	return t.M_bot_info
 }
 
@@ -6318,7 +6318,7 @@ func (t *TL_chatFull) Encode() []byte {
 	ec.TLObject(t.Get_chat_photo())
 	ec.TLObject(t.Get_notify_settings())
 	ec.TLObject(t.Get_exported_invite())
-	ec.TLObject(t.Get_bot_info())
+	ec.Vector(t.Get_bot_info())
 
 	return ec.GetBuffer()
 }
@@ -6331,7 +6331,7 @@ func (t *TL_chatFull) Decode(b []byte) {
 	t.M_chat_photo = dc.TLObject()
 	t.M_notify_settings = dc.TLObject()
 	t.M_exported_invite = dc.TLObject()
-	t.M_bot_info = dc.TLObject()
+	t.M_bot_info = dc.Vector()
 
 }
 
@@ -6355,7 +6355,7 @@ type TL_channelFull struct {
 	M_chat_photo            TLObject
 	M_notify_settings       TLObject
 	M_exported_invite       TLObject
-	M_bot_info              TLObject
+	M_bot_info              []TLObject
 	M_migrated_from_chat_id TLObject
 	M_migrated_from_max_id  TLObject
 	M_pinned_msg_id         TLObject
@@ -6503,11 +6503,11 @@ func (t *TL_channelFull) Get_exported_invite() TLObject {
 	return t.M_exported_invite
 }
 
-func (t *TL_channelFull) Set_bot_info(M_bot_info TLObject) {
+func (t *TL_channelFull) Set_bot_info(M_bot_info []TLObject) {
 	t.M_bot_info = M_bot_info
 }
 
-func (t *TL_channelFull) Get_bot_info() TLObject {
+func (t *TL_channelFull) Get_bot_info() []TLObject {
 	return t.M_bot_info
 }
 
@@ -6577,7 +6577,7 @@ func (t *TL_channelFull) Encode() []byte {
 	ec.TLObject(t.Get_chat_photo())
 	ec.TLObject(t.Get_notify_settings())
 	ec.TLObject(t.Get_exported_invite())
-	ec.TLObject(t.Get_bot_info())
+	ec.Vector(t.Get_bot_info())
 	ec.TLObject(t.Get_migrated_from_chat_id())
 	ec.TLObject(t.Get_migrated_from_max_id())
 	ec.TLObject(t.Get_pinned_msg_id())
@@ -6606,7 +6606,7 @@ func (t *TL_channelFull) Decode(b []byte) {
 	t.M_chat_photo = dc.TLObject()
 	t.M_notify_settings = dc.TLObject()
 	t.M_exported_invite = dc.TLObject()
-	t.M_bot_info = dc.TLObject()
+	t.M_bot_info = dc.Vector()
 	t.M_migrated_from_chat_id = dc.TLObject()
 	t.M_migrated_from_max_id = dc.TLObject()
 	t.M_pinned_msg_id = dc.TLObject()
@@ -6843,7 +6843,7 @@ func (t *TL_chatParticipantsForbidden) Decode(b []byte) {
 type TL_chatParticipants struct {
 	M_classID      int32
 	M_chat_id      int32
-	M_participants TLObject
+	M_participants []TLObject
 	M_version      int32
 }
 
@@ -6859,11 +6859,11 @@ func (t *TL_chatParticipants) Get_chat_id() int32 {
 	return t.M_chat_id
 }
 
-func (t *TL_chatParticipants) Set_participants(M_participants TLObject) {
+func (t *TL_chatParticipants) Set_participants(M_participants []TLObject) {
 	t.M_participants = M_participants
 }
 
-func (t *TL_chatParticipants) Get_participants() TLObject {
+func (t *TL_chatParticipants) Get_participants() []TLObject {
 	return t.M_participants
 }
 
@@ -6886,7 +6886,7 @@ func (t *TL_chatParticipants) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_chatParticipants))
 	ec.Int(t.Get_chat_id())
-	ec.TLObject(t.Get_participants())
+	ec.Vector(t.Get_participants())
 	ec.Int(t.Get_version())
 
 	return ec.GetBuffer()
@@ -6896,7 +6896,7 @@ func (t *TL_chatParticipants) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
-	t.M_participants = dc.TLObject()
+	t.M_participants = dc.Vector()
 	t.M_version = dc.Int()
 
 }
@@ -7034,7 +7034,7 @@ type TL_message struct {
 	M_message         string
 	M_media           TLObject
 	M_reply_markup    TLObject
-	M_entities        TLObject
+	M_entities        []TLObject
 	M_views           TLObject
 	M_edit_date       TLObject
 	M_post_author     TLObject
@@ -7173,11 +7173,11 @@ func (t *TL_message) Get_reply_markup() TLObject {
 	return t.M_reply_markup
 }
 
-func (t *TL_message) Set_entities(M_entities TLObject) {
+func (t *TL_message) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_message) Get_entities() TLObject {
+func (t *TL_message) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -7238,7 +7238,7 @@ func (t *TL_message) Encode() []byte {
 	ec.String(t.Get_message())
 	ec.TLObject(t.Get_media())
 	ec.TLObject(t.Get_reply_markup())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.TLObject(t.Get_views())
 	ec.TLObject(t.Get_edit_date())
 	ec.TLObject(t.Get_post_author())
@@ -7265,7 +7265,7 @@ func (t *TL_message) Decode(b []byte) {
 	t.M_message = dc.String()
 	t.M_media = dc.TLObject()
 	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_views = dc.TLObject()
 	t.M_edit_date = dc.TLObject()
 	t.M_post_author = dc.TLObject()
@@ -8123,7 +8123,7 @@ func (t *TL_messageActionEmpty) Decode(b []byte) {
 type TL_messageActionChatCreate struct {
 	M_classID int32
 	M_title   string
-	M_users   TLObject
+	M_users   []int32
 }
 
 func (t *TL_messageActionChatCreate) ClassID() int32 {
@@ -8138,11 +8138,11 @@ func (t *TL_messageActionChatCreate) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_messageActionChatCreate) Set_users(M_users TLObject) {
+func (t *TL_messageActionChatCreate) Set_users(M_users []int32) {
 	t.M_users = M_users
 }
 
-func (t *TL_messageActionChatCreate) Get_users() TLObject {
+func (t *TL_messageActionChatCreate) Get_users() []int32 {
 	return t.M_users
 }
 
@@ -8157,7 +8157,7 @@ func (t *TL_messageActionChatCreate) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messageActionChatCreate))
 	ec.String(t.Get_title())
-	ec.TLObject(t.Get_users())
+	ec.VectorInt(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -8166,7 +8166,7 @@ func (t *TL_messageActionChatCreate) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.VectorInt()
 
 }
 
@@ -8276,18 +8276,18 @@ func (t *TL_messageActionChatDeletePhoto) Decode(b []byte) {
 // messageActionChatAddUser#488a7337
 type TL_messageActionChatAddUser struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []int32
 }
 
 func (t *TL_messageActionChatAddUser) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageActionChatAddUser) Set_users(M_users TLObject) {
+func (t *TL_messageActionChatAddUser) Set_users(M_users []int32) {
 	t.M_users = M_users
 }
 
-func (t *TL_messageActionChatAddUser) Get_users() TLObject {
+func (t *TL_messageActionChatAddUser) Get_users() []int32 {
 	return t.M_users
 }
 
@@ -8301,7 +8301,7 @@ func (t *TL_messageActionChatAddUser) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messageActionChatAddUser))
-	ec.TLObject(t.Get_users())
+	ec.VectorInt(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -8309,7 +8309,7 @@ func (t *TL_messageActionChatAddUser) Encode() []byte {
 func (t *TL_messageActionChatAddUser) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.VectorInt()
 
 }
 
@@ -8627,7 +8627,7 @@ type TL_messageActionPaymentSentMe struct {
 	M_flags              TLObject
 	M_currency           string
 	M_total_amount       int64
-	M_payload            int32
+	M_payload            TLObject
 	M_info               TLObject
 	M_shipping_option_id TLObject
 	M_charge             TLObject
@@ -8661,11 +8661,11 @@ func (t *TL_messageActionPaymentSentMe) Get_total_amount() int64 {
 	return t.M_total_amount
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_payload(M_payload int32) {
+func (t *TL_messageActionPaymentSentMe) Set_payload(M_payload TLObject) {
 	t.M_payload = M_payload
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_payload() int32 {
+func (t *TL_messageActionPaymentSentMe) Get_payload() TLObject {
 	return t.M_payload
 }
 
@@ -8705,7 +8705,7 @@ func (t *TL_messageActionPaymentSentMe) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messageActionPaymentSentMe))
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
-	ec.Int(t.Get_payload())
+	ec.TLObject(t.Get_payload())
 	ec.TLObject(t.Get_info())
 	ec.TLObject(t.Get_shipping_option_id())
 	ec.TLObject(t.Get_charge())
@@ -8718,7 +8718,7 @@ func (t *TL_messageActionPaymentSentMe) Decode(b []byte) {
 
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
-	t.M_payload = dc.Int()
+	t.M_payload = dc.TLObject()
 	t.M_info = dc.TLObject()
 	t.M_shipping_option_id = dc.TLObject()
 	t.M_charge = dc.TLObject()
@@ -9106,7 +9106,7 @@ type TL_photo struct {
 	M_id           int64
 	M_access_hash  int64
 	M_date         int32
-	M_sizes        TLObject
+	M_sizes        []TLObject
 }
 
 func (t *TL_photo) ClassID() int32 {
@@ -9153,11 +9153,11 @@ func (t *TL_photo) Get_date() int32 {
 	return t.M_date
 }
 
-func (t *TL_photo) Set_sizes(M_sizes TLObject) {
+func (t *TL_photo) Set_sizes(M_sizes []TLObject) {
 	t.M_sizes = M_sizes
 }
 
-func (t *TL_photo) Get_sizes() TLObject {
+func (t *TL_photo) Get_sizes() []TLObject {
 	return t.M_sizes
 }
 
@@ -9175,7 +9175,7 @@ func (t *TL_photo) Encode() []byte {
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_sizes())
+	ec.Vector(t.Get_sizes())
 
 	return ec.GetBuffer()
 }
@@ -9187,7 +9187,7 @@ func (t *TL_photo) Decode(b []byte) {
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_date = dc.Int()
-	t.M_sizes = dc.TLObject()
+	t.M_sizes = dc.Vector()
 
 }
 
@@ -9322,7 +9322,7 @@ type TL_photoCachedSize struct {
 	M_location TLObject
 	M_w        int32
 	M_h        int32
-	M_bytes    int32
+	M_bytes    TLObject
 }
 
 func (t *TL_photoCachedSize) ClassID() int32 {
@@ -9361,11 +9361,11 @@ func (t *TL_photoCachedSize) Get_h() int32 {
 	return t.M_h
 }
 
-func (t *TL_photoCachedSize) Set_bytes(M_bytes int32) {
+func (t *TL_photoCachedSize) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_photoCachedSize) Get_bytes() int32 {
+func (t *TL_photoCachedSize) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -9383,7 +9383,7 @@ func (t *TL_photoCachedSize) Encode() []byte {
 	ec.TLObject(t.Get_location())
 	ec.Int(t.Get_w())
 	ec.Int(t.Get_h())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -9395,7 +9395,7 @@ func (t *TL_photoCachedSize) Decode(b []byte) {
 	t.M_location = dc.TLObject()
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -9670,7 +9670,7 @@ func (t *TL_auth_authorization) Decode(b []byte) {
 type TL_auth_exportedAuthorization struct {
 	M_classID int32
 	M_id      int32
-	M_bytes   int32
+	M_bytes   TLObject
 }
 
 func (t *TL_auth_exportedAuthorization) ClassID() int32 {
@@ -9685,11 +9685,11 @@ func (t *TL_auth_exportedAuthorization) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_auth_exportedAuthorization) Set_bytes(M_bytes int32) {
+func (t *TL_auth_exportedAuthorization) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_auth_exportedAuthorization) Get_bytes() int32 {
+func (t *TL_auth_exportedAuthorization) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -9704,7 +9704,7 @@ func (t *TL_auth_exportedAuthorization) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_auth_exportedAuthorization))
 	ec.Int(t.Get_id())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -9713,7 +9713,7 @@ func (t *TL_auth_exportedAuthorization) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -10159,7 +10159,7 @@ type TL_wallPaper struct {
 	M_classID int32
 	M_id      int32
 	M_title   string
-	M_sizes   TLObject
+	M_sizes   []TLObject
 	M_color   int32
 }
 
@@ -10183,11 +10183,11 @@ func (t *TL_wallPaper) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_wallPaper) Set_sizes(M_sizes TLObject) {
+func (t *TL_wallPaper) Set_sizes(M_sizes []TLObject) {
 	t.M_sizes = M_sizes
 }
 
-func (t *TL_wallPaper) Get_sizes() TLObject {
+func (t *TL_wallPaper) Get_sizes() []TLObject {
 	return t.M_sizes
 }
 
@@ -10211,7 +10211,7 @@ func (t *TL_wallPaper) Encode() []byte {
 	ec.Int(int32(TL_CLASS_wallPaper))
 	ec.Int(t.Get_id())
 	ec.String(t.Get_title())
-	ec.TLObject(t.Get_sizes())
+	ec.Vector(t.Get_sizes())
 	ec.Int(t.Get_color())
 
 	return ec.GetBuffer()
@@ -10222,7 +10222,7 @@ func (t *TL_wallPaper) Decode(b []byte) {
 
 	t.M_id = dc.Int()
 	t.M_title = dc.String()
-	t.M_sizes = dc.TLObject()
+	t.M_sizes = dc.Vector()
 	t.M_color = dc.Int()
 
 }
@@ -10849,20 +10849,20 @@ func (t *TL_contacts_contactsNotModified) Decode(b []byte) {
 // contacts_contacts#eae87e42
 type TL_contacts_contacts struct {
 	M_classID     int32
-	M_contacts    TLObject
+	M_contacts    []TLObject
 	M_saved_count int32
-	M_users       TLObject
+	M_users       []TLObject
 }
 
 func (t *TL_contacts_contacts) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_contacts) Set_contacts(M_contacts TLObject) {
+func (t *TL_contacts_contacts) Set_contacts(M_contacts []TLObject) {
 	t.M_contacts = M_contacts
 }
 
-func (t *TL_contacts_contacts) Get_contacts() TLObject {
+func (t *TL_contacts_contacts) Get_contacts() []TLObject {
 	return t.M_contacts
 }
 
@@ -10874,11 +10874,11 @@ func (t *TL_contacts_contacts) Get_saved_count() int32 {
 	return t.M_saved_count
 }
 
-func (t *TL_contacts_contacts) Set_users(M_users TLObject) {
+func (t *TL_contacts_contacts) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_contacts) Get_users() TLObject {
+func (t *TL_contacts_contacts) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -10892,9 +10892,9 @@ func (t *TL_contacts_contacts) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_contacts))
-	ec.TLObject(t.Get_contacts())
+	ec.Vector(t.Get_contacts())
 	ec.Int(t.Get_saved_count())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -10902,54 +10902,54 @@ func (t *TL_contacts_contacts) Encode() []byte {
 func (t *TL_contacts_contacts) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_contacts = dc.TLObject()
+	t.M_contacts = dc.Vector()
 	t.M_saved_count = dc.Int()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
 // contacts_importedContacts#77d01c3b
 type TL_contacts_importedContacts struct {
 	M_classID         int32
-	M_imported        TLObject
-	M_popular_invites TLObject
-	M_retry_contacts  TLObject
-	M_users           TLObject
+	M_imported        []TLObject
+	M_popular_invites []TLObject
+	M_retry_contacts  []int64
+	M_users           []TLObject
 }
 
 func (t *TL_contacts_importedContacts) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_importedContacts) Set_imported(M_imported TLObject) {
+func (t *TL_contacts_importedContacts) Set_imported(M_imported []TLObject) {
 	t.M_imported = M_imported
 }
 
-func (t *TL_contacts_importedContacts) Get_imported() TLObject {
+func (t *TL_contacts_importedContacts) Get_imported() []TLObject {
 	return t.M_imported
 }
 
-func (t *TL_contacts_importedContacts) Set_popular_invites(M_popular_invites TLObject) {
+func (t *TL_contacts_importedContacts) Set_popular_invites(M_popular_invites []TLObject) {
 	t.M_popular_invites = M_popular_invites
 }
 
-func (t *TL_contacts_importedContacts) Get_popular_invites() TLObject {
+func (t *TL_contacts_importedContacts) Get_popular_invites() []TLObject {
 	return t.M_popular_invites
 }
 
-func (t *TL_contacts_importedContacts) Set_retry_contacts(M_retry_contacts TLObject) {
+func (t *TL_contacts_importedContacts) Set_retry_contacts(M_retry_contacts []int64) {
 	t.M_retry_contacts = M_retry_contacts
 }
 
-func (t *TL_contacts_importedContacts) Get_retry_contacts() TLObject {
+func (t *TL_contacts_importedContacts) Get_retry_contacts() []int64 {
 	return t.M_retry_contacts
 }
 
-func (t *TL_contacts_importedContacts) Set_users(M_users TLObject) {
+func (t *TL_contacts_importedContacts) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_importedContacts) Get_users() TLObject {
+func (t *TL_contacts_importedContacts) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -10963,10 +10963,10 @@ func (t *TL_contacts_importedContacts) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_importedContacts))
-	ec.TLObject(t.Get_imported())
-	ec.TLObject(t.Get_popular_invites())
-	ec.TLObject(t.Get_retry_contacts())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_imported())
+	ec.Vector(t.Get_popular_invites())
+	ec.VectorLong(t.Get_retry_contacts())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -10974,37 +10974,37 @@ func (t *TL_contacts_importedContacts) Encode() []byte {
 func (t *TL_contacts_importedContacts) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_imported = dc.TLObject()
-	t.M_popular_invites = dc.TLObject()
-	t.M_retry_contacts = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_imported = dc.Vector()
+	t.M_popular_invites = dc.Vector()
+	t.M_retry_contacts = dc.VectorLong()
+	t.M_users = dc.Vector()
 
 }
 
 // contacts_blocked#1c138d15
 type TL_contacts_blocked struct {
 	M_classID int32
-	M_blocked TLObject
-	M_users   TLObject
+	M_blocked []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_contacts_blocked) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_blocked) Set_blocked(M_blocked TLObject) {
+func (t *TL_contacts_blocked) Set_blocked(M_blocked []TLObject) {
 	t.M_blocked = M_blocked
 }
 
-func (t *TL_contacts_blocked) Get_blocked() TLObject {
+func (t *TL_contacts_blocked) Get_blocked() []TLObject {
 	return t.M_blocked
 }
 
-func (t *TL_contacts_blocked) Set_users(M_users TLObject) {
+func (t *TL_contacts_blocked) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_blocked) Get_users() TLObject {
+func (t *TL_contacts_blocked) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11018,8 +11018,8 @@ func (t *TL_contacts_blocked) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_blocked))
-	ec.TLObject(t.Get_blocked())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_blocked())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11027,8 +11027,8 @@ func (t *TL_contacts_blocked) Encode() []byte {
 func (t *TL_contacts_blocked) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_blocked = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_blocked = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -11036,8 +11036,8 @@ func (t *TL_contacts_blocked) Decode(b []byte) {
 type TL_contacts_blockedSlice struct {
 	M_classID int32
 	M_count   int32
-	M_blocked TLObject
-	M_users   TLObject
+	M_blocked []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_contacts_blockedSlice) ClassID() int32 {
@@ -11052,19 +11052,19 @@ func (t *TL_contacts_blockedSlice) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_contacts_blockedSlice) Set_blocked(M_blocked TLObject) {
+func (t *TL_contacts_blockedSlice) Set_blocked(M_blocked []TLObject) {
 	t.M_blocked = M_blocked
 }
 
-func (t *TL_contacts_blockedSlice) Get_blocked() TLObject {
+func (t *TL_contacts_blockedSlice) Get_blocked() []TLObject {
 	return t.M_blocked
 }
 
-func (t *TL_contacts_blockedSlice) Set_users(M_users TLObject) {
+func (t *TL_contacts_blockedSlice) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_blockedSlice) Get_users() TLObject {
+func (t *TL_contacts_blockedSlice) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11079,8 +11079,8 @@ func (t *TL_contacts_blockedSlice) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_contacts_blockedSlice))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_blocked())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_blocked())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11089,53 +11089,53 @@ func (t *TL_contacts_blockedSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_blocked = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_blocked = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
 // messages_dialogs#15ba6c40
 type TL_messages_dialogs struct {
 	M_classID  int32
-	M_dialogs  TLObject
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_dialogs  []TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 }
 
 func (t *TL_messages_dialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_dialogs) Set_dialogs(M_dialogs TLObject) {
+func (t *TL_messages_dialogs) Set_dialogs(M_dialogs []TLObject) {
 	t.M_dialogs = M_dialogs
 }
 
-func (t *TL_messages_dialogs) Get_dialogs() TLObject {
+func (t *TL_messages_dialogs) Get_dialogs() []TLObject {
 	return t.M_dialogs
 }
 
-func (t *TL_messages_dialogs) Set_messages(M_messages TLObject) {
+func (t *TL_messages_dialogs) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_dialogs) Get_messages() TLObject {
+func (t *TL_messages_dialogs) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_dialogs) Set_chats(M_chats TLObject) {
+func (t *TL_messages_dialogs) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_dialogs) Get_chats() TLObject {
+func (t *TL_messages_dialogs) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_dialogs) Set_users(M_users TLObject) {
+func (t *TL_messages_dialogs) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_dialogs) Get_users() TLObject {
+func (t *TL_messages_dialogs) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11149,10 +11149,10 @@ func (t *TL_messages_dialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_dialogs))
-	ec.TLObject(t.Get_dialogs())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_dialogs())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11160,10 +11160,10 @@ func (t *TL_messages_dialogs) Encode() []byte {
 func (t *TL_messages_dialogs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_dialogs = dc.TLObject()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_dialogs = dc.Vector()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -11171,10 +11171,10 @@ func (t *TL_messages_dialogs) Decode(b []byte) {
 type TL_messages_dialogsSlice struct {
 	M_classID  int32
 	M_count    int32
-	M_dialogs  TLObject
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_dialogs  []TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 }
 
 func (t *TL_messages_dialogsSlice) ClassID() int32 {
@@ -11189,35 +11189,35 @@ func (t *TL_messages_dialogsSlice) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_messages_dialogsSlice) Set_dialogs(M_dialogs TLObject) {
+func (t *TL_messages_dialogsSlice) Set_dialogs(M_dialogs []TLObject) {
 	t.M_dialogs = M_dialogs
 }
 
-func (t *TL_messages_dialogsSlice) Get_dialogs() TLObject {
+func (t *TL_messages_dialogsSlice) Get_dialogs() []TLObject {
 	return t.M_dialogs
 }
 
-func (t *TL_messages_dialogsSlice) Set_messages(M_messages TLObject) {
+func (t *TL_messages_dialogsSlice) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_dialogsSlice) Get_messages() TLObject {
+func (t *TL_messages_dialogsSlice) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_dialogsSlice) Set_chats(M_chats TLObject) {
+func (t *TL_messages_dialogsSlice) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_dialogsSlice) Get_chats() TLObject {
+func (t *TL_messages_dialogsSlice) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_dialogsSlice) Set_users(M_users TLObject) {
+func (t *TL_messages_dialogsSlice) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_dialogsSlice) Get_users() TLObject {
+func (t *TL_messages_dialogsSlice) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11232,10 +11232,10 @@ func (t *TL_messages_dialogsSlice) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_dialogsSlice))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_dialogs())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_dialogs())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11244,46 +11244,46 @@ func (t *TL_messages_dialogsSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_dialogs = dc.TLObject()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_dialogs = dc.Vector()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
 // messages_messages#8c718e87
 type TL_messages_messages struct {
 	M_classID  int32
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 }
 
 func (t *TL_messages_messages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_messages) Set_messages(M_messages TLObject) {
+func (t *TL_messages_messages) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_messages) Get_messages() TLObject {
+func (t *TL_messages_messages) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_messages) Set_chats(M_chats TLObject) {
+func (t *TL_messages_messages) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_messages) Get_chats() TLObject {
+func (t *TL_messages_messages) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_messages) Set_users(M_users TLObject) {
+func (t *TL_messages_messages) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_messages) Get_users() TLObject {
+func (t *TL_messages_messages) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11297,9 +11297,9 @@ func (t *TL_messages_messages) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_messages))
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11307,9 +11307,9 @@ func (t *TL_messages_messages) Encode() []byte {
 func (t *TL_messages_messages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -11317,9 +11317,9 @@ func (t *TL_messages_messages) Decode(b []byte) {
 type TL_messages_messagesSlice struct {
 	M_classID  int32
 	M_count    int32
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 }
 
 func (t *TL_messages_messagesSlice) ClassID() int32 {
@@ -11334,27 +11334,27 @@ func (t *TL_messages_messagesSlice) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_messages_messagesSlice) Set_messages(M_messages TLObject) {
+func (t *TL_messages_messagesSlice) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_messagesSlice) Get_messages() TLObject {
+func (t *TL_messages_messagesSlice) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_messagesSlice) Set_chats(M_chats TLObject) {
+func (t *TL_messages_messagesSlice) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_messagesSlice) Get_chats() TLObject {
+func (t *TL_messages_messagesSlice) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_messagesSlice) Set_users(M_users TLObject) {
+func (t *TL_messages_messagesSlice) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_messagesSlice) Get_users() TLObject {
+func (t *TL_messages_messagesSlice) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11369,9 +11369,9 @@ func (t *TL_messages_messagesSlice) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_messagesSlice))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11380,9 +11380,9 @@ func (t *TL_messages_messagesSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -11392,9 +11392,9 @@ type TL_messages_channelMessages struct {
 	M_flags    TLObject
 	M_pts      int32
 	M_count    int32
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 }
 
 func (t *TL_messages_channelMessages) ClassID() int32 {
@@ -11425,27 +11425,27 @@ func (t *TL_messages_channelMessages) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_messages_channelMessages) Set_messages(M_messages TLObject) {
+func (t *TL_messages_channelMessages) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_channelMessages) Get_messages() TLObject {
+func (t *TL_messages_channelMessages) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_channelMessages) Set_chats(M_chats TLObject) {
+func (t *TL_messages_channelMessages) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_channelMessages) Get_chats() TLObject {
+func (t *TL_messages_channelMessages) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_channelMessages) Set_users(M_users TLObject) {
+func (t *TL_messages_channelMessages) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_channelMessages) Get_users() TLObject {
+func (t *TL_messages_channelMessages) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11461,9 +11461,9 @@ func (t *TL_messages_channelMessages) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_channelMessages))
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11473,9 +11473,9 @@ func (t *TL_messages_channelMessages) Decode(b []byte) {
 
 	t.M_pts = dc.Int()
 	t.M_count = dc.Int()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -11522,18 +11522,18 @@ func (t *TL_messages_messagesNotModified) Decode(b []byte) {
 // messages_chats#64ff9fd5
 type TL_messages_chats struct {
 	M_classID int32
-	M_chats   TLObject
+	M_chats   []TLObject
 }
 
 func (t *TL_messages_chats) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_chats) Set_chats(M_chats TLObject) {
+func (t *TL_messages_chats) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_chats) Get_chats() TLObject {
+func (t *TL_messages_chats) Get_chats() []TLObject {
 	return t.M_chats
 }
 
@@ -11547,7 +11547,7 @@ func (t *TL_messages_chats) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_chats))
-	ec.TLObject(t.Get_chats())
+	ec.Vector(t.Get_chats())
 
 	return ec.GetBuffer()
 }
@@ -11555,7 +11555,7 @@ func (t *TL_messages_chats) Encode() []byte {
 func (t *TL_messages_chats) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_chats = dc.TLObject()
+	t.M_chats = dc.Vector()
 
 }
 
@@ -11563,7 +11563,7 @@ func (t *TL_messages_chats) Decode(b []byte) {
 type TL_messages_chatsSlice struct {
 	M_classID int32
 	M_count   int32
-	M_chats   TLObject
+	M_chats   []TLObject
 }
 
 func (t *TL_messages_chatsSlice) ClassID() int32 {
@@ -11578,11 +11578,11 @@ func (t *TL_messages_chatsSlice) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_messages_chatsSlice) Set_chats(M_chats TLObject) {
+func (t *TL_messages_chatsSlice) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_chatsSlice) Get_chats() TLObject {
+func (t *TL_messages_chatsSlice) Get_chats() []TLObject {
 	return t.M_chats
 }
 
@@ -11597,7 +11597,7 @@ func (t *TL_messages_chatsSlice) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_chatsSlice))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_chats())
+	ec.Vector(t.Get_chats())
 
 	return ec.GetBuffer()
 }
@@ -11606,7 +11606,7 @@ func (t *TL_messages_chatsSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_chats = dc.TLObject()
+	t.M_chats = dc.Vector()
 
 }
 
@@ -11614,8 +11614,8 @@ func (t *TL_messages_chatsSlice) Decode(b []byte) {
 type TL_messages_chatFull struct {
 	M_classID   int32
 	M_full_chat TLObject
-	M_chats     TLObject
-	M_users     TLObject
+	M_chats     []TLObject
+	M_users     []TLObject
 }
 
 func (t *TL_messages_chatFull) ClassID() int32 {
@@ -11630,19 +11630,19 @@ func (t *TL_messages_chatFull) Get_full_chat() TLObject {
 	return t.M_full_chat
 }
 
-func (t *TL_messages_chatFull) Set_chats(M_chats TLObject) {
+func (t *TL_messages_chatFull) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_chatFull) Get_chats() TLObject {
+func (t *TL_messages_chatFull) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_chatFull) Set_users(M_users TLObject) {
+func (t *TL_messages_chatFull) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_chatFull) Get_users() TLObject {
+func (t *TL_messages_chatFull) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -11657,8 +11657,8 @@ func (t *TL_messages_chatFull) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_chatFull))
 	ec.TLObject(t.Get_full_chat())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -11667,8 +11667,8 @@ func (t *TL_messages_chatFull) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_full_chat = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -12244,7 +12244,7 @@ func (t *TL_updateMessageID) Decode(b []byte) {
 // updateDeleteMessages#a20db0e5
 type TL_updateDeleteMessages struct {
 	M_classID   int32
-	M_messages  TLObject
+	M_messages  []int32
 	M_pts       int32
 	M_pts_count int32
 }
@@ -12253,11 +12253,11 @@ func (t *TL_updateDeleteMessages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateDeleteMessages) Set_messages(M_messages TLObject) {
+func (t *TL_updateDeleteMessages) Set_messages(M_messages []int32) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_updateDeleteMessages) Get_messages() TLObject {
+func (t *TL_updateDeleteMessages) Get_messages() []int32 {
 	return t.M_messages
 }
 
@@ -12287,7 +12287,7 @@ func (t *TL_updateDeleteMessages) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updateDeleteMessages))
-	ec.TLObject(t.Get_messages())
+	ec.VectorInt(t.Get_messages())
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 
@@ -12297,7 +12297,7 @@ func (t *TL_updateDeleteMessages) Encode() []byte {
 func (t *TL_updateDeleteMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_messages = dc.TLObject()
+	t.M_messages = dc.VectorInt()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
@@ -13119,18 +13119,18 @@ func (t *TL_updateChatParticipantDelete) Decode(b []byte) {
 // updateDcOptions#8e5e9873
 type TL_updateDcOptions struct {
 	M_classID    int32
-	M_dc_options TLObject
+	M_dc_options []TLObject
 }
 
 func (t *TL_updateDcOptions) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateDcOptions) Set_dc_options(M_dc_options TLObject) {
+func (t *TL_updateDcOptions) Set_dc_options(M_dc_options []TLObject) {
 	t.M_dc_options = M_dc_options
 }
 
-func (t *TL_updateDcOptions) Get_dc_options() TLObject {
+func (t *TL_updateDcOptions) Get_dc_options() []TLObject {
 	return t.M_dc_options
 }
 
@@ -13144,7 +13144,7 @@ func (t *TL_updateDcOptions) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updateDcOptions))
-	ec.TLObject(t.Get_dc_options())
+	ec.Vector(t.Get_dc_options())
 
 	return ec.GetBuffer()
 }
@@ -13152,7 +13152,7 @@ func (t *TL_updateDcOptions) Encode() []byte {
 func (t *TL_updateDcOptions) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_dc_options = dc.TLObject()
+	t.M_dc_options = dc.Vector()
 
 }
 
@@ -13267,7 +13267,7 @@ type TL_updateServiceNotification struct {
 	M_type       string
 	M_message    string
 	M_media      TLObject
-	M_entities   TLObject
+	M_entities   []TLObject
 }
 
 func (t *TL_updateServiceNotification) ClassID() int32 {
@@ -13322,11 +13322,11 @@ func (t *TL_updateServiceNotification) Get_media() TLObject {
 	return t.M_media
 }
 
-func (t *TL_updateServiceNotification) Set_entities(M_entities TLObject) {
+func (t *TL_updateServiceNotification) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_updateServiceNotification) Get_entities() TLObject {
+func (t *TL_updateServiceNotification) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -13345,7 +13345,7 @@ func (t *TL_updateServiceNotification) Encode() []byte {
 	ec.String(t.Get_type())
 	ec.String(t.Get_message())
 	ec.TLObject(t.Get_media())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -13358,7 +13358,7 @@ func (t *TL_updateServiceNotification) Decode(b []byte) {
 	t.M_type = dc.String()
 	t.M_message = dc.String()
 	t.M_media = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
@@ -13366,7 +13366,7 @@ func (t *TL_updateServiceNotification) Decode(b []byte) {
 type TL_updatePrivacy struct {
 	M_classID int32
 	M_key     TLObject
-	M_rules   TLObject
+	M_rules   []TLObject
 }
 
 func (t *TL_updatePrivacy) ClassID() int32 {
@@ -13381,11 +13381,11 @@ func (t *TL_updatePrivacy) Get_key() TLObject {
 	return t.M_key
 }
 
-func (t *TL_updatePrivacy) Set_rules(M_rules TLObject) {
+func (t *TL_updatePrivacy) Set_rules(M_rules []TLObject) {
 	t.M_rules = M_rules
 }
 
-func (t *TL_updatePrivacy) Get_rules() TLObject {
+func (t *TL_updatePrivacy) Get_rules() []TLObject {
 	return t.M_rules
 }
 
@@ -13400,7 +13400,7 @@ func (t *TL_updatePrivacy) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_updatePrivacy))
 	ec.TLObject(t.Get_key())
-	ec.TLObject(t.Get_rules())
+	ec.Vector(t.Get_rules())
 
 	return ec.GetBuffer()
 }
@@ -13409,7 +13409,7 @@ func (t *TL_updatePrivacy) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.TLObject()
-	t.M_rules = dc.TLObject()
+	t.M_rules = dc.Vector()
 
 }
 
@@ -13675,7 +13675,7 @@ func (t *TL_updateWebPage) Decode(b []byte) {
 // updateReadMessagesContents#68c13933
 type TL_updateReadMessagesContents struct {
 	M_classID   int32
-	M_messages  TLObject
+	M_messages  []int32
 	M_pts       int32
 	M_pts_count int32
 }
@@ -13684,11 +13684,11 @@ func (t *TL_updateReadMessagesContents) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateReadMessagesContents) Set_messages(M_messages TLObject) {
+func (t *TL_updateReadMessagesContents) Set_messages(M_messages []int32) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_updateReadMessagesContents) Get_messages() TLObject {
+func (t *TL_updateReadMessagesContents) Get_messages() []int32 {
 	return t.M_messages
 }
 
@@ -13718,7 +13718,7 @@ func (t *TL_updateReadMessagesContents) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updateReadMessagesContents))
-	ec.TLObject(t.Get_messages())
+	ec.VectorInt(t.Get_messages())
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 
@@ -13728,7 +13728,7 @@ func (t *TL_updateReadMessagesContents) Encode() []byte {
 func (t *TL_updateReadMessagesContents) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_messages = dc.TLObject()
+	t.M_messages = dc.VectorInt()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
@@ -13951,7 +13951,7 @@ func (t *TL_updateReadChannelInbox) Decode(b []byte) {
 type TL_updateDeleteChannelMessages struct {
 	M_classID    int32
 	M_channel_id int32
-	M_messages   TLObject
+	M_messages   []int32
 	M_pts        int32
 	M_pts_count  int32
 }
@@ -13968,11 +13968,11 @@ func (t *TL_updateDeleteChannelMessages) Get_channel_id() int32 {
 	return t.M_channel_id
 }
 
-func (t *TL_updateDeleteChannelMessages) Set_messages(M_messages TLObject) {
+func (t *TL_updateDeleteChannelMessages) Set_messages(M_messages []int32) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_updateDeleteChannelMessages) Get_messages() TLObject {
+func (t *TL_updateDeleteChannelMessages) Get_messages() []int32 {
 	return t.M_messages
 }
 
@@ -14003,7 +14003,7 @@ func (t *TL_updateDeleteChannelMessages) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_updateDeleteChannelMessages))
 	ec.Int(t.Get_channel_id())
-	ec.TLObject(t.Get_messages())
+	ec.VectorInt(t.Get_messages())
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 
@@ -14014,7 +14014,7 @@ func (t *TL_updateDeleteChannelMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
-	t.M_messages = dc.TLObject()
+	t.M_messages = dc.VectorInt()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
@@ -14262,7 +14262,7 @@ type TL_updateStickerSetsOrder struct {
 	M_classID int32
 	M_flags   TLObject
 	M_masks   TLObject
-	M_order   TLObject
+	M_order   []int64
 }
 
 func (t *TL_updateStickerSetsOrder) ClassID() int32 {
@@ -14285,11 +14285,11 @@ func (t *TL_updateStickerSetsOrder) Get_masks() TLObject {
 	return t.M_masks
 }
 
-func (t *TL_updateStickerSetsOrder) Set_order(M_order TLObject) {
+func (t *TL_updateStickerSetsOrder) Set_order(M_order []int64) {
 	t.M_order = M_order
 }
 
-func (t *TL_updateStickerSetsOrder) Get_order() TLObject {
+func (t *TL_updateStickerSetsOrder) Get_order() []int64 {
 	return t.M_order
 }
 
@@ -14304,7 +14304,7 @@ func (t *TL_updateStickerSetsOrder) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_updateStickerSetsOrder))
 	ec.TLObject(t.Get_masks())
-	ec.TLObject(t.Get_order())
+	ec.VectorLong(t.Get_order())
 
 	return ec.GetBuffer()
 }
@@ -14313,7 +14313,7 @@ func (t *TL_updateStickerSetsOrder) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
-	t.M_order = dc.TLObject()
+	t.M_order = dc.VectorLong()
 
 }
 
@@ -15274,7 +15274,7 @@ func (t *TL_updateDialogPinned) Decode(b []byte) {
 type TL_updatePinnedDialogs struct {
 	M_classID int32
 	M_flags   TLObject
-	M_order   TLObject
+	M_order   []TLObject
 }
 
 func (t *TL_updatePinnedDialogs) ClassID() int32 {
@@ -15289,11 +15289,11 @@ func (t *TL_updatePinnedDialogs) Get_flags() TLObject {
 	return t.M_flags
 }
 
-func (t *TL_updatePinnedDialogs) Set_order(M_order TLObject) {
+func (t *TL_updatePinnedDialogs) Set_order(M_order []TLObject) {
 	t.M_order = M_order
 }
 
-func (t *TL_updatePinnedDialogs) Get_order() TLObject {
+func (t *TL_updatePinnedDialogs) Get_order() []TLObject {
 	return t.M_order
 }
 
@@ -15307,7 +15307,7 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updatePinnedDialogs))
-	ec.TLObject(t.Get_order())
+	ec.Vector(t.Get_order())
 
 	return ec.GetBuffer()
 }
@@ -15315,7 +15315,7 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 func (t *TL_updatePinnedDialogs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_order = dc.TLObject()
+	t.M_order = dc.Vector()
 
 }
 
@@ -15426,7 +15426,7 @@ type TL_updateBotShippingQuery struct {
 	M_classID          int32
 	M_query_id         int64
 	M_user_id          int32
-	M_payload          int32
+	M_payload          TLObject
 	M_shipping_address TLObject
 }
 
@@ -15450,11 +15450,11 @@ func (t *TL_updateBotShippingQuery) Get_user_id() int32 {
 	return t.M_user_id
 }
 
-func (t *TL_updateBotShippingQuery) Set_payload(M_payload int32) {
+func (t *TL_updateBotShippingQuery) Set_payload(M_payload TLObject) {
 	t.M_payload = M_payload
 }
 
-func (t *TL_updateBotShippingQuery) Get_payload() int32 {
+func (t *TL_updateBotShippingQuery) Get_payload() TLObject {
 	return t.M_payload
 }
 
@@ -15478,7 +15478,7 @@ func (t *TL_updateBotShippingQuery) Encode() []byte {
 	ec.Int(int32(TL_CLASS_updateBotShippingQuery))
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
-	ec.Int(t.Get_payload())
+	ec.TLObject(t.Get_payload())
 	ec.TLObject(t.Get_shipping_address())
 
 	return ec.GetBuffer()
@@ -15489,7 +15489,7 @@ func (t *TL_updateBotShippingQuery) Decode(b []byte) {
 
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
-	t.M_payload = dc.Int()
+	t.M_payload = dc.TLObject()
 	t.M_shipping_address = dc.TLObject()
 
 }
@@ -15500,7 +15500,7 @@ type TL_updateBotPrecheckoutQuery struct {
 	M_flags              TLObject
 	M_query_id           int64
 	M_user_id            int32
-	M_payload            int32
+	M_payload            TLObject
 	M_info               TLObject
 	M_shipping_option_id TLObject
 	M_currency           string
@@ -15535,11 +15535,11 @@ func (t *TL_updateBotPrecheckoutQuery) Get_user_id() int32 {
 	return t.M_user_id
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_payload(M_payload int32) {
+func (t *TL_updateBotPrecheckoutQuery) Set_payload(M_payload TLObject) {
 	t.M_payload = M_payload
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_payload() int32 {
+func (t *TL_updateBotPrecheckoutQuery) Get_payload() TLObject {
 	return t.M_payload
 }
 
@@ -15587,7 +15587,7 @@ func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
 	ec.Int(int32(TL_CLASS_updateBotPrecheckoutQuery))
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
-	ec.Int(t.Get_payload())
+	ec.TLObject(t.Get_payload())
 	ec.TLObject(t.Get_info())
 	ec.TLObject(t.Get_shipping_option_id())
 	ec.String(t.Get_currency())
@@ -15601,7 +15601,7 @@ func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) {
 
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
-	t.M_payload = dc.Int()
+	t.M_payload = dc.TLObject()
 	t.M_info = dc.TLObject()
 	t.M_shipping_option_id = dc.TLObject()
 	t.M_currency = dc.String()
@@ -15739,7 +15739,7 @@ func (t *TL_updateFavedStickers) Decode(b []byte) {
 type TL_updateChannelReadMessagesContents struct {
 	M_classID    int32
 	M_channel_id int32
-	M_messages   TLObject
+	M_messages   []int32
 }
 
 func (t *TL_updateChannelReadMessagesContents) ClassID() int32 {
@@ -15754,11 +15754,11 @@ func (t *TL_updateChannelReadMessagesContents) Get_channel_id() int32 {
 	return t.M_channel_id
 }
 
-func (t *TL_updateChannelReadMessagesContents) Set_messages(M_messages TLObject) {
+func (t *TL_updateChannelReadMessagesContents) Set_messages(M_messages []int32) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_updateChannelReadMessagesContents) Get_messages() TLObject {
+func (t *TL_updateChannelReadMessagesContents) Get_messages() []int32 {
 	return t.M_messages
 }
 
@@ -15773,7 +15773,7 @@ func (t *TL_updateChannelReadMessagesContents) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_updateChannelReadMessagesContents))
 	ec.Int(t.Get_channel_id())
-	ec.TLObject(t.Get_messages())
+	ec.VectorInt(t.Get_messages())
 
 	return ec.GetBuffer()
 }
@@ -15782,7 +15782,7 @@ func (t *TL_updateChannelReadMessagesContents) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
-	t.M_messages = dc.TLObject()
+	t.M_messages = dc.VectorInt()
 
 }
 
@@ -15998,11 +15998,11 @@ func (t *TL_updates_differenceEmpty) Decode(b []byte) {
 // updates_difference#f49ca0
 type TL_updates_difference struct {
 	M_classID                int32
-	M_new_messages           TLObject
-	M_new_encrypted_messages TLObject
-	M_other_updates          TLObject
-	M_chats                  TLObject
-	M_users                  TLObject
+	M_new_messages           []TLObject
+	M_new_encrypted_messages []TLObject
+	M_other_updates          []TLObject
+	M_chats                  []TLObject
+	M_users                  []TLObject
 	M_state                  TLObject
 }
 
@@ -16010,43 +16010,43 @@ func (t *TL_updates_difference) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_difference) Set_new_messages(M_new_messages TLObject) {
+func (t *TL_updates_difference) Set_new_messages(M_new_messages []TLObject) {
 	t.M_new_messages = M_new_messages
 }
 
-func (t *TL_updates_difference) Get_new_messages() TLObject {
+func (t *TL_updates_difference) Get_new_messages() []TLObject {
 	return t.M_new_messages
 }
 
-func (t *TL_updates_difference) Set_new_encrypted_messages(M_new_encrypted_messages TLObject) {
+func (t *TL_updates_difference) Set_new_encrypted_messages(M_new_encrypted_messages []TLObject) {
 	t.M_new_encrypted_messages = M_new_encrypted_messages
 }
 
-func (t *TL_updates_difference) Get_new_encrypted_messages() TLObject {
+func (t *TL_updates_difference) Get_new_encrypted_messages() []TLObject {
 	return t.M_new_encrypted_messages
 }
 
-func (t *TL_updates_difference) Set_other_updates(M_other_updates TLObject) {
+func (t *TL_updates_difference) Set_other_updates(M_other_updates []TLObject) {
 	t.M_other_updates = M_other_updates
 }
 
-func (t *TL_updates_difference) Get_other_updates() TLObject {
+func (t *TL_updates_difference) Get_other_updates() []TLObject {
 	return t.M_other_updates
 }
 
-func (t *TL_updates_difference) Set_chats(M_chats TLObject) {
+func (t *TL_updates_difference) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updates_difference) Get_chats() TLObject {
+func (t *TL_updates_difference) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_updates_difference) Set_users(M_users TLObject) {
+func (t *TL_updates_difference) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updates_difference) Get_users() TLObject {
+func (t *TL_updates_difference) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -16068,11 +16068,11 @@ func (t *TL_updates_difference) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updates_difference))
-	ec.TLObject(t.Get_new_messages())
-	ec.TLObject(t.Get_new_encrypted_messages())
-	ec.TLObject(t.Get_other_updates())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_new_messages())
+	ec.Vector(t.Get_new_encrypted_messages())
+	ec.Vector(t.Get_other_updates())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 	ec.TLObject(t.Get_state())
 
 	return ec.GetBuffer()
@@ -16081,11 +16081,11 @@ func (t *TL_updates_difference) Encode() []byte {
 func (t *TL_updates_difference) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_new_messages = dc.TLObject()
-	t.M_new_encrypted_messages = dc.TLObject()
-	t.M_other_updates = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_new_messages = dc.Vector()
+	t.M_new_encrypted_messages = dc.Vector()
+	t.M_other_updates = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 	t.M_state = dc.TLObject()
 
 }
@@ -16093,11 +16093,11 @@ func (t *TL_updates_difference) Decode(b []byte) {
 // updates_differenceSlice#a8fb1981
 type TL_updates_differenceSlice struct {
 	M_classID                int32
-	M_new_messages           TLObject
-	M_new_encrypted_messages TLObject
-	M_other_updates          TLObject
-	M_chats                  TLObject
-	M_users                  TLObject
+	M_new_messages           []TLObject
+	M_new_encrypted_messages []TLObject
+	M_other_updates          []TLObject
+	M_chats                  []TLObject
+	M_users                  []TLObject
 	M_intermediate_state     TLObject
 }
 
@@ -16105,43 +16105,43 @@ func (t *TL_updates_differenceSlice) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_differenceSlice) Set_new_messages(M_new_messages TLObject) {
+func (t *TL_updates_differenceSlice) Set_new_messages(M_new_messages []TLObject) {
 	t.M_new_messages = M_new_messages
 }
 
-func (t *TL_updates_differenceSlice) Get_new_messages() TLObject {
+func (t *TL_updates_differenceSlice) Get_new_messages() []TLObject {
 	return t.M_new_messages
 }
 
-func (t *TL_updates_differenceSlice) Set_new_encrypted_messages(M_new_encrypted_messages TLObject) {
+func (t *TL_updates_differenceSlice) Set_new_encrypted_messages(M_new_encrypted_messages []TLObject) {
 	t.M_new_encrypted_messages = M_new_encrypted_messages
 }
 
-func (t *TL_updates_differenceSlice) Get_new_encrypted_messages() TLObject {
+func (t *TL_updates_differenceSlice) Get_new_encrypted_messages() []TLObject {
 	return t.M_new_encrypted_messages
 }
 
-func (t *TL_updates_differenceSlice) Set_other_updates(M_other_updates TLObject) {
+func (t *TL_updates_differenceSlice) Set_other_updates(M_other_updates []TLObject) {
 	t.M_other_updates = M_other_updates
 }
 
-func (t *TL_updates_differenceSlice) Get_other_updates() TLObject {
+func (t *TL_updates_differenceSlice) Get_other_updates() []TLObject {
 	return t.M_other_updates
 }
 
-func (t *TL_updates_differenceSlice) Set_chats(M_chats TLObject) {
+func (t *TL_updates_differenceSlice) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updates_differenceSlice) Get_chats() TLObject {
+func (t *TL_updates_differenceSlice) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_updates_differenceSlice) Set_users(M_users TLObject) {
+func (t *TL_updates_differenceSlice) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updates_differenceSlice) Get_users() TLObject {
+func (t *TL_updates_differenceSlice) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -16163,11 +16163,11 @@ func (t *TL_updates_differenceSlice) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updates_differenceSlice))
-	ec.TLObject(t.Get_new_messages())
-	ec.TLObject(t.Get_new_encrypted_messages())
-	ec.TLObject(t.Get_other_updates())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_new_messages())
+	ec.Vector(t.Get_new_encrypted_messages())
+	ec.Vector(t.Get_other_updates())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 	ec.TLObject(t.Get_intermediate_state())
 
 	return ec.GetBuffer()
@@ -16176,11 +16176,11 @@ func (t *TL_updates_differenceSlice) Encode() []byte {
 func (t *TL_updates_differenceSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_new_messages = dc.TLObject()
-	t.M_new_encrypted_messages = dc.TLObject()
-	t.M_other_updates = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_new_messages = dc.Vector()
+	t.M_new_encrypted_messages = dc.Vector()
+	t.M_other_updates = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 	t.M_intermediate_state = dc.TLObject()
 
 }
@@ -16265,7 +16265,7 @@ type TL_updateShortMessage struct {
 	M_fwd_from        TLObject
 	M_via_bot_id      TLObject
 	M_reply_to_msg_id TLObject
-	M_entities        TLObject
+	M_entities        []TLObject
 }
 
 func (t *TL_updateShortMessage) ClassID() int32 {
@@ -16384,11 +16384,11 @@ func (t *TL_updateShortMessage) Get_reply_to_msg_id() TLObject {
 	return t.M_reply_to_msg_id
 }
 
-func (t *TL_updateShortMessage) Set_entities(M_entities TLObject) {
+func (t *TL_updateShortMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_updateShortMessage) Get_entities() TLObject {
+func (t *TL_updateShortMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -16415,7 +16415,7 @@ func (t *TL_updateShortMessage) Encode() []byte {
 	ec.TLObject(t.Get_fwd_from())
 	ec.TLObject(t.Get_via_bot_id())
 	ec.TLObject(t.Get_reply_to_msg_id())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -16436,7 +16436,7 @@ func (t *TL_updateShortMessage) Decode(b []byte) {
 	t.M_fwd_from = dc.TLObject()
 	t.M_via_bot_id = dc.TLObject()
 	t.M_reply_to_msg_id = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
@@ -16458,7 +16458,7 @@ type TL_updateShortChatMessage struct {
 	M_fwd_from        TLObject
 	M_via_bot_id      TLObject
 	M_reply_to_msg_id TLObject
-	M_entities        TLObject
+	M_entities        []TLObject
 }
 
 func (t *TL_updateShortChatMessage) ClassID() int32 {
@@ -16585,11 +16585,11 @@ func (t *TL_updateShortChatMessage) Get_reply_to_msg_id() TLObject {
 	return t.M_reply_to_msg_id
 }
 
-func (t *TL_updateShortChatMessage) Set_entities(M_entities TLObject) {
+func (t *TL_updateShortChatMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_updateShortChatMessage) Get_entities() TLObject {
+func (t *TL_updateShortChatMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -16617,7 +16617,7 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 	ec.TLObject(t.Get_fwd_from())
 	ec.TLObject(t.Get_via_bot_id())
 	ec.TLObject(t.Get_reply_to_msg_id())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -16639,7 +16639,7 @@ func (t *TL_updateShortChatMessage) Decode(b []byte) {
 	t.M_fwd_from = dc.TLObject()
 	t.M_via_bot_id = dc.TLObject()
 	t.M_reply_to_msg_id = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
@@ -16697,9 +16697,9 @@ func (t *TL_updateShort) Decode(b []byte) {
 // updatesCombined#725b04c3
 type TL_updatesCombined struct {
 	M_classID   int32
-	M_updates   TLObject
-	M_users     TLObject
-	M_chats     TLObject
+	M_updates   []TLObject
+	M_users     []TLObject
+	M_chats     []TLObject
 	M_date      int32
 	M_seq_start int32
 	M_seq       int32
@@ -16709,27 +16709,27 @@ func (t *TL_updatesCombined) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updatesCombined) Set_updates(M_updates TLObject) {
+func (t *TL_updatesCombined) Set_updates(M_updates []TLObject) {
 	t.M_updates = M_updates
 }
 
-func (t *TL_updatesCombined) Get_updates() TLObject {
+func (t *TL_updatesCombined) Get_updates() []TLObject {
 	return t.M_updates
 }
 
-func (t *TL_updatesCombined) Set_users(M_users TLObject) {
+func (t *TL_updatesCombined) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updatesCombined) Get_users() TLObject {
+func (t *TL_updatesCombined) Get_users() []TLObject {
 	return t.M_users
 }
 
-func (t *TL_updatesCombined) Set_chats(M_chats TLObject) {
+func (t *TL_updatesCombined) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updatesCombined) Get_chats() TLObject {
+func (t *TL_updatesCombined) Get_chats() []TLObject {
 	return t.M_chats
 }
 
@@ -16767,9 +16767,9 @@ func (t *TL_updatesCombined) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updatesCombined))
-	ec.TLObject(t.Get_updates())
-	ec.TLObject(t.Get_users())
-	ec.TLObject(t.Get_chats())
+	ec.Vector(t.Get_updates())
+	ec.Vector(t.Get_users())
+	ec.Vector(t.Get_chats())
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_seq_start())
 	ec.Int(t.Get_seq())
@@ -16780,9 +16780,9 @@ func (t *TL_updatesCombined) Encode() []byte {
 func (t *TL_updatesCombined) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_updates = dc.TLObject()
-	t.M_users = dc.TLObject()
-	t.M_chats = dc.TLObject()
+	t.M_updates = dc.Vector()
+	t.M_users = dc.Vector()
+	t.M_chats = dc.Vector()
 	t.M_date = dc.Int()
 	t.M_seq_start = dc.Int()
 	t.M_seq = dc.Int()
@@ -16792,9 +16792,9 @@ func (t *TL_updatesCombined) Decode(b []byte) {
 // updates#74ae4240
 type TL_updates struct {
 	M_classID int32
-	M_updates TLObject
-	M_users   TLObject
-	M_chats   TLObject
+	M_updates []TLObject
+	M_users   []TLObject
+	M_chats   []TLObject
 	M_date    int32
 	M_seq     int32
 }
@@ -16803,27 +16803,27 @@ func (t *TL_updates) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates) Set_updates(M_updates TLObject) {
+func (t *TL_updates) Set_updates(M_updates []TLObject) {
 	t.M_updates = M_updates
 }
 
-func (t *TL_updates) Get_updates() TLObject {
+func (t *TL_updates) Get_updates() []TLObject {
 	return t.M_updates
 }
 
-func (t *TL_updates) Set_users(M_users TLObject) {
+func (t *TL_updates) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updates) Get_users() TLObject {
+func (t *TL_updates) Get_users() []TLObject {
 	return t.M_users
 }
 
-func (t *TL_updates) Set_chats(M_chats TLObject) {
+func (t *TL_updates) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updates) Get_chats() TLObject {
+func (t *TL_updates) Get_chats() []TLObject {
 	return t.M_chats
 }
 
@@ -16853,9 +16853,9 @@ func (t *TL_updates) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_updates))
-	ec.TLObject(t.Get_updates())
-	ec.TLObject(t.Get_users())
-	ec.TLObject(t.Get_chats())
+	ec.Vector(t.Get_updates())
+	ec.Vector(t.Get_users())
+	ec.Vector(t.Get_chats())
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_seq())
 
@@ -16865,9 +16865,9 @@ func (t *TL_updates) Encode() []byte {
 func (t *TL_updates) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_updates = dc.TLObject()
-	t.M_users = dc.TLObject()
-	t.M_chats = dc.TLObject()
+	t.M_updates = dc.Vector()
+	t.M_users = dc.Vector()
+	t.M_chats = dc.Vector()
 	t.M_date = dc.Int()
 	t.M_seq = dc.Int()
 
@@ -16883,7 +16883,7 @@ type TL_updateShortSentMessage struct {
 	M_pts_count int32
 	M_date      int32
 	M_media     TLObject
-	M_entities  TLObject
+	M_entities  []TLObject
 }
 
 func (t *TL_updateShortSentMessage) ClassID() int32 {
@@ -16946,11 +16946,11 @@ func (t *TL_updateShortSentMessage) Get_media() TLObject {
 	return t.M_media
 }
 
-func (t *TL_updateShortSentMessage) Set_entities(M_entities TLObject) {
+func (t *TL_updateShortSentMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_updateShortSentMessage) Get_entities() TLObject {
+func (t *TL_updateShortSentMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -16970,7 +16970,7 @@ func (t *TL_updateShortSentMessage) Encode() []byte {
 	ec.Int(t.Get_pts_count())
 	ec.Int(t.Get_date())
 	ec.TLObject(t.Get_media())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -16984,34 +16984,34 @@ func (t *TL_updateShortSentMessage) Decode(b []byte) {
 	t.M_pts_count = dc.Int()
 	t.M_date = dc.Int()
 	t.M_media = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
 // photos_photos#8dca6aa5
 type TL_photos_photos struct {
 	M_classID int32
-	M_photos  TLObject
-	M_users   TLObject
+	M_photos  []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_photos_photos) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_photos_photos) Set_photos(M_photos TLObject) {
+func (t *TL_photos_photos) Set_photos(M_photos []TLObject) {
 	t.M_photos = M_photos
 }
 
-func (t *TL_photos_photos) Get_photos() TLObject {
+func (t *TL_photos_photos) Get_photos() []TLObject {
 	return t.M_photos
 }
 
-func (t *TL_photos_photos) Set_users(M_users TLObject) {
+func (t *TL_photos_photos) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_photos_photos) Get_users() TLObject {
+func (t *TL_photos_photos) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -17025,8 +17025,8 @@ func (t *TL_photos_photos) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_photos_photos))
-	ec.TLObject(t.Get_photos())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_photos())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -17034,8 +17034,8 @@ func (t *TL_photos_photos) Encode() []byte {
 func (t *TL_photos_photos) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_photos = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_photos = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -17043,8 +17043,8 @@ func (t *TL_photos_photos) Decode(b []byte) {
 type TL_photos_photosSlice struct {
 	M_classID int32
 	M_count   int32
-	M_photos  TLObject
-	M_users   TLObject
+	M_photos  []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_photos_photosSlice) ClassID() int32 {
@@ -17059,19 +17059,19 @@ func (t *TL_photos_photosSlice) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_photos_photosSlice) Set_photos(M_photos TLObject) {
+func (t *TL_photos_photosSlice) Set_photos(M_photos []TLObject) {
 	t.M_photos = M_photos
 }
 
-func (t *TL_photos_photosSlice) Get_photos() TLObject {
+func (t *TL_photos_photosSlice) Get_photos() []TLObject {
 	return t.M_photos
 }
 
-func (t *TL_photos_photosSlice) Set_users(M_users TLObject) {
+func (t *TL_photos_photosSlice) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_photos_photosSlice) Get_users() TLObject {
+func (t *TL_photos_photosSlice) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -17086,8 +17086,8 @@ func (t *TL_photos_photosSlice) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_photos_photosSlice))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_photos())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_photos())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -17096,8 +17096,8 @@ func (t *TL_photos_photosSlice) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_photos = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_photos = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -17105,7 +17105,7 @@ func (t *TL_photos_photosSlice) Decode(b []byte) {
 type TL_photos_photo struct {
 	M_classID int32
 	M_photo   TLObject
-	M_users   TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_photos_photo) ClassID() int32 {
@@ -17120,11 +17120,11 @@ func (t *TL_photos_photo) Get_photo() TLObject {
 	return t.M_photo
 }
 
-func (t *TL_photos_photo) Set_users(M_users TLObject) {
+func (t *TL_photos_photo) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_photos_photo) Get_users() TLObject {
+func (t *TL_photos_photo) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -17139,7 +17139,7 @@ func (t *TL_photos_photo) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_photos_photo))
 	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -17148,7 +17148,7 @@ func (t *TL_photos_photo) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -17157,7 +17157,7 @@ type TL_upload_file struct {
 	M_classID int32
 	M_type    TLObject
 	M_mtime   int32
-	M_bytes   int32
+	M_bytes   TLObject
 }
 
 func (t *TL_upload_file) ClassID() int32 {
@@ -17180,11 +17180,11 @@ func (t *TL_upload_file) Get_mtime() int32 {
 	return t.M_mtime
 }
 
-func (t *TL_upload_file) Set_bytes(M_bytes int32) {
+func (t *TL_upload_file) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_upload_file) Get_bytes() int32 {
+func (t *TL_upload_file) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -17200,7 +17200,7 @@ func (t *TL_upload_file) Encode() []byte {
 	ec.Int(int32(TL_CLASS_upload_file))
 	ec.TLObject(t.Get_type())
 	ec.Int(t.Get_mtime())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -17210,7 +17210,7 @@ func (t *TL_upload_file) Decode(b []byte) {
 
 	t.M_type = dc.TLObject()
 	t.M_mtime = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -17218,10 +17218,10 @@ func (t *TL_upload_file) Decode(b []byte) {
 type TL_upload_fileCdnRedirect struct {
 	M_classID         int32
 	M_dc_id           int32
-	M_file_token      int32
-	M_encryption_key  int32
-	M_encryption_iv   int32
-	M_cdn_file_hashes TLObject
+	M_file_token      TLObject
+	M_encryption_key  TLObject
+	M_encryption_iv   TLObject
+	M_cdn_file_hashes []TLObject
 }
 
 func (t *TL_upload_fileCdnRedirect) ClassID() int32 {
@@ -17236,35 +17236,35 @@ func (t *TL_upload_fileCdnRedirect) Get_dc_id() int32 {
 	return t.M_dc_id
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_file_token(M_file_token int32) {
+func (t *TL_upload_fileCdnRedirect) Set_file_token(M_file_token TLObject) {
 	t.M_file_token = M_file_token
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_file_token() int32 {
+func (t *TL_upload_fileCdnRedirect) Get_file_token() TLObject {
 	return t.M_file_token
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_encryption_key(M_encryption_key int32) {
+func (t *TL_upload_fileCdnRedirect) Set_encryption_key(M_encryption_key TLObject) {
 	t.M_encryption_key = M_encryption_key
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_encryption_key() int32 {
+func (t *TL_upload_fileCdnRedirect) Get_encryption_key() TLObject {
 	return t.M_encryption_key
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_encryption_iv(M_encryption_iv int32) {
+func (t *TL_upload_fileCdnRedirect) Set_encryption_iv(M_encryption_iv TLObject) {
 	t.M_encryption_iv = M_encryption_iv
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_encryption_iv() int32 {
+func (t *TL_upload_fileCdnRedirect) Get_encryption_iv() TLObject {
 	return t.M_encryption_iv
 }
 
-func (t *TL_upload_fileCdnRedirect) Set_cdn_file_hashes(M_cdn_file_hashes TLObject) {
+func (t *TL_upload_fileCdnRedirect) Set_cdn_file_hashes(M_cdn_file_hashes []TLObject) {
 	t.M_cdn_file_hashes = M_cdn_file_hashes
 }
 
-func (t *TL_upload_fileCdnRedirect) Get_cdn_file_hashes() TLObject {
+func (t *TL_upload_fileCdnRedirect) Get_cdn_file_hashes() []TLObject {
 	return t.M_cdn_file_hashes
 }
 
@@ -17279,10 +17279,10 @@ func (t *TL_upload_fileCdnRedirect) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_upload_fileCdnRedirect))
 	ec.Int(t.Get_dc_id())
-	ec.Int(t.Get_file_token())
-	ec.Int(t.Get_encryption_key())
-	ec.Int(t.Get_encryption_iv())
-	ec.TLObject(t.Get_cdn_file_hashes())
+	ec.TLObject(t.Get_file_token())
+	ec.TLObject(t.Get_encryption_key())
+	ec.TLObject(t.Get_encryption_iv())
+	ec.Vector(t.Get_cdn_file_hashes())
 
 	return ec.GetBuffer()
 }
@@ -17291,10 +17291,10 @@ func (t *TL_upload_fileCdnRedirect) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
-	t.M_file_token = dc.Int()
-	t.M_encryption_key = dc.Int()
-	t.M_encryption_iv = dc.Int()
-	t.M_cdn_file_hashes = dc.TLObject()
+	t.M_file_token = dc.TLObject()
+	t.M_encryption_key = dc.TLObject()
+	t.M_encryption_iv = dc.TLObject()
+	t.M_cdn_file_hashes = dc.Vector()
 
 }
 
@@ -17434,7 +17434,7 @@ type TL_config struct {
 	M_expires                    int32
 	M_test_mode                  TLObject
 	M_this_dc                    int32
-	M_dc_options                 TLObject
+	M_dc_options                 []TLObject
 	M_chat_size_max              int32
 	M_megagroup_size_max         int32
 	M_forwarded_count_max        int32
@@ -17462,7 +17462,7 @@ type TL_config struct {
 	M_me_url_prefix              string
 	M_suggested_lang_code        TLObject
 	M_lang_pack_version          TLObject
-	M_disabled_features          TLObject
+	M_disabled_features          []TLObject
 }
 
 func (t *TL_config) ClassID() int32 {
@@ -17525,11 +17525,11 @@ func (t *TL_config) Get_this_dc() int32 {
 	return t.M_this_dc
 }
 
-func (t *TL_config) Set_dc_options(M_dc_options TLObject) {
+func (t *TL_config) Set_dc_options(M_dc_options []TLObject) {
 	t.M_dc_options = M_dc_options
 }
 
-func (t *TL_config) Get_dc_options() TLObject {
+func (t *TL_config) Get_dc_options() []TLObject {
 	return t.M_dc_options
 }
 
@@ -17749,11 +17749,11 @@ func (t *TL_config) Get_lang_pack_version() TLObject {
 	return t.M_lang_pack_version
 }
 
-func (t *TL_config) Set_disabled_features(M_disabled_features TLObject) {
+func (t *TL_config) Set_disabled_features(M_disabled_features []TLObject) {
 	t.M_disabled_features = M_disabled_features
 }
 
-func (t *TL_config) Get_disabled_features() TLObject {
+func (t *TL_config) Get_disabled_features() []TLObject {
 	return t.M_disabled_features
 }
 
@@ -17773,7 +17773,7 @@ func (t *TL_config) Encode() []byte {
 	ec.Int(t.Get_expires())
 	ec.TLObject(t.Get_test_mode())
 	ec.Int(t.Get_this_dc())
-	ec.TLObject(t.Get_dc_options())
+	ec.Vector(t.Get_dc_options())
 	ec.Int(t.Get_chat_size_max())
 	ec.Int(t.Get_megagroup_size_max())
 	ec.Int(t.Get_forwarded_count_max())
@@ -17801,7 +17801,7 @@ func (t *TL_config) Encode() []byte {
 	ec.String(t.Get_me_url_prefix())
 	ec.TLObject(t.Get_suggested_lang_code())
 	ec.TLObject(t.Get_lang_pack_version())
-	ec.TLObject(t.Get_disabled_features())
+	ec.Vector(t.Get_disabled_features())
 
 	return ec.GetBuffer()
 }
@@ -17815,7 +17815,7 @@ func (t *TL_config) Decode(b []byte) {
 	t.M_expires = dc.Int()
 	t.M_test_mode = dc.TLObject()
 	t.M_this_dc = dc.Int()
-	t.M_dc_options = dc.TLObject()
+	t.M_dc_options = dc.Vector()
 	t.M_chat_size_max = dc.Int()
 	t.M_megagroup_size_max = dc.Int()
 	t.M_forwarded_count_max = dc.Int()
@@ -17843,7 +17843,7 @@ func (t *TL_config) Decode(b []byte) {
 	t.M_me_url_prefix = dc.String()
 	t.M_suggested_lang_code = dc.TLObject()
 	t.M_lang_pack_version = dc.TLObject()
-	t.M_disabled_features = dc.TLObject()
+	t.M_disabled_features = dc.Vector()
 
 }
 
@@ -18177,7 +18177,7 @@ type TL_encryptedChatRequested struct {
 	M_date           int32
 	M_admin_id       int32
 	M_participant_id int32
-	M_g_a            int32
+	M_g_a            TLObject
 }
 
 func (t *TL_encryptedChatRequested) ClassID() int32 {
@@ -18224,11 +18224,11 @@ func (t *TL_encryptedChatRequested) Get_participant_id() int32 {
 	return t.M_participant_id
 }
 
-func (t *TL_encryptedChatRequested) Set_g_a(M_g_a int32) {
+func (t *TL_encryptedChatRequested) Set_g_a(M_g_a TLObject) {
 	t.M_g_a = M_g_a
 }
 
-func (t *TL_encryptedChatRequested) Get_g_a() int32 {
+func (t *TL_encryptedChatRequested) Get_g_a() TLObject {
 	return t.M_g_a
 }
 
@@ -18247,7 +18247,7 @@ func (t *TL_encryptedChatRequested) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
-	ec.Int(t.Get_g_a())
+	ec.TLObject(t.Get_g_a())
 
 	return ec.GetBuffer()
 }
@@ -18260,7 +18260,7 @@ func (t *TL_encryptedChatRequested) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
-	t.M_g_a = dc.Int()
+	t.M_g_a = dc.TLObject()
 
 }
 
@@ -18272,7 +18272,7 @@ type TL_encryptedChat struct {
 	M_date            int32
 	M_admin_id        int32
 	M_participant_id  int32
-	M_g_a_or_b        int32
+	M_g_a_or_b        TLObject
 	M_key_fingerprint int64
 }
 
@@ -18320,11 +18320,11 @@ func (t *TL_encryptedChat) Get_participant_id() int32 {
 	return t.M_participant_id
 }
 
-func (t *TL_encryptedChat) Set_g_a_or_b(M_g_a_or_b int32) {
+func (t *TL_encryptedChat) Set_g_a_or_b(M_g_a_or_b TLObject) {
 	t.M_g_a_or_b = M_g_a_or_b
 }
 
-func (t *TL_encryptedChat) Get_g_a_or_b() int32 {
+func (t *TL_encryptedChat) Get_g_a_or_b() TLObject {
 	return t.M_g_a_or_b
 }
 
@@ -18351,7 +18351,7 @@ func (t *TL_encryptedChat) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
-	ec.Int(t.Get_g_a_or_b())
+	ec.TLObject(t.Get_g_a_or_b())
 	ec.Long(t.Get_key_fingerprint())
 
 	return ec.GetBuffer()
@@ -18365,7 +18365,7 @@ func (t *TL_encryptedChat) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
-	t.M_g_a_or_b = dc.Int()
+	t.M_g_a_or_b = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 
 }
@@ -18783,7 +18783,7 @@ type TL_encryptedMessage struct {
 	M_random_id int64
 	M_chat_id   int32
 	M_date      int32
-	M_bytes     int32
+	M_bytes     TLObject
 	M_file      TLObject
 }
 
@@ -18815,11 +18815,11 @@ func (t *TL_encryptedMessage) Get_date() int32 {
 	return t.M_date
 }
 
-func (t *TL_encryptedMessage) Set_bytes(M_bytes int32) {
+func (t *TL_encryptedMessage) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_encryptedMessage) Get_bytes() int32 {
+func (t *TL_encryptedMessage) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -18844,7 +18844,7 @@ func (t *TL_encryptedMessage) Encode() []byte {
 	ec.Long(t.Get_random_id())
 	ec.Int(t.Get_chat_id())
 	ec.Int(t.Get_date())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 	ec.TLObject(t.Get_file())
 
 	return ec.GetBuffer()
@@ -18856,7 +18856,7 @@ func (t *TL_encryptedMessage) Decode(b []byte) {
 	t.M_random_id = dc.Long()
 	t.M_chat_id = dc.Int()
 	t.M_date = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 	t.M_file = dc.TLObject()
 
 }
@@ -18867,7 +18867,7 @@ type TL_encryptedMessageService struct {
 	M_random_id int64
 	M_chat_id   int32
 	M_date      int32
-	M_bytes     int32
+	M_bytes     TLObject
 }
 
 func (t *TL_encryptedMessageService) ClassID() int32 {
@@ -18898,11 +18898,11 @@ func (t *TL_encryptedMessageService) Get_date() int32 {
 	return t.M_date
 }
 
-func (t *TL_encryptedMessageService) Set_bytes(M_bytes int32) {
+func (t *TL_encryptedMessageService) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_encryptedMessageService) Get_bytes() int32 {
+func (t *TL_encryptedMessageService) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -18919,7 +18919,7 @@ func (t *TL_encryptedMessageService) Encode() []byte {
 	ec.Long(t.Get_random_id())
 	ec.Int(t.Get_chat_id())
 	ec.Int(t.Get_date())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -18930,25 +18930,25 @@ func (t *TL_encryptedMessageService) Decode(b []byte) {
 	t.M_random_id = dc.Long()
 	t.M_chat_id = dc.Int()
 	t.M_date = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
 // messages_dhConfigNotModified#c0e24635
 type TL_messages_dhConfigNotModified struct {
 	M_classID int32
-	M_random  int32
+	M_random  TLObject
 }
 
 func (t *TL_messages_dhConfigNotModified) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_dhConfigNotModified) Set_random(M_random int32) {
+func (t *TL_messages_dhConfigNotModified) Set_random(M_random TLObject) {
 	t.M_random = M_random
 }
 
-func (t *TL_messages_dhConfigNotModified) Get_random() int32 {
+func (t *TL_messages_dhConfigNotModified) Get_random() TLObject {
 	return t.M_random
 }
 
@@ -18962,7 +18962,7 @@ func (t *TL_messages_dhConfigNotModified) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_dhConfigNotModified))
-	ec.Int(t.Get_random())
+	ec.TLObject(t.Get_random())
 
 	return ec.GetBuffer()
 }
@@ -18970,7 +18970,7 @@ func (t *TL_messages_dhConfigNotModified) Encode() []byte {
 func (t *TL_messages_dhConfigNotModified) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_random = dc.Int()
+	t.M_random = dc.TLObject()
 
 }
 
@@ -18978,9 +18978,9 @@ func (t *TL_messages_dhConfigNotModified) Decode(b []byte) {
 type TL_messages_dhConfig struct {
 	M_classID int32
 	M_g       int32
-	M_p       int32
+	M_p       TLObject
 	M_version int32
-	M_random  int32
+	M_random  TLObject
 }
 
 func (t *TL_messages_dhConfig) ClassID() int32 {
@@ -18995,11 +18995,11 @@ func (t *TL_messages_dhConfig) Get_g() int32 {
 	return t.M_g
 }
 
-func (t *TL_messages_dhConfig) Set_p(M_p int32) {
+func (t *TL_messages_dhConfig) Set_p(M_p TLObject) {
 	t.M_p = M_p
 }
 
-func (t *TL_messages_dhConfig) Get_p() int32 {
+func (t *TL_messages_dhConfig) Get_p() TLObject {
 	return t.M_p
 }
 
@@ -19011,11 +19011,11 @@ func (t *TL_messages_dhConfig) Get_version() int32 {
 	return t.M_version
 }
 
-func (t *TL_messages_dhConfig) Set_random(M_random int32) {
+func (t *TL_messages_dhConfig) Set_random(M_random TLObject) {
 	t.M_random = M_random
 }
 
-func (t *TL_messages_dhConfig) Get_random() int32 {
+func (t *TL_messages_dhConfig) Get_random() TLObject {
 	return t.M_random
 }
 
@@ -19030,9 +19030,9 @@ func (t *TL_messages_dhConfig) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_dhConfig))
 	ec.Int(t.Get_g())
-	ec.Int(t.Get_p())
+	ec.TLObject(t.Get_p())
 	ec.Int(t.Get_version())
-	ec.Int(t.Get_random())
+	ec.TLObject(t.Get_random())
 
 	return ec.GetBuffer()
 }
@@ -19041,9 +19041,9 @@ func (t *TL_messages_dhConfig) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_g = dc.Int()
-	t.M_p = dc.Int()
+	t.M_p = dc.TLObject()
 	t.M_version = dc.Int()
-	t.M_random = dc.Int()
+	t.M_random = dc.TLObject()
 
 }
 
@@ -19263,7 +19263,7 @@ type TL_document struct {
 	M_thumb       TLObject
 	M_dc_id       int32
 	M_version     int32
-	M_attributes  TLObject
+	M_attributes  []TLObject
 }
 
 func (t *TL_document) ClassID() int32 {
@@ -19334,11 +19334,11 @@ func (t *TL_document) Get_version() int32 {
 	return t.M_version
 }
 
-func (t *TL_document) Set_attributes(M_attributes TLObject) {
+func (t *TL_document) Set_attributes(M_attributes []TLObject) {
 	t.M_attributes = M_attributes
 }
 
-func (t *TL_document) Get_attributes() TLObject {
+func (t *TL_document) Get_attributes() []TLObject {
 	return t.M_attributes
 }
 
@@ -19360,7 +19360,7 @@ func (t *TL_document) Encode() []byte {
 	ec.TLObject(t.Get_thumb())
 	ec.Int(t.Get_dc_id())
 	ec.Int(t.Get_version())
-	ec.TLObject(t.Get_attributes())
+	ec.Vector(t.Get_attributes())
 
 	return ec.GetBuffer()
 }
@@ -19376,7 +19376,7 @@ func (t *TL_document) Decode(b []byte) {
 	t.M_thumb = dc.TLObject()
 	t.M_dc_id = dc.Int()
 	t.M_version = dc.Int()
-	t.M_attributes = dc.TLObject()
+	t.M_attributes = dc.Vector()
 
 }
 
@@ -19927,36 +19927,36 @@ func (t *TL_sendMessageUploadRoundAction) Decode(b []byte) {
 // contacts_found#1aa1f784
 type TL_contacts_found struct {
 	M_classID int32
-	M_results TLObject
-	M_chats   TLObject
-	M_users   TLObject
+	M_results []TLObject
+	M_chats   []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_contacts_found) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_found) Set_results(M_results TLObject) {
+func (t *TL_contacts_found) Set_results(M_results []TLObject) {
 	t.M_results = M_results
 }
 
-func (t *TL_contacts_found) Get_results() TLObject {
+func (t *TL_contacts_found) Get_results() []TLObject {
 	return t.M_results
 }
 
-func (t *TL_contacts_found) Set_chats(M_chats TLObject) {
+func (t *TL_contacts_found) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_contacts_found) Get_chats() TLObject {
+func (t *TL_contacts_found) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_contacts_found) Set_users(M_users TLObject) {
+func (t *TL_contacts_found) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_found) Get_users() TLObject {
+func (t *TL_contacts_found) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -19970,9 +19970,9 @@ func (t *TL_contacts_found) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_found))
-	ec.TLObject(t.Get_results())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_results())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -19980,9 +19980,9 @@ func (t *TL_contacts_found) Encode() []byte {
 func (t *TL_contacts_found) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_results = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_results = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -20173,18 +20173,18 @@ func (t *TL_inputPrivacyValueAllowAll) Decode(b []byte) {
 // inputPrivacyValueAllowUsers#131cc67f
 type TL_inputPrivacyValueAllowUsers struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_inputPrivacyValueAllowUsers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputPrivacyValueAllowUsers) Set_users(M_users TLObject) {
+func (t *TL_inputPrivacyValueAllowUsers) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_inputPrivacyValueAllowUsers) Get_users() TLObject {
+func (t *TL_inputPrivacyValueAllowUsers) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -20198,7 +20198,7 @@ func (t *TL_inputPrivacyValueAllowUsers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueAllowUsers))
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -20206,7 +20206,7 @@ func (t *TL_inputPrivacyValueAllowUsers) Encode() []byte {
 func (t *TL_inputPrivacyValueAllowUsers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -20259,18 +20259,18 @@ func (t *TL_inputPrivacyValueDisallowAll) Decode(b []byte) {
 // inputPrivacyValueDisallowUsers#90110467
 type TL_inputPrivacyValueDisallowUsers struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_inputPrivacyValueDisallowUsers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputPrivacyValueDisallowUsers) Set_users(M_users TLObject) {
+func (t *TL_inputPrivacyValueDisallowUsers) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_inputPrivacyValueDisallowUsers) Get_users() TLObject {
+func (t *TL_inputPrivacyValueDisallowUsers) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -20284,7 +20284,7 @@ func (t *TL_inputPrivacyValueDisallowUsers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueDisallowUsers))
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -20292,7 +20292,7 @@ func (t *TL_inputPrivacyValueDisallowUsers) Encode() []byte {
 func (t *TL_inputPrivacyValueDisallowUsers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -20345,18 +20345,18 @@ func (t *TL_privacyValueAllowAll) Decode(b []byte) {
 // privacyValueAllowUsers#4d5bbe0c
 type TL_privacyValueAllowUsers struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []int32
 }
 
 func (t *TL_privacyValueAllowUsers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_privacyValueAllowUsers) Set_users(M_users TLObject) {
+func (t *TL_privacyValueAllowUsers) Set_users(M_users []int32) {
 	t.M_users = M_users
 }
 
-func (t *TL_privacyValueAllowUsers) Get_users() TLObject {
+func (t *TL_privacyValueAllowUsers) Get_users() []int32 {
 	return t.M_users
 }
 
@@ -20370,7 +20370,7 @@ func (t *TL_privacyValueAllowUsers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_privacyValueAllowUsers))
-	ec.TLObject(t.Get_users())
+	ec.VectorInt(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -20378,7 +20378,7 @@ func (t *TL_privacyValueAllowUsers) Encode() []byte {
 func (t *TL_privacyValueAllowUsers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.VectorInt()
 
 }
 
@@ -20431,18 +20431,18 @@ func (t *TL_privacyValueDisallowAll) Decode(b []byte) {
 // privacyValueDisallowUsers#c7f49b7
 type TL_privacyValueDisallowUsers struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []int32
 }
 
 func (t *TL_privacyValueDisallowUsers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_privacyValueDisallowUsers) Set_users(M_users TLObject) {
+func (t *TL_privacyValueDisallowUsers) Set_users(M_users []int32) {
 	t.M_users = M_users
 }
 
-func (t *TL_privacyValueDisallowUsers) Get_users() TLObject {
+func (t *TL_privacyValueDisallowUsers) Get_users() []int32 {
 	return t.M_users
 }
 
@@ -20456,7 +20456,7 @@ func (t *TL_privacyValueDisallowUsers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_privacyValueDisallowUsers))
-	ec.TLObject(t.Get_users())
+	ec.VectorInt(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -20464,34 +20464,34 @@ func (t *TL_privacyValueDisallowUsers) Encode() []byte {
 func (t *TL_privacyValueDisallowUsers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.VectorInt()
 
 }
 
 // account_privacyRules#554abb6f
 type TL_account_privacyRules struct {
 	M_classID int32
-	M_rules   TLObject
-	M_users   TLObject
+	M_rules   []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_account_privacyRules) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_privacyRules) Set_rules(M_rules TLObject) {
+func (t *TL_account_privacyRules) Set_rules(M_rules []TLObject) {
 	t.M_rules = M_rules
 }
 
-func (t *TL_account_privacyRules) Get_rules() TLObject {
+func (t *TL_account_privacyRules) Get_rules() []TLObject {
 	return t.M_rules
 }
 
-func (t *TL_account_privacyRules) Set_users(M_users TLObject) {
+func (t *TL_account_privacyRules) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_account_privacyRules) Get_users() TLObject {
+func (t *TL_account_privacyRules) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -20505,8 +20505,8 @@ func (t *TL_account_privacyRules) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_privacyRules))
-	ec.TLObject(t.Get_rules())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_rules())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -20514,8 +20514,8 @@ func (t *TL_account_privacyRules) Encode() []byte {
 func (t *TL_account_privacyRules) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_rules = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_rules = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -20980,7 +20980,7 @@ func (t *TL_messages_stickersNotModified) Decode(b []byte) {
 type TL_messages_stickers struct {
 	M_classID  int32
 	M_hash     string
-	M_stickers TLObject
+	M_stickers []TLObject
 }
 
 func (t *TL_messages_stickers) ClassID() int32 {
@@ -20995,11 +20995,11 @@ func (t *TL_messages_stickers) Get_hash() string {
 	return t.M_hash
 }
 
-func (t *TL_messages_stickers) Set_stickers(M_stickers TLObject) {
+func (t *TL_messages_stickers) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_messages_stickers) Get_stickers() TLObject {
+func (t *TL_messages_stickers) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -21014,7 +21014,7 @@ func (t *TL_messages_stickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_stickers))
 	ec.String(t.Get_hash())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_stickers())
 
 	return ec.GetBuffer()
 }
@@ -21023,7 +21023,7 @@ func (t *TL_messages_stickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.String()
-	t.M_stickers = dc.TLObject()
+	t.M_stickers = dc.Vector()
 
 }
 
@@ -21031,7 +21031,7 @@ func (t *TL_messages_stickers) Decode(b []byte) {
 type TL_stickerPack struct {
 	M_classID   int32
 	M_emoticon  string
-	M_documents TLObject
+	M_documents []int64
 }
 
 func (t *TL_stickerPack) ClassID() int32 {
@@ -21046,11 +21046,11 @@ func (t *TL_stickerPack) Get_emoticon() string {
 	return t.M_emoticon
 }
 
-func (t *TL_stickerPack) Set_documents(M_documents TLObject) {
+func (t *TL_stickerPack) Set_documents(M_documents []int64) {
 	t.M_documents = M_documents
 }
 
-func (t *TL_stickerPack) Get_documents() TLObject {
+func (t *TL_stickerPack) Get_documents() []int64 {
 	return t.M_documents
 }
 
@@ -21065,7 +21065,7 @@ func (t *TL_stickerPack) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_stickerPack))
 	ec.String(t.Get_emoticon())
-	ec.TLObject(t.Get_documents())
+	ec.VectorLong(t.Get_documents())
 
 	return ec.GetBuffer()
 }
@@ -21074,7 +21074,7 @@ func (t *TL_stickerPack) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_emoticon = dc.String()
-	t.M_documents = dc.TLObject()
+	t.M_documents = dc.VectorLong()
 
 }
 
@@ -21105,7 +21105,7 @@ func (t *TL_messages_allStickersNotModified) Decode(b []byte) {
 type TL_messages_allStickers struct {
 	M_classID int32
 	M_hash    int32
-	M_sets    TLObject
+	M_sets    []TLObject
 }
 
 func (t *TL_messages_allStickers) ClassID() int32 {
@@ -21120,11 +21120,11 @@ func (t *TL_messages_allStickers) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_messages_allStickers) Set_sets(M_sets TLObject) {
+func (t *TL_messages_allStickers) Set_sets(M_sets []TLObject) {
 	t.M_sets = M_sets
 }
 
-func (t *TL_messages_allStickers) Get_sets() TLObject {
+func (t *TL_messages_allStickers) Get_sets() []TLObject {
 	return t.M_sets
 }
 
@@ -21139,7 +21139,7 @@ func (t *TL_messages_allStickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_allStickers))
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_sets())
+	ec.Vector(t.Get_sets())
 
 	return ec.GetBuffer()
 }
@@ -21148,7 +21148,7 @@ func (t *TL_messages_allStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
-	t.M_sets = dc.TLObject()
+	t.M_sets = dc.Vector()
 
 }
 
@@ -21860,18 +21860,18 @@ func (t *TL_authorization) Decode(b []byte) {
 // account_authorizations#1250abde
 type TL_account_authorizations struct {
 	M_classID        int32
-	M_authorizations TLObject
+	M_authorizations []TLObject
 }
 
 func (t *TL_account_authorizations) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_authorizations) Set_authorizations(M_authorizations TLObject) {
+func (t *TL_account_authorizations) Set_authorizations(M_authorizations []TLObject) {
 	t.M_authorizations = M_authorizations
 }
 
-func (t *TL_account_authorizations) Get_authorizations() TLObject {
+func (t *TL_account_authorizations) Get_authorizations() []TLObject {
 	return t.M_authorizations
 }
 
@@ -21885,7 +21885,7 @@ func (t *TL_account_authorizations) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_authorizations))
-	ec.TLObject(t.Get_authorizations())
+	ec.Vector(t.Get_authorizations())
 
 	return ec.GetBuffer()
 }
@@ -21893,14 +21893,14 @@ func (t *TL_account_authorizations) Encode() []byte {
 func (t *TL_account_authorizations) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_authorizations = dc.TLObject()
+	t.M_authorizations = dc.Vector()
 
 }
 
 // account_noPassword#96dabc18
 type TL_account_noPassword struct {
 	M_classID                   int32
-	M_new_salt                  int32
+	M_new_salt                  TLObject
 	M_email_unconfirmed_pattern string
 }
 
@@ -21908,11 +21908,11 @@ func (t *TL_account_noPassword) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_noPassword) Set_new_salt(M_new_salt int32) {
+func (t *TL_account_noPassword) Set_new_salt(M_new_salt TLObject) {
 	t.M_new_salt = M_new_salt
 }
 
-func (t *TL_account_noPassword) Get_new_salt() int32 {
+func (t *TL_account_noPassword) Get_new_salt() TLObject {
 	return t.M_new_salt
 }
 
@@ -21934,7 +21934,7 @@ func (t *TL_account_noPassword) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_noPassword))
-	ec.Int(t.Get_new_salt())
+	ec.TLObject(t.Get_new_salt())
 	ec.String(t.Get_email_unconfirmed_pattern())
 
 	return ec.GetBuffer()
@@ -21943,7 +21943,7 @@ func (t *TL_account_noPassword) Encode() []byte {
 func (t *TL_account_noPassword) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_new_salt = dc.Int()
+	t.M_new_salt = dc.TLObject()
 	t.M_email_unconfirmed_pattern = dc.String()
 
 }
@@ -21951,8 +21951,8 @@ func (t *TL_account_noPassword) Decode(b []byte) {
 // account_password#7c18141c
 type TL_account_password struct {
 	M_classID                   int32
-	M_current_salt              int32
-	M_new_salt                  int32
+	M_current_salt              TLObject
+	M_new_salt                  TLObject
 	M_hint                      string
 	M_has_recovery              TLObject
 	M_email_unconfirmed_pattern string
@@ -21962,19 +21962,19 @@ func (t *TL_account_password) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_password) Set_current_salt(M_current_salt int32) {
+func (t *TL_account_password) Set_current_salt(M_current_salt TLObject) {
 	t.M_current_salt = M_current_salt
 }
 
-func (t *TL_account_password) Get_current_salt() int32 {
+func (t *TL_account_password) Get_current_salt() TLObject {
 	return t.M_current_salt
 }
 
-func (t *TL_account_password) Set_new_salt(M_new_salt int32) {
+func (t *TL_account_password) Set_new_salt(M_new_salt TLObject) {
 	t.M_new_salt = M_new_salt
 }
 
-func (t *TL_account_password) Get_new_salt() int32 {
+func (t *TL_account_password) Get_new_salt() TLObject {
 	return t.M_new_salt
 }
 
@@ -22012,8 +22012,8 @@ func (t *TL_account_password) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_password))
-	ec.Int(t.Get_current_salt())
-	ec.Int(t.Get_new_salt())
+	ec.TLObject(t.Get_current_salt())
+	ec.TLObject(t.Get_new_salt())
 	ec.String(t.Get_hint())
 	ec.TLObject(t.Get_has_recovery())
 	ec.String(t.Get_email_unconfirmed_pattern())
@@ -22024,8 +22024,8 @@ func (t *TL_account_password) Encode() []byte {
 func (t *TL_account_password) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_current_salt = dc.Int()
-	t.M_new_salt = dc.Int()
+	t.M_current_salt = dc.TLObject()
+	t.M_new_salt = dc.TLObject()
 	t.M_hint = dc.String()
 	t.M_has_recovery = dc.TLObject()
 	t.M_email_unconfirmed_pattern = dc.String()
@@ -22359,7 +22359,7 @@ type TL_chatInvite struct {
 	M_title              string
 	M_photo              TLObject
 	M_participants_count int32
-	M_participants       TLObject
+	M_participants       []TLObject
 }
 
 func (t *TL_chatInvite) ClassID() int32 {
@@ -22430,11 +22430,11 @@ func (t *TL_chatInvite) Get_participants_count() int32 {
 	return t.M_participants_count
 }
 
-func (t *TL_chatInvite) Set_participants(M_participants TLObject) {
+func (t *TL_chatInvite) Set_participants(M_participants []TLObject) {
 	t.M_participants = M_participants
 }
 
-func (t *TL_chatInvite) Get_participants() TLObject {
+func (t *TL_chatInvite) Get_participants() []TLObject {
 	return t.M_participants
 }
 
@@ -22455,7 +22455,7 @@ func (t *TL_chatInvite) Encode() []byte {
 	ec.String(t.Get_title())
 	ec.TLObject(t.Get_photo())
 	ec.Int(t.Get_participants_count())
-	ec.TLObject(t.Get_participants())
+	ec.Vector(t.Get_participants())
 
 	return ec.GetBuffer()
 }
@@ -22470,7 +22470,7 @@ func (t *TL_chatInvite) Decode(b []byte) {
 	t.M_title = dc.String()
 	t.M_photo = dc.TLObject()
 	t.M_participants_count = dc.Int()
-	t.M_participants = dc.TLObject()
+	t.M_participants = dc.Vector()
 
 }
 
@@ -22740,8 +22740,8 @@ func (t *TL_stickerSet) Decode(b []byte) {
 type TL_messages_stickerSet struct {
 	M_classID   int32
 	M_set       TLObject
-	M_packs     TLObject
-	M_documents TLObject
+	M_packs     []TLObject
+	M_documents []TLObject
 }
 
 func (t *TL_messages_stickerSet) ClassID() int32 {
@@ -22756,19 +22756,19 @@ func (t *TL_messages_stickerSet) Get_set() TLObject {
 	return t.M_set
 }
 
-func (t *TL_messages_stickerSet) Set_packs(M_packs TLObject) {
+func (t *TL_messages_stickerSet) Set_packs(M_packs []TLObject) {
 	t.M_packs = M_packs
 }
 
-func (t *TL_messages_stickerSet) Get_packs() TLObject {
+func (t *TL_messages_stickerSet) Get_packs() []TLObject {
 	return t.M_packs
 }
 
-func (t *TL_messages_stickerSet) Set_documents(M_documents TLObject) {
+func (t *TL_messages_stickerSet) Set_documents(M_documents []TLObject) {
 	t.M_documents = M_documents
 }
 
-func (t *TL_messages_stickerSet) Get_documents() TLObject {
+func (t *TL_messages_stickerSet) Get_documents() []TLObject {
 	return t.M_documents
 }
 
@@ -22783,8 +22783,8 @@ func (t *TL_messages_stickerSet) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_stickerSet))
 	ec.TLObject(t.Get_set())
-	ec.TLObject(t.Get_packs())
-	ec.TLObject(t.Get_documents())
+	ec.Vector(t.Get_packs())
+	ec.Vector(t.Get_documents())
 
 	return ec.GetBuffer()
 }
@@ -22793,8 +22793,8 @@ func (t *TL_messages_stickerSet) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_set = dc.TLObject()
-	t.M_packs = dc.TLObject()
-	t.M_documents = dc.TLObject()
+	t.M_packs = dc.Vector()
+	t.M_documents = dc.Vector()
 
 }
 
@@ -22854,7 +22854,7 @@ type TL_botInfo struct {
 	M_classID     int32
 	M_user_id     int32
 	M_description string
-	M_commands    TLObject
+	M_commands    []TLObject
 }
 
 func (t *TL_botInfo) ClassID() int32 {
@@ -22877,11 +22877,11 @@ func (t *TL_botInfo) Get_description() string {
 	return t.M_description
 }
 
-func (t *TL_botInfo) Set_commands(M_commands TLObject) {
+func (t *TL_botInfo) Set_commands(M_commands []TLObject) {
 	t.M_commands = M_commands
 }
 
-func (t *TL_botInfo) Get_commands() TLObject {
+func (t *TL_botInfo) Get_commands() []TLObject {
 	return t.M_commands
 }
 
@@ -22897,7 +22897,7 @@ func (t *TL_botInfo) Encode() []byte {
 	ec.Int(int32(TL_CLASS_botInfo))
 	ec.Int(t.Get_user_id())
 	ec.String(t.Get_description())
-	ec.TLObject(t.Get_commands())
+	ec.Vector(t.Get_commands())
 
 	return ec.GetBuffer()
 }
@@ -22907,7 +22907,7 @@ func (t *TL_botInfo) Decode(b []byte) {
 
 	t.M_user_id = dc.Int()
 	t.M_description = dc.String()
-	t.M_commands = dc.TLObject()
+	t.M_commands = dc.Vector()
 
 }
 
@@ -23006,7 +23006,7 @@ func (t *TL_keyboardButtonUrl) Decode(b []byte) {
 type TL_keyboardButtonCallback struct {
 	M_classID int32
 	M_text    string
-	M_data    int32
+	M_data    TLObject
 }
 
 func (t *TL_keyboardButtonCallback) ClassID() int32 {
@@ -23021,11 +23021,11 @@ func (t *TL_keyboardButtonCallback) Get_text() string {
 	return t.M_text
 }
 
-func (t *TL_keyboardButtonCallback) Set_data(M_data int32) {
+func (t *TL_keyboardButtonCallback) Set_data(M_data TLObject) {
 	t.M_data = M_data
 }
 
-func (t *TL_keyboardButtonCallback) Get_data() int32 {
+func (t *TL_keyboardButtonCallback) Get_data() TLObject {
 	return t.M_data
 }
 
@@ -23040,7 +23040,7 @@ func (t *TL_keyboardButtonCallback) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_keyboardButtonCallback))
 	ec.String(t.Get_text())
-	ec.Int(t.Get_data())
+	ec.TLObject(t.Get_data())
 
 	return ec.GetBuffer()
 }
@@ -23049,7 +23049,7 @@ func (t *TL_keyboardButtonCallback) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
-	t.M_data = dc.Int()
+	t.M_data = dc.TLObject()
 
 }
 
@@ -23287,18 +23287,18 @@ func (t *TL_keyboardButtonBuy) Decode(b []byte) {
 // keyboardButtonRow#77608b83
 type TL_keyboardButtonRow struct {
 	M_classID int32
-	M_buttons TLObject
+	M_buttons []TLObject
 }
 
 func (t *TL_keyboardButtonRow) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_keyboardButtonRow) Set_buttons(M_buttons TLObject) {
+func (t *TL_keyboardButtonRow) Set_buttons(M_buttons []TLObject) {
 	t.M_buttons = M_buttons
 }
 
-func (t *TL_keyboardButtonRow) Get_buttons() TLObject {
+func (t *TL_keyboardButtonRow) Get_buttons() []TLObject {
 	return t.M_buttons
 }
 
@@ -23312,7 +23312,7 @@ func (t *TL_keyboardButtonRow) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_keyboardButtonRow))
-	ec.TLObject(t.Get_buttons())
+	ec.Vector(t.Get_buttons())
 
 	return ec.GetBuffer()
 }
@@ -23320,7 +23320,7 @@ func (t *TL_keyboardButtonRow) Encode() []byte {
 func (t *TL_keyboardButtonRow) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_buttons = dc.TLObject()
+	t.M_buttons = dc.Vector()
 
 }
 
@@ -23440,7 +23440,7 @@ type TL_replyKeyboardMarkup struct {
 	M_resize     TLObject
 	M_single_use TLObject
 	M_selective  TLObject
-	M_rows       TLObject
+	M_rows       []TLObject
 }
 
 func (t *TL_replyKeyboardMarkup) ClassID() int32 {
@@ -23479,11 +23479,11 @@ func (t *TL_replyKeyboardMarkup) Get_selective() TLObject {
 	return t.M_selective
 }
 
-func (t *TL_replyKeyboardMarkup) Set_rows(M_rows TLObject) {
+func (t *TL_replyKeyboardMarkup) Set_rows(M_rows []TLObject) {
 	t.M_rows = M_rows
 }
 
-func (t *TL_replyKeyboardMarkup) Get_rows() TLObject {
+func (t *TL_replyKeyboardMarkup) Get_rows() []TLObject {
 	return t.M_rows
 }
 
@@ -23500,7 +23500,7 @@ func (t *TL_replyKeyboardMarkup) Encode() []byte {
 	ec.TLObject(t.Get_resize())
 	ec.TLObject(t.Get_single_use())
 	ec.TLObject(t.Get_selective())
-	ec.TLObject(t.Get_rows())
+	ec.Vector(t.Get_rows())
 
 	return ec.GetBuffer()
 }
@@ -23511,25 +23511,25 @@ func (t *TL_replyKeyboardMarkup) Decode(b []byte) {
 	t.M_resize = dc.TLObject()
 	t.M_single_use = dc.TLObject()
 	t.M_selective = dc.TLObject()
-	t.M_rows = dc.TLObject()
+	t.M_rows = dc.Vector()
 
 }
 
 // replyInlineMarkup#48a30254
 type TL_replyInlineMarkup struct {
 	M_classID int32
-	M_rows    TLObject
+	M_rows    []TLObject
 }
 
 func (t *TL_replyInlineMarkup) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_replyInlineMarkup) Set_rows(M_rows TLObject) {
+func (t *TL_replyInlineMarkup) Set_rows(M_rows []TLObject) {
 	t.M_rows = M_rows
 }
 
-func (t *TL_replyInlineMarkup) Get_rows() TLObject {
+func (t *TL_replyInlineMarkup) Get_rows() []TLObject {
 	return t.M_rows
 }
 
@@ -23543,7 +23543,7 @@ func (t *TL_replyInlineMarkup) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_replyInlineMarkup))
-	ec.TLObject(t.Get_rows())
+	ec.Vector(t.Get_rows())
 
 	return ec.GetBuffer()
 }
@@ -23551,7 +23551,7 @@ func (t *TL_replyInlineMarkup) Encode() []byte {
 func (t *TL_replyInlineMarkup) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_rows = dc.TLObject()
+	t.M_rows = dc.Vector()
 
 }
 
@@ -24340,8 +24340,8 @@ func (t *TL_inputChannel) Decode(b []byte) {
 type TL_contacts_resolvedPeer struct {
 	M_classID int32
 	M_peer    TLObject
-	M_chats   TLObject
-	M_users   TLObject
+	M_chats   []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_contacts_resolvedPeer) ClassID() int32 {
@@ -24356,19 +24356,19 @@ func (t *TL_contacts_resolvedPeer) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_contacts_resolvedPeer) Set_chats(M_chats TLObject) {
+func (t *TL_contacts_resolvedPeer) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_contacts_resolvedPeer) Get_chats() TLObject {
+func (t *TL_contacts_resolvedPeer) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_contacts_resolvedPeer) Set_users(M_users TLObject) {
+func (t *TL_contacts_resolvedPeer) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_resolvedPeer) Get_users() TLObject {
+func (t *TL_contacts_resolvedPeer) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -24383,8 +24383,8 @@ func (t *TL_contacts_resolvedPeer) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_contacts_resolvedPeer))
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -24393,8 +24393,8 @@ func (t *TL_contacts_resolvedPeer) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -24532,9 +24532,9 @@ type TL_updates_channelDifferenceTooLong struct {
 	M_read_outbox_max_id    int32
 	M_unread_count          int32
 	M_unread_mentions_count int32
-	M_messages              TLObject
-	M_chats                 TLObject
-	M_users                 TLObject
+	M_messages              []TLObject
+	M_chats                 []TLObject
+	M_users                 []TLObject
 }
 
 func (t *TL_updates_channelDifferenceTooLong) ClassID() int32 {
@@ -24613,27 +24613,27 @@ func (t *TL_updates_channelDifferenceTooLong) Get_unread_mentions_count() int32 
 	return t.M_unread_mentions_count
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_messages(M_messages TLObject) {
+func (t *TL_updates_channelDifferenceTooLong) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_messages() TLObject {
+func (t *TL_updates_channelDifferenceTooLong) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_chats(M_chats TLObject) {
+func (t *TL_updates_channelDifferenceTooLong) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_chats() TLObject {
+func (t *TL_updates_channelDifferenceTooLong) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_users(M_users TLObject) {
+func (t *TL_updates_channelDifferenceTooLong) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_users() TLObject {
+func (t *TL_updates_channelDifferenceTooLong) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -24655,9 +24655,9 @@ func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
 	ec.Int(t.Get_read_outbox_max_id())
 	ec.Int(t.Get_unread_count())
 	ec.Int(t.Get_unread_mentions_count())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -24673,9 +24673,9 @@ func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) {
 	t.M_read_outbox_max_id = dc.Int()
 	t.M_unread_count = dc.Int()
 	t.M_unread_mentions_count = dc.Int()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -24686,10 +24686,10 @@ type TL_updates_channelDifference struct {
 	M_final         TLObject
 	M_pts           int32
 	M_timeout       TLObject
-	M_new_messages  TLObject
-	M_other_updates TLObject
-	M_chats         TLObject
-	M_users         TLObject
+	M_new_messages  []TLObject
+	M_other_updates []TLObject
+	M_chats         []TLObject
+	M_users         []TLObject
 }
 
 func (t *TL_updates_channelDifference) ClassID() int32 {
@@ -24728,35 +24728,35 @@ func (t *TL_updates_channelDifference) Get_timeout() TLObject {
 	return t.M_timeout
 }
 
-func (t *TL_updates_channelDifference) Set_new_messages(M_new_messages TLObject) {
+func (t *TL_updates_channelDifference) Set_new_messages(M_new_messages []TLObject) {
 	t.M_new_messages = M_new_messages
 }
 
-func (t *TL_updates_channelDifference) Get_new_messages() TLObject {
+func (t *TL_updates_channelDifference) Get_new_messages() []TLObject {
 	return t.M_new_messages
 }
 
-func (t *TL_updates_channelDifference) Set_other_updates(M_other_updates TLObject) {
+func (t *TL_updates_channelDifference) Set_other_updates(M_other_updates []TLObject) {
 	t.M_other_updates = M_other_updates
 }
 
-func (t *TL_updates_channelDifference) Get_other_updates() TLObject {
+func (t *TL_updates_channelDifference) Get_other_updates() []TLObject {
 	return t.M_other_updates
 }
 
-func (t *TL_updates_channelDifference) Set_chats(M_chats TLObject) {
+func (t *TL_updates_channelDifference) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_updates_channelDifference) Get_chats() TLObject {
+func (t *TL_updates_channelDifference) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_updates_channelDifference) Set_users(M_users TLObject) {
+func (t *TL_updates_channelDifference) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_updates_channelDifference) Get_users() TLObject {
+func (t *TL_updates_channelDifference) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -24773,10 +24773,10 @@ func (t *TL_updates_channelDifference) Encode() []byte {
 	ec.TLObject(t.Get_final())
 	ec.Int(t.Get_pts())
 	ec.TLObject(t.Get_timeout())
-	ec.TLObject(t.Get_new_messages())
-	ec.TLObject(t.Get_other_updates())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_new_messages())
+	ec.Vector(t.Get_other_updates())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -24787,10 +24787,10 @@ func (t *TL_updates_channelDifference) Decode(b []byte) {
 	t.M_final = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_timeout = dc.TLObject()
-	t.M_new_messages = dc.TLObject()
-	t.M_other_updates = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_new_messages = dc.Vector()
+	t.M_other_updates = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -24822,7 +24822,7 @@ type TL_channelMessagesFilter struct {
 	M_classID              int32
 	M_flags                TLObject
 	M_exclude_new_messages TLObject
-	M_ranges               TLObject
+	M_ranges               []TLObject
 }
 
 func (t *TL_channelMessagesFilter) ClassID() int32 {
@@ -24845,11 +24845,11 @@ func (t *TL_channelMessagesFilter) Get_exclude_new_messages() TLObject {
 	return t.M_exclude_new_messages
 }
 
-func (t *TL_channelMessagesFilter) Set_ranges(M_ranges TLObject) {
+func (t *TL_channelMessagesFilter) Set_ranges(M_ranges []TLObject) {
 	t.M_ranges = M_ranges
 }
 
-func (t *TL_channelMessagesFilter) Get_ranges() TLObject {
+func (t *TL_channelMessagesFilter) Get_ranges() []TLObject {
 	return t.M_ranges
 }
 
@@ -24864,7 +24864,7 @@ func (t *TL_channelMessagesFilter) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channelMessagesFilter))
 	ec.TLObject(t.Get_exclude_new_messages())
-	ec.TLObject(t.Get_ranges())
+	ec.Vector(t.Get_ranges())
 
 	return ec.GetBuffer()
 }
@@ -24873,7 +24873,7 @@ func (t *TL_channelMessagesFilter) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_exclude_new_messages = dc.TLObject()
-	t.M_ranges = dc.TLObject()
+	t.M_ranges = dc.Vector()
 
 }
 
@@ -25420,8 +25420,8 @@ func (t *TL_channelParticipantsSearch) Decode(b []byte) {
 type TL_channels_channelParticipants struct {
 	M_classID      int32
 	M_count        int32
-	M_participants TLObject
-	M_users        TLObject
+	M_participants []TLObject
+	M_users        []TLObject
 }
 
 func (t *TL_channels_channelParticipants) ClassID() int32 {
@@ -25436,19 +25436,19 @@ func (t *TL_channels_channelParticipants) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_channels_channelParticipants) Set_participants(M_participants TLObject) {
+func (t *TL_channels_channelParticipants) Set_participants(M_participants []TLObject) {
 	t.M_participants = M_participants
 }
 
-func (t *TL_channels_channelParticipants) Get_participants() TLObject {
+func (t *TL_channels_channelParticipants) Get_participants() []TLObject {
 	return t.M_participants
 }
 
-func (t *TL_channels_channelParticipants) Set_users(M_users TLObject) {
+func (t *TL_channels_channelParticipants) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_channels_channelParticipants) Get_users() TLObject {
+func (t *TL_channels_channelParticipants) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -25463,8 +25463,8 @@ func (t *TL_channels_channelParticipants) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_channelParticipants))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_participants())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_participants())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -25473,8 +25473,8 @@ func (t *TL_channels_channelParticipants) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_participants = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_participants = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -25505,7 +25505,7 @@ func (t *TL_channels_channelParticipantsNotModified) Decode(b []byte) {
 type TL_channels_channelParticipant struct {
 	M_classID     int32
 	M_participant TLObject
-	M_users       TLObject
+	M_users       []TLObject
 }
 
 func (t *TL_channels_channelParticipant) ClassID() int32 {
@@ -25520,11 +25520,11 @@ func (t *TL_channels_channelParticipant) Get_participant() TLObject {
 	return t.M_participant
 }
 
-func (t *TL_channels_channelParticipant) Set_users(M_users TLObject) {
+func (t *TL_channels_channelParticipant) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_channels_channelParticipant) Get_users() TLObject {
+func (t *TL_channels_channelParticipant) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -25539,7 +25539,7 @@ func (t *TL_channels_channelParticipant) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_channelParticipant))
 	ec.TLObject(t.Get_participant())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -25548,7 +25548,7 @@ func (t *TL_channels_channelParticipant) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_participant = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -25753,7 +25753,7 @@ func (t *TL_foundGifCached) Decode(b []byte) {
 type TL_messages_foundGifs struct {
 	M_classID     int32
 	M_next_offset int32
-	M_results     TLObject
+	M_results     []TLObject
 }
 
 func (t *TL_messages_foundGifs) ClassID() int32 {
@@ -25768,11 +25768,11 @@ func (t *TL_messages_foundGifs) Get_next_offset() int32 {
 	return t.M_next_offset
 }
 
-func (t *TL_messages_foundGifs) Set_results(M_results TLObject) {
+func (t *TL_messages_foundGifs) Set_results(M_results []TLObject) {
 	t.M_results = M_results
 }
 
-func (t *TL_messages_foundGifs) Get_results() TLObject {
+func (t *TL_messages_foundGifs) Get_results() []TLObject {
 	return t.M_results
 }
 
@@ -25787,7 +25787,7 @@ func (t *TL_messages_foundGifs) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_foundGifs))
 	ec.Int(t.Get_next_offset())
-	ec.TLObject(t.Get_results())
+	ec.Vector(t.Get_results())
 
 	return ec.GetBuffer()
 }
@@ -25796,7 +25796,7 @@ func (t *TL_messages_foundGifs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_next_offset = dc.Int()
-	t.M_results = dc.TLObject()
+	t.M_results = dc.Vector()
 
 }
 
@@ -25827,7 +25827,7 @@ func (t *TL_messages_savedGifsNotModified) Decode(b []byte) {
 type TL_messages_savedGifs struct {
 	M_classID int32
 	M_hash    int32
-	M_gifs    TLObject
+	M_gifs    []TLObject
 }
 
 func (t *TL_messages_savedGifs) ClassID() int32 {
@@ -25842,11 +25842,11 @@ func (t *TL_messages_savedGifs) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_messages_savedGifs) Set_gifs(M_gifs TLObject) {
+func (t *TL_messages_savedGifs) Set_gifs(M_gifs []TLObject) {
 	t.M_gifs = M_gifs
 }
 
-func (t *TL_messages_savedGifs) Get_gifs() TLObject {
+func (t *TL_messages_savedGifs) Get_gifs() []TLObject {
 	return t.M_gifs
 }
 
@@ -25861,7 +25861,7 @@ func (t *TL_messages_savedGifs) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_savedGifs))
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_gifs())
+	ec.Vector(t.Get_gifs())
 
 	return ec.GetBuffer()
 }
@@ -25870,7 +25870,7 @@ func (t *TL_messages_savedGifs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
-	t.M_gifs = dc.TLObject()
+	t.M_gifs = dc.Vector()
 
 }
 
@@ -25940,7 +25940,7 @@ type TL_inputBotInlineMessageText struct {
 	M_flags        TLObject
 	M_no_webpage   TLObject
 	M_message      string
-	M_entities     TLObject
+	M_entities     []TLObject
 	M_reply_markup TLObject
 }
 
@@ -25972,11 +25972,11 @@ func (t *TL_inputBotInlineMessageText) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_inputBotInlineMessageText) Set_entities(M_entities TLObject) {
+func (t *TL_inputBotInlineMessageText) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_inputBotInlineMessageText) Get_entities() TLObject {
+func (t *TL_inputBotInlineMessageText) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -26000,7 +26000,7 @@ func (t *TL_inputBotInlineMessageText) Encode() []byte {
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageText))
 	ec.TLObject(t.Get_no_webpage())
 	ec.String(t.Get_message())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.TLObject(t.Get_reply_markup())
 
 	return ec.GetBuffer()
@@ -26011,7 +26011,7 @@ func (t *TL_inputBotInlineMessageText) Decode(b []byte) {
 
 	t.M_no_webpage = dc.TLObject()
 	t.M_message = dc.String()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_reply_markup = dc.TLObject()
 
 }
@@ -26797,7 +26797,7 @@ type TL_botInlineMessageText struct {
 	M_flags        TLObject
 	M_no_webpage   TLObject
 	M_message      string
-	M_entities     TLObject
+	M_entities     []TLObject
 	M_reply_markup TLObject
 }
 
@@ -26829,11 +26829,11 @@ func (t *TL_botInlineMessageText) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_botInlineMessageText) Set_entities(M_entities TLObject) {
+func (t *TL_botInlineMessageText) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_botInlineMessageText) Get_entities() TLObject {
+func (t *TL_botInlineMessageText) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -26857,7 +26857,7 @@ func (t *TL_botInlineMessageText) Encode() []byte {
 	ec.Int(int32(TL_CLASS_botInlineMessageText))
 	ec.TLObject(t.Get_no_webpage())
 	ec.String(t.Get_message())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.TLObject(t.Get_reply_markup())
 
 	return ec.GetBuffer()
@@ -26868,7 +26868,7 @@ func (t *TL_botInlineMessageText) Decode(b []byte) {
 
 	t.M_no_webpage = dc.TLObject()
 	t.M_message = dc.String()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_reply_markup = dc.TLObject()
 
 }
@@ -27423,9 +27423,9 @@ type TL_messages_botResults struct {
 	M_query_id    int64
 	M_next_offset TLObject
 	M_switch_pm   TLObject
-	M_results     TLObject
+	M_results     []TLObject
 	M_cache_time  int32
-	M_users       TLObject
+	M_users       []TLObject
 }
 
 func (t *TL_messages_botResults) ClassID() int32 {
@@ -27472,11 +27472,11 @@ func (t *TL_messages_botResults) Get_switch_pm() TLObject {
 	return t.M_switch_pm
 }
 
-func (t *TL_messages_botResults) Set_results(M_results TLObject) {
+func (t *TL_messages_botResults) Set_results(M_results []TLObject) {
 	t.M_results = M_results
 }
 
-func (t *TL_messages_botResults) Get_results() TLObject {
+func (t *TL_messages_botResults) Get_results() []TLObject {
 	return t.M_results
 }
 
@@ -27488,11 +27488,11 @@ func (t *TL_messages_botResults) Get_cache_time() int32 {
 	return t.M_cache_time
 }
 
-func (t *TL_messages_botResults) Set_users(M_users TLObject) {
+func (t *TL_messages_botResults) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_botResults) Get_users() TLObject {
+func (t *TL_messages_botResults) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -27510,9 +27510,9 @@ func (t *TL_messages_botResults) Encode() []byte {
 	ec.Long(t.Get_query_id())
 	ec.TLObject(t.Get_next_offset())
 	ec.TLObject(t.Get_switch_pm())
-	ec.TLObject(t.Get_results())
+	ec.Vector(t.Get_results())
 	ec.Int(t.Get_cache_time())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -27524,9 +27524,9 @@ func (t *TL_messages_botResults) Decode(b []byte) {
 	t.M_query_id = dc.Long()
 	t.M_next_offset = dc.TLObject()
 	t.M_switch_pm = dc.TLObject()
-	t.M_results = dc.TLObject()
+	t.M_results = dc.Vector()
 	t.M_cache_time = dc.Int()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -28183,10 +28183,10 @@ func (t *TL_inlineBotSwitchPM) Decode(b []byte) {
 // messages_peerDialogs#3371c354
 type TL_messages_peerDialogs struct {
 	M_classID  int32
-	M_dialogs  TLObject
-	M_messages TLObject
-	M_chats    TLObject
-	M_users    TLObject
+	M_dialogs  []TLObject
+	M_messages []TLObject
+	M_chats    []TLObject
+	M_users    []TLObject
 	M_state    TLObject
 }
 
@@ -28194,35 +28194,35 @@ func (t *TL_messages_peerDialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_peerDialogs) Set_dialogs(M_dialogs TLObject) {
+func (t *TL_messages_peerDialogs) Set_dialogs(M_dialogs []TLObject) {
 	t.M_dialogs = M_dialogs
 }
 
-func (t *TL_messages_peerDialogs) Get_dialogs() TLObject {
+func (t *TL_messages_peerDialogs) Get_dialogs() []TLObject {
 	return t.M_dialogs
 }
 
-func (t *TL_messages_peerDialogs) Set_messages(M_messages TLObject) {
+func (t *TL_messages_peerDialogs) Set_messages(M_messages []TLObject) {
 	t.M_messages = M_messages
 }
 
-func (t *TL_messages_peerDialogs) Get_messages() TLObject {
+func (t *TL_messages_peerDialogs) Get_messages() []TLObject {
 	return t.M_messages
 }
 
-func (t *TL_messages_peerDialogs) Set_chats(M_chats TLObject) {
+func (t *TL_messages_peerDialogs) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_messages_peerDialogs) Get_chats() TLObject {
+func (t *TL_messages_peerDialogs) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_messages_peerDialogs) Set_users(M_users TLObject) {
+func (t *TL_messages_peerDialogs) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_peerDialogs) Get_users() TLObject {
+func (t *TL_messages_peerDialogs) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -28244,10 +28244,10 @@ func (t *TL_messages_peerDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_peerDialogs))
-	ec.TLObject(t.Get_dialogs())
-	ec.TLObject(t.Get_messages())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_dialogs())
+	ec.Vector(t.Get_messages())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 	ec.TLObject(t.Get_state())
 
 	return ec.GetBuffer()
@@ -28256,10 +28256,10 @@ func (t *TL_messages_peerDialogs) Encode() []byte {
 func (t *TL_messages_peerDialogs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_dialogs = dc.TLObject()
-	t.M_messages = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_dialogs = dc.Vector()
+	t.M_messages = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 	t.M_state = dc.TLObject()
 
 }
@@ -28458,7 +28458,7 @@ type TL_topPeerCategoryPeers struct {
 	M_classID  int32
 	M_category TLObject
 	M_count    int32
-	M_peers    TLObject
+	M_peers    []TLObject
 }
 
 func (t *TL_topPeerCategoryPeers) ClassID() int32 {
@@ -28481,11 +28481,11 @@ func (t *TL_topPeerCategoryPeers) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_topPeerCategoryPeers) Set_peers(M_peers TLObject) {
+func (t *TL_topPeerCategoryPeers) Set_peers(M_peers []TLObject) {
 	t.M_peers = M_peers
 }
 
-func (t *TL_topPeerCategoryPeers) Get_peers() TLObject {
+func (t *TL_topPeerCategoryPeers) Get_peers() []TLObject {
 	return t.M_peers
 }
 
@@ -28501,7 +28501,7 @@ func (t *TL_topPeerCategoryPeers) Encode() []byte {
 	ec.Int(int32(TL_CLASS_topPeerCategoryPeers))
 	ec.TLObject(t.Get_category())
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_peers())
+	ec.Vector(t.Get_peers())
 
 	return ec.GetBuffer()
 }
@@ -28511,7 +28511,7 @@ func (t *TL_topPeerCategoryPeers) Decode(b []byte) {
 
 	t.M_category = dc.TLObject()
 	t.M_count = dc.Int()
-	t.M_peers = dc.TLObject()
+	t.M_peers = dc.Vector()
 
 }
 
@@ -28541,36 +28541,36 @@ func (t *TL_contacts_topPeersNotModified) Decode(b []byte) {
 // contacts_topPeers#70b772a8
 type TL_contacts_topPeers struct {
 	M_classID    int32
-	M_categories TLObject
-	M_chats      TLObject
-	M_users      TLObject
+	M_categories []TLObject
+	M_chats      []TLObject
+	M_users      []TLObject
 }
 
 func (t *TL_contacts_topPeers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_topPeers) Set_categories(M_categories TLObject) {
+func (t *TL_contacts_topPeers) Set_categories(M_categories []TLObject) {
 	t.M_categories = M_categories
 }
 
-func (t *TL_contacts_topPeers) Get_categories() TLObject {
+func (t *TL_contacts_topPeers) Get_categories() []TLObject {
 	return t.M_categories
 }
 
-func (t *TL_contacts_topPeers) Set_chats(M_chats TLObject) {
+func (t *TL_contacts_topPeers) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_contacts_topPeers) Get_chats() TLObject {
+func (t *TL_contacts_topPeers) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_contacts_topPeers) Set_users(M_users TLObject) {
+func (t *TL_contacts_topPeers) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_contacts_topPeers) Get_users() TLObject {
+func (t *TL_contacts_topPeers) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -28584,9 +28584,9 @@ func (t *TL_contacts_topPeers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_topPeers))
-	ec.TLObject(t.Get_categories())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_categories())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -28594,9 +28594,9 @@ func (t *TL_contacts_topPeers) Encode() []byte {
 func (t *TL_contacts_topPeers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_categories = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_categories = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -28630,7 +28630,7 @@ type TL_draftMessage struct {
 	M_no_webpage      TLObject
 	M_reply_to_msg_id TLObject
 	M_message         string
-	M_entities        TLObject
+	M_entities        []TLObject
 	M_date            int32
 }
 
@@ -28670,11 +28670,11 @@ func (t *TL_draftMessage) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_draftMessage) Set_entities(M_entities TLObject) {
+func (t *TL_draftMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_draftMessage) Get_entities() TLObject {
+func (t *TL_draftMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -28699,7 +28699,7 @@ func (t *TL_draftMessage) Encode() []byte {
 	ec.TLObject(t.Get_no_webpage())
 	ec.TLObject(t.Get_reply_to_msg_id())
 	ec.String(t.Get_message())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.Int(t.Get_date())
 
 	return ec.GetBuffer()
@@ -28711,7 +28711,7 @@ func (t *TL_draftMessage) Decode(b []byte) {
 	t.M_no_webpage = dc.TLObject()
 	t.M_reply_to_msg_id = dc.TLObject()
 	t.M_message = dc.String()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_date = dc.Int()
 
 }
@@ -28743,8 +28743,8 @@ func (t *TL_messages_featuredStickersNotModified) Decode(b []byte) {
 type TL_messages_featuredStickers struct {
 	M_classID int32
 	M_hash    int32
-	M_sets    TLObject
-	M_unread  TLObject
+	M_sets    []TLObject
+	M_unread  []int64
 }
 
 func (t *TL_messages_featuredStickers) ClassID() int32 {
@@ -28759,19 +28759,19 @@ func (t *TL_messages_featuredStickers) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_messages_featuredStickers) Set_sets(M_sets TLObject) {
+func (t *TL_messages_featuredStickers) Set_sets(M_sets []TLObject) {
 	t.M_sets = M_sets
 }
 
-func (t *TL_messages_featuredStickers) Get_sets() TLObject {
+func (t *TL_messages_featuredStickers) Get_sets() []TLObject {
 	return t.M_sets
 }
 
-func (t *TL_messages_featuredStickers) Set_unread(M_unread TLObject) {
+func (t *TL_messages_featuredStickers) Set_unread(M_unread []int64) {
 	t.M_unread = M_unread
 }
 
-func (t *TL_messages_featuredStickers) Get_unread() TLObject {
+func (t *TL_messages_featuredStickers) Get_unread() []int64 {
 	return t.M_unread
 }
 
@@ -28786,8 +28786,8 @@ func (t *TL_messages_featuredStickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_featuredStickers))
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_sets())
-	ec.TLObject(t.Get_unread())
+	ec.Vector(t.Get_sets())
+	ec.VectorLong(t.Get_unread())
 
 	return ec.GetBuffer()
 }
@@ -28796,8 +28796,8 @@ func (t *TL_messages_featuredStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
-	t.M_sets = dc.TLObject()
-	t.M_unread = dc.TLObject()
+	t.M_sets = dc.Vector()
+	t.M_unread = dc.VectorLong()
 
 }
 
@@ -28828,7 +28828,7 @@ func (t *TL_messages_recentStickersNotModified) Decode(b []byte) {
 type TL_messages_recentStickers struct {
 	M_classID  int32
 	M_hash     int32
-	M_stickers TLObject
+	M_stickers []TLObject
 }
 
 func (t *TL_messages_recentStickers) ClassID() int32 {
@@ -28843,11 +28843,11 @@ func (t *TL_messages_recentStickers) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_messages_recentStickers) Set_stickers(M_stickers TLObject) {
+func (t *TL_messages_recentStickers) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_messages_recentStickers) Get_stickers() TLObject {
+func (t *TL_messages_recentStickers) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -28862,7 +28862,7 @@ func (t *TL_messages_recentStickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_recentStickers))
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_stickers())
 
 	return ec.GetBuffer()
 }
@@ -28871,7 +28871,7 @@ func (t *TL_messages_recentStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
-	t.M_stickers = dc.TLObject()
+	t.M_stickers = dc.Vector()
 
 }
 
@@ -28879,7 +28879,7 @@ func (t *TL_messages_recentStickers) Decode(b []byte) {
 type TL_messages_archivedStickers struct {
 	M_classID int32
 	M_count   int32
-	M_sets    TLObject
+	M_sets    []TLObject
 }
 
 func (t *TL_messages_archivedStickers) ClassID() int32 {
@@ -28894,11 +28894,11 @@ func (t *TL_messages_archivedStickers) Get_count() int32 {
 	return t.M_count
 }
 
-func (t *TL_messages_archivedStickers) Set_sets(M_sets TLObject) {
+func (t *TL_messages_archivedStickers) Set_sets(M_sets []TLObject) {
 	t.M_sets = M_sets
 }
 
-func (t *TL_messages_archivedStickers) Get_sets() TLObject {
+func (t *TL_messages_archivedStickers) Get_sets() []TLObject {
 	return t.M_sets
 }
 
@@ -28913,7 +28913,7 @@ func (t *TL_messages_archivedStickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_archivedStickers))
 	ec.Int(t.Get_count())
-	ec.TLObject(t.Get_sets())
+	ec.Vector(t.Get_sets())
 
 	return ec.GetBuffer()
 }
@@ -28922,7 +28922,7 @@ func (t *TL_messages_archivedStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
-	t.M_sets = dc.TLObject()
+	t.M_sets = dc.Vector()
 
 }
 
@@ -28952,18 +28952,18 @@ func (t *TL_messages_stickerSetInstallResultSuccess) Decode(b []byte) {
 // messages_stickerSetInstallResultArchive#35e410a8
 type TL_messages_stickerSetInstallResultArchive struct {
 	M_classID int32
-	M_sets    TLObject
+	M_sets    []TLObject
 }
 
 func (t *TL_messages_stickerSetInstallResultArchive) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_stickerSetInstallResultArchive) Set_sets(M_sets TLObject) {
+func (t *TL_messages_stickerSetInstallResultArchive) Set_sets(M_sets []TLObject) {
 	t.M_sets = M_sets
 }
 
-func (t *TL_messages_stickerSetInstallResultArchive) Get_sets() TLObject {
+func (t *TL_messages_stickerSetInstallResultArchive) Get_sets() []TLObject {
 	return t.M_sets
 }
 
@@ -28977,7 +28977,7 @@ func (t *TL_messages_stickerSetInstallResultArchive) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_stickerSetInstallResultArchive))
-	ec.TLObject(t.Get_sets())
+	ec.Vector(t.Get_sets())
 
 	return ec.GetBuffer()
 }
@@ -28985,7 +28985,7 @@ func (t *TL_messages_stickerSetInstallResultArchive) Encode() []byte {
 func (t *TL_messages_stickerSetInstallResultArchive) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_sets = dc.TLObject()
+	t.M_sets = dc.Vector()
 
 }
 
@@ -29044,7 +29044,7 @@ func (t *TL_stickerSetCovered) Decode(b []byte) {
 type TL_stickerSetMultiCovered struct {
 	M_classID int32
 	M_set     TLObject
-	M_covers  TLObject
+	M_covers  []TLObject
 }
 
 func (t *TL_stickerSetMultiCovered) ClassID() int32 {
@@ -29059,11 +29059,11 @@ func (t *TL_stickerSetMultiCovered) Get_set() TLObject {
 	return t.M_set
 }
 
-func (t *TL_stickerSetMultiCovered) Set_covers(M_covers TLObject) {
+func (t *TL_stickerSetMultiCovered) Set_covers(M_covers []TLObject) {
 	t.M_covers = M_covers
 }
 
-func (t *TL_stickerSetMultiCovered) Get_covers() TLObject {
+func (t *TL_stickerSetMultiCovered) Get_covers() []TLObject {
 	return t.M_covers
 }
 
@@ -29078,7 +29078,7 @@ func (t *TL_stickerSetMultiCovered) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_stickerSetMultiCovered))
 	ec.TLObject(t.Get_set())
-	ec.TLObject(t.Get_covers())
+	ec.Vector(t.Get_covers())
 
 	return ec.GetBuffer()
 }
@@ -29087,7 +29087,7 @@ func (t *TL_stickerSetMultiCovered) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_set = dc.TLObject()
-	t.M_covers = dc.TLObject()
+	t.M_covers = dc.Vector()
 
 }
 
@@ -29526,27 +29526,27 @@ func (t *TL_highScore) Decode(b []byte) {
 // messages_highScores#9a3bfd99
 type TL_messages_highScores struct {
 	M_classID int32
-	M_scores  TLObject
-	M_users   TLObject
+	M_scores  []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_messages_highScores) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_highScores) Set_scores(M_scores TLObject) {
+func (t *TL_messages_highScores) Set_scores(M_scores []TLObject) {
 	t.M_scores = M_scores
 }
 
-func (t *TL_messages_highScores) Get_scores() TLObject {
+func (t *TL_messages_highScores) Get_scores() []TLObject {
 	return t.M_scores
 }
 
-func (t *TL_messages_highScores) Set_users(M_users TLObject) {
+func (t *TL_messages_highScores) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_highScores) Get_users() TLObject {
+func (t *TL_messages_highScores) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -29560,8 +29560,8 @@ func (t *TL_messages_highScores) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_highScores))
-	ec.TLObject(t.Get_scores())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_scores())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -29569,8 +29569,8 @@ func (t *TL_messages_highScores) Encode() []byte {
 func (t *TL_messages_highScores) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_scores = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_scores = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -29953,18 +29953,18 @@ func (t *TL_textEmail) Decode(b []byte) {
 // textConcat#7e6260d7
 type TL_textConcat struct {
 	M_classID int32
-	M_texts   TLObject
+	M_texts   []TLObject
 }
 
 func (t *TL_textConcat) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_textConcat) Set_texts(M_texts TLObject) {
+func (t *TL_textConcat) Set_texts(M_texts []TLObject) {
 	t.M_texts = M_texts
 }
 
-func (t *TL_textConcat) Get_texts() TLObject {
+func (t *TL_textConcat) Get_texts() []TLObject {
 	return t.M_texts
 }
 
@@ -29978,7 +29978,7 @@ func (t *TL_textConcat) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_textConcat))
-	ec.TLObject(t.Get_texts())
+	ec.Vector(t.Get_texts())
 
 	return ec.GetBuffer()
 }
@@ -29986,7 +29986,7 @@ func (t *TL_textConcat) Encode() []byte {
 func (t *TL_textConcat) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_texts = dc.TLObject()
+	t.M_texts = dc.Vector()
 
 }
 
@@ -30422,7 +30422,7 @@ func (t *TL_pageBlockAnchor) Decode(b []byte) {
 type TL_pageBlockList struct {
 	M_classID int32
 	M_ordered TLObject
-	M_items   TLObject
+	M_items   []TLObject
 }
 
 func (t *TL_pageBlockList) ClassID() int32 {
@@ -30437,11 +30437,11 @@ func (t *TL_pageBlockList) Get_ordered() TLObject {
 	return t.M_ordered
 }
 
-func (t *TL_pageBlockList) Set_items(M_items TLObject) {
+func (t *TL_pageBlockList) Set_items(M_items []TLObject) {
 	t.M_items = M_items
 }
 
-func (t *TL_pageBlockList) Get_items() TLObject {
+func (t *TL_pageBlockList) Get_items() []TLObject {
 	return t.M_items
 }
 
@@ -30456,7 +30456,7 @@ func (t *TL_pageBlockList) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_pageBlockList))
 	ec.TLObject(t.Get_ordered())
-	ec.TLObject(t.Get_items())
+	ec.Vector(t.Get_items())
 
 	return ec.GetBuffer()
 }
@@ -30465,7 +30465,7 @@ func (t *TL_pageBlockList) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ordered = dc.TLObject()
-	t.M_items = dc.TLObject()
+	t.M_items = dc.Vector()
 
 }
 
@@ -30878,7 +30878,7 @@ type TL_pageBlockEmbedPost struct {
 	M_author_photo_id int64
 	M_author          string
 	M_date            int32
-	M_blocks          TLObject
+	M_blocks          []TLObject
 	M_caption         TLObject
 }
 
@@ -30926,11 +30926,11 @@ func (t *TL_pageBlockEmbedPost) Get_date() int32 {
 	return t.M_date
 }
 
-func (t *TL_pageBlockEmbedPost) Set_blocks(M_blocks TLObject) {
+func (t *TL_pageBlockEmbedPost) Set_blocks(M_blocks []TLObject) {
 	t.M_blocks = M_blocks
 }
 
-func (t *TL_pageBlockEmbedPost) Get_blocks() TLObject {
+func (t *TL_pageBlockEmbedPost) Get_blocks() []TLObject {
 	return t.M_blocks
 }
 
@@ -30957,7 +30957,7 @@ func (t *TL_pageBlockEmbedPost) Encode() []byte {
 	ec.Long(t.Get_author_photo_id())
 	ec.String(t.Get_author())
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_blocks())
+	ec.Vector(t.Get_blocks())
 	ec.TLObject(t.Get_caption())
 
 	return ec.GetBuffer()
@@ -30971,7 +30971,7 @@ func (t *TL_pageBlockEmbedPost) Decode(b []byte) {
 	t.M_author_photo_id = dc.Long()
 	t.M_author = dc.String()
 	t.M_date = dc.Int()
-	t.M_blocks = dc.TLObject()
+	t.M_blocks = dc.Vector()
 	t.M_caption = dc.TLObject()
 
 }
@@ -30979,7 +30979,7 @@ func (t *TL_pageBlockEmbedPost) Decode(b []byte) {
 // pageBlockCollage#8b31c4f
 type TL_pageBlockCollage struct {
 	M_classID int32
-	M_items   TLObject
+	M_items   []TLObject
 	M_caption TLObject
 }
 
@@ -30987,11 +30987,11 @@ func (t *TL_pageBlockCollage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pageBlockCollage) Set_items(M_items TLObject) {
+func (t *TL_pageBlockCollage) Set_items(M_items []TLObject) {
 	t.M_items = M_items
 }
 
-func (t *TL_pageBlockCollage) Get_items() TLObject {
+func (t *TL_pageBlockCollage) Get_items() []TLObject {
 	return t.M_items
 }
 
@@ -31013,7 +31013,7 @@ func (t *TL_pageBlockCollage) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_pageBlockCollage))
-	ec.TLObject(t.Get_items())
+	ec.Vector(t.Get_items())
 	ec.TLObject(t.Get_caption())
 
 	return ec.GetBuffer()
@@ -31022,7 +31022,7 @@ func (t *TL_pageBlockCollage) Encode() []byte {
 func (t *TL_pageBlockCollage) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_items = dc.TLObject()
+	t.M_items = dc.Vector()
 	t.M_caption = dc.TLObject()
 
 }
@@ -31030,7 +31030,7 @@ func (t *TL_pageBlockCollage) Decode(b []byte) {
 // pageBlockSlideshow#130c8963
 type TL_pageBlockSlideshow struct {
 	M_classID int32
-	M_items   TLObject
+	M_items   []TLObject
 	M_caption TLObject
 }
 
@@ -31038,11 +31038,11 @@ func (t *TL_pageBlockSlideshow) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pageBlockSlideshow) Set_items(M_items TLObject) {
+func (t *TL_pageBlockSlideshow) Set_items(M_items []TLObject) {
 	t.M_items = M_items
 }
 
-func (t *TL_pageBlockSlideshow) Get_items() TLObject {
+func (t *TL_pageBlockSlideshow) Get_items() []TLObject {
 	return t.M_items
 }
 
@@ -31064,7 +31064,7 @@ func (t *TL_pageBlockSlideshow) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_pageBlockSlideshow))
-	ec.TLObject(t.Get_items())
+	ec.Vector(t.Get_items())
 	ec.TLObject(t.Get_caption())
 
 	return ec.GetBuffer()
@@ -31073,7 +31073,7 @@ func (t *TL_pageBlockSlideshow) Encode() []byte {
 func (t *TL_pageBlockSlideshow) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_items = dc.TLObject()
+	t.M_items = dc.Vector()
 	t.M_caption = dc.TLObject()
 
 }
@@ -31172,36 +31172,36 @@ func (t *TL_pageBlockAudio) Decode(b []byte) {
 // pagePart#8e3f9ebe
 type TL_pagePart struct {
 	M_classID   int32
-	M_blocks    TLObject
-	M_photos    TLObject
-	M_documents TLObject
+	M_blocks    []TLObject
+	M_photos    []TLObject
+	M_documents []TLObject
 }
 
 func (t *TL_pagePart) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pagePart) Set_blocks(M_blocks TLObject) {
+func (t *TL_pagePart) Set_blocks(M_blocks []TLObject) {
 	t.M_blocks = M_blocks
 }
 
-func (t *TL_pagePart) Get_blocks() TLObject {
+func (t *TL_pagePart) Get_blocks() []TLObject {
 	return t.M_blocks
 }
 
-func (t *TL_pagePart) Set_photos(M_photos TLObject) {
+func (t *TL_pagePart) Set_photos(M_photos []TLObject) {
 	t.M_photos = M_photos
 }
 
-func (t *TL_pagePart) Get_photos() TLObject {
+func (t *TL_pagePart) Get_photos() []TLObject {
 	return t.M_photos
 }
 
-func (t *TL_pagePart) Set_documents(M_documents TLObject) {
+func (t *TL_pagePart) Set_documents(M_documents []TLObject) {
 	t.M_documents = M_documents
 }
 
-func (t *TL_pagePart) Get_documents() TLObject {
+func (t *TL_pagePart) Get_documents() []TLObject {
 	return t.M_documents
 }
 
@@ -31215,9 +31215,9 @@ func (t *TL_pagePart) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_pagePart))
-	ec.TLObject(t.Get_blocks())
-	ec.TLObject(t.Get_photos())
-	ec.TLObject(t.Get_documents())
+	ec.Vector(t.Get_blocks())
+	ec.Vector(t.Get_photos())
+	ec.Vector(t.Get_documents())
 
 	return ec.GetBuffer()
 }
@@ -31225,45 +31225,45 @@ func (t *TL_pagePart) Encode() []byte {
 func (t *TL_pagePart) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_blocks = dc.TLObject()
-	t.M_photos = dc.TLObject()
-	t.M_documents = dc.TLObject()
+	t.M_blocks = dc.Vector()
+	t.M_photos = dc.Vector()
+	t.M_documents = dc.Vector()
 
 }
 
 // pageFull#556ec7aa
 type TL_pageFull struct {
 	M_classID   int32
-	M_blocks    TLObject
-	M_photos    TLObject
-	M_documents TLObject
+	M_blocks    []TLObject
+	M_photos    []TLObject
+	M_documents []TLObject
 }
 
 func (t *TL_pageFull) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pageFull) Set_blocks(M_blocks TLObject) {
+func (t *TL_pageFull) Set_blocks(M_blocks []TLObject) {
 	t.M_blocks = M_blocks
 }
 
-func (t *TL_pageFull) Get_blocks() TLObject {
+func (t *TL_pageFull) Get_blocks() []TLObject {
 	return t.M_blocks
 }
 
-func (t *TL_pageFull) Set_photos(M_photos TLObject) {
+func (t *TL_pageFull) Set_photos(M_photos []TLObject) {
 	t.M_photos = M_photos
 }
 
-func (t *TL_pageFull) Get_photos() TLObject {
+func (t *TL_pageFull) Get_photos() []TLObject {
 	return t.M_photos
 }
 
-func (t *TL_pageFull) Set_documents(M_documents TLObject) {
+func (t *TL_pageFull) Set_documents(M_documents []TLObject) {
 	t.M_documents = M_documents
 }
 
-func (t *TL_pageFull) Get_documents() TLObject {
+func (t *TL_pageFull) Get_documents() []TLObject {
 	return t.M_documents
 }
 
@@ -31277,9 +31277,9 @@ func (t *TL_pageFull) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_pageFull))
-	ec.TLObject(t.Get_blocks())
-	ec.TLObject(t.Get_photos())
-	ec.TLObject(t.Get_documents())
+	ec.Vector(t.Get_blocks())
+	ec.Vector(t.Get_photos())
+	ec.Vector(t.Get_documents())
 
 	return ec.GetBuffer()
 }
@@ -31287,9 +31287,9 @@ func (t *TL_pageFull) Encode() []byte {
 func (t *TL_pageFull) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_blocks = dc.TLObject()
-	t.M_photos = dc.TLObject()
-	t.M_documents = dc.TLObject()
+	t.M_blocks = dc.Vector()
+	t.M_photos = dc.Vector()
+	t.M_documents = dc.Vector()
 
 }
 
@@ -31489,7 +31489,7 @@ type TL_invoice struct {
 	M_phone_to_provider          TLObject
 	M_email_to_provider          TLObject
 	M_currency                   string
-	M_prices                     TLObject
+	M_prices                     []TLObject
 }
 
 func (t *TL_invoice) ClassID() int32 {
@@ -31576,11 +31576,11 @@ func (t *TL_invoice) Get_currency() string {
 	return t.M_currency
 }
 
-func (t *TL_invoice) Set_prices(M_prices TLObject) {
+func (t *TL_invoice) Set_prices(M_prices []TLObject) {
 	t.M_prices = M_prices
 }
 
-func (t *TL_invoice) Get_prices() TLObject {
+func (t *TL_invoice) Get_prices() []TLObject {
 	return t.M_prices
 }
 
@@ -31603,7 +31603,7 @@ func (t *TL_invoice) Encode() []byte {
 	ec.TLObject(t.Get_phone_to_provider())
 	ec.TLObject(t.Get_email_to_provider())
 	ec.String(t.Get_currency())
-	ec.TLObject(t.Get_prices())
+	ec.Vector(t.Get_prices())
 
 	return ec.GetBuffer()
 }
@@ -31620,7 +31620,7 @@ func (t *TL_invoice) Decode(b []byte) {
 	t.M_phone_to_provider = dc.TLObject()
 	t.M_email_to_provider = dc.TLObject()
 	t.M_currency = dc.String()
-	t.M_prices = dc.TLObject()
+	t.M_prices = dc.Vector()
 
 }
 
@@ -31910,7 +31910,7 @@ type TL_webDocument struct {
 	M_access_hash int64
 	M_size        int32
 	M_mime_type   string
-	M_attributes  TLObject
+	M_attributes  []TLObject
 	M_dc_id       int32
 }
 
@@ -31950,11 +31950,11 @@ func (t *TL_webDocument) Get_mime_type() string {
 	return t.M_mime_type
 }
 
-func (t *TL_webDocument) Set_attributes(M_attributes TLObject) {
+func (t *TL_webDocument) Set_attributes(M_attributes []TLObject) {
 	t.M_attributes = M_attributes
 }
 
-func (t *TL_webDocument) Get_attributes() TLObject {
+func (t *TL_webDocument) Get_attributes() []TLObject {
 	return t.M_attributes
 }
 
@@ -31980,7 +31980,7 @@ func (t *TL_webDocument) Encode() []byte {
 	ec.Long(t.Get_access_hash())
 	ec.Int(t.Get_size())
 	ec.String(t.Get_mime_type())
-	ec.TLObject(t.Get_attributes())
+	ec.Vector(t.Get_attributes())
 	ec.Int(t.Get_dc_id())
 
 	return ec.GetBuffer()
@@ -31993,7 +31993,7 @@ func (t *TL_webDocument) Decode(b []byte) {
 	t.M_access_hash = dc.Long()
 	t.M_size = dc.Int()
 	t.M_mime_type = dc.String()
-	t.M_attributes = dc.TLObject()
+	t.M_attributes = dc.Vector()
 	t.M_dc_id = dc.Int()
 
 }
@@ -32004,7 +32004,7 @@ type TL_inputWebDocument struct {
 	M_url        string
 	M_size       int32
 	M_mime_type  string
-	M_attributes TLObject
+	M_attributes []TLObject
 }
 
 func (t *TL_inputWebDocument) ClassID() int32 {
@@ -32035,11 +32035,11 @@ func (t *TL_inputWebDocument) Get_mime_type() string {
 	return t.M_mime_type
 }
 
-func (t *TL_inputWebDocument) Set_attributes(M_attributes TLObject) {
+func (t *TL_inputWebDocument) Set_attributes(M_attributes []TLObject) {
 	t.M_attributes = M_attributes
 }
 
-func (t *TL_inputWebDocument) Get_attributes() TLObject {
+func (t *TL_inputWebDocument) Get_attributes() []TLObject {
 	return t.M_attributes
 }
 
@@ -32056,7 +32056,7 @@ func (t *TL_inputWebDocument) Encode() []byte {
 	ec.String(t.Get_url())
 	ec.Int(t.Get_size())
 	ec.String(t.Get_mime_type())
-	ec.TLObject(t.Get_attributes())
+	ec.Vector(t.Get_attributes())
 
 	return ec.GetBuffer()
 }
@@ -32067,7 +32067,7 @@ func (t *TL_inputWebDocument) Decode(b []byte) {
 	t.M_url = dc.String()
 	t.M_size = dc.Int()
 	t.M_mime_type = dc.String()
-	t.M_attributes = dc.TLObject()
+	t.M_attributes = dc.Vector()
 
 }
 
@@ -32129,7 +32129,7 @@ type TL_upload_webFile struct {
 	M_mime_type string
 	M_file_type TLObject
 	M_mtime     int32
-	M_bytes     int32
+	M_bytes     TLObject
 }
 
 func (t *TL_upload_webFile) ClassID() int32 {
@@ -32168,11 +32168,11 @@ func (t *TL_upload_webFile) Get_mtime() int32 {
 	return t.M_mtime
 }
 
-func (t *TL_upload_webFile) Set_bytes(M_bytes int32) {
+func (t *TL_upload_webFile) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_upload_webFile) Get_bytes() int32 {
+func (t *TL_upload_webFile) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -32190,7 +32190,7 @@ func (t *TL_upload_webFile) Encode() []byte {
 	ec.String(t.Get_mime_type())
 	ec.TLObject(t.Get_file_type())
 	ec.Int(t.Get_mtime())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -32202,7 +32202,7 @@ func (t *TL_upload_webFile) Decode(b []byte) {
 	t.M_mime_type = dc.String()
 	t.M_file_type = dc.TLObject()
 	t.M_mtime = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -32220,7 +32220,7 @@ type TL_payments_paymentForm struct {
 	M_native_params        TLObject
 	M_saved_info           TLObject
 	M_saved_credentials    TLObject
-	M_users                TLObject
+	M_users                []TLObject
 }
 
 func (t *TL_payments_paymentForm) ClassID() int32 {
@@ -32315,11 +32315,11 @@ func (t *TL_payments_paymentForm) Get_saved_credentials() TLObject {
 	return t.M_saved_credentials
 }
 
-func (t *TL_payments_paymentForm) Set_users(M_users TLObject) {
+func (t *TL_payments_paymentForm) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_payments_paymentForm) Get_users() TLObject {
+func (t *TL_payments_paymentForm) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -32343,7 +32343,7 @@ func (t *TL_payments_paymentForm) Encode() []byte {
 	ec.TLObject(t.Get_native_params())
 	ec.TLObject(t.Get_saved_info())
 	ec.TLObject(t.Get_saved_credentials())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -32361,7 +32361,7 @@ func (t *TL_payments_paymentForm) Decode(b []byte) {
 	t.M_native_params = dc.TLObject()
 	t.M_saved_info = dc.TLObject()
 	t.M_saved_credentials = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -32370,7 +32370,7 @@ type TL_payments_validatedRequestedInfo struct {
 	M_classID          int32
 	M_flags            TLObject
 	M_id               TLObject
-	M_shipping_options TLObject
+	M_shipping_options []TLObject
 }
 
 func (t *TL_payments_validatedRequestedInfo) ClassID() int32 {
@@ -32393,11 +32393,11 @@ func (t *TL_payments_validatedRequestedInfo) Get_id() TLObject {
 	return t.M_id
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_shipping_options(M_shipping_options TLObject) {
+func (t *TL_payments_validatedRequestedInfo) Set_shipping_options(M_shipping_options []TLObject) {
 	t.M_shipping_options = M_shipping_options
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_shipping_options() TLObject {
+func (t *TL_payments_validatedRequestedInfo) Get_shipping_options() []TLObject {
 	return t.M_shipping_options
 }
 
@@ -32412,7 +32412,7 @@ func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_payments_validatedRequestedInfo))
 	ec.TLObject(t.Get_id())
-	ec.TLObject(t.Get_shipping_options())
+	ec.Vector(t.Get_shipping_options())
 
 	return ec.GetBuffer()
 }
@@ -32421,7 +32421,7 @@ func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
-	t.M_shipping_options = dc.TLObject()
+	t.M_shipping_options = dc.Vector()
 
 }
 
@@ -32518,7 +32518,7 @@ type TL_payments_paymentReceipt struct {
 	M_currency          string
 	M_total_amount      int64
 	M_credentials_title string
-	M_users             TLObject
+	M_users             []TLObject
 }
 
 func (t *TL_payments_paymentReceipt) ClassID() int32 {
@@ -32605,11 +32605,11 @@ func (t *TL_payments_paymentReceipt) Get_credentials_title() string {
 	return t.M_credentials_title
 }
 
-func (t *TL_payments_paymentReceipt) Set_users(M_users TLObject) {
+func (t *TL_payments_paymentReceipt) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_payments_paymentReceipt) Get_users() TLObject {
+func (t *TL_payments_paymentReceipt) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -32632,7 +32632,7 @@ func (t *TL_payments_paymentReceipt) Encode() []byte {
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
 	ec.String(t.Get_credentials_title())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -32649,7 +32649,7 @@ func (t *TL_payments_paymentReceipt) Decode(b []byte) {
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 	t.M_credentials_title = dc.String()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -32717,7 +32717,7 @@ func (t *TL_payments_savedInfo) Decode(b []byte) {
 type TL_inputPaymentCredentialsSaved struct {
 	M_classID      int32
 	M_id           string
-	M_tmp_password int32
+	M_tmp_password TLObject
 }
 
 func (t *TL_inputPaymentCredentialsSaved) ClassID() int32 {
@@ -32732,11 +32732,11 @@ func (t *TL_inputPaymentCredentialsSaved) Get_id() string {
 	return t.M_id
 }
 
-func (t *TL_inputPaymentCredentialsSaved) Set_tmp_password(M_tmp_password int32) {
+func (t *TL_inputPaymentCredentialsSaved) Set_tmp_password(M_tmp_password TLObject) {
 	t.M_tmp_password = M_tmp_password
 }
 
-func (t *TL_inputPaymentCredentialsSaved) Get_tmp_password() int32 {
+func (t *TL_inputPaymentCredentialsSaved) Get_tmp_password() TLObject {
 	return t.M_tmp_password
 }
 
@@ -32751,7 +32751,7 @@ func (t *TL_inputPaymentCredentialsSaved) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentialsSaved))
 	ec.String(t.Get_id())
-	ec.Int(t.Get_tmp_password())
+	ec.TLObject(t.Get_tmp_password())
 
 	return ec.GetBuffer()
 }
@@ -32760,7 +32760,7 @@ func (t *TL_inputPaymentCredentialsSaved) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
-	t.M_tmp_password = dc.Int()
+	t.M_tmp_password = dc.TLObject()
 
 }
 
@@ -32907,7 +32907,7 @@ func (t *TL_inputPaymentCredentialsAndroidPay) Decode(b []byte) {
 // account_tmpPassword#db64fd34
 type TL_account_tmpPassword struct {
 	M_classID      int32
-	M_tmp_password int32
+	M_tmp_password TLObject
 	M_valid_until  int32
 }
 
@@ -32915,11 +32915,11 @@ func (t *TL_account_tmpPassword) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_tmpPassword) Set_tmp_password(M_tmp_password int32) {
+func (t *TL_account_tmpPassword) Set_tmp_password(M_tmp_password TLObject) {
 	t.M_tmp_password = M_tmp_password
 }
 
-func (t *TL_account_tmpPassword) Get_tmp_password() int32 {
+func (t *TL_account_tmpPassword) Get_tmp_password() TLObject {
 	return t.M_tmp_password
 }
 
@@ -32941,7 +32941,7 @@ func (t *TL_account_tmpPassword) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_tmpPassword))
-	ec.Int(t.Get_tmp_password())
+	ec.TLObject(t.Get_tmp_password())
 	ec.Int(t.Get_valid_until())
 
 	return ec.GetBuffer()
@@ -32950,7 +32950,7 @@ func (t *TL_account_tmpPassword) Encode() []byte {
 func (t *TL_account_tmpPassword) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_tmp_password = dc.Int()
+	t.M_tmp_password = dc.TLObject()
 	t.M_valid_until = dc.Int()
 
 }
@@ -32960,7 +32960,7 @@ type TL_shippingOption struct {
 	M_classID int32
 	M_id      string
 	M_title   string
-	M_prices  TLObject
+	M_prices  []TLObject
 }
 
 func (t *TL_shippingOption) ClassID() int32 {
@@ -32983,11 +32983,11 @@ func (t *TL_shippingOption) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_shippingOption) Set_prices(M_prices TLObject) {
+func (t *TL_shippingOption) Set_prices(M_prices []TLObject) {
 	t.M_prices = M_prices
 }
 
-func (t *TL_shippingOption) Get_prices() TLObject {
+func (t *TL_shippingOption) Get_prices() []TLObject {
 	return t.M_prices
 }
 
@@ -33003,7 +33003,7 @@ func (t *TL_shippingOption) Encode() []byte {
 	ec.Int(int32(TL_CLASS_shippingOption))
 	ec.String(t.Get_id())
 	ec.String(t.Get_title())
-	ec.TLObject(t.Get_prices())
+	ec.Vector(t.Get_prices())
 
 	return ec.GetBuffer()
 }
@@ -33013,7 +33013,7 @@ func (t *TL_shippingOption) Decode(b []byte) {
 
 	t.M_id = dc.String()
 	t.M_title = dc.String()
-	t.M_prices = dc.TLObject()
+	t.M_prices = dc.Vector()
 
 }
 
@@ -33302,7 +33302,7 @@ type TL_phoneCallRequested struct {
 	M_date           int32
 	M_admin_id       int32
 	M_participant_id int32
-	M_g_a_hash       int32
+	M_g_a_hash       TLObject
 	M_protocol       TLObject
 }
 
@@ -33350,11 +33350,11 @@ func (t *TL_phoneCallRequested) Get_participant_id() int32 {
 	return t.M_participant_id
 }
 
-func (t *TL_phoneCallRequested) Set_g_a_hash(M_g_a_hash int32) {
+func (t *TL_phoneCallRequested) Set_g_a_hash(M_g_a_hash TLObject) {
 	t.M_g_a_hash = M_g_a_hash
 }
 
-func (t *TL_phoneCallRequested) Get_g_a_hash() int32 {
+func (t *TL_phoneCallRequested) Get_g_a_hash() TLObject {
 	return t.M_g_a_hash
 }
 
@@ -33381,7 +33381,7 @@ func (t *TL_phoneCallRequested) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
-	ec.Int(t.Get_g_a_hash())
+	ec.TLObject(t.Get_g_a_hash())
 	ec.TLObject(t.Get_protocol())
 
 	return ec.GetBuffer()
@@ -33395,7 +33395,7 @@ func (t *TL_phoneCallRequested) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
-	t.M_g_a_hash = dc.Int()
+	t.M_g_a_hash = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
 }
@@ -33408,7 +33408,7 @@ type TL_phoneCallAccepted struct {
 	M_date           int32
 	M_admin_id       int32
 	M_participant_id int32
-	M_g_b            int32
+	M_g_b            TLObject
 	M_protocol       TLObject
 }
 
@@ -33456,11 +33456,11 @@ func (t *TL_phoneCallAccepted) Get_participant_id() int32 {
 	return t.M_participant_id
 }
 
-func (t *TL_phoneCallAccepted) Set_g_b(M_g_b int32) {
+func (t *TL_phoneCallAccepted) Set_g_b(M_g_b TLObject) {
 	t.M_g_b = M_g_b
 }
 
-func (t *TL_phoneCallAccepted) Get_g_b() int32 {
+func (t *TL_phoneCallAccepted) Get_g_b() TLObject {
 	return t.M_g_b
 }
 
@@ -33487,7 +33487,7 @@ func (t *TL_phoneCallAccepted) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
-	ec.Int(t.Get_g_b())
+	ec.TLObject(t.Get_g_b())
 	ec.TLObject(t.Get_protocol())
 
 	return ec.GetBuffer()
@@ -33501,7 +33501,7 @@ func (t *TL_phoneCallAccepted) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
-	t.M_g_b = dc.Int()
+	t.M_g_b = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
 }
@@ -33514,11 +33514,11 @@ type TL_phoneCall struct {
 	M_date                    int32
 	M_admin_id                int32
 	M_participant_id          int32
-	M_g_a_or_b                int32
+	M_g_a_or_b                TLObject
 	M_key_fingerprint         int64
 	M_protocol                TLObject
 	M_connection              TLObject
-	M_alternative_connections TLObject
+	M_alternative_connections []TLObject
 	M_start_date              int32
 }
 
@@ -33566,11 +33566,11 @@ func (t *TL_phoneCall) Get_participant_id() int32 {
 	return t.M_participant_id
 }
 
-func (t *TL_phoneCall) Set_g_a_or_b(M_g_a_or_b int32) {
+func (t *TL_phoneCall) Set_g_a_or_b(M_g_a_or_b TLObject) {
 	t.M_g_a_or_b = M_g_a_or_b
 }
 
-func (t *TL_phoneCall) Get_g_a_or_b() int32 {
+func (t *TL_phoneCall) Get_g_a_or_b() TLObject {
 	return t.M_g_a_or_b
 }
 
@@ -33598,11 +33598,11 @@ func (t *TL_phoneCall) Get_connection() TLObject {
 	return t.M_connection
 }
 
-func (t *TL_phoneCall) Set_alternative_connections(M_alternative_connections TLObject) {
+func (t *TL_phoneCall) Set_alternative_connections(M_alternative_connections []TLObject) {
 	t.M_alternative_connections = M_alternative_connections
 }
 
-func (t *TL_phoneCall) Get_alternative_connections() TLObject {
+func (t *TL_phoneCall) Get_alternative_connections() []TLObject {
 	return t.M_alternative_connections
 }
 
@@ -33629,11 +33629,11 @@ func (t *TL_phoneCall) Encode() []byte {
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
-	ec.Int(t.Get_g_a_or_b())
+	ec.TLObject(t.Get_g_a_or_b())
 	ec.Long(t.Get_key_fingerprint())
 	ec.TLObject(t.Get_protocol())
 	ec.TLObject(t.Get_connection())
-	ec.TLObject(t.Get_alternative_connections())
+	ec.Vector(t.Get_alternative_connections())
 	ec.Int(t.Get_start_date())
 
 	return ec.GetBuffer()
@@ -33647,11 +33647,11 @@ func (t *TL_phoneCall) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
-	t.M_g_a_or_b = dc.Int()
+	t.M_g_a_or_b = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 	t.M_protocol = dc.TLObject()
 	t.M_connection = dc.TLObject()
-	t.M_alternative_connections = dc.TLObject()
+	t.M_alternative_connections = dc.Vector()
 	t.M_start_date = dc.Int()
 
 }
@@ -33756,7 +33756,7 @@ type TL_phoneConnection struct {
 	M_ip       string
 	M_ipv6     string
 	M_port     int32
-	M_peer_tag int32
+	M_peer_tag TLObject
 }
 
 func (t *TL_phoneConnection) ClassID() int32 {
@@ -33795,11 +33795,11 @@ func (t *TL_phoneConnection) Get_port() int32 {
 	return t.M_port
 }
 
-func (t *TL_phoneConnection) Set_peer_tag(M_peer_tag int32) {
+func (t *TL_phoneConnection) Set_peer_tag(M_peer_tag TLObject) {
 	t.M_peer_tag = M_peer_tag
 }
 
-func (t *TL_phoneConnection) Get_peer_tag() int32 {
+func (t *TL_phoneConnection) Get_peer_tag() TLObject {
 	return t.M_peer_tag
 }
 
@@ -33817,7 +33817,7 @@ func (t *TL_phoneConnection) Encode() []byte {
 	ec.String(t.Get_ip())
 	ec.String(t.Get_ipv6())
 	ec.Int(t.Get_port())
-	ec.Int(t.Get_peer_tag())
+	ec.TLObject(t.Get_peer_tag())
 
 	return ec.GetBuffer()
 }
@@ -33829,7 +33829,7 @@ func (t *TL_phoneConnection) Decode(b []byte) {
 	t.M_ip = dc.String()
 	t.M_ipv6 = dc.String()
 	t.M_port = dc.Int()
-	t.M_peer_tag = dc.Int()
+	t.M_peer_tag = dc.TLObject()
 
 }
 
@@ -33919,7 +33919,7 @@ func (t *TL_phoneCallProtocol) Decode(b []byte) {
 type TL_phone_phoneCall struct {
 	M_classID    int32
 	M_phone_call TLObject
-	M_users      TLObject
+	M_users      []TLObject
 }
 
 func (t *TL_phone_phoneCall) ClassID() int32 {
@@ -33934,11 +33934,11 @@ func (t *TL_phone_phoneCall) Get_phone_call() TLObject {
 	return t.M_phone_call
 }
 
-func (t *TL_phone_phoneCall) Set_users(M_users TLObject) {
+func (t *TL_phone_phoneCall) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_phone_phoneCall) Get_users() TLObject {
+func (t *TL_phone_phoneCall) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -33953,7 +33953,7 @@ func (t *TL_phone_phoneCall) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_phone_phoneCall))
 	ec.TLObject(t.Get_phone_call())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -33962,25 +33962,25 @@ func (t *TL_phone_phoneCall) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_call = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
 // upload_cdnFileReuploadNeeded#eea8e46e
 type TL_upload_cdnFileReuploadNeeded struct {
 	M_classID       int32
-	M_request_token int32
+	M_request_token TLObject
 }
 
 func (t *TL_upload_cdnFileReuploadNeeded) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_upload_cdnFileReuploadNeeded) Set_request_token(M_request_token int32) {
+func (t *TL_upload_cdnFileReuploadNeeded) Set_request_token(M_request_token TLObject) {
 	t.M_request_token = M_request_token
 }
 
-func (t *TL_upload_cdnFileReuploadNeeded) Get_request_token() int32 {
+func (t *TL_upload_cdnFileReuploadNeeded) Get_request_token() TLObject {
 	return t.M_request_token
 }
 
@@ -33994,7 +33994,7 @@ func (t *TL_upload_cdnFileReuploadNeeded) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_upload_cdnFileReuploadNeeded))
-	ec.Int(t.Get_request_token())
+	ec.TLObject(t.Get_request_token())
 
 	return ec.GetBuffer()
 }
@@ -34002,25 +34002,25 @@ func (t *TL_upload_cdnFileReuploadNeeded) Encode() []byte {
 func (t *TL_upload_cdnFileReuploadNeeded) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_request_token = dc.Int()
+	t.M_request_token = dc.TLObject()
 
 }
 
 // upload_cdnFile#a99fca4f
 type TL_upload_cdnFile struct {
 	M_classID int32
-	M_bytes   int32
+	M_bytes   TLObject
 }
 
 func (t *TL_upload_cdnFile) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_upload_cdnFile) Set_bytes(M_bytes int32) {
+func (t *TL_upload_cdnFile) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_upload_cdnFile) Get_bytes() int32 {
+func (t *TL_upload_cdnFile) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -34034,7 +34034,7 @@ func (t *TL_upload_cdnFile) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_upload_cdnFile))
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -34042,7 +34042,7 @@ func (t *TL_upload_cdnFile) Encode() []byte {
 func (t *TL_upload_cdnFile) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -34100,18 +34100,18 @@ func (t *TL_cdnPublicKey) Decode(b []byte) {
 // cdnConfig#5725e40a
 type TL_cdnConfig struct {
 	M_classID     int32
-	M_public_keys TLObject
+	M_public_keys []TLObject
 }
 
 func (t *TL_cdnConfig) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_cdnConfig) Set_public_keys(M_public_keys TLObject) {
+func (t *TL_cdnConfig) Set_public_keys(M_public_keys []TLObject) {
 	t.M_public_keys = M_public_keys
 }
 
-func (t *TL_cdnConfig) Get_public_keys() TLObject {
+func (t *TL_cdnConfig) Get_public_keys() []TLObject {
 	return t.M_public_keys
 }
 
@@ -34125,7 +34125,7 @@ func (t *TL_cdnConfig) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_cdnConfig))
-	ec.TLObject(t.Get_public_keys())
+	ec.Vector(t.Get_public_keys())
 
 	return ec.GetBuffer()
 }
@@ -34133,7 +34133,7 @@ func (t *TL_cdnConfig) Encode() []byte {
 func (t *TL_cdnConfig) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_public_keys = dc.TLObject()
+	t.M_public_keys = dc.Vector()
 
 }
 
@@ -34349,7 +34349,7 @@ type TL_langPackDifference struct {
 	M_lang_code    string
 	M_from_version int32
 	M_version      int32
-	M_strings      TLObject
+	M_strings      []TLObject
 }
 
 func (t *TL_langPackDifference) ClassID() int32 {
@@ -34380,11 +34380,11 @@ func (t *TL_langPackDifference) Get_version() int32 {
 	return t.M_version
 }
 
-func (t *TL_langPackDifference) Set_strings(M_strings TLObject) {
+func (t *TL_langPackDifference) Set_strings(M_strings []TLObject) {
 	t.M_strings = M_strings
 }
 
-func (t *TL_langPackDifference) Get_strings() TLObject {
+func (t *TL_langPackDifference) Get_strings() []TLObject {
 	return t.M_strings
 }
 
@@ -34401,7 +34401,7 @@ func (t *TL_langPackDifference) Encode() []byte {
 	ec.String(t.Get_lang_code())
 	ec.Int(t.Get_from_version())
 	ec.Int(t.Get_version())
-	ec.TLObject(t.Get_strings())
+	ec.Vector(t.Get_strings())
 
 	return ec.GetBuffer()
 }
@@ -34412,7 +34412,7 @@ func (t *TL_langPackDifference) Decode(b []byte) {
 	t.M_lang_code = dc.String()
 	t.M_from_version = dc.Int()
 	t.M_version = dc.Int()
-	t.M_strings = dc.TLObject()
+	t.M_strings = dc.Vector()
 
 }
 
@@ -35522,36 +35522,36 @@ func (t *TL_channelAdminLogEvent) Decode(b []byte) {
 // channels_adminLogResults#ed8af74d
 type TL_channels_adminLogResults struct {
 	M_classID int32
-	M_events  TLObject
-	M_chats   TLObject
-	M_users   TLObject
+	M_events  []TLObject
+	M_chats   []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_channels_adminLogResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channels_adminLogResults) Set_events(M_events TLObject) {
+func (t *TL_channels_adminLogResults) Set_events(M_events []TLObject) {
 	t.M_events = M_events
 }
 
-func (t *TL_channels_adminLogResults) Get_events() TLObject {
+func (t *TL_channels_adminLogResults) Get_events() []TLObject {
 	return t.M_events
 }
 
-func (t *TL_channels_adminLogResults) Set_chats(M_chats TLObject) {
+func (t *TL_channels_adminLogResults) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_channels_adminLogResults) Get_chats() TLObject {
+func (t *TL_channels_adminLogResults) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_channels_adminLogResults) Set_users(M_users TLObject) {
+func (t *TL_channels_adminLogResults) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_channels_adminLogResults) Get_users() TLObject {
+func (t *TL_channels_adminLogResults) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -35565,9 +35565,9 @@ func (t *TL_channels_adminLogResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_channels_adminLogResults))
-	ec.TLObject(t.Get_events())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_events())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -35575,9 +35575,9 @@ func (t *TL_channels_adminLogResults) Encode() []byte {
 func (t *TL_channels_adminLogResults) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_events = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_events = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -35829,7 +35829,7 @@ type TL_cdnFileHash struct {
 	M_classID int32
 	M_offset  int32
 	M_limit   int32
-	M_hash    int32
+	M_hash    TLObject
 }
 
 func (t *TL_cdnFileHash) ClassID() int32 {
@@ -35852,11 +35852,11 @@ func (t *TL_cdnFileHash) Get_limit() int32 {
 	return t.M_limit
 }
 
-func (t *TL_cdnFileHash) Set_hash(M_hash int32) {
+func (t *TL_cdnFileHash) Set_hash(M_hash TLObject) {
 	t.M_hash = M_hash
 }
 
-func (t *TL_cdnFileHash) Get_hash() int32 {
+func (t *TL_cdnFileHash) Get_hash() TLObject {
 	return t.M_hash
 }
 
@@ -35872,7 +35872,7 @@ func (t *TL_cdnFileHash) Encode() []byte {
 	ec.Int(int32(TL_CLASS_cdnFileHash))
 	ec.Int(t.Get_offset())
 	ec.Int(t.Get_limit())
-	ec.Int(t.Get_hash())
+	ec.TLObject(t.Get_hash())
 
 	return ec.GetBuffer()
 }
@@ -35882,7 +35882,7 @@ func (t *TL_cdnFileHash) Decode(b []byte) {
 
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
-	t.M_hash = dc.Int()
+	t.M_hash = dc.TLObject()
 
 }
 
@@ -35913,8 +35913,8 @@ func (t *TL_messages_favedStickersNotModified) Decode(b []byte) {
 type TL_messages_favedStickers struct {
 	M_classID  int32
 	M_hash     int32
-	M_packs    TLObject
-	M_stickers TLObject
+	M_packs    []TLObject
+	M_stickers []TLObject
 }
 
 func (t *TL_messages_favedStickers) ClassID() int32 {
@@ -35929,19 +35929,19 @@ func (t *TL_messages_favedStickers) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_messages_favedStickers) Set_packs(M_packs TLObject) {
+func (t *TL_messages_favedStickers) Set_packs(M_packs []TLObject) {
 	t.M_packs = M_packs
 }
 
-func (t *TL_messages_favedStickers) Get_packs() TLObject {
+func (t *TL_messages_favedStickers) Get_packs() []TLObject {
 	return t.M_packs
 }
 
-func (t *TL_messages_favedStickers) Set_stickers(M_stickers TLObject) {
+func (t *TL_messages_favedStickers) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_messages_favedStickers) Get_stickers() TLObject {
+func (t *TL_messages_favedStickers) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -35956,8 +35956,8 @@ func (t *TL_messages_favedStickers) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_favedStickers))
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_packs())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_packs())
+	ec.Vector(t.Get_stickers())
 
 	return ec.GetBuffer()
 }
@@ -35966,8 +35966,8 @@ func (t *TL_messages_favedStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
-	t.M_packs = dc.TLObject()
-	t.M_stickers = dc.TLObject()
+	t.M_packs = dc.Vector()
+	t.M_stickers = dc.Vector()
 
 }
 
@@ -36218,36 +36218,36 @@ func (t *TL_recentMeUrlStickerSet) Decode(b []byte) {
 // help_recentMeUrls#e0310d7
 type TL_help_recentMeUrls struct {
 	M_classID int32
-	M_urls    TLObject
-	M_chats   TLObject
-	M_users   TLObject
+	M_urls    []TLObject
+	M_chats   []TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_help_recentMeUrls) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_help_recentMeUrls) Set_urls(M_urls TLObject) {
+func (t *TL_help_recentMeUrls) Set_urls(M_urls []TLObject) {
 	t.M_urls = M_urls
 }
 
-func (t *TL_help_recentMeUrls) Get_urls() TLObject {
+func (t *TL_help_recentMeUrls) Get_urls() []TLObject {
 	return t.M_urls
 }
 
-func (t *TL_help_recentMeUrls) Set_chats(M_chats TLObject) {
+func (t *TL_help_recentMeUrls) Set_chats(M_chats []TLObject) {
 	t.M_chats = M_chats
 }
 
-func (t *TL_help_recentMeUrls) Get_chats() TLObject {
+func (t *TL_help_recentMeUrls) Get_chats() []TLObject {
 	return t.M_chats
 }
 
-func (t *TL_help_recentMeUrls) Set_users(M_users TLObject) {
+func (t *TL_help_recentMeUrls) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_help_recentMeUrls) Get_users() TLObject {
+func (t *TL_help_recentMeUrls) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -36261,9 +36261,9 @@ func (t *TL_help_recentMeUrls) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_help_recentMeUrls))
-	ec.TLObject(t.Get_urls())
-	ec.TLObject(t.Get_chats())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_urls())
+	ec.Vector(t.Get_chats())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -36271,9 +36271,9 @@ func (t *TL_help_recentMeUrls) Encode() []byte {
 func (t *TL_help_recentMeUrls) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_urls = dc.TLObject()
-	t.M_chats = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_urls = dc.Vector()
+	t.M_chats = dc.Vector()
+	t.M_users = dc.Vector()
 
 }
 
@@ -36382,7 +36382,7 @@ func (t *TL_invokeAfterMsg) Decode(b []byte) {
 // invokeAfterMsgs#3dc4b4f0
 type TL_invokeAfterMsgs struct {
 	M_classID int32
-	M_msg_ids TLObject
+	M_msg_ids []int64
 	M_query   TLObject
 }
 
@@ -36390,11 +36390,11 @@ func (t *TL_invokeAfterMsgs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_invokeAfterMsgs) Set_msg_ids(M_msg_ids TLObject) {
+func (t *TL_invokeAfterMsgs) Set_msg_ids(M_msg_ids []int64) {
 	t.M_msg_ids = M_msg_ids
 }
 
-func (t *TL_invokeAfterMsgs) Get_msg_ids() TLObject {
+func (t *TL_invokeAfterMsgs) Get_msg_ids() []int64 {
 	return t.M_msg_ids
 }
 
@@ -36416,7 +36416,7 @@ func (t *TL_invokeAfterMsgs) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_invokeAfterMsgs))
-	ec.TLObject(t.Get_msg_ids())
+	ec.VectorLong(t.Get_msg_ids())
 	ec.TLObject(t.Get_query())
 
 	return ec.GetBuffer()
@@ -36425,7 +36425,7 @@ func (t *TL_invokeAfterMsgs) Encode() []byte {
 func (t *TL_invokeAfterMsgs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_msg_ids = dc.TLObject()
+	t.M_msg_ids = dc.VectorLong()
 	t.M_query = dc.TLObject()
 
 }
@@ -36966,7 +36966,7 @@ func (t *TL_auth_resetAuthorizations) Decode(b []byte) {
 // auth_sendInvites#771c1d97
 type TL_auth_sendInvites struct {
 	M_classID       int32
-	M_phone_numbers TLObject
+	M_phone_numbers []string
 	M_message       string
 }
 
@@ -36974,11 +36974,11 @@ func (t *TL_auth_sendInvites) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_sendInvites) Set_phone_numbers(M_phone_numbers TLObject) {
+func (t *TL_auth_sendInvites) Set_phone_numbers(M_phone_numbers []string) {
 	t.M_phone_numbers = M_phone_numbers
 }
 
-func (t *TL_auth_sendInvites) Get_phone_numbers() TLObject {
+func (t *TL_auth_sendInvites) Get_phone_numbers() []string {
 	return t.M_phone_numbers
 }
 
@@ -37000,7 +37000,7 @@ func (t *TL_auth_sendInvites) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_auth_sendInvites))
-	ec.TLObject(t.Get_phone_numbers())
+	ec.VectorString(t.Get_phone_numbers())
 	ec.String(t.Get_message())
 
 	return ec.GetBuffer()
@@ -37009,7 +37009,7 @@ func (t *TL_auth_sendInvites) Encode() []byte {
 func (t *TL_auth_sendInvites) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_phone_numbers = dc.TLObject()
+	t.M_phone_numbers = dc.VectorString()
 	t.M_message = dc.String()
 
 }
@@ -37058,7 +37058,7 @@ func (t *TL_auth_exportAuthorization) Decode(b []byte) {
 type TL_auth_importAuthorization struct {
 	M_classID int32
 	M_id      int32
-	M_bytes   int32
+	M_bytes   TLObject
 }
 
 func (t *TL_auth_importAuthorization) ClassID() int32 {
@@ -37073,11 +37073,11 @@ func (t *TL_auth_importAuthorization) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_auth_importAuthorization) Set_bytes(M_bytes int32) {
+func (t *TL_auth_importAuthorization) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_auth_importAuthorization) Get_bytes() int32 {
+func (t *TL_auth_importAuthorization) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -37092,7 +37092,7 @@ func (t *TL_auth_importAuthorization) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_auth_importAuthorization))
 	ec.Int(t.Get_id())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -37101,7 +37101,7 @@ func (t *TL_auth_importAuthorization) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -37111,7 +37111,7 @@ type TL_auth_bindTempAuthKey struct {
 	M_perm_auth_key_id  int64
 	M_nonce             int64
 	M_expires_at        int32
-	M_encrypted_message int32
+	M_encrypted_message TLObject
 }
 
 func (t *TL_auth_bindTempAuthKey) ClassID() int32 {
@@ -37142,11 +37142,11 @@ func (t *TL_auth_bindTempAuthKey) Get_expires_at() int32 {
 	return t.M_expires_at
 }
 
-func (t *TL_auth_bindTempAuthKey) Set_encrypted_message(M_encrypted_message int32) {
+func (t *TL_auth_bindTempAuthKey) Set_encrypted_message(M_encrypted_message TLObject) {
 	t.M_encrypted_message = M_encrypted_message
 }
 
-func (t *TL_auth_bindTempAuthKey) Get_encrypted_message() int32 {
+func (t *TL_auth_bindTempAuthKey) Get_encrypted_message() TLObject {
 	return t.M_encrypted_message
 }
 
@@ -37163,7 +37163,7 @@ func (t *TL_auth_bindTempAuthKey) Encode() []byte {
 	ec.Long(t.Get_perm_auth_key_id())
 	ec.Long(t.Get_nonce())
 	ec.Int(t.Get_expires_at())
-	ec.Int(t.Get_encrypted_message())
+	ec.TLObject(t.Get_encrypted_message())
 
 	return ec.GetBuffer()
 }
@@ -37174,7 +37174,7 @@ func (t *TL_auth_bindTempAuthKey) Decode(b []byte) {
 	t.M_perm_auth_key_id = dc.Long()
 	t.M_nonce = dc.Long()
 	t.M_expires_at = dc.Int()
-	t.M_encrypted_message = dc.Int()
+	t.M_encrypted_message = dc.TLObject()
 
 }
 
@@ -37254,18 +37254,18 @@ func (t *TL_auth_importBotAuthorization) Decode(b []byte) {
 // auth_checkPassword#a63011e
 type TL_auth_checkPassword struct {
 	M_classID       int32
-	M_password_hash int32
+	M_password_hash TLObject
 }
 
 func (t *TL_auth_checkPassword) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_checkPassword) Set_password_hash(M_password_hash int32) {
+func (t *TL_auth_checkPassword) Set_password_hash(M_password_hash TLObject) {
 	t.M_password_hash = M_password_hash
 }
 
-func (t *TL_auth_checkPassword) Get_password_hash() int32 {
+func (t *TL_auth_checkPassword) Get_password_hash() TLObject {
 	return t.M_password_hash
 }
 
@@ -37279,7 +37279,7 @@ func (t *TL_auth_checkPassword) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_auth_checkPassword))
-	ec.Int(t.Get_password_hash())
+	ec.TLObject(t.Get_password_hash())
 
 	return ec.GetBuffer()
 }
@@ -37287,7 +37287,7 @@ func (t *TL_auth_checkPassword) Encode() []byte {
 func (t *TL_auth_checkPassword) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_password_hash = dc.Int()
+	t.M_password_hash = dc.TLObject()
 
 }
 
@@ -37459,18 +37459,18 @@ func (t *TL_auth_cancelCode) Decode(b []byte) {
 // auth_dropTempAuthKeys#8e48a188
 type TL_auth_dropTempAuthKeys struct {
 	M_classID          int32
-	M_except_auth_keys TLObject
+	M_except_auth_keys []int64
 }
 
 func (t *TL_auth_dropTempAuthKeys) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_dropTempAuthKeys) Set_except_auth_keys(M_except_auth_keys TLObject) {
+func (t *TL_auth_dropTempAuthKeys) Set_except_auth_keys(M_except_auth_keys []int64) {
 	t.M_except_auth_keys = M_except_auth_keys
 }
 
-func (t *TL_auth_dropTempAuthKeys) Get_except_auth_keys() TLObject {
+func (t *TL_auth_dropTempAuthKeys) Get_except_auth_keys() []int64 {
 	return t.M_except_auth_keys
 }
 
@@ -37484,7 +37484,7 @@ func (t *TL_auth_dropTempAuthKeys) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_auth_dropTempAuthKeys))
-	ec.TLObject(t.Get_except_auth_keys())
+	ec.VectorLong(t.Get_except_auth_keys())
 
 	return ec.GetBuffer()
 }
@@ -37492,7 +37492,7 @@ func (t *TL_auth_dropTempAuthKeys) Encode() []byte {
 func (t *TL_auth_dropTempAuthKeys) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_except_auth_keys = dc.TLObject()
+	t.M_except_auth_keys = dc.VectorLong()
 
 }
 
@@ -38021,7 +38021,7 @@ func (t *TL_account_getPrivacy) Decode(b []byte) {
 type TL_account_setPrivacy struct {
 	M_classID int32
 	M_key     TLObject
-	M_rules   TLObject
+	M_rules   []TLObject
 }
 
 func (t *TL_account_setPrivacy) ClassID() int32 {
@@ -38036,11 +38036,11 @@ func (t *TL_account_setPrivacy) Get_key() TLObject {
 	return t.M_key
 }
 
-func (t *TL_account_setPrivacy) Set_rules(M_rules TLObject) {
+func (t *TL_account_setPrivacy) Set_rules(M_rules []TLObject) {
 	t.M_rules = M_rules
 }
 
-func (t *TL_account_setPrivacy) Get_rules() TLObject {
+func (t *TL_account_setPrivacy) Get_rules() []TLObject {
 	return t.M_rules
 }
 
@@ -38055,7 +38055,7 @@ func (t *TL_account_setPrivacy) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_account_setPrivacy))
 	ec.TLObject(t.Get_key())
-	ec.TLObject(t.Get_rules())
+	ec.Vector(t.Get_rules())
 
 	return ec.GetBuffer()
 }
@@ -38064,7 +38064,7 @@ func (t *TL_account_setPrivacy) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.TLObject()
-	t.M_rules = dc.TLObject()
+	t.M_rules = dc.Vector()
 
 }
 
@@ -38433,18 +38433,18 @@ func (t *TL_account_getPassword) Decode(b []byte) {
 // account_getPasswordSettings#bc8d11bb
 type TL_account_getPasswordSettings struct {
 	M_classID               int32
-	M_current_password_hash int32
+	M_current_password_hash TLObject
 }
 
 func (t *TL_account_getPasswordSettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_getPasswordSettings) Set_current_password_hash(M_current_password_hash int32) {
+func (t *TL_account_getPasswordSettings) Set_current_password_hash(M_current_password_hash TLObject) {
 	t.M_current_password_hash = M_current_password_hash
 }
 
-func (t *TL_account_getPasswordSettings) Get_current_password_hash() int32 {
+func (t *TL_account_getPasswordSettings) Get_current_password_hash() TLObject {
 	return t.M_current_password_hash
 }
 
@@ -38458,7 +38458,7 @@ func (t *TL_account_getPasswordSettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_getPasswordSettings))
-	ec.Int(t.Get_current_password_hash())
+	ec.TLObject(t.Get_current_password_hash())
 
 	return ec.GetBuffer()
 }
@@ -38466,14 +38466,14 @@ func (t *TL_account_getPasswordSettings) Encode() []byte {
 func (t *TL_account_getPasswordSettings) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_current_password_hash = dc.Int()
+	t.M_current_password_hash = dc.TLObject()
 
 }
 
 // account_updatePasswordSettings#fa7c4b86
 type TL_account_updatePasswordSettings struct {
 	M_classID               int32
-	M_current_password_hash int32
+	M_current_password_hash TLObject
 	M_new_settings          TLObject
 }
 
@@ -38481,11 +38481,11 @@ func (t *TL_account_updatePasswordSettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_updatePasswordSettings) Set_current_password_hash(M_current_password_hash int32) {
+func (t *TL_account_updatePasswordSettings) Set_current_password_hash(M_current_password_hash TLObject) {
 	t.M_current_password_hash = M_current_password_hash
 }
 
-func (t *TL_account_updatePasswordSettings) Get_current_password_hash() int32 {
+func (t *TL_account_updatePasswordSettings) Get_current_password_hash() TLObject {
 	return t.M_current_password_hash
 }
 
@@ -38507,7 +38507,7 @@ func (t *TL_account_updatePasswordSettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_updatePasswordSettings))
-	ec.Int(t.Get_current_password_hash())
+	ec.TLObject(t.Get_current_password_hash())
 	ec.TLObject(t.Get_new_settings())
 
 	return ec.GetBuffer()
@@ -38516,7 +38516,7 @@ func (t *TL_account_updatePasswordSettings) Encode() []byte {
 func (t *TL_account_updatePasswordSettings) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_current_password_hash = dc.Int()
+	t.M_current_password_hash = dc.TLObject()
 	t.M_new_settings = dc.TLObject()
 
 }
@@ -38646,7 +38646,7 @@ func (t *TL_account_confirmPhone) Decode(b []byte) {
 // account_getTmpPassword#4a82327e
 type TL_account_getTmpPassword struct {
 	M_classID       int32
-	M_password_hash int32
+	M_password_hash TLObject
 	M_period        int32
 }
 
@@ -38654,11 +38654,11 @@ func (t *TL_account_getTmpPassword) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_getTmpPassword) Set_password_hash(M_password_hash int32) {
+func (t *TL_account_getTmpPassword) Set_password_hash(M_password_hash TLObject) {
 	t.M_password_hash = M_password_hash
 }
 
-func (t *TL_account_getTmpPassword) Get_password_hash() int32 {
+func (t *TL_account_getTmpPassword) Get_password_hash() TLObject {
 	return t.M_password_hash
 }
 
@@ -38680,7 +38680,7 @@ func (t *TL_account_getTmpPassword) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_account_getTmpPassword))
-	ec.Int(t.Get_password_hash())
+	ec.TLObject(t.Get_password_hash())
 	ec.Int(t.Get_period())
 
 	return ec.GetBuffer()
@@ -38689,7 +38689,7 @@ func (t *TL_account_getTmpPassword) Encode() []byte {
 func (t *TL_account_getTmpPassword) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_password_hash = dc.Int()
+	t.M_password_hash = dc.TLObject()
 	t.M_period = dc.Int()
 
 }
@@ -38697,18 +38697,18 @@ func (t *TL_account_getTmpPassword) Decode(b []byte) {
 // users_getUsers#d91a548
 type TL_users_getUsers struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []TLObject
 }
 
 func (t *TL_users_getUsers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_users_getUsers) Set_id(M_id TLObject) {
+func (t *TL_users_getUsers) Set_id(M_id []TLObject) {
 	t.M_id = M_id
 }
 
-func (t *TL_users_getUsers) Get_id() TLObject {
+func (t *TL_users_getUsers) Get_id() []TLObject {
 	return t.M_id
 }
 
@@ -38722,7 +38722,7 @@ func (t *TL_users_getUsers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_users_getUsers))
-	ec.TLObject(t.Get_id())
+	ec.Vector(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -38730,7 +38730,7 @@ func (t *TL_users_getUsers) Encode() []byte {
 func (t *TL_users_getUsers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.Vector()
 
 }
 
@@ -38840,18 +38840,18 @@ func (t *TL_contacts_getContacts) Decode(b []byte) {
 // contacts_importContacts#2c800be5
 type TL_contacts_importContacts struct {
 	M_classID  int32
-	M_contacts TLObject
+	M_contacts []TLObject
 }
 
 func (t *TL_contacts_importContacts) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_importContacts) Set_contacts(M_contacts TLObject) {
+func (t *TL_contacts_importContacts) Set_contacts(M_contacts []TLObject) {
 	t.M_contacts = M_contacts
 }
 
-func (t *TL_contacts_importContacts) Get_contacts() TLObject {
+func (t *TL_contacts_importContacts) Get_contacts() []TLObject {
 	return t.M_contacts
 }
 
@@ -38865,7 +38865,7 @@ func (t *TL_contacts_importContacts) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_importContacts))
-	ec.TLObject(t.Get_contacts())
+	ec.Vector(t.Get_contacts())
 
 	return ec.GetBuffer()
 }
@@ -38873,7 +38873,7 @@ func (t *TL_contacts_importContacts) Encode() []byte {
 func (t *TL_contacts_importContacts) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_contacts = dc.TLObject()
+	t.M_contacts = dc.Vector()
 
 }
 
@@ -38920,18 +38920,18 @@ func (t *TL_contacts_deleteContact) Decode(b []byte) {
 // contacts_deleteContacts#59ab389e
 type TL_contacts_deleteContacts struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []TLObject
 }
 
 func (t *TL_contacts_deleteContacts) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_deleteContacts) Set_id(M_id TLObject) {
+func (t *TL_contacts_deleteContacts) Set_id(M_id []TLObject) {
 	t.M_id = M_id
 }
 
-func (t *TL_contacts_deleteContacts) Get_id() TLObject {
+func (t *TL_contacts_deleteContacts) Get_id() []TLObject {
 	return t.M_id
 }
 
@@ -38945,7 +38945,7 @@ func (t *TL_contacts_deleteContacts) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_deleteContacts))
-	ec.TLObject(t.Get_id())
+	ec.Vector(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -38953,7 +38953,7 @@ func (t *TL_contacts_deleteContacts) Encode() []byte {
 func (t *TL_contacts_deleteContacts) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.Vector()
 
 }
 
@@ -39114,18 +39114,18 @@ func (t *TL_contacts_exportCard) Decode(b []byte) {
 // contacts_importCard#4fe196fe
 type TL_contacts_importCard struct {
 	M_classID     int32
-	M_export_card TLObject
+	M_export_card []int32
 }
 
 func (t *TL_contacts_importCard) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_importCard) Set_export_card(M_export_card TLObject) {
+func (t *TL_contacts_importCard) Set_export_card(M_export_card []int32) {
 	t.M_export_card = M_export_card
 }
 
-func (t *TL_contacts_importCard) Get_export_card() TLObject {
+func (t *TL_contacts_importCard) Get_export_card() []int32 {
 	return t.M_export_card
 }
 
@@ -39139,7 +39139,7 @@ func (t *TL_contacts_importCard) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_contacts_importCard))
-	ec.TLObject(t.Get_export_card())
+	ec.VectorInt(t.Get_export_card())
 
 	return ec.GetBuffer()
 }
@@ -39147,7 +39147,7 @@ func (t *TL_contacts_importCard) Encode() []byte {
 func (t *TL_contacts_importCard) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_export_card = dc.TLObject()
+	t.M_export_card = dc.VectorInt()
 
 }
 
@@ -39456,18 +39456,18 @@ func (t *TL_contacts_resetSaved) Decode(b []byte) {
 // messages_getMessages#4222fa74
 type TL_messages_getMessages struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_messages_getMessages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getMessages) Set_id(M_id TLObject) {
+func (t *TL_messages_getMessages) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_getMessages) Get_id() TLObject {
+func (t *TL_messages_getMessages) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -39481,7 +39481,7 @@ func (t *TL_messages_getMessages) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_getMessages))
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -39489,7 +39489,7 @@ func (t *TL_messages_getMessages) Encode() []byte {
 func (t *TL_messages_getMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -39989,7 +39989,7 @@ type TL_messages_deleteMessages struct {
 	M_classID int32
 	M_flags   TLObject
 	M_revoke  TLObject
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_messages_deleteMessages) ClassID() int32 {
@@ -40012,11 +40012,11 @@ func (t *TL_messages_deleteMessages) Get_revoke() TLObject {
 	return t.M_revoke
 }
 
-func (t *TL_messages_deleteMessages) Set_id(M_id TLObject) {
+func (t *TL_messages_deleteMessages) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_deleteMessages) Get_id() TLObject {
+func (t *TL_messages_deleteMessages) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -40031,7 +40031,7 @@ func (t *TL_messages_deleteMessages) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_deleteMessages))
 	ec.TLObject(t.Get_revoke())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -40040,7 +40040,7 @@ func (t *TL_messages_deleteMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_revoke = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -40148,7 +40148,7 @@ type TL_messages_sendMessage struct {
 	M_message         string
 	M_random_id       int64
 	M_reply_markup    TLObject
-	M_entities        TLObject
+	M_entities        []TLObject
 }
 
 func (t *TL_messages_sendMessage) ClassID() int32 {
@@ -40235,11 +40235,11 @@ func (t *TL_messages_sendMessage) Get_reply_markup() TLObject {
 	return t.M_reply_markup
 }
 
-func (t *TL_messages_sendMessage) Set_entities(M_entities TLObject) {
+func (t *TL_messages_sendMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_messages_sendMessage) Get_entities() TLObject {
+func (t *TL_messages_sendMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -40262,7 +40262,7 @@ func (t *TL_messages_sendMessage) Encode() []byte {
 	ec.String(t.Get_message())
 	ec.Long(t.Get_random_id())
 	ec.TLObject(t.Get_reply_markup())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -40279,7 +40279,7 @@ func (t *TL_messages_sendMessage) Decode(b []byte) {
 	t.M_message = dc.String()
 	t.M_random_id = dc.Long()
 	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
@@ -40418,8 +40418,8 @@ type TL_messages_forwardMessages struct {
 	M_with_my_score TLObject
 	M_grouped       TLObject
 	M_from_peer     TLObject
-	M_id            TLObject
-	M_random_id     TLObject
+	M_id            []int32
+	M_random_id     []int64
 	M_to_peer       TLObject
 }
 
@@ -40475,19 +40475,19 @@ func (t *TL_messages_forwardMessages) Get_from_peer() TLObject {
 	return t.M_from_peer
 }
 
-func (t *TL_messages_forwardMessages) Set_id(M_id TLObject) {
+func (t *TL_messages_forwardMessages) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_forwardMessages) Get_id() TLObject {
+func (t *TL_messages_forwardMessages) Get_id() []int32 {
 	return t.M_id
 }
 
-func (t *TL_messages_forwardMessages) Set_random_id(M_random_id TLObject) {
+func (t *TL_messages_forwardMessages) Set_random_id(M_random_id []int64) {
 	t.M_random_id = M_random_id
 }
 
-func (t *TL_messages_forwardMessages) Get_random_id() TLObject {
+func (t *TL_messages_forwardMessages) Get_random_id() []int64 {
 	return t.M_random_id
 }
 
@@ -40514,8 +40514,8 @@ func (t *TL_messages_forwardMessages) Encode() []byte {
 	ec.TLObject(t.Get_with_my_score())
 	ec.TLObject(t.Get_grouped())
 	ec.TLObject(t.Get_from_peer())
-	ec.TLObject(t.Get_id())
-	ec.TLObject(t.Get_random_id())
+	ec.VectorInt(t.Get_id())
+	ec.VectorLong(t.Get_random_id())
 	ec.TLObject(t.Get_to_peer())
 
 	return ec.GetBuffer()
@@ -40529,8 +40529,8 @@ func (t *TL_messages_forwardMessages) Decode(b []byte) {
 	t.M_with_my_score = dc.TLObject()
 	t.M_grouped = dc.TLObject()
 	t.M_from_peer = dc.TLObject()
-	t.M_id = dc.TLObject()
-	t.M_random_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
+	t.M_random_id = dc.VectorLong()
 	t.M_to_peer = dc.TLObject()
 
 }
@@ -40658,18 +40658,18 @@ func (t *TL_messages_getPeerSettings) Decode(b []byte) {
 // messages_getChats#3c6aa187
 type TL_messages_getChats struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_messages_getChats) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getChats) Set_id(M_id TLObject) {
+func (t *TL_messages_getChats) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_getChats) Get_id() TLObject {
+func (t *TL_messages_getChats) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -40683,7 +40683,7 @@ func (t *TL_messages_getChats) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_getChats))
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -40691,7 +40691,7 @@ func (t *TL_messages_getChats) Encode() []byte {
 func (t *TL_messages_getChats) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -40953,7 +40953,7 @@ func (t *TL_messages_deleteChatUser) Decode(b []byte) {
 // messages_createChat#9cb126e
 type TL_messages_createChat struct {
 	M_classID int32
-	M_users   TLObject
+	M_users   []TLObject
 	M_title   string
 }
 
@@ -40961,11 +40961,11 @@ func (t *TL_messages_createChat) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_createChat) Set_users(M_users TLObject) {
+func (t *TL_messages_createChat) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_messages_createChat) Get_users() TLObject {
+func (t *TL_messages_createChat) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -40987,7 +40987,7 @@ func (t *TL_messages_createChat) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_createChat))
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 	ec.String(t.Get_title())
 
 	return ec.GetBuffer()
@@ -40996,7 +40996,7 @@ func (t *TL_messages_createChat) Encode() []byte {
 func (t *TL_messages_createChat) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 	t.M_title = dc.String()
 
 }
@@ -41119,7 +41119,7 @@ type TL_messages_requestEncryption struct {
 	M_classID   int32
 	M_user_id   TLObject
 	M_random_id int32
-	M_g_a       int32
+	M_g_a       TLObject
 }
 
 func (t *TL_messages_requestEncryption) ClassID() int32 {
@@ -41142,11 +41142,11 @@ func (t *TL_messages_requestEncryption) Get_random_id() int32 {
 	return t.M_random_id
 }
 
-func (t *TL_messages_requestEncryption) Set_g_a(M_g_a int32) {
+func (t *TL_messages_requestEncryption) Set_g_a(M_g_a TLObject) {
 	t.M_g_a = M_g_a
 }
 
-func (t *TL_messages_requestEncryption) Get_g_a() int32 {
+func (t *TL_messages_requestEncryption) Get_g_a() TLObject {
 	return t.M_g_a
 }
 
@@ -41162,7 +41162,7 @@ func (t *TL_messages_requestEncryption) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_requestEncryption))
 	ec.TLObject(t.Get_user_id())
 	ec.Int(t.Get_random_id())
-	ec.Int(t.Get_g_a())
+	ec.TLObject(t.Get_g_a())
 
 	return ec.GetBuffer()
 }
@@ -41172,7 +41172,7 @@ func (t *TL_messages_requestEncryption) Decode(b []byte) {
 
 	t.M_user_id = dc.TLObject()
 	t.M_random_id = dc.Int()
-	t.M_g_a = dc.Int()
+	t.M_g_a = dc.TLObject()
 
 }
 
@@ -41180,7 +41180,7 @@ func (t *TL_messages_requestEncryption) Decode(b []byte) {
 type TL_messages_acceptEncryption struct {
 	M_classID         int32
 	M_peer            TLObject
-	M_g_b             int32
+	M_g_b             TLObject
 	M_key_fingerprint int64
 }
 
@@ -41196,11 +41196,11 @@ func (t *TL_messages_acceptEncryption) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_acceptEncryption) Set_g_b(M_g_b int32) {
+func (t *TL_messages_acceptEncryption) Set_g_b(M_g_b TLObject) {
 	t.M_g_b = M_g_b
 }
 
-func (t *TL_messages_acceptEncryption) Get_g_b() int32 {
+func (t *TL_messages_acceptEncryption) Get_g_b() TLObject {
 	return t.M_g_b
 }
 
@@ -41223,7 +41223,7 @@ func (t *TL_messages_acceptEncryption) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_acceptEncryption))
 	ec.TLObject(t.Get_peer())
-	ec.Int(t.Get_g_b())
+	ec.TLObject(t.Get_g_b())
 	ec.Long(t.Get_key_fingerprint())
 
 	return ec.GetBuffer()
@@ -41233,7 +41233,7 @@ func (t *TL_messages_acceptEncryption) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
-	t.M_g_b = dc.Int()
+	t.M_g_b = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 
 }
@@ -41385,7 +41385,7 @@ type TL_messages_sendEncrypted struct {
 	M_classID   int32
 	M_peer      TLObject
 	M_random_id int64
-	M_data      int32
+	M_data      TLObject
 }
 
 func (t *TL_messages_sendEncrypted) ClassID() int32 {
@@ -41408,11 +41408,11 @@ func (t *TL_messages_sendEncrypted) Get_random_id() int64 {
 	return t.M_random_id
 }
 
-func (t *TL_messages_sendEncrypted) Set_data(M_data int32) {
+func (t *TL_messages_sendEncrypted) Set_data(M_data TLObject) {
 	t.M_data = M_data
 }
 
-func (t *TL_messages_sendEncrypted) Get_data() int32 {
+func (t *TL_messages_sendEncrypted) Get_data() TLObject {
 	return t.M_data
 }
 
@@ -41428,7 +41428,7 @@ func (t *TL_messages_sendEncrypted) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_sendEncrypted))
 	ec.TLObject(t.Get_peer())
 	ec.Long(t.Get_random_id())
-	ec.Int(t.Get_data())
+	ec.TLObject(t.Get_data())
 
 	return ec.GetBuffer()
 }
@@ -41438,7 +41438,7 @@ func (t *TL_messages_sendEncrypted) Decode(b []byte) {
 
 	t.M_peer = dc.TLObject()
 	t.M_random_id = dc.Long()
-	t.M_data = dc.Int()
+	t.M_data = dc.TLObject()
 
 }
 
@@ -41447,7 +41447,7 @@ type TL_messages_sendEncryptedFile struct {
 	M_classID   int32
 	M_peer      TLObject
 	M_random_id int64
-	M_data      int32
+	M_data      TLObject
 	M_file      TLObject
 }
 
@@ -41471,11 +41471,11 @@ func (t *TL_messages_sendEncryptedFile) Get_random_id() int64 {
 	return t.M_random_id
 }
 
-func (t *TL_messages_sendEncryptedFile) Set_data(M_data int32) {
+func (t *TL_messages_sendEncryptedFile) Set_data(M_data TLObject) {
 	t.M_data = M_data
 }
 
-func (t *TL_messages_sendEncryptedFile) Get_data() int32 {
+func (t *TL_messages_sendEncryptedFile) Get_data() TLObject {
 	return t.M_data
 }
 
@@ -41499,7 +41499,7 @@ func (t *TL_messages_sendEncryptedFile) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_sendEncryptedFile))
 	ec.TLObject(t.Get_peer())
 	ec.Long(t.Get_random_id())
-	ec.Int(t.Get_data())
+	ec.TLObject(t.Get_data())
 	ec.TLObject(t.Get_file())
 
 	return ec.GetBuffer()
@@ -41510,7 +41510,7 @@ func (t *TL_messages_sendEncryptedFile) Decode(b []byte) {
 
 	t.M_peer = dc.TLObject()
 	t.M_random_id = dc.Long()
-	t.M_data = dc.Int()
+	t.M_data = dc.TLObject()
 	t.M_file = dc.TLObject()
 
 }
@@ -41520,7 +41520,7 @@ type TL_messages_sendEncryptedService struct {
 	M_classID   int32
 	M_peer      TLObject
 	M_random_id int64
-	M_data      int32
+	M_data      TLObject
 }
 
 func (t *TL_messages_sendEncryptedService) ClassID() int32 {
@@ -41543,11 +41543,11 @@ func (t *TL_messages_sendEncryptedService) Get_random_id() int64 {
 	return t.M_random_id
 }
 
-func (t *TL_messages_sendEncryptedService) Set_data(M_data int32) {
+func (t *TL_messages_sendEncryptedService) Set_data(M_data TLObject) {
 	t.M_data = M_data
 }
 
-func (t *TL_messages_sendEncryptedService) Get_data() int32 {
+func (t *TL_messages_sendEncryptedService) Get_data() TLObject {
 	return t.M_data
 }
 
@@ -41563,7 +41563,7 @@ func (t *TL_messages_sendEncryptedService) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_sendEncryptedService))
 	ec.TLObject(t.Get_peer())
 	ec.Long(t.Get_random_id())
-	ec.Int(t.Get_data())
+	ec.TLObject(t.Get_data())
 
 	return ec.GetBuffer()
 }
@@ -41573,7 +41573,7 @@ func (t *TL_messages_sendEncryptedService) Decode(b []byte) {
 
 	t.M_peer = dc.TLObject()
 	t.M_random_id = dc.Long()
-	t.M_data = dc.Int()
+	t.M_data = dc.TLObject()
 
 }
 
@@ -41660,18 +41660,18 @@ func (t *TL_messages_reportEncryptedSpam) Decode(b []byte) {
 // messages_readMessageContents#36a73f77
 type TL_messages_readMessageContents struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_messages_readMessageContents) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_readMessageContents) Set_id(M_id TLObject) {
+func (t *TL_messages_readMessageContents) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_readMessageContents) Get_id() TLObject {
+func (t *TL_messages_readMessageContents) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -41685,7 +41685,7 @@ func (t *TL_messages_readMessageContents) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_readMessageContents))
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -41693,7 +41693,7 @@ func (t *TL_messages_readMessageContents) Encode() []byte {
 func (t *TL_messages_readMessageContents) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -42105,7 +42105,7 @@ func (t *TL_messages_startBot) Decode(b []byte) {
 type TL_messages_getMessagesViews struct {
 	M_classID   int32
 	M_peer      TLObject
-	M_id        TLObject
+	M_id        []int32
 	M_increment TLObject
 }
 
@@ -42121,11 +42121,11 @@ func (t *TL_messages_getMessagesViews) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_getMessagesViews) Set_id(M_id TLObject) {
+func (t *TL_messages_getMessagesViews) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_getMessagesViews) Get_id() TLObject {
+func (t *TL_messages_getMessagesViews) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -42148,7 +42148,7 @@ func (t *TL_messages_getMessagesViews) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_getMessagesViews))
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 	ec.TLObject(t.Get_increment())
 
 	return ec.GetBuffer()
@@ -42158,7 +42158,7 @@ func (t *TL_messages_getMessagesViews) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 	t.M_increment = dc.TLObject()
 
 }
@@ -42405,7 +42405,7 @@ type TL_messages_reorderStickerSets struct {
 	M_classID int32
 	M_flags   TLObject
 	M_masks   TLObject
-	M_order   TLObject
+	M_order   []int64
 }
 
 func (t *TL_messages_reorderStickerSets) ClassID() int32 {
@@ -42428,11 +42428,11 @@ func (t *TL_messages_reorderStickerSets) Get_masks() TLObject {
 	return t.M_masks
 }
 
-func (t *TL_messages_reorderStickerSets) Set_order(M_order TLObject) {
+func (t *TL_messages_reorderStickerSets) Set_order(M_order []int64) {
 	t.M_order = M_order
 }
 
-func (t *TL_messages_reorderStickerSets) Get_order() TLObject {
+func (t *TL_messages_reorderStickerSets) Get_order() []int64 {
 	return t.M_order
 }
 
@@ -42447,7 +42447,7 @@ func (t *TL_messages_reorderStickerSets) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_reorderStickerSets))
 	ec.TLObject(t.Get_masks())
-	ec.TLObject(t.Get_order())
+	ec.VectorLong(t.Get_order())
 
 	return ec.GetBuffer()
 }
@@ -42456,14 +42456,14 @@ func (t *TL_messages_reorderStickerSets) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
-	t.M_order = dc.TLObject()
+	t.M_order = dc.VectorLong()
 
 }
 
 // messages_getDocumentByHash#338e2464
 type TL_messages_getDocumentByHash struct {
 	M_classID   int32
-	M_sha256    int32
+	M_sha256    TLObject
 	M_size      int32
 	M_mime_type string
 }
@@ -42472,11 +42472,11 @@ func (t *TL_messages_getDocumentByHash) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getDocumentByHash) Set_sha256(M_sha256 int32) {
+func (t *TL_messages_getDocumentByHash) Set_sha256(M_sha256 TLObject) {
 	t.M_sha256 = M_sha256
 }
 
-func (t *TL_messages_getDocumentByHash) Get_sha256() int32 {
+func (t *TL_messages_getDocumentByHash) Get_sha256() TLObject {
 	return t.M_sha256
 }
 
@@ -42506,7 +42506,7 @@ func (t *TL_messages_getDocumentByHash) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_getDocumentByHash))
-	ec.Int(t.Get_sha256())
+	ec.TLObject(t.Get_sha256())
 	ec.Int(t.Get_size())
 	ec.String(t.Get_mime_type())
 
@@ -42516,7 +42516,7 @@ func (t *TL_messages_getDocumentByHash) Encode() []byte {
 func (t *TL_messages_getDocumentByHash) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_sha256 = dc.Int()
+	t.M_sha256 = dc.TLObject()
 	t.M_size = dc.Int()
 	t.M_mime_type = dc.String()
 
@@ -42764,7 +42764,7 @@ type TL_messages_setInlineBotResults struct {
 	M_gallery     TLObject
 	M_private     TLObject
 	M_query_id    int64
-	M_results     TLObject
+	M_results     []TLObject
 	M_cache_time  int32
 	M_next_offset TLObject
 	M_switch_pm   TLObject
@@ -42806,11 +42806,11 @@ func (t *TL_messages_setInlineBotResults) Get_query_id() int64 {
 	return t.M_query_id
 }
 
-func (t *TL_messages_setInlineBotResults) Set_results(M_results TLObject) {
+func (t *TL_messages_setInlineBotResults) Set_results(M_results []TLObject) {
 	t.M_results = M_results
 }
 
-func (t *TL_messages_setInlineBotResults) Get_results() TLObject {
+func (t *TL_messages_setInlineBotResults) Get_results() []TLObject {
 	return t.M_results
 }
 
@@ -42851,7 +42851,7 @@ func (t *TL_messages_setInlineBotResults) Encode() []byte {
 	ec.TLObject(t.Get_gallery())
 	ec.TLObject(t.Get_private())
 	ec.Long(t.Get_query_id())
-	ec.TLObject(t.Get_results())
+	ec.Vector(t.Get_results())
 	ec.Int(t.Get_cache_time())
 	ec.TLObject(t.Get_next_offset())
 	ec.TLObject(t.Get_switch_pm())
@@ -42865,7 +42865,7 @@ func (t *TL_messages_setInlineBotResults) Decode(b []byte) {
 	t.M_gallery = dc.TLObject()
 	t.M_private = dc.TLObject()
 	t.M_query_id = dc.Long()
-	t.M_results = dc.TLObject()
+	t.M_results = dc.Vector()
 	t.M_cache_time = dc.Int()
 	t.M_next_offset = dc.TLObject()
 	t.M_switch_pm = dc.TLObject()
@@ -43059,7 +43059,7 @@ type TL_messages_editMessage struct {
 	M_id            int32
 	M_message       TLObject
 	M_reply_markup  TLObject
-	M_entities      TLObject
+	M_entities      []TLObject
 	M_geo_point     TLObject
 }
 
@@ -43123,11 +43123,11 @@ func (t *TL_messages_editMessage) Get_reply_markup() TLObject {
 	return t.M_reply_markup
 }
 
-func (t *TL_messages_editMessage) Set_entities(M_entities TLObject) {
+func (t *TL_messages_editMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_messages_editMessage) Get_entities() TLObject {
+func (t *TL_messages_editMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -43155,7 +43155,7 @@ func (t *TL_messages_editMessage) Encode() []byte {
 	ec.Int(t.Get_id())
 	ec.TLObject(t.Get_message())
 	ec.TLObject(t.Get_reply_markup())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.TLObject(t.Get_geo_point())
 
 	return ec.GetBuffer()
@@ -43170,7 +43170,7 @@ func (t *TL_messages_editMessage) Decode(b []byte) {
 	t.M_id = dc.Int()
 	t.M_message = dc.TLObject()
 	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_geo_point = dc.TLObject()
 
 }
@@ -43184,7 +43184,7 @@ type TL_messages_editInlineBotMessage struct {
 	M_id            TLObject
 	M_message       TLObject
 	M_reply_markup  TLObject
-	M_entities      TLObject
+	M_entities      []TLObject
 	M_geo_point     TLObject
 }
 
@@ -43240,11 +43240,11 @@ func (t *TL_messages_editInlineBotMessage) Get_reply_markup() TLObject {
 	return t.M_reply_markup
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_entities(M_entities TLObject) {
+func (t *TL_messages_editInlineBotMessage) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_entities() TLObject {
+func (t *TL_messages_editInlineBotMessage) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -43271,7 +43271,7 @@ func (t *TL_messages_editInlineBotMessage) Encode() []byte {
 	ec.TLObject(t.Get_id())
 	ec.TLObject(t.Get_message())
 	ec.TLObject(t.Get_reply_markup())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 	ec.TLObject(t.Get_geo_point())
 
 	return ec.GetBuffer()
@@ -43285,7 +43285,7 @@ func (t *TL_messages_editInlineBotMessage) Decode(b []byte) {
 	t.M_id = dc.TLObject()
 	t.M_message = dc.TLObject()
 	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 	t.M_geo_point = dc.TLObject()
 
 }
@@ -43468,18 +43468,18 @@ func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) {
 // messages_getPeerDialogs#2d9776b9
 type TL_messages_getPeerDialogs struct {
 	M_classID int32
-	M_peers   TLObject
+	M_peers   []TLObject
 }
 
 func (t *TL_messages_getPeerDialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getPeerDialogs) Set_peers(M_peers TLObject) {
+func (t *TL_messages_getPeerDialogs) Set_peers(M_peers []TLObject) {
 	t.M_peers = M_peers
 }
 
-func (t *TL_messages_getPeerDialogs) Get_peers() TLObject {
+func (t *TL_messages_getPeerDialogs) Get_peers() []TLObject {
 	return t.M_peers
 }
 
@@ -43493,7 +43493,7 @@ func (t *TL_messages_getPeerDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_getPeerDialogs))
-	ec.TLObject(t.Get_peers())
+	ec.Vector(t.Get_peers())
 
 	return ec.GetBuffer()
 }
@@ -43501,7 +43501,7 @@ func (t *TL_messages_getPeerDialogs) Encode() []byte {
 func (t *TL_messages_getPeerDialogs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_peers = dc.TLObject()
+	t.M_peers = dc.Vector()
 
 }
 
@@ -43513,7 +43513,7 @@ type TL_messages_saveDraft struct {
 	M_reply_to_msg_id TLObject
 	M_peer            TLObject
 	M_message         string
-	M_entities        TLObject
+	M_entities        []TLObject
 }
 
 func (t *TL_messages_saveDraft) ClassID() int32 {
@@ -43560,11 +43560,11 @@ func (t *TL_messages_saveDraft) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_messages_saveDraft) Set_entities(M_entities TLObject) {
+func (t *TL_messages_saveDraft) Set_entities(M_entities []TLObject) {
 	t.M_entities = M_entities
 }
 
-func (t *TL_messages_saveDraft) Get_entities() TLObject {
+func (t *TL_messages_saveDraft) Get_entities() []TLObject {
 	return t.M_entities
 }
 
@@ -43582,7 +43582,7 @@ func (t *TL_messages_saveDraft) Encode() []byte {
 	ec.TLObject(t.Get_reply_to_msg_id())
 	ec.TLObject(t.Get_peer())
 	ec.String(t.Get_message())
-	ec.TLObject(t.Get_entities())
+	ec.Vector(t.Get_entities())
 
 	return ec.GetBuffer()
 }
@@ -43594,7 +43594,7 @@ func (t *TL_messages_saveDraft) Decode(b []byte) {
 	t.M_reply_to_msg_id = dc.TLObject()
 	t.M_peer = dc.TLObject()
 	t.M_message = dc.String()
-	t.M_entities = dc.TLObject()
+	t.M_entities = dc.Vector()
 
 }
 
@@ -43664,18 +43664,18 @@ func (t *TL_messages_getFeaturedStickers) Decode(b []byte) {
 // messages_readFeaturedStickers#5b118126
 type TL_messages_readFeaturedStickers struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []int64
 }
 
 func (t *TL_messages_readFeaturedStickers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_readFeaturedStickers) Set_id(M_id TLObject) {
+func (t *TL_messages_readFeaturedStickers) Set_id(M_id []int64) {
 	t.M_id = M_id
 }
 
-func (t *TL_messages_readFeaturedStickers) Get_id() TLObject {
+func (t *TL_messages_readFeaturedStickers) Get_id() []int64 {
 	return t.M_id
 }
 
@@ -43689,7 +43689,7 @@ func (t *TL_messages_readFeaturedStickers) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_readFeaturedStickers))
-	ec.TLObject(t.Get_id())
+	ec.VectorLong(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -43697,7 +43697,7 @@ func (t *TL_messages_readFeaturedStickers) Encode() []byte {
 func (t *TL_messages_readFeaturedStickers) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorLong()
 
 }
 
@@ -44407,18 +44407,18 @@ func (t *TL_messages_getCommonChats) Decode(b []byte) {
 // messages_getAllChats#eba80ff0
 type TL_messages_getAllChats struct {
 	M_classID    int32
-	M_except_ids TLObject
+	M_except_ids []int32
 }
 
 func (t *TL_messages_getAllChats) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getAllChats) Set_except_ids(M_except_ids TLObject) {
+func (t *TL_messages_getAllChats) Set_except_ids(M_except_ids []int32) {
 	t.M_except_ids = M_except_ids
 }
 
-func (t *TL_messages_getAllChats) Get_except_ids() TLObject {
+func (t *TL_messages_getAllChats) Get_except_ids() []int32 {
 	return t.M_except_ids
 }
 
@@ -44432,7 +44432,7 @@ func (t *TL_messages_getAllChats) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_messages_getAllChats))
-	ec.TLObject(t.Get_except_ids())
+	ec.VectorInt(t.Get_except_ids())
 
 	return ec.GetBuffer()
 }
@@ -44440,7 +44440,7 @@ func (t *TL_messages_getAllChats) Encode() []byte {
 func (t *TL_messages_getAllChats) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_except_ids = dc.TLObject()
+	t.M_except_ids = dc.VectorInt()
 
 }
 
@@ -44560,7 +44560,7 @@ type TL_messages_reorderPinnedDialogs struct {
 	M_classID int32
 	M_flags   TLObject
 	M_force   TLObject
-	M_order   TLObject
+	M_order   []TLObject
 }
 
 func (t *TL_messages_reorderPinnedDialogs) ClassID() int32 {
@@ -44583,11 +44583,11 @@ func (t *TL_messages_reorderPinnedDialogs) Get_force() TLObject {
 	return t.M_force
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Set_order(M_order TLObject) {
+func (t *TL_messages_reorderPinnedDialogs) Set_order(M_order []TLObject) {
 	t.M_order = M_order
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Get_order() TLObject {
+func (t *TL_messages_reorderPinnedDialogs) Get_order() []TLObject {
 	return t.M_order
 }
 
@@ -44602,7 +44602,7 @@ func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_messages_reorderPinnedDialogs))
 	ec.TLObject(t.Get_force())
-	ec.TLObject(t.Get_order())
+	ec.Vector(t.Get_order())
 
 	return ec.GetBuffer()
 }
@@ -44611,7 +44611,7 @@ func (t *TL_messages_reorderPinnedDialogs) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_force = dc.TLObject()
-	t.M_order = dc.TLObject()
+	t.M_order = dc.Vector()
 
 }
 
@@ -44644,7 +44644,7 @@ type TL_messages_setBotShippingResults struct {
 	M_flags            TLObject
 	M_query_id         int64
 	M_error            TLObject
-	M_shipping_options TLObject
+	M_shipping_options []TLObject
 }
 
 func (t *TL_messages_setBotShippingResults) ClassID() int32 {
@@ -44675,11 +44675,11 @@ func (t *TL_messages_setBotShippingResults) Get_error() TLObject {
 	return t.M_error
 }
 
-func (t *TL_messages_setBotShippingResults) Set_shipping_options(M_shipping_options TLObject) {
+func (t *TL_messages_setBotShippingResults) Set_shipping_options(M_shipping_options []TLObject) {
 	t.M_shipping_options = M_shipping_options
 }
 
-func (t *TL_messages_setBotShippingResults) Get_shipping_options() TLObject {
+func (t *TL_messages_setBotShippingResults) Get_shipping_options() []TLObject {
 	return t.M_shipping_options
 }
 
@@ -44695,7 +44695,7 @@ func (t *TL_messages_setBotShippingResults) Encode() []byte {
 	ec.Int(int32(TL_CLASS_messages_setBotShippingResults))
 	ec.Long(t.Get_query_id())
 	ec.TLObject(t.Get_error())
-	ec.TLObject(t.Get_shipping_options())
+	ec.Vector(t.Get_shipping_options())
 
 	return ec.GetBuffer()
 }
@@ -44705,7 +44705,7 @@ func (t *TL_messages_setBotShippingResults) Decode(b []byte) {
 
 	t.M_query_id = dc.Long()
 	t.M_error = dc.TLObject()
-	t.M_shipping_options = dc.TLObject()
+	t.M_shipping_options = dc.Vector()
 
 }
 
@@ -45179,7 +45179,7 @@ type TL_messages_sendMultiMedia struct {
 	M_clear_draft     TLObject
 	M_peer            TLObject
 	M_reply_to_msg_id TLObject
-	M_multi_media     TLObject
+	M_multi_media     []TLObject
 }
 
 func (t *TL_messages_sendMultiMedia) ClassID() int32 {
@@ -45234,11 +45234,11 @@ func (t *TL_messages_sendMultiMedia) Get_reply_to_msg_id() TLObject {
 	return t.M_reply_to_msg_id
 }
 
-func (t *TL_messages_sendMultiMedia) Set_multi_media(M_multi_media TLObject) {
+func (t *TL_messages_sendMultiMedia) Set_multi_media(M_multi_media []TLObject) {
 	t.M_multi_media = M_multi_media
 }
 
-func (t *TL_messages_sendMultiMedia) Get_multi_media() TLObject {
+func (t *TL_messages_sendMultiMedia) Get_multi_media() []TLObject {
 	return t.M_multi_media
 }
 
@@ -45257,7 +45257,7 @@ func (t *TL_messages_sendMultiMedia) Encode() []byte {
 	ec.TLObject(t.Get_clear_draft())
 	ec.TLObject(t.Get_peer())
 	ec.TLObject(t.Get_reply_to_msg_id())
-	ec.TLObject(t.Get_multi_media())
+	ec.Vector(t.Get_multi_media())
 
 	return ec.GetBuffer()
 }
@@ -45270,7 +45270,7 @@ func (t *TL_messages_sendMultiMedia) Decode(b []byte) {
 	t.M_clear_draft = dc.TLObject()
 	t.M_peer = dc.TLObject()
 	t.M_reply_to_msg_id = dc.TLObject()
-	t.M_multi_media = dc.TLObject()
+	t.M_multi_media = dc.Vector()
 
 }
 
@@ -45606,18 +45606,18 @@ func (t *TL_photos_uploadProfilePhoto) Decode(b []byte) {
 // photos_deletePhotos#87cf7f2f
 type TL_photos_deletePhotos struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []TLObject
 }
 
 func (t *TL_photos_deletePhotos) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_photos_deletePhotos) Set_id(M_id TLObject) {
+func (t *TL_photos_deletePhotos) Set_id(M_id []TLObject) {
 	t.M_id = M_id
 }
 
-func (t *TL_photos_deletePhotos) Get_id() TLObject {
+func (t *TL_photos_deletePhotos) Get_id() []TLObject {
 	return t.M_id
 }
 
@@ -45631,7 +45631,7 @@ func (t *TL_photos_deletePhotos) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_photos_deletePhotos))
-	ec.TLObject(t.Get_id())
+	ec.Vector(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -45639,7 +45639,7 @@ func (t *TL_photos_deletePhotos) Encode() []byte {
 func (t *TL_photos_deletePhotos) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.Vector()
 
 }
 
@@ -45721,7 +45721,7 @@ type TL_upload_saveFilePart struct {
 	M_classID   int32
 	M_file_id   int64
 	M_file_part int32
-	M_bytes     int32
+	M_bytes     TLObject
 }
 
 func (t *TL_upload_saveFilePart) ClassID() int32 {
@@ -45744,11 +45744,11 @@ func (t *TL_upload_saveFilePart) Get_file_part() int32 {
 	return t.M_file_part
 }
 
-func (t *TL_upload_saveFilePart) Set_bytes(M_bytes int32) {
+func (t *TL_upload_saveFilePart) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_upload_saveFilePart) Get_bytes() int32 {
+func (t *TL_upload_saveFilePart) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -45764,7 +45764,7 @@ func (t *TL_upload_saveFilePart) Encode() []byte {
 	ec.Int(int32(TL_CLASS_upload_saveFilePart))
 	ec.Long(t.Get_file_id())
 	ec.Int(t.Get_file_part())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -45774,7 +45774,7 @@ func (t *TL_upload_saveFilePart) Decode(b []byte) {
 
 	t.M_file_id = dc.Long()
 	t.M_file_part = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -45846,7 +45846,7 @@ type TL_upload_saveBigFilePart struct {
 	M_file_id          int64
 	M_file_part        int32
 	M_file_total_parts int32
-	M_bytes            int32
+	M_bytes            TLObject
 }
 
 func (t *TL_upload_saveBigFilePart) ClassID() int32 {
@@ -45877,11 +45877,11 @@ func (t *TL_upload_saveBigFilePart) Get_file_total_parts() int32 {
 	return t.M_file_total_parts
 }
 
-func (t *TL_upload_saveBigFilePart) Set_bytes(M_bytes int32) {
+func (t *TL_upload_saveBigFilePart) Set_bytes(M_bytes TLObject) {
 	t.M_bytes = M_bytes
 }
 
-func (t *TL_upload_saveBigFilePart) Get_bytes() int32 {
+func (t *TL_upload_saveBigFilePart) Get_bytes() TLObject {
 	return t.M_bytes
 }
 
@@ -45898,7 +45898,7 @@ func (t *TL_upload_saveBigFilePart) Encode() []byte {
 	ec.Long(t.Get_file_id())
 	ec.Int(t.Get_file_part())
 	ec.Int(t.Get_file_total_parts())
-	ec.Int(t.Get_bytes())
+	ec.TLObject(t.Get_bytes())
 
 	return ec.GetBuffer()
 }
@@ -45909,7 +45909,7 @@ func (t *TL_upload_saveBigFilePart) Decode(b []byte) {
 	t.M_file_id = dc.Long()
 	t.M_file_part = dc.Int()
 	t.M_file_total_parts = dc.Int()
-	t.M_bytes = dc.Int()
+	t.M_bytes = dc.TLObject()
 
 }
 
@@ -45978,7 +45978,7 @@ func (t *TL_upload_getWebFile) Decode(b []byte) {
 // upload_getCdnFile#2000bcc3
 type TL_upload_getCdnFile struct {
 	M_classID    int32
-	M_file_token int32
+	M_file_token TLObject
 	M_offset     int32
 	M_limit      int32
 }
@@ -45987,11 +45987,11 @@ func (t *TL_upload_getCdnFile) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_upload_getCdnFile) Set_file_token(M_file_token int32) {
+func (t *TL_upload_getCdnFile) Set_file_token(M_file_token TLObject) {
 	t.M_file_token = M_file_token
 }
 
-func (t *TL_upload_getCdnFile) Get_file_token() int32 {
+func (t *TL_upload_getCdnFile) Get_file_token() TLObject {
 	return t.M_file_token
 }
 
@@ -46021,7 +46021,7 @@ func (t *TL_upload_getCdnFile) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_upload_getCdnFile))
-	ec.Int(t.Get_file_token())
+	ec.TLObject(t.Get_file_token())
 	ec.Int(t.Get_offset())
 	ec.Int(t.Get_limit())
 
@@ -46031,7 +46031,7 @@ func (t *TL_upload_getCdnFile) Encode() []byte {
 func (t *TL_upload_getCdnFile) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_file_token = dc.Int()
+	t.M_file_token = dc.TLObject()
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 
@@ -46040,27 +46040,27 @@ func (t *TL_upload_getCdnFile) Decode(b []byte) {
 // upload_reuploadCdnFile#1af91c09
 type TL_upload_reuploadCdnFile struct {
 	M_classID       int32
-	M_file_token    int32
-	M_request_token int32
+	M_file_token    TLObject
+	M_request_token TLObject
 }
 
 func (t *TL_upload_reuploadCdnFile) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_upload_reuploadCdnFile) Set_file_token(M_file_token int32) {
+func (t *TL_upload_reuploadCdnFile) Set_file_token(M_file_token TLObject) {
 	t.M_file_token = M_file_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Get_file_token() int32 {
+func (t *TL_upload_reuploadCdnFile) Get_file_token() TLObject {
 	return t.M_file_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Set_request_token(M_request_token int32) {
+func (t *TL_upload_reuploadCdnFile) Set_request_token(M_request_token TLObject) {
 	t.M_request_token = M_request_token
 }
 
-func (t *TL_upload_reuploadCdnFile) Get_request_token() int32 {
+func (t *TL_upload_reuploadCdnFile) Get_request_token() TLObject {
 	return t.M_request_token
 }
 
@@ -46074,8 +46074,8 @@ func (t *TL_upload_reuploadCdnFile) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_upload_reuploadCdnFile))
-	ec.Int(t.Get_file_token())
-	ec.Int(t.Get_request_token())
+	ec.TLObject(t.Get_file_token())
+	ec.TLObject(t.Get_request_token())
 
 	return ec.GetBuffer()
 }
@@ -46083,15 +46083,15 @@ func (t *TL_upload_reuploadCdnFile) Encode() []byte {
 func (t *TL_upload_reuploadCdnFile) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_file_token = dc.Int()
-	t.M_request_token = dc.Int()
+	t.M_file_token = dc.TLObject()
+	t.M_request_token = dc.TLObject()
 
 }
 
 // upload_getCdnFileHashes#f715c87b
 type TL_upload_getCdnFileHashes struct {
 	M_classID    int32
-	M_file_token int32
+	M_file_token TLObject
 	M_offset     int32
 }
 
@@ -46099,11 +46099,11 @@ func (t *TL_upload_getCdnFileHashes) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_upload_getCdnFileHashes) Set_file_token(M_file_token int32) {
+func (t *TL_upload_getCdnFileHashes) Set_file_token(M_file_token TLObject) {
 	t.M_file_token = M_file_token
 }
 
-func (t *TL_upload_getCdnFileHashes) Get_file_token() int32 {
+func (t *TL_upload_getCdnFileHashes) Get_file_token() TLObject {
 	return t.M_file_token
 }
 
@@ -46125,7 +46125,7 @@ func (t *TL_upload_getCdnFileHashes) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_upload_getCdnFileHashes))
-	ec.Int(t.Get_file_token())
+	ec.TLObject(t.Get_file_token())
 	ec.Int(t.Get_offset())
 
 	return ec.GetBuffer()
@@ -46134,7 +46134,7 @@ func (t *TL_upload_getCdnFileHashes) Encode() []byte {
 func (t *TL_upload_getCdnFileHashes) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_file_token = dc.Int()
+	t.M_file_token = dc.TLObject()
 	t.M_offset = dc.Int()
 
 }
@@ -46211,18 +46211,18 @@ func (t *TL_help_getAppUpdate) Decode(b []byte) {
 // help_saveAppLog#6f02f748
 type TL_help_saveAppLog struct {
 	M_classID int32
-	M_events  TLObject
+	M_events  []TLObject
 }
 
 func (t *TL_help_saveAppLog) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_help_saveAppLog) Set_events(M_events TLObject) {
+func (t *TL_help_saveAppLog) Set_events(M_events []TLObject) {
 	t.M_events = M_events
 }
 
-func (t *TL_help_saveAppLog) Get_events() TLObject {
+func (t *TL_help_saveAppLog) Get_events() []TLObject {
 	return t.M_events
 }
 
@@ -46236,7 +46236,7 @@ func (t *TL_help_saveAppLog) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_help_saveAppLog))
-	ec.TLObject(t.Get_events())
+	ec.Vector(t.Get_events())
 
 	return ec.GetBuffer()
 }
@@ -46244,7 +46244,7 @@ func (t *TL_help_saveAppLog) Encode() []byte {
 func (t *TL_help_saveAppLog) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_events = dc.TLObject()
+	t.M_events = dc.Vector()
 
 }
 
@@ -46526,7 +46526,7 @@ func (t *TL_channels_readHistory) Decode(b []byte) {
 type TL_channels_deleteMessages struct {
 	M_classID int32
 	M_channel TLObject
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_channels_deleteMessages) ClassID() int32 {
@@ -46541,11 +46541,11 @@ func (t *TL_channels_deleteMessages) Get_channel() TLObject {
 	return t.M_channel
 }
 
-func (t *TL_channels_deleteMessages) Set_id(M_id TLObject) {
+func (t *TL_channels_deleteMessages) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_channels_deleteMessages) Get_id() TLObject {
+func (t *TL_channels_deleteMessages) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -46560,7 +46560,7 @@ func (t *TL_channels_deleteMessages) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_deleteMessages))
 	ec.TLObject(t.Get_channel())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -46569,7 +46569,7 @@ func (t *TL_channels_deleteMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -46629,7 +46629,7 @@ type TL_channels_reportSpam struct {
 	M_classID int32
 	M_channel TLObject
 	M_user_id TLObject
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_channels_reportSpam) ClassID() int32 {
@@ -46652,11 +46652,11 @@ func (t *TL_channels_reportSpam) Get_user_id() TLObject {
 	return t.M_user_id
 }
 
-func (t *TL_channels_reportSpam) Set_id(M_id TLObject) {
+func (t *TL_channels_reportSpam) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_channels_reportSpam) Get_id() TLObject {
+func (t *TL_channels_reportSpam) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -46672,7 +46672,7 @@ func (t *TL_channels_reportSpam) Encode() []byte {
 	ec.Int(int32(TL_CLASS_channels_reportSpam))
 	ec.TLObject(t.Get_channel())
 	ec.TLObject(t.Get_user_id())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -46682,7 +46682,7 @@ func (t *TL_channels_reportSpam) Decode(b []byte) {
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -46690,7 +46690,7 @@ func (t *TL_channels_reportSpam) Decode(b []byte) {
 type TL_channels_getMessages struct {
 	M_classID int32
 	M_channel TLObject
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_channels_getMessages) ClassID() int32 {
@@ -46705,11 +46705,11 @@ func (t *TL_channels_getMessages) Get_channel() TLObject {
 	return t.M_channel
 }
 
-func (t *TL_channels_getMessages) Set_id(M_id TLObject) {
+func (t *TL_channels_getMessages) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_channels_getMessages) Get_id() TLObject {
+func (t *TL_channels_getMessages) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -46724,7 +46724,7 @@ func (t *TL_channels_getMessages) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_getMessages))
 	ec.TLObject(t.Get_channel())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -46733,7 +46733,7 @@ func (t *TL_channels_getMessages) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -46875,18 +46875,18 @@ func (t *TL_channels_getParticipant) Decode(b []byte) {
 // channels_getChannels#a7f6bbb
 type TL_channels_getChannels struct {
 	M_classID int32
-	M_id      TLObject
+	M_id      []TLObject
 }
 
 func (t *TL_channels_getChannels) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channels_getChannels) Set_id(M_id TLObject) {
+func (t *TL_channels_getChannels) Set_id(M_id []TLObject) {
 	t.M_id = M_id
 }
 
-func (t *TL_channels_getChannels) Get_id() TLObject {
+func (t *TL_channels_getChannels) Get_id() []TLObject {
 	return t.M_id
 }
 
@@ -46900,7 +46900,7 @@ func (t *TL_channels_getChannels) Encode() []byte {
 	ec := NewMTPEncodeBuffer()
 
 	ec.Int(int32(TL_CLASS_channels_getChannels))
-	ec.TLObject(t.Get_id())
+	ec.Vector(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -46908,7 +46908,7 @@ func (t *TL_channels_getChannels) Encode() []byte {
 func (t *TL_channels_getChannels) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
+	t.M_id = dc.Vector()
 
 }
 
@@ -47435,7 +47435,7 @@ func (t *TL_channels_leaveChannel) Decode(b []byte) {
 type TL_channels_inviteToChannel struct {
 	M_classID int32
 	M_channel TLObject
-	M_users   TLObject
+	M_users   []TLObject
 }
 
 func (t *TL_channels_inviteToChannel) ClassID() int32 {
@@ -47450,11 +47450,11 @@ func (t *TL_channels_inviteToChannel) Get_channel() TLObject {
 	return t.M_channel
 }
 
-func (t *TL_channels_inviteToChannel) Set_users(M_users TLObject) {
+func (t *TL_channels_inviteToChannel) Set_users(M_users []TLObject) {
 	t.M_users = M_users
 }
 
-func (t *TL_channels_inviteToChannel) Get_users() TLObject {
+func (t *TL_channels_inviteToChannel) Get_users() []TLObject {
 	return t.M_users
 }
 
@@ -47469,7 +47469,7 @@ func (t *TL_channels_inviteToChannel) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_inviteToChannel))
 	ec.TLObject(t.Get_channel())
-	ec.TLObject(t.Get_users())
+	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
 }
@@ -47478,7 +47478,7 @@ func (t *TL_channels_inviteToChannel) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
-	t.M_users = dc.TLObject()
+	t.M_users = dc.Vector()
 
 }
 
@@ -47878,7 +47878,7 @@ type TL_channels_getAdminLog struct {
 	M_channel       TLObject
 	M_q             string
 	M_events_filter TLObject
-	M_admins        TLObject
+	M_admins        []TLObject
 	M_max_id        int64
 	M_min_id        int64
 	M_limit         int32
@@ -47920,11 +47920,11 @@ func (t *TL_channels_getAdminLog) Get_events_filter() TLObject {
 	return t.M_events_filter
 }
 
-func (t *TL_channels_getAdminLog) Set_admins(M_admins TLObject) {
+func (t *TL_channels_getAdminLog) Set_admins(M_admins []TLObject) {
 	t.M_admins = M_admins
 }
 
-func (t *TL_channels_getAdminLog) Get_admins() TLObject {
+func (t *TL_channels_getAdminLog) Get_admins() []TLObject {
 	return t.M_admins
 }
 
@@ -47965,7 +47965,7 @@ func (t *TL_channels_getAdminLog) Encode() []byte {
 	ec.TLObject(t.Get_channel())
 	ec.String(t.Get_q())
 	ec.TLObject(t.Get_events_filter())
-	ec.TLObject(t.Get_admins())
+	ec.Vector(t.Get_admins())
 	ec.Long(t.Get_max_id())
 	ec.Long(t.Get_min_id())
 	ec.Int(t.Get_limit())
@@ -47979,7 +47979,7 @@ func (t *TL_channels_getAdminLog) Decode(b []byte) {
 	t.M_channel = dc.TLObject()
 	t.M_q = dc.String()
 	t.M_events_filter = dc.TLObject()
-	t.M_admins = dc.TLObject()
+	t.M_admins = dc.Vector()
 	t.M_max_id = dc.Long()
 	t.M_min_id = dc.Long()
 	t.M_limit = dc.Int()
@@ -48041,7 +48041,7 @@ func (t *TL_channels_setStickers) Decode(b []byte) {
 type TL_channels_readMessageContents struct {
 	M_classID int32
 	M_channel TLObject
-	M_id      TLObject
+	M_id      []int32
 }
 
 func (t *TL_channels_readMessageContents) ClassID() int32 {
@@ -48056,11 +48056,11 @@ func (t *TL_channels_readMessageContents) Get_channel() TLObject {
 	return t.M_channel
 }
 
-func (t *TL_channels_readMessageContents) Set_id(M_id TLObject) {
+func (t *TL_channels_readMessageContents) Set_id(M_id []int32) {
 	t.M_id = M_id
 }
 
-func (t *TL_channels_readMessageContents) Get_id() TLObject {
+func (t *TL_channels_readMessageContents) Get_id() []int32 {
 	return t.M_id
 }
 
@@ -48075,7 +48075,7 @@ func (t *TL_channels_readMessageContents) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_channels_readMessageContents))
 	ec.TLObject(t.Get_channel())
-	ec.TLObject(t.Get_id())
+	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
 }
@@ -48084,7 +48084,7 @@ func (t *TL_channels_readMessageContents) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
-	t.M_id = dc.TLObject()
+	t.M_id = dc.VectorInt()
 
 }
 
@@ -48616,7 +48616,7 @@ type TL_stickers_createStickerSet struct {
 	M_user_id    TLObject
 	M_title      string
 	M_short_name string
-	M_stickers   TLObject
+	M_stickers   []TLObject
 }
 
 func (t *TL_stickers_createStickerSet) ClassID() int32 {
@@ -48663,11 +48663,11 @@ func (t *TL_stickers_createStickerSet) Get_short_name() string {
 	return t.M_short_name
 }
 
-func (t *TL_stickers_createStickerSet) Set_stickers(M_stickers TLObject) {
+func (t *TL_stickers_createStickerSet) Set_stickers(M_stickers []TLObject) {
 	t.M_stickers = M_stickers
 }
 
-func (t *TL_stickers_createStickerSet) Get_stickers() TLObject {
+func (t *TL_stickers_createStickerSet) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
@@ -48685,7 +48685,7 @@ func (t *TL_stickers_createStickerSet) Encode() []byte {
 	ec.TLObject(t.Get_user_id())
 	ec.String(t.Get_title())
 	ec.String(t.Get_short_name())
-	ec.TLObject(t.Get_stickers())
+	ec.Vector(t.Get_stickers())
 
 	return ec.GetBuffer()
 }
@@ -48697,7 +48697,7 @@ func (t *TL_stickers_createStickerSet) Decode(b []byte) {
 	t.M_user_id = dc.TLObject()
 	t.M_title = dc.String()
 	t.M_short_name = dc.String()
-	t.M_stickers = dc.TLObject()
+	t.M_stickers = dc.Vector()
 
 }
 
@@ -48871,7 +48871,7 @@ type TL_phone_requestCall struct {
 	M_classID   int32
 	M_user_id   TLObject
 	M_random_id int32
-	M_g_a_hash  int32
+	M_g_a_hash  TLObject
 	M_protocol  TLObject
 }
 
@@ -48895,11 +48895,11 @@ func (t *TL_phone_requestCall) Get_random_id() int32 {
 	return t.M_random_id
 }
 
-func (t *TL_phone_requestCall) Set_g_a_hash(M_g_a_hash int32) {
+func (t *TL_phone_requestCall) Set_g_a_hash(M_g_a_hash TLObject) {
 	t.M_g_a_hash = M_g_a_hash
 }
 
-func (t *TL_phone_requestCall) Get_g_a_hash() int32 {
+func (t *TL_phone_requestCall) Get_g_a_hash() TLObject {
 	return t.M_g_a_hash
 }
 
@@ -48923,7 +48923,7 @@ func (t *TL_phone_requestCall) Encode() []byte {
 	ec.Int(int32(TL_CLASS_phone_requestCall))
 	ec.TLObject(t.Get_user_id())
 	ec.Int(t.Get_random_id())
-	ec.Int(t.Get_g_a_hash())
+	ec.TLObject(t.Get_g_a_hash())
 	ec.TLObject(t.Get_protocol())
 
 	return ec.GetBuffer()
@@ -48934,7 +48934,7 @@ func (t *TL_phone_requestCall) Decode(b []byte) {
 
 	t.M_user_id = dc.TLObject()
 	t.M_random_id = dc.Int()
-	t.M_g_a_hash = dc.Int()
+	t.M_g_a_hash = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
 }
@@ -48943,7 +48943,7 @@ func (t *TL_phone_requestCall) Decode(b []byte) {
 type TL_phone_acceptCall struct {
 	M_classID  int32
 	M_peer     TLObject
-	M_g_b      int32
+	M_g_b      TLObject
 	M_protocol TLObject
 }
 
@@ -48959,11 +48959,11 @@ func (t *TL_phone_acceptCall) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_phone_acceptCall) Set_g_b(M_g_b int32) {
+func (t *TL_phone_acceptCall) Set_g_b(M_g_b TLObject) {
 	t.M_g_b = M_g_b
 }
 
-func (t *TL_phone_acceptCall) Get_g_b() int32 {
+func (t *TL_phone_acceptCall) Get_g_b() TLObject {
 	return t.M_g_b
 }
 
@@ -48986,7 +48986,7 @@ func (t *TL_phone_acceptCall) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_phone_acceptCall))
 	ec.TLObject(t.Get_peer())
-	ec.Int(t.Get_g_b())
+	ec.TLObject(t.Get_g_b())
 	ec.TLObject(t.Get_protocol())
 
 	return ec.GetBuffer()
@@ -48996,7 +48996,7 @@ func (t *TL_phone_acceptCall) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
-	t.M_g_b = dc.Int()
+	t.M_g_b = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
 }
@@ -49005,7 +49005,7 @@ func (t *TL_phone_acceptCall) Decode(b []byte) {
 type TL_phone_confirmCall struct {
 	M_classID         int32
 	M_peer            TLObject
-	M_g_a             int32
+	M_g_a             TLObject
 	M_key_fingerprint int64
 	M_protocol        TLObject
 }
@@ -49022,11 +49022,11 @@ func (t *TL_phone_confirmCall) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_phone_confirmCall) Set_g_a(M_g_a int32) {
+func (t *TL_phone_confirmCall) Set_g_a(M_g_a TLObject) {
 	t.M_g_a = M_g_a
 }
 
-func (t *TL_phone_confirmCall) Get_g_a() int32 {
+func (t *TL_phone_confirmCall) Get_g_a() TLObject {
 	return t.M_g_a
 }
 
@@ -49057,7 +49057,7 @@ func (t *TL_phone_confirmCall) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_phone_confirmCall))
 	ec.TLObject(t.Get_peer())
-	ec.Int(t.Get_g_a())
+	ec.TLObject(t.Get_g_a())
 	ec.Long(t.Get_key_fingerprint())
 	ec.TLObject(t.Get_protocol())
 
@@ -49068,7 +49068,7 @@ func (t *TL_phone_confirmCall) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
-	t.M_g_a = dc.Int()
+	t.M_g_a = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 	t.M_protocol = dc.TLObject()
 
@@ -49344,7 +49344,7 @@ func (t *TL_langpack_getLangPack) Decode(b []byte) {
 type TL_langpack_getStrings struct {
 	M_classID   int32
 	M_lang_code string
-	M_keys      TLObject
+	M_keys      []string
 }
 
 func (t *TL_langpack_getStrings) ClassID() int32 {
@@ -49359,11 +49359,11 @@ func (t *TL_langpack_getStrings) Get_lang_code() string {
 	return t.M_lang_code
 }
 
-func (t *TL_langpack_getStrings) Set_keys(M_keys TLObject) {
+func (t *TL_langpack_getStrings) Set_keys(M_keys []string) {
 	t.M_keys = M_keys
 }
 
-func (t *TL_langpack_getStrings) Get_keys() TLObject {
+func (t *TL_langpack_getStrings) Get_keys() []string {
 	return t.M_keys
 }
 
@@ -49378,7 +49378,7 @@ func (t *TL_langpack_getStrings) Encode() []byte {
 
 	ec.Int(int32(TL_CLASS_langpack_getStrings))
 	ec.String(t.Get_lang_code())
-	ec.TLObject(t.Get_keys())
+	ec.VectorString(t.Get_keys())
 
 	return ec.GetBuffer()
 }
@@ -49387,7 +49387,7 @@ func (t *TL_langpack_getStrings) Decode(b []byte) {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_lang_code = dc.String()
-	t.M_keys = dc.TLObject()
+	t.M_keys = dc.VectorString()
 
 }
 

@@ -120,14 +120,13 @@ func (e *MTPEncodeBuffer) TLObject(obj TLObject) {
 	e.buffer = append(e.buffer, obj.Encode()...)
 }
 
-/*
+// will do it in the future
 func (e *MTPEncodeBuffer) Vector(v []TLObject) {
 	x := make([]byte, 8)
-	binary.LittleEndian.PutUint32(x, CRC32_vector)
+	binary.LittleEndian.PutUint32(x, uint32(TL_CLASS_vector))
 	binary.LittleEndian.PutUint32(x[4:], uint32(len(v)))
 	e.buffer = append(e.buffer, x...)
 	for _, v := range v {
-		e.buffer = append(e.buffer, v.encode()...)
+		e.buffer = append(e.buffer, v.Encode()...)
 	}
 }
-*/
