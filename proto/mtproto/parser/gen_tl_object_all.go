@@ -17,7 +17,7 @@ package mtproto
 
 func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
 
-	res := ""
+	res := "_classID int32\n"
 	for _, p := range params {
 		name := p.Name
 		tp := convertDataType(p.Type)
@@ -35,7 +35,12 @@ func (t *TLLayer) generateOneTLObjectFields(params []*TLParam) string {
 
 func (t *TLLayer) generateOneTLObjectSetterGetter(objName string, params []*TLParam) string {
 
-	res := ""
+	res := `
+		func (t *%v)ClassID() int32 {
+			return t._classID
+		}
+	`
+	res = fmt.Sprintf(res, objName)
 	for _, p := range params {
 		name := p.Name
 		fname := convertFieldName(name)
@@ -98,7 +103,6 @@ func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) st
 func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	tlname := strings.Replace(line.Predicate, ".", "_", -1)
-	// objname := "TL_" + tlname
 	objname := convertTLObjectName(line.Predicate)
 
 	defstr := fmt.Sprintf(`
@@ -114,9 +118,11 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 	newfuncname := convertNewTLFuncName(line.Predicate)
 	newfuncstr := fmt.Sprintf(`
 		func %v() *%v {
-			return &%v{}
+			return &%v{
+				_classID: %v,
+			}
 		}
-	`, newfuncname, objname, objname)
+	`, newfuncname, objname, objname, "TL_CLASS_"+tlname)
 
 	encodestr := fmt.Sprintf(`
 		func (t *%v)Encode() []byte {

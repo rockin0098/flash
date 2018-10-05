@@ -17,3 +17,7 @@ func GenerateStringUID() string {
 	s := fmt.Sprintf("%v", GenerateUID())
 	return s
 }
+
+func GenerateSessionID() string {
+	return GenerateStringUID()
+}

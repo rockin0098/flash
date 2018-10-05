@@ -5,15 +5,17 @@ import (
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/lproto"
 	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/session"
+	"github.com/rockin0098/flash/server/service"
 )
 
-func MTProtoProcess(sess *session.Session, mtp *mtproto.MTProto) error {
+func GateProcess(mtp *mtproto.MTProto) error {
 
 	raw := mtp.Message().(*mtproto.RawMessage)
 
-	ctx, err := lproto.MakeLProtoContext(&lproto.LProtoRequest{
+	ls := service.LProtoServiceInstance()
+	ctx, err := ls.MakeLProtoContext(&lproto.LProtoRequest{
 		LID:            guid.GenerateUID(),
+		SessionID:      mtp.SessionID(),
 		MTProtoRequest: raw,
 	})
 	if err != nil {

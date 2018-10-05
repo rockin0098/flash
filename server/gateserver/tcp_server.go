@@ -55,7 +55,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
 		for {
-			mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr, respChan)
+			mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr, sess.SessionID(), respChan)
 			err := mtp.Read()
 			if err != nil {
 				Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
@@ -65,7 +65,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 
 			// 暂时没有控制并发数量
 			grm.Go("tcp_worker", func() {
-				err = process.MTProtoProcess(sess, mtp)
+				err = process.GateProcess(mtp)
 				if err != nil {
 					Log.Error(err)
 					conn.Close()

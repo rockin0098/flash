@@ -51,16 +51,18 @@ type MTProto struct {
 	d          *crypto.AesCTR128Encrypt
 	remoteAddr net.Addr
 	localAddr  net.Addr
+	sessionID  string
 	// AuthKey []byte
 }
 
-func NewMTProto(reader *bufio.Reader, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, respChan chan interface{}) *MTProto {
+func NewMTProto(reader *bufio.Reader, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, sessid string, respChan chan interface{}) *MTProto {
 	return &MTProto{
 		reader:     reader,
 		writer:     writer,
 		respChan:   respChan,
 		remoteAddr: remoteAddr,
 		localAddr:  localAddr,
+		sessionID:  sessid,
 	}
 }
 
@@ -74,6 +76,10 @@ func (s *MTProto) LocalAddr() net.Addr {
 
 func (s *MTProto) Message() MTProtoMessage {
 	return s.message
+}
+
+func (s *MTProto) SessionID() string {
+	return s.sessionID
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -282,6 +288,8 @@ func (s *MTProto) ReadMTProtoApp() error {
 }
 
 func (s *MTProto) Write(data interface{}) error {
+
+	s.respChan <- data
 
 	return nil
 }

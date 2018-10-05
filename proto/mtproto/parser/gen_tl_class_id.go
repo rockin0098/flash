@@ -11,10 +11,10 @@ var classid_output_file = "tl.class.id.go"
 var classid_template = `
 package mtproto
 
-type TL_CLASS_ID int32
+// type TL_CLASS_ID int32
 
 const (
-	TL_CLASS_UNKNOWN TL_CLASS_ID = 0
+	TL_CLASS_UNKNOWN int32 = 0
 	%v
 )
 
@@ -43,7 +43,7 @@ func (t *TLLayer) GenerateTLObjectClassConst() {
 		lineid := int32(convertCRC32(line.ID))
 		line.Predicate = strings.Replace(line.Predicate, ".", "_", -1)
 
-		constLine := fmt.Sprintf("TL_CLASS_%v TL_CLASS_ID = %d\n", line.Predicate, lineid)
+		constLine := fmt.Sprintf("TL_CLASS_%v int32 = %d\n", line.Predicate, lineid)
 		classIDConst = classIDConst + constLine
 
 		classNameLine := fmt.Sprintf("%d:\"TL_CLASS_%v\",\n", lineid, line.Predicate)

@@ -1,6 +1,7 @@
 package mtproto
 
 type TLObject interface {
+	ClassID() int32
 	Encode() []byte
 	Decode(b []byte)
 }
