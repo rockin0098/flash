@@ -92,12 +92,17 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tl *mtproto.TL_
 
 	Log.Infof("nonce = %v", hex.EncodeToString(nonce))
 
+	// // for debugging
+	// tmpnonce, _ := hex.DecodeString("2d91ae9c85bbbd559fc7959341106a7d")
+	// // for debugging ===> end
+
 	resPQ := &mtproto.TL_resPQ{
-		M_nonce:        nonce,
-		M_server_nonce: crypto.GenerateNonce(16),
-		M_pq:           pq,
-		// M_server_public_key_fingerprints: []int64{int64(fingerprint)},
+		M_nonce: nonce,
+		// M_server_nonce:                   tmpnonce, // crypto.GenerateNonce(16),
+		M_server_nonce:                   crypto.GenerateNonce(16),
+		M_pq:                             pq,
+		M_server_public_key_fingerprints: []int64{int64(fingerprint)},
 	}
 
-	return resPQ.Encode(), nil
+	return resPQ, nil
 }

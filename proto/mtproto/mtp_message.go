@@ -7,12 +7,11 @@ import (
 	"io"
 
 	"github.com/rockin0098/flash/base/crypto"
-	"github.com/rockin0098/flash/base/guid"
 	. "github.com/rockin0098/flash/base/logger"
 )
 
 type MTProtoMessage interface {
-	Encode() ([]byte, error)
+	Encode() []byte
 	Decode(b []byte) error
 }
 
@@ -33,8 +32,8 @@ func NewRawMessage(transportType int, authKeyID int64, quickAckID int32) *RawMes
 	}
 }
 
-func (m *RawMessage) Encode() ([]byte, error) {
-	return nil, nil
+func (m *RawMessage) Encode() []byte {
+	return m.Payload
 }
 
 func (m *RawMessage) Decode(b []byte) error {
@@ -48,11 +47,12 @@ type UnencryptedMessage struct {
 	TLObject  TLObject
 }
 
-func (m *UnencryptedMessage) Encode() ([]byte, error) {
+func (m *UnencryptedMessage) Encode() []byte {
 
 	x := NewMTPEncodeBuffer(512)
 	x.Long(0)
-	m.MessageID = guid.GenerateMessageID()
+	m.MessageID = GenerateMessageID()
+	// m.MessageID = 6609242482192799577
 	x.Long(m.MessageID)
 
 	if m.TLObject == nil {
@@ -62,8 +62,8 @@ func (m *UnencryptedMessage) Encode() ([]byte, error) {
 		x.Int(int32(len(b)))
 		x.Bytes(b)
 	}
-	return x.buffer, nil
 
+	return x.buffer
 }
 
 func (m *UnencryptedMessage) Decode(b []byte) error {
@@ -102,9 +102,9 @@ type EncryptedMessage struct {
 	TLObject  TLObject
 }
 
-func (m *EncryptedMessage) Encode() ([]byte, error) {
+func (m *EncryptedMessage) Encode() []byte {
 
-	return nil, nil
+	return nil
 }
 
 func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {

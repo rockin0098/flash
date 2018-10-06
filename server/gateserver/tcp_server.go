@@ -2,6 +2,7 @@ package gateserver
 
 import (
 	"bufio"
+	"encoding/hex"
 	"net"
 
 	"github.com/rockin0098/flash/base/grmon"
@@ -41,6 +42,11 @@ func (s *TTcpServer) Run() {
 		Log.Debugf("s:[%v] accept connection from %v", s.addr, conn.RemoteAddr().String())
 		grm := grmon.GetGRMon()
 		grm.Go("tcp_handler", func() { s.ConnectionHandler(conn) })
+
+		// for debugging, only allow one connection
+		// ch := make(chan int, 0)
+		// <-ch
+		// for debugging =====> end
 	}
 }
 
@@ -55,6 +61,9 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
 		for {
+			// for debugging
+			// s.test_read(conn)
+			// for debbuging ===> end
 			mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr, sess.SessionID(), respChan)
 			err := mtp.Read()
 			if err != nil {
@@ -97,4 +106,18 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 			}
 		}
 	})
+}
+
+func (s *TTcpServer) test_read(conn net.Conn) []byte {
+	b := make([]byte, 512)
+	n, err := conn.Read(b)
+	if err != nil {
+		Log.Error(err)
+		return nil
+	}
+
+	Log.Infof("test_read n : %v", n)
+	Log.Infof("test_read b : %v", hex.EncodeToString(b[:n]))
+
+	return b
 }

@@ -11,7 +11,9 @@ var classid_output_file = "tl.class.id.go"
 var classid_template = `
 package mtproto
 
-// type TL_CLASS_ID int32
+const (
+	TL_LAYER_VERSION = "%v"
+)
 
 const (
 	TL_CLASS_UNKNOWN int32 = 0
@@ -53,7 +55,7 @@ func (t *TLLayer) GenerateTLObjectClassConst() {
 		classNameID = classNameID + classNameIDLine
 	}
 
-	filecontent := fmt.Sprintf(classid_template, classIDConst, className, classNameID)
+	filecontent := fmt.Sprintf(classid_template, t.Layer, classIDConst, className, classNameID)
 	file := t.OutputDir + classid_output_file
 
 	ioutil.WriteFile(file, []byte(filecontent), 0644)

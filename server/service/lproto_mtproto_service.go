@@ -24,7 +24,21 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 			return nil, err
 		}
 
-		return s.MTProtoUnencryptedMessageProcess(sess, unencryptedMessage)
+		res, err := s.MTProtoUnencryptedMessageProcess(sess, unencryptedMessage)
+		if err != nil {
+			Log.Error(err)
+			return nil, err
+		}
+
+		unencryptedMessage2 := &mtproto.UnencryptedMessage{
+			TLObject: res.(mtproto.TLObject),
+		}
+
+		resPlayload := unencryptedMessage2.Encode()
+
+		Log.Infof("resp payload = %v", hex.EncodeToString(resPlayload))
+
+		return resPlayload, nil
 
 	} else { // 加密消息
 

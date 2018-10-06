@@ -1,6 +1,8 @@
 package mtproto
 
-// type TL_CLASS_ID int32
+const (
+	TL_LAYER_VERSION = "73"
+)
 
 const (
 	TL_CLASS_UNKNOWN                                          int32 = 0

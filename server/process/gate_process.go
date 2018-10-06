@@ -23,7 +23,10 @@ func GateProcess(mtp *mtproto.MTProto) error {
 		return err
 	}
 
-	err = mtp.Write(ctx.Response.MTProtoResponse)
+	// 返回消息
+	rmsg := mtproto.NewRawMessage(raw.TransportType, raw.AuthKeyID, raw.QuickAckID)
+	rmsg.Decode(ctx.Response.MTProtoResponse.([]byte))
+	err = mtp.Write(rmsg)
 
 	return err
 }
