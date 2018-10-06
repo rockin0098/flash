@@ -471,7 +471,7 @@ func (s *MTProto) ReadMTProtoApp() error {
 	var n int
 	var err error
 
-	stream := NewAesCTR128Stream(s.reader, s.writer, s.d, s.e)
+	stream := NewAesCTR128Stream(s.reader, s.writer, s.respChan, s.d, s.e)
 	s.stream = stream // 保存 stream 返回消息时加密使用
 	b := make([]byte, 1)
 	n, err = io.ReadFull(stream, b)
@@ -723,15 +723,9 @@ func (s *MTProto) WriteMTProtoApp(msg interface{}) error {
 	}
 
 	b = append(sb, b...)
-	_, err := s.stream.Write(b)
-	if err != nil {
-		Log.Errorf("Send msg error: %s", err)
-		return err
-	}
+	s.stream.Write(b)
 
 	Log.Debugf("app write = %v", hex.EncodeToString(b))
-
-	s.respChan <- b
 
 	return nil
 }

@@ -113,18 +113,20 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 
 // encrypted stream
 type AesCTR128Stream struct {
-	reader  *bufio.Reader
-	writer  io.Writer
-	encrypt *crypto.AesCTR128Encrypt
-	decrypt *crypto.AesCTR128Encrypt
+	reader    *bufio.Reader
+	writer    io.Writer
+	writeChan chan interface{}
+	encrypt   *crypto.AesCTR128Encrypt
+	decrypt   *crypto.AesCTR128Encrypt
 }
 
-func NewAesCTR128Stream(reader *bufio.Reader, writer io.Writer, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
+func NewAesCTR128Stream(reader *bufio.Reader, writer io.Writer, writeChan chan interface{}, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
 	return &AesCTR128Stream{
-		reader:  reader,
-		writer:  writer,
-		decrypt: d,
-		encrypt: e,
+		reader:    reader,
+		writer:    writer,
+		writeChan: writeChan,
+		decrypt:   d,
+		encrypt:   e,
 	}
 }
 
@@ -138,7 +140,8 @@ func (this *AesCTR128Stream) Read(p []byte) (int, error) {
 	return n, err
 }
 
-func (this *AesCTR128Stream) Write(p []byte) (int, error) {
+func (this *AesCTR128Stream) Write(p []byte) {
 	this.encrypt.Encrypt(p[:])
-	return this.writer.Write(p)
+
+	this.writeChan <- p
 }

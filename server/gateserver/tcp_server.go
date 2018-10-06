@@ -2,6 +2,7 @@ package gateserver
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/hex"
 	"net"
 
@@ -72,6 +73,24 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 			// for debugging
 			// s.test_read(conn)
 			// for debbuging ===> end
+			var buf *bytes.Buffer
+
+			{
+				b := make([]byte, 1024)
+				n, err := conn.Read(b)
+				if err != nil {
+					Log.Error(err)
+					connClose()
+					return
+				}
+
+				Log.Infof("test_read n : %v", n)
+				Log.Infof("test_read b : %v", hex.EncodeToString(b[:n]))
+
+				buf = bytes.NewBuffer(b[:n])
+			}
+
+			bufReader = bufio.NewReader(buf)
 			mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan)
 			err := mtp.Read()
 			if err != nil {
