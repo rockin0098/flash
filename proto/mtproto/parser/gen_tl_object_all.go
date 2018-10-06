@@ -83,12 +83,9 @@ func (t *TLLayer) generateOneTLObjectDecode(params []*TLParam) string {
 
 func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) string {
 
-	if len(params) == 0 {
-		return "return nil"
-	}
-
 	res := "ec := NewMTPEncodeBuffer()\n\n"
 	res = res + fmt.Sprintf("ec.Int(int32(TL_CLASS_%v))\n", tlname)
+
 	for _, p := range params {
 		if p.Type == "#" {
 			continue
