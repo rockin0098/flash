@@ -7,6 +7,7 @@ import (
 	"io"
 
 	"github.com/rockin0098/flash/base/crypto"
+	"github.com/rockin0098/flash/base/guid"
 	. "github.com/rockin0098/flash/base/logger"
 )
 
@@ -33,7 +34,6 @@ func NewRawMessage(transportType int, authKeyID int64, quickAckID int32) *RawMes
 }
 
 func (m *RawMessage) Encode() ([]byte, error) {
-
 	return nil, nil
 }
 
@@ -50,7 +50,20 @@ type UnencryptedMessage struct {
 
 func (m *UnencryptedMessage) Encode() ([]byte, error) {
 
-	return nil, nil
+	x := NewMTPEncodeBuffer(512)
+	x.Long(0)
+	m.MessageID = guid.GenerateMessageID()
+	x.Long(m.MessageID)
+
+	if m.TLObject == nil {
+		x.Int(0)
+	} else {
+		b := m.TLObject.Encode()
+		x.Int(int32(len(b)))
+		x.Bytes(b)
+	}
+	return x.buffer, nil
+
 }
 
 func (m *UnencryptedMessage) Decode(b []byte) error {

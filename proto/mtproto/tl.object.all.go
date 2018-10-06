@@ -52,7 +52,7 @@ func New_TL_resPQ() *TL_resPQ {
 }
 
 func (t *TL_resPQ) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_resPQ))
 	ec.Bytes(t.Get_nonce())
@@ -143,7 +143,7 @@ func New_TL_p_q_inner_data() *TL_p_q_inner_data {
 }
 
 func (t *TL_p_q_inner_data) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_p_q_inner_data))
 	ec.String(t.Get_pq())
@@ -211,7 +211,7 @@ func New_TL_server_DH_params_fail() *TL_server_DH_params_fail {
 }
 
 func (t *TL_server_DH_params_fail) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_server_DH_params_fail))
 	ec.Bytes(t.Get_nonce())
@@ -273,7 +273,7 @@ func New_TL_server_DH_params_ok() *TL_server_DH_params_ok {
 }
 
 func (t *TL_server_DH_params_ok) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_server_DH_params_ok))
 	ec.Bytes(t.Get_nonce())
@@ -362,7 +362,7 @@ func New_TL_server_DH_inner_data() *TL_server_DH_inner_data {
 }
 
 func (t *TL_server_DH_inner_data) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_server_DH_inner_data))
 	ec.Bytes(t.Get_nonce())
@@ -439,7 +439,7 @@ func New_TL_client_DH_inner_data() *TL_client_DH_inner_data {
 }
 
 func (t *TL_client_DH_inner_data) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_client_DH_inner_data))
 	ec.Bytes(t.Get_nonce())
@@ -503,7 +503,7 @@ func New_TL_dh_gen_ok() *TL_dh_gen_ok {
 }
 
 func (t *TL_dh_gen_ok) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dh_gen_ok))
 	ec.Bytes(t.Get_nonce())
@@ -565,7 +565,7 @@ func New_TL_dh_gen_retry() *TL_dh_gen_retry {
 }
 
 func (t *TL_dh_gen_retry) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dh_gen_retry))
 	ec.Bytes(t.Get_nonce())
@@ -627,7 +627,7 @@ func New_TL_dh_gen_fail() *TL_dh_gen_fail {
 }
 
 func (t *TL_dh_gen_fail) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dh_gen_fail))
 	ec.Bytes(t.Get_nonce())
@@ -662,7 +662,7 @@ func New_TL_destroy_auth_key_ok() *TL_destroy_auth_key_ok {
 }
 
 func (t *TL_destroy_auth_key_ok) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_auth_key_ok))
 
@@ -689,7 +689,7 @@ func New_TL_destroy_auth_key_none() *TL_destroy_auth_key_none {
 }
 
 func (t *TL_destroy_auth_key_none) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_auth_key_none))
 
@@ -716,7 +716,7 @@ func New_TL_destroy_auth_key_fail() *TL_destroy_auth_key_fail {
 }
 
 func (t *TL_destroy_auth_key_fail) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_auth_key_fail))
 
@@ -752,7 +752,7 @@ func New_TL_req_pq() *TL_req_pq {
 }
 
 func (t *TL_req_pq) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_req_pq))
 	ec.Bytes(t.Get_nonce())
@@ -837,7 +837,7 @@ func New_TL_req_DH_params() *TL_req_DH_params {
 }
 
 func (t *TL_req_DH_params) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_req_DH_params))
 	ec.Bytes(t.Get_nonce())
@@ -905,7 +905,7 @@ func New_TL_set_client_DH_params() *TL_set_client_DH_params {
 }
 
 func (t *TL_set_client_DH_params) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_set_client_DH_params))
 	ec.Bytes(t.Get_nonce())
@@ -940,7 +940,7 @@ func New_TL_destroy_auth_key() *TL_destroy_auth_key {
 }
 
 func (t *TL_destroy_auth_key) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_auth_key))
 
@@ -976,7 +976,7 @@ func New_TL_msgs_ack() *TL_msgs_ack {
 }
 
 func (t *TL_msgs_ack) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msgs_ack))
 	ec.VectorLong(t.Get_msg_ids())
@@ -1034,7 +1034,7 @@ func New_TL_bad_msg_notification() *TL_bad_msg_notification {
 }
 
 func (t *TL_bad_msg_notification) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_bad_msg_notification))
 	ec.Long(t.Get_bad_msg_id())
@@ -1105,7 +1105,7 @@ func New_TL_bad_server_salt() *TL_bad_server_salt {
 }
 
 func (t *TL_bad_server_salt) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_bad_server_salt))
 	ec.Long(t.Get_bad_msg_id())
@@ -1151,7 +1151,7 @@ func New_TL_msgs_state_req() *TL_msgs_state_req {
 }
 
 func (t *TL_msgs_state_req) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msgs_state_req))
 	ec.VectorLong(t.Get_msg_ids())
@@ -1200,7 +1200,7 @@ func New_TL_msgs_state_info() *TL_msgs_state_info {
 }
 
 func (t *TL_msgs_state_info) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msgs_state_info))
 	ec.Long(t.Get_req_msg_id())
@@ -1251,7 +1251,7 @@ func New_TL_msgs_all_info() *TL_msgs_all_info {
 }
 
 func (t *TL_msgs_all_info) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msgs_all_info))
 	ec.VectorLong(t.Get_msg_ids())
@@ -1320,7 +1320,7 @@ func New_TL_msg_detailed_info() *TL_msg_detailed_info {
 }
 
 func (t *TL_msg_detailed_info) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msg_detailed_info))
 	ec.Long(t.Get_msg_id())
@@ -1384,7 +1384,7 @@ func New_TL_msg_new_detailed_info() *TL_msg_new_detailed_info {
 }
 
 func (t *TL_msg_new_detailed_info) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msg_new_detailed_info))
 	ec.Long(t.Get_answer_msg_id())
@@ -1428,7 +1428,7 @@ func New_TL_msg_resend_req() *TL_msg_resend_req {
 }
 
 func (t *TL_msg_resend_req) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_msg_resend_req))
 	ec.VectorLong(t.Get_msg_ids())
@@ -1477,7 +1477,7 @@ func New_TL_rpc_error() *TL_rpc_error {
 }
 
 func (t *TL_rpc_error) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_rpc_error))
 	ec.Int(t.Get_error_code())
@@ -1510,7 +1510,7 @@ func New_TL_rpc_answer_unknown() *TL_rpc_answer_unknown {
 }
 
 func (t *TL_rpc_answer_unknown) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_rpc_answer_unknown))
 
@@ -1537,7 +1537,7 @@ func New_TL_rpc_answer_dropped_running() *TL_rpc_answer_dropped_running {
 }
 
 func (t *TL_rpc_answer_dropped_running) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_rpc_answer_dropped_running))
 
@@ -1591,7 +1591,7 @@ func New_TL_rpc_answer_dropped() *TL_rpc_answer_dropped {
 }
 
 func (t *TL_rpc_answer_dropped) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_rpc_answer_dropped))
 	ec.Long(t.Get_msg_id())
@@ -1653,7 +1653,7 @@ func New_TL_future_salt() *TL_future_salt {
 }
 
 func (t *TL_future_salt) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_future_salt))
 	ec.Int(t.Get_valid_since())
@@ -1715,7 +1715,7 @@ func New_TL_future_salts() *TL_future_salts {
 }
 
 func (t *TL_future_salts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_future_salts))
 	ec.Long(t.Get_req_msg_id())
@@ -1768,7 +1768,7 @@ func New_TL_pong() *TL_pong {
 }
 
 func (t *TL_pong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pong))
 	ec.Long(t.Get_msg_id())
@@ -1810,7 +1810,7 @@ func New_TL_destroy_session_ok() *TL_destroy_session_ok {
 }
 
 func (t *TL_destroy_session_ok) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_session_ok))
 	ec.Long(t.Get_session_id())
@@ -1850,7 +1850,7 @@ func New_TL_destroy_session_none() *TL_destroy_session_none {
 }
 
 func (t *TL_destroy_session_none) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_session_none))
 	ec.Long(t.Get_session_id())
@@ -1908,7 +1908,7 @@ func New_TL_new_session_created() *TL_new_session_created {
 }
 
 func (t *TL_new_session_created) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_new_session_created))
 	ec.Long(t.Get_first_msg_id())
@@ -1970,7 +1970,7 @@ func New_TL_http_wait() *TL_http_wait {
 }
 
 func (t *TL_http_wait) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_http_wait))
 	ec.Int(t.Get_max_delay())
@@ -2023,7 +2023,7 @@ func New_TL_ipPort() *TL_ipPort {
 }
 
 func (t *TL_ipPort) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_ipPort))
 	ec.Int(t.Get_ipv4())
@@ -2092,7 +2092,7 @@ func New_TL_help_configSimple() *TL_help_configSimple {
 }
 
 func (t *TL_help_configSimple) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_configSimple))
 	ec.Int(t.Get_date())
@@ -2138,7 +2138,7 @@ func New_TL_rpc_drop_answer() *TL_rpc_drop_answer {
 }
 
 func (t *TL_rpc_drop_answer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_rpc_drop_answer))
 	ec.Long(t.Get_req_msg_id())
@@ -2178,7 +2178,7 @@ func New_TL_get_future_salts() *TL_get_future_salts {
 }
 
 func (t *TL_get_future_salts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_get_future_salts))
 	ec.Int(t.Get_num())
@@ -2218,7 +2218,7 @@ func New_TL_ping() *TL_ping {
 }
 
 func (t *TL_ping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_ping))
 	ec.Long(t.Get_ping_id())
@@ -2267,7 +2267,7 @@ func New_TL_ping_delay_disconnect() *TL_ping_delay_disconnect {
 }
 
 func (t *TL_ping_delay_disconnect) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_ping_delay_disconnect))
 	ec.Long(t.Get_ping_id())
@@ -2309,7 +2309,7 @@ func New_TL_destroy_session() *TL_destroy_session {
 }
 
 func (t *TL_destroy_session) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_destroy_session))
 	ec.Long(t.Get_session_id())
@@ -2385,7 +2385,7 @@ func New_TL_contest_saveDeveloperInfo() *TL_contest_saveDeveloperInfo {
 }
 
 func (t *TL_contest_saveDeveloperInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contest_saveDeveloperInfo))
 	ec.Int(t.Get_vk_id())
@@ -2424,7 +2424,7 @@ func New_TL_boolFalse() *TL_boolFalse {
 }
 
 func (t *TL_boolFalse) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_boolFalse))
 
@@ -2451,7 +2451,7 @@ func New_TL_boolTrue() *TL_boolTrue {
 }
 
 func (t *TL_boolTrue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_boolTrue))
 
@@ -2478,7 +2478,7 @@ func New_TL_true() *TL_true {
 }
 
 func (t *TL_true) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_true))
 
@@ -2505,7 +2505,7 @@ func New_TL_vector() *TL_vector {
 }
 
 func (t *TL_vector) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_vector))
 
@@ -2550,7 +2550,7 @@ func New_TL_error() *TL_error {
 }
 
 func (t *TL_error) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_error))
 	ec.Int(t.Get_code())
@@ -2583,7 +2583,7 @@ func New_TL_null() *TL_null {
 }
 
 func (t *TL_null) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_null))
 
@@ -2610,7 +2610,7 @@ func New_TL_inputPeerEmpty() *TL_inputPeerEmpty {
 }
 
 func (t *TL_inputPeerEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerEmpty))
 
@@ -2637,7 +2637,7 @@ func New_TL_inputPeerSelf() *TL_inputPeerSelf {
 }
 
 func (t *TL_inputPeerSelf) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerSelf))
 
@@ -2673,7 +2673,7 @@ func New_TL_inputPeerChat() *TL_inputPeerChat {
 }
 
 func (t *TL_inputPeerChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerChat))
 	ec.Int(t.Get_chat_id())
@@ -2722,7 +2722,7 @@ func New_TL_inputPeerUser() *TL_inputPeerUser {
 }
 
 func (t *TL_inputPeerUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerUser))
 	ec.Int(t.Get_user_id())
@@ -2773,7 +2773,7 @@ func New_TL_inputPeerChannel() *TL_inputPeerChannel {
 }
 
 func (t *TL_inputPeerChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerChannel))
 	ec.Int(t.Get_channel_id())
@@ -2806,7 +2806,7 @@ func New_TL_inputUserEmpty() *TL_inputUserEmpty {
 }
 
 func (t *TL_inputUserEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputUserEmpty))
 
@@ -2833,7 +2833,7 @@ func New_TL_inputUserSelf() *TL_inputUserSelf {
 }
 
 func (t *TL_inputUserSelf) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputUserSelf))
 
@@ -2878,7 +2878,7 @@ func New_TL_inputUser() *TL_inputUser {
 }
 
 func (t *TL_inputUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputUser))
 	ec.Int(t.Get_user_id())
@@ -2947,7 +2947,7 @@ func New_TL_inputPhoneContact() *TL_inputPhoneContact {
 }
 
 func (t *TL_inputPhoneContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPhoneContact))
 	ec.Long(t.Get_client_id())
@@ -3020,7 +3020,7 @@ func New_TL_inputFile() *TL_inputFile {
 }
 
 func (t *TL_inputFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputFile))
 	ec.Long(t.Get_id())
@@ -3084,7 +3084,7 @@ func New_TL_inputFileBig() *TL_inputFileBig {
 }
 
 func (t *TL_inputFileBig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputFileBig))
 	ec.Long(t.Get_id())
@@ -3119,7 +3119,7 @@ func New_TL_inputMediaEmpty() *TL_inputMediaEmpty {
 }
 
 func (t *TL_inputMediaEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaEmpty))
 
@@ -3191,7 +3191,7 @@ func New_TL_inputMediaUploadedPhoto() *TL_inputMediaUploadedPhoto {
 }
 
 func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaUploadedPhoto))
 	ec.TLObject(t.Get_file())
@@ -3264,7 +3264,7 @@ func New_TL_inputMediaPhoto() *TL_inputMediaPhoto {
 }
 
 func (t *TL_inputMediaPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaPhoto))
 	ec.TLObject(t.Get_id())
@@ -3308,7 +3308,7 @@ func New_TL_inputMediaGeoPoint() *TL_inputMediaGeoPoint {
 }
 
 func (t *TL_inputMediaGeoPoint) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaGeoPoint))
 	ec.TLObject(t.Get_geo_point())
@@ -3366,7 +3366,7 @@ func New_TL_inputMediaContact() *TL_inputMediaContact {
 }
 
 func (t *TL_inputMediaContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaContact))
 	ec.String(t.Get_phone_number())
@@ -3482,7 +3482,7 @@ func New_TL_inputMediaUploadedDocument() *TL_inputMediaUploadedDocument {
 }
 
 func (t *TL_inputMediaUploadedDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaUploadedDocument))
 	ec.TLObject(t.Get_nosound_video())
@@ -3563,7 +3563,7 @@ func New_TL_inputMediaDocument() *TL_inputMediaDocument {
 }
 
 func (t *TL_inputMediaDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaDocument))
 	ec.TLObject(t.Get_id())
@@ -3652,7 +3652,7 @@ func New_TL_inputMediaVenue() *TL_inputMediaVenue {
 }
 
 func (t *TL_inputMediaVenue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaVenue))
 	ec.TLObject(t.Get_geo_point())
@@ -3711,7 +3711,7 @@ func New_TL_inputMediaGifExternal() *TL_inputMediaGifExternal {
 }
 
 func (t *TL_inputMediaGifExternal) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaGifExternal))
 	ec.String(t.Get_url())
@@ -3780,7 +3780,7 @@ func New_TL_inputMediaPhotoExternal() *TL_inputMediaPhotoExternal {
 }
 
 func (t *TL_inputMediaPhotoExternal) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaPhotoExternal))
 	ec.String(t.Get_url())
@@ -3851,7 +3851,7 @@ func New_TL_inputMediaDocumentExternal() *TL_inputMediaDocumentExternal {
 }
 
 func (t *TL_inputMediaDocumentExternal) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaDocumentExternal))
 	ec.String(t.Get_url())
@@ -3895,7 +3895,7 @@ func New_TL_inputMediaGame() *TL_inputMediaGame {
 }
 
 func (t *TL_inputMediaGame) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaGame))
 	ec.TLObject(t.Get_id())
@@ -4007,7 +4007,7 @@ func New_TL_inputMediaInvoice() *TL_inputMediaInvoice {
 }
 
 func (t *TL_inputMediaInvoice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaInvoice))
 	ec.String(t.Get_title())
@@ -4070,7 +4070,7 @@ func New_TL_inputMediaGeoLive() *TL_inputMediaGeoLive {
 }
 
 func (t *TL_inputMediaGeoLive) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaGeoLive))
 	ec.TLObject(t.Get_geo_point())
@@ -4103,7 +4103,7 @@ func New_TL_inputChatPhotoEmpty() *TL_inputChatPhotoEmpty {
 }
 
 func (t *TL_inputChatPhotoEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputChatPhotoEmpty))
 
@@ -4139,7 +4139,7 @@ func New_TL_inputChatUploadedPhoto() *TL_inputChatUploadedPhoto {
 }
 
 func (t *TL_inputChatUploadedPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputChatUploadedPhoto))
 	ec.TLObject(t.Get_file())
@@ -4179,7 +4179,7 @@ func New_TL_inputChatPhoto() *TL_inputChatPhoto {
 }
 
 func (t *TL_inputChatPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputChatPhoto))
 	ec.TLObject(t.Get_id())
@@ -4210,7 +4210,7 @@ func New_TL_inputGeoPointEmpty() *TL_inputGeoPointEmpty {
 }
 
 func (t *TL_inputGeoPointEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputGeoPointEmpty))
 
@@ -4255,7 +4255,7 @@ func New_TL_inputGeoPoint() *TL_inputGeoPoint {
 }
 
 func (t *TL_inputGeoPoint) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputGeoPoint))
 	ec.Double(t.Get_lat())
@@ -4288,7 +4288,7 @@ func New_TL_inputPhotoEmpty() *TL_inputPhotoEmpty {
 }
 
 func (t *TL_inputPhotoEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPhotoEmpty))
 
@@ -4333,7 +4333,7 @@ func New_TL_inputPhoto() *TL_inputPhoto {
 }
 
 func (t *TL_inputPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPhoto))
 	ec.Long(t.Get_id())
@@ -4393,7 +4393,7 @@ func New_TL_inputFileLocation() *TL_inputFileLocation {
 }
 
 func (t *TL_inputFileLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputFileLocation))
 	ec.Long(t.Get_volume_id())
@@ -4446,7 +4446,7 @@ func New_TL_inputEncryptedFileLocation() *TL_inputEncryptedFileLocation {
 }
 
 func (t *TL_inputEncryptedFileLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedFileLocation))
 	ec.Long(t.Get_id())
@@ -4506,7 +4506,7 @@ func New_TL_inputDocumentFileLocation() *TL_inputDocumentFileLocation {
 }
 
 func (t *TL_inputDocumentFileLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputDocumentFileLocation))
 	ec.Long(t.Get_id())
@@ -4577,7 +4577,7 @@ func New_TL_inputAppEvent() *TL_inputAppEvent {
 }
 
 func (t *TL_inputAppEvent) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputAppEvent))
 	ec.Double(t.Get_time())
@@ -4623,7 +4623,7 @@ func New_TL_peerUser() *TL_peerUser {
 }
 
 func (t *TL_peerUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerUser))
 	ec.Int(t.Get_user_id())
@@ -4663,7 +4663,7 @@ func New_TL_peerChat() *TL_peerChat {
 }
 
 func (t *TL_peerChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerChat))
 	ec.Int(t.Get_chat_id())
@@ -4703,7 +4703,7 @@ func New_TL_peerChannel() *TL_peerChannel {
 }
 
 func (t *TL_peerChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerChannel))
 	ec.Int(t.Get_channel_id())
@@ -4734,7 +4734,7 @@ func New_TL_storage_fileUnknown() *TL_storage_fileUnknown {
 }
 
 func (t *TL_storage_fileUnknown) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileUnknown))
 
@@ -4761,7 +4761,7 @@ func New_TL_storage_filePartial() *TL_storage_filePartial {
 }
 
 func (t *TL_storage_filePartial) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_filePartial))
 
@@ -4788,7 +4788,7 @@ func New_TL_storage_fileJpeg() *TL_storage_fileJpeg {
 }
 
 func (t *TL_storage_fileJpeg) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileJpeg))
 
@@ -4815,7 +4815,7 @@ func New_TL_storage_fileGif() *TL_storage_fileGif {
 }
 
 func (t *TL_storage_fileGif) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileGif))
 
@@ -4842,7 +4842,7 @@ func New_TL_storage_filePng() *TL_storage_filePng {
 }
 
 func (t *TL_storage_filePng) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_filePng))
 
@@ -4869,7 +4869,7 @@ func New_TL_storage_filePdf() *TL_storage_filePdf {
 }
 
 func (t *TL_storage_filePdf) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_filePdf))
 
@@ -4896,7 +4896,7 @@ func New_TL_storage_fileMp3() *TL_storage_fileMp3 {
 }
 
 func (t *TL_storage_fileMp3) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileMp3))
 
@@ -4923,7 +4923,7 @@ func New_TL_storage_fileMov() *TL_storage_fileMov {
 }
 
 func (t *TL_storage_fileMov) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileMov))
 
@@ -4950,7 +4950,7 @@ func New_TL_storage_fileMp4() *TL_storage_fileMp4 {
 }
 
 func (t *TL_storage_fileMp4) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileMp4))
 
@@ -4977,7 +4977,7 @@ func New_TL_storage_fileWebp() *TL_storage_fileWebp {
 }
 
 func (t *TL_storage_fileWebp) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_storage_fileWebp))
 
@@ -5031,7 +5031,7 @@ func New_TL_fileLocationUnavailable() *TL_fileLocationUnavailable {
 }
 
 func (t *TL_fileLocationUnavailable) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_fileLocationUnavailable))
 	ec.Long(t.Get_volume_id())
@@ -5102,7 +5102,7 @@ func New_TL_fileLocation() *TL_fileLocation {
 }
 
 func (t *TL_fileLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_fileLocation))
 	ec.Int(t.Get_dc_id())
@@ -5148,7 +5148,7 @@ func New_TL_userEmpty() *TL_userEmpty {
 }
 
 func (t *TL_userEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userEmpty))
 	ec.Int(t.Get_id())
@@ -5395,7 +5395,7 @@ func New_TL_user() *TL_user {
 }
 
 func (t *TL_user) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_user))
 	ec.TLObject(t.Get_self())
@@ -5470,7 +5470,7 @@ func New_TL_userProfilePhotoEmpty() *TL_userProfilePhotoEmpty {
 }
 
 func (t *TL_userProfilePhotoEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userProfilePhotoEmpty))
 
@@ -5524,7 +5524,7 @@ func New_TL_userProfilePhoto() *TL_userProfilePhoto {
 }
 
 func (t *TL_userProfilePhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userProfilePhoto))
 	ec.Long(t.Get_photo_id())
@@ -5559,7 +5559,7 @@ func New_TL_userStatusEmpty() *TL_userStatusEmpty {
 }
 
 func (t *TL_userStatusEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusEmpty))
 
@@ -5595,7 +5595,7 @@ func New_TL_userStatusOnline() *TL_userStatusOnline {
 }
 
 func (t *TL_userStatusOnline) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusOnline))
 	ec.Int(t.Get_expires())
@@ -5635,7 +5635,7 @@ func New_TL_userStatusOffline() *TL_userStatusOffline {
 }
 
 func (t *TL_userStatusOffline) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusOffline))
 	ec.Int(t.Get_was_online())
@@ -5666,7 +5666,7 @@ func New_TL_userStatusRecently() *TL_userStatusRecently {
 }
 
 func (t *TL_userStatusRecently) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusRecently))
 
@@ -5693,7 +5693,7 @@ func New_TL_userStatusLastWeek() *TL_userStatusLastWeek {
 }
 
 func (t *TL_userStatusLastWeek) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusLastWeek))
 
@@ -5720,7 +5720,7 @@ func New_TL_userStatusLastMonth() *TL_userStatusLastMonth {
 }
 
 func (t *TL_userStatusLastMonth) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userStatusLastMonth))
 
@@ -5756,7 +5756,7 @@ func New_TL_chatEmpty() *TL_chatEmpty {
 }
 
 func (t *TL_chatEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatEmpty))
 	ec.Int(t.Get_id())
@@ -5913,7 +5913,7 @@ func New_TL_chat() *TL_chat {
 }
 
 func (t *TL_chat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chat))
 	ec.TLObject(t.Get_creator())
@@ -5986,7 +5986,7 @@ func New_TL_chatForbidden() *TL_chatForbidden {
 }
 
 func (t *TL_chatForbidden) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatForbidden))
 	ec.Int(t.Get_id())
@@ -6217,7 +6217,7 @@ func New_TL_channel() *TL_channel {
 }
 
 func (t *TL_channel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channel))
 	ec.TLObject(t.Get_creator())
@@ -6351,7 +6351,7 @@ func New_TL_channelForbidden() *TL_channelForbidden {
 }
 
 func (t *TL_channelForbidden) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelForbidden))
 	ec.TLObject(t.Get_broadcast())
@@ -6446,7 +6446,7 @@ func New_TL_chatFull() *TL_chatFull {
 }
 
 func (t *TL_chatFull) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatFull))
 	ec.Int(t.Get_id())
@@ -6694,7 +6694,7 @@ func New_TL_channelFull() *TL_channelFull {
 }
 
 func (t *TL_channelFull) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelFull))
 	ec.TLObject(t.Get_can_view_participants())
@@ -6794,7 +6794,7 @@ func New_TL_chatParticipant() *TL_chatParticipant {
 }
 
 func (t *TL_chatParticipant) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipant))
 	ec.Int(t.Get_user_id())
@@ -6838,7 +6838,7 @@ func New_TL_chatParticipantCreator() *TL_chatParticipantCreator {
 }
 
 func (t *TL_chatParticipantCreator) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipantCreator))
 	ec.Int(t.Get_user_id())
@@ -6896,7 +6896,7 @@ func New_TL_chatParticipantAdmin() *TL_chatParticipantAdmin {
 }
 
 func (t *TL_chatParticipantAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipantAdmin))
 	ec.Int(t.Get_user_id())
@@ -6958,7 +6958,7 @@ func New_TL_chatParticipantsForbidden() *TL_chatParticipantsForbidden {
 }
 
 func (t *TL_chatParticipantsForbidden) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipantsForbidden))
 	ec.Int(t.Get_chat_id())
@@ -7018,7 +7018,7 @@ func New_TL_chatParticipants() *TL_chatParticipants {
 }
 
 func (t *TL_chatParticipants) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipants))
 	ec.Int(t.Get_chat_id())
@@ -7053,7 +7053,7 @@ func New_TL_chatPhotoEmpty() *TL_chatPhotoEmpty {
 }
 
 func (t *TL_chatPhotoEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatPhotoEmpty))
 
@@ -7098,7 +7098,7 @@ func New_TL_chatPhoto() *TL_chatPhoto {
 }
 
 func (t *TL_chatPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatPhoto))
 	ec.TLObject(t.Get_photo_small())
@@ -7140,7 +7140,7 @@ func New_TL_messageEmpty() *TL_messageEmpty {
 }
 
 func (t *TL_messageEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEmpty))
 	ec.Int(t.Get_id())
@@ -7360,7 +7360,7 @@ func New_TL_message() *TL_message {
 }
 
 func (t *TL_message) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_message))
 	ec.TLObject(t.Get_out())
@@ -7537,7 +7537,7 @@ func New_TL_messageService() *TL_messageService {
 }
 
 func (t *TL_messageService) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageService))
 	ec.TLObject(t.Get_out())
@@ -7588,7 +7588,7 @@ func New_TL_messageMediaEmpty() *TL_messageMediaEmpty {
 }
 
 func (t *TL_messageMediaEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaEmpty))
 
@@ -7651,7 +7651,7 @@ func New_TL_messageMediaPhoto() *TL_messageMediaPhoto {
 }
 
 func (t *TL_messageMediaPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaPhoto))
 	ec.TLObject(t.Get_photo())
@@ -7695,7 +7695,7 @@ func New_TL_messageMediaGeo() *TL_messageMediaGeo {
 }
 
 func (t *TL_messageMediaGeo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaGeo))
 	ec.TLObject(t.Get_geo())
@@ -7762,7 +7762,7 @@ func New_TL_messageMediaContact() *TL_messageMediaContact {
 }
 
 func (t *TL_messageMediaContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaContact))
 	ec.String(t.Get_phone_number())
@@ -7799,7 +7799,7 @@ func New_TL_messageMediaUnsupported() *TL_messageMediaUnsupported {
 }
 
 func (t *TL_messageMediaUnsupported) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaUnsupported))
 
@@ -7862,7 +7862,7 @@ func New_TL_messageMediaDocument() *TL_messageMediaDocument {
 }
 
 func (t *TL_messageMediaDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaDocument))
 	ec.TLObject(t.Get_document())
@@ -7906,7 +7906,7 @@ func New_TL_messageMediaWebPage() *TL_messageMediaWebPage {
 }
 
 func (t *TL_messageMediaWebPage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaWebPage))
 	ec.TLObject(t.Get_webpage())
@@ -7991,7 +7991,7 @@ func New_TL_messageMediaVenue() *TL_messageMediaVenue {
 }
 
 func (t *TL_messageMediaVenue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaVenue))
 	ec.TLObject(t.Get_geo())
@@ -8041,7 +8041,7 @@ func New_TL_messageMediaGame() *TL_messageMediaGame {
 }
 
 func (t *TL_messageMediaGame) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaGame))
 	ec.TLObject(t.Get_game())
@@ -8162,7 +8162,7 @@ func New_TL_messageMediaInvoice() *TL_messageMediaInvoice {
 }
 
 func (t *TL_messageMediaInvoice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaInvoice))
 	ec.TLObject(t.Get_shipping_address_requested())
@@ -8227,7 +8227,7 @@ func New_TL_messageMediaGeoLive() *TL_messageMediaGeoLive {
 }
 
 func (t *TL_messageMediaGeoLive) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaGeoLive))
 	ec.TLObject(t.Get_geo())
@@ -8260,7 +8260,7 @@ func New_TL_messageActionEmpty() *TL_messageActionEmpty {
 }
 
 func (t *TL_messageActionEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionEmpty))
 
@@ -8305,7 +8305,7 @@ func New_TL_messageActionChatCreate() *TL_messageActionChatCreate {
 }
 
 func (t *TL_messageActionChatCreate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatCreate))
 	ec.String(t.Get_title())
@@ -8347,7 +8347,7 @@ func New_TL_messageActionChatEditTitle() *TL_messageActionChatEditTitle {
 }
 
 func (t *TL_messageActionChatEditTitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatEditTitle))
 	ec.String(t.Get_title())
@@ -8387,7 +8387,7 @@ func New_TL_messageActionChatEditPhoto() *TL_messageActionChatEditPhoto {
 }
 
 func (t *TL_messageActionChatEditPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatEditPhoto))
 	ec.TLObject(t.Get_photo())
@@ -8418,7 +8418,7 @@ func New_TL_messageActionChatDeletePhoto() *TL_messageActionChatDeletePhoto {
 }
 
 func (t *TL_messageActionChatDeletePhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatDeletePhoto))
 
@@ -8454,7 +8454,7 @@ func New_TL_messageActionChatAddUser() *TL_messageActionChatAddUser {
 }
 
 func (t *TL_messageActionChatAddUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatAddUser))
 	ec.VectorInt(t.Get_users())
@@ -8494,7 +8494,7 @@ func New_TL_messageActionChatDeleteUser() *TL_messageActionChatDeleteUser {
 }
 
 func (t *TL_messageActionChatDeleteUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatDeleteUser))
 	ec.Int(t.Get_user_id())
@@ -8534,7 +8534,7 @@ func New_TL_messageActionChatJoinedByLink() *TL_messageActionChatJoinedByLink {
 }
 
 func (t *TL_messageActionChatJoinedByLink) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatJoinedByLink))
 	ec.Int(t.Get_inviter_id())
@@ -8574,7 +8574,7 @@ func New_TL_messageActionChannelCreate() *TL_messageActionChannelCreate {
 }
 
 func (t *TL_messageActionChannelCreate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChannelCreate))
 	ec.String(t.Get_title())
@@ -8614,7 +8614,7 @@ func New_TL_messageActionChatMigrateTo() *TL_messageActionChatMigrateTo {
 }
 
 func (t *TL_messageActionChatMigrateTo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChatMigrateTo))
 	ec.Int(t.Get_channel_id())
@@ -8663,7 +8663,7 @@ func New_TL_messageActionChannelMigrateFrom() *TL_messageActionChannelMigrateFro
 }
 
 func (t *TL_messageActionChannelMigrateFrom) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionChannelMigrateFrom))
 	ec.String(t.Get_title())
@@ -8696,7 +8696,7 @@ func New_TL_messageActionPinMessage() *TL_messageActionPinMessage {
 }
 
 func (t *TL_messageActionPinMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPinMessage))
 
@@ -8723,7 +8723,7 @@ func New_TL_messageActionHistoryClear() *TL_messageActionHistoryClear {
 }
 
 func (t *TL_messageActionHistoryClear) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionHistoryClear))
 
@@ -8768,7 +8768,7 @@ func New_TL_messageActionGameScore() *TL_messageActionGameScore {
 }
 
 func (t *TL_messageActionGameScore) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionGameScore))
 	ec.Long(t.Get_game_id())
@@ -8864,7 +8864,7 @@ func New_TL_messageActionPaymentSentMe() *TL_messageActionPaymentSentMe {
 }
 
 func (t *TL_messageActionPaymentSentMe) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPaymentSentMe))
 	ec.String(t.Get_currency())
@@ -8923,7 +8923,7 @@ func New_TL_messageActionPaymentSent() *TL_messageActionPaymentSent {
 }
 
 func (t *TL_messageActionPaymentSent) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPaymentSent))
 	ec.String(t.Get_currency())
@@ -8992,7 +8992,7 @@ func New_TL_messageActionPhoneCall() *TL_messageActionPhoneCall {
 }
 
 func (t *TL_messageActionPhoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPhoneCall))
 	ec.Long(t.Get_call_id())
@@ -9027,7 +9027,7 @@ func New_TL_messageActionScreenshotTaken() *TL_messageActionScreenshotTaken {
 }
 
 func (t *TL_messageActionScreenshotTaken) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionScreenshotTaken))
 
@@ -9063,7 +9063,7 @@ func New_TL_messageActionCustomAction() *TL_messageActionCustomAction {
 }
 
 func (t *TL_messageActionCustomAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionCustomAction))
 	ec.String(t.Get_message())
@@ -9193,7 +9193,7 @@ func New_TL_dialog() *TL_dialog {
 }
 
 func (t *TL_dialog) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dialog))
 	ec.TLObject(t.Get_pinned())
@@ -9251,7 +9251,7 @@ func New_TL_photoEmpty() *TL_photoEmpty {
 }
 
 func (t *TL_photoEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photoEmpty))
 	ec.Long(t.Get_id())
@@ -9336,7 +9336,7 @@ func New_TL_photo() *TL_photo {
 }
 
 func (t *TL_photo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photo))
 	ec.TLObject(t.Get_has_stickers())
@@ -9384,7 +9384,7 @@ func New_TL_photoSizeEmpty() *TL_photoSizeEmpty {
 }
 
 func (t *TL_photoSizeEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photoSizeEmpty))
 	ec.String(t.Get_type())
@@ -9460,7 +9460,7 @@ func New_TL_photoSize() *TL_photoSize {
 }
 
 func (t *TL_photoSize) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photoSize))
 	ec.String(t.Get_type())
@@ -9544,7 +9544,7 @@ func New_TL_photoCachedSize() *TL_photoCachedSize {
 }
 
 func (t *TL_photoCachedSize) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photoCachedSize))
 	ec.String(t.Get_type())
@@ -9583,7 +9583,7 @@ func New_TL_geoPointEmpty() *TL_geoPointEmpty {
 }
 
 func (t *TL_geoPointEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_geoPointEmpty))
 
@@ -9628,7 +9628,7 @@ func New_TL_geoPoint() *TL_geoPoint {
 }
 
 func (t *TL_geoPoint) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_geoPoint))
 	ec.Double(t.Get_long())
@@ -9670,7 +9670,7 @@ func New_TL_auth_checkedPhone() *TL_auth_checkedPhone {
 }
 
 func (t *TL_auth_checkedPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_checkedPhone))
 	ec.TLObject(t.Get_phone_registered())
@@ -9755,7 +9755,7 @@ func New_TL_auth_sentCode() *TL_auth_sentCode {
 }
 
 func (t *TL_auth_sentCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCode))
 	ec.TLObject(t.Get_phone_registered())
@@ -9821,7 +9821,7 @@ func New_TL_auth_authorization() *TL_auth_authorization {
 }
 
 func (t *TL_auth_authorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_authorization))
 	ec.TLObject(t.Get_tmp_sessions())
@@ -9872,7 +9872,7 @@ func New_TL_auth_exportedAuthorization() *TL_auth_exportedAuthorization {
 }
 
 func (t *TL_auth_exportedAuthorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_exportedAuthorization))
 	ec.Int(t.Get_id())
@@ -9914,7 +9914,7 @@ func New_TL_inputNotifyPeer() *TL_inputNotifyPeer {
 }
 
 func (t *TL_inputNotifyPeer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputNotifyPeer))
 	ec.TLObject(t.Get_peer())
@@ -9945,7 +9945,7 @@ func New_TL_inputNotifyUsers() *TL_inputNotifyUsers {
 }
 
 func (t *TL_inputNotifyUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputNotifyUsers))
 
@@ -9972,7 +9972,7 @@ func New_TL_inputNotifyChats() *TL_inputNotifyChats {
 }
 
 func (t *TL_inputNotifyChats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputNotifyChats))
 
@@ -9999,7 +9999,7 @@ func New_TL_inputNotifyAll() *TL_inputNotifyAll {
 }
 
 func (t *TL_inputNotifyAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputNotifyAll))
 
@@ -10026,7 +10026,7 @@ func New_TL_inputPeerNotifyEventsEmpty() *TL_inputPeerNotifyEventsEmpty {
 }
 
 func (t *TL_inputPeerNotifyEventsEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerNotifyEventsEmpty))
 
@@ -10053,7 +10053,7 @@ func New_TL_inputPeerNotifyEventsAll() *TL_inputPeerNotifyEventsAll {
 }
 
 func (t *TL_inputPeerNotifyEventsAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerNotifyEventsAll))
 
@@ -10125,7 +10125,7 @@ func New_TL_inputPeerNotifySettings() *TL_inputPeerNotifySettings {
 }
 
 func (t *TL_inputPeerNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerNotifySettings))
 	ec.TLObject(t.Get_show_previews())
@@ -10162,7 +10162,7 @@ func New_TL_peerNotifyEventsEmpty() *TL_peerNotifyEventsEmpty {
 }
 
 func (t *TL_peerNotifyEventsEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerNotifyEventsEmpty))
 
@@ -10189,7 +10189,7 @@ func New_TL_peerNotifyEventsAll() *TL_peerNotifyEventsAll {
 }
 
 func (t *TL_peerNotifyEventsAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerNotifyEventsAll))
 
@@ -10216,7 +10216,7 @@ func New_TL_peerNotifySettingsEmpty() *TL_peerNotifySettingsEmpty {
 }
 
 func (t *TL_peerNotifySettingsEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerNotifySettingsEmpty))
 
@@ -10288,7 +10288,7 @@ func New_TL_peerNotifySettings() *TL_peerNotifySettings {
 }
 
 func (t *TL_peerNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerNotifySettings))
 	ec.TLObject(t.Get_show_previews())
@@ -10343,7 +10343,7 @@ func New_TL_peerSettings() *TL_peerSettings {
 }
 
 func (t *TL_peerSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerSettings))
 	ec.TLObject(t.Get_report_spam())
@@ -10410,7 +10410,7 @@ func New_TL_wallPaper() *TL_wallPaper {
 }
 
 func (t *TL_wallPaper) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_wallPaper))
 	ec.Int(t.Get_id())
@@ -10483,7 +10483,7 @@ func New_TL_wallPaperSolid() *TL_wallPaperSolid {
 }
 
 func (t *TL_wallPaperSolid) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_wallPaperSolid))
 	ec.Int(t.Get_id())
@@ -10520,7 +10520,7 @@ func New_TL_inputReportReasonSpam() *TL_inputReportReasonSpam {
 }
 
 func (t *TL_inputReportReasonSpam) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputReportReasonSpam))
 
@@ -10547,7 +10547,7 @@ func New_TL_inputReportReasonViolence() *TL_inputReportReasonViolence {
 }
 
 func (t *TL_inputReportReasonViolence) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputReportReasonViolence))
 
@@ -10574,7 +10574,7 @@ func New_TL_inputReportReasonPornography() *TL_inputReportReasonPornography {
 }
 
 func (t *TL_inputReportReasonPornography) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputReportReasonPornography))
 
@@ -10610,7 +10610,7 @@ func New_TL_inputReportReasonOther() *TL_inputReportReasonOther {
 }
 
 func (t *TL_inputReportReasonOther) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputReportReasonOther))
 	ec.String(t.Get_text())
@@ -10740,7 +10740,7 @@ func New_TL_userFull() *TL_userFull {
 }
 
 func (t *TL_userFull) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userFull))
 	ec.TLObject(t.Get_blocked())
@@ -10807,7 +10807,7 @@ func New_TL_contact() *TL_contact {
 }
 
 func (t *TL_contact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contact))
 	ec.Int(t.Get_user_id())
@@ -10858,7 +10858,7 @@ func New_TL_importedContact() *TL_importedContact {
 }
 
 func (t *TL_importedContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_importedContact))
 	ec.Int(t.Get_user_id())
@@ -10909,7 +10909,7 @@ func New_TL_contactBlocked() *TL_contactBlocked {
 }
 
 func (t *TL_contactBlocked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactBlocked))
 	ec.Int(t.Get_user_id())
@@ -10960,7 +10960,7 @@ func New_TL_contactStatus() *TL_contactStatus {
 }
 
 func (t *TL_contactStatus) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactStatus))
 	ec.Int(t.Get_user_id())
@@ -11020,7 +11020,7 @@ func New_TL_contacts_link() *TL_contacts_link {
 }
 
 func (t *TL_contacts_link) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_link))
 	ec.TLObject(t.Get_my_link())
@@ -11055,7 +11055,7 @@ func New_TL_contacts_contactsNotModified() *TL_contacts_contactsNotModified {
 }
 
 func (t *TL_contacts_contactsNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_contactsNotModified))
 
@@ -11109,7 +11109,7 @@ func New_TL_contacts_contacts() *TL_contacts_contacts {
 }
 
 func (t *TL_contacts_contacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_contacts))
 	ec.Vector(t.Get_contacts())
@@ -11180,7 +11180,7 @@ func New_TL_contacts_importedContacts() *TL_contacts_importedContacts {
 }
 
 func (t *TL_contacts_importedContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_importedContacts))
 	ec.Vector(t.Get_imported())
@@ -11235,7 +11235,7 @@ func New_TL_contacts_blocked() *TL_contacts_blocked {
 }
 
 func (t *TL_contacts_blocked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_blocked))
 	ec.Vector(t.Get_blocked())
@@ -11295,7 +11295,7 @@ func New_TL_contacts_blockedSlice() *TL_contacts_blockedSlice {
 }
 
 func (t *TL_contacts_blockedSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_blockedSlice))
 	ec.Int(t.Get_count())
@@ -11366,7 +11366,7 @@ func New_TL_messages_dialogs() *TL_messages_dialogs {
 }
 
 func (t *TL_messages_dialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_dialogs))
 	ec.Vector(t.Get_dialogs())
@@ -11448,7 +11448,7 @@ func New_TL_messages_dialogsSlice() *TL_messages_dialogsSlice {
 }
 
 func (t *TL_messages_dialogsSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_dialogsSlice))
 	ec.Int(t.Get_count())
@@ -11514,7 +11514,7 @@ func New_TL_messages_messages() *TL_messages_messages {
 }
 
 func (t *TL_messages_messages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_messages))
 	ec.Vector(t.Get_messages())
@@ -11585,7 +11585,7 @@ func New_TL_messages_messagesSlice() *TL_messages_messagesSlice {
 }
 
 func (t *TL_messages_messagesSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_messagesSlice))
 	ec.Int(t.Get_count())
@@ -11676,7 +11676,7 @@ func New_TL_messages_channelMessages() *TL_messages_channelMessages {
 }
 
 func (t *TL_messages_channelMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_channelMessages))
 	ec.Int(t.Get_pts())
@@ -11724,7 +11724,7 @@ func New_TL_messages_messagesNotModified() *TL_messages_messagesNotModified {
 }
 
 func (t *TL_messages_messagesNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_messagesNotModified))
 	ec.Int(t.Get_count())
@@ -11764,7 +11764,7 @@ func New_TL_messages_chats() *TL_messages_chats {
 }
 
 func (t *TL_messages_chats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_chats))
 	ec.Vector(t.Get_chats())
@@ -11813,7 +11813,7 @@ func New_TL_messages_chatsSlice() *TL_messages_chatsSlice {
 }
 
 func (t *TL_messages_chatsSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_chatsSlice))
 	ec.Int(t.Get_count())
@@ -11873,7 +11873,7 @@ func New_TL_messages_chatFull() *TL_messages_chatFull {
 }
 
 func (t *TL_messages_chatFull) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_chatFull))
 	ec.TLObject(t.Get_full_chat())
@@ -11935,7 +11935,7 @@ func New_TL_messages_affectedHistory() *TL_messages_affectedHistory {
 }
 
 func (t *TL_messages_affectedHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_affectedHistory))
 	ec.Int(t.Get_pts())
@@ -11970,7 +11970,7 @@ func New_TL_inputMessagesFilterEmpty() *TL_inputMessagesFilterEmpty {
 }
 
 func (t *TL_inputMessagesFilterEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterEmpty))
 
@@ -11997,7 +11997,7 @@ func New_TL_inputMessagesFilterPhotos() *TL_inputMessagesFilterPhotos {
 }
 
 func (t *TL_inputMessagesFilterPhotos) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterPhotos))
 
@@ -12024,7 +12024,7 @@ func New_TL_inputMessagesFilterVideo() *TL_inputMessagesFilterVideo {
 }
 
 func (t *TL_inputMessagesFilterVideo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterVideo))
 
@@ -12051,7 +12051,7 @@ func New_TL_inputMessagesFilterPhotoVideo() *TL_inputMessagesFilterPhotoVideo {
 }
 
 func (t *TL_inputMessagesFilterPhotoVideo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterPhotoVideo))
 
@@ -12078,7 +12078,7 @@ func New_TL_inputMessagesFilterDocument() *TL_inputMessagesFilterDocument {
 }
 
 func (t *TL_inputMessagesFilterDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterDocument))
 
@@ -12105,7 +12105,7 @@ func New_TL_inputMessagesFilterUrl() *TL_inputMessagesFilterUrl {
 }
 
 func (t *TL_inputMessagesFilterUrl) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterUrl))
 
@@ -12132,7 +12132,7 @@ func New_TL_inputMessagesFilterGif() *TL_inputMessagesFilterGif {
 }
 
 func (t *TL_inputMessagesFilterGif) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterGif))
 
@@ -12159,7 +12159,7 @@ func New_TL_inputMessagesFilterVoice() *TL_inputMessagesFilterVoice {
 }
 
 func (t *TL_inputMessagesFilterVoice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterVoice))
 
@@ -12186,7 +12186,7 @@ func New_TL_inputMessagesFilterMusic() *TL_inputMessagesFilterMusic {
 }
 
 func (t *TL_inputMessagesFilterMusic) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterMusic))
 
@@ -12213,7 +12213,7 @@ func New_TL_inputMessagesFilterChatPhotos() *TL_inputMessagesFilterChatPhotos {
 }
 
 func (t *TL_inputMessagesFilterChatPhotos) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterChatPhotos))
 
@@ -12258,7 +12258,7 @@ func New_TL_inputMessagesFilterPhoneCalls() *TL_inputMessagesFilterPhoneCalls {
 }
 
 func (t *TL_inputMessagesFilterPhoneCalls) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterPhoneCalls))
 	ec.TLObject(t.Get_missed())
@@ -12289,7 +12289,7 @@ func New_TL_inputMessagesFilterRoundVoice() *TL_inputMessagesFilterRoundVoice {
 }
 
 func (t *TL_inputMessagesFilterRoundVoice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterRoundVoice))
 
@@ -12316,7 +12316,7 @@ func New_TL_inputMessagesFilterRoundVideo() *TL_inputMessagesFilterRoundVideo {
 }
 
 func (t *TL_inputMessagesFilterRoundVideo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterRoundVideo))
 
@@ -12343,7 +12343,7 @@ func New_TL_inputMessagesFilterMyMentions() *TL_inputMessagesFilterMyMentions {
 }
 
 func (t *TL_inputMessagesFilterMyMentions) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterMyMentions))
 
@@ -12370,7 +12370,7 @@ func New_TL_inputMessagesFilterGeo() *TL_inputMessagesFilterGeo {
 }
 
 func (t *TL_inputMessagesFilterGeo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterGeo))
 
@@ -12397,7 +12397,7 @@ func New_TL_inputMessagesFilterContacts() *TL_inputMessagesFilterContacts {
 }
 
 func (t *TL_inputMessagesFilterContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterContacts))
 
@@ -12451,7 +12451,7 @@ func New_TL_updateNewMessage() *TL_updateNewMessage {
 }
 
 func (t *TL_updateNewMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateNewMessage))
 	ec.TLObject(t.Get_message())
@@ -12504,7 +12504,7 @@ func New_TL_updateMessageID() *TL_updateMessageID {
 }
 
 func (t *TL_updateMessageID) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateMessageID))
 	ec.Int(t.Get_id())
@@ -12564,7 +12564,7 @@ func New_TL_updateDeleteMessages() *TL_updateDeleteMessages {
 }
 
 func (t *TL_updateDeleteMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDeleteMessages))
 	ec.VectorInt(t.Get_messages())
@@ -12617,7 +12617,7 @@ func New_TL_updateUserTyping() *TL_updateUserTyping {
 }
 
 func (t *TL_updateUserTyping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserTyping))
 	ec.Int(t.Get_user_id())
@@ -12677,7 +12677,7 @@ func New_TL_updateChatUserTyping() *TL_updateChatUserTyping {
 }
 
 func (t *TL_updateChatUserTyping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatUserTyping))
 	ec.Int(t.Get_chat_id())
@@ -12721,7 +12721,7 @@ func New_TL_updateChatParticipants() *TL_updateChatParticipants {
 }
 
 func (t *TL_updateChatParticipants) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatParticipants))
 	ec.TLObject(t.Get_participants())
@@ -12770,7 +12770,7 @@ func New_TL_updateUserStatus() *TL_updateUserStatus {
 }
 
 func (t *TL_updateUserStatus) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserStatus))
 	ec.Int(t.Get_user_id())
@@ -12839,7 +12839,7 @@ func New_TL_updateUserName() *TL_updateUserName {
 }
 
 func (t *TL_updateUserName) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserName))
 	ec.Int(t.Get_user_id())
@@ -12912,7 +12912,7 @@ func New_TL_updateUserPhoto() *TL_updateUserPhoto {
 }
 
 func (t *TL_updateUserPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserPhoto))
 	ec.Int(t.Get_user_id())
@@ -12967,7 +12967,7 @@ func New_TL_updateContactRegistered() *TL_updateContactRegistered {
 }
 
 func (t *TL_updateContactRegistered) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateContactRegistered))
 	ec.Int(t.Get_user_id())
@@ -13027,7 +13027,7 @@ func New_TL_updateContactLink() *TL_updateContactLink {
 }
 
 func (t *TL_updateContactLink) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateContactLink))
 	ec.Int(t.Get_user_id())
@@ -13080,7 +13080,7 @@ func New_TL_updateNewEncryptedMessage() *TL_updateNewEncryptedMessage {
 }
 
 func (t *TL_updateNewEncryptedMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateNewEncryptedMessage))
 	ec.TLObject(t.Get_message())
@@ -13122,7 +13122,7 @@ func New_TL_updateEncryptedChatTyping() *TL_updateEncryptedChatTyping {
 }
 
 func (t *TL_updateEncryptedChatTyping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateEncryptedChatTyping))
 	ec.Int(t.Get_chat_id())
@@ -13171,7 +13171,7 @@ func New_TL_updateEncryption() *TL_updateEncryption {
 }
 
 func (t *TL_updateEncryption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateEncryption))
 	ec.TLObject(t.Get_chat())
@@ -13231,7 +13231,7 @@ func New_TL_updateEncryptedMessagesRead() *TL_updateEncryptedMessagesRead {
 }
 
 func (t *TL_updateEncryptedMessagesRead) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateEncryptedMessagesRead))
 	ec.Int(t.Get_chat_id())
@@ -13311,7 +13311,7 @@ func New_TL_updateChatParticipantAdd() *TL_updateChatParticipantAdd {
 }
 
 func (t *TL_updateChatParticipantAdd) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatParticipantAdd))
 	ec.Int(t.Get_chat_id())
@@ -13377,7 +13377,7 @@ func New_TL_updateChatParticipantDelete() *TL_updateChatParticipantDelete {
 }
 
 func (t *TL_updateChatParticipantDelete) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatParticipantDelete))
 	ec.Int(t.Get_chat_id())
@@ -13421,7 +13421,7 @@ func New_TL_updateDcOptions() *TL_updateDcOptions {
 }
 
 func (t *TL_updateDcOptions) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDcOptions))
 	ec.Vector(t.Get_dc_options())
@@ -13470,7 +13470,7 @@ func New_TL_updateUserBlocked() *TL_updateUserBlocked {
 }
 
 func (t *TL_updateUserBlocked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserBlocked))
 	ec.Int(t.Get_user_id())
@@ -13521,7 +13521,7 @@ func New_TL_updateNotifySettings() *TL_updateNotifySettings {
 }
 
 func (t *TL_updateNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateNotifySettings))
 	ec.TLObject(t.Get_peer())
@@ -13617,7 +13617,7 @@ func New_TL_updateServiceNotification() *TL_updateServiceNotification {
 }
 
 func (t *TL_updateServiceNotification) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateServiceNotification))
 	ec.TLObject(t.Get_popup())
@@ -13676,7 +13676,7 @@ func New_TL_updatePrivacy() *TL_updatePrivacy {
 }
 
 func (t *TL_updatePrivacy) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatePrivacy))
 	ec.TLObject(t.Get_key())
@@ -13727,7 +13727,7 @@ func New_TL_updateUserPhone() *TL_updateUserPhone {
 }
 
 func (t *TL_updateUserPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateUserPhone))
 	ec.Int(t.Get_user_id())
@@ -13796,7 +13796,7 @@ func New_TL_updateReadHistoryInbox() *TL_updateReadHistoryInbox {
 }
 
 func (t *TL_updateReadHistoryInbox) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadHistoryInbox))
 	ec.TLObject(t.Get_peer())
@@ -13869,7 +13869,7 @@ func New_TL_updateReadHistoryOutbox() *TL_updateReadHistoryOutbox {
 }
 
 func (t *TL_updateReadHistoryOutbox) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadHistoryOutbox))
 	ec.TLObject(t.Get_peer())
@@ -13933,7 +13933,7 @@ func New_TL_updateWebPage() *TL_updateWebPage {
 }
 
 func (t *TL_updateWebPage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateWebPage))
 	ec.TLObject(t.Get_webpage())
@@ -13995,7 +13995,7 @@ func New_TL_updateReadMessagesContents() *TL_updateReadMessagesContents {
 }
 
 func (t *TL_updateReadMessagesContents) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadMessagesContents))
 	ec.VectorInt(t.Get_messages())
@@ -14057,7 +14057,7 @@ func New_TL_updateChannelTooLong() *TL_updateChannelTooLong {
 }
 
 func (t *TL_updateChannelTooLong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelTooLong))
 	ec.Int(t.Get_channel_id())
@@ -14099,7 +14099,7 @@ func New_TL_updateChannel() *TL_updateChannel {
 }
 
 func (t *TL_updateChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannel))
 	ec.Int(t.Get_channel_id())
@@ -14157,7 +14157,7 @@ func New_TL_updateNewChannelMessage() *TL_updateNewChannelMessage {
 }
 
 func (t *TL_updateNewChannelMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateNewChannelMessage))
 	ec.TLObject(t.Get_message())
@@ -14210,7 +14210,7 @@ func New_TL_updateReadChannelInbox() *TL_updateReadChannelInbox {
 }
 
 func (t *TL_updateReadChannelInbox) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadChannelInbox))
 	ec.Int(t.Get_channel_id())
@@ -14279,7 +14279,7 @@ func New_TL_updateDeleteChannelMessages() *TL_updateDeleteChannelMessages {
 }
 
 func (t *TL_updateDeleteChannelMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDeleteChannelMessages))
 	ec.Int(t.Get_channel_id())
@@ -14343,7 +14343,7 @@ func New_TL_updateChannelMessageViews() *TL_updateChannelMessageViews {
 }
 
 func (t *TL_updateChannelMessageViews) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelMessageViews))
 	ec.Int(t.Get_channel_id())
@@ -14405,7 +14405,7 @@ func New_TL_updateChatAdmins() *TL_updateChatAdmins {
 }
 
 func (t *TL_updateChatAdmins) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatAdmins))
 	ec.Int(t.Get_chat_id())
@@ -14476,7 +14476,7 @@ func New_TL_updateChatParticipantAdmin() *TL_updateChatParticipantAdmin {
 }
 
 func (t *TL_updateChatParticipantAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChatParticipantAdmin))
 	ec.Int(t.Get_chat_id())
@@ -14522,7 +14522,7 @@ func New_TL_updateNewStickerSet() *TL_updateNewStickerSet {
 }
 
 func (t *TL_updateNewStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateNewStickerSet))
 	ec.TLObject(t.Get_stickerset())
@@ -14580,7 +14580,7 @@ func New_TL_updateStickerSetsOrder() *TL_updateStickerSetsOrder {
 }
 
 func (t *TL_updateStickerSetsOrder) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateStickerSetsOrder))
 	ec.TLObject(t.Get_masks())
@@ -14613,7 +14613,7 @@ func New_TL_updateStickerSets() *TL_updateStickerSets {
 }
 
 func (t *TL_updateStickerSets) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateStickerSets))
 
@@ -14640,7 +14640,7 @@ func New_TL_updateSavedGifs() *TL_updateSavedGifs {
 }
 
 func (t *TL_updateSavedGifs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateSavedGifs))
 
@@ -14721,7 +14721,7 @@ func New_TL_updateBotInlineQuery() *TL_updateBotInlineQuery {
 }
 
 func (t *TL_updateBotInlineQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotInlineQuery))
 	ec.Long(t.Get_query_id())
@@ -14814,7 +14814,7 @@ func New_TL_updateBotInlineSend() *TL_updateBotInlineSend {
 }
 
 func (t *TL_updateBotInlineSend) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotInlineSend))
 	ec.Int(t.Get_user_id())
@@ -14880,7 +14880,7 @@ func New_TL_updateEditChannelMessage() *TL_updateEditChannelMessage {
 }
 
 func (t *TL_updateEditChannelMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateEditChannelMessage))
 	ec.TLObject(t.Get_message())
@@ -14933,7 +14933,7 @@ func New_TL_updateChannelPinnedMessage() *TL_updateChannelPinnedMessage {
 }
 
 func (t *TL_updateChannelPinnedMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelPinnedMessage))
 	ec.Int(t.Get_channel_id())
@@ -15038,7 +15038,7 @@ func New_TL_updateBotCallbackQuery() *TL_updateBotCallbackQuery {
 }
 
 func (t *TL_updateBotCallbackQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotCallbackQuery))
 	ec.Long(t.Get_query_id())
@@ -15108,7 +15108,7 @@ func New_TL_updateEditMessage() *TL_updateEditMessage {
 }
 
 func (t *TL_updateEditMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateEditMessage))
 	ec.TLObject(t.Get_message())
@@ -15206,7 +15206,7 @@ func New_TL_updateInlineBotCallbackQuery() *TL_updateInlineBotCallbackQuery {
 }
 
 func (t *TL_updateInlineBotCallbackQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateInlineBotCallbackQuery))
 	ec.Long(t.Get_query_id())
@@ -15265,7 +15265,7 @@ func New_TL_updateReadChannelOutbox() *TL_updateReadChannelOutbox {
 }
 
 func (t *TL_updateReadChannelOutbox) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadChannelOutbox))
 	ec.Int(t.Get_channel_id())
@@ -15316,7 +15316,7 @@ func New_TL_updateDraftMessage() *TL_updateDraftMessage {
 }
 
 func (t *TL_updateDraftMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDraftMessage))
 	ec.TLObject(t.Get_peer())
@@ -15349,7 +15349,7 @@ func New_TL_updateReadFeaturedStickers() *TL_updateReadFeaturedStickers {
 }
 
 func (t *TL_updateReadFeaturedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateReadFeaturedStickers))
 
@@ -15376,7 +15376,7 @@ func New_TL_updateRecentStickers() *TL_updateRecentStickers {
 }
 
 func (t *TL_updateRecentStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateRecentStickers))
 
@@ -15403,7 +15403,7 @@ func New_TL_updateConfig() *TL_updateConfig {
 }
 
 func (t *TL_updateConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateConfig))
 
@@ -15430,7 +15430,7 @@ func New_TL_updatePtsChanged() *TL_updatePtsChanged {
 }
 
 func (t *TL_updatePtsChanged) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatePtsChanged))
 
@@ -15493,7 +15493,7 @@ func New_TL_updateChannelWebPage() *TL_updateChannelWebPage {
 }
 
 func (t *TL_updateChannelWebPage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelWebPage))
 	ec.Int(t.Get_channel_id())
@@ -15557,7 +15557,7 @@ func New_TL_updateDialogPinned() *TL_updateDialogPinned {
 }
 
 func (t *TL_updateDialogPinned) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDialogPinned))
 	ec.TLObject(t.Get_pinned())
@@ -15608,7 +15608,7 @@ func New_TL_updatePinnedDialogs() *TL_updatePinnedDialogs {
 }
 
 func (t *TL_updatePinnedDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatePinnedDialogs))
 	ec.Vector(t.Get_order())
@@ -15648,7 +15648,7 @@ func New_TL_updateBotWebhookJSON() *TL_updateBotWebhookJSON {
 }
 
 func (t *TL_updateBotWebhookJSON) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotWebhookJSON))
 	ec.TLObject(t.Get_data())
@@ -15706,7 +15706,7 @@ func New_TL_updateBotWebhookJSONQuery() *TL_updateBotWebhookJSONQuery {
 }
 
 func (t *TL_updateBotWebhookJSONQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotWebhookJSONQuery))
 	ec.Long(t.Get_query_id())
@@ -15777,7 +15777,7 @@ func New_TL_updateBotShippingQuery() *TL_updateBotShippingQuery {
 }
 
 func (t *TL_updateBotShippingQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotShippingQuery))
 	ec.Long(t.Get_query_id())
@@ -15886,7 +15886,7 @@ func New_TL_updateBotPrecheckoutQuery() *TL_updateBotPrecheckoutQuery {
 }
 
 func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotPrecheckoutQuery))
 	ec.Long(t.Get_query_id())
@@ -15938,7 +15938,7 @@ func New_TL_updatePhoneCall() *TL_updatePhoneCall {
 }
 
 func (t *TL_updatePhoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatePhoneCall))
 	ec.TLObject(t.Get_phone_call())
@@ -15969,7 +15969,7 @@ func New_TL_updateLangPackTooLong() *TL_updateLangPackTooLong {
 }
 
 func (t *TL_updateLangPackTooLong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateLangPackTooLong))
 
@@ -16005,7 +16005,7 @@ func New_TL_updateLangPack() *TL_updateLangPack {
 }
 
 func (t *TL_updateLangPack) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateLangPack))
 	ec.TLObject(t.Get_difference())
@@ -16036,7 +16036,7 @@ func New_TL_updateFavedStickers() *TL_updateFavedStickers {
 }
 
 func (t *TL_updateFavedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateFavedStickers))
 
@@ -16081,7 +16081,7 @@ func New_TL_updateChannelReadMessagesContents() *TL_updateChannelReadMessagesCon
 }
 
 func (t *TL_updateChannelReadMessagesContents) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelReadMessagesContents))
 	ec.Int(t.Get_channel_id())
@@ -16114,7 +16114,7 @@ func New_TL_updateContactsReset() *TL_updateContactsReset {
 }
 
 func (t *TL_updateContactsReset) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateContactsReset))
 
@@ -16159,7 +16159,7 @@ func New_TL_updateChannelAvailableMessages() *TL_updateChannelAvailableMessages 
 }
 
 func (t *TL_updateChannelAvailableMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelAvailableMessages))
 	ec.Int(t.Get_channel_id())
@@ -16237,7 +16237,7 @@ func New_TL_updates_state() *TL_updates_state {
 }
 
 func (t *TL_updates_state) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_state))
 	ec.Int(t.Get_pts())
@@ -16294,7 +16294,7 @@ func New_TL_updates_differenceEmpty() *TL_updates_differenceEmpty {
 }
 
 func (t *TL_updates_differenceEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_differenceEmpty))
 	ec.Int(t.Get_date())
@@ -16381,7 +16381,7 @@ func New_TL_updates_difference() *TL_updates_difference {
 }
 
 func (t *TL_updates_difference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_difference))
 	ec.Vector(t.Get_new_messages())
@@ -16476,7 +16476,7 @@ func New_TL_updates_differenceSlice() *TL_updates_differenceSlice {
 }
 
 func (t *TL_updates_differenceSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_differenceSlice))
 	ec.Vector(t.Get_new_messages())
@@ -16526,7 +16526,7 @@ func New_TL_updates_differenceTooLong() *TL_updates_differenceTooLong {
 }
 
 func (t *TL_updates_differenceTooLong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_differenceTooLong))
 	ec.Int(t.Get_pts())
@@ -16557,7 +16557,7 @@ func New_TL_updatesTooLong() *TL_updatesTooLong {
 }
 
 func (t *TL_updatesTooLong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatesTooLong))
 
@@ -16719,7 +16719,7 @@ func New_TL_updateShortMessage() *TL_updateShortMessage {
 }
 
 func (t *TL_updateShortMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortMessage))
 	ec.TLObject(t.Get_out())
@@ -16920,7 +16920,7 @@ func New_TL_updateShortChatMessage() *TL_updateShortChatMessage {
 }
 
 func (t *TL_updateShortChatMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortChatMessage))
 	ec.TLObject(t.Get_out())
@@ -16997,7 +16997,7 @@ func New_TL_updateShort() *TL_updateShort {
 }
 
 func (t *TL_updateShort) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShort))
 	ec.TLObject(t.Get_update())
@@ -17084,7 +17084,7 @@ func New_TL_updatesCombined() *TL_updatesCombined {
 }
 
 func (t *TL_updatesCombined) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatesCombined))
 	ec.Vector(t.Get_updates())
@@ -17170,7 +17170,7 @@ func New_TL_updates() *TL_updates {
 }
 
 func (t *TL_updates) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates))
 	ec.Vector(t.Get_updates())
@@ -17281,7 +17281,7 @@ func New_TL_updateShortSentMessage() *TL_updateShortSentMessage {
 }
 
 func (t *TL_updateShortSentMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortSentMessage))
 	ec.TLObject(t.Get_out())
@@ -17342,7 +17342,7 @@ func New_TL_photos_photos() *TL_photos_photos {
 }
 
 func (t *TL_photos_photos) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_photos))
 	ec.Vector(t.Get_photos())
@@ -17402,7 +17402,7 @@ func New_TL_photos_photosSlice() *TL_photos_photosSlice {
 }
 
 func (t *TL_photos_photosSlice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_photosSlice))
 	ec.Int(t.Get_count())
@@ -17455,7 +17455,7 @@ func New_TL_photos_photo() *TL_photos_photo {
 }
 
 func (t *TL_photos_photo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_photo))
 	ec.TLObject(t.Get_photo())
@@ -17515,7 +17515,7 @@ func New_TL_upload_file() *TL_upload_file {
 }
 
 func (t *TL_upload_file) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_file))
 	ec.TLObject(t.Get_type())
@@ -17595,7 +17595,7 @@ func New_TL_upload_fileCdnRedirect() *TL_upload_fileCdnRedirect {
 }
 
 func (t *TL_upload_fileCdnRedirect) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_fileCdnRedirect))
 	ec.Int(t.Get_dc_id())
@@ -17715,7 +17715,7 @@ func New_TL_dcOption() *TL_dcOption {
 }
 
 func (t *TL_dcOption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dcOption))
 	ec.TLObject(t.Get_ipv6())
@@ -18084,7 +18084,7 @@ func New_TL_config() *TL_config {
 }
 
 func (t *TL_config) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_config))
 	ec.TLObject(t.Get_phonecalls_enabled())
@@ -18210,7 +18210,7 @@ func New_TL_nearestDc() *TL_nearestDc {
 }
 
 func (t *TL_nearestDc) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_nearestDc))
 	ec.String(t.Get_country())
@@ -18281,7 +18281,7 @@ func New_TL_help_appUpdate() *TL_help_appUpdate {
 }
 
 func (t *TL_help_appUpdate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_appUpdate))
 	ec.Int(t.Get_id())
@@ -18318,7 +18318,7 @@ func New_TL_help_noAppUpdate() *TL_help_noAppUpdate {
 }
 
 func (t *TL_help_noAppUpdate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_noAppUpdate))
 
@@ -18354,7 +18354,7 @@ func New_TL_help_inviteText() *TL_help_inviteText {
 }
 
 func (t *TL_help_inviteText) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_inviteText))
 	ec.String(t.Get_message())
@@ -18394,7 +18394,7 @@ func New_TL_encryptedChatEmpty() *TL_encryptedChatEmpty {
 }
 
 func (t *TL_encryptedChatEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedChatEmpty))
 	ec.Int(t.Get_id())
@@ -18470,7 +18470,7 @@ func New_TL_encryptedChatWaiting() *TL_encryptedChatWaiting {
 }
 
 func (t *TL_encryptedChatWaiting) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedChatWaiting))
 	ec.Int(t.Get_id())
@@ -18563,7 +18563,7 @@ func New_TL_encryptedChatRequested() *TL_encryptedChatRequested {
 }
 
 func (t *TL_encryptedChatRequested) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedChatRequested))
 	ec.Int(t.Get_id())
@@ -18667,7 +18667,7 @@ func New_TL_encryptedChat() *TL_encryptedChat {
 }
 
 func (t *TL_encryptedChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedChat))
 	ec.Int(t.Get_id())
@@ -18719,7 +18719,7 @@ func New_TL_encryptedChatDiscarded() *TL_encryptedChatDiscarded {
 }
 
 func (t *TL_encryptedChatDiscarded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedChatDiscarded))
 	ec.Int(t.Get_id())
@@ -18768,7 +18768,7 @@ func New_TL_inputEncryptedChat() *TL_inputEncryptedChat {
 }
 
 func (t *TL_inputEncryptedChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedChat))
 	ec.Int(t.Get_chat_id())
@@ -18801,7 +18801,7 @@ func New_TL_encryptedFileEmpty() *TL_encryptedFileEmpty {
 }
 
 func (t *TL_encryptedFileEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedFileEmpty))
 
@@ -18873,7 +18873,7 @@ func New_TL_encryptedFile() *TL_encryptedFile {
 }
 
 func (t *TL_encryptedFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedFile))
 	ec.Long(t.Get_id())
@@ -18912,7 +18912,7 @@ func New_TL_inputEncryptedFileEmpty() *TL_inputEncryptedFileEmpty {
 }
 
 func (t *TL_inputEncryptedFileEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedFileEmpty))
 
@@ -18975,7 +18975,7 @@ func New_TL_inputEncryptedFileUploaded() *TL_inputEncryptedFileUploaded {
 }
 
 func (t *TL_inputEncryptedFileUploaded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedFileUploaded))
 	ec.Long(t.Get_id())
@@ -19030,7 +19030,7 @@ func New_TL_inputEncryptedFile() *TL_inputEncryptedFile {
 }
 
 func (t *TL_inputEncryptedFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedFile))
 	ec.Long(t.Get_id())
@@ -19090,7 +19090,7 @@ func New_TL_inputEncryptedFileBigUploaded() *TL_inputEncryptedFileBigUploaded {
 }
 
 func (t *TL_inputEncryptedFileBigUploaded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputEncryptedFileBigUploaded))
 	ec.Long(t.Get_id())
@@ -19170,7 +19170,7 @@ func New_TL_encryptedMessage() *TL_encryptedMessage {
 }
 
 func (t *TL_encryptedMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedMessage))
 	ec.Long(t.Get_random_id())
@@ -19245,7 +19245,7 @@ func New_TL_encryptedMessageService() *TL_encryptedMessageService {
 }
 
 func (t *TL_encryptedMessageService) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_encryptedMessageService))
 	ec.Long(t.Get_random_id())
@@ -19291,7 +19291,7 @@ func New_TL_messages_dhConfigNotModified() *TL_messages_dhConfigNotModified {
 }
 
 func (t *TL_messages_dhConfigNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_dhConfigNotModified))
 	ec.TLObject(t.Get_random())
@@ -19358,7 +19358,7 @@ func New_TL_messages_dhConfig() *TL_messages_dhConfig {
 }
 
 func (t *TL_messages_dhConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_dhConfig))
 	ec.Int(t.Get_g())
@@ -19404,7 +19404,7 @@ func New_TL_messages_sentEncryptedMessage() *TL_messages_sentEncryptedMessage {
 }
 
 func (t *TL_messages_sentEncryptedMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sentEncryptedMessage))
 	ec.Int(t.Get_date())
@@ -19453,7 +19453,7 @@ func New_TL_messages_sentEncryptedFile() *TL_messages_sentEncryptedFile {
 }
 
 func (t *TL_messages_sentEncryptedFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sentEncryptedFile))
 	ec.Int(t.Get_date())
@@ -19486,7 +19486,7 @@ func New_TL_inputDocumentEmpty() *TL_inputDocumentEmpty {
 }
 
 func (t *TL_inputDocumentEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputDocumentEmpty))
 
@@ -19531,7 +19531,7 @@ func New_TL_inputDocument() *TL_inputDocument {
 }
 
 func (t *TL_inputDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputDocument))
 	ec.Long(t.Get_id())
@@ -19573,7 +19573,7 @@ func New_TL_documentEmpty() *TL_documentEmpty {
 }
 
 func (t *TL_documentEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentEmpty))
 	ec.Long(t.Get_id())
@@ -19685,7 +19685,7 @@ func New_TL_document() *TL_document {
 }
 
 func (t *TL_document) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_document))
 	ec.Long(t.Get_id())
@@ -19750,7 +19750,7 @@ func New_TL_help_support() *TL_help_support {
 }
 
 func (t *TL_help_support) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_support))
 	ec.String(t.Get_phone_number())
@@ -19792,7 +19792,7 @@ func New_TL_notifyPeer() *TL_notifyPeer {
 }
 
 func (t *TL_notifyPeer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_notifyPeer))
 	ec.TLObject(t.Get_peer())
@@ -19823,7 +19823,7 @@ func New_TL_notifyUsers() *TL_notifyUsers {
 }
 
 func (t *TL_notifyUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_notifyUsers))
 
@@ -19850,7 +19850,7 @@ func New_TL_notifyChats() *TL_notifyChats {
 }
 
 func (t *TL_notifyChats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_notifyChats))
 
@@ -19877,7 +19877,7 @@ func New_TL_notifyAll() *TL_notifyAll {
 }
 
 func (t *TL_notifyAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_notifyAll))
 
@@ -19904,7 +19904,7 @@ func New_TL_sendMessageTypingAction() *TL_sendMessageTypingAction {
 }
 
 func (t *TL_sendMessageTypingAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageTypingAction))
 
@@ -19931,7 +19931,7 @@ func New_TL_sendMessageCancelAction() *TL_sendMessageCancelAction {
 }
 
 func (t *TL_sendMessageCancelAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageCancelAction))
 
@@ -19958,7 +19958,7 @@ func New_TL_sendMessageRecordVideoAction() *TL_sendMessageRecordVideoAction {
 }
 
 func (t *TL_sendMessageRecordVideoAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageRecordVideoAction))
 
@@ -19994,7 +19994,7 @@ func New_TL_sendMessageUploadVideoAction() *TL_sendMessageUploadVideoAction {
 }
 
 func (t *TL_sendMessageUploadVideoAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageUploadVideoAction))
 	ec.Int(t.Get_progress())
@@ -20025,7 +20025,7 @@ func New_TL_sendMessageRecordAudioAction() *TL_sendMessageRecordAudioAction {
 }
 
 func (t *TL_sendMessageRecordAudioAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageRecordAudioAction))
 
@@ -20061,7 +20061,7 @@ func New_TL_sendMessageUploadAudioAction() *TL_sendMessageUploadAudioAction {
 }
 
 func (t *TL_sendMessageUploadAudioAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageUploadAudioAction))
 	ec.Int(t.Get_progress())
@@ -20101,7 +20101,7 @@ func New_TL_sendMessageUploadPhotoAction() *TL_sendMessageUploadPhotoAction {
 }
 
 func (t *TL_sendMessageUploadPhotoAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageUploadPhotoAction))
 	ec.Int(t.Get_progress())
@@ -20141,7 +20141,7 @@ func New_TL_sendMessageUploadDocumentAction() *TL_sendMessageUploadDocumentActio
 }
 
 func (t *TL_sendMessageUploadDocumentAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageUploadDocumentAction))
 	ec.Int(t.Get_progress())
@@ -20172,7 +20172,7 @@ func New_TL_sendMessageGeoLocationAction() *TL_sendMessageGeoLocationAction {
 }
 
 func (t *TL_sendMessageGeoLocationAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageGeoLocationAction))
 
@@ -20199,7 +20199,7 @@ func New_TL_sendMessageChooseContactAction() *TL_sendMessageChooseContactAction 
 }
 
 func (t *TL_sendMessageChooseContactAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageChooseContactAction))
 
@@ -20226,7 +20226,7 @@ func New_TL_sendMessageGamePlayAction() *TL_sendMessageGamePlayAction {
 }
 
 func (t *TL_sendMessageGamePlayAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageGamePlayAction))
 
@@ -20253,7 +20253,7 @@ func New_TL_sendMessageRecordRoundAction() *TL_sendMessageRecordRoundAction {
 }
 
 func (t *TL_sendMessageRecordRoundAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageRecordRoundAction))
 
@@ -20289,7 +20289,7 @@ func New_TL_sendMessageUploadRoundAction() *TL_sendMessageUploadRoundAction {
 }
 
 func (t *TL_sendMessageUploadRoundAction) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_sendMessageUploadRoundAction))
 	ec.Int(t.Get_progress())
@@ -20347,7 +20347,7 @@ func New_TL_contacts_found() *TL_contacts_found {
 }
 
 func (t *TL_contacts_found) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_found))
 	ec.Vector(t.Get_results())
@@ -20382,7 +20382,7 @@ func New_TL_inputPrivacyKeyStatusTimestamp() *TL_inputPrivacyKeyStatusTimestamp 
 }
 
 func (t *TL_inputPrivacyKeyStatusTimestamp) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyKeyStatusTimestamp))
 
@@ -20409,7 +20409,7 @@ func New_TL_inputPrivacyKeyChatInvite() *TL_inputPrivacyKeyChatInvite {
 }
 
 func (t *TL_inputPrivacyKeyChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyKeyChatInvite))
 
@@ -20436,7 +20436,7 @@ func New_TL_inputPrivacyKeyPhoneCall() *TL_inputPrivacyKeyPhoneCall {
 }
 
 func (t *TL_inputPrivacyKeyPhoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyKeyPhoneCall))
 
@@ -20463,7 +20463,7 @@ func New_TL_privacyKeyStatusTimestamp() *TL_privacyKeyStatusTimestamp {
 }
 
 func (t *TL_privacyKeyStatusTimestamp) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyKeyStatusTimestamp))
 
@@ -20490,7 +20490,7 @@ func New_TL_privacyKeyChatInvite() *TL_privacyKeyChatInvite {
 }
 
 func (t *TL_privacyKeyChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyKeyChatInvite))
 
@@ -20517,7 +20517,7 @@ func New_TL_privacyKeyPhoneCall() *TL_privacyKeyPhoneCall {
 }
 
 func (t *TL_privacyKeyPhoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyKeyPhoneCall))
 
@@ -20544,7 +20544,7 @@ func New_TL_inputPrivacyValueAllowContacts() *TL_inputPrivacyValueAllowContacts 
 }
 
 func (t *TL_inputPrivacyValueAllowContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueAllowContacts))
 
@@ -20571,7 +20571,7 @@ func New_TL_inputPrivacyValueAllowAll() *TL_inputPrivacyValueAllowAll {
 }
 
 func (t *TL_inputPrivacyValueAllowAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueAllowAll))
 
@@ -20607,7 +20607,7 @@ func New_TL_inputPrivacyValueAllowUsers() *TL_inputPrivacyValueAllowUsers {
 }
 
 func (t *TL_inputPrivacyValueAllowUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueAllowUsers))
 	ec.Vector(t.Get_users())
@@ -20638,7 +20638,7 @@ func New_TL_inputPrivacyValueDisallowContacts() *TL_inputPrivacyValueDisallowCon
 }
 
 func (t *TL_inputPrivacyValueDisallowContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueDisallowContacts))
 
@@ -20665,7 +20665,7 @@ func New_TL_inputPrivacyValueDisallowAll() *TL_inputPrivacyValueDisallowAll {
 }
 
 func (t *TL_inputPrivacyValueDisallowAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueDisallowAll))
 
@@ -20701,7 +20701,7 @@ func New_TL_inputPrivacyValueDisallowUsers() *TL_inputPrivacyValueDisallowUsers 
 }
 
 func (t *TL_inputPrivacyValueDisallowUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPrivacyValueDisallowUsers))
 	ec.Vector(t.Get_users())
@@ -20732,7 +20732,7 @@ func New_TL_privacyValueAllowContacts() *TL_privacyValueAllowContacts {
 }
 
 func (t *TL_privacyValueAllowContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueAllowContacts))
 
@@ -20759,7 +20759,7 @@ func New_TL_privacyValueAllowAll() *TL_privacyValueAllowAll {
 }
 
 func (t *TL_privacyValueAllowAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueAllowAll))
 
@@ -20795,7 +20795,7 @@ func New_TL_privacyValueAllowUsers() *TL_privacyValueAllowUsers {
 }
 
 func (t *TL_privacyValueAllowUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueAllowUsers))
 	ec.VectorInt(t.Get_users())
@@ -20826,7 +20826,7 @@ func New_TL_privacyValueDisallowContacts() *TL_privacyValueDisallowContacts {
 }
 
 func (t *TL_privacyValueDisallowContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueDisallowContacts))
 
@@ -20853,7 +20853,7 @@ func New_TL_privacyValueDisallowAll() *TL_privacyValueDisallowAll {
 }
 
 func (t *TL_privacyValueDisallowAll) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueDisallowAll))
 
@@ -20889,7 +20889,7 @@ func New_TL_privacyValueDisallowUsers() *TL_privacyValueDisallowUsers {
 }
 
 func (t *TL_privacyValueDisallowUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_privacyValueDisallowUsers))
 	ec.VectorInt(t.Get_users())
@@ -20938,7 +20938,7 @@ func New_TL_account_privacyRules() *TL_account_privacyRules {
 }
 
 func (t *TL_account_privacyRules) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_privacyRules))
 	ec.Vector(t.Get_rules())
@@ -20980,7 +20980,7 @@ func New_TL_accountDaysTTL() *TL_accountDaysTTL {
 }
 
 func (t *TL_accountDaysTTL) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_accountDaysTTL))
 	ec.Int(t.Get_days())
@@ -21029,7 +21029,7 @@ func New_TL_documentAttributeImageSize() *TL_documentAttributeImageSize {
 }
 
 func (t *TL_documentAttributeImageSize) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeImageSize))
 	ec.Int(t.Get_w())
@@ -21062,7 +21062,7 @@ func New_TL_documentAttributeAnimated() *TL_documentAttributeAnimated {
 }
 
 func (t *TL_documentAttributeAnimated) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeAnimated))
 
@@ -21134,7 +21134,7 @@ func New_TL_documentAttributeSticker() *TL_documentAttributeSticker {
 }
 
 func (t *TL_documentAttributeSticker) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeSticker))
 	ec.TLObject(t.Get_mask())
@@ -21216,7 +21216,7 @@ func New_TL_documentAttributeVideo() *TL_documentAttributeVideo {
 }
 
 func (t *TL_documentAttributeVideo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeVideo))
 	ec.TLObject(t.Get_round_message())
@@ -21307,7 +21307,7 @@ func New_TL_documentAttributeAudio() *TL_documentAttributeAudio {
 }
 
 func (t *TL_documentAttributeAudio) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeAudio))
 	ec.TLObject(t.Get_voice())
@@ -21355,7 +21355,7 @@ func New_TL_documentAttributeFilename() *TL_documentAttributeFilename {
 }
 
 func (t *TL_documentAttributeFilename) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeFilename))
 	ec.String(t.Get_file_name())
@@ -21386,7 +21386,7 @@ func New_TL_documentAttributeHasStickers() *TL_documentAttributeHasStickers {
 }
 
 func (t *TL_documentAttributeHasStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeHasStickers))
 
@@ -21413,7 +21413,7 @@ func New_TL_messages_stickersNotModified() *TL_messages_stickersNotModified {
 }
 
 func (t *TL_messages_stickersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_stickersNotModified))
 
@@ -21458,7 +21458,7 @@ func New_TL_messages_stickers() *TL_messages_stickers {
 }
 
 func (t *TL_messages_stickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_stickers))
 	ec.String(t.Get_hash())
@@ -21509,7 +21509,7 @@ func New_TL_stickerPack() *TL_stickerPack {
 }
 
 func (t *TL_stickerPack) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickerPack))
 	ec.String(t.Get_emoticon())
@@ -21542,7 +21542,7 @@ func New_TL_messages_allStickersNotModified() *TL_messages_allStickersNotModifie
 }
 
 func (t *TL_messages_allStickersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_allStickersNotModified))
 
@@ -21587,7 +21587,7 @@ func New_TL_messages_allStickers() *TL_messages_allStickers {
 }
 
 func (t *TL_messages_allStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_allStickers))
 	ec.Int(t.Get_hash())
@@ -21638,7 +21638,7 @@ func New_TL_disabledFeature() *TL_disabledFeature {
 }
 
 func (t *TL_disabledFeature) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_disabledFeature))
 	ec.String(t.Get_feature())
@@ -21689,7 +21689,7 @@ func New_TL_messages_affectedMessages() *TL_messages_affectedMessages {
 }
 
 func (t *TL_messages_affectedMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_affectedMessages))
 	ec.Int(t.Get_pts())
@@ -21722,7 +21722,7 @@ func New_TL_contactLinkUnknown() *TL_contactLinkUnknown {
 }
 
 func (t *TL_contactLinkUnknown) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactLinkUnknown))
 
@@ -21749,7 +21749,7 @@ func New_TL_contactLinkNone() *TL_contactLinkNone {
 }
 
 func (t *TL_contactLinkNone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactLinkNone))
 
@@ -21776,7 +21776,7 @@ func New_TL_contactLinkHasPhone() *TL_contactLinkHasPhone {
 }
 
 func (t *TL_contactLinkHasPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactLinkHasPhone))
 
@@ -21803,7 +21803,7 @@ func New_TL_contactLinkContact() *TL_contactLinkContact {
 }
 
 func (t *TL_contactLinkContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contactLinkContact))
 
@@ -21839,7 +21839,7 @@ func New_TL_webPageEmpty() *TL_webPageEmpty {
 }
 
 func (t *TL_webPageEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webPageEmpty))
 	ec.Long(t.Get_id())
@@ -21888,7 +21888,7 @@ func New_TL_webPagePending() *TL_webPagePending {
 }
 
 func (t *TL_webPagePending) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webPagePending))
 	ec.Long(t.Get_id())
@@ -22083,7 +22083,7 @@ func New_TL_webPage() *TL_webPage {
 }
 
 func (t *TL_webPage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webPage))
 	ec.Long(t.Get_id())
@@ -22146,7 +22146,7 @@ func New_TL_webPageNotModified() *TL_webPageNotModified {
 }
 
 func (t *TL_webPageNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webPageNotModified))
 
@@ -22290,7 +22290,7 @@ func New_TL_authorization() *TL_authorization {
 }
 
 func (t *TL_authorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_authorization))
 	ec.Long(t.Get_hash())
@@ -22354,7 +22354,7 @@ func New_TL_account_authorizations() *TL_account_authorizations {
 }
 
 func (t *TL_account_authorizations) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_authorizations))
 	ec.Vector(t.Get_authorizations())
@@ -22403,7 +22403,7 @@ func New_TL_account_noPassword() *TL_account_noPassword {
 }
 
 func (t *TL_account_noPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_noPassword))
 	ec.TLObject(t.Get_new_salt())
@@ -22481,7 +22481,7 @@ func New_TL_account_password() *TL_account_password {
 }
 
 func (t *TL_account_password) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_password))
 	ec.TLObject(t.Get_current_salt())
@@ -22529,7 +22529,7 @@ func New_TL_account_passwordSettings() *TL_account_passwordSettings {
 }
 
 func (t *TL_account_passwordSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_passwordSettings))
 	ec.String(t.Get_email())
@@ -22605,7 +22605,7 @@ func New_TL_account_passwordInputSettings() *TL_account_passwordInputSettings {
 }
 
 func (t *TL_account_passwordInputSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_passwordInputSettings))
 	ec.TLObject(t.Get_new_salt())
@@ -22651,7 +22651,7 @@ func New_TL_auth_passwordRecovery() *TL_auth_passwordRecovery {
 }
 
 func (t *TL_auth_passwordRecovery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_passwordRecovery))
 	ec.String(t.Get_email_pattern())
@@ -22700,7 +22700,7 @@ func New_TL_receivedNotifyMessage() *TL_receivedNotifyMessage {
 }
 
 func (t *TL_receivedNotifyMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_receivedNotifyMessage))
 	ec.Int(t.Get_id())
@@ -22733,7 +22733,7 @@ func New_TL_chatInviteEmpty() *TL_chatInviteEmpty {
 }
 
 func (t *TL_chatInviteEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatInviteEmpty))
 
@@ -22769,7 +22769,7 @@ func New_TL_chatInviteExported() *TL_chatInviteExported {
 }
 
 func (t *TL_chatInviteExported) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatInviteExported))
 	ec.String(t.Get_link())
@@ -22809,7 +22809,7 @@ func New_TL_chatInviteAlready() *TL_chatInviteAlready {
 }
 
 func (t *TL_chatInviteAlready) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatInviteAlready))
 	ec.TLObject(t.Get_chat())
@@ -22921,7 +22921,7 @@ func New_TL_chatInvite() *TL_chatInvite {
 }
 
 func (t *TL_chatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatInvite))
 	ec.TLObject(t.Get_channel())
@@ -22966,7 +22966,7 @@ func New_TL_inputStickerSetEmpty() *TL_inputStickerSetEmpty {
 }
 
 func (t *TL_inputStickerSetEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickerSetEmpty))
 
@@ -23011,7 +23011,7 @@ func New_TL_inputStickerSetID() *TL_inputStickerSetID {
 }
 
 func (t *TL_inputStickerSetID) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickerSetID))
 	ec.Long(t.Get_id())
@@ -23053,7 +23053,7 @@ func New_TL_inputStickerSetShortName() *TL_inputStickerSetShortName {
 }
 
 func (t *TL_inputStickerSetShortName) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickerSetShortName))
 	ec.String(t.Get_short_name())
@@ -23183,7 +23183,7 @@ func New_TL_stickerSet() *TL_stickerSet {
 }
 
 func (t *TL_stickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickerSet))
 	ec.TLObject(t.Get_installed())
@@ -23259,7 +23259,7 @@ func New_TL_messages_stickerSet() *TL_messages_stickerSet {
 }
 
 func (t *TL_messages_stickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_stickerSet))
 	ec.TLObject(t.Get_set())
@@ -23312,7 +23312,7 @@ func New_TL_botCommand() *TL_botCommand {
 }
 
 func (t *TL_botCommand) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botCommand))
 	ec.String(t.Get_command())
@@ -23372,7 +23372,7 @@ func New_TL_botInfo() *TL_botInfo {
 }
 
 func (t *TL_botInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInfo))
 	ec.Int(t.Get_user_id())
@@ -23416,7 +23416,7 @@ func New_TL_keyboardButton() *TL_keyboardButton {
 }
 
 func (t *TL_keyboardButton) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButton))
 	ec.String(t.Get_text())
@@ -23465,7 +23465,7 @@ func New_TL_keyboardButtonUrl() *TL_keyboardButtonUrl {
 }
 
 func (t *TL_keyboardButtonUrl) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonUrl))
 	ec.String(t.Get_text())
@@ -23516,7 +23516,7 @@ func New_TL_keyboardButtonCallback() *TL_keyboardButtonCallback {
 }
 
 func (t *TL_keyboardButtonCallback) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonCallback))
 	ec.String(t.Get_text())
@@ -23558,7 +23558,7 @@ func New_TL_keyboardButtonRequestPhone() *TL_keyboardButtonRequestPhone {
 }
 
 func (t *TL_keyboardButtonRequestPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonRequestPhone))
 	ec.String(t.Get_text())
@@ -23598,7 +23598,7 @@ func New_TL_keyboardButtonRequestGeoLocation() *TL_keyboardButtonRequestGeoLocat
 }
 
 func (t *TL_keyboardButtonRequestGeoLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonRequestGeoLocation))
 	ec.String(t.Get_text())
@@ -23665,7 +23665,7 @@ func New_TL_keyboardButtonSwitchInline() *TL_keyboardButtonSwitchInline {
 }
 
 func (t *TL_keyboardButtonSwitchInline) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonSwitchInline))
 	ec.TLObject(t.Get_same_peer())
@@ -23709,7 +23709,7 @@ func New_TL_keyboardButtonGame() *TL_keyboardButtonGame {
 }
 
 func (t *TL_keyboardButtonGame) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonGame))
 	ec.String(t.Get_text())
@@ -23749,7 +23749,7 @@ func New_TL_keyboardButtonBuy() *TL_keyboardButtonBuy {
 }
 
 func (t *TL_keyboardButtonBuy) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonBuy))
 	ec.String(t.Get_text())
@@ -23789,7 +23789,7 @@ func New_TL_keyboardButtonRow() *TL_keyboardButtonRow {
 }
 
 func (t *TL_keyboardButtonRow) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonRow))
 	ec.Vector(t.Get_buttons())
@@ -23838,7 +23838,7 @@ func New_TL_replyKeyboardHide() *TL_replyKeyboardHide {
 }
 
 func (t *TL_replyKeyboardHide) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardHide))
 	ec.TLObject(t.Get_selective())
@@ -23896,7 +23896,7 @@ func New_TL_replyKeyboardForceReply() *TL_replyKeyboardForceReply {
 }
 
 func (t *TL_replyKeyboardForceReply) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardForceReply))
 	ec.TLObject(t.Get_single_use())
@@ -23974,7 +23974,7 @@ func New_TL_replyKeyboardMarkup() *TL_replyKeyboardMarkup {
 }
 
 func (t *TL_replyKeyboardMarkup) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardMarkup))
 	ec.TLObject(t.Get_resize())
@@ -24020,7 +24020,7 @@ func New_TL_replyInlineMarkup() *TL_replyInlineMarkup {
 }
 
 func (t *TL_replyInlineMarkup) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyInlineMarkup))
 	ec.Vector(t.Get_rows())
@@ -24069,7 +24069,7 @@ func New_TL_messageEntityUnknown() *TL_messageEntityUnknown {
 }
 
 func (t *TL_messageEntityUnknown) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityUnknown))
 	ec.Int(t.Get_offset())
@@ -24120,7 +24120,7 @@ func New_TL_messageEntityMention() *TL_messageEntityMention {
 }
 
 func (t *TL_messageEntityMention) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityMention))
 	ec.Int(t.Get_offset())
@@ -24171,7 +24171,7 @@ func New_TL_messageEntityHashtag() *TL_messageEntityHashtag {
 }
 
 func (t *TL_messageEntityHashtag) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityHashtag))
 	ec.Int(t.Get_offset())
@@ -24222,7 +24222,7 @@ func New_TL_messageEntityBotCommand() *TL_messageEntityBotCommand {
 }
 
 func (t *TL_messageEntityBotCommand) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityBotCommand))
 	ec.Int(t.Get_offset())
@@ -24273,7 +24273,7 @@ func New_TL_messageEntityUrl() *TL_messageEntityUrl {
 }
 
 func (t *TL_messageEntityUrl) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityUrl))
 	ec.Int(t.Get_offset())
@@ -24324,7 +24324,7 @@ func New_TL_messageEntityEmail() *TL_messageEntityEmail {
 }
 
 func (t *TL_messageEntityEmail) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityEmail))
 	ec.Int(t.Get_offset())
@@ -24375,7 +24375,7 @@ func New_TL_messageEntityBold() *TL_messageEntityBold {
 }
 
 func (t *TL_messageEntityBold) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityBold))
 	ec.Int(t.Get_offset())
@@ -24426,7 +24426,7 @@ func New_TL_messageEntityItalic() *TL_messageEntityItalic {
 }
 
 func (t *TL_messageEntityItalic) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityItalic))
 	ec.Int(t.Get_offset())
@@ -24477,7 +24477,7 @@ func New_TL_messageEntityCode() *TL_messageEntityCode {
 }
 
 func (t *TL_messageEntityCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityCode))
 	ec.Int(t.Get_offset())
@@ -24537,7 +24537,7 @@ func New_TL_messageEntityPre() *TL_messageEntityPre {
 }
 
 func (t *TL_messageEntityPre) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityPre))
 	ec.Int(t.Get_offset())
@@ -24599,7 +24599,7 @@ func New_TL_messageEntityTextUrl() *TL_messageEntityTextUrl {
 }
 
 func (t *TL_messageEntityTextUrl) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityTextUrl))
 	ec.Int(t.Get_offset())
@@ -24661,7 +24661,7 @@ func New_TL_messageEntityMentionName() *TL_messageEntityMentionName {
 }
 
 func (t *TL_messageEntityMentionName) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageEntityMentionName))
 	ec.Int(t.Get_offset())
@@ -24723,7 +24723,7 @@ func New_TL_inputMessageEntityMentionName() *TL_inputMessageEntityMentionName {
 }
 
 func (t *TL_inputMessageEntityMentionName) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessageEntityMentionName))
 	ec.Int(t.Get_offset())
@@ -24758,7 +24758,7 @@ func New_TL_inputChannelEmpty() *TL_inputChannelEmpty {
 }
 
 func (t *TL_inputChannelEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputChannelEmpty))
 
@@ -24803,7 +24803,7 @@ func New_TL_inputChannel() *TL_inputChannel {
 }
 
 func (t *TL_inputChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputChannel))
 	ec.Int(t.Get_channel_id())
@@ -24863,7 +24863,7 @@ func New_TL_contacts_resolvedPeer() *TL_contacts_resolvedPeer {
 }
 
 func (t *TL_contacts_resolvedPeer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_resolvedPeer))
 	ec.TLObject(t.Get_peer())
@@ -24916,7 +24916,7 @@ func New_TL_messageRange() *TL_messageRange {
 }
 
 func (t *TL_messageRange) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageRange))
 	ec.Int(t.Get_min_id())
@@ -24985,7 +24985,7 @@ func New_TL_updates_channelDifferenceEmpty() *TL_updates_channelDifferenceEmpty 
 }
 
 func (t *TL_updates_channelDifferenceEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifferenceEmpty))
 	ec.TLObject(t.Get_final())
@@ -25128,7 +25128,7 @@ func New_TL_updates_channelDifferenceTooLong() *TL_updates_channelDifferenceTooL
 }
 
 func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifferenceTooLong))
 	ec.TLObject(t.Get_final())
@@ -25251,7 +25251,7 @@ func New_TL_updates_channelDifference() *TL_updates_channelDifference {
 }
 
 func (t *TL_updates_channelDifference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifference))
 	ec.TLObject(t.Get_final())
@@ -25294,7 +25294,7 @@ func New_TL_channelMessagesFilterEmpty() *TL_channelMessagesFilterEmpty {
 }
 
 func (t *TL_channelMessagesFilterEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelMessagesFilterEmpty))
 
@@ -25348,7 +25348,7 @@ func New_TL_channelMessagesFilter() *TL_channelMessagesFilter {
 }
 
 func (t *TL_channelMessagesFilter) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelMessagesFilter))
 	ec.TLObject(t.Get_exclude_new_messages())
@@ -25399,7 +25399,7 @@ func New_TL_channelParticipant() *TL_channelParticipant {
 }
 
 func (t *TL_channelParticipant) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipant))
 	ec.Int(t.Get_user_id())
@@ -25459,7 +25459,7 @@ func New_TL_channelParticipantSelf() *TL_channelParticipantSelf {
 }
 
 func (t *TL_channelParticipantSelf) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantSelf))
 	ec.Int(t.Get_user_id())
@@ -25503,7 +25503,7 @@ func New_TL_channelParticipantCreator() *TL_channelParticipantCreator {
 }
 
 func (t *TL_channelParticipantCreator) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantCreator))
 	ec.Int(t.Get_user_id())
@@ -25597,7 +25597,7 @@ func New_TL_channelParticipantAdmin() *TL_channelParticipantAdmin {
 }
 
 func (t *TL_channelParticipantAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantAdmin))
 	ec.TLObject(t.Get_can_edit())
@@ -25692,7 +25692,7 @@ func New_TL_channelParticipantBanned() *TL_channelParticipantBanned {
 }
 
 func (t *TL_channelParticipantBanned) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantBanned))
 	ec.TLObject(t.Get_left())
@@ -25731,7 +25731,7 @@ func New_TL_channelParticipantsRecent() *TL_channelParticipantsRecent {
 }
 
 func (t *TL_channelParticipantsRecent) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsRecent))
 
@@ -25758,7 +25758,7 @@ func New_TL_channelParticipantsAdmins() *TL_channelParticipantsAdmins {
 }
 
 func (t *TL_channelParticipantsAdmins) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsAdmins))
 
@@ -25794,7 +25794,7 @@ func New_TL_channelParticipantsKicked() *TL_channelParticipantsKicked {
 }
 
 func (t *TL_channelParticipantsKicked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsKicked))
 	ec.String(t.Get_q())
@@ -25825,7 +25825,7 @@ func New_TL_channelParticipantsBots() *TL_channelParticipantsBots {
 }
 
 func (t *TL_channelParticipantsBots) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsBots))
 
@@ -25861,7 +25861,7 @@ func New_TL_channelParticipantsBanned() *TL_channelParticipantsBanned {
 }
 
 func (t *TL_channelParticipantsBanned) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsBanned))
 	ec.String(t.Get_q())
@@ -25901,7 +25901,7 @@ func New_TL_channelParticipantsSearch() *TL_channelParticipantsSearch {
 }
 
 func (t *TL_channelParticipantsSearch) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantsSearch))
 	ec.String(t.Get_q())
@@ -25959,7 +25959,7 @@ func New_TL_channels_channelParticipants() *TL_channels_channelParticipants {
 }
 
 func (t *TL_channels_channelParticipants) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_channelParticipants))
 	ec.Int(t.Get_count())
@@ -25994,7 +25994,7 @@ func New_TL_channels_channelParticipantsNotModified() *TL_channels_channelPartic
 }
 
 func (t *TL_channels_channelParticipantsNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_channelParticipantsNotModified))
 
@@ -26039,7 +26039,7 @@ func New_TL_channels_channelParticipant() *TL_channels_channelParticipant {
 }
 
 func (t *TL_channels_channelParticipant) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_channelParticipant))
 	ec.TLObject(t.Get_participant())
@@ -26081,7 +26081,7 @@ func New_TL_help_termsOfService() *TL_help_termsOfService {
 }
 
 func (t *TL_help_termsOfService) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_termsOfService))
 	ec.String(t.Get_text())
@@ -26166,7 +26166,7 @@ func New_TL_foundGif() *TL_foundGif {
 }
 
 func (t *TL_foundGif) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_foundGif))
 	ec.String(t.Get_url())
@@ -26234,7 +26234,7 @@ func New_TL_foundGifCached() *TL_foundGifCached {
 }
 
 func (t *TL_foundGifCached) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_foundGifCached))
 	ec.String(t.Get_url())
@@ -26287,7 +26287,7 @@ func New_TL_messages_foundGifs() *TL_messages_foundGifs {
 }
 
 func (t *TL_messages_foundGifs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_foundGifs))
 	ec.Int(t.Get_next_offset())
@@ -26320,7 +26320,7 @@ func New_TL_messages_savedGifsNotModified() *TL_messages_savedGifsNotModified {
 }
 
 func (t *TL_messages_savedGifsNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_savedGifsNotModified))
 
@@ -26365,7 +26365,7 @@ func New_TL_messages_savedGifs() *TL_messages_savedGifs {
 }
 
 func (t *TL_messages_savedGifs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_savedGifs))
 	ec.Int(t.Get_hash())
@@ -26425,7 +26425,7 @@ func New_TL_inputBotInlineMessageMediaAuto() *TL_inputBotInlineMessageMediaAuto 
 }
 
 func (t *TL_inputBotInlineMessageMediaAuto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaAuto))
 	ec.String(t.Get_caption())
@@ -26503,7 +26503,7 @@ func New_TL_inputBotInlineMessageText() *TL_inputBotInlineMessageText {
 }
 
 func (t *TL_inputBotInlineMessageText) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageText))
 	ec.TLObject(t.Get_no_webpage())
@@ -26576,7 +26576,7 @@ func New_TL_inputBotInlineMessageMediaGeo() *TL_inputBotInlineMessageMediaGeo {
 }
 
 func (t *TL_inputBotInlineMessageMediaGeo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaGeo))
 	ec.TLObject(t.Get_geo_point())
@@ -26674,7 +26674,7 @@ func New_TL_inputBotInlineMessageMediaVenue() *TL_inputBotInlineMessageMediaVenu
 }
 
 func (t *TL_inputBotInlineMessageMediaVenue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaVenue))
 	ec.TLObject(t.Get_geo_point())
@@ -26760,7 +26760,7 @@ func New_TL_inputBotInlineMessageMediaContact() *TL_inputBotInlineMessageMediaCo
 }
 
 func (t *TL_inputBotInlineMessageMediaContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaContact))
 	ec.String(t.Get_phone_number())
@@ -26815,7 +26815,7 @@ func New_TL_inputBotInlineMessageGame() *TL_inputBotInlineMessageGame {
 }
 
 func (t *TL_inputBotInlineMessageGame) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageGame))
 	ec.TLObject(t.Get_reply_markup())
@@ -26963,7 +26963,7 @@ func New_TL_inputBotInlineResult() *TL_inputBotInlineResult {
 }
 
 func (t *TL_inputBotInlineResult) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResult))
 	ec.String(t.Get_id())
@@ -27052,7 +27052,7 @@ func New_TL_inputBotInlineResultPhoto() *TL_inputBotInlineResultPhoto {
 }
 
 func (t *TL_inputBotInlineResultPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResultPhoto))
 	ec.String(t.Get_id())
@@ -27152,7 +27152,7 @@ func New_TL_inputBotInlineResultDocument() *TL_inputBotInlineResultDocument {
 }
 
 func (t *TL_inputBotInlineResultDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResultDocument))
 	ec.String(t.Get_id())
@@ -27220,7 +27220,7 @@ func New_TL_inputBotInlineResultGame() *TL_inputBotInlineResultGame {
 }
 
 func (t *TL_inputBotInlineResultGame) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResultGame))
 	ec.String(t.Get_id())
@@ -27282,7 +27282,7 @@ func New_TL_botInlineMessageMediaAuto() *TL_botInlineMessageMediaAuto {
 }
 
 func (t *TL_botInlineMessageMediaAuto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaAuto))
 	ec.String(t.Get_caption())
@@ -27360,7 +27360,7 @@ func New_TL_botInlineMessageText() *TL_botInlineMessageText {
 }
 
 func (t *TL_botInlineMessageText) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageText))
 	ec.TLObject(t.Get_no_webpage())
@@ -27433,7 +27433,7 @@ func New_TL_botInlineMessageMediaGeo() *TL_botInlineMessageMediaGeo {
 }
 
 func (t *TL_botInlineMessageMediaGeo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaGeo))
 	ec.TLObject(t.Get_geo())
@@ -27531,7 +27531,7 @@ func New_TL_botInlineMessageMediaVenue() *TL_botInlineMessageMediaVenue {
 }
 
 func (t *TL_botInlineMessageMediaVenue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaVenue))
 	ec.TLObject(t.Get_geo())
@@ -27617,7 +27617,7 @@ func New_TL_botInlineMessageMediaContact() *TL_botInlineMessageMediaContact {
 }
 
 func (t *TL_botInlineMessageMediaContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaContact))
 	ec.String(t.Get_phone_number())
@@ -27771,7 +27771,7 @@ func New_TL_botInlineResult() *TL_botInlineResult {
 }
 
 func (t *TL_botInlineResult) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineResult))
 	ec.String(t.Get_id())
@@ -27896,7 +27896,7 @@ func New_TL_botInlineMediaResult() *TL_botInlineMediaResult {
 }
 
 func (t *TL_botInlineMediaResult) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMediaResult))
 	ec.String(t.Get_id())
@@ -28011,7 +28011,7 @@ func New_TL_messages_botResults() *TL_messages_botResults {
 }
 
 func (t *TL_messages_botResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_botResults))
 	ec.TLObject(t.Get_gallery())
@@ -28063,7 +28063,7 @@ func New_TL_exportedMessageLink() *TL_exportedMessageLink {
 }
 
 func (t *TL_exportedMessageLink) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_exportedMessageLink))
 	ec.String(t.Get_link())
@@ -28166,7 +28166,7 @@ func New_TL_messageFwdHeader() *TL_messageFwdHeader {
 }
 
 func (t *TL_messageFwdHeader) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageFwdHeader))
 	ec.TLObject(t.Get_from_id())
@@ -28209,7 +28209,7 @@ func New_TL_auth_codeTypeSms() *TL_auth_codeTypeSms {
 }
 
 func (t *TL_auth_codeTypeSms) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_codeTypeSms))
 
@@ -28236,7 +28236,7 @@ func New_TL_auth_codeTypeCall() *TL_auth_codeTypeCall {
 }
 
 func (t *TL_auth_codeTypeCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_codeTypeCall))
 
@@ -28263,7 +28263,7 @@ func New_TL_auth_codeTypeFlashCall() *TL_auth_codeTypeFlashCall {
 }
 
 func (t *TL_auth_codeTypeFlashCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_codeTypeFlashCall))
 
@@ -28299,7 +28299,7 @@ func New_TL_auth_sentCodeTypeApp() *TL_auth_sentCodeTypeApp {
 }
 
 func (t *TL_auth_sentCodeTypeApp) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCodeTypeApp))
 	ec.Int(t.Get_length())
@@ -28339,7 +28339,7 @@ func New_TL_auth_sentCodeTypeSms() *TL_auth_sentCodeTypeSms {
 }
 
 func (t *TL_auth_sentCodeTypeSms) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCodeTypeSms))
 	ec.Int(t.Get_length())
@@ -28379,7 +28379,7 @@ func New_TL_auth_sentCodeTypeCall() *TL_auth_sentCodeTypeCall {
 }
 
 func (t *TL_auth_sentCodeTypeCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCodeTypeCall))
 	ec.Int(t.Get_length())
@@ -28419,7 +28419,7 @@ func New_TL_auth_sentCodeTypeFlashCall() *TL_auth_sentCodeTypeFlashCall {
 }
 
 func (t *TL_auth_sentCodeTypeFlashCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCodeTypeFlashCall))
 	ec.String(t.Get_pattern())
@@ -28513,7 +28513,7 @@ func New_TL_messages_botCallbackAnswer() *TL_messages_botCallbackAnswer {
 }
 
 func (t *TL_messages_botCallbackAnswer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_botCallbackAnswer))
 	ec.TLObject(t.Get_alert())
@@ -28572,7 +28572,7 @@ func New_TL_messages_messageEditData() *TL_messages_messageEditData {
 }
 
 func (t *TL_messages_messageEditData) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_messageEditData))
 	ec.TLObject(t.Get_caption())
@@ -28630,7 +28630,7 @@ func New_TL_inputBotInlineMessageID() *TL_inputBotInlineMessageID {
 }
 
 func (t *TL_inputBotInlineMessageID) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageID))
 	ec.Int(t.Get_dc_id())
@@ -28683,7 +28683,7 @@ func New_TL_inlineBotSwitchPM() *TL_inlineBotSwitchPM {
 }
 
 func (t *TL_inlineBotSwitchPM) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inlineBotSwitchPM))
 	ec.String(t.Get_text())
@@ -28761,7 +28761,7 @@ func New_TL_messages_peerDialogs() *TL_messages_peerDialogs {
 }
 
 func (t *TL_messages_peerDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_peerDialogs))
 	ec.Vector(t.Get_dialogs())
@@ -28818,7 +28818,7 @@ func New_TL_topPeer() *TL_topPeer {
 }
 
 func (t *TL_topPeer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeer))
 	ec.TLObject(t.Get_peer())
@@ -28851,7 +28851,7 @@ func New_TL_topPeerCategoryBotsPM() *TL_topPeerCategoryBotsPM {
 }
 
 func (t *TL_topPeerCategoryBotsPM) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryBotsPM))
 
@@ -28878,7 +28878,7 @@ func New_TL_topPeerCategoryBotsInline() *TL_topPeerCategoryBotsInline {
 }
 
 func (t *TL_topPeerCategoryBotsInline) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryBotsInline))
 
@@ -28905,7 +28905,7 @@ func New_TL_topPeerCategoryCorrespondents() *TL_topPeerCategoryCorrespondents {
 }
 
 func (t *TL_topPeerCategoryCorrespondents) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryCorrespondents))
 
@@ -28932,7 +28932,7 @@ func New_TL_topPeerCategoryGroups() *TL_topPeerCategoryGroups {
 }
 
 func (t *TL_topPeerCategoryGroups) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryGroups))
 
@@ -28959,7 +28959,7 @@ func New_TL_topPeerCategoryChannels() *TL_topPeerCategoryChannels {
 }
 
 func (t *TL_topPeerCategoryChannels) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryChannels))
 
@@ -28986,7 +28986,7 @@ func New_TL_topPeerCategoryPhoneCalls() *TL_topPeerCategoryPhoneCalls {
 }
 
 func (t *TL_topPeerCategoryPhoneCalls) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryPhoneCalls))
 
@@ -29040,7 +29040,7 @@ func New_TL_topPeerCategoryPeers() *TL_topPeerCategoryPeers {
 }
 
 func (t *TL_topPeerCategoryPeers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_topPeerCategoryPeers))
 	ec.TLObject(t.Get_category())
@@ -29075,7 +29075,7 @@ func New_TL_contacts_topPeersNotModified() *TL_contacts_topPeersNotModified {
 }
 
 func (t *TL_contacts_topPeersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_topPeersNotModified))
 
@@ -29129,7 +29129,7 @@ func New_TL_contacts_topPeers() *TL_contacts_topPeers {
 }
 
 func (t *TL_contacts_topPeers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_topPeers))
 	ec.Vector(t.Get_categories())
@@ -29164,7 +29164,7 @@ func New_TL_draftMessageEmpty() *TL_draftMessageEmpty {
 }
 
 func (t *TL_draftMessageEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_draftMessageEmpty))
 
@@ -29245,7 +29245,7 @@ func New_TL_draftMessage() *TL_draftMessage {
 }
 
 func (t *TL_draftMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_draftMessage))
 	ec.TLObject(t.Get_no_webpage())
@@ -29284,7 +29284,7 @@ func New_TL_messages_featuredStickersNotModified() *TL_messages_featuredStickers
 }
 
 func (t *TL_messages_featuredStickersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_featuredStickersNotModified))
 
@@ -29338,7 +29338,7 @@ func New_TL_messages_featuredStickers() *TL_messages_featuredStickers {
 }
 
 func (t *TL_messages_featuredStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_featuredStickers))
 	ec.Int(t.Get_hash())
@@ -29373,7 +29373,7 @@ func New_TL_messages_recentStickersNotModified() *TL_messages_recentStickersNotM
 }
 
 func (t *TL_messages_recentStickersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_recentStickersNotModified))
 
@@ -29418,7 +29418,7 @@ func New_TL_messages_recentStickers() *TL_messages_recentStickers {
 }
 
 func (t *TL_messages_recentStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_recentStickers))
 	ec.Int(t.Get_hash())
@@ -29469,7 +29469,7 @@ func New_TL_messages_archivedStickers() *TL_messages_archivedStickers {
 }
 
 func (t *TL_messages_archivedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_archivedStickers))
 	ec.Int(t.Get_count())
@@ -29502,7 +29502,7 @@ func New_TL_messages_stickerSetInstallResultSuccess() *TL_messages_stickerSetIns
 }
 
 func (t *TL_messages_stickerSetInstallResultSuccess) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_stickerSetInstallResultSuccess))
 
@@ -29538,7 +29538,7 @@ func New_TL_messages_stickerSetInstallResultArchive() *TL_messages_stickerSetIns
 }
 
 func (t *TL_messages_stickerSetInstallResultArchive) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_stickerSetInstallResultArchive))
 	ec.Vector(t.Get_sets())
@@ -29587,7 +29587,7 @@ func New_TL_stickerSetCovered() *TL_stickerSetCovered {
 }
 
 func (t *TL_stickerSetCovered) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickerSetCovered))
 	ec.TLObject(t.Get_set())
@@ -29638,7 +29638,7 @@ func New_TL_stickerSetMultiCovered() *TL_stickerSetMultiCovered {
 }
 
 func (t *TL_stickerSetMultiCovered) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickerSetMultiCovered))
 	ec.TLObject(t.Get_set())
@@ -29707,7 +29707,7 @@ func New_TL_maskCoords() *TL_maskCoords {
 }
 
 func (t *TL_maskCoords) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_maskCoords))
 	ec.Int(t.Get_n())
@@ -29753,7 +29753,7 @@ func New_TL_inputStickeredMediaPhoto() *TL_inputStickeredMediaPhoto {
 }
 
 func (t *TL_inputStickeredMediaPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickeredMediaPhoto))
 	ec.TLObject(t.Get_id())
@@ -29793,7 +29793,7 @@ func New_TL_inputStickeredMediaDocument() *TL_inputStickeredMediaDocument {
 }
 
 func (t *TL_inputStickeredMediaDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickeredMediaDocument))
 	ec.TLObject(t.Get_id())
@@ -29896,7 +29896,7 @@ func New_TL_game() *TL_game {
 }
 
 func (t *TL_game) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_game))
 	ec.Long(t.Get_id())
@@ -29957,7 +29957,7 @@ func New_TL_inputGameID() *TL_inputGameID {
 }
 
 func (t *TL_inputGameID) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputGameID))
 	ec.Long(t.Get_id())
@@ -30008,7 +30008,7 @@ func New_TL_inputGameShortName() *TL_inputGameShortName {
 }
 
 func (t *TL_inputGameShortName) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputGameShortName))
 	ec.TLObject(t.Get_bot_id())
@@ -30068,7 +30068,7 @@ func New_TL_highScore() *TL_highScore {
 }
 
 func (t *TL_highScore) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_highScore))
 	ec.Int(t.Get_pos())
@@ -30121,7 +30121,7 @@ func New_TL_messages_highScores() *TL_messages_highScores {
 }
 
 func (t *TL_messages_highScores) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_highScores))
 	ec.Vector(t.Get_scores())
@@ -30154,7 +30154,7 @@ func New_TL_textEmpty() *TL_textEmpty {
 }
 
 func (t *TL_textEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textEmpty))
 
@@ -30190,7 +30190,7 @@ func New_TL_textPlain() *TL_textPlain {
 }
 
 func (t *TL_textPlain) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textPlain))
 	ec.String(t.Get_text())
@@ -30230,7 +30230,7 @@ func New_TL_textBold() *TL_textBold {
 }
 
 func (t *TL_textBold) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textBold))
 	ec.TLObject(t.Get_text())
@@ -30270,7 +30270,7 @@ func New_TL_textItalic() *TL_textItalic {
 }
 
 func (t *TL_textItalic) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textItalic))
 	ec.TLObject(t.Get_text())
@@ -30310,7 +30310,7 @@ func New_TL_textUnderline() *TL_textUnderline {
 }
 
 func (t *TL_textUnderline) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textUnderline))
 	ec.TLObject(t.Get_text())
@@ -30350,7 +30350,7 @@ func New_TL_textStrike() *TL_textStrike {
 }
 
 func (t *TL_textStrike) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textStrike))
 	ec.TLObject(t.Get_text())
@@ -30390,7 +30390,7 @@ func New_TL_textFixed() *TL_textFixed {
 }
 
 func (t *TL_textFixed) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textFixed))
 	ec.TLObject(t.Get_text())
@@ -30448,7 +30448,7 @@ func New_TL_textUrl() *TL_textUrl {
 }
 
 func (t *TL_textUrl) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textUrl))
 	ec.TLObject(t.Get_text())
@@ -30501,7 +30501,7 @@ func New_TL_textEmail() *TL_textEmail {
 }
 
 func (t *TL_textEmail) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textEmail))
 	ec.TLObject(t.Get_text())
@@ -30543,7 +30543,7 @@ func New_TL_textConcat() *TL_textConcat {
 }
 
 func (t *TL_textConcat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_textConcat))
 	ec.Vector(t.Get_texts())
@@ -30574,7 +30574,7 @@ func New_TL_pageBlockUnsupported() *TL_pageBlockUnsupported {
 }
 
 func (t *TL_pageBlockUnsupported) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockUnsupported))
 
@@ -30610,7 +30610,7 @@ func New_TL_pageBlockTitle() *TL_pageBlockTitle {
 }
 
 func (t *TL_pageBlockTitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockTitle))
 	ec.TLObject(t.Get_text())
@@ -30650,7 +30650,7 @@ func New_TL_pageBlockSubtitle() *TL_pageBlockSubtitle {
 }
 
 func (t *TL_pageBlockSubtitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockSubtitle))
 	ec.TLObject(t.Get_text())
@@ -30699,7 +30699,7 @@ func New_TL_pageBlockAuthorDate() *TL_pageBlockAuthorDate {
 }
 
 func (t *TL_pageBlockAuthorDate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockAuthorDate))
 	ec.TLObject(t.Get_author())
@@ -30741,7 +30741,7 @@ func New_TL_pageBlockHeader() *TL_pageBlockHeader {
 }
 
 func (t *TL_pageBlockHeader) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockHeader))
 	ec.TLObject(t.Get_text())
@@ -30781,7 +30781,7 @@ func New_TL_pageBlockSubheader() *TL_pageBlockSubheader {
 }
 
 func (t *TL_pageBlockSubheader) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockSubheader))
 	ec.TLObject(t.Get_text())
@@ -30821,7 +30821,7 @@ func New_TL_pageBlockParagraph() *TL_pageBlockParagraph {
 }
 
 func (t *TL_pageBlockParagraph) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockParagraph))
 	ec.TLObject(t.Get_text())
@@ -30870,7 +30870,7 @@ func New_TL_pageBlockPreformatted() *TL_pageBlockPreformatted {
 }
 
 func (t *TL_pageBlockPreformatted) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockPreformatted))
 	ec.TLObject(t.Get_text())
@@ -30912,7 +30912,7 @@ func New_TL_pageBlockFooter() *TL_pageBlockFooter {
 }
 
 func (t *TL_pageBlockFooter) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockFooter))
 	ec.TLObject(t.Get_text())
@@ -30943,7 +30943,7 @@ func New_TL_pageBlockDivider() *TL_pageBlockDivider {
 }
 
 func (t *TL_pageBlockDivider) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockDivider))
 
@@ -30979,7 +30979,7 @@ func New_TL_pageBlockAnchor() *TL_pageBlockAnchor {
 }
 
 func (t *TL_pageBlockAnchor) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockAnchor))
 	ec.String(t.Get_name())
@@ -31028,7 +31028,7 @@ func New_TL_pageBlockList() *TL_pageBlockList {
 }
 
 func (t *TL_pageBlockList) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockList))
 	ec.TLObject(t.Get_ordered())
@@ -31079,7 +31079,7 @@ func New_TL_pageBlockBlockquote() *TL_pageBlockBlockquote {
 }
 
 func (t *TL_pageBlockBlockquote) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockBlockquote))
 	ec.TLObject(t.Get_text())
@@ -31130,7 +31130,7 @@ func New_TL_pageBlockPullquote() *TL_pageBlockPullquote {
 }
 
 func (t *TL_pageBlockPullquote) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockPullquote))
 	ec.TLObject(t.Get_text())
@@ -31181,7 +31181,7 @@ func New_TL_pageBlockPhoto() *TL_pageBlockPhoto {
 }
 
 func (t *TL_pageBlockPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockPhoto))
 	ec.Long(t.Get_photo_id())
@@ -31259,7 +31259,7 @@ func New_TL_pageBlockVideo() *TL_pageBlockVideo {
 }
 
 func (t *TL_pageBlockVideo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockVideo))
 	ec.TLObject(t.Get_autoplay())
@@ -31305,7 +31305,7 @@ func New_TL_pageBlockCover() *TL_pageBlockCover {
 }
 
 func (t *TL_pageBlockCover) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockCover))
 	ec.TLObject(t.Get_cover())
@@ -31417,7 +31417,7 @@ func New_TL_pageBlockEmbed() *TL_pageBlockEmbed {
 }
 
 func (t *TL_pageBlockEmbed) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockEmbed))
 	ec.TLObject(t.Get_full_width())
@@ -31525,7 +31525,7 @@ func New_TL_pageBlockEmbedPost() *TL_pageBlockEmbedPost {
 }
 
 func (t *TL_pageBlockEmbedPost) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockEmbedPost))
 	ec.String(t.Get_url())
@@ -31586,7 +31586,7 @@ func New_TL_pageBlockCollage() *TL_pageBlockCollage {
 }
 
 func (t *TL_pageBlockCollage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockCollage))
 	ec.Vector(t.Get_items())
@@ -31637,7 +31637,7 @@ func New_TL_pageBlockSlideshow() *TL_pageBlockSlideshow {
 }
 
 func (t *TL_pageBlockSlideshow) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockSlideshow))
 	ec.Vector(t.Get_items())
@@ -31679,7 +31679,7 @@ func New_TL_pageBlockChannel() *TL_pageBlockChannel {
 }
 
 func (t *TL_pageBlockChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockChannel))
 	ec.TLObject(t.Get_channel())
@@ -31728,7 +31728,7 @@ func New_TL_pageBlockAudio() *TL_pageBlockAudio {
 }
 
 func (t *TL_pageBlockAudio) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockAudio))
 	ec.Long(t.Get_audio_id())
@@ -31788,7 +31788,7 @@ func New_TL_pagePart() *TL_pagePart {
 }
 
 func (t *TL_pagePart) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pagePart))
 	ec.Vector(t.Get_blocks())
@@ -31850,7 +31850,7 @@ func New_TL_pageFull() *TL_pageFull {
 }
 
 func (t *TL_pageFull) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageFull))
 	ec.Vector(t.Get_blocks())
@@ -31885,7 +31885,7 @@ func New_TL_phoneCallDiscardReasonMissed() *TL_phoneCallDiscardReasonMissed {
 }
 
 func (t *TL_phoneCallDiscardReasonMissed) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscardReasonMissed))
 
@@ -31912,7 +31912,7 @@ func New_TL_phoneCallDiscardReasonDisconnect() *TL_phoneCallDiscardReasonDisconn
 }
 
 func (t *TL_phoneCallDiscardReasonDisconnect) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscardReasonDisconnect))
 
@@ -31939,7 +31939,7 @@ func New_TL_phoneCallDiscardReasonHangup() *TL_phoneCallDiscardReasonHangup {
 }
 
 func (t *TL_phoneCallDiscardReasonHangup) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscardReasonHangup))
 
@@ -31966,7 +31966,7 @@ func New_TL_phoneCallDiscardReasonBusy() *TL_phoneCallDiscardReasonBusy {
 }
 
 func (t *TL_phoneCallDiscardReasonBusy) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscardReasonBusy))
 
@@ -32002,7 +32002,7 @@ func New_TL_dataJSON() *TL_dataJSON {
 }
 
 func (t *TL_dataJSON) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dataJSON))
 	ec.String(t.Get_data())
@@ -32051,7 +32051,7 @@ func New_TL_labeledPrice() *TL_labeledPrice {
 }
 
 func (t *TL_labeledPrice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_labeledPrice))
 	ec.String(t.Get_label())
@@ -32183,7 +32183,7 @@ func New_TL_invoice() *TL_invoice {
 }
 
 func (t *TL_invoice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invoice))
 	ec.TLObject(t.Get_test())
@@ -32250,7 +32250,7 @@ func New_TL_paymentCharge() *TL_paymentCharge {
 }
 
 func (t *TL_paymentCharge) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_paymentCharge))
 	ec.String(t.Get_id())
@@ -32337,7 +32337,7 @@ func New_TL_postAddress() *TL_postAddress {
 }
 
 func (t *TL_postAddress) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_postAddress))
 	ec.String(t.Get_street_line1())
@@ -32423,7 +32423,7 @@ func New_TL_paymentRequestedInfo() *TL_paymentRequestedInfo {
 }
 
 func (t *TL_paymentRequestedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_paymentRequestedInfo))
 	ec.TLObject(t.Get_name())
@@ -32478,7 +32478,7 @@ func New_TL_paymentSavedCredentialsCard() *TL_paymentSavedCredentialsCard {
 }
 
 func (t *TL_paymentSavedCredentialsCard) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_paymentSavedCredentialsCard))
 	ec.String(t.Get_id())
@@ -32565,7 +32565,7 @@ func New_TL_webDocument() *TL_webDocument {
 }
 
 func (t *TL_webDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webDocument))
 	ec.String(t.Get_url())
@@ -32642,7 +32642,7 @@ func New_TL_inputWebDocument() *TL_inputWebDocument {
 }
 
 func (t *TL_inputWebDocument) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputWebDocument))
 	ec.String(t.Get_url())
@@ -32697,7 +32697,7 @@ func New_TL_inputWebFileLocation() *TL_inputWebFileLocation {
 }
 
 func (t *TL_inputWebFileLocation) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputWebFileLocation))
 	ec.String(t.Get_url())
@@ -32775,7 +32775,7 @@ func New_TL_upload_webFile() *TL_upload_webFile {
 }
 
 func (t *TL_upload_webFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_webFile))
 	ec.Int(t.Get_size())
@@ -32922,7 +32922,7 @@ func New_TL_payments_paymentForm() *TL_payments_paymentForm {
 }
 
 func (t *TL_payments_paymentForm) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentForm))
 	ec.TLObject(t.Get_can_save_credentials())
@@ -33000,7 +33000,7 @@ func New_TL_payments_validatedRequestedInfo() *TL_payments_validatedRequestedInf
 }
 
 func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_validatedRequestedInfo))
 	ec.TLObject(t.Get_id())
@@ -33042,7 +33042,7 @@ func New_TL_payments_paymentResult() *TL_payments_paymentResult {
 }
 
 func (t *TL_payments_paymentResult) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentResult))
 	ec.TLObject(t.Get_updates())
@@ -33082,7 +33082,7 @@ func New_TL_payments_paymentVerficationNeeded() *TL_payments_paymentVerficationN
 }
 
 func (t *TL_payments_paymentVerficationNeeded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentVerficationNeeded))
 	ec.String(t.Get_url())
@@ -33212,7 +33212,7 @@ func New_TL_payments_paymentReceipt() *TL_payments_paymentReceipt {
 }
 
 func (t *TL_payments_paymentReceipt) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentReceipt))
 	ec.Int(t.Get_date())
@@ -33288,7 +33288,7 @@ func New_TL_payments_savedInfo() *TL_payments_savedInfo {
 }
 
 func (t *TL_payments_savedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_savedInfo))
 	ec.TLObject(t.Get_has_saved_credentials())
@@ -33339,7 +33339,7 @@ func New_TL_inputPaymentCredentialsSaved() *TL_inputPaymentCredentialsSaved {
 }
 
 func (t *TL_inputPaymentCredentialsSaved) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentialsSaved))
 	ec.String(t.Get_id())
@@ -33399,7 +33399,7 @@ func New_TL_inputPaymentCredentials() *TL_inputPaymentCredentials {
 }
 
 func (t *TL_inputPaymentCredentials) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentials))
 	ec.TLObject(t.Get_save())
@@ -33441,7 +33441,7 @@ func New_TL_inputPaymentCredentialsApplePay() *TL_inputPaymentCredentialsApplePa
 }
 
 func (t *TL_inputPaymentCredentialsApplePay) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentialsApplePay))
 	ec.TLObject(t.Get_payment_data())
@@ -33481,7 +33481,7 @@ func New_TL_inputPaymentCredentialsAndroidPay() *TL_inputPaymentCredentialsAndro
 }
 
 func (t *TL_inputPaymentCredentialsAndroidPay) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentialsAndroidPay))
 	ec.TLObject(t.Get_payment_token())
@@ -33530,7 +33530,7 @@ func New_TL_account_tmpPassword() *TL_account_tmpPassword {
 }
 
 func (t *TL_account_tmpPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_tmpPassword))
 	ec.TLObject(t.Get_tmp_password())
@@ -33590,7 +33590,7 @@ func New_TL_shippingOption() *TL_shippingOption {
 }
 
 func (t *TL_shippingOption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_shippingOption))
 	ec.String(t.Get_id())
@@ -33661,7 +33661,7 @@ func New_TL_inputStickerSetItem() *TL_inputStickerSetItem {
 }
 
 func (t *TL_inputStickerSetItem) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickerSetItem))
 	ec.TLObject(t.Get_document())
@@ -33714,7 +33714,7 @@ func New_TL_inputPhoneCall() *TL_inputPhoneCall {
 }
 
 func (t *TL_inputPhoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPhoneCall))
 	ec.Long(t.Get_id())
@@ -33756,7 +33756,7 @@ func New_TL_phoneCallEmpty() *TL_phoneCallEmpty {
 }
 
 func (t *TL_phoneCallEmpty) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallEmpty))
 	ec.Long(t.Get_id())
@@ -33859,7 +33859,7 @@ func New_TL_phoneCallWaiting() *TL_phoneCallWaiting {
 }
 
 func (t *TL_phoneCallWaiting) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallWaiting))
 	ec.Long(t.Get_id())
@@ -33965,7 +33965,7 @@ func New_TL_phoneCallRequested() *TL_phoneCallRequested {
 }
 
 func (t *TL_phoneCallRequested) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallRequested))
 	ec.Long(t.Get_id())
@@ -34071,7 +34071,7 @@ func New_TL_phoneCallAccepted() *TL_phoneCallAccepted {
 }
 
 func (t *TL_phoneCallAccepted) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallAccepted))
 	ec.Long(t.Get_id())
@@ -34213,7 +34213,7 @@ func New_TL_phoneCall() *TL_phoneCall {
 }
 
 func (t *TL_phoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCall))
 	ec.Long(t.Get_id())
@@ -34318,7 +34318,7 @@ func New_TL_phoneCallDiscarded() *TL_phoneCallDiscarded {
 }
 
 func (t *TL_phoneCallDiscarded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscarded))
 	ec.TLObject(t.Get_need_rating())
@@ -34402,7 +34402,7 @@ func New_TL_phoneConnection() *TL_phoneConnection {
 }
 
 func (t *TL_phoneConnection) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneConnection))
 	ec.Long(t.Get_id())
@@ -34486,7 +34486,7 @@ func New_TL_phoneCallProtocol() *TL_phoneCallProtocol {
 }
 
 func (t *TL_phoneCallProtocol) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallProtocol))
 	ec.TLObject(t.Get_udp_p2p())
@@ -34541,7 +34541,7 @@ func New_TL_phone_phoneCall() *TL_phone_phoneCall {
 }
 
 func (t *TL_phone_phoneCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_phoneCall))
 	ec.TLObject(t.Get_phone_call())
@@ -34583,7 +34583,7 @@ func New_TL_upload_cdnFileReuploadNeeded() *TL_upload_cdnFileReuploadNeeded {
 }
 
 func (t *TL_upload_cdnFileReuploadNeeded) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_cdnFileReuploadNeeded))
 	ec.TLObject(t.Get_request_token())
@@ -34623,7 +34623,7 @@ func New_TL_upload_cdnFile() *TL_upload_cdnFile {
 }
 
 func (t *TL_upload_cdnFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_cdnFile))
 	ec.TLObject(t.Get_bytes())
@@ -34672,7 +34672,7 @@ func New_TL_cdnPublicKey() *TL_cdnPublicKey {
 }
 
 func (t *TL_cdnPublicKey) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_cdnPublicKey))
 	ec.Int(t.Get_dc_id())
@@ -34714,7 +34714,7 @@ func New_TL_cdnConfig() *TL_cdnConfig {
 }
 
 func (t *TL_cdnConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_cdnConfig))
 	ec.Vector(t.Get_public_keys())
@@ -34763,7 +34763,7 @@ func New_TL_langPackString() *TL_langPackString {
 }
 
 func (t *TL_langPackString) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackString))
 	ec.String(t.Get_key())
@@ -34868,7 +34868,7 @@ func New_TL_langPackStringPluralized() *TL_langPackStringPluralized {
 }
 
 func (t *TL_langPackStringPluralized) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackStringPluralized))
 	ec.String(t.Get_key())
@@ -34920,7 +34920,7 @@ func New_TL_langPackStringDeleted() *TL_langPackStringDeleted {
 }
 
 func (t *TL_langPackStringDeleted) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackStringDeleted))
 	ec.String(t.Get_key())
@@ -34987,7 +34987,7 @@ func New_TL_langPackDifference() *TL_langPackDifference {
 }
 
 func (t *TL_langPackDifference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackDifference))
 	ec.String(t.Get_lang_code())
@@ -35051,7 +35051,7 @@ func New_TL_langPackLanguage() *TL_langPackLanguage {
 }
 
 func (t *TL_langPackLanguage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackLanguage))
 	ec.String(t.Get_name())
@@ -35176,7 +35176,7 @@ func New_TL_channelAdminRights() *TL_channelAdminRights {
 }
 
 func (t *TL_channelAdminRights) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminRights))
 	ec.TLObject(t.Get_change_info())
@@ -35313,7 +35313,7 @@ func New_TL_channelBannedRights() *TL_channelBannedRights {
 }
 
 func (t *TL_channelBannedRights) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelBannedRights))
 	ec.TLObject(t.Get_view_messages())
@@ -35378,7 +35378,7 @@ func New_TL_channelAdminLogEventActionChangeTitle() *TL_channelAdminLogEventActi
 }
 
 func (t *TL_channelAdminLogEventActionChangeTitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionChangeTitle))
 	ec.String(t.Get_prev_value())
@@ -35429,7 +35429,7 @@ func New_TL_channelAdminLogEventActionChangeAbout() *TL_channelAdminLogEventActi
 }
 
 func (t *TL_channelAdminLogEventActionChangeAbout) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionChangeAbout))
 	ec.String(t.Get_prev_value())
@@ -35480,7 +35480,7 @@ func New_TL_channelAdminLogEventActionChangeUsername() *TL_channelAdminLogEventA
 }
 
 func (t *TL_channelAdminLogEventActionChangeUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionChangeUsername))
 	ec.String(t.Get_prev_value())
@@ -35531,7 +35531,7 @@ func New_TL_channelAdminLogEventActionChangePhoto() *TL_channelAdminLogEventActi
 }
 
 func (t *TL_channelAdminLogEventActionChangePhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionChangePhoto))
 	ec.TLObject(t.Get_prev_photo())
@@ -35573,7 +35573,7 @@ func New_TL_channelAdminLogEventActionToggleInvites() *TL_channelAdminLogEventAc
 }
 
 func (t *TL_channelAdminLogEventActionToggleInvites) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionToggleInvites))
 	ec.TLObject(t.Get_new_value())
@@ -35613,7 +35613,7 @@ func New_TL_channelAdminLogEventActionToggleSignatures() *TL_channelAdminLogEven
 }
 
 func (t *TL_channelAdminLogEventActionToggleSignatures) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionToggleSignatures))
 	ec.TLObject(t.Get_new_value())
@@ -35653,7 +35653,7 @@ func New_TL_channelAdminLogEventActionUpdatePinned() *TL_channelAdminLogEventAct
 }
 
 func (t *TL_channelAdminLogEventActionUpdatePinned) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionUpdatePinned))
 	ec.TLObject(t.Get_message())
@@ -35702,7 +35702,7 @@ func New_TL_channelAdminLogEventActionEditMessage() *TL_channelAdminLogEventActi
 }
 
 func (t *TL_channelAdminLogEventActionEditMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionEditMessage))
 	ec.TLObject(t.Get_prev_message())
@@ -35744,7 +35744,7 @@ func New_TL_channelAdminLogEventActionDeleteMessage() *TL_channelAdminLogEventAc
 }
 
 func (t *TL_channelAdminLogEventActionDeleteMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionDeleteMessage))
 	ec.TLObject(t.Get_message())
@@ -35775,7 +35775,7 @@ func New_TL_channelAdminLogEventActionParticipantJoin() *TL_channelAdminLogEvent
 }
 
 func (t *TL_channelAdminLogEventActionParticipantJoin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionParticipantJoin))
 
@@ -35802,7 +35802,7 @@ func New_TL_channelAdminLogEventActionParticipantLeave() *TL_channelAdminLogEven
 }
 
 func (t *TL_channelAdminLogEventActionParticipantLeave) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionParticipantLeave))
 
@@ -35838,7 +35838,7 @@ func New_TL_channelAdminLogEventActionParticipantInvite() *TL_channelAdminLogEve
 }
 
 func (t *TL_channelAdminLogEventActionParticipantInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionParticipantInvite))
 	ec.TLObject(t.Get_participant())
@@ -35887,7 +35887,7 @@ func New_TL_channelAdminLogEventActionParticipantToggleBan() *TL_channelAdminLog
 }
 
 func (t *TL_channelAdminLogEventActionParticipantToggleBan) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionParticipantToggleBan))
 	ec.TLObject(t.Get_prev_participant())
@@ -35938,7 +35938,7 @@ func New_TL_channelAdminLogEventActionParticipantToggleAdmin() *TL_channelAdminL
 }
 
 func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionParticipantToggleAdmin))
 	ec.TLObject(t.Get_prev_participant())
@@ -35989,7 +35989,7 @@ func New_TL_channelAdminLogEventActionChangeStickerSet() *TL_channelAdminLogEven
 }
 
 func (t *TL_channelAdminLogEventActionChangeStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionChangeStickerSet))
 	ec.TLObject(t.Get_prev_stickerset())
@@ -36031,7 +36031,7 @@ func New_TL_channelAdminLogEventActionTogglePreHistoryHidden() *TL_channelAdminL
 }
 
 func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventActionTogglePreHistoryHidden))
 	ec.TLObject(t.Get_new_value())
@@ -36098,7 +36098,7 @@ func New_TL_channelAdminLogEvent() *TL_channelAdminLogEvent {
 }
 
 func (t *TL_channelAdminLogEvent) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEvent))
 	ec.Long(t.Get_id())
@@ -36162,7 +36162,7 @@ func New_TL_channels_adminLogResults() *TL_channels_adminLogResults {
 }
 
 func (t *TL_channels_adminLogResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_adminLogResults))
 	ec.Vector(t.Get_events())
@@ -36332,7 +36332,7 @@ func New_TL_channelAdminLogEventsFilter() *TL_channelAdminLogEventsFilter {
 }
 
 func (t *TL_channelAdminLogEventsFilter) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventsFilter))
 	ec.TLObject(t.Get_join())
@@ -36407,7 +36407,7 @@ func New_TL_popularContact() *TL_popularContact {
 }
 
 func (t *TL_popularContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_popularContact))
 	ec.Long(t.Get_client_id())
@@ -36467,7 +36467,7 @@ func New_TL_cdnFileHash() *TL_cdnFileHash {
 }
 
 func (t *TL_cdnFileHash) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_cdnFileHash))
 	ec.Int(t.Get_offset())
@@ -36502,7 +36502,7 @@ func New_TL_messages_favedStickersNotModified() *TL_messages_favedStickersNotMod
 }
 
 func (t *TL_messages_favedStickersNotModified) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_favedStickersNotModified))
 
@@ -36556,7 +36556,7 @@ func New_TL_messages_favedStickers() *TL_messages_favedStickers {
 }
 
 func (t *TL_messages_favedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_favedStickers))
 	ec.Int(t.Get_hash())
@@ -36600,7 +36600,7 @@ func New_TL_recentMeUrlUnknown() *TL_recentMeUrlUnknown {
 }
 
 func (t *TL_recentMeUrlUnknown) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_recentMeUrlUnknown))
 	ec.String(t.Get_url())
@@ -36649,7 +36649,7 @@ func New_TL_recentMeUrlUser() *TL_recentMeUrlUser {
 }
 
 func (t *TL_recentMeUrlUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_recentMeUrlUser))
 	ec.String(t.Get_url())
@@ -36700,7 +36700,7 @@ func New_TL_recentMeUrlChat() *TL_recentMeUrlChat {
 }
 
 func (t *TL_recentMeUrlChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_recentMeUrlChat))
 	ec.String(t.Get_url())
@@ -36751,7 +36751,7 @@ func New_TL_recentMeUrlChatInvite() *TL_recentMeUrlChatInvite {
 }
 
 func (t *TL_recentMeUrlChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_recentMeUrlChatInvite))
 	ec.String(t.Get_url())
@@ -36802,7 +36802,7 @@ func New_TL_recentMeUrlStickerSet() *TL_recentMeUrlStickerSet {
 }
 
 func (t *TL_recentMeUrlStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_recentMeUrlStickerSet))
 	ec.String(t.Get_url())
@@ -36862,7 +36862,7 @@ func New_TL_help_recentMeUrls() *TL_help_recentMeUrls {
 }
 
 func (t *TL_help_recentMeUrls) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_recentMeUrls))
 	ec.Vector(t.Get_urls())
@@ -36915,7 +36915,7 @@ func New_TL_inputSingleMedia() *TL_inputSingleMedia {
 }
 
 func (t *TL_inputSingleMedia) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputSingleMedia))
 	ec.TLObject(t.Get_media())
@@ -36966,7 +36966,7 @@ func New_TL_invokeAfterMsg() *TL_invokeAfterMsg {
 }
 
 func (t *TL_invokeAfterMsg) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invokeAfterMsg))
 	ec.Long(t.Get_msg_id())
@@ -37017,7 +37017,7 @@ func New_TL_invokeAfterMsgs() *TL_invokeAfterMsgs {
 }
 
 func (t *TL_invokeAfterMsgs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invokeAfterMsgs))
 	ec.VectorLong(t.Get_msg_ids())
@@ -37122,7 +37122,7 @@ func New_TL_initConnection() *TL_initConnection {
 }
 
 func (t *TL_initConnection) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_initConnection))
 	ec.Int(t.Get_api_id())
@@ -37185,7 +37185,7 @@ func New_TL_invokeWithLayer() *TL_invokeWithLayer {
 }
 
 func (t *TL_invokeWithLayer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invokeWithLayer))
 	ec.Int(t.Get_layer())
@@ -37227,7 +37227,7 @@ func New_TL_invokeWithoutUpdates() *TL_invokeWithoutUpdates {
 }
 
 func (t *TL_invokeWithoutUpdates) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invokeWithoutUpdates))
 	ec.TLObject(t.Get_query())
@@ -37267,7 +37267,7 @@ func New_TL_auth_checkPhone() *TL_auth_checkPhone {
 }
 
 func (t *TL_auth_checkPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_checkPhone))
 	ec.String(t.Get_phone_number())
@@ -37352,7 +37352,7 @@ func New_TL_auth_sendCode() *TL_auth_sendCode {
 }
 
 func (t *TL_auth_sendCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sendCode))
 	ec.TLObject(t.Get_allow_flashcall())
@@ -37436,7 +37436,7 @@ func New_TL_auth_signUp() *TL_auth_signUp {
 }
 
 func (t *TL_auth_signUp) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_signUp))
 	ec.String(t.Get_phone_number())
@@ -37502,7 +37502,7 @@ func New_TL_auth_signIn() *TL_auth_signIn {
 }
 
 func (t *TL_auth_signIn) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_signIn))
 	ec.String(t.Get_phone_number())
@@ -37537,7 +37537,7 @@ func New_TL_auth_logOut() *TL_auth_logOut {
 }
 
 func (t *TL_auth_logOut) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_logOut))
 
@@ -37564,7 +37564,7 @@ func New_TL_auth_resetAuthorizations() *TL_auth_resetAuthorizations {
 }
 
 func (t *TL_auth_resetAuthorizations) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_resetAuthorizations))
 
@@ -37609,7 +37609,7 @@ func New_TL_auth_sendInvites() *TL_auth_sendInvites {
 }
 
 func (t *TL_auth_sendInvites) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sendInvites))
 	ec.VectorString(t.Get_phone_numbers())
@@ -37651,7 +37651,7 @@ func New_TL_auth_exportAuthorization() *TL_auth_exportAuthorization {
 }
 
 func (t *TL_auth_exportAuthorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_exportAuthorization))
 	ec.Int(t.Get_dc_id())
@@ -37700,7 +37700,7 @@ func New_TL_auth_importAuthorization() *TL_auth_importAuthorization {
 }
 
 func (t *TL_auth_importAuthorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_importAuthorization))
 	ec.Int(t.Get_id())
@@ -37769,7 +37769,7 @@ func New_TL_auth_bindTempAuthKey() *TL_auth_bindTempAuthKey {
 }
 
 func (t *TL_auth_bindTempAuthKey) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_bindTempAuthKey))
 	ec.Long(t.Get_perm_auth_key_id())
@@ -37842,7 +37842,7 @@ func New_TL_auth_importBotAuthorization() *TL_auth_importBotAuthorization {
 }
 
 func (t *TL_auth_importBotAuthorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_importBotAuthorization))
 	ec.Int(t.Get_flags())
@@ -37888,7 +37888,7 @@ func New_TL_auth_checkPassword() *TL_auth_checkPassword {
 }
 
 func (t *TL_auth_checkPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_checkPassword))
 	ec.TLObject(t.Get_password_hash())
@@ -37919,7 +37919,7 @@ func New_TL_auth_requestPasswordRecovery() *TL_auth_requestPasswordRecovery {
 }
 
 func (t *TL_auth_requestPasswordRecovery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_requestPasswordRecovery))
 
@@ -37955,7 +37955,7 @@ func New_TL_auth_recoverPassword() *TL_auth_recoverPassword {
 }
 
 func (t *TL_auth_recoverPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_recoverPassword))
 	ec.String(t.Get_code())
@@ -38004,7 +38004,7 @@ func New_TL_auth_resendCode() *TL_auth_resendCode {
 }
 
 func (t *TL_auth_resendCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_resendCode))
 	ec.String(t.Get_phone_number())
@@ -38055,7 +38055,7 @@ func New_TL_auth_cancelCode() *TL_auth_cancelCode {
 }
 
 func (t *TL_auth_cancelCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_cancelCode))
 	ec.String(t.Get_phone_number())
@@ -38097,7 +38097,7 @@ func New_TL_auth_dropTempAuthKeys() *TL_auth_dropTempAuthKeys {
 }
 
 func (t *TL_auth_dropTempAuthKeys) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_dropTempAuthKeys))
 	ec.VectorLong(t.Get_except_auth_keys())
@@ -38146,7 +38146,7 @@ func New_TL_account_registerDevice() *TL_account_registerDevice {
 }
 
 func (t *TL_account_registerDevice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_registerDevice))
 	ec.Int(t.Get_token_type())
@@ -38197,7 +38197,7 @@ func New_TL_account_unregisterDevice() *TL_account_unregisterDevice {
 }
 
 func (t *TL_account_unregisterDevice) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_unregisterDevice))
 	ec.Int(t.Get_token_type())
@@ -38248,7 +38248,7 @@ func New_TL_account_updateNotifySettings() *TL_account_updateNotifySettings {
 }
 
 func (t *TL_account_updateNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateNotifySettings))
 	ec.TLObject(t.Get_peer())
@@ -38290,7 +38290,7 @@ func New_TL_account_getNotifySettings() *TL_account_getNotifySettings {
 }
 
 func (t *TL_account_getNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getNotifySettings))
 	ec.TLObject(t.Get_peer())
@@ -38321,7 +38321,7 @@ func New_TL_account_resetNotifySettings() *TL_account_resetNotifySettings {
 }
 
 func (t *TL_account_resetNotifySettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_resetNotifySettings))
 
@@ -38384,7 +38384,7 @@ func New_TL_account_updateProfile() *TL_account_updateProfile {
 }
 
 func (t *TL_account_updateProfile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateProfile))
 	ec.TLObject(t.Get_first_name())
@@ -38428,7 +38428,7 @@ func New_TL_account_updateStatus() *TL_account_updateStatus {
 }
 
 func (t *TL_account_updateStatus) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateStatus))
 	ec.TLObject(t.Get_offline())
@@ -38459,7 +38459,7 @@ func New_TL_account_getWallPapers() *TL_account_getWallPapers {
 }
 
 func (t *TL_account_getWallPapers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getWallPapers))
 
@@ -38504,7 +38504,7 @@ func New_TL_account_reportPeer() *TL_account_reportPeer {
 }
 
 func (t *TL_account_reportPeer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_reportPeer))
 	ec.TLObject(t.Get_peer())
@@ -38546,7 +38546,7 @@ func New_TL_account_checkUsername() *TL_account_checkUsername {
 }
 
 func (t *TL_account_checkUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_checkUsername))
 	ec.String(t.Get_username())
@@ -38586,7 +38586,7 @@ func New_TL_account_updateUsername() *TL_account_updateUsername {
 }
 
 func (t *TL_account_updateUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateUsername))
 	ec.String(t.Get_username())
@@ -38626,7 +38626,7 @@ func New_TL_account_getPrivacy() *TL_account_getPrivacy {
 }
 
 func (t *TL_account_getPrivacy) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getPrivacy))
 	ec.TLObject(t.Get_key())
@@ -38675,7 +38675,7 @@ func New_TL_account_setPrivacy() *TL_account_setPrivacy {
 }
 
 func (t *TL_account_setPrivacy) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_setPrivacy))
 	ec.TLObject(t.Get_key())
@@ -38717,7 +38717,7 @@ func New_TL_account_deleteAccount() *TL_account_deleteAccount {
 }
 
 func (t *TL_account_deleteAccount) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_deleteAccount))
 	ec.String(t.Get_reason())
@@ -38748,7 +38748,7 @@ func New_TL_account_getAccountTTL() *TL_account_getAccountTTL {
 }
 
 func (t *TL_account_getAccountTTL) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getAccountTTL))
 
@@ -38784,7 +38784,7 @@ func New_TL_account_setAccountTTL() *TL_account_setAccountTTL {
 }
 
 func (t *TL_account_setAccountTTL) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_setAccountTTL))
 	ec.TLObject(t.Get_ttl())
@@ -38851,7 +38851,7 @@ func New_TL_account_sendChangePhoneCode() *TL_account_sendChangePhoneCode {
 }
 
 func (t *TL_account_sendChangePhoneCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_sendChangePhoneCode))
 	ec.TLObject(t.Get_allow_flashcall())
@@ -38913,7 +38913,7 @@ func New_TL_account_changePhone() *TL_account_changePhone {
 }
 
 func (t *TL_account_changePhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_changePhone))
 	ec.String(t.Get_phone_number())
@@ -38957,7 +38957,7 @@ func New_TL_account_updateDeviceLocked() *TL_account_updateDeviceLocked {
 }
 
 func (t *TL_account_updateDeviceLocked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateDeviceLocked))
 	ec.Int(t.Get_period())
@@ -38988,7 +38988,7 @@ func New_TL_account_getAuthorizations() *TL_account_getAuthorizations {
 }
 
 func (t *TL_account_getAuthorizations) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getAuthorizations))
 
@@ -39024,7 +39024,7 @@ func New_TL_account_resetAuthorization() *TL_account_resetAuthorization {
 }
 
 func (t *TL_account_resetAuthorization) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_resetAuthorization))
 	ec.Long(t.Get_hash())
@@ -39055,7 +39055,7 @@ func New_TL_account_getPassword() *TL_account_getPassword {
 }
 
 func (t *TL_account_getPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getPassword))
 
@@ -39091,7 +39091,7 @@ func New_TL_account_getPasswordSettings() *TL_account_getPasswordSettings {
 }
 
 func (t *TL_account_getPasswordSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getPasswordSettings))
 	ec.TLObject(t.Get_current_password_hash())
@@ -39140,7 +39140,7 @@ func New_TL_account_updatePasswordSettings() *TL_account_updatePasswordSettings 
 }
 
 func (t *TL_account_updatePasswordSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updatePasswordSettings))
 	ec.TLObject(t.Get_current_password_hash())
@@ -39209,7 +39209,7 @@ func New_TL_account_sendConfirmPhoneCode() *TL_account_sendConfirmPhoneCode {
 }
 
 func (t *TL_account_sendConfirmPhoneCode) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_sendConfirmPhoneCode))
 	ec.TLObject(t.Get_allow_flashcall())
@@ -39262,7 +39262,7 @@ func New_TL_account_confirmPhone() *TL_account_confirmPhone {
 }
 
 func (t *TL_account_confirmPhone) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_confirmPhone))
 	ec.String(t.Get_phone_code_hash())
@@ -39313,7 +39313,7 @@ func New_TL_account_getTmpPassword() *TL_account_getTmpPassword {
 }
 
 func (t *TL_account_getTmpPassword) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_getTmpPassword))
 	ec.TLObject(t.Get_password_hash())
@@ -39355,7 +39355,7 @@ func New_TL_users_getUsers() *TL_users_getUsers {
 }
 
 func (t *TL_users_getUsers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_users_getUsers))
 	ec.Vector(t.Get_id())
@@ -39395,7 +39395,7 @@ func New_TL_users_getFullUser() *TL_users_getFullUser {
 }
 
 func (t *TL_users_getFullUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_users_getFullUser))
 	ec.TLObject(t.Get_id())
@@ -39426,7 +39426,7 @@ func New_TL_contacts_getStatuses() *TL_contacts_getStatuses {
 }
 
 func (t *TL_contacts_getStatuses) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_getStatuses))
 
@@ -39462,7 +39462,7 @@ func New_TL_contacts_getContacts() *TL_contacts_getContacts {
 }
 
 func (t *TL_contacts_getContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_getContacts))
 	ec.Int(t.Get_hash())
@@ -39502,7 +39502,7 @@ func New_TL_contacts_importContacts() *TL_contacts_importContacts {
 }
 
 func (t *TL_contacts_importContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_importContacts))
 	ec.Vector(t.Get_contacts())
@@ -39542,7 +39542,7 @@ func New_TL_contacts_deleteContact() *TL_contacts_deleteContact {
 }
 
 func (t *TL_contacts_deleteContact) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_deleteContact))
 	ec.TLObject(t.Get_id())
@@ -39582,7 +39582,7 @@ func New_TL_contacts_deleteContacts() *TL_contacts_deleteContacts {
 }
 
 func (t *TL_contacts_deleteContacts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_deleteContacts))
 	ec.Vector(t.Get_id())
@@ -39622,7 +39622,7 @@ func New_TL_contacts_block() *TL_contacts_block {
 }
 
 func (t *TL_contacts_block) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_block))
 	ec.TLObject(t.Get_id())
@@ -39662,7 +39662,7 @@ func New_TL_contacts_unblock() *TL_contacts_unblock {
 }
 
 func (t *TL_contacts_unblock) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_unblock))
 	ec.TLObject(t.Get_id())
@@ -39711,7 +39711,7 @@ func New_TL_contacts_getBlocked() *TL_contacts_getBlocked {
 }
 
 func (t *TL_contacts_getBlocked) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_getBlocked))
 	ec.Int(t.Get_offset())
@@ -39744,7 +39744,7 @@ func New_TL_contacts_exportCard() *TL_contacts_exportCard {
 }
 
 func (t *TL_contacts_exportCard) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_exportCard))
 
@@ -39780,7 +39780,7 @@ func New_TL_contacts_importCard() *TL_contacts_importCard {
 }
 
 func (t *TL_contacts_importCard) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_importCard))
 	ec.VectorInt(t.Get_export_card())
@@ -39829,7 +39829,7 @@ func New_TL_contacts_search() *TL_contacts_search {
 }
 
 func (t *TL_contacts_search) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_search))
 	ec.String(t.Get_q())
@@ -39871,7 +39871,7 @@ func New_TL_contacts_resolveUsername() *TL_contacts_resolveUsername {
 }
 
 func (t *TL_contacts_resolveUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_resolveUsername))
 	ec.String(t.Get_username())
@@ -39992,7 +39992,7 @@ func New_TL_contacts_getTopPeers() *TL_contacts_getTopPeers {
 }
 
 func (t *TL_contacts_getTopPeers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_getTopPeers))
 	ec.TLObject(t.Get_correspondents())
@@ -40057,7 +40057,7 @@ func New_TL_contacts_resetTopPeerRating() *TL_contacts_resetTopPeerRating {
 }
 
 func (t *TL_contacts_resetTopPeerRating) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_resetTopPeerRating))
 	ec.TLObject(t.Get_category())
@@ -40090,7 +40090,7 @@ func New_TL_contacts_resetSaved() *TL_contacts_resetSaved {
 }
 
 func (t *TL_contacts_resetSaved) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_resetSaved))
 
@@ -40126,7 +40126,7 @@ func New_TL_messages_getMessages() *TL_messages_getMessages {
 }
 
 func (t *TL_messages_getMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getMessages))
 	ec.VectorInt(t.Get_id())
@@ -40211,7 +40211,7 @@ func New_TL_messages_getDialogs() *TL_messages_getDialogs {
 }
 
 func (t *TL_messages_getDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getDialogs))
 	ec.TLObject(t.Get_exclude_pinned())
@@ -40322,7 +40322,7 @@ func New_TL_messages_getHistory() *TL_messages_getHistory {
 }
 
 func (t *TL_messages_getHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getHistory))
 	ec.TLObject(t.Get_peer())
@@ -40475,7 +40475,7 @@ func New_TL_messages_search() *TL_messages_search {
 }
 
 func (t *TL_messages_search) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_search))
 	ec.TLObject(t.Get_peer())
@@ -40544,7 +40544,7 @@ func New_TL_messages_readHistory() *TL_messages_readHistory {
 }
 
 func (t *TL_messages_readHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_readHistory))
 	ec.TLObject(t.Get_peer())
@@ -40613,7 +40613,7 @@ func New_TL_messages_deleteHistory() *TL_messages_deleteHistory {
 }
 
 func (t *TL_messages_deleteHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_deleteHistory))
 	ec.TLObject(t.Get_just_clear())
@@ -40675,7 +40675,7 @@ func New_TL_messages_deleteMessages() *TL_messages_deleteMessages {
 }
 
 func (t *TL_messages_deleteMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_deleteMessages))
 	ec.TLObject(t.Get_revoke())
@@ -40717,7 +40717,7 @@ func New_TL_messages_receivedMessages() *TL_messages_receivedMessages {
 }
 
 func (t *TL_messages_receivedMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_receivedMessages))
 	ec.Int(t.Get_max_id())
@@ -40766,7 +40766,7 @@ func New_TL_messages_setTyping() *TL_messages_setTyping {
 }
 
 func (t *TL_messages_setTyping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setTyping))
 	ec.TLObject(t.Get_peer())
@@ -40898,7 +40898,7 @@ func New_TL_messages_sendMessage() *TL_messages_sendMessage {
 }
 
 func (t *TL_messages_sendMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMessage))
 	ec.TLObject(t.Get_no_webpage())
@@ -41028,7 +41028,7 @@ func New_TL_messages_sendMedia() *TL_messages_sendMedia {
 }
 
 func (t *TL_messages_sendMedia) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMedia))
 	ec.TLObject(t.Get_silent())
@@ -41154,7 +41154,7 @@ func New_TL_messages_forwardMessages() *TL_messages_forwardMessages {
 }
 
 func (t *TL_messages_forwardMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_forwardMessages))
 	ec.TLObject(t.Get_silent())
@@ -41208,7 +41208,7 @@ func New_TL_messages_reportSpam() *TL_messages_reportSpam {
 }
 
 func (t *TL_messages_reportSpam) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reportSpam))
 	ec.TLObject(t.Get_peer())
@@ -41248,7 +41248,7 @@ func New_TL_messages_hideReportSpam() *TL_messages_hideReportSpam {
 }
 
 func (t *TL_messages_hideReportSpam) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_hideReportSpam))
 	ec.TLObject(t.Get_peer())
@@ -41288,7 +41288,7 @@ func New_TL_messages_getPeerSettings() *TL_messages_getPeerSettings {
 }
 
 func (t *TL_messages_getPeerSettings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getPeerSettings))
 	ec.TLObject(t.Get_peer())
@@ -41328,7 +41328,7 @@ func New_TL_messages_getChats() *TL_messages_getChats {
 }
 
 func (t *TL_messages_getChats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getChats))
 	ec.VectorInt(t.Get_id())
@@ -41368,7 +41368,7 @@ func New_TL_messages_getFullChat() *TL_messages_getFullChat {
 }
 
 func (t *TL_messages_getFullChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getFullChat))
 	ec.Int(t.Get_chat_id())
@@ -41417,7 +41417,7 @@ func New_TL_messages_editChatTitle() *TL_messages_editChatTitle {
 }
 
 func (t *TL_messages_editChatTitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editChatTitle))
 	ec.Int(t.Get_chat_id())
@@ -41468,7 +41468,7 @@ func New_TL_messages_editChatPhoto() *TL_messages_editChatPhoto {
 }
 
 func (t *TL_messages_editChatPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editChatPhoto))
 	ec.Int(t.Get_chat_id())
@@ -41528,7 +41528,7 @@ func New_TL_messages_addChatUser() *TL_messages_addChatUser {
 }
 
 func (t *TL_messages_addChatUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_addChatUser))
 	ec.Int(t.Get_chat_id())
@@ -41581,7 +41581,7 @@ func New_TL_messages_deleteChatUser() *TL_messages_deleteChatUser {
 }
 
 func (t *TL_messages_deleteChatUser) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_deleteChatUser))
 	ec.Int(t.Get_chat_id())
@@ -41632,7 +41632,7 @@ func New_TL_messages_createChat() *TL_messages_createChat {
 }
 
 func (t *TL_messages_createChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_createChat))
 	ec.Vector(t.Get_users())
@@ -41692,7 +41692,7 @@ func New_TL_messages_forwardMessage() *TL_messages_forwardMessage {
 }
 
 func (t *TL_messages_forwardMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_forwardMessage))
 	ec.TLObject(t.Get_peer())
@@ -41745,7 +41745,7 @@ func New_TL_messages_getDhConfig() *TL_messages_getDhConfig {
 }
 
 func (t *TL_messages_getDhConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getDhConfig))
 	ec.Int(t.Get_version())
@@ -41805,7 +41805,7 @@ func New_TL_messages_requestEncryption() *TL_messages_requestEncryption {
 }
 
 func (t *TL_messages_requestEncryption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_requestEncryption))
 	ec.TLObject(t.Get_user_id())
@@ -41867,7 +41867,7 @@ func New_TL_messages_acceptEncryption() *TL_messages_acceptEncryption {
 }
 
 func (t *TL_messages_acceptEncryption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_acceptEncryption))
 	ec.TLObject(t.Get_peer())
@@ -41911,7 +41911,7 @@ func New_TL_messages_discardEncryption() *TL_messages_discardEncryption {
 }
 
 func (t *TL_messages_discardEncryption) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_discardEncryption))
 	ec.Int(t.Get_chat_id())
@@ -41960,7 +41960,7 @@ func New_TL_messages_setEncryptedTyping() *TL_messages_setEncryptedTyping {
 }
 
 func (t *TL_messages_setEncryptedTyping) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setEncryptedTyping))
 	ec.TLObject(t.Get_peer())
@@ -42011,7 +42011,7 @@ func New_TL_messages_readEncryptedHistory() *TL_messages_readEncryptedHistory {
 }
 
 func (t *TL_messages_readEncryptedHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_readEncryptedHistory))
 	ec.TLObject(t.Get_peer())
@@ -42071,7 +42071,7 @@ func New_TL_messages_sendEncrypted() *TL_messages_sendEncrypted {
 }
 
 func (t *TL_messages_sendEncrypted) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendEncrypted))
 	ec.TLObject(t.Get_peer())
@@ -42142,7 +42142,7 @@ func New_TL_messages_sendEncryptedFile() *TL_messages_sendEncryptedFile {
 }
 
 func (t *TL_messages_sendEncryptedFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendEncryptedFile))
 	ec.TLObject(t.Get_peer())
@@ -42206,7 +42206,7 @@ func New_TL_messages_sendEncryptedService() *TL_messages_sendEncryptedService {
 }
 
 func (t *TL_messages_sendEncryptedService) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendEncryptedService))
 	ec.TLObject(t.Get_peer())
@@ -42250,7 +42250,7 @@ func New_TL_messages_receivedQueue() *TL_messages_receivedQueue {
 }
 
 func (t *TL_messages_receivedQueue) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_receivedQueue))
 	ec.Int(t.Get_max_qts())
@@ -42290,7 +42290,7 @@ func New_TL_messages_reportEncryptedSpam() *TL_messages_reportEncryptedSpam {
 }
 
 func (t *TL_messages_reportEncryptedSpam) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reportEncryptedSpam))
 	ec.TLObject(t.Get_peer())
@@ -42330,7 +42330,7 @@ func New_TL_messages_readMessageContents() *TL_messages_readMessageContents {
 }
 
 func (t *TL_messages_readMessageContents) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_readMessageContents))
 	ec.VectorInt(t.Get_id())
@@ -42370,7 +42370,7 @@ func New_TL_messages_getAllStickers() *TL_messages_getAllStickers {
 }
 
 func (t *TL_messages_getAllStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getAllStickers))
 	ec.Int(t.Get_hash())
@@ -42410,7 +42410,7 @@ func New_TL_messages_getWebPagePreview() *TL_messages_getWebPagePreview {
 }
 
 func (t *TL_messages_getWebPagePreview) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getWebPagePreview))
 	ec.String(t.Get_message())
@@ -42450,7 +42450,7 @@ func New_TL_messages_exportChatInvite() *TL_messages_exportChatInvite {
 }
 
 func (t *TL_messages_exportChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_exportChatInvite))
 	ec.Int(t.Get_chat_id())
@@ -42490,7 +42490,7 @@ func New_TL_messages_checkChatInvite() *TL_messages_checkChatInvite {
 }
 
 func (t *TL_messages_checkChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_checkChatInvite))
 	ec.String(t.Get_hash())
@@ -42530,7 +42530,7 @@ func New_TL_messages_importChatInvite() *TL_messages_importChatInvite {
 }
 
 func (t *TL_messages_importChatInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_importChatInvite))
 	ec.String(t.Get_hash())
@@ -42570,7 +42570,7 @@ func New_TL_messages_getStickerSet() *TL_messages_getStickerSet {
 }
 
 func (t *TL_messages_getStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getStickerSet))
 	ec.TLObject(t.Get_stickerset())
@@ -42619,7 +42619,7 @@ func New_TL_messages_installStickerSet() *TL_messages_installStickerSet {
 }
 
 func (t *TL_messages_installStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_installStickerSet))
 	ec.TLObject(t.Get_stickerset())
@@ -42661,7 +42661,7 @@ func New_TL_messages_uninstallStickerSet() *TL_messages_uninstallStickerSet {
 }
 
 func (t *TL_messages_uninstallStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_uninstallStickerSet))
 	ec.TLObject(t.Get_stickerset())
@@ -42728,7 +42728,7 @@ func New_TL_messages_startBot() *TL_messages_startBot {
 }
 
 func (t *TL_messages_startBot) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_startBot))
 	ec.TLObject(t.Get_bot())
@@ -42792,7 +42792,7 @@ func New_TL_messages_getMessagesViews() *TL_messages_getMessagesViews {
 }
 
 func (t *TL_messages_getMessagesViews) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getMessagesViews))
 	ec.TLObject(t.Get_peer())
@@ -42845,7 +42845,7 @@ func New_TL_messages_toggleChatAdmins() *TL_messages_toggleChatAdmins {
 }
 
 func (t *TL_messages_toggleChatAdmins) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_toggleChatAdmins))
 	ec.Int(t.Get_chat_id())
@@ -42905,7 +42905,7 @@ func New_TL_messages_editChatAdmin() *TL_messages_editChatAdmin {
 }
 
 func (t *TL_messages_editChatAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editChatAdmin))
 	ec.Int(t.Get_chat_id())
@@ -42949,7 +42949,7 @@ func New_TL_messages_migrateChat() *TL_messages_migrateChat {
 }
 
 func (t *TL_messages_migrateChat) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_migrateChat))
 	ec.Int(t.Get_chat_id())
@@ -43025,7 +43025,7 @@ func New_TL_messages_searchGlobal() *TL_messages_searchGlobal {
 }
 
 func (t *TL_messages_searchGlobal) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_searchGlobal))
 	ec.String(t.Get_q())
@@ -43091,7 +43091,7 @@ func New_TL_messages_reorderStickerSets() *TL_messages_reorderStickerSets {
 }
 
 func (t *TL_messages_reorderStickerSets) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reorderStickerSets))
 	ec.TLObject(t.Get_masks())
@@ -43151,7 +43151,7 @@ func New_TL_messages_getDocumentByHash() *TL_messages_getDocumentByHash {
 }
 
 func (t *TL_messages_getDocumentByHash) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getDocumentByHash))
 	ec.TLObject(t.Get_sha256())
@@ -43204,7 +43204,7 @@ func New_TL_messages_searchGifs() *TL_messages_searchGifs {
 }
 
 func (t *TL_messages_searchGifs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_searchGifs))
 	ec.String(t.Get_q())
@@ -43246,7 +43246,7 @@ func New_TL_messages_getSavedGifs() *TL_messages_getSavedGifs {
 }
 
 func (t *TL_messages_getSavedGifs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getSavedGifs))
 	ec.Int(t.Get_hash())
@@ -43295,7 +43295,7 @@ func New_TL_messages_saveGif() *TL_messages_saveGif {
 }
 
 func (t *TL_messages_saveGif) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_saveGif))
 	ec.TLObject(t.Get_id())
@@ -43382,7 +43382,7 @@ func New_TL_messages_getInlineBotResults() *TL_messages_getInlineBotResults {
 }
 
 func (t *TL_messages_getInlineBotResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getInlineBotResults))
 	ec.TLObject(t.Get_bot())
@@ -43493,7 +43493,7 @@ func New_TL_messages_setInlineBotResults() *TL_messages_setInlineBotResults {
 }
 
 func (t *TL_messages_setInlineBotResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setInlineBotResults))
 	ec.TLObject(t.Get_gallery())
@@ -43617,7 +43617,7 @@ func New_TL_messages_sendInlineBotResult() *TL_messages_sendInlineBotResult {
 }
 
 func (t *TL_messages_sendInlineBotResult) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendInlineBotResult))
 	ec.TLObject(t.Get_silent())
@@ -43680,7 +43680,7 @@ func New_TL_messages_getMessageEditData() *TL_messages_getMessageEditData {
 }
 
 func (t *TL_messages_getMessageEditData) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getMessageEditData))
 	ec.TLObject(t.Get_peer())
@@ -43794,7 +43794,7 @@ func New_TL_messages_editMessage() *TL_messages_editMessage {
 }
 
 func (t *TL_messages_editMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editMessage))
 	ec.TLObject(t.Get_no_webpage())
@@ -43911,7 +43911,7 @@ func New_TL_messages_editInlineBotMessage() *TL_messages_editInlineBotMessage {
 }
 
 func (t *TL_messages_editInlineBotMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editInlineBotMessage))
 	ec.TLObject(t.Get_no_webpage())
@@ -43999,7 +43999,7 @@ func New_TL_messages_getBotCallbackAnswer() *TL_messages_getBotCallbackAnswer {
 }
 
 func (t *TL_messages_getBotCallbackAnswer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getBotCallbackAnswer))
 	ec.TLObject(t.Get_game())
@@ -44090,7 +44090,7 @@ func New_TL_messages_setBotCallbackAnswer() *TL_messages_setBotCallbackAnswer {
 }
 
 func (t *TL_messages_setBotCallbackAnswer) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotCallbackAnswer))
 	ec.TLObject(t.Get_alert())
@@ -44138,7 +44138,7 @@ func New_TL_messages_getPeerDialogs() *TL_messages_getPeerDialogs {
 }
 
 func (t *TL_messages_getPeerDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getPeerDialogs))
 	ec.Vector(t.Get_peers())
@@ -44223,7 +44223,7 @@ func New_TL_messages_saveDraft() *TL_messages_saveDraft {
 }
 
 func (t *TL_messages_saveDraft) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_saveDraft))
 	ec.TLObject(t.Get_no_webpage())
@@ -44262,7 +44262,7 @@ func New_TL_messages_getAllDrafts() *TL_messages_getAllDrafts {
 }
 
 func (t *TL_messages_getAllDrafts) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getAllDrafts))
 
@@ -44298,7 +44298,7 @@ func New_TL_messages_getFeaturedStickers() *TL_messages_getFeaturedStickers {
 }
 
 func (t *TL_messages_getFeaturedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getFeaturedStickers))
 	ec.Int(t.Get_hash())
@@ -44338,7 +44338,7 @@ func New_TL_messages_readFeaturedStickers() *TL_messages_readFeaturedStickers {
 }
 
 func (t *TL_messages_readFeaturedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_readFeaturedStickers))
 	ec.VectorLong(t.Get_id())
@@ -44396,7 +44396,7 @@ func New_TL_messages_getRecentStickers() *TL_messages_getRecentStickers {
 }
 
 func (t *TL_messages_getRecentStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getRecentStickers))
 	ec.TLObject(t.Get_attached())
@@ -44465,7 +44465,7 @@ func New_TL_messages_saveRecentSticker() *TL_messages_saveRecentSticker {
 }
 
 func (t *TL_messages_saveRecentSticker) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_saveRecentSticker))
 	ec.TLObject(t.Get_attached())
@@ -44518,7 +44518,7 @@ func New_TL_messages_clearRecentStickers() *TL_messages_clearRecentStickers {
 }
 
 func (t *TL_messages_clearRecentStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_clearRecentStickers))
 	ec.TLObject(t.Get_attached())
@@ -44585,7 +44585,7 @@ func New_TL_messages_getArchivedStickers() *TL_messages_getArchivedStickers {
 }
 
 func (t *TL_messages_getArchivedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getArchivedStickers))
 	ec.TLObject(t.Get_masks())
@@ -44629,7 +44629,7 @@ func New_TL_messages_getMaskStickers() *TL_messages_getMaskStickers {
 }
 
 func (t *TL_messages_getMaskStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getMaskStickers))
 	ec.Int(t.Get_hash())
@@ -44669,7 +44669,7 @@ func New_TL_messages_getAttachedStickers() *TL_messages_getAttachedStickers {
 }
 
 func (t *TL_messages_getAttachedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getAttachedStickers))
 	ec.TLObject(t.Get_media())
@@ -44763,7 +44763,7 @@ func New_TL_messages_setGameScore() *TL_messages_setGameScore {
 }
 
 func (t *TL_messages_setGameScore) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setGameScore))
 	ec.TLObject(t.Get_edit_message())
@@ -44858,7 +44858,7 @@ func New_TL_messages_setInlineGameScore() *TL_messages_setInlineGameScore {
 }
 
 func (t *TL_messages_setInlineGameScore) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setInlineGameScore))
 	ec.TLObject(t.Get_edit_message())
@@ -44924,7 +44924,7 @@ func New_TL_messages_getGameHighScores() *TL_messages_getGameHighScores {
 }
 
 func (t *TL_messages_getGameHighScores) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getGameHighScores))
 	ec.TLObject(t.Get_peer())
@@ -44977,7 +44977,7 @@ func New_TL_messages_getInlineGameHighScores() *TL_messages_getInlineGameHighSco
 }
 
 func (t *TL_messages_getInlineGameHighScores) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getInlineGameHighScores))
 	ec.TLObject(t.Get_id())
@@ -45037,7 +45037,7 @@ func New_TL_messages_getCommonChats() *TL_messages_getCommonChats {
 }
 
 func (t *TL_messages_getCommonChats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getCommonChats))
 	ec.TLObject(t.Get_user_id())
@@ -45081,7 +45081,7 @@ func New_TL_messages_getAllChats() *TL_messages_getAllChats {
 }
 
 func (t *TL_messages_getAllChats) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getAllChats))
 	ec.VectorInt(t.Get_except_ids())
@@ -45130,7 +45130,7 @@ func New_TL_messages_getWebPage() *TL_messages_getWebPage {
 }
 
 func (t *TL_messages_getWebPage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getWebPage))
 	ec.String(t.Get_url())
@@ -45190,7 +45190,7 @@ func New_TL_messages_toggleDialogPin() *TL_messages_toggleDialogPin {
 }
 
 func (t *TL_messages_toggleDialogPin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_toggleDialogPin))
 	ec.TLObject(t.Get_pinned())
@@ -45250,7 +45250,7 @@ func New_TL_messages_reorderPinnedDialogs() *TL_messages_reorderPinnedDialogs {
 }
 
 func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reorderPinnedDialogs))
 	ec.TLObject(t.Get_force())
@@ -45283,7 +45283,7 @@ func New_TL_messages_getPinnedDialogs() *TL_messages_getPinnedDialogs {
 }
 
 func (t *TL_messages_getPinnedDialogs) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getPinnedDialogs))
 
@@ -45346,7 +45346,7 @@ func New_TL_messages_setBotShippingResults() *TL_messages_setBotShippingResults 
 }
 
 func (t *TL_messages_setBotShippingResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotShippingResults))
 	ec.Long(t.Get_query_id())
@@ -45417,7 +45417,7 @@ func New_TL_messages_setBotPrecheckoutResults() *TL_messages_setBotPrecheckoutRe
 }
 
 func (t *TL_messages_setBotPrecheckoutResults) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotPrecheckoutResults))
 	ec.TLObject(t.Get_success())
@@ -45470,7 +45470,7 @@ func New_TL_messages_uploadMedia() *TL_messages_uploadMedia {
 }
 
 func (t *TL_messages_uploadMedia) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_uploadMedia))
 	ec.TLObject(t.Get_peer())
@@ -45530,7 +45530,7 @@ func New_TL_messages_sendScreenshotNotification() *TL_messages_sendScreenshotNot
 }
 
 func (t *TL_messages_sendScreenshotNotification) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendScreenshotNotification))
 	ec.TLObject(t.Get_peer())
@@ -45574,7 +45574,7 @@ func New_TL_messages_getFavedStickers() *TL_messages_getFavedStickers {
 }
 
 func (t *TL_messages_getFavedStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getFavedStickers))
 	ec.Int(t.Get_hash())
@@ -45623,7 +45623,7 @@ func New_TL_messages_faveSticker() *TL_messages_faveSticker {
 }
 
 func (t *TL_messages_faveSticker) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_faveSticker))
 	ec.TLObject(t.Get_id())
@@ -45710,7 +45710,7 @@ func New_TL_messages_getUnreadMentions() *TL_messages_getUnreadMentions {
 }
 
 func (t *TL_messages_getUnreadMentions) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getUnreadMentions))
 	ec.TLObject(t.Get_peer())
@@ -45760,7 +45760,7 @@ func New_TL_messages_readMentions() *TL_messages_readMentions {
 }
 
 func (t *TL_messages_readMentions) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_readMentions))
 	ec.TLObject(t.Get_peer())
@@ -45809,7 +45809,7 @@ func New_TL_messages_getRecentLocations() *TL_messages_getRecentLocations {
 }
 
 func (t *TL_messages_getRecentLocations) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getRecentLocations))
 	ec.TLObject(t.Get_peer())
@@ -45905,7 +45905,7 @@ func New_TL_messages_sendMultiMedia() *TL_messages_sendMultiMedia {
 }
 
 func (t *TL_messages_sendMultiMedia) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMultiMedia))
 	ec.TLObject(t.Get_silent())
@@ -45964,7 +45964,7 @@ func New_TL_messages_uploadEncryptedFile() *TL_messages_uploadEncryptedFile {
 }
 
 func (t *TL_messages_uploadEncryptedFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_uploadEncryptedFile))
 	ec.TLObject(t.Get_peer())
@@ -45997,7 +45997,7 @@ func New_TL_updates_getState() *TL_updates_getState {
 }
 
 func (t *TL_updates_getState) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_getState))
 
@@ -46069,7 +46069,7 @@ func New_TL_updates_getDifference() *TL_updates_getDifference {
 }
 
 func (t *TL_updates_getDifference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_getDifference))
 	ec.Int(t.Get_pts())
@@ -46160,7 +46160,7 @@ func New_TL_updates_getChannelDifference() *TL_updates_getChannelDifference {
 }
 
 func (t *TL_updates_getChannelDifference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_getChannelDifference))
 	ec.TLObject(t.Get_force())
@@ -46208,7 +46208,7 @@ func New_TL_photos_updateProfilePhoto() *TL_photos_updateProfilePhoto {
 }
 
 func (t *TL_photos_updateProfilePhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_updateProfilePhoto))
 	ec.TLObject(t.Get_id())
@@ -46248,7 +46248,7 @@ func New_TL_photos_uploadProfilePhoto() *TL_photos_uploadProfilePhoto {
 }
 
 func (t *TL_photos_uploadProfilePhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_uploadProfilePhoto))
 	ec.TLObject(t.Get_file())
@@ -46288,7 +46288,7 @@ func New_TL_photos_deletePhotos() *TL_photos_deletePhotos {
 }
 
 func (t *TL_photos_deletePhotos) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_deletePhotos))
 	ec.Vector(t.Get_id())
@@ -46355,7 +46355,7 @@ func New_TL_photos_getUserPhotos() *TL_photos_getUserPhotos {
 }
 
 func (t *TL_photos_getUserPhotos) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photos_getUserPhotos))
 	ec.TLObject(t.Get_user_id())
@@ -46419,7 +46419,7 @@ func New_TL_upload_saveFilePart() *TL_upload_saveFilePart {
 }
 
 func (t *TL_upload_saveFilePart) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_saveFilePart))
 	ec.Long(t.Get_file_id())
@@ -46481,7 +46481,7 @@ func New_TL_upload_getFile() *TL_upload_getFile {
 }
 
 func (t *TL_upload_getFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_getFile))
 	ec.TLObject(t.Get_location())
@@ -46552,7 +46552,7 @@ func New_TL_upload_saveBigFilePart() *TL_upload_saveBigFilePart {
 }
 
 func (t *TL_upload_saveBigFilePart) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_saveBigFilePart))
 	ec.Long(t.Get_file_id())
@@ -46616,7 +46616,7 @@ func New_TL_upload_getWebFile() *TL_upload_getWebFile {
 }
 
 func (t *TL_upload_getWebFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_getWebFile))
 	ec.TLObject(t.Get_location())
@@ -46678,7 +46678,7 @@ func New_TL_upload_getCdnFile() *TL_upload_getCdnFile {
 }
 
 func (t *TL_upload_getCdnFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_getCdnFile))
 	ec.TLObject(t.Get_file_token())
@@ -46731,7 +46731,7 @@ func New_TL_upload_reuploadCdnFile() *TL_upload_reuploadCdnFile {
 }
 
 func (t *TL_upload_reuploadCdnFile) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_reuploadCdnFile))
 	ec.TLObject(t.Get_file_token())
@@ -46782,7 +46782,7 @@ func New_TL_upload_getCdnFileHashes() *TL_upload_getCdnFileHashes {
 }
 
 func (t *TL_upload_getCdnFileHashes) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_upload_getCdnFileHashes))
 	ec.TLObject(t.Get_file_token())
@@ -46815,7 +46815,7 @@ func New_TL_help_getConfig() *TL_help_getConfig {
 }
 
 func (t *TL_help_getConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getConfig))
 
@@ -46842,7 +46842,7 @@ func New_TL_help_getNearestDc() *TL_help_getNearestDc {
 }
 
 func (t *TL_help_getNearestDc) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getNearestDc))
 
@@ -46869,7 +46869,7 @@ func New_TL_help_getAppUpdate() *TL_help_getAppUpdate {
 }
 
 func (t *TL_help_getAppUpdate) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getAppUpdate))
 
@@ -46905,7 +46905,7 @@ func New_TL_help_saveAppLog() *TL_help_saveAppLog {
 }
 
 func (t *TL_help_saveAppLog) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_saveAppLog))
 	ec.Vector(t.Get_events())
@@ -46936,7 +46936,7 @@ func New_TL_help_getInviteText() *TL_help_getInviteText {
 }
 
 func (t *TL_help_getInviteText) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getInviteText))
 
@@ -46963,7 +46963,7 @@ func New_TL_help_getSupport() *TL_help_getSupport {
 }
 
 func (t *TL_help_getSupport) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getSupport))
 
@@ -46999,7 +46999,7 @@ func New_TL_help_getAppChangelog() *TL_help_getAppChangelog {
 }
 
 func (t *TL_help_getAppChangelog) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getAppChangelog))
 	ec.String(t.Get_prev_app_version())
@@ -47030,7 +47030,7 @@ func New_TL_help_getTermsOfService() *TL_help_getTermsOfService {
 }
 
 func (t *TL_help_getTermsOfService) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getTermsOfService))
 
@@ -47075,7 +47075,7 @@ func New_TL_help_setBotUpdatesStatus() *TL_help_setBotUpdatesStatus {
 }
 
 func (t *TL_help_setBotUpdatesStatus) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_setBotUpdatesStatus))
 	ec.Int(t.Get_pending_updates_count())
@@ -47108,7 +47108,7 @@ func New_TL_help_getCdnConfig() *TL_help_getCdnConfig {
 }
 
 func (t *TL_help_getCdnConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getCdnConfig))
 
@@ -47144,7 +47144,7 @@ func New_TL_help_getRecentMeUrls() *TL_help_getRecentMeUrls {
 }
 
 func (t *TL_help_getRecentMeUrls) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_help_getRecentMeUrls))
 	ec.String(t.Get_referer())
@@ -47193,7 +47193,7 @@ func New_TL_channels_readHistory() *TL_channels_readHistory {
 }
 
 func (t *TL_channels_readHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_readHistory))
 	ec.TLObject(t.Get_channel())
@@ -47244,7 +47244,7 @@ func New_TL_channels_deleteMessages() *TL_channels_deleteMessages {
 }
 
 func (t *TL_channels_deleteMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_deleteMessages))
 	ec.TLObject(t.Get_channel())
@@ -47295,7 +47295,7 @@ func New_TL_channels_deleteUserHistory() *TL_channels_deleteUserHistory {
 }
 
 func (t *TL_channels_deleteUserHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_deleteUserHistory))
 	ec.TLObject(t.Get_channel())
@@ -47355,7 +47355,7 @@ func New_TL_channels_reportSpam() *TL_channels_reportSpam {
 }
 
 func (t *TL_channels_reportSpam) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_reportSpam))
 	ec.TLObject(t.Get_channel())
@@ -47408,7 +47408,7 @@ func New_TL_channels_getMessages() *TL_channels_getMessages {
 }
 
 func (t *TL_channels_getMessages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getMessages))
 	ec.TLObject(t.Get_channel())
@@ -47486,7 +47486,7 @@ func New_TL_channels_getParticipants() *TL_channels_getParticipants {
 }
 
 func (t *TL_channels_getParticipants) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getParticipants))
 	ec.TLObject(t.Get_channel())
@@ -47543,7 +47543,7 @@ func New_TL_channels_getParticipant() *TL_channels_getParticipant {
 }
 
 func (t *TL_channels_getParticipant) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getParticipant))
 	ec.TLObject(t.Get_channel())
@@ -47585,7 +47585,7 @@ func New_TL_channels_getChannels() *TL_channels_getChannels {
 }
 
 func (t *TL_channels_getChannels) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getChannels))
 	ec.Vector(t.Get_id())
@@ -47625,7 +47625,7 @@ func New_TL_channels_getFullChannel() *TL_channels_getFullChannel {
 }
 
 func (t *TL_channels_getFullChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getFullChannel))
 	ec.TLObject(t.Get_channel())
@@ -47701,7 +47701,7 @@ func New_TL_channels_createChannel() *TL_channels_createChannel {
 }
 
 func (t *TL_channels_createChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_createChannel))
 	ec.TLObject(t.Get_broadcast())
@@ -47756,7 +47756,7 @@ func New_TL_channels_editAbout() *TL_channels_editAbout {
 }
 
 func (t *TL_channels_editAbout) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_editAbout))
 	ec.TLObject(t.Get_channel())
@@ -47816,7 +47816,7 @@ func New_TL_channels_editAdmin() *TL_channels_editAdmin {
 }
 
 func (t *TL_channels_editAdmin) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_editAdmin))
 	ec.TLObject(t.Get_channel())
@@ -47869,7 +47869,7 @@ func New_TL_channels_editTitle() *TL_channels_editTitle {
 }
 
 func (t *TL_channels_editTitle) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_editTitle))
 	ec.TLObject(t.Get_channel())
@@ -47920,7 +47920,7 @@ func New_TL_channels_editPhoto() *TL_channels_editPhoto {
 }
 
 func (t *TL_channels_editPhoto) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_editPhoto))
 	ec.TLObject(t.Get_channel())
@@ -47971,7 +47971,7 @@ func New_TL_channels_checkUsername() *TL_channels_checkUsername {
 }
 
 func (t *TL_channels_checkUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_checkUsername))
 	ec.TLObject(t.Get_channel())
@@ -48022,7 +48022,7 @@ func New_TL_channels_updateUsername() *TL_channels_updateUsername {
 }
 
 func (t *TL_channels_updateUsername) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_updateUsername))
 	ec.TLObject(t.Get_channel())
@@ -48064,7 +48064,7 @@ func New_TL_channels_joinChannel() *TL_channels_joinChannel {
 }
 
 func (t *TL_channels_joinChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_joinChannel))
 	ec.TLObject(t.Get_channel())
@@ -48104,7 +48104,7 @@ func New_TL_channels_leaveChannel() *TL_channels_leaveChannel {
 }
 
 func (t *TL_channels_leaveChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_leaveChannel))
 	ec.TLObject(t.Get_channel())
@@ -48153,7 +48153,7 @@ func New_TL_channels_inviteToChannel() *TL_channels_inviteToChannel {
 }
 
 func (t *TL_channels_inviteToChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_inviteToChannel))
 	ec.TLObject(t.Get_channel())
@@ -48195,7 +48195,7 @@ func New_TL_channels_exportInvite() *TL_channels_exportInvite {
 }
 
 func (t *TL_channels_exportInvite) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_exportInvite))
 	ec.TLObject(t.Get_channel())
@@ -48235,7 +48235,7 @@ func New_TL_channels_deleteChannel() *TL_channels_deleteChannel {
 }
 
 func (t *TL_channels_deleteChannel) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_deleteChannel))
 	ec.TLObject(t.Get_channel())
@@ -48284,7 +48284,7 @@ func New_TL_channels_toggleInvites() *TL_channels_toggleInvites {
 }
 
 func (t *TL_channels_toggleInvites) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_toggleInvites))
 	ec.TLObject(t.Get_channel())
@@ -48335,7 +48335,7 @@ func New_TL_channels_exportMessageLink() *TL_channels_exportMessageLink {
 }
 
 func (t *TL_channels_exportMessageLink) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_exportMessageLink))
 	ec.TLObject(t.Get_channel())
@@ -48386,7 +48386,7 @@ func New_TL_channels_toggleSignatures() *TL_channels_toggleSignatures {
 }
 
 func (t *TL_channels_toggleSignatures) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_toggleSignatures))
 	ec.TLObject(t.Get_channel())
@@ -48455,7 +48455,7 @@ func New_TL_channels_updatePinnedMessage() *TL_channels_updatePinnedMessage {
 }
 
 func (t *TL_channels_updatePinnedMessage) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_updatePinnedMessage))
 	ec.TLObject(t.Get_silent())
@@ -48490,7 +48490,7 @@ func New_TL_channels_getAdminedPublicChannels() *TL_channels_getAdminedPublicCha
 }
 
 func (t *TL_channels_getAdminedPublicChannels) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getAdminedPublicChannels))
 
@@ -48544,7 +48544,7 @@ func New_TL_channels_editBanned() *TL_channels_editBanned {
 }
 
 func (t *TL_channels_editBanned) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_editBanned))
 	ec.TLObject(t.Get_channel())
@@ -48651,7 +48651,7 @@ func New_TL_channels_getAdminLog() *TL_channels_getAdminLog {
 }
 
 func (t *TL_channels_getAdminLog) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getAdminLog))
 	ec.TLObject(t.Get_channel())
@@ -48712,7 +48712,7 @@ func New_TL_channels_setStickers() *TL_channels_setStickers {
 }
 
 func (t *TL_channels_setStickers) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_setStickers))
 	ec.TLObject(t.Get_channel())
@@ -48763,7 +48763,7 @@ func New_TL_channels_readMessageContents() *TL_channels_readMessageContents {
 }
 
 func (t *TL_channels_readMessageContents) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_readMessageContents))
 	ec.TLObject(t.Get_channel())
@@ -48814,7 +48814,7 @@ func New_TL_channels_deleteHistory() *TL_channels_deleteHistory {
 }
 
 func (t *TL_channels_deleteHistory) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_deleteHistory))
 	ec.TLObject(t.Get_channel())
@@ -48865,7 +48865,7 @@ func New_TL_channels_togglePreHistoryHidden() *TL_channels_togglePreHistoryHidde
 }
 
 func (t *TL_channels_togglePreHistoryHidden) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_togglePreHistoryHidden))
 	ec.TLObject(t.Get_channel())
@@ -48916,7 +48916,7 @@ func New_TL_bots_sendCustomRequest() *TL_bots_sendCustomRequest {
 }
 
 func (t *TL_bots_sendCustomRequest) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_bots_sendCustomRequest))
 	ec.String(t.Get_custom_method())
@@ -48967,7 +48967,7 @@ func New_TL_bots_answerWebhookJSONQuery() *TL_bots_answerWebhookJSONQuery {
 }
 
 func (t *TL_bots_answerWebhookJSONQuery) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_bots_answerWebhookJSONQuery))
 	ec.Long(t.Get_query_id())
@@ -49009,7 +49009,7 @@ func New_TL_payments_getPaymentForm() *TL_payments_getPaymentForm {
 }
 
 func (t *TL_payments_getPaymentForm) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_getPaymentForm))
 	ec.Int(t.Get_msg_id())
@@ -49049,7 +49049,7 @@ func New_TL_payments_getPaymentReceipt() *TL_payments_getPaymentReceipt {
 }
 
 func (t *TL_payments_getPaymentReceipt) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_getPaymentReceipt))
 	ec.Int(t.Get_msg_id())
@@ -49116,7 +49116,7 @@ func New_TL_payments_validateRequestedInfo() *TL_payments_validateRequestedInfo 
 }
 
 func (t *TL_payments_validateRequestedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_validateRequestedInfo))
 	ec.TLObject(t.Get_save())
@@ -49196,7 +49196,7 @@ func New_TL_payments_sendPaymentForm() *TL_payments_sendPaymentForm {
 }
 
 func (t *TL_payments_sendPaymentForm) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_sendPaymentForm))
 	ec.Int(t.Get_msg_id())
@@ -49233,7 +49233,7 @@ func New_TL_payments_getSavedInfo() *TL_payments_getSavedInfo {
 }
 
 func (t *TL_payments_getSavedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_getSavedInfo))
 
@@ -49287,7 +49287,7 @@ func New_TL_payments_clearSavedInfo() *TL_payments_clearSavedInfo {
 }
 
 func (t *TL_payments_clearSavedInfo) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_clearSavedInfo))
 	ec.TLObject(t.Get_credentials())
@@ -49374,7 +49374,7 @@ func New_TL_stickers_createStickerSet() *TL_stickers_createStickerSet {
 }
 
 func (t *TL_stickers_createStickerSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickers_createStickerSet))
 	ec.TLObject(t.Get_masks())
@@ -49422,7 +49422,7 @@ func New_TL_stickers_removeStickerFromSet() *TL_stickers_removeStickerFromSet {
 }
 
 func (t *TL_stickers_removeStickerFromSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickers_removeStickerFromSet))
 	ec.TLObject(t.Get_sticker())
@@ -49471,7 +49471,7 @@ func New_TL_stickers_changeStickerPosition() *TL_stickers_changeStickerPosition 
 }
 
 func (t *TL_stickers_changeStickerPosition) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickers_changeStickerPosition))
 	ec.TLObject(t.Get_sticker())
@@ -49522,7 +49522,7 @@ func New_TL_stickers_addStickerToSet() *TL_stickers_addStickerToSet {
 }
 
 func (t *TL_stickers_addStickerToSet) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickers_addStickerToSet))
 	ec.TLObject(t.Get_stickerset())
@@ -49555,7 +49555,7 @@ func New_TL_phone_getCallConfig() *TL_phone_getCallConfig {
 }
 
 func (t *TL_phone_getCallConfig) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_getCallConfig))
 
@@ -49618,7 +49618,7 @@ func New_TL_phone_requestCall() *TL_phone_requestCall {
 }
 
 func (t *TL_phone_requestCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_requestCall))
 	ec.TLObject(t.Get_user_id())
@@ -49682,7 +49682,7 @@ func New_TL_phone_acceptCall() *TL_phone_acceptCall {
 }
 
 func (t *TL_phone_acceptCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_acceptCall))
 	ec.TLObject(t.Get_peer())
@@ -49753,7 +49753,7 @@ func New_TL_phone_confirmCall() *TL_phone_confirmCall {
 }
 
 func (t *TL_phone_confirmCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_confirmCall))
 	ec.TLObject(t.Get_peer())
@@ -49799,7 +49799,7 @@ func New_TL_phone_receivedCall() *TL_phone_receivedCall {
 }
 
 func (t *TL_phone_receivedCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_receivedCall))
 	ec.TLObject(t.Get_peer())
@@ -49866,7 +49866,7 @@ func New_TL_phone_discardCall() *TL_phone_discardCall {
 }
 
 func (t *TL_phone_discardCall) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_discardCall))
 	ec.TLObject(t.Get_peer())
@@ -49930,7 +49930,7 @@ func New_TL_phone_setCallRating() *TL_phone_setCallRating {
 }
 
 func (t *TL_phone_setCallRating) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_setCallRating))
 	ec.TLObject(t.Get_peer())
@@ -49983,7 +49983,7 @@ func New_TL_phone_saveCallDebug() *TL_phone_saveCallDebug {
 }
 
 func (t *TL_phone_saveCallDebug) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phone_saveCallDebug))
 	ec.TLObject(t.Get_peer())
@@ -50025,7 +50025,7 @@ func New_TL_langpack_getLangPack() *TL_langpack_getLangPack {
 }
 
 func (t *TL_langpack_getLangPack) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langpack_getLangPack))
 	ec.String(t.Get_lang_code())
@@ -50074,7 +50074,7 @@ func New_TL_langpack_getStrings() *TL_langpack_getStrings {
 }
 
 func (t *TL_langpack_getStrings) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langpack_getStrings))
 	ec.String(t.Get_lang_code())
@@ -50116,7 +50116,7 @@ func New_TL_langpack_getDifference() *TL_langpack_getDifference {
 }
 
 func (t *TL_langpack_getDifference) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langpack_getDifference))
 	ec.Int(t.Get_from_version())
@@ -50147,7 +50147,7 @@ func New_TL_langpack_getLanguages() *TL_langpack_getLanguages {
 }
 
 func (t *TL_langpack_getLanguages) Encode() []byte {
-	ec := NewMTPEncodeBuffer()
+	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langpack_getLanguages))
 

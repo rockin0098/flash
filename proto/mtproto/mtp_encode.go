@@ -10,8 +10,8 @@ type MTPEncodeBuffer struct {
 	buffer []byte
 }
 
-func NewMTPEncodeBuffer() *MTPEncodeBuffer {
-	return &MTPEncodeBuffer{buffer: make([]byte, 0)}
+func NewMTPEncodeBuffer(cap int) *MTPEncodeBuffer {
+	return &MTPEncodeBuffer{buffer: make([]byte, 0, cap)}
 }
 
 func (e *MTPEncodeBuffer) GetBuffer() []byte {
