@@ -17,28 +17,28 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
 
 	if raw.AuthKeyID == 0 { // 未加密的消息, 握手协商消息
-		unencryptedMessage := &mtproto.UnencryptedMessage{}
-		err := unencryptedMessage.Decode(raw.Payload[8:])
+		reqmsg := &mtproto.UnencryptedMessage{}
+		err := reqmsg.Decode(raw.Payload[8:])
 		if err != nil {
 			Log.Error(err)
 			return nil, err
 		}
 
-		res, err := s.MTProtoUnencryptedMessageProcess(sess, unencryptedMessage)
+		res, err := s.MTProtoUnencryptedMessageProcess(sess, reqmsg)
 		if err != nil {
 			Log.Error(err)
 			return nil, err
 		}
 
-		unencryptedMessage2 := &mtproto.UnencryptedMessage{
+		respmsg := &mtproto.UnencryptedMessage{
 			TLObject: res.(mtproto.TLObject),
 		}
 
-		resPlayload := unencryptedMessage2.Encode()
+		resPayload := respmsg.Encode()
 
-		Log.Infof("resp payload = %v", hex.EncodeToString(resPlayload))
+		Log.Debugf("resp payload = %v", hex.EncodeToString(resPayload))
 
-		return resPlayload, nil
+		return resPayload, nil
 
 	} else { // 加密消息
 
@@ -63,6 +63,8 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 	switch tl := tlobj.(type) {
 	case *mtproto.TL_req_pq:
 		res, err = s.TL_req_pq_Process(sess, tl)
+	case *mtproto.TL_req_DH_params:
+		res, err = s.TL_req_DH_params_Process(sess, tl)
 	default:
 		Log.Debugf("havent implemented yet, type = %v", mtproto.TL_CLASS_NAME[tl.ClassID()])
 	}

@@ -52,7 +52,6 @@ func (m *UnencryptedMessage) Encode() []byte {
 	x := NewMTPEncodeBuffer(512)
 	x.Long(0)
 	m.MessageID = GenerateMessageID()
-	// m.MessageID = 6609242482192799577
 	x.Long(m.MessageID)
 
 	if m.TLObject == nil {

@@ -229,7 +229,7 @@ func (s *MTProto) Read() error {
 	d.Encrypt(b_4_60)
 
 	if b_4_60[52] != 0xef && b_4_60[53] != 0xef && b_4_60[54] != 0xef && b_4_60[55] != 0xef {
-		Log.Errorf("first 56~59 byte != 0xef")
+		Log.Errorf("first 56~59 byte != 0xef, remoteaddr = %v", s.remoteAddr)
 		return errors.New("mtproto buf[56:60]'s byte != 0xef!!")
 	}
 

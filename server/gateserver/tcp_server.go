@@ -44,8 +44,8 @@ func (s *TTcpServer) Run() {
 		grm.Go("tcp_handler", func() { s.ConnectionHandler(conn) })
 
 		// for debugging, only allow one connection
-		// ch := make(chan int, 0)
-		// <-ch
+		ch := make(chan int, 0)
+		<-ch
 		// for debugging =====> end
 	}
 }
@@ -54,9 +54,17 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr()
 	localAddr := conn.LocalAddr()
 
-	sess := session.NewSession(conn)
-	MAX_RESP_CHAN_LEN := 4096
+	cm := session.GetConnectionManager()
+	connid := cm.Add(conn)
+	sess := session.NewSession(connid)
+	MAX_RESP_CHAN_LEN := 8192
 	respChan := make(chan interface{}, MAX_RESP_CHAN_LEN)
+	bufReader := bufio.NewReader(conn)
+
+	connClose := func() {
+		conn.Close()
+		cm.Remove(connid)
+	}
 
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
@@ -64,11 +72,11 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 			// for debugging
 			// s.test_read(conn)
 			// for debbuging ===> end
-			mtp := mtproto.NewMTProto(bufio.NewReader(conn), conn, remoteAddr, localAddr, sess.SessionID(), respChan)
+			mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan)
 			err := mtp.Read()
 			if err != nil {
 				Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
-				conn.Close()
+				connClose()
 				return
 			}
 
@@ -77,7 +85,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 				err = process.GateProcess(mtp)
 				if err != nil {
 					Log.Error(err)
-					conn.Close()
+					connClose()
 					return
 				}
 			})
@@ -88,7 +96,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 		for {
 			data := <-respChan
 			if data == nil { // 空数据则不处理
-				Log.Warnf("tcp write nil. sess = %+v", sess)
+				Log.Warnf("tcp will write nil. sess = %+v", sess)
 				continue
 			}
 
@@ -99,7 +107,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 				n, err := conn.Write(databytes)
 				if err != nil {
 					Log.Error(err)
-					conn.Close()
+					connClose()
 					return
 				}
 				left = left - n
