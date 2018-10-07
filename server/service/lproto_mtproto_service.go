@@ -36,7 +36,7 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		resPayload := respmsg.Encode()
 
-		Log.Debugf("resp payload = %v", hex.EncodeToString(resPayload))
+		Log.Debugf("sessid = %v, resp payload = %v", sess.SessionID(), hex.EncodeToString(resPayload))
 
 		return resPayload, nil
 
@@ -65,6 +65,8 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 		res, err = s.TL_req_pq_Process(sess, tl)
 	case *mtproto.TL_req_DH_params:
 		res, err = s.TL_req_DH_params_Process(sess, tl)
+	case *mtproto.TL_set_client_DH_params:
+		res, err = s.TL_set_client_DH_params_Process(sess, tl)
 	default:
 		Log.Debugf("havent implemented yet, type = %v", mtproto.TL_CLASS_NAME[tl.ClassID()])
 	}

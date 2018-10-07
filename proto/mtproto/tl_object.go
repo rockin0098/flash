@@ -3,7 +3,7 @@ package mtproto
 type TLObject interface {
 	ClassID() int32
 	Encode() []byte
-	Decode(b []byte)
+	Decode(b []byte) error
 }
 
 func NewTLObjectByClassID(classID int32) TLObject {

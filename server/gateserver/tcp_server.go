@@ -1,7 +1,6 @@
 package gateserver
 
 import (
-	"encoding/hex"
 	"io"
 	"net"
 
@@ -140,18 +139,4 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 			}
 		}
 	})
-}
-
-func (s *TTcpServer) test_read(conn net.Conn) []byte {
-	b := make([]byte, 512)
-	n, err := conn.Read(b)
-	if err != nil {
-		Log.Error(err)
-		return nil
-	}
-
-	Log.Infof("test_read n : %v", n)
-	Log.Infof("test_read b : %v", hex.EncodeToString(b[:n]))
-
-	return b
 }

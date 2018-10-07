@@ -6,6 +6,10 @@ import (
 	"github.com/rockin0098/flash/base/crypto"
 )
 
+const (
+	SHA_DIGEST_LENGTH = 20
+)
+
 var (
 	// headerRpcMetadata = "auth_key_metadata"
 

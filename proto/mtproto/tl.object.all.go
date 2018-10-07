@@ -63,7 +63,7 @@ func (t *TL_resPQ) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_resPQ) Decode(b []byte) {
+func (t *TL_resPQ) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
@@ -71,6 +71,7 @@ func (t *TL_resPQ) Decode(b []byte) {
 	t.M_pq = dc.String()
 	t.M_server_public_key_fingerprints = dc.VectorLong()
 
+	return dc.err
 }
 
 // p_q_inner_data#83c95aec
@@ -156,7 +157,7 @@ func (t *TL_p_q_inner_data) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_p_q_inner_data) Decode(b []byte) {
+func (t *TL_p_q_inner_data) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pq = dc.String()
@@ -166,6 +167,7 @@ func (t *TL_p_q_inner_data) Decode(b []byte) {
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_new_nonce = dc.Bytes(32)
 
+	return dc.err
 }
 
 // server_DH_params_fail#79cb045d
@@ -221,13 +223,14 @@ func (t *TL_server_DH_params_fail) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_server_DH_params_fail) Decode(b []byte) {
+func (t *TL_server_DH_params_fail) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_new_nonce_hash = dc.Bytes(16)
 
+	return dc.err
 }
 
 // server_DH_params_ok#d0e8075c
@@ -283,13 +286,14 @@ func (t *TL_server_DH_params_ok) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_server_DH_params_ok) Decode(b []byte) {
+func (t *TL_server_DH_params_ok) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_encrypted_answer = dc.String()
 
+	return dc.err
 }
 
 // server_DH_inner_data#b5890dba
@@ -375,7 +379,7 @@ func (t *TL_server_DH_inner_data) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_server_DH_inner_data) Decode(b []byte) {
+func (t *TL_server_DH_inner_data) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
@@ -385,6 +389,7 @@ func (t *TL_server_DH_inner_data) Decode(b []byte) {
 	t.M_g_a = dc.String()
 	t.M_server_time = dc.Int()
 
+	return dc.err
 }
 
 // client_DH_inner_data#6643b654
@@ -450,7 +455,7 @@ func (t *TL_client_DH_inner_data) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_client_DH_inner_data) Decode(b []byte) {
+func (t *TL_client_DH_inner_data) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
@@ -458,6 +463,7 @@ func (t *TL_client_DH_inner_data) Decode(b []byte) {
 	t.M_retry_id = dc.Long()
 	t.M_g_b = dc.String()
 
+	return dc.err
 }
 
 // dh_gen_ok#3bcbf734
@@ -513,13 +519,14 @@ func (t *TL_dh_gen_ok) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dh_gen_ok) Decode(b []byte) {
+func (t *TL_dh_gen_ok) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_new_nonce_hash1 = dc.Bytes(16)
 
+	return dc.err
 }
 
 // dh_gen_retry#46dc1fb9
@@ -575,13 +582,14 @@ func (t *TL_dh_gen_retry) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dh_gen_retry) Decode(b []byte) {
+func (t *TL_dh_gen_retry) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_new_nonce_hash2 = dc.Bytes(16)
 
+	return dc.err
 }
 
 // dh_gen_fail#a69dae02
@@ -637,13 +645,14 @@ func (t *TL_dh_gen_fail) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dh_gen_fail) Decode(b []byte) {
+func (t *TL_dh_gen_fail) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_new_nonce_hash3 = dc.Bytes(16)
 
+	return dc.err
 }
 
 // destroy_auth_key_ok#f660e1d4
@@ -669,8 +678,8 @@ func (t *TL_destroy_auth_key_ok) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_auth_key_ok) Decode(b []byte) {
-
+func (t *TL_destroy_auth_key_ok) Decode(b []byte) error {
+	return nil
 }
 
 // destroy_auth_key_none#0a9f2259
@@ -696,8 +705,8 @@ func (t *TL_destroy_auth_key_none) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_auth_key_none) Decode(b []byte) {
-
+func (t *TL_destroy_auth_key_none) Decode(b []byte) error {
+	return nil
 }
 
 // destroy_auth_key_fail#ea109b13
@@ -723,8 +732,8 @@ func (t *TL_destroy_auth_key_fail) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_auth_key_fail) Decode(b []byte) {
-
+func (t *TL_destroy_auth_key_fail) Decode(b []byte) error {
+	return nil
 }
 
 // req_pq#60469778
@@ -760,11 +769,12 @@ func (t *TL_req_pq) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_req_pq) Decode(b []byte) {
+func (t *TL_req_pq) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 
+	return dc.err
 }
 
 // req_DH_params#d712e4be
@@ -850,7 +860,7 @@ func (t *TL_req_DH_params) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_req_DH_params) Decode(b []byte) {
+func (t *TL_req_DH_params) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
@@ -860,6 +870,7 @@ func (t *TL_req_DH_params) Decode(b []byte) {
 	t.M_public_key_fingerprint = dc.Long()
 	t.M_encrypted_data = dc.String()
 
+	return dc.err
 }
 
 // set_client_DH_params#f5045f1f
@@ -915,13 +926,14 @@ func (t *TL_set_client_DH_params) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_set_client_DH_params) Decode(b []byte) {
+func (t *TL_set_client_DH_params) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nonce = dc.Bytes(16)
 	t.M_server_nonce = dc.Bytes(16)
 	t.M_encrypted_data = dc.String()
 
+	return dc.err
 }
 
 // destroy_auth_key#d1435160
@@ -947,8 +959,8 @@ func (t *TL_destroy_auth_key) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_auth_key) Decode(b []byte) {
-
+func (t *TL_destroy_auth_key) Decode(b []byte) error {
+	return nil
 }
 
 // msgs_ack#62d6b459
@@ -984,11 +996,12 @@ func (t *TL_msgs_ack) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msgs_ack) Decode(b []byte) {
+func (t *TL_msgs_ack) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_ids = dc.VectorLong()
 
+	return dc.err
 }
 
 // bad_msg_notification#a7eff811
@@ -1044,13 +1057,14 @@ func (t *TL_bad_msg_notification) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_bad_msg_notification) Decode(b []byte) {
+func (t *TL_bad_msg_notification) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bad_msg_id = dc.Long()
 	t.M_bad_msg_seqno = dc.Int()
 	t.M_error_code = dc.Int()
 
+	return dc.err
 }
 
 // bad_server_salt#edab447b
@@ -1116,7 +1130,7 @@ func (t *TL_bad_server_salt) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_bad_server_salt) Decode(b []byte) {
+func (t *TL_bad_server_salt) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bad_msg_id = dc.Long()
@@ -1124,6 +1138,7 @@ func (t *TL_bad_server_salt) Decode(b []byte) {
 	t.M_error_code = dc.Int()
 	t.M_new_server_salt = dc.Long()
 
+	return dc.err
 }
 
 // msgs_state_req#da69fb52
@@ -1159,11 +1174,12 @@ func (t *TL_msgs_state_req) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msgs_state_req) Decode(b []byte) {
+func (t *TL_msgs_state_req) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_ids = dc.VectorLong()
 
+	return dc.err
 }
 
 // msgs_state_info#04deb57d
@@ -1209,12 +1225,13 @@ func (t *TL_msgs_state_info) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msgs_state_info) Decode(b []byte) {
+func (t *TL_msgs_state_info) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_req_msg_id = dc.Long()
 	t.M_info = dc.String()
 
+	return dc.err
 }
 
 // msgs_all_info#8cc0d131
@@ -1260,12 +1277,13 @@ func (t *TL_msgs_all_info) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msgs_all_info) Decode(b []byte) {
+func (t *TL_msgs_all_info) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_ids = dc.VectorLong()
 	t.M_info = dc.String()
 
+	return dc.err
 }
 
 // msg_detailed_info#276d3ec6
@@ -1331,7 +1349,7 @@ func (t *TL_msg_detailed_info) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msg_detailed_info) Decode(b []byte) {
+func (t *TL_msg_detailed_info) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Long()
@@ -1339,6 +1357,7 @@ func (t *TL_msg_detailed_info) Decode(b []byte) {
 	t.M_bytes = dc.Int()
 	t.M_status = dc.Int()
 
+	return dc.err
 }
 
 // msg_new_detailed_info#809db6df
@@ -1394,13 +1413,14 @@ func (t *TL_msg_new_detailed_info) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msg_new_detailed_info) Decode(b []byte) {
+func (t *TL_msg_new_detailed_info) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_answer_msg_id = dc.Long()
 	t.M_bytes = dc.Int()
 	t.M_status = dc.Int()
 
+	return dc.err
 }
 
 // msg_resend_req#7d861a08
@@ -1436,11 +1456,12 @@ func (t *TL_msg_resend_req) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_msg_resend_req) Decode(b []byte) {
+func (t *TL_msg_resend_req) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_ids = dc.VectorLong()
 
+	return dc.err
 }
 
 // rpc_error#2144ca19
@@ -1486,12 +1507,13 @@ func (t *TL_rpc_error) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_rpc_error) Decode(b []byte) {
+func (t *TL_rpc_error) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_error_code = dc.Int()
 	t.M_error_message = dc.String()
 
+	return dc.err
 }
 
 // rpc_answer_unknown#5e2ad36e
@@ -1517,8 +1539,8 @@ func (t *TL_rpc_answer_unknown) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_rpc_answer_unknown) Decode(b []byte) {
-
+func (t *TL_rpc_answer_unknown) Decode(b []byte) error {
+	return nil
 }
 
 // rpc_answer_dropped_running#cd78e586
@@ -1544,8 +1566,8 @@ func (t *TL_rpc_answer_dropped_running) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_rpc_answer_dropped_running) Decode(b []byte) {
-
+func (t *TL_rpc_answer_dropped_running) Decode(b []byte) error {
+	return nil
 }
 
 // rpc_answer_dropped#a43ad8b7
@@ -1601,13 +1623,14 @@ func (t *TL_rpc_answer_dropped) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_rpc_answer_dropped) Decode(b []byte) {
+func (t *TL_rpc_answer_dropped) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Long()
 	t.M_seq_no = dc.Int()
 	t.M_bytes = dc.Int()
 
+	return dc.err
 }
 
 // future_salt#0949d9dc
@@ -1663,13 +1686,14 @@ func (t *TL_future_salt) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_future_salt) Decode(b []byte) {
+func (t *TL_future_salt) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_valid_since = dc.Int()
 	t.M_valid_until = dc.Int()
 	t.M_salt = dc.Long()
 
+	return dc.err
 }
 
 // future_salts#ae500895
@@ -1725,13 +1749,14 @@ func (t *TL_future_salts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_future_salts) Decode(b []byte) {
+func (t *TL_future_salts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_req_msg_id = dc.Long()
 	t.M_now = dc.Int()
 	t.M_salts = dc.Vector()
 
+	return dc.err
 }
 
 // pong#347773c5
@@ -1777,12 +1802,13 @@ func (t *TL_pong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pong) Decode(b []byte) {
+func (t *TL_pong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Long()
 	t.M_ping_id = dc.Long()
 
+	return dc.err
 }
 
 // destroy_session_ok#e22045fc
@@ -1818,11 +1844,12 @@ func (t *TL_destroy_session_ok) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_session_ok) Decode(b []byte) {
+func (t *TL_destroy_session_ok) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_session_id = dc.Long()
 
+	return dc.err
 }
 
 // destroy_session_none#62d350c9
@@ -1858,11 +1885,12 @@ func (t *TL_destroy_session_none) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_session_none) Decode(b []byte) {
+func (t *TL_destroy_session_none) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_session_id = dc.Long()
 
+	return dc.err
 }
 
 // new_session_created#9ec20908
@@ -1918,13 +1946,14 @@ func (t *TL_new_session_created) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_new_session_created) Decode(b []byte) {
+func (t *TL_new_session_created) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_first_msg_id = dc.Long()
 	t.M_unique_id = dc.Long()
 	t.M_server_salt = dc.Long()
 
+	return dc.err
 }
 
 // http_wait#9299359f
@@ -1980,13 +2009,14 @@ func (t *TL_http_wait) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_http_wait) Decode(b []byte) {
+func (t *TL_http_wait) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_max_delay = dc.Int()
 	t.M_wait_after = dc.Int()
 	t.M_max_wait = dc.Int()
 
+	return dc.err
 }
 
 // ipPort#d433ad73
@@ -2032,12 +2062,13 @@ func (t *TL_ipPort) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_ipPort) Decode(b []byte) {
+func (t *TL_ipPort) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ipv4 = dc.Int()
 	t.M_port = dc.Int()
 
+	return dc.err
 }
 
 // help_configSimple#d997c3c5
@@ -2103,7 +2134,7 @@ func (t *TL_help_configSimple) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_configSimple) Decode(b []byte) {
+func (t *TL_help_configSimple) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_date = dc.Int()
@@ -2111,6 +2142,7 @@ func (t *TL_help_configSimple) Decode(b []byte) {
 	t.M_dc_id = dc.Int()
 	t.M_ip_port_list = dc.Vector()
 
+	return dc.err
 }
 
 // rpc_drop_answer#58e4a740
@@ -2146,11 +2178,12 @@ func (t *TL_rpc_drop_answer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_rpc_drop_answer) Decode(b []byte) {
+func (t *TL_rpc_drop_answer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_req_msg_id = dc.Long()
 
+	return dc.err
 }
 
 // get_future_salts#b921bd04
@@ -2186,11 +2219,12 @@ func (t *TL_get_future_salts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_get_future_salts) Decode(b []byte) {
+func (t *TL_get_future_salts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_num = dc.Int()
 
+	return dc.err
 }
 
 // ping#7abe77ec
@@ -2226,11 +2260,12 @@ func (t *TL_ping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_ping) Decode(b []byte) {
+func (t *TL_ping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ping_id = dc.Long()
 
+	return dc.err
 }
 
 // ping_delay_disconnect#f3427b8c
@@ -2276,12 +2311,13 @@ func (t *TL_ping_delay_disconnect) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_ping_delay_disconnect) Decode(b []byte) {
+func (t *TL_ping_delay_disconnect) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ping_id = dc.Long()
 	t.M_disconnect_delay = dc.Int()
 
+	return dc.err
 }
 
 // destroy_session#e7512126
@@ -2317,11 +2353,12 @@ func (t *TL_destroy_session) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_destroy_session) Decode(b []byte) {
+func (t *TL_destroy_session) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_session_id = dc.Long()
 
+	return dc.err
 }
 
 // contest_saveDeveloperInfo#9a5f6e95
@@ -2397,7 +2434,7 @@ func (t *TL_contest_saveDeveloperInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contest_saveDeveloperInfo) Decode(b []byte) {
+func (t *TL_contest_saveDeveloperInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_vk_id = dc.Int()
@@ -2406,6 +2443,7 @@ func (t *TL_contest_saveDeveloperInfo) Decode(b []byte) {
 	t.M_age = dc.Int()
 	t.M_city = dc.String()
 
+	return dc.err
 }
 
 // boolFalse#bc799737
@@ -2431,8 +2469,8 @@ func (t *TL_boolFalse) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_boolFalse) Decode(b []byte) {
-
+func (t *TL_boolFalse) Decode(b []byte) error {
+	return nil
 }
 
 // boolTrue#997275b5
@@ -2458,8 +2496,8 @@ func (t *TL_boolTrue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_boolTrue) Decode(b []byte) {
-
+func (t *TL_boolTrue) Decode(b []byte) error {
+	return nil
 }
 
 // true#3fedd339
@@ -2485,8 +2523,8 @@ func (t *TL_true) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_true) Decode(b []byte) {
-
+func (t *TL_true) Decode(b []byte) error {
+	return nil
 }
 
 // vector#1cb5c415
@@ -2512,8 +2550,8 @@ func (t *TL_vector) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_vector) Decode(b []byte) {
-
+func (t *TL_vector) Decode(b []byte) error {
+	return nil
 }
 
 // error#c4b9f9bb
@@ -2559,12 +2597,13 @@ func (t *TL_error) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_error) Decode(b []byte) {
+func (t *TL_error) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_code = dc.Int()
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // null#56730bcc
@@ -2590,8 +2629,8 @@ func (t *TL_null) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_null) Decode(b []byte) {
-
+func (t *TL_null) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerEmpty#7f3b18ea
@@ -2617,8 +2656,8 @@ func (t *TL_inputPeerEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerEmpty) Decode(b []byte) {
-
+func (t *TL_inputPeerEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerSelf#7da07ec9
@@ -2644,8 +2683,8 @@ func (t *TL_inputPeerSelf) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerSelf) Decode(b []byte) {
-
+func (t *TL_inputPeerSelf) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerChat#179be863
@@ -2681,11 +2720,12 @@ func (t *TL_inputPeerChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerChat) Decode(b []byte) {
+func (t *TL_inputPeerChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // inputPeerUser#7b8e7de6
@@ -2731,12 +2771,13 @@ func (t *TL_inputPeerUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerUser) Decode(b []byte) {
+func (t *TL_inputPeerUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputPeerChannel#20adaef8
@@ -2782,12 +2823,13 @@ func (t *TL_inputPeerChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerChannel) Decode(b []byte) {
+func (t *TL_inputPeerChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputUserEmpty#b98886cf
@@ -2813,8 +2855,8 @@ func (t *TL_inputUserEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputUserEmpty) Decode(b []byte) {
-
+func (t *TL_inputUserEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputUserSelf#f7c1b13f
@@ -2840,8 +2882,8 @@ func (t *TL_inputUserSelf) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputUserSelf) Decode(b []byte) {
-
+func (t *TL_inputUserSelf) Decode(b []byte) error {
+	return nil
 }
 
 // inputUser#d8292816
@@ -2887,12 +2929,13 @@ func (t *TL_inputUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputUser) Decode(b []byte) {
+func (t *TL_inputUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputPhoneContact#f392b7f4
@@ -2958,7 +3001,7 @@ func (t *TL_inputPhoneContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPhoneContact) Decode(b []byte) {
+func (t *TL_inputPhoneContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_client_id = dc.Long()
@@ -2966,6 +3009,7 @@ func (t *TL_inputPhoneContact) Decode(b []byte) {
 	t.M_first_name = dc.String()
 	t.M_last_name = dc.String()
 
+	return dc.err
 }
 
 // inputFile#f52ff27f
@@ -3031,7 +3075,7 @@ func (t *TL_inputFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputFile) Decode(b []byte) {
+func (t *TL_inputFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -3039,6 +3083,7 @@ func (t *TL_inputFile) Decode(b []byte) {
 	t.M_name = dc.String()
 	t.M_md5_checksum = dc.String()
 
+	return dc.err
 }
 
 // inputFileBig#fa4f0bb5
@@ -3094,13 +3139,14 @@ func (t *TL_inputFileBig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputFileBig) Decode(b []byte) {
+func (t *TL_inputFileBig) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_parts = dc.Int()
 	t.M_name = dc.String()
 
+	return dc.err
 }
 
 // inputMediaEmpty#9664f57f
@@ -3126,8 +3172,8 @@ func (t *TL_inputMediaEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaEmpty) Decode(b []byte) {
-
+func (t *TL_inputMediaEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputMediaUploadedPhoto#2f37e231
@@ -3202,7 +3248,7 @@ func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) {
+func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file = dc.TLObject()
@@ -3210,6 +3256,7 @@ func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) {
 	t.M_stickers = dc.Vector()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaPhoto#81fa373a
@@ -3274,13 +3321,14 @@ func (t *TL_inputMediaPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaPhoto) Decode(b []byte) {
+func (t *TL_inputMediaPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_caption = dc.String()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaGeoPoint#f9c44144
@@ -3316,11 +3364,12 @@ func (t *TL_inputMediaGeoPoint) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaGeoPoint) Decode(b []byte) {
+func (t *TL_inputMediaGeoPoint) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo_point = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaContact#a6e45987
@@ -3376,13 +3425,14 @@ func (t *TL_inputMediaContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaContact) Decode(b []byte) {
+func (t *TL_inputMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_first_name = dc.String()
 	t.M_last_name = dc.String()
 
+	return dc.err
 }
 
 // inputMediaUploadedDocument#e39621fd
@@ -3497,7 +3547,7 @@ func (t *TL_inputMediaUploadedDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaUploadedDocument) Decode(b []byte) {
+func (t *TL_inputMediaUploadedDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_nosound_video = dc.TLObject()
@@ -3509,6 +3559,7 @@ func (t *TL_inputMediaUploadedDocument) Decode(b []byte) {
 	t.M_stickers = dc.Vector()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaDocument#5acb668e
@@ -3573,13 +3624,14 @@ func (t *TL_inputMediaDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaDocument) Decode(b []byte) {
+func (t *TL_inputMediaDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_caption = dc.String()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaVenue#c13d1c11
@@ -3665,7 +3717,7 @@ func (t *TL_inputMediaVenue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaVenue) Decode(b []byte) {
+func (t *TL_inputMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo_point = dc.TLObject()
@@ -3675,6 +3727,7 @@ func (t *TL_inputMediaVenue) Decode(b []byte) {
 	t.M_venue_id = dc.String()
 	t.M_venue_type = dc.String()
 
+	return dc.err
 }
 
 // inputMediaGifExternal#4843b0fd
@@ -3720,12 +3773,13 @@ func (t *TL_inputMediaGifExternal) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaGifExternal) Decode(b []byte) {
+func (t *TL_inputMediaGifExternal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_q = dc.String()
 
+	return dc.err
 }
 
 // inputMediaPhotoExternal#922aec1
@@ -3790,13 +3844,14 @@ func (t *TL_inputMediaPhotoExternal) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaPhotoExternal) Decode(b []byte) {
+func (t *TL_inputMediaPhotoExternal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_caption = dc.String()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaDocumentExternal#b6f74335
@@ -3861,13 +3916,14 @@ func (t *TL_inputMediaDocumentExternal) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaDocumentExternal) Decode(b []byte) {
+func (t *TL_inputMediaDocumentExternal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_caption = dc.String()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaGame#d33f43f3
@@ -3903,11 +3959,12 @@ func (t *TL_inputMediaGame) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaGame) Decode(b []byte) {
+func (t *TL_inputMediaGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMediaInvoice#f4e096c3
@@ -4022,7 +4079,7 @@ func (t *TL_inputMediaInvoice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaInvoice) Decode(b []byte) {
+func (t *TL_inputMediaInvoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
@@ -4034,6 +4091,7 @@ func (t *TL_inputMediaInvoice) Decode(b []byte) {
 	t.M_provider_data = dc.TLObject()
 	t.M_start_param = dc.String()
 
+	return dc.err
 }
 
 // inputMediaGeoLive#7b1a118f
@@ -4079,12 +4137,13 @@ func (t *TL_inputMediaGeoLive) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMediaGeoLive) Decode(b []byte) {
+func (t *TL_inputMediaGeoLive) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo_point = dc.TLObject()
 	t.M_period = dc.Int()
 
+	return dc.err
 }
 
 // inputChatPhotoEmpty#1ca48f57
@@ -4110,8 +4169,8 @@ func (t *TL_inputChatPhotoEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputChatPhotoEmpty) Decode(b []byte) {
-
+func (t *TL_inputChatPhotoEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputChatUploadedPhoto#927c55b4
@@ -4147,11 +4206,12 @@ func (t *TL_inputChatUploadedPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputChatUploadedPhoto) Decode(b []byte) {
+func (t *TL_inputChatUploadedPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // inputChatPhoto#8953ad37
@@ -4187,11 +4247,12 @@ func (t *TL_inputChatPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputChatPhoto) Decode(b []byte) {
+func (t *TL_inputChatPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // inputGeoPointEmpty#e4c123d6
@@ -4217,8 +4278,8 @@ func (t *TL_inputGeoPointEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputGeoPointEmpty) Decode(b []byte) {
-
+func (t *TL_inputGeoPointEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputGeoPoint#f3b7acc9
@@ -4264,12 +4325,13 @@ func (t *TL_inputGeoPoint) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputGeoPoint) Decode(b []byte) {
+func (t *TL_inputGeoPoint) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_lat = dc.Double()
 	t.M_long = dc.Double()
 
+	return dc.err
 }
 
 // inputPhotoEmpty#1cd7bf0d
@@ -4295,8 +4357,8 @@ func (t *TL_inputPhotoEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPhotoEmpty) Decode(b []byte) {
-
+func (t *TL_inputPhotoEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputPhoto#fb95c6c4
@@ -4342,12 +4404,13 @@ func (t *TL_inputPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPhoto) Decode(b []byte) {
+func (t *TL_inputPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputFileLocation#14637196
@@ -4403,13 +4466,14 @@ func (t *TL_inputFileLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputFileLocation) Decode(b []byte) {
+func (t *TL_inputFileLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_volume_id = dc.Long()
 	t.M_local_id = dc.Int()
 	t.M_secret = dc.Long()
 
+	return dc.err
 }
 
 // inputEncryptedFileLocation#f5235d55
@@ -4455,12 +4519,13 @@ func (t *TL_inputEncryptedFileLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedFileLocation) Decode(b []byte) {
+func (t *TL_inputEncryptedFileLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputDocumentFileLocation#430f0724
@@ -4516,13 +4581,14 @@ func (t *TL_inputDocumentFileLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputDocumentFileLocation) Decode(b []byte) {
+func (t *TL_inputDocumentFileLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // inputAppEvent#770656a8
@@ -4588,7 +4654,7 @@ func (t *TL_inputAppEvent) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputAppEvent) Decode(b []byte) {
+func (t *TL_inputAppEvent) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_time = dc.Double()
@@ -4596,6 +4662,7 @@ func (t *TL_inputAppEvent) Decode(b []byte) {
 	t.M_peer = dc.Long()
 	t.M_data = dc.String()
 
+	return dc.err
 }
 
 // peerUser#9db1bc6d
@@ -4631,11 +4698,12 @@ func (t *TL_peerUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerUser) Decode(b []byte) {
+func (t *TL_peerUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // peerChat#bad0e5bb
@@ -4671,11 +4739,12 @@ func (t *TL_peerChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerChat) Decode(b []byte) {
+func (t *TL_peerChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // peerChannel#bddde532
@@ -4711,11 +4780,12 @@ func (t *TL_peerChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerChannel) Decode(b []byte) {
+func (t *TL_peerChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 
+	return dc.err
 }
 
 // storage_fileUnknown#aa963b05
@@ -4741,8 +4811,8 @@ func (t *TL_storage_fileUnknown) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileUnknown) Decode(b []byte) {
-
+func (t *TL_storage_fileUnknown) Decode(b []byte) error {
+	return nil
 }
 
 // storage_filePartial#40bc6f52
@@ -4768,8 +4838,8 @@ func (t *TL_storage_filePartial) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_filePartial) Decode(b []byte) {
-
+func (t *TL_storage_filePartial) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileJpeg#7efe0e
@@ -4795,8 +4865,8 @@ func (t *TL_storage_fileJpeg) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileJpeg) Decode(b []byte) {
-
+func (t *TL_storage_fileJpeg) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileGif#cae1aadf
@@ -4822,8 +4892,8 @@ func (t *TL_storage_fileGif) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileGif) Decode(b []byte) {
-
+func (t *TL_storage_fileGif) Decode(b []byte) error {
+	return nil
 }
 
 // storage_filePng#a4f63c0
@@ -4849,8 +4919,8 @@ func (t *TL_storage_filePng) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_filePng) Decode(b []byte) {
-
+func (t *TL_storage_filePng) Decode(b []byte) error {
+	return nil
 }
 
 // storage_filePdf#ae1e508d
@@ -4876,8 +4946,8 @@ func (t *TL_storage_filePdf) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_filePdf) Decode(b []byte) {
-
+func (t *TL_storage_filePdf) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileMp3#528a0677
@@ -4903,8 +4973,8 @@ func (t *TL_storage_fileMp3) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileMp3) Decode(b []byte) {
-
+func (t *TL_storage_fileMp3) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileMov#4b09ebbc
@@ -4930,8 +5000,8 @@ func (t *TL_storage_fileMov) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileMov) Decode(b []byte) {
-
+func (t *TL_storage_fileMov) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileMp4#b3cea0e4
@@ -4957,8 +5027,8 @@ func (t *TL_storage_fileMp4) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileMp4) Decode(b []byte) {
-
+func (t *TL_storage_fileMp4) Decode(b []byte) error {
+	return nil
 }
 
 // storage_fileWebp#1081464c
@@ -4984,8 +5054,8 @@ func (t *TL_storage_fileWebp) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_storage_fileWebp) Decode(b []byte) {
-
+func (t *TL_storage_fileWebp) Decode(b []byte) error {
+	return nil
 }
 
 // fileLocationUnavailable#7c596b46
@@ -5041,13 +5111,14 @@ func (t *TL_fileLocationUnavailable) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_fileLocationUnavailable) Decode(b []byte) {
+func (t *TL_fileLocationUnavailable) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_volume_id = dc.Long()
 	t.M_local_id = dc.Int()
 	t.M_secret = dc.Long()
 
+	return dc.err
 }
 
 // fileLocation#53d69076
@@ -5113,7 +5184,7 @@ func (t *TL_fileLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_fileLocation) Decode(b []byte) {
+func (t *TL_fileLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
@@ -5121,6 +5192,7 @@ func (t *TL_fileLocation) Decode(b []byte) {
 	t.M_local_id = dc.Int()
 	t.M_secret = dc.Long()
 
+	return dc.err
 }
 
 // userEmpty#200250ba
@@ -5156,11 +5228,12 @@ func (t *TL_userEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userEmpty) Decode(b []byte) {
+func (t *TL_userEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // user#2e13f4c3
@@ -5425,7 +5498,7 @@ func (t *TL_user) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_user) Decode(b []byte) {
+func (t *TL_user) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_self = dc.TLObject()
@@ -5452,6 +5525,7 @@ func (t *TL_user) Decode(b []byte) {
 	t.M_bot_inline_placeholder = dc.TLObject()
 	t.M_lang_code = dc.TLObject()
 
+	return dc.err
 }
 
 // userProfilePhotoEmpty#4f11bae1
@@ -5477,8 +5551,8 @@ func (t *TL_userProfilePhotoEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userProfilePhotoEmpty) Decode(b []byte) {
-
+func (t *TL_userProfilePhotoEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // userProfilePhoto#d559d8c8
@@ -5534,13 +5608,14 @@ func (t *TL_userProfilePhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userProfilePhoto) Decode(b []byte) {
+func (t *TL_userProfilePhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo_id = dc.Long()
 	t.M_photo_small = dc.TLObject()
 	t.M_photo_big = dc.TLObject()
 
+	return dc.err
 }
 
 // userStatusEmpty#9d05049
@@ -5566,8 +5641,8 @@ func (t *TL_userStatusEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusEmpty) Decode(b []byte) {
-
+func (t *TL_userStatusEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // userStatusOnline#edb93949
@@ -5603,11 +5678,12 @@ func (t *TL_userStatusOnline) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusOnline) Decode(b []byte) {
+func (t *TL_userStatusOnline) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_expires = dc.Int()
 
+	return dc.err
 }
 
 // userStatusOffline#8c703f
@@ -5643,11 +5719,12 @@ func (t *TL_userStatusOffline) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusOffline) Decode(b []byte) {
+func (t *TL_userStatusOffline) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_was_online = dc.Int()
 
+	return dc.err
 }
 
 // userStatusRecently#e26f42f1
@@ -5673,8 +5750,8 @@ func (t *TL_userStatusRecently) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusRecently) Decode(b []byte) {
-
+func (t *TL_userStatusRecently) Decode(b []byte) error {
+	return nil
 }
 
 // userStatusLastWeek#7bf09fc
@@ -5700,8 +5777,8 @@ func (t *TL_userStatusLastWeek) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusLastWeek) Decode(b []byte) {
-
+func (t *TL_userStatusLastWeek) Decode(b []byte) error {
+	return nil
 }
 
 // userStatusLastMonth#77ebc742
@@ -5727,8 +5804,8 @@ func (t *TL_userStatusLastMonth) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userStatusLastMonth) Decode(b []byte) {
-
+func (t *TL_userStatusLastMonth) Decode(b []byte) error {
+	return nil
 }
 
 // chatEmpty#9ba2d800
@@ -5764,11 +5841,12 @@ func (t *TL_chatEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatEmpty) Decode(b []byte) {
+func (t *TL_chatEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // chat#d91cdd54
@@ -5933,7 +6011,7 @@ func (t *TL_chat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chat) Decode(b []byte) {
+func (t *TL_chat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_creator = dc.TLObject()
@@ -5950,6 +6028,7 @@ func (t *TL_chat) Decode(b []byte) {
 	t.M_version = dc.Int()
 	t.M_migrated_to = dc.TLObject()
 
+	return dc.err
 }
 
 // chatForbidden#7328bdb
@@ -5995,12 +6074,13 @@ func (t *TL_chatForbidden) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatForbidden) Decode(b []byte) {
+func (t *TL_chatForbidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // channel#450b7115
@@ -6245,7 +6325,7 @@ func (t *TL_channel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channel) Decode(b []byte) {
+func (t *TL_channel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_creator = dc.TLObject()
@@ -6270,6 +6350,7 @@ func (t *TL_channel) Decode(b []byte) {
 	t.M_banned_rights = dc.TLObject()
 	t.M_participants_count = dc.TLObject()
 
+	return dc.err
 }
 
 // channelForbidden#289da732
@@ -6364,7 +6445,7 @@ func (t *TL_channelForbidden) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelForbidden) Decode(b []byte) {
+func (t *TL_channelForbidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_broadcast = dc.TLObject()
@@ -6374,6 +6455,7 @@ func (t *TL_channelForbidden) Decode(b []byte) {
 	t.M_title = dc.String()
 	t.M_until_date = dc.TLObject()
 
+	return dc.err
 }
 
 // chatFull#2e02a614
@@ -6459,7 +6541,7 @@ func (t *TL_chatFull) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatFull) Decode(b []byte) {
+func (t *TL_chatFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -6469,6 +6551,7 @@ func (t *TL_chatFull) Decode(b []byte) {
 	t.M_exported_invite = dc.TLObject()
 	t.M_bot_info = dc.Vector()
 
+	return dc.err
 }
 
 // channelFull#76af5481
@@ -6723,7 +6806,7 @@ func (t *TL_channelFull) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelFull) Decode(b []byte) {
+func (t *TL_channelFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_can_view_participants = dc.TLObject()
@@ -6749,6 +6832,7 @@ func (t *TL_channelFull) Decode(b []byte) {
 	t.M_stickerset = dc.TLObject()
 	t.M_available_min_id = dc.TLObject()
 
+	return dc.err
 }
 
 // chatParticipant#c8d7493e
@@ -6804,13 +6888,14 @@ func (t *TL_chatParticipant) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatParticipant) Decode(b []byte) {
+func (t *TL_chatParticipant) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_inviter_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // chatParticipantCreator#da13538a
@@ -6846,11 +6931,12 @@ func (t *TL_chatParticipantCreator) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatParticipantCreator) Decode(b []byte) {
+func (t *TL_chatParticipantCreator) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // chatParticipantAdmin#e2d6e436
@@ -6906,13 +6992,14 @@ func (t *TL_chatParticipantAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatParticipantAdmin) Decode(b []byte) {
+func (t *TL_chatParticipantAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_inviter_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // chatParticipantsForbidden#fc900c2b
@@ -6967,12 +7054,13 @@ func (t *TL_chatParticipantsForbidden) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatParticipantsForbidden) Decode(b []byte) {
+func (t *TL_chatParticipantsForbidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_self_participant = dc.TLObject()
 
+	return dc.err
 }
 
 // chatParticipants#3f460fed
@@ -7028,13 +7116,14 @@ func (t *TL_chatParticipants) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatParticipants) Decode(b []byte) {
+func (t *TL_chatParticipants) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_participants = dc.Vector()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // chatPhotoEmpty#37c1011c
@@ -7060,8 +7149,8 @@ func (t *TL_chatPhotoEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatPhotoEmpty) Decode(b []byte) {
-
+func (t *TL_chatPhotoEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // chatPhoto#6153276a
@@ -7107,12 +7196,13 @@ func (t *TL_chatPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatPhoto) Decode(b []byte) {
+func (t *TL_chatPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo_small = dc.TLObject()
 	t.M_photo_big = dc.TLObject()
 
+	return dc.err
 }
 
 // messageEmpty#83e5de54
@@ -7148,11 +7238,12 @@ func (t *TL_messageEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEmpty) Decode(b []byte) {
+func (t *TL_messageEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // message#44f9b43d
@@ -7387,7 +7478,7 @@ func (t *TL_message) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_message) Decode(b []byte) {
+func (t *TL_message) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_out = dc.TLObject()
@@ -7411,6 +7502,7 @@ func (t *TL_message) Decode(b []byte) {
 	t.M_post_author = dc.TLObject()
 	t.M_grouped_id = dc.TLObject()
 
+	return dc.err
 }
 
 // messageService#9e19a1f6
@@ -7555,7 +7647,7 @@ func (t *TL_messageService) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageService) Decode(b []byte) {
+func (t *TL_messageService) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_out = dc.TLObject()
@@ -7570,6 +7662,7 @@ func (t *TL_messageService) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_action = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaEmpty#3ded6320
@@ -7595,8 +7688,8 @@ func (t *TL_messageMediaEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaEmpty) Decode(b []byte) {
-
+func (t *TL_messageMediaEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // messageMediaPhoto#b5223b0f
@@ -7661,13 +7754,14 @@ func (t *TL_messageMediaPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaPhoto) Decode(b []byte) {
+func (t *TL_messageMediaPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo = dc.TLObject()
 	t.M_caption = dc.TLObject()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaGeo#56e0d474
@@ -7703,11 +7797,12 @@ func (t *TL_messageMediaGeo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaGeo) Decode(b []byte) {
+func (t *TL_messageMediaGeo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaContact#5e7d2f39
@@ -7773,7 +7868,7 @@ func (t *TL_messageMediaContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaContact) Decode(b []byte) {
+func (t *TL_messageMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
@@ -7781,6 +7876,7 @@ func (t *TL_messageMediaContact) Decode(b []byte) {
 	t.M_last_name = dc.String()
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // messageMediaUnsupported#9f84f49e
@@ -7806,8 +7902,8 @@ func (t *TL_messageMediaUnsupported) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaUnsupported) Decode(b []byte) {
-
+func (t *TL_messageMediaUnsupported) Decode(b []byte) error {
+	return nil
 }
 
 // messageMediaDocument#7c4414d3
@@ -7872,13 +7968,14 @@ func (t *TL_messageMediaDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaDocument) Decode(b []byte) {
+func (t *TL_messageMediaDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_document = dc.TLObject()
 	t.M_caption = dc.TLObject()
 	t.M_ttl_seconds = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaWebPage#a32dd600
@@ -7914,11 +8011,12 @@ func (t *TL_messageMediaWebPage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaWebPage) Decode(b []byte) {
+func (t *TL_messageMediaWebPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_webpage = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaVenue#2ec0533f
@@ -8004,7 +8102,7 @@ func (t *TL_messageMediaVenue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaVenue) Decode(b []byte) {
+func (t *TL_messageMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo = dc.TLObject()
@@ -8014,6 +8112,7 @@ func (t *TL_messageMediaVenue) Decode(b []byte) {
 	t.M_venue_id = dc.String()
 	t.M_venue_type = dc.String()
 
+	return dc.err
 }
 
 // messageMediaGame#fdb19008
@@ -8049,11 +8148,12 @@ func (t *TL_messageMediaGame) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaGame) Decode(b []byte) {
+func (t *TL_messageMediaGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_game = dc.TLObject()
 
+	return dc.err
 }
 
 // messageMediaInvoice#84551347
@@ -8178,7 +8278,7 @@ func (t *TL_messageMediaInvoice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaInvoice) Decode(b []byte) {
+func (t *TL_messageMediaInvoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_shipping_address_requested = dc.TLObject()
@@ -8191,6 +8291,7 @@ func (t *TL_messageMediaInvoice) Decode(b []byte) {
 	t.M_total_amount = dc.Long()
 	t.M_start_param = dc.String()
 
+	return dc.err
 }
 
 // messageMediaGeoLive#7c3c2609
@@ -8236,12 +8337,13 @@ func (t *TL_messageMediaGeoLive) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageMediaGeoLive) Decode(b []byte) {
+func (t *TL_messageMediaGeoLive) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo = dc.TLObject()
 	t.M_period = dc.Int()
 
+	return dc.err
 }
 
 // messageActionEmpty#b6aef7b0
@@ -8267,8 +8369,8 @@ func (t *TL_messageActionEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionEmpty) Decode(b []byte) {
-
+func (t *TL_messageActionEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // messageActionChatCreate#a6638b9a
@@ -8314,12 +8416,13 @@ func (t *TL_messageActionChatCreate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatCreate) Decode(b []byte) {
+func (t *TL_messageActionChatCreate) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
 	t.M_users = dc.VectorInt()
 
+	return dc.err
 }
 
 // messageActionChatEditTitle#b5a1ce5a
@@ -8355,11 +8458,12 @@ func (t *TL_messageActionChatEditTitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatEditTitle) Decode(b []byte) {
+func (t *TL_messageActionChatEditTitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // messageActionChatEditPhoto#7fcb13a8
@@ -8395,11 +8499,12 @@ func (t *TL_messageActionChatEditPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatEditPhoto) Decode(b []byte) {
+func (t *TL_messageActionChatEditPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo = dc.TLObject()
 
+	return dc.err
 }
 
 // messageActionChatDeletePhoto#95e3fbef
@@ -8425,8 +8530,8 @@ func (t *TL_messageActionChatDeletePhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatDeletePhoto) Decode(b []byte) {
-
+func (t *TL_messageActionChatDeletePhoto) Decode(b []byte) error {
+	return nil
 }
 
 // messageActionChatAddUser#488a7337
@@ -8462,11 +8567,12 @@ func (t *TL_messageActionChatAddUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatAddUser) Decode(b []byte) {
+func (t *TL_messageActionChatAddUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.VectorInt()
 
+	return dc.err
 }
 
 // messageActionChatDeleteUser#b2ae9b0c
@@ -8502,11 +8608,12 @@ func (t *TL_messageActionChatDeleteUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatDeleteUser) Decode(b []byte) {
+func (t *TL_messageActionChatDeleteUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // messageActionChatJoinedByLink#f89cf5e8
@@ -8542,11 +8649,12 @@ func (t *TL_messageActionChatJoinedByLink) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatJoinedByLink) Decode(b []byte) {
+func (t *TL_messageActionChatJoinedByLink) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_inviter_id = dc.Int()
 
+	return dc.err
 }
 
 // messageActionChannelCreate#95d2ac92
@@ -8582,11 +8690,12 @@ func (t *TL_messageActionChannelCreate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChannelCreate) Decode(b []byte) {
+func (t *TL_messageActionChannelCreate) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // messageActionChatMigrateTo#51bdb021
@@ -8622,11 +8731,12 @@ func (t *TL_messageActionChatMigrateTo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChatMigrateTo) Decode(b []byte) {
+func (t *TL_messageActionChatMigrateTo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 
+	return dc.err
 }
 
 // messageActionChannelMigrateFrom#b055eaee
@@ -8672,12 +8782,13 @@ func (t *TL_messageActionChannelMigrateFrom) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionChannelMigrateFrom) Decode(b []byte) {
+func (t *TL_messageActionChannelMigrateFrom) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_title = dc.String()
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // messageActionPinMessage#94bd38ed
@@ -8703,8 +8814,8 @@ func (t *TL_messageActionPinMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionPinMessage) Decode(b []byte) {
-
+func (t *TL_messageActionPinMessage) Decode(b []byte) error {
+	return nil
 }
 
 // messageActionHistoryClear#9fbab604
@@ -8730,8 +8841,8 @@ func (t *TL_messageActionHistoryClear) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionHistoryClear) Decode(b []byte) {
-
+func (t *TL_messageActionHistoryClear) Decode(b []byte) error {
+	return nil
 }
 
 // messageActionGameScore#92a72876
@@ -8777,12 +8888,13 @@ func (t *TL_messageActionGameScore) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionGameScore) Decode(b []byte) {
+func (t *TL_messageActionGameScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_game_id = dc.Long()
 	t.M_score = dc.Int()
 
+	return dc.err
 }
 
 // messageActionPaymentSentMe#8f31b327
@@ -8877,7 +8989,7 @@ func (t *TL_messageActionPaymentSentMe) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionPaymentSentMe) Decode(b []byte) {
+func (t *TL_messageActionPaymentSentMe) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_currency = dc.String()
@@ -8887,6 +8999,7 @@ func (t *TL_messageActionPaymentSentMe) Decode(b []byte) {
 	t.M_shipping_option_id = dc.TLObject()
 	t.M_charge = dc.TLObject()
 
+	return dc.err
 }
 
 // messageActionPaymentSent#40699cd0
@@ -8932,12 +9045,13 @@ func (t *TL_messageActionPaymentSent) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionPaymentSent) Decode(b []byte) {
+func (t *TL_messageActionPaymentSent) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 
+	return dc.err
 }
 
 // messageActionPhoneCall#80e11a7f
@@ -9002,13 +9116,14 @@ func (t *TL_messageActionPhoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionPhoneCall) Decode(b []byte) {
+func (t *TL_messageActionPhoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_call_id = dc.Long()
 	t.M_reason = dc.TLObject()
 	t.M_duration = dc.TLObject()
 
+	return dc.err
 }
 
 // messageActionScreenshotTaken#4792929b
@@ -9034,8 +9149,8 @@ func (t *TL_messageActionScreenshotTaken) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionScreenshotTaken) Decode(b []byte) {
-
+func (t *TL_messageActionScreenshotTaken) Decode(b []byte) error {
+	return nil
 }
 
 // messageActionCustomAction#fae69f56
@@ -9071,11 +9186,12 @@ func (t *TL_messageActionCustomAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageActionCustomAction) Decode(b []byte) {
+func (t *TL_messageActionCustomAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.String()
 
+	return dc.err
 }
 
 // dialog#e4def5db
@@ -9210,7 +9326,7 @@ func (t *TL_dialog) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dialog) Decode(b []byte) {
+func (t *TL_dialog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pinned = dc.TLObject()
@@ -9224,6 +9340,7 @@ func (t *TL_dialog) Decode(b []byte) {
 	t.M_pts = dc.TLObject()
 	t.M_draft = dc.TLObject()
 
+	return dc.err
 }
 
 // photoEmpty#2331b22d
@@ -9259,11 +9376,12 @@ func (t *TL_photoEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photoEmpty) Decode(b []byte) {
+func (t *TL_photoEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 
+	return dc.err
 }
 
 // photo#9288dd29
@@ -9348,7 +9466,7 @@ func (t *TL_photo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photo) Decode(b []byte) {
+func (t *TL_photo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_has_stickers = dc.TLObject()
@@ -9357,6 +9475,7 @@ func (t *TL_photo) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_sizes = dc.Vector()
 
+	return dc.err
 }
 
 // photoSizeEmpty#e17e23c
@@ -9392,11 +9511,12 @@ func (t *TL_photoSizeEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photoSizeEmpty) Decode(b []byte) {
+func (t *TL_photoSizeEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_type = dc.String()
 
+	return dc.err
 }
 
 // photoSize#77bfb61b
@@ -9472,7 +9592,7 @@ func (t *TL_photoSize) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photoSize) Decode(b []byte) {
+func (t *TL_photoSize) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_type = dc.String()
@@ -9481,6 +9601,7 @@ func (t *TL_photoSize) Decode(b []byte) {
 	t.M_h = dc.Int()
 	t.M_size = dc.Int()
 
+	return dc.err
 }
 
 // photoCachedSize#e9a734fa
@@ -9556,7 +9677,7 @@ func (t *TL_photoCachedSize) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photoCachedSize) Decode(b []byte) {
+func (t *TL_photoCachedSize) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_type = dc.String()
@@ -9565,6 +9686,7 @@ func (t *TL_photoCachedSize) Decode(b []byte) {
 	t.M_h = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // geoPointEmpty#1117dd5f
@@ -9590,8 +9712,8 @@ func (t *TL_geoPointEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_geoPointEmpty) Decode(b []byte) {
-
+func (t *TL_geoPointEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // geoPoint#2049d70c
@@ -9637,12 +9759,13 @@ func (t *TL_geoPoint) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_geoPoint) Decode(b []byte) {
+func (t *TL_geoPoint) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_long = dc.Double()
 	t.M_lat = dc.Double()
 
+	return dc.err
 }
 
 // auth_checkedPhone#811ea28e
@@ -9678,11 +9801,12 @@ func (t *TL_auth_checkedPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_checkedPhone) Decode(b []byte) {
+func (t *TL_auth_checkedPhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_registered = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_sentCode#5e002502
@@ -9767,7 +9891,7 @@ func (t *TL_auth_sentCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sentCode) Decode(b []byte) {
+func (t *TL_auth_sentCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_registered = dc.TLObject()
@@ -9776,6 +9900,7 @@ func (t *TL_auth_sentCode) Decode(b []byte) {
 	t.M_next_type = dc.TLObject()
 	t.M_timeout = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_authorization#cd050916
@@ -9830,12 +9955,13 @@ func (t *TL_auth_authorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_authorization) Decode(b []byte) {
+func (t *TL_auth_authorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_tmp_sessions = dc.TLObject()
 	t.M_user = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_exportedAuthorization#df969c2d
@@ -9881,12 +10007,13 @@ func (t *TL_auth_exportedAuthorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_exportedAuthorization) Decode(b []byte) {
+func (t *TL_auth_exportedAuthorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // inputNotifyPeer#b8bc5b0c
@@ -9922,11 +10049,12 @@ func (t *TL_inputNotifyPeer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputNotifyPeer) Decode(b []byte) {
+func (t *TL_inputNotifyPeer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // inputNotifyUsers#193b4417
@@ -9952,8 +10080,8 @@ func (t *TL_inputNotifyUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputNotifyUsers) Decode(b []byte) {
-
+func (t *TL_inputNotifyUsers) Decode(b []byte) error {
+	return nil
 }
 
 // inputNotifyChats#4a95e84e
@@ -9979,8 +10107,8 @@ func (t *TL_inputNotifyChats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputNotifyChats) Decode(b []byte) {
-
+func (t *TL_inputNotifyChats) Decode(b []byte) error {
+	return nil
 }
 
 // inputNotifyAll#a429b886
@@ -10006,8 +10134,8 @@ func (t *TL_inputNotifyAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputNotifyAll) Decode(b []byte) {
-
+func (t *TL_inputNotifyAll) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerNotifyEventsEmpty#f03064d8
@@ -10033,8 +10161,8 @@ func (t *TL_inputPeerNotifyEventsEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerNotifyEventsEmpty) Decode(b []byte) {
-
+func (t *TL_inputPeerNotifyEventsEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerNotifyEventsAll#e86a2c74
@@ -10060,8 +10188,8 @@ func (t *TL_inputPeerNotifyEventsAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerNotifyEventsAll) Decode(b []byte) {
-
+func (t *TL_inputPeerNotifyEventsAll) Decode(b []byte) error {
+	return nil
 }
 
 // inputPeerNotifySettings#38935eb2
@@ -10136,7 +10264,7 @@ func (t *TL_inputPeerNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPeerNotifySettings) Decode(b []byte) {
+func (t *TL_inputPeerNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_show_previews = dc.TLObject()
@@ -10144,6 +10272,7 @@ func (t *TL_inputPeerNotifySettings) Decode(b []byte) {
 	t.M_mute_until = dc.Int()
 	t.M_sound = dc.String()
 
+	return dc.err
 }
 
 // peerNotifyEventsEmpty#add53cb3
@@ -10169,8 +10298,8 @@ func (t *TL_peerNotifyEventsEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerNotifyEventsEmpty) Decode(b []byte) {
-
+func (t *TL_peerNotifyEventsEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // peerNotifyEventsAll#6d1ded88
@@ -10196,8 +10325,8 @@ func (t *TL_peerNotifyEventsAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerNotifyEventsAll) Decode(b []byte) {
-
+func (t *TL_peerNotifyEventsAll) Decode(b []byte) error {
+	return nil
 }
 
 // peerNotifySettingsEmpty#70a68512
@@ -10223,8 +10352,8 @@ func (t *TL_peerNotifySettingsEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerNotifySettingsEmpty) Decode(b []byte) {
-
+func (t *TL_peerNotifySettingsEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // peerNotifySettings#9acda4c0
@@ -10299,7 +10428,7 @@ func (t *TL_peerNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerNotifySettings) Decode(b []byte) {
+func (t *TL_peerNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_show_previews = dc.TLObject()
@@ -10307,6 +10436,7 @@ func (t *TL_peerNotifySettings) Decode(b []byte) {
 	t.M_mute_until = dc.Int()
 	t.M_sound = dc.String()
 
+	return dc.err
 }
 
 // peerSettings#818426cd
@@ -10351,11 +10481,12 @@ func (t *TL_peerSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_peerSettings) Decode(b []byte) {
+func (t *TL_peerSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_report_spam = dc.TLObject()
 
+	return dc.err
 }
 
 // wallPaper#ccb03657
@@ -10421,7 +10552,7 @@ func (t *TL_wallPaper) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_wallPaper) Decode(b []byte) {
+func (t *TL_wallPaper) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -10429,6 +10560,7 @@ func (t *TL_wallPaper) Decode(b []byte) {
 	t.M_sizes = dc.Vector()
 	t.M_color = dc.Int()
 
+	return dc.err
 }
 
 // wallPaperSolid#63117f24
@@ -10494,7 +10626,7 @@ func (t *TL_wallPaperSolid) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_wallPaperSolid) Decode(b []byte) {
+func (t *TL_wallPaperSolid) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -10502,6 +10634,7 @@ func (t *TL_wallPaperSolid) Decode(b []byte) {
 	t.M_bg_color = dc.Int()
 	t.M_color = dc.Int()
 
+	return dc.err
 }
 
 // inputReportReasonSpam#58dbcab8
@@ -10527,8 +10660,8 @@ func (t *TL_inputReportReasonSpam) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputReportReasonSpam) Decode(b []byte) {
-
+func (t *TL_inputReportReasonSpam) Decode(b []byte) error {
+	return nil
 }
 
 // inputReportReasonViolence#1e22c78d
@@ -10554,8 +10687,8 @@ func (t *TL_inputReportReasonViolence) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputReportReasonViolence) Decode(b []byte) {
-
+func (t *TL_inputReportReasonViolence) Decode(b []byte) error {
+	return nil
 }
 
 // inputReportReasonPornography#2e59d922
@@ -10581,8 +10714,8 @@ func (t *TL_inputReportReasonPornography) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputReportReasonPornography) Decode(b []byte) {
-
+func (t *TL_inputReportReasonPornography) Decode(b []byte) error {
+	return nil
 }
 
 // inputReportReasonOther#e1746d0a
@@ -10618,11 +10751,12 @@ func (t *TL_inputReportReasonOther) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputReportReasonOther) Decode(b []byte) {
+func (t *TL_inputReportReasonOther) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // userFull#f220f3f
@@ -10757,7 +10891,7 @@ func (t *TL_userFull) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_userFull) Decode(b []byte) {
+func (t *TL_userFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_blocked = dc.TLObject()
@@ -10771,6 +10905,7 @@ func (t *TL_userFull) Decode(b []byte) {
 	t.M_bot_info = dc.TLObject()
 	t.M_common_chats_count = dc.Int()
 
+	return dc.err
 }
 
 // contact#f911c994
@@ -10816,12 +10951,13 @@ func (t *TL_contact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contact) Decode(b []byte) {
+func (t *TL_contact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_mutual = dc.TLObject()
 
+	return dc.err
 }
 
 // importedContact#d0028438
@@ -10867,12 +11003,13 @@ func (t *TL_importedContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_importedContact) Decode(b []byte) {
+func (t *TL_importedContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_client_id = dc.Long()
 
+	return dc.err
 }
 
 // contactBlocked#561bc879
@@ -10918,12 +11055,13 @@ func (t *TL_contactBlocked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactBlocked) Decode(b []byte) {
+func (t *TL_contactBlocked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // contactStatus#d3680c61
@@ -10969,12 +11107,13 @@ func (t *TL_contactStatus) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactStatus) Decode(b []byte) {
+func (t *TL_contactStatus) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_status = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_link#3ace484c
@@ -11030,13 +11169,14 @@ func (t *TL_contacts_link) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_link) Decode(b []byte) {
+func (t *TL_contacts_link) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_my_link = dc.TLObject()
 	t.M_foreign_link = dc.TLObject()
 	t.M_user = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_contactsNotModified#b74ba9d2
@@ -11062,8 +11202,8 @@ func (t *TL_contacts_contactsNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_contactsNotModified) Decode(b []byte) {
-
+func (t *TL_contacts_contactsNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // contacts_contacts#eae87e42
@@ -11119,13 +11259,14 @@ func (t *TL_contacts_contacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_contacts) Decode(b []byte) {
+func (t *TL_contacts_contacts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_contacts = dc.Vector()
 	t.M_saved_count = dc.Int()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_importedContacts#77d01c3b
@@ -11191,7 +11332,7 @@ func (t *TL_contacts_importedContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_importedContacts) Decode(b []byte) {
+func (t *TL_contacts_importedContacts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_imported = dc.Vector()
@@ -11199,6 +11340,7 @@ func (t *TL_contacts_importedContacts) Decode(b []byte) {
 	t.M_retry_contacts = dc.VectorLong()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_blocked#1c138d15
@@ -11244,12 +11386,13 @@ func (t *TL_contacts_blocked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_blocked) Decode(b []byte) {
+func (t *TL_contacts_blocked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_blocked = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_blockedSlice#900802a1
@@ -11305,13 +11448,14 @@ func (t *TL_contacts_blockedSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_blockedSlice) Decode(b []byte) {
+func (t *TL_contacts_blockedSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 	t.M_blocked = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_dialogs#15ba6c40
@@ -11377,7 +11521,7 @@ func (t *TL_messages_dialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_dialogs) Decode(b []byte) {
+func (t *TL_messages_dialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dialogs = dc.Vector()
@@ -11385,6 +11529,7 @@ func (t *TL_messages_dialogs) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_dialogsSlice#71e094f3
@@ -11460,7 +11605,7 @@ func (t *TL_messages_dialogsSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_dialogsSlice) Decode(b []byte) {
+func (t *TL_messages_dialogsSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
@@ -11469,6 +11614,7 @@ func (t *TL_messages_dialogsSlice) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_messages#8c718e87
@@ -11524,13 +11670,14 @@ func (t *TL_messages_messages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_messages) Decode(b []byte) {
+func (t *TL_messages_messages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_messages = dc.Vector()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_messagesSlice#b446ae3
@@ -11596,7 +11743,7 @@ func (t *TL_messages_messagesSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_messagesSlice) Decode(b []byte) {
+func (t *TL_messages_messagesSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
@@ -11604,6 +11751,7 @@ func (t *TL_messages_messagesSlice) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_channelMessages#99262e37
@@ -11688,7 +11836,7 @@ func (t *TL_messages_channelMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_channelMessages) Decode(b []byte) {
+func (t *TL_messages_channelMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
@@ -11697,6 +11845,7 @@ func (t *TL_messages_channelMessages) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_messagesNotModified#74535f21
@@ -11732,11 +11881,12 @@ func (t *TL_messages_messagesNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_messagesNotModified) Decode(b []byte) {
+func (t *TL_messages_messagesNotModified) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 
+	return dc.err
 }
 
 // messages_chats#64ff9fd5
@@ -11772,11 +11922,12 @@ func (t *TL_messages_chats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_chats) Decode(b []byte) {
+func (t *TL_messages_chats) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chats = dc.Vector()
 
+	return dc.err
 }
 
 // messages_chatsSlice#9cd81144
@@ -11822,12 +11973,13 @@ func (t *TL_messages_chatsSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_chatsSlice) Decode(b []byte) {
+func (t *TL_messages_chatsSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 	t.M_chats = dc.Vector()
 
+	return dc.err
 }
 
 // messages_chatFull#e5d7d19c
@@ -11883,13 +12035,14 @@ func (t *TL_messages_chatFull) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_chatFull) Decode(b []byte) {
+func (t *TL_messages_chatFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_full_chat = dc.TLObject()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messages_affectedHistory#b45c69d1
@@ -11945,13 +12098,14 @@ func (t *TL_messages_affectedHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_affectedHistory) Decode(b []byte) {
+func (t *TL_messages_affectedHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 	t.M_offset = dc.Int()
 
+	return dc.err
 }
 
 // inputMessagesFilterEmpty#57e2f66c
@@ -11977,8 +12131,8 @@ func (t *TL_inputMessagesFilterEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterEmpty) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterPhotos#9609a51c
@@ -12004,8 +12158,8 @@ func (t *TL_inputMessagesFilterPhotos) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterPhotos) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterPhotos) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterVideo#9fc00e65
@@ -12031,8 +12185,8 @@ func (t *TL_inputMessagesFilterVideo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterVideo) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterVideo) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterPhotoVideo#56e9f0e4
@@ -12058,8 +12212,8 @@ func (t *TL_inputMessagesFilterPhotoVideo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterPhotoVideo) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterPhotoVideo) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterDocument#9eddf188
@@ -12085,8 +12239,8 @@ func (t *TL_inputMessagesFilterDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterDocument) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterDocument) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterUrl#7ef0dd87
@@ -12112,8 +12266,8 @@ func (t *TL_inputMessagesFilterUrl) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterUrl) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterUrl) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterGif#ffc86587
@@ -12139,8 +12293,8 @@ func (t *TL_inputMessagesFilterGif) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterGif) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterGif) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterVoice#50f5c392
@@ -12166,8 +12320,8 @@ func (t *TL_inputMessagesFilterVoice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterVoice) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterVoice) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterMusic#3751b49e
@@ -12193,8 +12347,8 @@ func (t *TL_inputMessagesFilterMusic) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterMusic) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterMusic) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterChatPhotos#3a20ecb8
@@ -12220,8 +12374,8 @@ func (t *TL_inputMessagesFilterChatPhotos) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterChatPhotos) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterChatPhotos) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterPhoneCalls#80c99768
@@ -12266,11 +12420,12 @@ func (t *TL_inputMessagesFilterPhoneCalls) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Decode(b []byte) {
+func (t *TL_inputMessagesFilterPhoneCalls) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_missed = dc.TLObject()
 
+	return dc.err
 }
 
 // inputMessagesFilterRoundVoice#7a7c17a4
@@ -12296,8 +12451,8 @@ func (t *TL_inputMessagesFilterRoundVoice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterRoundVoice) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterRoundVoice) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterRoundVideo#b549da53
@@ -12323,8 +12478,8 @@ func (t *TL_inputMessagesFilterRoundVideo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterRoundVideo) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterRoundVideo) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterMyMentions#c1f8e69a
@@ -12350,8 +12505,8 @@ func (t *TL_inputMessagesFilterMyMentions) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterMyMentions) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterMyMentions) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterGeo#e7026d0d
@@ -12377,8 +12532,8 @@ func (t *TL_inputMessagesFilterGeo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterGeo) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterGeo) Decode(b []byte) error {
+	return nil
 }
 
 // inputMessagesFilterContacts#e062db83
@@ -12404,8 +12559,8 @@ func (t *TL_inputMessagesFilterContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessagesFilterContacts) Decode(b []byte) {
-
+func (t *TL_inputMessagesFilterContacts) Decode(b []byte) error {
+	return nil
 }
 
 // updateNewMessage#1f2b0afd
@@ -12461,13 +12616,14 @@ func (t *TL_updateNewMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateNewMessage) Decode(b []byte) {
+func (t *TL_updateNewMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateMessageID#4e90bfd6
@@ -12513,12 +12669,13 @@ func (t *TL_updateMessageID) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateMessageID) Decode(b []byte) {
+func (t *TL_updateMessageID) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 	t.M_random_id = dc.Long()
 
+	return dc.err
 }
 
 // updateDeleteMessages#a20db0e5
@@ -12574,13 +12731,14 @@ func (t *TL_updateDeleteMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateDeleteMessages) Decode(b []byte) {
+func (t *TL_updateDeleteMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_messages = dc.VectorInt()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateUserTyping#5c486927
@@ -12626,12 +12784,13 @@ func (t *TL_updateUserTyping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserTyping) Decode(b []byte) {
+func (t *TL_updateUserTyping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_action = dc.TLObject()
 
+	return dc.err
 }
 
 // updateChatUserTyping#9a65ea1f
@@ -12687,13 +12846,14 @@ func (t *TL_updateChatUserTyping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatUserTyping) Decode(b []byte) {
+func (t *TL_updateChatUserTyping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_user_id = dc.Int()
 	t.M_action = dc.TLObject()
 
+	return dc.err
 }
 
 // updateChatParticipants#7761198
@@ -12729,11 +12889,12 @@ func (t *TL_updateChatParticipants) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatParticipants) Decode(b []byte) {
+func (t *TL_updateChatParticipants) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_participants = dc.TLObject()
 
+	return dc.err
 }
 
 // updateUserStatus#1bfbd823
@@ -12779,12 +12940,13 @@ func (t *TL_updateUserStatus) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserStatus) Decode(b []byte) {
+func (t *TL_updateUserStatus) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_status = dc.TLObject()
 
+	return dc.err
 }
 
 // updateUserName#a7332b73
@@ -12850,7 +13012,7 @@ func (t *TL_updateUserName) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserName) Decode(b []byte) {
+func (t *TL_updateUserName) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
@@ -12858,6 +13020,7 @@ func (t *TL_updateUserName) Decode(b []byte) {
 	t.M_last_name = dc.String()
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // updateUserPhoto#95313b0c
@@ -12923,7 +13086,7 @@ func (t *TL_updateUserPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserPhoto) Decode(b []byte) {
+func (t *TL_updateUserPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
@@ -12931,6 +13094,7 @@ func (t *TL_updateUserPhoto) Decode(b []byte) {
 	t.M_photo = dc.TLObject()
 	t.M_previous = dc.TLObject()
 
+	return dc.err
 }
 
 // updateContactRegistered#2575bbb9
@@ -12976,12 +13140,13 @@ func (t *TL_updateContactRegistered) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateContactRegistered) Decode(b []byte) {
+func (t *TL_updateContactRegistered) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // updateContactLink#9d2e67c5
@@ -13037,13 +13202,14 @@ func (t *TL_updateContactLink) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateContactLink) Decode(b []byte) {
+func (t *TL_updateContactLink) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_my_link = dc.TLObject()
 	t.M_foreign_link = dc.TLObject()
 
+	return dc.err
 }
 
 // updateNewEncryptedMessage#12bcbd9a
@@ -13089,12 +13255,13 @@ func (t *TL_updateNewEncryptedMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateNewEncryptedMessage) Decode(b []byte) {
+func (t *TL_updateNewEncryptedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 	t.M_qts = dc.Int()
 
+	return dc.err
 }
 
 // updateEncryptedChatTyping#1710f156
@@ -13130,11 +13297,12 @@ func (t *TL_updateEncryptedChatTyping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateEncryptedChatTyping) Decode(b []byte) {
+func (t *TL_updateEncryptedChatTyping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // updateEncryption#b4a2e88d
@@ -13180,12 +13348,13 @@ func (t *TL_updateEncryption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateEncryption) Decode(b []byte) {
+func (t *TL_updateEncryption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat = dc.TLObject()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // updateEncryptedMessagesRead#38fe25b7
@@ -13241,13 +13410,14 @@ func (t *TL_updateEncryptedMessagesRead) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateEncryptedMessagesRead) Decode(b []byte) {
+func (t *TL_updateEncryptedMessagesRead) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_max_date = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // updateChatParticipantAdd#ea4b0e5c
@@ -13323,7 +13493,7 @@ func (t *TL_updateChatParticipantAdd) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatParticipantAdd) Decode(b []byte) {
+func (t *TL_updateChatParticipantAdd) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
@@ -13332,6 +13502,7 @@ func (t *TL_updateChatParticipantAdd) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // updateChatParticipantDelete#6e5f8c22
@@ -13387,13 +13558,14 @@ func (t *TL_updateChatParticipantDelete) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatParticipantDelete) Decode(b []byte) {
+func (t *TL_updateChatParticipantDelete) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_user_id = dc.Int()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // updateDcOptions#8e5e9873
@@ -13429,11 +13601,12 @@ func (t *TL_updateDcOptions) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateDcOptions) Decode(b []byte) {
+func (t *TL_updateDcOptions) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_options = dc.Vector()
 
+	return dc.err
 }
 
 // updateUserBlocked#80ece81a
@@ -13479,12 +13652,13 @@ func (t *TL_updateUserBlocked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserBlocked) Decode(b []byte) {
+func (t *TL_updateUserBlocked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_blocked = dc.TLObject()
 
+	return dc.err
 }
 
 // updateNotifySettings#bec268ef
@@ -13530,12 +13704,13 @@ func (t *TL_updateNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateNotifySettings) Decode(b []byte) {
+func (t *TL_updateNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_notify_settings = dc.TLObject()
 
+	return dc.err
 }
 
 // updateServiceNotification#ebe46819
@@ -13630,7 +13805,7 @@ func (t *TL_updateServiceNotification) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateServiceNotification) Decode(b []byte) {
+func (t *TL_updateServiceNotification) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_popup = dc.TLObject()
@@ -13640,6 +13815,7 @@ func (t *TL_updateServiceNotification) Decode(b []byte) {
 	t.M_media = dc.TLObject()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // updatePrivacy#ee3b272a
@@ -13685,12 +13861,13 @@ func (t *TL_updatePrivacy) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatePrivacy) Decode(b []byte) {
+func (t *TL_updatePrivacy) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.TLObject()
 	t.M_rules = dc.Vector()
 
+	return dc.err
 }
 
 // updateUserPhone#12b9417b
@@ -13736,12 +13913,13 @@ func (t *TL_updateUserPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateUserPhone) Decode(b []byte) {
+func (t *TL_updateUserPhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_phone = dc.String()
 
+	return dc.err
 }
 
 // updateReadHistoryInbox#9961fd5c
@@ -13807,7 +13985,7 @@ func (t *TL_updateReadHistoryInbox) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadHistoryInbox) Decode(b []byte) {
+func (t *TL_updateReadHistoryInbox) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -13815,6 +13993,7 @@ func (t *TL_updateReadHistoryInbox) Decode(b []byte) {
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateReadHistoryOutbox#2f2f21bf
@@ -13880,7 +14059,7 @@ func (t *TL_updateReadHistoryOutbox) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadHistoryOutbox) Decode(b []byte) {
+func (t *TL_updateReadHistoryOutbox) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -13888,6 +14067,7 @@ func (t *TL_updateReadHistoryOutbox) Decode(b []byte) {
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateWebPage#7f891213
@@ -13943,13 +14123,14 @@ func (t *TL_updateWebPage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateWebPage) Decode(b []byte) {
+func (t *TL_updateWebPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_webpage = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateReadMessagesContents#68c13933
@@ -14005,13 +14186,14 @@ func (t *TL_updateReadMessagesContents) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadMessagesContents) Decode(b []byte) {
+func (t *TL_updateReadMessagesContents) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_messages = dc.VectorInt()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateChannelTooLong#eb0467fb
@@ -14066,12 +14248,13 @@ func (t *TL_updateChannelTooLong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelTooLong) Decode(b []byte) {
+func (t *TL_updateChannelTooLong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_pts = dc.TLObject()
 
+	return dc.err
 }
 
 // updateChannel#b6d45656
@@ -14107,11 +14290,12 @@ func (t *TL_updateChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannel) Decode(b []byte) {
+func (t *TL_updateChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 
+	return dc.err
 }
 
 // updateNewChannelMessage#62ba04d9
@@ -14167,13 +14351,14 @@ func (t *TL_updateNewChannelMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateNewChannelMessage) Decode(b []byte) {
+func (t *TL_updateNewChannelMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateReadChannelInbox#4214f37f
@@ -14219,12 +14404,13 @@ func (t *TL_updateReadChannelInbox) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadChannelInbox) Decode(b []byte) {
+func (t *TL_updateReadChannelInbox) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // updateDeleteChannelMessages#c37521c9
@@ -14290,7 +14476,7 @@ func (t *TL_updateDeleteChannelMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateDeleteChannelMessages) Decode(b []byte) {
+func (t *TL_updateDeleteChannelMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
@@ -14298,6 +14484,7 @@ func (t *TL_updateDeleteChannelMessages) Decode(b []byte) {
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateChannelMessageViews#98a12b4b
@@ -14353,13 +14540,14 @@ func (t *TL_updateChannelMessageViews) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelMessageViews) Decode(b []byte) {
+func (t *TL_updateChannelMessageViews) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_id = dc.Int()
 	t.M_views = dc.Int()
 
+	return dc.err
 }
 
 // updateChatAdmins#6e947941
@@ -14415,13 +14603,14 @@ func (t *TL_updateChatAdmins) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatAdmins) Decode(b []byte) {
+func (t *TL_updateChatAdmins) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_enabled = dc.TLObject()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // updateChatParticipantAdmin#b6901959
@@ -14487,7 +14676,7 @@ func (t *TL_updateChatParticipantAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChatParticipantAdmin) Decode(b []byte) {
+func (t *TL_updateChatParticipantAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
@@ -14495,6 +14684,7 @@ func (t *TL_updateChatParticipantAdmin) Decode(b []byte) {
 	t.M_is_admin = dc.TLObject()
 	t.M_version = dc.Int()
 
+	return dc.err
 }
 
 // updateNewStickerSet#688a30aa
@@ -14530,11 +14720,12 @@ func (t *TL_updateNewStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateNewStickerSet) Decode(b []byte) {
+func (t *TL_updateNewStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_stickerset = dc.TLObject()
 
+	return dc.err
 }
 
 // updateStickerSetsOrder#bb2d201
@@ -14589,12 +14780,13 @@ func (t *TL_updateStickerSetsOrder) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateStickerSetsOrder) Decode(b []byte) {
+func (t *TL_updateStickerSetsOrder) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
 	t.M_order = dc.VectorLong()
 
+	return dc.err
 }
 
 // updateStickerSets#43ae3dec
@@ -14620,8 +14812,8 @@ func (t *TL_updateStickerSets) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateStickerSets) Decode(b []byte) {
-
+func (t *TL_updateStickerSets) Decode(b []byte) error {
+	return nil
 }
 
 // updateSavedGifs#9375341e
@@ -14647,8 +14839,8 @@ func (t *TL_updateSavedGifs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateSavedGifs) Decode(b []byte) {
-
+func (t *TL_updateSavedGifs) Decode(b []byte) error {
+	return nil
 }
 
 // updateBotInlineQuery#54826690
@@ -14733,7 +14925,7 @@ func (t *TL_updateBotInlineQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotInlineQuery) Decode(b []byte) {
+func (t *TL_updateBotInlineQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
@@ -14742,6 +14934,7 @@ func (t *TL_updateBotInlineQuery) Decode(b []byte) {
 	t.M_geo = dc.TLObject()
 	t.M_offset = dc.String()
 
+	return dc.err
 }
 
 // updateBotInlineSend#e48f964
@@ -14826,7 +15019,7 @@ func (t *TL_updateBotInlineSend) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotInlineSend) Decode(b []byte) {
+func (t *TL_updateBotInlineSend) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
@@ -14835,6 +15028,7 @@ func (t *TL_updateBotInlineSend) Decode(b []byte) {
 	t.M_id = dc.String()
 	t.M_msg_id = dc.TLObject()
 
+	return dc.err
 }
 
 // updateEditChannelMessage#1b3f4df7
@@ -14890,13 +15084,14 @@ func (t *TL_updateEditChannelMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateEditChannelMessage) Decode(b []byte) {
+func (t *TL_updateEditChannelMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateChannelPinnedMessage#98592475
@@ -14942,12 +15137,13 @@ func (t *TL_updateChannelPinnedMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelPinnedMessage) Decode(b []byte) {
+func (t *TL_updateChannelPinnedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // updateBotCallbackQuery#e73547e1
@@ -15052,7 +15248,7 @@ func (t *TL_updateBotCallbackQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotCallbackQuery) Decode(b []byte) {
+func (t *TL_updateBotCallbackQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
@@ -15063,6 +15259,7 @@ func (t *TL_updateBotCallbackQuery) Decode(b []byte) {
 	t.M_data = dc.TLObject()
 	t.M_game_short_name = dc.TLObject()
 
+	return dc.err
 }
 
 // updateEditMessage#e40370a3
@@ -15118,13 +15315,14 @@ func (t *TL_updateEditMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateEditMessage) Decode(b []byte) {
+func (t *TL_updateEditMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateInlineBotCallbackQuery#f9d27a5a
@@ -15219,7 +15417,7 @@ func (t *TL_updateInlineBotCallbackQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Decode(b []byte) {
+func (t *TL_updateInlineBotCallbackQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
@@ -15229,6 +15427,7 @@ func (t *TL_updateInlineBotCallbackQuery) Decode(b []byte) {
 	t.M_data = dc.TLObject()
 	t.M_game_short_name = dc.TLObject()
 
+	return dc.err
 }
 
 // updateReadChannelOutbox#25d6c9c7
@@ -15274,12 +15473,13 @@ func (t *TL_updateReadChannelOutbox) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadChannelOutbox) Decode(b []byte) {
+func (t *TL_updateReadChannelOutbox) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // updateDraftMessage#ee2bb969
@@ -15325,12 +15525,13 @@ func (t *TL_updateDraftMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateDraftMessage) Decode(b []byte) {
+func (t *TL_updateDraftMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_draft = dc.TLObject()
 
+	return dc.err
 }
 
 // updateReadFeaturedStickers#571d2742
@@ -15356,8 +15557,8 @@ func (t *TL_updateReadFeaturedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateReadFeaturedStickers) Decode(b []byte) {
-
+func (t *TL_updateReadFeaturedStickers) Decode(b []byte) error {
+	return nil
 }
 
 // updateRecentStickers#9a422c20
@@ -15383,8 +15584,8 @@ func (t *TL_updateRecentStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateRecentStickers) Decode(b []byte) {
-
+func (t *TL_updateRecentStickers) Decode(b []byte) error {
+	return nil
 }
 
 // updateConfig#a229dd06
@@ -15410,8 +15611,8 @@ func (t *TL_updateConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateConfig) Decode(b []byte) {
-
+func (t *TL_updateConfig) Decode(b []byte) error {
+	return nil
 }
 
 // updatePtsChanged#3354678f
@@ -15437,8 +15638,8 @@ func (t *TL_updatePtsChanged) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatePtsChanged) Decode(b []byte) {
-
+func (t *TL_updatePtsChanged) Decode(b []byte) error {
+	return nil
 }
 
 // updateChannelWebPage#40771900
@@ -15504,7 +15705,7 @@ func (t *TL_updateChannelWebPage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelWebPage) Decode(b []byte) {
+func (t *TL_updateChannelWebPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
@@ -15512,6 +15713,7 @@ func (t *TL_updateChannelWebPage) Decode(b []byte) {
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // updateDialogPinned#d711a2cc
@@ -15566,12 +15768,13 @@ func (t *TL_updateDialogPinned) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateDialogPinned) Decode(b []byte) {
+func (t *TL_updateDialogPinned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pinned = dc.TLObject()
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // updatePinnedDialogs#d8caf68d
@@ -15616,11 +15819,12 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatePinnedDialogs) Decode(b []byte) {
+func (t *TL_updatePinnedDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_order = dc.Vector()
 
+	return dc.err
 }
 
 // updateBotWebhookJSON#8317c0c3
@@ -15656,11 +15860,12 @@ func (t *TL_updateBotWebhookJSON) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotWebhookJSON) Decode(b []byte) {
+func (t *TL_updateBotWebhookJSON) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // updateBotWebhookJSONQuery#9b9240a6
@@ -15716,13 +15921,14 @@ func (t *TL_updateBotWebhookJSONQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotWebhookJSONQuery) Decode(b []byte) {
+func (t *TL_updateBotWebhookJSONQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
 	t.M_data = dc.TLObject()
 	t.M_timeout = dc.Int()
 
+	return dc.err
 }
 
 // updateBotShippingQuery#e0cdc940
@@ -15788,7 +15994,7 @@ func (t *TL_updateBotShippingQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotShippingQuery) Decode(b []byte) {
+func (t *TL_updateBotShippingQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
@@ -15796,6 +16002,7 @@ func (t *TL_updateBotShippingQuery) Decode(b []byte) {
 	t.M_payload = dc.TLObject()
 	t.M_shipping_address = dc.TLObject()
 
+	return dc.err
 }
 
 // updateBotPrecheckoutQuery#5d2f3aa9
@@ -15900,7 +16107,7 @@ func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) {
+func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
@@ -15911,6 +16118,7 @@ func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) {
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 
+	return dc.err
 }
 
 // updatePhoneCall#ab0f6b1e
@@ -15946,11 +16154,12 @@ func (t *TL_updatePhoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatePhoneCall) Decode(b []byte) {
+func (t *TL_updatePhoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_call = dc.TLObject()
 
+	return dc.err
 }
 
 // updateLangPackTooLong#10c2404b
@@ -15976,8 +16185,8 @@ func (t *TL_updateLangPackTooLong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateLangPackTooLong) Decode(b []byte) {
-
+func (t *TL_updateLangPackTooLong) Decode(b []byte) error {
+	return nil
 }
 
 // updateLangPack#56022f4d
@@ -16013,11 +16222,12 @@ func (t *TL_updateLangPack) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateLangPack) Decode(b []byte) {
+func (t *TL_updateLangPack) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_difference = dc.TLObject()
 
+	return dc.err
 }
 
 // updateFavedStickers#e511996d
@@ -16043,8 +16253,8 @@ func (t *TL_updateFavedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateFavedStickers) Decode(b []byte) {
-
+func (t *TL_updateFavedStickers) Decode(b []byte) error {
+	return nil
 }
 
 // updateChannelReadMessagesContents#89893b45
@@ -16090,12 +16300,13 @@ func (t *TL_updateChannelReadMessagesContents) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelReadMessagesContents) Decode(b []byte) {
+func (t *TL_updateChannelReadMessagesContents) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_messages = dc.VectorInt()
 
+	return dc.err
 }
 
 // updateContactsReset#7084a7be
@@ -16121,8 +16332,8 @@ func (t *TL_updateContactsReset) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateContactsReset) Decode(b []byte) {
-
+func (t *TL_updateContactsReset) Decode(b []byte) error {
+	return nil
 }
 
 // updateChannelAvailableMessages#70db6837
@@ -16168,12 +16379,13 @@ func (t *TL_updateChannelAvailableMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateChannelAvailableMessages) Decode(b []byte) {
+func (t *TL_updateChannelAvailableMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_available_min_id = dc.Int()
 
+	return dc.err
 }
 
 // updates_state#a56c2a3e
@@ -16249,7 +16461,7 @@ func (t *TL_updates_state) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_state) Decode(b []byte) {
+func (t *TL_updates_state) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
@@ -16258,6 +16470,7 @@ func (t *TL_updates_state) Decode(b []byte) {
 	t.M_seq = dc.Int()
 	t.M_unread_count = dc.Int()
 
+	return dc.err
 }
 
 // updates_differenceEmpty#5d75a138
@@ -16303,12 +16516,13 @@ func (t *TL_updates_differenceEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_differenceEmpty) Decode(b []byte) {
+func (t *TL_updates_differenceEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_date = dc.Int()
 	t.M_seq = dc.Int()
 
+	return dc.err
 }
 
 // updates_difference#f49ca0
@@ -16394,7 +16608,7 @@ func (t *TL_updates_difference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_difference) Decode(b []byte) {
+func (t *TL_updates_difference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_messages = dc.Vector()
@@ -16404,6 +16618,7 @@ func (t *TL_updates_difference) Decode(b []byte) {
 	t.M_users = dc.Vector()
 	t.M_state = dc.TLObject()
 
+	return dc.err
 }
 
 // updates_differenceSlice#a8fb1981
@@ -16489,7 +16704,7 @@ func (t *TL_updates_differenceSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_differenceSlice) Decode(b []byte) {
+func (t *TL_updates_differenceSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_messages = dc.Vector()
@@ -16499,6 +16714,7 @@ func (t *TL_updates_differenceSlice) Decode(b []byte) {
 	t.M_users = dc.Vector()
 	t.M_intermediate_state = dc.TLObject()
 
+	return dc.err
 }
 
 // updates_differenceTooLong#4afe8f6d
@@ -16534,11 +16750,12 @@ func (t *TL_updates_differenceTooLong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_differenceTooLong) Decode(b []byte) {
+func (t *TL_updates_differenceTooLong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
 
+	return dc.err
 }
 
 // updatesTooLong#e317af7e
@@ -16564,8 +16781,8 @@ func (t *TL_updatesTooLong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatesTooLong) Decode(b []byte) {
-
+func (t *TL_updatesTooLong) Decode(b []byte) error {
+	return nil
 }
 
 // updateShortMessage#914fbf11
@@ -16740,7 +16957,7 @@ func (t *TL_updateShortMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateShortMessage) Decode(b []byte) {
+func (t *TL_updateShortMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_out = dc.TLObject()
@@ -16758,6 +16975,7 @@ func (t *TL_updateShortMessage) Decode(b []byte) {
 	t.M_reply_to_msg_id = dc.TLObject()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // updateShortChatMessage#16812688
@@ -16942,7 +17160,7 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateShortChatMessage) Decode(b []byte) {
+func (t *TL_updateShortChatMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_out = dc.TLObject()
@@ -16961,6 +17179,7 @@ func (t *TL_updateShortChatMessage) Decode(b []byte) {
 	t.M_reply_to_msg_id = dc.TLObject()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // updateShort#78d4dec1
@@ -17006,12 +17225,13 @@ func (t *TL_updateShort) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateShort) Decode(b []byte) {
+func (t *TL_updateShort) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_update = dc.TLObject()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // updatesCombined#725b04c3
@@ -17097,7 +17317,7 @@ func (t *TL_updatesCombined) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updatesCombined) Decode(b []byte) {
+func (t *TL_updatesCombined) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_updates = dc.Vector()
@@ -17107,6 +17327,7 @@ func (t *TL_updatesCombined) Decode(b []byte) {
 	t.M_seq_start = dc.Int()
 	t.M_seq = dc.Int()
 
+	return dc.err
 }
 
 // updates#74ae4240
@@ -17182,7 +17403,7 @@ func (t *TL_updates) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates) Decode(b []byte) {
+func (t *TL_updates) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_updates = dc.Vector()
@@ -17191,6 +17412,7 @@ func (t *TL_updates) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_seq = dc.Int()
 
+	return dc.err
 }
 
 // updateShortSentMessage#11f1331c
@@ -17295,7 +17517,7 @@ func (t *TL_updateShortSentMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updateShortSentMessage) Decode(b []byte) {
+func (t *TL_updateShortSentMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_out = dc.TLObject()
@@ -17306,6 +17528,7 @@ func (t *TL_updateShortSentMessage) Decode(b []byte) {
 	t.M_media = dc.TLObject()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // photos_photos#8dca6aa5
@@ -17351,12 +17574,13 @@ func (t *TL_photos_photos) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_photos) Decode(b []byte) {
+func (t *TL_photos_photos) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photos = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // photos_photosSlice#15051f54
@@ -17412,13 +17636,14 @@ func (t *TL_photos_photosSlice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_photosSlice) Decode(b []byte) {
+func (t *TL_photos_photosSlice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 	t.M_photos = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // photos_photo#20212ca8
@@ -17464,12 +17689,13 @@ func (t *TL_photos_photo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_photo) Decode(b []byte) {
+func (t *TL_photos_photo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo = dc.TLObject()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // upload_file#96a18d5
@@ -17525,13 +17751,14 @@ func (t *TL_upload_file) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_file) Decode(b []byte) {
+func (t *TL_upload_file) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_type = dc.TLObject()
 	t.M_mtime = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // upload_fileCdnRedirect#ea52fe5a
@@ -17607,7 +17834,7 @@ func (t *TL_upload_fileCdnRedirect) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_fileCdnRedirect) Decode(b []byte) {
+func (t *TL_upload_fileCdnRedirect) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
@@ -17616,6 +17843,7 @@ func (t *TL_upload_fileCdnRedirect) Decode(b []byte) {
 	t.M_encryption_iv = dc.TLObject()
 	t.M_cdn_file_hashes = dc.Vector()
 
+	return dc.err
 }
 
 // dcOption#5d8c6cc
@@ -17730,7 +17958,7 @@ func (t *TL_dcOption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dcOption) Decode(b []byte) {
+func (t *TL_dcOption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ipv6 = dc.TLObject()
@@ -17742,6 +17970,7 @@ func (t *TL_dcOption) Decode(b []byte) {
 	t.M_ip_address = dc.String()
 	t.M_port = dc.Int()
 
+	return dc.err
 }
 
 // config#9c840964
@@ -18126,7 +18355,7 @@ func (t *TL_config) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_config) Decode(b []byte) {
+func (t *TL_config) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phonecalls_enabled = dc.TLObject()
@@ -18165,6 +18394,7 @@ func (t *TL_config) Decode(b []byte) {
 	t.M_lang_pack_version = dc.TLObject()
 	t.M_disabled_features = dc.Vector()
 
+	return dc.err
 }
 
 // nearestDc#8e1a1775
@@ -18220,13 +18450,14 @@ func (t *TL_nearestDc) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_nearestDc) Decode(b []byte) {
+func (t *TL_nearestDc) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_country = dc.String()
 	t.M_this_dc = dc.Int()
 	t.M_nearest_dc = dc.Int()
 
+	return dc.err
 }
 
 // help_appUpdate#8987f311
@@ -18292,7 +18523,7 @@ func (t *TL_help_appUpdate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_appUpdate) Decode(b []byte) {
+func (t *TL_help_appUpdate) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -18300,6 +18531,7 @@ func (t *TL_help_appUpdate) Decode(b []byte) {
 	t.M_url = dc.String()
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // help_noAppUpdate#c45a6536
@@ -18325,8 +18557,8 @@ func (t *TL_help_noAppUpdate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_noAppUpdate) Decode(b []byte) {
-
+func (t *TL_help_noAppUpdate) Decode(b []byte) error {
+	return nil
 }
 
 // help_inviteText#18cb9f78
@@ -18362,11 +18594,12 @@ func (t *TL_help_inviteText) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_inviteText) Decode(b []byte) {
+func (t *TL_help_inviteText) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.String()
 
+	return dc.err
 }
 
 // encryptedChatEmpty#ab7ec0a0
@@ -18402,11 +18635,12 @@ func (t *TL_encryptedChatEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedChatEmpty) Decode(b []byte) {
+func (t *TL_encryptedChatEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // encryptedChatWaiting#3bf703dc
@@ -18482,7 +18716,7 @@ func (t *TL_encryptedChatWaiting) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedChatWaiting) Decode(b []byte) {
+func (t *TL_encryptedChatWaiting) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -18491,6 +18725,7 @@ func (t *TL_encryptedChatWaiting) Decode(b []byte) {
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
 
+	return dc.err
 }
 
 // encryptedChatRequested#c878527e
@@ -18576,7 +18811,7 @@ func (t *TL_encryptedChatRequested) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedChatRequested) Decode(b []byte) {
+func (t *TL_encryptedChatRequested) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -18586,6 +18821,7 @@ func (t *TL_encryptedChatRequested) Decode(b []byte) {
 	t.M_participant_id = dc.Int()
 	t.M_g_a = dc.TLObject()
 
+	return dc.err
 }
 
 // encryptedChat#fa56ce36
@@ -18681,7 +18917,7 @@ func (t *TL_encryptedChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedChat) Decode(b []byte) {
+func (t *TL_encryptedChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
@@ -18692,6 +18928,7 @@ func (t *TL_encryptedChat) Decode(b []byte) {
 	t.M_g_a_or_b = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 
+	return dc.err
 }
 
 // encryptedChatDiscarded#13d6dd27
@@ -18727,11 +18964,12 @@ func (t *TL_encryptedChatDiscarded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedChatDiscarded) Decode(b []byte) {
+func (t *TL_encryptedChatDiscarded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // inputEncryptedChat#f141b5e1
@@ -18777,12 +19015,13 @@ func (t *TL_inputEncryptedChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedChat) Decode(b []byte) {
+func (t *TL_inputEncryptedChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // encryptedFileEmpty#c21f497e
@@ -18808,8 +19047,8 @@ func (t *TL_encryptedFileEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedFileEmpty) Decode(b []byte) {
-
+func (t *TL_encryptedFileEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // encryptedFile#4a70994c
@@ -18885,7 +19124,7 @@ func (t *TL_encryptedFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedFile) Decode(b []byte) {
+func (t *TL_encryptedFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -18894,6 +19133,7 @@ func (t *TL_encryptedFile) Decode(b []byte) {
 	t.M_dc_id = dc.Int()
 	t.M_key_fingerprint = dc.Int()
 
+	return dc.err
 }
 
 // inputEncryptedFileEmpty#1837c364
@@ -18919,8 +19159,8 @@ func (t *TL_inputEncryptedFileEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedFileEmpty) Decode(b []byte) {
-
+func (t *TL_inputEncryptedFileEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputEncryptedFileUploaded#64bd0306
@@ -18986,7 +19226,7 @@ func (t *TL_inputEncryptedFileUploaded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedFileUploaded) Decode(b []byte) {
+func (t *TL_inputEncryptedFileUploaded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -18994,6 +19234,7 @@ func (t *TL_inputEncryptedFileUploaded) Decode(b []byte) {
 	t.M_md5_checksum = dc.String()
 	t.M_key_fingerprint = dc.Int()
 
+	return dc.err
 }
 
 // inputEncryptedFile#5a17b5e5
@@ -19039,12 +19280,13 @@ func (t *TL_inputEncryptedFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedFile) Decode(b []byte) {
+func (t *TL_inputEncryptedFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputEncryptedFileBigUploaded#2dc173c8
@@ -19100,13 +19342,14 @@ func (t *TL_inputEncryptedFileBigUploaded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputEncryptedFileBigUploaded) Decode(b []byte) {
+func (t *TL_inputEncryptedFileBigUploaded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_parts = dc.Int()
 	t.M_key_fingerprint = dc.Int()
 
+	return dc.err
 }
 
 // encryptedMessage#ed18c118
@@ -19182,7 +19425,7 @@ func (t *TL_encryptedMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedMessage) Decode(b []byte) {
+func (t *TL_encryptedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_random_id = dc.Long()
@@ -19191,6 +19434,7 @@ func (t *TL_encryptedMessage) Decode(b []byte) {
 	t.M_bytes = dc.TLObject()
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // encryptedMessageService#23734b06
@@ -19256,7 +19500,7 @@ func (t *TL_encryptedMessageService) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_encryptedMessageService) Decode(b []byte) {
+func (t *TL_encryptedMessageService) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_random_id = dc.Long()
@@ -19264,6 +19508,7 @@ func (t *TL_encryptedMessageService) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_dhConfigNotModified#c0e24635
@@ -19299,11 +19544,12 @@ func (t *TL_messages_dhConfigNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_dhConfigNotModified) Decode(b []byte) {
+func (t *TL_messages_dhConfigNotModified) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_random = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_dhConfig#2c221edd
@@ -19369,7 +19615,7 @@ func (t *TL_messages_dhConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_dhConfig) Decode(b []byte) {
+func (t *TL_messages_dhConfig) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_g = dc.Int()
@@ -19377,6 +19623,7 @@ func (t *TL_messages_dhConfig) Decode(b []byte) {
 	t.M_version = dc.Int()
 	t.M_random = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sentEncryptedMessage#560f8935
@@ -19412,11 +19659,12 @@ func (t *TL_messages_sentEncryptedMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sentEncryptedMessage) Decode(b []byte) {
+func (t *TL_messages_sentEncryptedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // messages_sentEncryptedFile#9493ff32
@@ -19462,12 +19710,13 @@ func (t *TL_messages_sentEncryptedFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sentEncryptedFile) Decode(b []byte) {
+func (t *TL_messages_sentEncryptedFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_date = dc.Int()
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // inputDocumentEmpty#72f0eaae
@@ -19493,8 +19742,8 @@ func (t *TL_inputDocumentEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputDocumentEmpty) Decode(b []byte) {
-
+func (t *TL_inputDocumentEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputDocument#18798952
@@ -19540,12 +19789,13 @@ func (t *TL_inputDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputDocument) Decode(b []byte) {
+func (t *TL_inputDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // documentEmpty#36f8c871
@@ -19581,11 +19831,12 @@ func (t *TL_documentEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentEmpty) Decode(b []byte) {
+func (t *TL_documentEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 
+	return dc.err
 }
 
 // document#87232bc7
@@ -19701,7 +19952,7 @@ func (t *TL_document) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_document) Decode(b []byte) {
+func (t *TL_document) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -19714,6 +19965,7 @@ func (t *TL_document) Decode(b []byte) {
 	t.M_version = dc.Int()
 	t.M_attributes = dc.Vector()
 
+	return dc.err
 }
 
 // help_support#17c6b5f6
@@ -19759,12 +20011,13 @@ func (t *TL_help_support) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_support) Decode(b []byte) {
+func (t *TL_help_support) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_user = dc.TLObject()
 
+	return dc.err
 }
 
 // notifyPeer#9fd40bd8
@@ -19800,11 +20053,12 @@ func (t *TL_notifyPeer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_notifyPeer) Decode(b []byte) {
+func (t *TL_notifyPeer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // notifyUsers#b4c83b4c
@@ -19830,8 +20084,8 @@ func (t *TL_notifyUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_notifyUsers) Decode(b []byte) {
-
+func (t *TL_notifyUsers) Decode(b []byte) error {
+	return nil
 }
 
 // notifyChats#c007cec3
@@ -19857,8 +20111,8 @@ func (t *TL_notifyChats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_notifyChats) Decode(b []byte) {
-
+func (t *TL_notifyChats) Decode(b []byte) error {
+	return nil
 }
 
 // notifyAll#74d07c60
@@ -19884,8 +20138,8 @@ func (t *TL_notifyAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_notifyAll) Decode(b []byte) {
-
+func (t *TL_notifyAll) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageTypingAction#16bf744e
@@ -19911,8 +20165,8 @@ func (t *TL_sendMessageTypingAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageTypingAction) Decode(b []byte) {
-
+func (t *TL_sendMessageTypingAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageCancelAction#fd5ec8f5
@@ -19938,8 +20192,8 @@ func (t *TL_sendMessageCancelAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageCancelAction) Decode(b []byte) {
-
+func (t *TL_sendMessageCancelAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageRecordVideoAction#a187d66f
@@ -19965,8 +20219,8 @@ func (t *TL_sendMessageRecordVideoAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageRecordVideoAction) Decode(b []byte) {
-
+func (t *TL_sendMessageRecordVideoAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageUploadVideoAction#e9763aec
@@ -20002,11 +20256,12 @@ func (t *TL_sendMessageUploadVideoAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageUploadVideoAction) Decode(b []byte) {
+func (t *TL_sendMessageUploadVideoAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_progress = dc.Int()
 
+	return dc.err
 }
 
 // sendMessageRecordAudioAction#d52f73f7
@@ -20032,8 +20287,8 @@ func (t *TL_sendMessageRecordAudioAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageRecordAudioAction) Decode(b []byte) {
-
+func (t *TL_sendMessageRecordAudioAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageUploadAudioAction#f351d7ab
@@ -20069,11 +20324,12 @@ func (t *TL_sendMessageUploadAudioAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageUploadAudioAction) Decode(b []byte) {
+func (t *TL_sendMessageUploadAudioAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_progress = dc.Int()
 
+	return dc.err
 }
 
 // sendMessageUploadPhotoAction#d1d34a26
@@ -20109,11 +20365,12 @@ func (t *TL_sendMessageUploadPhotoAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageUploadPhotoAction) Decode(b []byte) {
+func (t *TL_sendMessageUploadPhotoAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_progress = dc.Int()
 
+	return dc.err
 }
 
 // sendMessageUploadDocumentAction#aa0cd9e4
@@ -20149,11 +20406,12 @@ func (t *TL_sendMessageUploadDocumentAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageUploadDocumentAction) Decode(b []byte) {
+func (t *TL_sendMessageUploadDocumentAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_progress = dc.Int()
 
+	return dc.err
 }
 
 // sendMessageGeoLocationAction#176f8ba1
@@ -20179,8 +20437,8 @@ func (t *TL_sendMessageGeoLocationAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageGeoLocationAction) Decode(b []byte) {
-
+func (t *TL_sendMessageGeoLocationAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageChooseContactAction#628cbc6f
@@ -20206,8 +20464,8 @@ func (t *TL_sendMessageChooseContactAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageChooseContactAction) Decode(b []byte) {
-
+func (t *TL_sendMessageChooseContactAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageGamePlayAction#dd6a8f48
@@ -20233,8 +20491,8 @@ func (t *TL_sendMessageGamePlayAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageGamePlayAction) Decode(b []byte) {
-
+func (t *TL_sendMessageGamePlayAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageRecordRoundAction#88f27fbc
@@ -20260,8 +20518,8 @@ func (t *TL_sendMessageRecordRoundAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageRecordRoundAction) Decode(b []byte) {
-
+func (t *TL_sendMessageRecordRoundAction) Decode(b []byte) error {
+	return nil
 }
 
 // sendMessageUploadRoundAction#243e1c66
@@ -20297,11 +20555,12 @@ func (t *TL_sendMessageUploadRoundAction) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_sendMessageUploadRoundAction) Decode(b []byte) {
+func (t *TL_sendMessageUploadRoundAction) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_progress = dc.Int()
 
+	return dc.err
 }
 
 // contacts_found#1aa1f784
@@ -20357,13 +20616,14 @@ func (t *TL_contacts_found) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_found) Decode(b []byte) {
+func (t *TL_contacts_found) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_results = dc.Vector()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // inputPrivacyKeyStatusTimestamp#4f96cb18
@@ -20389,8 +20649,8 @@ func (t *TL_inputPrivacyKeyStatusTimestamp) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyKeyStatusTimestamp) Decode(b []byte) {
-
+func (t *TL_inputPrivacyKeyStatusTimestamp) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyKeyChatInvite#bdfb0426
@@ -20416,8 +20676,8 @@ func (t *TL_inputPrivacyKeyChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyKeyChatInvite) Decode(b []byte) {
-
+func (t *TL_inputPrivacyKeyChatInvite) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyKeyPhoneCall#fabadc5f
@@ -20443,8 +20703,8 @@ func (t *TL_inputPrivacyKeyPhoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyKeyPhoneCall) Decode(b []byte) {
-
+func (t *TL_inputPrivacyKeyPhoneCall) Decode(b []byte) error {
+	return nil
 }
 
 // privacyKeyStatusTimestamp#bc2eab30
@@ -20470,8 +20730,8 @@ func (t *TL_privacyKeyStatusTimestamp) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyKeyStatusTimestamp) Decode(b []byte) {
-
+func (t *TL_privacyKeyStatusTimestamp) Decode(b []byte) error {
+	return nil
 }
 
 // privacyKeyChatInvite#500e6dfa
@@ -20497,8 +20757,8 @@ func (t *TL_privacyKeyChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyKeyChatInvite) Decode(b []byte) {
-
+func (t *TL_privacyKeyChatInvite) Decode(b []byte) error {
+	return nil
 }
 
 // privacyKeyPhoneCall#3d662b7b
@@ -20524,8 +20784,8 @@ func (t *TL_privacyKeyPhoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyKeyPhoneCall) Decode(b []byte) {
-
+func (t *TL_privacyKeyPhoneCall) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyValueAllowContacts#d09e07b
@@ -20551,8 +20811,8 @@ func (t *TL_inputPrivacyValueAllowContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueAllowContacts) Decode(b []byte) {
-
+func (t *TL_inputPrivacyValueAllowContacts) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyValueAllowAll#184b35ce
@@ -20578,8 +20838,8 @@ func (t *TL_inputPrivacyValueAllowAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueAllowAll) Decode(b []byte) {
-
+func (t *TL_inputPrivacyValueAllowAll) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyValueAllowUsers#131cc67f
@@ -20615,11 +20875,12 @@ func (t *TL_inputPrivacyValueAllowUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueAllowUsers) Decode(b []byte) {
+func (t *TL_inputPrivacyValueAllowUsers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // inputPrivacyValueDisallowContacts#ba52007
@@ -20645,8 +20906,8 @@ func (t *TL_inputPrivacyValueDisallowContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueDisallowContacts) Decode(b []byte) {
-
+func (t *TL_inputPrivacyValueDisallowContacts) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyValueDisallowAll#d66b66c9
@@ -20672,8 +20933,8 @@ func (t *TL_inputPrivacyValueDisallowAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueDisallowAll) Decode(b []byte) {
-
+func (t *TL_inputPrivacyValueDisallowAll) Decode(b []byte) error {
+	return nil
 }
 
 // inputPrivacyValueDisallowUsers#90110467
@@ -20709,11 +20970,12 @@ func (t *TL_inputPrivacyValueDisallowUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPrivacyValueDisallowUsers) Decode(b []byte) {
+func (t *TL_inputPrivacyValueDisallowUsers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // privacyValueAllowContacts#fffe1bac
@@ -20739,8 +21001,8 @@ func (t *TL_privacyValueAllowContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueAllowContacts) Decode(b []byte) {
-
+func (t *TL_privacyValueAllowContacts) Decode(b []byte) error {
+	return nil
 }
 
 // privacyValueAllowAll#65427b82
@@ -20766,8 +21028,8 @@ func (t *TL_privacyValueAllowAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueAllowAll) Decode(b []byte) {
-
+func (t *TL_privacyValueAllowAll) Decode(b []byte) error {
+	return nil
 }
 
 // privacyValueAllowUsers#4d5bbe0c
@@ -20803,11 +21065,12 @@ func (t *TL_privacyValueAllowUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueAllowUsers) Decode(b []byte) {
+func (t *TL_privacyValueAllowUsers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.VectorInt()
 
+	return dc.err
 }
 
 // privacyValueDisallowContacts#f888fa1a
@@ -20833,8 +21096,8 @@ func (t *TL_privacyValueDisallowContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueDisallowContacts) Decode(b []byte) {
-
+func (t *TL_privacyValueDisallowContacts) Decode(b []byte) error {
+	return nil
 }
 
 // privacyValueDisallowAll#8b73e763
@@ -20860,8 +21123,8 @@ func (t *TL_privacyValueDisallowAll) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueDisallowAll) Decode(b []byte) {
-
+func (t *TL_privacyValueDisallowAll) Decode(b []byte) error {
+	return nil
 }
 
 // privacyValueDisallowUsers#c7f49b7
@@ -20897,11 +21160,12 @@ func (t *TL_privacyValueDisallowUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_privacyValueDisallowUsers) Decode(b []byte) {
+func (t *TL_privacyValueDisallowUsers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.VectorInt()
 
+	return dc.err
 }
 
 // account_privacyRules#554abb6f
@@ -20947,12 +21211,13 @@ func (t *TL_account_privacyRules) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_privacyRules) Decode(b []byte) {
+func (t *TL_account_privacyRules) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_rules = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // accountDaysTTL#b8d0afdf
@@ -20988,11 +21253,12 @@ func (t *TL_accountDaysTTL) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_accountDaysTTL) Decode(b []byte) {
+func (t *TL_accountDaysTTL) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_days = dc.Int()
 
+	return dc.err
 }
 
 // documentAttributeImageSize#6c37c15c
@@ -21038,12 +21304,13 @@ func (t *TL_documentAttributeImageSize) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeImageSize) Decode(b []byte) {
+func (t *TL_documentAttributeImageSize) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
 
+	return dc.err
 }
 
 // documentAttributeAnimated#11b58939
@@ -21069,8 +21336,8 @@ func (t *TL_documentAttributeAnimated) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeAnimated) Decode(b []byte) {
-
+func (t *TL_documentAttributeAnimated) Decode(b []byte) error {
+	return nil
 }
 
 // documentAttributeSticker#6319d612
@@ -21145,7 +21412,7 @@ func (t *TL_documentAttributeSticker) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeSticker) Decode(b []byte) {
+func (t *TL_documentAttributeSticker) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_mask = dc.TLObject()
@@ -21153,6 +21420,7 @@ func (t *TL_documentAttributeSticker) Decode(b []byte) {
 	t.M_stickerset = dc.TLObject()
 	t.M_mask_coords = dc.TLObject()
 
+	return dc.err
 }
 
 // documentAttributeVideo#ef02ce6
@@ -21227,7 +21495,7 @@ func (t *TL_documentAttributeVideo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeVideo) Decode(b []byte) {
+func (t *TL_documentAttributeVideo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_round_message = dc.TLObject()
@@ -21235,6 +21503,7 @@ func (t *TL_documentAttributeVideo) Decode(b []byte) {
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
 
+	return dc.err
 }
 
 // documentAttributeAudio#9852f9c6
@@ -21319,7 +21588,7 @@ func (t *TL_documentAttributeAudio) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeAudio) Decode(b []byte) {
+func (t *TL_documentAttributeAudio) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_voice = dc.TLObject()
@@ -21328,6 +21597,7 @@ func (t *TL_documentAttributeAudio) Decode(b []byte) {
 	t.M_performer = dc.TLObject()
 	t.M_waveform = dc.TLObject()
 
+	return dc.err
 }
 
 // documentAttributeFilename#15590068
@@ -21363,11 +21633,12 @@ func (t *TL_documentAttributeFilename) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeFilename) Decode(b []byte) {
+func (t *TL_documentAttributeFilename) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_name = dc.String()
 
+	return dc.err
 }
 
 // documentAttributeHasStickers#9801d2f7
@@ -21393,8 +21664,8 @@ func (t *TL_documentAttributeHasStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_documentAttributeHasStickers) Decode(b []byte) {
-
+func (t *TL_documentAttributeHasStickers) Decode(b []byte) error {
+	return nil
 }
 
 // messages_stickersNotModified#f1749a22
@@ -21420,8 +21691,8 @@ func (t *TL_messages_stickersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_stickersNotModified) Decode(b []byte) {
-
+func (t *TL_messages_stickersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_stickers#8a8ecd32
@@ -21467,12 +21738,13 @@ func (t *TL_messages_stickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_stickers) Decode(b []byte) {
+func (t *TL_messages_stickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.String()
 	t.M_stickers = dc.Vector()
 
+	return dc.err
 }
 
 // stickerPack#12b299d4
@@ -21518,12 +21790,13 @@ func (t *TL_stickerPack) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickerPack) Decode(b []byte) {
+func (t *TL_stickerPack) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_emoticon = dc.String()
 	t.M_documents = dc.VectorLong()
 
+	return dc.err
 }
 
 // messages_allStickersNotModified#e86602c3
@@ -21549,8 +21822,8 @@ func (t *TL_messages_allStickersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_allStickersNotModified) Decode(b []byte) {
-
+func (t *TL_messages_allStickersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_allStickers#edfd405f
@@ -21596,12 +21869,13 @@ func (t *TL_messages_allStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_allStickers) Decode(b []byte) {
+func (t *TL_messages_allStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 	t.M_sets = dc.Vector()
 
+	return dc.err
 }
 
 // disabledFeature#ae636f24
@@ -21647,12 +21921,13 @@ func (t *TL_disabledFeature) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_disabledFeature) Decode(b []byte) {
+func (t *TL_disabledFeature) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_feature = dc.String()
 	t.M_description = dc.String()
 
+	return dc.err
 }
 
 // messages_affectedMessages#84d19185
@@ -21698,12 +21973,13 @@ func (t *TL_messages_affectedMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_affectedMessages) Decode(b []byte) {
+func (t *TL_messages_affectedMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 
+	return dc.err
 }
 
 // contactLinkUnknown#5f4f9247
@@ -21729,8 +22005,8 @@ func (t *TL_contactLinkUnknown) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactLinkUnknown) Decode(b []byte) {
-
+func (t *TL_contactLinkUnknown) Decode(b []byte) error {
+	return nil
 }
 
 // contactLinkNone#feedd3ad
@@ -21756,8 +22032,8 @@ func (t *TL_contactLinkNone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactLinkNone) Decode(b []byte) {
-
+func (t *TL_contactLinkNone) Decode(b []byte) error {
+	return nil
 }
 
 // contactLinkHasPhone#268f3f59
@@ -21783,8 +22059,8 @@ func (t *TL_contactLinkHasPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactLinkHasPhone) Decode(b []byte) {
-
+func (t *TL_contactLinkHasPhone) Decode(b []byte) error {
+	return nil
 }
 
 // contactLinkContact#d502c2d0
@@ -21810,8 +22086,8 @@ func (t *TL_contactLinkContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contactLinkContact) Decode(b []byte) {
-
+func (t *TL_contactLinkContact) Decode(b []byte) error {
+	return nil
 }
 
 // webPageEmpty#eb1477e8
@@ -21847,11 +22123,12 @@ func (t *TL_webPageEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_webPageEmpty) Decode(b []byte) {
+func (t *TL_webPageEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 
+	return dc.err
 }
 
 // webPagePending#c586da1c
@@ -21897,12 +22174,13 @@ func (t *TL_webPagePending) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_webPagePending) Decode(b []byte) {
+func (t *TL_webPagePending) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // webPage#5f07b4bc
@@ -22107,7 +22385,7 @@ func (t *TL_webPage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_webPage) Decode(b []byte) {
+func (t *TL_webPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -22128,6 +22406,7 @@ func (t *TL_webPage) Decode(b []byte) {
 	t.M_document = dc.TLObject()
 	t.M_cached_page = dc.TLObject()
 
+	return dc.err
 }
 
 // webPageNotModified#85849473
@@ -22153,8 +22432,8 @@ func (t *TL_webPageNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_webPageNotModified) Decode(b []byte) {
-
+func (t *TL_webPageNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // authorization#7bf2e6f6
@@ -22310,7 +22589,7 @@ func (t *TL_authorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_authorization) Decode(b []byte) {
+func (t *TL_authorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Long()
@@ -22327,6 +22606,7 @@ func (t *TL_authorization) Decode(b []byte) {
 	t.M_country = dc.String()
 	t.M_region = dc.String()
 
+	return dc.err
 }
 
 // account_authorizations#1250abde
@@ -22362,11 +22642,12 @@ func (t *TL_account_authorizations) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_authorizations) Decode(b []byte) {
+func (t *TL_account_authorizations) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_authorizations = dc.Vector()
 
+	return dc.err
 }
 
 // account_noPassword#96dabc18
@@ -22412,12 +22693,13 @@ func (t *TL_account_noPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_noPassword) Decode(b []byte) {
+func (t *TL_account_noPassword) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_salt = dc.TLObject()
 	t.M_email_unconfirmed_pattern = dc.String()
 
+	return dc.err
 }
 
 // account_password#7c18141c
@@ -22493,7 +22775,7 @@ func (t *TL_account_password) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_password) Decode(b []byte) {
+func (t *TL_account_password) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_current_salt = dc.TLObject()
@@ -22502,6 +22784,7 @@ func (t *TL_account_password) Decode(b []byte) {
 	t.M_has_recovery = dc.TLObject()
 	t.M_email_unconfirmed_pattern = dc.String()
 
+	return dc.err
 }
 
 // account_passwordSettings#b7b72ab3
@@ -22537,11 +22820,12 @@ func (t *TL_account_passwordSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_passwordSettings) Decode(b []byte) {
+func (t *TL_account_passwordSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_email = dc.String()
 
+	return dc.err
 }
 
 // account_passwordInputSettings#86916deb
@@ -22616,7 +22900,7 @@ func (t *TL_account_passwordInputSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_passwordInputSettings) Decode(b []byte) {
+func (t *TL_account_passwordInputSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_salt = dc.TLObject()
@@ -22624,6 +22908,7 @@ func (t *TL_account_passwordInputSettings) Decode(b []byte) {
 	t.M_hint = dc.TLObject()
 	t.M_email = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_passwordRecovery#137948a5
@@ -22659,11 +22944,12 @@ func (t *TL_auth_passwordRecovery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_passwordRecovery) Decode(b []byte) {
+func (t *TL_auth_passwordRecovery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_email_pattern = dc.String()
 
+	return dc.err
 }
 
 // receivedNotifyMessage#a384b779
@@ -22709,12 +22995,13 @@ func (t *TL_receivedNotifyMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_receivedNotifyMessage) Decode(b []byte) {
+func (t *TL_receivedNotifyMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 	t.M_flags = dc.Int()
 
+	return dc.err
 }
 
 // chatInviteEmpty#69df3769
@@ -22740,8 +23027,8 @@ func (t *TL_chatInviteEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatInviteEmpty) Decode(b []byte) {
-
+func (t *TL_chatInviteEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // chatInviteExported#fc2e05bc
@@ -22777,11 +23064,12 @@ func (t *TL_chatInviteExported) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatInviteExported) Decode(b []byte) {
+func (t *TL_chatInviteExported) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_link = dc.String()
 
+	return dc.err
 }
 
 // chatInviteAlready#5a686d7c
@@ -22817,11 +23105,12 @@ func (t *TL_chatInviteAlready) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatInviteAlready) Decode(b []byte) {
+func (t *TL_chatInviteAlready) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat = dc.TLObject()
 
+	return dc.err
 }
 
 // chatInvite#db74f558
@@ -22936,7 +23225,7 @@ func (t *TL_chatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_chatInvite) Decode(b []byte) {
+func (t *TL_chatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
@@ -22948,6 +23237,7 @@ func (t *TL_chatInvite) Decode(b []byte) {
 	t.M_participants_count = dc.Int()
 	t.M_participants = dc.Vector()
 
+	return dc.err
 }
 
 // inputStickerSetEmpty#ffb62b95
@@ -22973,8 +23263,8 @@ func (t *TL_inputStickerSetEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickerSetEmpty) Decode(b []byte) {
-
+func (t *TL_inputStickerSetEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputStickerSetID#9de7a269
@@ -23020,12 +23310,13 @@ func (t *TL_inputStickerSetID) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickerSetID) Decode(b []byte) {
+func (t *TL_inputStickerSetID) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputStickerSetShortName#861cc8a0
@@ -23061,11 +23352,12 @@ func (t *TL_inputStickerSetShortName) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickerSetShortName) Decode(b []byte) {
+func (t *TL_inputStickerSetShortName) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_short_name = dc.String()
 
+	return dc.err
 }
 
 // stickerSet#cd303b41
@@ -23200,7 +23492,7 @@ func (t *TL_stickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickerSet) Decode(b []byte) {
+func (t *TL_stickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_installed = dc.TLObject()
@@ -23214,6 +23506,7 @@ func (t *TL_stickerSet) Decode(b []byte) {
 	t.M_count = dc.Int()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_stickerSet#b60a24a6
@@ -23269,13 +23562,14 @@ func (t *TL_messages_stickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_stickerSet) Decode(b []byte) {
+func (t *TL_messages_stickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_set = dc.TLObject()
 	t.M_packs = dc.Vector()
 	t.M_documents = dc.Vector()
 
+	return dc.err
 }
 
 // botCommand#c27ac8c7
@@ -23321,12 +23615,13 @@ func (t *TL_botCommand) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botCommand) Decode(b []byte) {
+func (t *TL_botCommand) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_command = dc.String()
 	t.M_description = dc.String()
 
+	return dc.err
 }
 
 // botInfo#98e81d3a
@@ -23382,13 +23677,14 @@ func (t *TL_botInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInfo) Decode(b []byte) {
+func (t *TL_botInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_description = dc.String()
 	t.M_commands = dc.Vector()
 
+	return dc.err
 }
 
 // keyboardButton#a2fa4880
@@ -23424,11 +23720,12 @@ func (t *TL_keyboardButton) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButton) Decode(b []byte) {
+func (t *TL_keyboardButton) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonUrl#258aff05
@@ -23474,12 +23771,13 @@ func (t *TL_keyboardButtonUrl) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonUrl) Decode(b []byte) {
+func (t *TL_keyboardButtonUrl) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 	t.M_url = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonCallback#683a5e46
@@ -23525,12 +23823,13 @@ func (t *TL_keyboardButtonCallback) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonCallback) Decode(b []byte) {
+func (t *TL_keyboardButtonCallback) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // keyboardButtonRequestPhone#b16a6c29
@@ -23566,11 +23865,12 @@ func (t *TL_keyboardButtonRequestPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonRequestPhone) Decode(b []byte) {
+func (t *TL_keyboardButtonRequestPhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonRequestGeoLocation#fc796b3f
@@ -23606,11 +23906,12 @@ func (t *TL_keyboardButtonRequestGeoLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonRequestGeoLocation) Decode(b []byte) {
+func (t *TL_keyboardButtonRequestGeoLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonSwitchInline#568a748
@@ -23675,13 +23976,14 @@ func (t *TL_keyboardButtonSwitchInline) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonSwitchInline) Decode(b []byte) {
+func (t *TL_keyboardButtonSwitchInline) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_same_peer = dc.TLObject()
 	t.M_text = dc.String()
 	t.M_query = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonGame#50f41ccf
@@ -23717,11 +24019,12 @@ func (t *TL_keyboardButtonGame) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonGame) Decode(b []byte) {
+func (t *TL_keyboardButtonGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonBuy#afd93fbb
@@ -23757,11 +24060,12 @@ func (t *TL_keyboardButtonBuy) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonBuy) Decode(b []byte) {
+func (t *TL_keyboardButtonBuy) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // keyboardButtonRow#77608b83
@@ -23797,11 +24101,12 @@ func (t *TL_keyboardButtonRow) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_keyboardButtonRow) Decode(b []byte) {
+func (t *TL_keyboardButtonRow) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_buttons = dc.Vector()
 
+	return dc.err
 }
 
 // replyKeyboardHide#a03e5b85
@@ -23846,11 +24151,12 @@ func (t *TL_replyKeyboardHide) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_replyKeyboardHide) Decode(b []byte) {
+func (t *TL_replyKeyboardHide) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_selective = dc.TLObject()
 
+	return dc.err
 }
 
 // replyKeyboardForceReply#f4108aa0
@@ -23905,12 +24211,13 @@ func (t *TL_replyKeyboardForceReply) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_replyKeyboardForceReply) Decode(b []byte) {
+func (t *TL_replyKeyboardForceReply) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_single_use = dc.TLObject()
 	t.M_selective = dc.TLObject()
 
+	return dc.err
 }
 
 // replyKeyboardMarkup#3502758c
@@ -23985,7 +24292,7 @@ func (t *TL_replyKeyboardMarkup) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_replyKeyboardMarkup) Decode(b []byte) {
+func (t *TL_replyKeyboardMarkup) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_resize = dc.TLObject()
@@ -23993,6 +24300,7 @@ func (t *TL_replyKeyboardMarkup) Decode(b []byte) {
 	t.M_selective = dc.TLObject()
 	t.M_rows = dc.Vector()
 
+	return dc.err
 }
 
 // replyInlineMarkup#48a30254
@@ -24028,11 +24336,12 @@ func (t *TL_replyInlineMarkup) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_replyInlineMarkup) Decode(b []byte) {
+func (t *TL_replyInlineMarkup) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_rows = dc.Vector()
 
+	return dc.err
 }
 
 // messageEntityUnknown#bb92ba95
@@ -24078,12 +24387,13 @@ func (t *TL_messageEntityUnknown) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityUnknown) Decode(b []byte) {
+func (t *TL_messageEntityUnknown) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityMention#fa04579d
@@ -24129,12 +24439,13 @@ func (t *TL_messageEntityMention) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityMention) Decode(b []byte) {
+func (t *TL_messageEntityMention) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityHashtag#6f635b0d
@@ -24180,12 +24491,13 @@ func (t *TL_messageEntityHashtag) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityHashtag) Decode(b []byte) {
+func (t *TL_messageEntityHashtag) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityBotCommand#6cef8ac7
@@ -24231,12 +24543,13 @@ func (t *TL_messageEntityBotCommand) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityBotCommand) Decode(b []byte) {
+func (t *TL_messageEntityBotCommand) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityUrl#6ed02538
@@ -24282,12 +24595,13 @@ func (t *TL_messageEntityUrl) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityUrl) Decode(b []byte) {
+func (t *TL_messageEntityUrl) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityEmail#64e475c2
@@ -24333,12 +24647,13 @@ func (t *TL_messageEntityEmail) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityEmail) Decode(b []byte) {
+func (t *TL_messageEntityEmail) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityBold#bd610bc9
@@ -24384,12 +24699,13 @@ func (t *TL_messageEntityBold) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityBold) Decode(b []byte) {
+func (t *TL_messageEntityBold) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityItalic#826f8b60
@@ -24435,12 +24751,13 @@ func (t *TL_messageEntityItalic) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityItalic) Decode(b []byte) {
+func (t *TL_messageEntityItalic) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityCode#28a20571
@@ -24486,12 +24803,13 @@ func (t *TL_messageEntityCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityCode) Decode(b []byte) {
+func (t *TL_messageEntityCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // messageEntityPre#73924be0
@@ -24547,13 +24865,14 @@ func (t *TL_messageEntityPre) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityPre) Decode(b []byte) {
+func (t *TL_messageEntityPre) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 	t.M_language = dc.String()
 
+	return dc.err
 }
 
 // messageEntityTextUrl#76a6d327
@@ -24609,13 +24928,14 @@ func (t *TL_messageEntityTextUrl) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityTextUrl) Decode(b []byte) {
+func (t *TL_messageEntityTextUrl) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 	t.M_url = dc.String()
 
+	return dc.err
 }
 
 // messageEntityMentionName#352dca58
@@ -24671,13 +24991,14 @@ func (t *TL_messageEntityMentionName) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageEntityMentionName) Decode(b []byte) {
+func (t *TL_messageEntityMentionName) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // inputMessageEntityMentionName#208e68c9
@@ -24733,13 +25054,14 @@ func (t *TL_inputMessageEntityMentionName) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputMessageEntityMentionName) Decode(b []byte) {
+func (t *TL_inputMessageEntityMentionName) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_length = dc.Int()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // inputChannelEmpty#ee8c1e86
@@ -24765,8 +25087,8 @@ func (t *TL_inputChannelEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputChannelEmpty) Decode(b []byte) {
-
+func (t *TL_inputChannelEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // inputChannel#afeb712e
@@ -24812,12 +25134,13 @@ func (t *TL_inputChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputChannel) Decode(b []byte) {
+func (t *TL_inputChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel_id = dc.Int()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // contacts_resolvedPeer#7f077ad9
@@ -24873,13 +25196,14 @@ func (t *TL_contacts_resolvedPeer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_resolvedPeer) Decode(b []byte) {
+func (t *TL_contacts_resolvedPeer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // messageRange#ae30253
@@ -24925,12 +25249,13 @@ func (t *TL_messageRange) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageRange) Decode(b []byte) {
+func (t *TL_messageRange) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_min_id = dc.Int()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // updates_channelDifferenceEmpty#3e11affb
@@ -24995,13 +25320,14 @@ func (t *TL_updates_channelDifferenceEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Decode(b []byte) {
+func (t *TL_updates_channelDifferenceEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_final = dc.TLObject()
 	t.M_pts = dc.Int()
 	t.M_timeout = dc.TLObject()
 
+	return dc.err
 }
 
 // updates_channelDifferenceTooLong#6a9d7b35
@@ -25146,7 +25472,7 @@ func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) {
+func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_final = dc.TLObject()
@@ -25161,6 +25487,7 @@ func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // updates_channelDifference#2064674e
@@ -25265,7 +25592,7 @@ func (t *TL_updates_channelDifference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_channelDifference) Decode(b []byte) {
+func (t *TL_updates_channelDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_final = dc.TLObject()
@@ -25276,6 +25603,7 @@ func (t *TL_updates_channelDifference) Decode(b []byte) {
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // channelMessagesFilterEmpty#94d42ee7
@@ -25301,8 +25629,8 @@ func (t *TL_channelMessagesFilterEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelMessagesFilterEmpty) Decode(b []byte) {
-
+func (t *TL_channelMessagesFilterEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // channelMessagesFilter#cd77d957
@@ -25357,12 +25685,13 @@ func (t *TL_channelMessagesFilter) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelMessagesFilter) Decode(b []byte) {
+func (t *TL_channelMessagesFilter) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_exclude_new_messages = dc.TLObject()
 	t.M_ranges = dc.Vector()
 
+	return dc.err
 }
 
 // channelParticipant#15ebac1d
@@ -25408,12 +25737,13 @@ func (t *TL_channelParticipant) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipant) Decode(b []byte) {
+func (t *TL_channelParticipant) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // channelParticipantSelf#a3289a6d
@@ -25469,13 +25799,14 @@ func (t *TL_channelParticipantSelf) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantSelf) Decode(b []byte) {
+func (t *TL_channelParticipantSelf) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 	t.M_inviter_id = dc.Int()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // channelParticipantCreator#e3e2e1f9
@@ -25511,11 +25842,12 @@ func (t *TL_channelParticipantCreator) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantCreator) Decode(b []byte) {
+func (t *TL_channelParticipantCreator) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // channelParticipantAdmin#a82fa898
@@ -25610,7 +25942,7 @@ func (t *TL_channelParticipantAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantAdmin) Decode(b []byte) {
+func (t *TL_channelParticipantAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_can_edit = dc.TLObject()
@@ -25620,6 +25952,7 @@ func (t *TL_channelParticipantAdmin) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_admin_rights = dc.TLObject()
 
+	return dc.err
 }
 
 // channelParticipantBanned#222c1886
@@ -25704,7 +26037,7 @@ func (t *TL_channelParticipantBanned) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantBanned) Decode(b []byte) {
+func (t *TL_channelParticipantBanned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_left = dc.TLObject()
@@ -25713,6 +26046,7 @@ func (t *TL_channelParticipantBanned) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_banned_rights = dc.TLObject()
 
+	return dc.err
 }
 
 // channelParticipantsRecent#de3f3c79
@@ -25738,8 +26072,8 @@ func (t *TL_channelParticipantsRecent) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsRecent) Decode(b []byte) {
-
+func (t *TL_channelParticipantsRecent) Decode(b []byte) error {
+	return nil
 }
 
 // channelParticipantsAdmins#b4608969
@@ -25765,8 +26099,8 @@ func (t *TL_channelParticipantsAdmins) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsAdmins) Decode(b []byte) {
-
+func (t *TL_channelParticipantsAdmins) Decode(b []byte) error {
+	return nil
 }
 
 // channelParticipantsKicked#a3b54985
@@ -25802,11 +26136,12 @@ func (t *TL_channelParticipantsKicked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsKicked) Decode(b []byte) {
+func (t *TL_channelParticipantsKicked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
 
+	return dc.err
 }
 
 // channelParticipantsBots#b0d1865b
@@ -25832,8 +26167,8 @@ func (t *TL_channelParticipantsBots) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsBots) Decode(b []byte) {
-
+func (t *TL_channelParticipantsBots) Decode(b []byte) error {
+	return nil
 }
 
 // channelParticipantsBanned#1427a5e1
@@ -25869,11 +26204,12 @@ func (t *TL_channelParticipantsBanned) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsBanned) Decode(b []byte) {
+func (t *TL_channelParticipantsBanned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
 
+	return dc.err
 }
 
 // channelParticipantsSearch#656ac4b
@@ -25909,11 +26245,12 @@ func (t *TL_channelParticipantsSearch) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelParticipantsSearch) Decode(b []byte) {
+func (t *TL_channelParticipantsSearch) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
 
+	return dc.err
 }
 
 // channels_channelParticipants#f56ee2a8
@@ -25969,13 +26306,14 @@ func (t *TL_channels_channelParticipants) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_channelParticipants) Decode(b []byte) {
+func (t *TL_channels_channelParticipants) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 	t.M_participants = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // channels_channelParticipantsNotModified#f0173fe9
@@ -26001,8 +26339,8 @@ func (t *TL_channels_channelParticipantsNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_channelParticipantsNotModified) Decode(b []byte) {
-
+func (t *TL_channels_channelParticipantsNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // channels_channelParticipant#d0d9b163
@@ -26048,12 +26386,13 @@ func (t *TL_channels_channelParticipant) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_channelParticipant) Decode(b []byte) {
+func (t *TL_channels_channelParticipant) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_participant = dc.TLObject()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // help_termsOfService#f1ee3e90
@@ -26089,11 +26428,12 @@ func (t *TL_help_termsOfService) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_termsOfService) Decode(b []byte) {
+func (t *TL_help_termsOfService) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // foundGif#162ecc1f
@@ -26179,7 +26519,7 @@ func (t *TL_foundGif) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_foundGif) Decode(b []byte) {
+func (t *TL_foundGif) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
@@ -26189,6 +26529,7 @@ func (t *TL_foundGif) Decode(b []byte) {
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
 
+	return dc.err
 }
 
 // foundGifCached#9c750409
@@ -26244,13 +26585,14 @@ func (t *TL_foundGifCached) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_foundGifCached) Decode(b []byte) {
+func (t *TL_foundGifCached) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_photo = dc.TLObject()
 	t.M_document = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_foundGifs#450a1c0a
@@ -26296,12 +26638,13 @@ func (t *TL_messages_foundGifs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_foundGifs) Decode(b []byte) {
+func (t *TL_messages_foundGifs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_next_offset = dc.Int()
 	t.M_results = dc.Vector()
 
+	return dc.err
 }
 
 // messages_savedGifsNotModified#e8025ca2
@@ -26327,8 +26670,8 @@ func (t *TL_messages_savedGifsNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_savedGifsNotModified) Decode(b []byte) {
-
+func (t *TL_messages_savedGifsNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_savedGifs#2e0709a5
@@ -26374,12 +26717,13 @@ func (t *TL_messages_savedGifs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_savedGifs) Decode(b []byte) {
+func (t *TL_messages_savedGifs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 	t.M_gifs = dc.Vector()
 
+	return dc.err
 }
 
 // inputBotInlineMessageMediaAuto#292fed13
@@ -26434,12 +26778,13 @@ func (t *TL_inputBotInlineMessageMediaAuto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageMediaAuto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_caption = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageText#3dcd7a87
@@ -26514,7 +26859,7 @@ func (t *TL_inputBotInlineMessageText) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageText) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageText) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -26522,6 +26867,7 @@ func (t *TL_inputBotInlineMessageText) Decode(b []byte) {
 	t.M_entities = dc.Vector()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageMediaGeo#c1b15d65
@@ -26586,13 +26932,14 @@ func (t *TL_inputBotInlineMessageMediaGeo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageMediaGeo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo_point = dc.TLObject()
 	t.M_period = dc.Int()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageMediaVenue#aaafadc8
@@ -26687,7 +27034,7 @@ func (t *TL_inputBotInlineMessageMediaVenue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo_point = dc.TLObject()
@@ -26697,6 +27044,7 @@ func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) {
 	t.M_venue_id = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageMediaContact#2daf01a7
@@ -26771,7 +27119,7 @@ func (t *TL_inputBotInlineMessageMediaContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
@@ -26779,6 +27127,7 @@ func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) {
 	t.M_last_name = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageGame#4b425864
@@ -26823,11 +27172,12 @@ func (t *TL_inputBotInlineMessageGame) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageGame) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineResult#2cbbe15a
@@ -26982,7 +27332,7 @@ func (t *TL_inputBotInlineResult) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineResult) Decode(b []byte) {
+func (t *TL_inputBotInlineResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
@@ -26998,6 +27348,7 @@ func (t *TL_inputBotInlineResult) Decode(b []byte) {
 	t.M_duration = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineResultPhoto#a8d864a7
@@ -27063,7 +27414,7 @@ func (t *TL_inputBotInlineResultPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineResultPhoto) Decode(b []byte) {
+func (t *TL_inputBotInlineResultPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
@@ -27071,6 +27422,7 @@ func (t *TL_inputBotInlineResultPhoto) Decode(b []byte) {
 	t.M_photo = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineResultDocument#fff8fdc4
@@ -27165,7 +27517,7 @@ func (t *TL_inputBotInlineResultDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineResultDocument) Decode(b []byte) {
+func (t *TL_inputBotInlineResultDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
@@ -27175,6 +27527,7 @@ func (t *TL_inputBotInlineResultDocument) Decode(b []byte) {
 	t.M_document = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineResultGame#4fa417f2
@@ -27230,13 +27583,14 @@ func (t *TL_inputBotInlineResultGame) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineResultGame) Decode(b []byte) {
+func (t *TL_inputBotInlineResultGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
 	t.M_short_name = dc.String()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMessageMediaAuto#a74b15b
@@ -27291,12 +27645,13 @@ func (t *TL_botInlineMessageMediaAuto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMessageMediaAuto) Decode(b []byte) {
+func (t *TL_botInlineMessageMediaAuto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_caption = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMessageText#8c7f65e2
@@ -27371,7 +27726,7 @@ func (t *TL_botInlineMessageText) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMessageText) Decode(b []byte) {
+func (t *TL_botInlineMessageText) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -27379,6 +27734,7 @@ func (t *TL_botInlineMessageText) Decode(b []byte) {
 	t.M_entities = dc.Vector()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMessageMediaGeo#b722de65
@@ -27443,13 +27799,14 @@ func (t *TL_botInlineMessageMediaGeo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMessageMediaGeo) Decode(b []byte) {
+func (t *TL_botInlineMessageMediaGeo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo = dc.TLObject()
 	t.M_period = dc.Int()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMessageMediaVenue#4366232e
@@ -27544,7 +27901,7 @@ func (t *TL_botInlineMessageMediaVenue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) {
+func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_geo = dc.TLObject()
@@ -27554,6 +27911,7 @@ func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) {
 	t.M_venue_id = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMessageMediaContact#35edb4d4
@@ -27628,7 +27986,7 @@ func (t *TL_botInlineMessageMediaContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMessageMediaContact) Decode(b []byte) {
+func (t *TL_botInlineMessageMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
@@ -27636,6 +27994,7 @@ func (t *TL_botInlineMessageMediaContact) Decode(b []byte) {
 	t.M_last_name = dc.String()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineResult#9bebaeb9
@@ -27790,7 +28149,7 @@ func (t *TL_botInlineResult) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineResult) Decode(b []byte) {
+func (t *TL_botInlineResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
@@ -27806,6 +28165,7 @@ func (t *TL_botInlineResult) Decode(b []byte) {
 	t.M_duration = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // botInlineMediaResult#17db940b
@@ -27910,7 +28270,7 @@ func (t *TL_botInlineMediaResult) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_botInlineMediaResult) Decode(b []byte) {
+func (t *TL_botInlineMediaResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
@@ -27921,6 +28281,7 @@ func (t *TL_botInlineMediaResult) Decode(b []byte) {
 	t.M_description = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_botResults#947ca848
@@ -28025,7 +28386,7 @@ func (t *TL_messages_botResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_botResults) Decode(b []byte) {
+func (t *TL_messages_botResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_gallery = dc.TLObject()
@@ -28036,6 +28397,7 @@ func (t *TL_messages_botResults) Decode(b []byte) {
 	t.M_cache_time = dc.Int()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // exportedMessageLink#1f486803
@@ -28071,11 +28433,12 @@ func (t *TL_exportedMessageLink) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_exportedMessageLink) Decode(b []byte) {
+func (t *TL_exportedMessageLink) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_link = dc.String()
 
+	return dc.err
 }
 
 // messageFwdHeader#559ebe6d
@@ -28180,7 +28543,7 @@ func (t *TL_messageFwdHeader) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messageFwdHeader) Decode(b []byte) {
+func (t *TL_messageFwdHeader) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_from_id = dc.TLObject()
@@ -28191,6 +28554,7 @@ func (t *TL_messageFwdHeader) Decode(b []byte) {
 	t.M_saved_from_peer = dc.TLObject()
 	t.M_saved_from_msg_id = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_codeTypeSms#72a3158c
@@ -28216,8 +28580,8 @@ func (t *TL_auth_codeTypeSms) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_codeTypeSms) Decode(b []byte) {
-
+func (t *TL_auth_codeTypeSms) Decode(b []byte) error {
+	return nil
 }
 
 // auth_codeTypeCall#741cd3e3
@@ -28243,8 +28607,8 @@ func (t *TL_auth_codeTypeCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_codeTypeCall) Decode(b []byte) {
-
+func (t *TL_auth_codeTypeCall) Decode(b []byte) error {
+	return nil
 }
 
 // auth_codeTypeFlashCall#226ccefb
@@ -28270,8 +28634,8 @@ func (t *TL_auth_codeTypeFlashCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_codeTypeFlashCall) Decode(b []byte) {
-
+func (t *TL_auth_codeTypeFlashCall) Decode(b []byte) error {
+	return nil
 }
 
 // auth_sentCodeTypeApp#3dbb5986
@@ -28307,11 +28671,12 @@ func (t *TL_auth_sentCodeTypeApp) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sentCodeTypeApp) Decode(b []byte) {
+func (t *TL_auth_sentCodeTypeApp) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // auth_sentCodeTypeSms#c000bba2
@@ -28347,11 +28712,12 @@ func (t *TL_auth_sentCodeTypeSms) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sentCodeTypeSms) Decode(b []byte) {
+func (t *TL_auth_sentCodeTypeSms) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // auth_sentCodeTypeCall#5353e5a7
@@ -28387,11 +28753,12 @@ func (t *TL_auth_sentCodeTypeCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sentCodeTypeCall) Decode(b []byte) {
+func (t *TL_auth_sentCodeTypeCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_length = dc.Int()
 
+	return dc.err
 }
 
 // auth_sentCodeTypeFlashCall#ab03c6d9
@@ -28427,11 +28794,12 @@ func (t *TL_auth_sentCodeTypeFlashCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sentCodeTypeFlashCall) Decode(b []byte) {
+func (t *TL_auth_sentCodeTypeFlashCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pattern = dc.String()
 
+	return dc.err
 }
 
 // messages_botCallbackAnswer#36585ea4
@@ -28526,7 +28894,7 @@ func (t *TL_messages_botCallbackAnswer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_botCallbackAnswer) Decode(b []byte) {
+func (t *TL_messages_botCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_alert = dc.TLObject()
@@ -28536,6 +28904,7 @@ func (t *TL_messages_botCallbackAnswer) Decode(b []byte) {
 	t.M_url = dc.TLObject()
 	t.M_cache_time = dc.Int()
 
+	return dc.err
 }
 
 // messages_messageEditData#26b5dde6
@@ -28580,11 +28949,12 @@ func (t *TL_messages_messageEditData) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_messageEditData) Decode(b []byte) {
+func (t *TL_messages_messageEditData) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // inputBotInlineMessageID#890c3d89
@@ -28640,13 +29010,14 @@ func (t *TL_inputBotInlineMessageID) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputBotInlineMessageID) Decode(b []byte) {
+func (t *TL_inputBotInlineMessageID) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inlineBotSwitchPM#3c20629f
@@ -28692,12 +29063,13 @@ func (t *TL_inlineBotSwitchPM) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inlineBotSwitchPM) Decode(b []byte) {
+func (t *TL_inlineBotSwitchPM) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 	t.M_start_param = dc.String()
 
+	return dc.err
 }
 
 // messages_peerDialogs#3371c354
@@ -28773,7 +29145,7 @@ func (t *TL_messages_peerDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_peerDialogs) Decode(b []byte) {
+func (t *TL_messages_peerDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dialogs = dc.Vector()
@@ -28782,6 +29154,7 @@ func (t *TL_messages_peerDialogs) Decode(b []byte) {
 	t.M_users = dc.Vector()
 	t.M_state = dc.TLObject()
 
+	return dc.err
 }
 
 // topPeer#edcdc05b
@@ -28827,12 +29200,13 @@ func (t *TL_topPeer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeer) Decode(b []byte) {
+func (t *TL_topPeer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_rating = dc.Double()
 
+	return dc.err
 }
 
 // topPeerCategoryBotsPM#ab661b5b
@@ -28858,8 +29232,8 @@ func (t *TL_topPeerCategoryBotsPM) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryBotsPM) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryBotsPM) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryBotsInline#148677e2
@@ -28885,8 +29259,8 @@ func (t *TL_topPeerCategoryBotsInline) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryBotsInline) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryBotsInline) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryCorrespondents#637b7ed
@@ -28912,8 +29286,8 @@ func (t *TL_topPeerCategoryCorrespondents) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryCorrespondents) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryCorrespondents) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryGroups#bd17a14a
@@ -28939,8 +29313,8 @@ func (t *TL_topPeerCategoryGroups) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryGroups) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryGroups) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryChannels#161d9628
@@ -28966,8 +29340,8 @@ func (t *TL_topPeerCategoryChannels) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryChannels) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryChannels) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryPhoneCalls#1e76a78c
@@ -28993,8 +29367,8 @@ func (t *TL_topPeerCategoryPhoneCalls) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryPhoneCalls) Decode(b []byte) {
-
+func (t *TL_topPeerCategoryPhoneCalls) Decode(b []byte) error {
+	return nil
 }
 
 // topPeerCategoryPeers#fb834291
@@ -29050,13 +29424,14 @@ func (t *TL_topPeerCategoryPeers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_topPeerCategoryPeers) Decode(b []byte) {
+func (t *TL_topPeerCategoryPeers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_category = dc.TLObject()
 	t.M_count = dc.Int()
 	t.M_peers = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_topPeersNotModified#de266ef5
@@ -29082,8 +29457,8 @@ func (t *TL_contacts_topPeersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_topPeersNotModified) Decode(b []byte) {
-
+func (t *TL_contacts_topPeersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // contacts_topPeers#70b772a8
@@ -29139,13 +29514,14 @@ func (t *TL_contacts_topPeers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_topPeers) Decode(b []byte) {
+func (t *TL_contacts_topPeers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_categories = dc.Vector()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // draftMessageEmpty#ba4baec5
@@ -29171,8 +29547,8 @@ func (t *TL_draftMessageEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_draftMessageEmpty) Decode(b []byte) {
-
+func (t *TL_draftMessageEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // draftMessage#fd8e711f
@@ -29257,7 +29633,7 @@ func (t *TL_draftMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_draftMessage) Decode(b []byte) {
+func (t *TL_draftMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -29266,6 +29642,7 @@ func (t *TL_draftMessage) Decode(b []byte) {
 	t.M_entities = dc.Vector()
 	t.M_date = dc.Int()
 
+	return dc.err
 }
 
 // messages_featuredStickersNotModified#4ede3cf
@@ -29291,8 +29668,8 @@ func (t *TL_messages_featuredStickersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_featuredStickersNotModified) Decode(b []byte) {
-
+func (t *TL_messages_featuredStickersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_featuredStickers#f89d88e5
@@ -29348,13 +29725,14 @@ func (t *TL_messages_featuredStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_featuredStickers) Decode(b []byte) {
+func (t *TL_messages_featuredStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 	t.M_sets = dc.Vector()
 	t.M_unread = dc.VectorLong()
 
+	return dc.err
 }
 
 // messages_recentStickersNotModified#b17f890
@@ -29380,8 +29758,8 @@ func (t *TL_messages_recentStickersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_recentStickersNotModified) Decode(b []byte) {
-
+func (t *TL_messages_recentStickersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_recentStickers#5ce20970
@@ -29427,12 +29805,13 @@ func (t *TL_messages_recentStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_recentStickers) Decode(b []byte) {
+func (t *TL_messages_recentStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 	t.M_stickers = dc.Vector()
 
+	return dc.err
 }
 
 // messages_archivedStickers#4fcba9c8
@@ -29478,12 +29857,13 @@ func (t *TL_messages_archivedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_archivedStickers) Decode(b []byte) {
+func (t *TL_messages_archivedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_count = dc.Int()
 	t.M_sets = dc.Vector()
 
+	return dc.err
 }
 
 // messages_stickerSetInstallResultSuccess#38641628
@@ -29509,8 +29889,8 @@ func (t *TL_messages_stickerSetInstallResultSuccess) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_stickerSetInstallResultSuccess) Decode(b []byte) {
-
+func (t *TL_messages_stickerSetInstallResultSuccess) Decode(b []byte) error {
+	return nil
 }
 
 // messages_stickerSetInstallResultArchive#35e410a8
@@ -29546,11 +29926,12 @@ func (t *TL_messages_stickerSetInstallResultArchive) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_stickerSetInstallResultArchive) Decode(b []byte) {
+func (t *TL_messages_stickerSetInstallResultArchive) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_sets = dc.Vector()
 
+	return dc.err
 }
 
 // stickerSetCovered#6410a5d2
@@ -29596,12 +29977,13 @@ func (t *TL_stickerSetCovered) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickerSetCovered) Decode(b []byte) {
+func (t *TL_stickerSetCovered) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_set = dc.TLObject()
 	t.M_cover = dc.TLObject()
 
+	return dc.err
 }
 
 // stickerSetMultiCovered#3407e51b
@@ -29647,12 +30029,13 @@ func (t *TL_stickerSetMultiCovered) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickerSetMultiCovered) Decode(b []byte) {
+func (t *TL_stickerSetMultiCovered) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_set = dc.TLObject()
 	t.M_covers = dc.Vector()
 
+	return dc.err
 }
 
 // maskCoords#aed6dbb2
@@ -29718,7 +30101,7 @@ func (t *TL_maskCoords) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_maskCoords) Decode(b []byte) {
+func (t *TL_maskCoords) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_n = dc.Int()
@@ -29726,6 +30109,7 @@ func (t *TL_maskCoords) Decode(b []byte) {
 	t.M_y = dc.Double()
 	t.M_zoom = dc.Double()
 
+	return dc.err
 }
 
 // inputStickeredMediaPhoto#4a992157
@@ -29761,11 +30145,12 @@ func (t *TL_inputStickeredMediaPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickeredMediaPhoto) Decode(b []byte) {
+func (t *TL_inputStickeredMediaPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // inputStickeredMediaDocument#438865b
@@ -29801,11 +30186,12 @@ func (t *TL_inputStickeredMediaDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickeredMediaDocument) Decode(b []byte) {
+func (t *TL_inputStickeredMediaDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // game#bdf9653b
@@ -29910,7 +30296,7 @@ func (t *TL_game) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_game) Decode(b []byte) {
+func (t *TL_game) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -29921,6 +30307,7 @@ func (t *TL_game) Decode(b []byte) {
 	t.M_photo = dc.TLObject()
 	t.M_document = dc.TLObject()
 
+	return dc.err
 }
 
 // inputGameID#32c3e77
@@ -29966,12 +30353,13 @@ func (t *TL_inputGameID) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputGameID) Decode(b []byte) {
+func (t *TL_inputGameID) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // inputGameShortName#c331e80a
@@ -30017,12 +30405,13 @@ func (t *TL_inputGameShortName) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputGameShortName) Decode(b []byte) {
+func (t *TL_inputGameShortName) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bot_id = dc.TLObject()
 	t.M_short_name = dc.String()
 
+	return dc.err
 }
 
 // highScore#58fffcd0
@@ -30078,13 +30467,14 @@ func (t *TL_highScore) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_highScore) Decode(b []byte) {
+func (t *TL_highScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pos = dc.Int()
 	t.M_user_id = dc.Int()
 	t.M_score = dc.Int()
 
+	return dc.err
 }
 
 // messages_highScores#9a3bfd99
@@ -30130,12 +30520,13 @@ func (t *TL_messages_highScores) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_highScores) Decode(b []byte) {
+func (t *TL_messages_highScores) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_scores = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // textEmpty#dc3d824f
@@ -30161,8 +30552,8 @@ func (t *TL_textEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textEmpty) Decode(b []byte) {
-
+func (t *TL_textEmpty) Decode(b []byte) error {
+	return nil
 }
 
 // textPlain#744694e0
@@ -30198,11 +30589,12 @@ func (t *TL_textPlain) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textPlain) Decode(b []byte) {
+func (t *TL_textPlain) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.String()
 
+	return dc.err
 }
 
 // textBold#6724abc4
@@ -30238,11 +30630,12 @@ func (t *TL_textBold) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textBold) Decode(b []byte) {
+func (t *TL_textBold) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // textItalic#d912a59c
@@ -30278,11 +30671,12 @@ func (t *TL_textItalic) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textItalic) Decode(b []byte) {
+func (t *TL_textItalic) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // textUnderline#c12622c4
@@ -30318,11 +30712,12 @@ func (t *TL_textUnderline) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textUnderline) Decode(b []byte) {
+func (t *TL_textUnderline) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // textStrike#9bf8bb95
@@ -30358,11 +30753,12 @@ func (t *TL_textStrike) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textStrike) Decode(b []byte) {
+func (t *TL_textStrike) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // textFixed#6c3f19b9
@@ -30398,11 +30794,12 @@ func (t *TL_textFixed) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textFixed) Decode(b []byte) {
+func (t *TL_textFixed) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // textUrl#3c2884c1
@@ -30458,13 +30855,14 @@ func (t *TL_textUrl) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textUrl) Decode(b []byte) {
+func (t *TL_textUrl) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 	t.M_url = dc.String()
 	t.M_webpage_id = dc.Long()
 
+	return dc.err
 }
 
 // textEmail#de5a0dd6
@@ -30510,12 +30908,13 @@ func (t *TL_textEmail) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textEmail) Decode(b []byte) {
+func (t *TL_textEmail) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 	t.M_email = dc.String()
 
+	return dc.err
 }
 
 // textConcat#7e6260d7
@@ -30551,11 +30950,12 @@ func (t *TL_textConcat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_textConcat) Decode(b []byte) {
+func (t *TL_textConcat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_texts = dc.Vector()
 
+	return dc.err
 }
 
 // pageBlockUnsupported#13567e8a
@@ -30581,8 +30981,8 @@ func (t *TL_pageBlockUnsupported) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockUnsupported) Decode(b []byte) {
-
+func (t *TL_pageBlockUnsupported) Decode(b []byte) error {
+	return nil
 }
 
 // pageBlockTitle#70abc3fd
@@ -30618,11 +31018,12 @@ func (t *TL_pageBlockTitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockTitle) Decode(b []byte) {
+func (t *TL_pageBlockTitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockSubtitle#8ffa9a1f
@@ -30658,11 +31059,12 @@ func (t *TL_pageBlockSubtitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockSubtitle) Decode(b []byte) {
+func (t *TL_pageBlockSubtitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockAuthorDate#baafe5e0
@@ -30708,12 +31110,13 @@ func (t *TL_pageBlockAuthorDate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockAuthorDate) Decode(b []byte) {
+func (t *TL_pageBlockAuthorDate) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_author = dc.TLObject()
 	t.M_published_date = dc.Int()
 
+	return dc.err
 }
 
 // pageBlockHeader#bfd064ec
@@ -30749,11 +31152,12 @@ func (t *TL_pageBlockHeader) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockHeader) Decode(b []byte) {
+func (t *TL_pageBlockHeader) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockSubheader#f12bb6e1
@@ -30789,11 +31193,12 @@ func (t *TL_pageBlockSubheader) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockSubheader) Decode(b []byte) {
+func (t *TL_pageBlockSubheader) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockParagraph#467a0766
@@ -30829,11 +31234,12 @@ func (t *TL_pageBlockParagraph) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockParagraph) Decode(b []byte) {
+func (t *TL_pageBlockParagraph) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockPreformatted#c070d93e
@@ -30879,12 +31285,13 @@ func (t *TL_pageBlockPreformatted) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockPreformatted) Decode(b []byte) {
+func (t *TL_pageBlockPreformatted) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 	t.M_language = dc.String()
 
+	return dc.err
 }
 
 // pageBlockFooter#48870999
@@ -30920,11 +31327,12 @@ func (t *TL_pageBlockFooter) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockFooter) Decode(b []byte) {
+func (t *TL_pageBlockFooter) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockDivider#db20b188
@@ -30950,8 +31358,8 @@ func (t *TL_pageBlockDivider) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockDivider) Decode(b []byte) {
-
+func (t *TL_pageBlockDivider) Decode(b []byte) error {
+	return nil
 }
 
 // pageBlockAnchor#ce0d37b0
@@ -30987,11 +31395,12 @@ func (t *TL_pageBlockAnchor) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockAnchor) Decode(b []byte) {
+func (t *TL_pageBlockAnchor) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_name = dc.String()
 
+	return dc.err
 }
 
 // pageBlockList#3a58c7f4
@@ -31037,12 +31446,13 @@ func (t *TL_pageBlockList) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockList) Decode(b []byte) {
+func (t *TL_pageBlockList) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ordered = dc.TLObject()
 	t.M_items = dc.Vector()
 
+	return dc.err
 }
 
 // pageBlockBlockquote#263d7c26
@@ -31088,12 +31498,13 @@ func (t *TL_pageBlockBlockquote) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockBlockquote) Decode(b []byte) {
+func (t *TL_pageBlockBlockquote) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockPullquote#4f4456d3
@@ -31139,12 +31550,13 @@ func (t *TL_pageBlockPullquote) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockPullquote) Decode(b []byte) {
+func (t *TL_pageBlockPullquote) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_text = dc.TLObject()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockPhoto#e9c69982
@@ -31190,12 +31602,13 @@ func (t *TL_pageBlockPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockPhoto) Decode(b []byte) {
+func (t *TL_pageBlockPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_photo_id = dc.Long()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockVideo#d9d71866
@@ -31270,7 +31683,7 @@ func (t *TL_pageBlockVideo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockVideo) Decode(b []byte) {
+func (t *TL_pageBlockVideo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_autoplay = dc.TLObject()
@@ -31278,6 +31691,7 @@ func (t *TL_pageBlockVideo) Decode(b []byte) {
 	t.M_video_id = dc.Long()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockCover#39f23300
@@ -31313,11 +31727,12 @@ func (t *TL_pageBlockCover) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockCover) Decode(b []byte) {
+func (t *TL_pageBlockCover) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_cover = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockEmbed#cde200d1
@@ -31432,7 +31847,7 @@ func (t *TL_pageBlockEmbed) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockEmbed) Decode(b []byte) {
+func (t *TL_pageBlockEmbed) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_full_width = dc.TLObject()
@@ -31444,6 +31859,7 @@ func (t *TL_pageBlockEmbed) Decode(b []byte) {
 	t.M_h = dc.Int()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockEmbedPost#292c7be9
@@ -31539,7 +31955,7 @@ func (t *TL_pageBlockEmbedPost) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockEmbedPost) Decode(b []byte) {
+func (t *TL_pageBlockEmbedPost) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
@@ -31550,6 +31966,7 @@ func (t *TL_pageBlockEmbedPost) Decode(b []byte) {
 	t.M_blocks = dc.Vector()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockCollage#8b31c4f
@@ -31595,12 +32012,13 @@ func (t *TL_pageBlockCollage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockCollage) Decode(b []byte) {
+func (t *TL_pageBlockCollage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_items = dc.Vector()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockSlideshow#130c8963
@@ -31646,12 +32064,13 @@ func (t *TL_pageBlockSlideshow) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockSlideshow) Decode(b []byte) {
+func (t *TL_pageBlockSlideshow) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_items = dc.Vector()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockChannel#ef1751b5
@@ -31687,11 +32106,12 @@ func (t *TL_pageBlockChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockChannel) Decode(b []byte) {
+func (t *TL_pageBlockChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // pageBlockAudio#31b81a7f
@@ -31737,12 +32157,13 @@ func (t *TL_pageBlockAudio) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageBlockAudio) Decode(b []byte) {
+func (t *TL_pageBlockAudio) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_audio_id = dc.Long()
 	t.M_caption = dc.TLObject()
 
+	return dc.err
 }
 
 // pagePart#8e3f9ebe
@@ -31798,13 +32219,14 @@ func (t *TL_pagePart) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pagePart) Decode(b []byte) {
+func (t *TL_pagePart) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_blocks = dc.Vector()
 	t.M_photos = dc.Vector()
 	t.M_documents = dc.Vector()
 
+	return dc.err
 }
 
 // pageFull#556ec7aa
@@ -31860,13 +32282,14 @@ func (t *TL_pageFull) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_pageFull) Decode(b []byte) {
+func (t *TL_pageFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_blocks = dc.Vector()
 	t.M_photos = dc.Vector()
 	t.M_documents = dc.Vector()
 
+	return dc.err
 }
 
 // phoneCallDiscardReasonMissed#85e42301
@@ -31892,8 +32315,8 @@ func (t *TL_phoneCallDiscardReasonMissed) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallDiscardReasonMissed) Decode(b []byte) {
-
+func (t *TL_phoneCallDiscardReasonMissed) Decode(b []byte) error {
+	return nil
 }
 
 // phoneCallDiscardReasonDisconnect#e095c1a0
@@ -31919,8 +32342,8 @@ func (t *TL_phoneCallDiscardReasonDisconnect) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallDiscardReasonDisconnect) Decode(b []byte) {
-
+func (t *TL_phoneCallDiscardReasonDisconnect) Decode(b []byte) error {
+	return nil
 }
 
 // phoneCallDiscardReasonHangup#57adc690
@@ -31946,8 +32369,8 @@ func (t *TL_phoneCallDiscardReasonHangup) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallDiscardReasonHangup) Decode(b []byte) {
-
+func (t *TL_phoneCallDiscardReasonHangup) Decode(b []byte) error {
+	return nil
 }
 
 // phoneCallDiscardReasonBusy#faf7e8c9
@@ -31973,8 +32396,8 @@ func (t *TL_phoneCallDiscardReasonBusy) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallDiscardReasonBusy) Decode(b []byte) {
-
+func (t *TL_phoneCallDiscardReasonBusy) Decode(b []byte) error {
+	return nil
 }
 
 // dataJSON#7d748d04
@@ -32010,11 +32433,12 @@ func (t *TL_dataJSON) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_dataJSON) Decode(b []byte) {
+func (t *TL_dataJSON) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_data = dc.String()
 
+	return dc.err
 }
 
 // labeledPrice#cb296bf8
@@ -32060,12 +32484,13 @@ func (t *TL_labeledPrice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_labeledPrice) Decode(b []byte) {
+func (t *TL_labeledPrice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_label = dc.String()
 	t.M_amount = dc.Long()
 
+	return dc.err
 }
 
 // invoice#c30aa358
@@ -32200,7 +32625,7 @@ func (t *TL_invoice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_invoice) Decode(b []byte) {
+func (t *TL_invoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_test = dc.TLObject()
@@ -32214,6 +32639,7 @@ func (t *TL_invoice) Decode(b []byte) {
 	t.M_currency = dc.String()
 	t.M_prices = dc.Vector()
 
+	return dc.err
 }
 
 // paymentCharge#ea02c27e
@@ -32259,12 +32685,13 @@ func (t *TL_paymentCharge) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_paymentCharge) Decode(b []byte) {
+func (t *TL_paymentCharge) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
 	t.M_provider_charge_id = dc.String()
 
+	return dc.err
 }
 
 // postAddress#1e8caaeb
@@ -32350,7 +32777,7 @@ func (t *TL_postAddress) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_postAddress) Decode(b []byte) {
+func (t *TL_postAddress) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_street_line1 = dc.String()
@@ -32360,6 +32787,7 @@ func (t *TL_postAddress) Decode(b []byte) {
 	t.M_country_iso2 = dc.String()
 	t.M_post_code = dc.String()
 
+	return dc.err
 }
 
 // paymentRequestedInfo#909c3f94
@@ -32434,7 +32862,7 @@ func (t *TL_paymentRequestedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_paymentRequestedInfo) Decode(b []byte) {
+func (t *TL_paymentRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_name = dc.TLObject()
@@ -32442,6 +32870,7 @@ func (t *TL_paymentRequestedInfo) Decode(b []byte) {
 	t.M_email = dc.TLObject()
 	t.M_shipping_address = dc.TLObject()
 
+	return dc.err
 }
 
 // paymentSavedCredentialsCard#cdc27a1f
@@ -32487,12 +32916,13 @@ func (t *TL_paymentSavedCredentialsCard) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_paymentSavedCredentialsCard) Decode(b []byte) {
+func (t *TL_paymentSavedCredentialsCard) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // webDocument#c61acbd8
@@ -32578,7 +33008,7 @@ func (t *TL_webDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_webDocument) Decode(b []byte) {
+func (t *TL_webDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
@@ -32588,6 +33018,7 @@ func (t *TL_webDocument) Decode(b []byte) {
 	t.M_attributes = dc.Vector()
 	t.M_dc_id = dc.Int()
 
+	return dc.err
 }
 
 // inputWebDocument#9bed434d
@@ -32653,7 +33084,7 @@ func (t *TL_inputWebDocument) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputWebDocument) Decode(b []byte) {
+func (t *TL_inputWebDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
@@ -32661,6 +33092,7 @@ func (t *TL_inputWebDocument) Decode(b []byte) {
 	t.M_mime_type = dc.String()
 	t.M_attributes = dc.Vector()
 
+	return dc.err
 }
 
 // inputWebFileLocation#c239d686
@@ -32706,12 +33138,13 @@ func (t *TL_inputWebFileLocation) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputWebFileLocation) Decode(b []byte) {
+func (t *TL_inputWebFileLocation) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // upload_webFile#21e753bc
@@ -32787,7 +33220,7 @@ func (t *TL_upload_webFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_webFile) Decode(b []byte) {
+func (t *TL_upload_webFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_size = dc.Int()
@@ -32796,6 +33229,7 @@ func (t *TL_upload_webFile) Decode(b []byte) {
 	t.M_mtime = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // payments_paymentForm#3f56aea3
@@ -32940,7 +33374,7 @@ func (t *TL_payments_paymentForm) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_paymentForm) Decode(b []byte) {
+func (t *TL_payments_paymentForm) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_can_save_credentials = dc.TLObject()
@@ -32955,6 +33389,7 @@ func (t *TL_payments_paymentForm) Decode(b []byte) {
 	t.M_saved_credentials = dc.TLObject()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // payments_validatedRequestedInfo#d1451883
@@ -33009,12 +33444,13 @@ func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) {
+func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_shipping_options = dc.Vector()
 
+	return dc.err
 }
 
 // payments_paymentResult#4e5f810d
@@ -33050,11 +33486,12 @@ func (t *TL_payments_paymentResult) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_paymentResult) Decode(b []byte) {
+func (t *TL_payments_paymentResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_updates = dc.TLObject()
 
+	return dc.err
 }
 
 // payments_paymentVerficationNeeded#6b56b921
@@ -33090,11 +33527,12 @@ func (t *TL_payments_paymentVerficationNeeded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_paymentVerficationNeeded) Decode(b []byte) {
+func (t *TL_payments_paymentVerficationNeeded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 
+	return dc.err
 }
 
 // payments_paymentReceipt#500911e1
@@ -33229,7 +33667,7 @@ func (t *TL_payments_paymentReceipt) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_paymentReceipt) Decode(b []byte) {
+func (t *TL_payments_paymentReceipt) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_date = dc.Int()
@@ -33243,6 +33681,7 @@ func (t *TL_payments_paymentReceipt) Decode(b []byte) {
 	t.M_credentials_title = dc.String()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // payments_savedInfo#fb8fe43c
@@ -33297,12 +33736,13 @@ func (t *TL_payments_savedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_savedInfo) Decode(b []byte) {
+func (t *TL_payments_savedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_has_saved_credentials = dc.TLObject()
 	t.M_saved_info = dc.TLObject()
 
+	return dc.err
 }
 
 // inputPaymentCredentialsSaved#c10eb2cf
@@ -33348,12 +33788,13 @@ func (t *TL_inputPaymentCredentialsSaved) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPaymentCredentialsSaved) Decode(b []byte) {
+func (t *TL_inputPaymentCredentialsSaved) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
 	t.M_tmp_password = dc.TLObject()
 
+	return dc.err
 }
 
 // inputPaymentCredentials#3417d728
@@ -33408,12 +33849,13 @@ func (t *TL_inputPaymentCredentials) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPaymentCredentials) Decode(b []byte) {
+func (t *TL_inputPaymentCredentials) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_save = dc.TLObject()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // inputPaymentCredentialsApplePay#aa1c39f
@@ -33449,11 +33891,12 @@ func (t *TL_inputPaymentCredentialsApplePay) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPaymentCredentialsApplePay) Decode(b []byte) {
+func (t *TL_inputPaymentCredentialsApplePay) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_payment_data = dc.TLObject()
 
+	return dc.err
 }
 
 // inputPaymentCredentialsAndroidPay#795667a6
@@ -33489,11 +33932,12 @@ func (t *TL_inputPaymentCredentialsAndroidPay) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPaymentCredentialsAndroidPay) Decode(b []byte) {
+func (t *TL_inputPaymentCredentialsAndroidPay) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_payment_token = dc.TLObject()
 
+	return dc.err
 }
 
 // account_tmpPassword#db64fd34
@@ -33539,12 +33983,13 @@ func (t *TL_account_tmpPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_tmpPassword) Decode(b []byte) {
+func (t *TL_account_tmpPassword) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_tmp_password = dc.TLObject()
 	t.M_valid_until = dc.Int()
 
+	return dc.err
 }
 
 // shippingOption#b6213cdf
@@ -33600,13 +34045,14 @@ func (t *TL_shippingOption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_shippingOption) Decode(b []byte) {
+func (t *TL_shippingOption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.String()
 	t.M_title = dc.String()
 	t.M_prices = dc.Vector()
 
+	return dc.err
 }
 
 // inputStickerSetItem#ffa0a496
@@ -33671,13 +34117,14 @@ func (t *TL_inputStickerSetItem) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputStickerSetItem) Decode(b []byte) {
+func (t *TL_inputStickerSetItem) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_document = dc.TLObject()
 	t.M_emoji = dc.String()
 	t.M_mask_coords = dc.TLObject()
 
+	return dc.err
 }
 
 // inputPhoneCall#1e36fded
@@ -33723,12 +34170,13 @@ func (t *TL_inputPhoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputPhoneCall) Decode(b []byte) {
+func (t *TL_inputPhoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 
+	return dc.err
 }
 
 // phoneCallEmpty#5366c915
@@ -33764,11 +34212,12 @@ func (t *TL_phoneCallEmpty) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallEmpty) Decode(b []byte) {
+func (t *TL_phoneCallEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
 
+	return dc.err
 }
 
 // phoneCallWaiting#1b8f4ad1
@@ -33873,7 +34322,7 @@ func (t *TL_phoneCallWaiting) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallWaiting) Decode(b []byte) {
+func (t *TL_phoneCallWaiting) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -33884,6 +34333,7 @@ func (t *TL_phoneCallWaiting) Decode(b []byte) {
 	t.M_protocol = dc.TLObject()
 	t.M_receive_date = dc.TLObject()
 
+	return dc.err
 }
 
 // phoneCallRequested#83761ce4
@@ -33979,7 +34429,7 @@ func (t *TL_phoneCallRequested) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallRequested) Decode(b []byte) {
+func (t *TL_phoneCallRequested) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -33990,6 +34440,7 @@ func (t *TL_phoneCallRequested) Decode(b []byte) {
 	t.M_g_a_hash = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
+	return dc.err
 }
 
 // phoneCallAccepted#6d003d3f
@@ -34085,7 +34536,7 @@ func (t *TL_phoneCallAccepted) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallAccepted) Decode(b []byte) {
+func (t *TL_phoneCallAccepted) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -34096,6 +34547,7 @@ func (t *TL_phoneCallAccepted) Decode(b []byte) {
 	t.M_g_b = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
+	return dc.err
 }
 
 // phoneCall#ffe6ab67
@@ -34231,7 +34683,7 @@ func (t *TL_phoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCall) Decode(b []byte) {
+func (t *TL_phoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -34246,6 +34698,7 @@ func (t *TL_phoneCall) Decode(b []byte) {
 	t.M_alternative_connections = dc.Vector()
 	t.M_start_date = dc.Int()
 
+	return dc.err
 }
 
 // phoneCallDiscarded#50ca4de1
@@ -34330,7 +34783,7 @@ func (t *TL_phoneCallDiscarded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallDiscarded) Decode(b []byte) {
+func (t *TL_phoneCallDiscarded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_need_rating = dc.TLObject()
@@ -34339,6 +34792,7 @@ func (t *TL_phoneCallDiscarded) Decode(b []byte) {
 	t.M_reason = dc.TLObject()
 	t.M_duration = dc.TLObject()
 
+	return dc.err
 }
 
 // phoneConnection#9d4c17c0
@@ -34414,7 +34868,7 @@ func (t *TL_phoneConnection) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneConnection) Decode(b []byte) {
+func (t *TL_phoneConnection) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -34423,6 +34877,7 @@ func (t *TL_phoneConnection) Decode(b []byte) {
 	t.M_port = dc.Int()
 	t.M_peer_tag = dc.TLObject()
 
+	return dc.err
 }
 
 // phoneCallProtocol#a2bb35cb
@@ -34497,7 +34952,7 @@ func (t *TL_phoneCallProtocol) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phoneCallProtocol) Decode(b []byte) {
+func (t *TL_phoneCallProtocol) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_udp_p2p = dc.TLObject()
@@ -34505,6 +34960,7 @@ func (t *TL_phoneCallProtocol) Decode(b []byte) {
 	t.M_min_layer = dc.Int()
 	t.M_max_layer = dc.Int()
 
+	return dc.err
 }
 
 // phone_phoneCall#ec82e140
@@ -34550,12 +35006,13 @@ func (t *TL_phone_phoneCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_phoneCall) Decode(b []byte) {
+func (t *TL_phone_phoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_call = dc.TLObject()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // upload_cdnFileReuploadNeeded#eea8e46e
@@ -34591,11 +35048,12 @@ func (t *TL_upload_cdnFileReuploadNeeded) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_cdnFileReuploadNeeded) Decode(b []byte) {
+func (t *TL_upload_cdnFileReuploadNeeded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_request_token = dc.TLObject()
 
+	return dc.err
 }
 
 // upload_cdnFile#a99fca4f
@@ -34631,11 +35089,12 @@ func (t *TL_upload_cdnFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_cdnFile) Decode(b []byte) {
+func (t *TL_upload_cdnFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // cdnPublicKey#c982eaba
@@ -34681,12 +35140,13 @@ func (t *TL_cdnPublicKey) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_cdnPublicKey) Decode(b []byte) {
+func (t *TL_cdnPublicKey) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
 	t.M_public_key = dc.String()
 
+	return dc.err
 }
 
 // cdnConfig#5725e40a
@@ -34722,11 +35182,12 @@ func (t *TL_cdnConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_cdnConfig) Decode(b []byte) {
+func (t *TL_cdnConfig) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_public_keys = dc.Vector()
 
+	return dc.err
 }
 
 // langPackString#cad181f6
@@ -34772,12 +35233,13 @@ func (t *TL_langPackString) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langPackString) Decode(b []byte) {
+func (t *TL_langPackString) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.String()
 	t.M_value = dc.String()
 
+	return dc.err
 }
 
 // langPackStringPluralized#6c47ac9f
@@ -34882,7 +35344,7 @@ func (t *TL_langPackStringPluralized) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langPackStringPluralized) Decode(b []byte) {
+func (t *TL_langPackStringPluralized) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.String()
@@ -34893,6 +35355,7 @@ func (t *TL_langPackStringPluralized) Decode(b []byte) {
 	t.M_many_value = dc.TLObject()
 	t.M_other_value = dc.String()
 
+	return dc.err
 }
 
 // langPackStringDeleted#2979eeb2
@@ -34928,11 +35391,12 @@ func (t *TL_langPackStringDeleted) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langPackStringDeleted) Decode(b []byte) {
+func (t *TL_langPackStringDeleted) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.String()
 
+	return dc.err
 }
 
 // langPackDifference#f385c1f6
@@ -34998,7 +35462,7 @@ func (t *TL_langPackDifference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langPackDifference) Decode(b []byte) {
+func (t *TL_langPackDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_lang_code = dc.String()
@@ -35006,6 +35470,7 @@ func (t *TL_langPackDifference) Decode(b []byte) {
 	t.M_version = dc.Int()
 	t.M_strings = dc.Vector()
 
+	return dc.err
 }
 
 // langPackLanguage#117698f1
@@ -35061,13 +35526,14 @@ func (t *TL_langPackLanguage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langPackLanguage) Decode(b []byte) {
+func (t *TL_langPackLanguage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_name = dc.String()
 	t.M_native_name = dc.String()
 	t.M_lang_code = dc.String()
 
+	return dc.err
 }
 
 // channelAdminRights#5d7ceba5
@@ -35192,7 +35658,7 @@ func (t *TL_channelAdminRights) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminRights) Decode(b []byte) {
+func (t *TL_channelAdminRights) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_change_info = dc.TLObject()
@@ -35205,6 +35671,7 @@ func (t *TL_channelAdminRights) Decode(b []byte) {
 	t.M_pin_messages = dc.TLObject()
 	t.M_add_admins = dc.TLObject()
 
+	return dc.err
 }
 
 // channelBannedRights#58cf4249
@@ -35329,7 +35796,7 @@ func (t *TL_channelBannedRights) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelBannedRights) Decode(b []byte) {
+func (t *TL_channelBannedRights) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_view_messages = dc.TLObject()
@@ -35342,6 +35809,7 @@ func (t *TL_channelBannedRights) Decode(b []byte) {
 	t.M_embed_links = dc.TLObject()
 	t.M_until_date = dc.Int()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionChangeTitle#e6dfb825
@@ -35387,12 +35855,13 @@ func (t *TL_channelAdminLogEventActionChangeTitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionChangeTitle) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionChangeTitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_value = dc.String()
 	t.M_new_value = dc.String()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionChangeAbout#55188a2e
@@ -35438,12 +35907,13 @@ func (t *TL_channelAdminLogEventActionChangeAbout) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionChangeAbout) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionChangeAbout) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_value = dc.String()
 	t.M_new_value = dc.String()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionChangeUsername#6a4afc38
@@ -35489,12 +35959,13 @@ func (t *TL_channelAdminLogEventActionChangeUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionChangeUsername) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionChangeUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_value = dc.String()
 	t.M_new_value = dc.String()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionChangePhoto#b82f55c3
@@ -35540,12 +36011,13 @@ func (t *TL_channelAdminLogEventActionChangePhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionChangePhoto) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionChangePhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_photo = dc.TLObject()
 	t.M_new_photo = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionToggleInvites#1b7907ae
@@ -35581,11 +36053,12 @@ func (t *TL_channelAdminLogEventActionToggleInvites) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionToggleInvites) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionToggleInvites) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_value = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionToggleSignatures#26ae0971
@@ -35621,11 +36094,12 @@ func (t *TL_channelAdminLogEventActionToggleSignatures) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionToggleSignatures) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionToggleSignatures) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_value = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionUpdatePinned#e9e82c18
@@ -35661,11 +36135,12 @@ func (t *TL_channelAdminLogEventActionUpdatePinned) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionUpdatePinned) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionUpdatePinned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionEditMessage#709b2405
@@ -35711,12 +36186,13 @@ func (t *TL_channelAdminLogEventActionEditMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionEditMessage) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionEditMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_message = dc.TLObject()
 	t.M_new_message = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionDeleteMessage#42e047bb
@@ -35752,11 +36228,12 @@ func (t *TL_channelAdminLogEventActionDeleteMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionDeleteMessage) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionDeleteMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionParticipantJoin#183040d3
@@ -35782,8 +36259,8 @@ func (t *TL_channelAdminLogEventActionParticipantJoin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionParticipantJoin) Decode(b []byte) {
-
+func (t *TL_channelAdminLogEventActionParticipantJoin) Decode(b []byte) error {
+	return nil
 }
 
 // channelAdminLogEventActionParticipantLeave#f89777f2
@@ -35809,8 +36286,8 @@ func (t *TL_channelAdminLogEventActionParticipantLeave) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionParticipantLeave) Decode(b []byte) {
-
+func (t *TL_channelAdminLogEventActionParticipantLeave) Decode(b []byte) error {
+	return nil
 }
 
 // channelAdminLogEventActionParticipantInvite#e31c34d8
@@ -35846,11 +36323,12 @@ func (t *TL_channelAdminLogEventActionParticipantInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionParticipantInvite) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionParticipantInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_participant = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionParticipantToggleBan#e6d83d7e
@@ -35896,12 +36374,13 @@ func (t *TL_channelAdminLogEventActionParticipantToggleBan) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleBan) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_participant = dc.TLObject()
 	t.M_new_participant = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionParticipantToggleAdmin#d5676710
@@ -35947,12 +36426,13 @@ func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_participant = dc.TLObject()
 	t.M_new_participant = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionChangeStickerSet#b1c3caa7
@@ -35998,12 +36478,13 @@ func (t *TL_channelAdminLogEventActionChangeStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionChangeStickerSet) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionChangeStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_stickerset = dc.TLObject()
 	t.M_new_stickerset = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEventActionTogglePreHistoryHidden#5f5c95f1
@@ -36039,11 +36520,12 @@ func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) Decode(b []byte) {
+func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_new_value = dc.TLObject()
 
+	return dc.err
 }
 
 // channelAdminLogEvent#3b5a3e40
@@ -36109,7 +36591,7 @@ func (t *TL_channelAdminLogEvent) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEvent) Decode(b []byte) {
+func (t *TL_channelAdminLogEvent) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Long()
@@ -36117,6 +36599,7 @@ func (t *TL_channelAdminLogEvent) Decode(b []byte) {
 	t.M_user_id = dc.Int()
 	t.M_action = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_adminLogResults#ed8af74d
@@ -36172,13 +36655,14 @@ func (t *TL_channels_adminLogResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_adminLogResults) Decode(b []byte) {
+func (t *TL_channels_adminLogResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_events = dc.Vector()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // channelAdminLogEventsFilter#ea107ae4
@@ -36353,7 +36837,7 @@ func (t *TL_channelAdminLogEventsFilter) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channelAdminLogEventsFilter) Decode(b []byte) {
+func (t *TL_channelAdminLogEventsFilter) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_join = dc.TLObject()
@@ -36371,6 +36855,7 @@ func (t *TL_channelAdminLogEventsFilter) Decode(b []byte) {
 	t.M_edit = dc.TLObject()
 	t.M_delete = dc.TLObject()
 
+	return dc.err
 }
 
 // popularContact#5ce14175
@@ -36416,12 +36901,13 @@ func (t *TL_popularContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_popularContact) Decode(b []byte) {
+func (t *TL_popularContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_client_id = dc.Long()
 	t.M_importers = dc.Int()
 
+	return dc.err
 }
 
 // cdnFileHash#77eec38f
@@ -36477,13 +36963,14 @@ func (t *TL_cdnFileHash) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_cdnFileHash) Decode(b []byte) {
+func (t *TL_cdnFileHash) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 	t.M_hash = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_favedStickersNotModified#9e8fa6d3
@@ -36509,8 +36996,8 @@ func (t *TL_messages_favedStickersNotModified) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_favedStickersNotModified) Decode(b []byte) {
-
+func (t *TL_messages_favedStickersNotModified) Decode(b []byte) error {
+	return nil
 }
 
 // messages_favedStickers#f37f2f16
@@ -36566,13 +37053,14 @@ func (t *TL_messages_favedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_favedStickers) Decode(b []byte) {
+func (t *TL_messages_favedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 	t.M_packs = dc.Vector()
 	t.M_stickers = dc.Vector()
 
+	return dc.err
 }
 
 // recentMeUrlUnknown#46e1d13d
@@ -36608,11 +37096,12 @@ func (t *TL_recentMeUrlUnknown) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_recentMeUrlUnknown) Decode(b []byte) {
+func (t *TL_recentMeUrlUnknown) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 
+	return dc.err
 }
 
 // recentMeUrlUser#8dbc3336
@@ -36658,12 +37147,13 @@ func (t *TL_recentMeUrlUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_recentMeUrlUser) Decode(b []byte) {
+func (t *TL_recentMeUrlUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_user_id = dc.Int()
 
+	return dc.err
 }
 
 // recentMeUrlChat#a01b22f9
@@ -36709,12 +37199,13 @@ func (t *TL_recentMeUrlChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_recentMeUrlChat) Decode(b []byte) {
+func (t *TL_recentMeUrlChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // recentMeUrlChatInvite#eb49081d
@@ -36760,12 +37251,13 @@ func (t *TL_recentMeUrlChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_recentMeUrlChatInvite) Decode(b []byte) {
+func (t *TL_recentMeUrlChatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_chat_invite = dc.TLObject()
 
+	return dc.err
 }
 
 // recentMeUrlStickerSet#bc0a57dc
@@ -36811,12 +37303,13 @@ func (t *TL_recentMeUrlStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_recentMeUrlStickerSet) Decode(b []byte) {
+func (t *TL_recentMeUrlStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_set = dc.TLObject()
 
+	return dc.err
 }
 
 // help_recentMeUrls#e0310d7
@@ -36872,13 +37365,14 @@ func (t *TL_help_recentMeUrls) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_recentMeUrls) Decode(b []byte) {
+func (t *TL_help_recentMeUrls) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_urls = dc.Vector()
 	t.M_chats = dc.Vector()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // inputSingleMedia#5eaa7809
@@ -36924,12 +37418,13 @@ func (t *TL_inputSingleMedia) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_inputSingleMedia) Decode(b []byte) {
+func (t *TL_inputSingleMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_media = dc.TLObject()
 	t.M_random_id = dc.Long()
 
+	return dc.err
 }
 
 // invokeAfterMsg#cb9f372d
@@ -36975,12 +37470,13 @@ func (t *TL_invokeAfterMsg) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_invokeAfterMsg) Decode(b []byte) {
+func (t *TL_invokeAfterMsg) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Long()
 	t.M_query = dc.TLObject()
 
+	return dc.err
 }
 
 // invokeAfterMsgs#3dc4b4f0
@@ -37026,12 +37522,13 @@ func (t *TL_invokeAfterMsgs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_invokeAfterMsgs) Decode(b []byte) {
+func (t *TL_invokeAfterMsgs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_ids = dc.VectorLong()
 	t.M_query = dc.TLObject()
 
+	return dc.err
 }
 
 // initConnection#c7481da6
@@ -37137,7 +37634,7 @@ func (t *TL_initConnection) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_initConnection) Decode(b []byte) {
+func (t *TL_initConnection) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_api_id = dc.Int()
@@ -37149,6 +37646,7 @@ func (t *TL_initConnection) Decode(b []byte) {
 	t.M_lang_code = dc.String()
 	t.M_query = dc.TLObject()
 
+	return dc.err
 }
 
 // invokeWithLayer#da9b0d0d
@@ -37194,12 +37692,13 @@ func (t *TL_invokeWithLayer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_invokeWithLayer) Decode(b []byte) {
+func (t *TL_invokeWithLayer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_layer = dc.Int()
 	t.M_query = dc.TLObject()
 
+	return dc.err
 }
 
 // invokeWithoutUpdates#bf9459b7
@@ -37235,11 +37734,12 @@ func (t *TL_invokeWithoutUpdates) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_invokeWithoutUpdates) Decode(b []byte) {
+func (t *TL_invokeWithoutUpdates) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_checkPhone#6fe51dfb
@@ -37275,11 +37775,12 @@ func (t *TL_auth_checkPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_checkPhone) Decode(b []byte) {
+func (t *TL_auth_checkPhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 
+	return dc.err
 }
 
 // auth_sendCode#86aef0ec
@@ -37364,7 +37865,7 @@ func (t *TL_auth_sendCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sendCode) Decode(b []byte) {
+func (t *TL_auth_sendCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_allow_flashcall = dc.TLObject()
@@ -37373,6 +37874,7 @@ func (t *TL_auth_sendCode) Decode(b []byte) {
 	t.M_api_id = dc.Int()
 	t.M_api_hash = dc.String()
 
+	return dc.err
 }
 
 // auth_signUp#1b067634
@@ -37448,7 +37950,7 @@ func (t *TL_auth_signUp) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_signUp) Decode(b []byte) {
+func (t *TL_auth_signUp) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
@@ -37457,6 +37959,7 @@ func (t *TL_auth_signUp) Decode(b []byte) {
 	t.M_first_name = dc.String()
 	t.M_last_name = dc.String()
 
+	return dc.err
 }
 
 // auth_signIn#bcd51581
@@ -37512,13 +38015,14 @@ func (t *TL_auth_signIn) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_signIn) Decode(b []byte) {
+func (t *TL_auth_signIn) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_phone_code_hash = dc.String()
 	t.M_phone_code = dc.String()
 
+	return dc.err
 }
 
 // auth_logOut#5717da40
@@ -37544,8 +38048,8 @@ func (t *TL_auth_logOut) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_logOut) Decode(b []byte) {
-
+func (t *TL_auth_logOut) Decode(b []byte) error {
+	return nil
 }
 
 // auth_resetAuthorizations#9fab0d1a
@@ -37571,8 +38075,8 @@ func (t *TL_auth_resetAuthorizations) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_resetAuthorizations) Decode(b []byte) {
-
+func (t *TL_auth_resetAuthorizations) Decode(b []byte) error {
+	return nil
 }
 
 // auth_sendInvites#771c1d97
@@ -37618,12 +38122,13 @@ func (t *TL_auth_sendInvites) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_sendInvites) Decode(b []byte) {
+func (t *TL_auth_sendInvites) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_numbers = dc.VectorString()
 	t.M_message = dc.String()
 
+	return dc.err
 }
 
 // auth_exportAuthorization#e5bfffcd
@@ -37659,11 +38164,12 @@ func (t *TL_auth_exportAuthorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_exportAuthorization) Decode(b []byte) {
+func (t *TL_auth_exportAuthorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_dc_id = dc.Int()
 
+	return dc.err
 }
 
 // auth_importAuthorization#e3ef9613
@@ -37709,12 +38215,13 @@ func (t *TL_auth_importAuthorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_importAuthorization) Decode(b []byte) {
+func (t *TL_auth_importAuthorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_bindTempAuthKey#cdd42a05
@@ -37780,7 +38287,7 @@ func (t *TL_auth_bindTempAuthKey) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_bindTempAuthKey) Decode(b []byte) {
+func (t *TL_auth_bindTempAuthKey) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_perm_auth_key_id = dc.Long()
@@ -37788,6 +38295,7 @@ func (t *TL_auth_bindTempAuthKey) Decode(b []byte) {
 	t.M_expires_at = dc.Int()
 	t.M_encrypted_message = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_importBotAuthorization#67a3ff2c
@@ -37853,7 +38361,7 @@ func (t *TL_auth_importBotAuthorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_importBotAuthorization) Decode(b []byte) {
+func (t *TL_auth_importBotAuthorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_flags = dc.Int()
@@ -37861,6 +38369,7 @@ func (t *TL_auth_importBotAuthorization) Decode(b []byte) {
 	t.M_api_hash = dc.String()
 	t.M_bot_auth_token = dc.String()
 
+	return dc.err
 }
 
 // auth_checkPassword#a63011e
@@ -37896,11 +38405,12 @@ func (t *TL_auth_checkPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_checkPassword) Decode(b []byte) {
+func (t *TL_auth_checkPassword) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_password_hash = dc.TLObject()
 
+	return dc.err
 }
 
 // auth_requestPasswordRecovery#d897bc66
@@ -37926,8 +38436,8 @@ func (t *TL_auth_requestPasswordRecovery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_requestPasswordRecovery) Decode(b []byte) {
-
+func (t *TL_auth_requestPasswordRecovery) Decode(b []byte) error {
+	return nil
 }
 
 // auth_recoverPassword#4ea56e92
@@ -37963,11 +38473,12 @@ func (t *TL_auth_recoverPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_recoverPassword) Decode(b []byte) {
+func (t *TL_auth_recoverPassword) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_code = dc.String()
 
+	return dc.err
 }
 
 // auth_resendCode#3ef1a9bf
@@ -38013,12 +38524,13 @@ func (t *TL_auth_resendCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_resendCode) Decode(b []byte) {
+func (t *TL_auth_resendCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_phone_code_hash = dc.String()
 
+	return dc.err
 }
 
 // auth_cancelCode#1f040578
@@ -38064,12 +38576,13 @@ func (t *TL_auth_cancelCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_cancelCode) Decode(b []byte) {
+func (t *TL_auth_cancelCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_phone_code_hash = dc.String()
 
+	return dc.err
 }
 
 // auth_dropTempAuthKeys#8e48a188
@@ -38105,11 +38618,12 @@ func (t *TL_auth_dropTempAuthKeys) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_auth_dropTempAuthKeys) Decode(b []byte) {
+func (t *TL_auth_dropTempAuthKeys) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_except_auth_keys = dc.VectorLong()
 
+	return dc.err
 }
 
 // account_registerDevice#637ea878
@@ -38155,12 +38669,13 @@ func (t *TL_account_registerDevice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_registerDevice) Decode(b []byte) {
+func (t *TL_account_registerDevice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_token_type = dc.Int()
 	t.M_token = dc.String()
 
+	return dc.err
 }
 
 // account_unregisterDevice#65c55b40
@@ -38206,12 +38721,13 @@ func (t *TL_account_unregisterDevice) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_unregisterDevice) Decode(b []byte) {
+func (t *TL_account_unregisterDevice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_token_type = dc.Int()
 	t.M_token = dc.String()
 
+	return dc.err
 }
 
 // account_updateNotifySettings#84be5b93
@@ -38257,12 +38773,13 @@ func (t *TL_account_updateNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updateNotifySettings) Decode(b []byte) {
+func (t *TL_account_updateNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_settings = dc.TLObject()
 
+	return dc.err
 }
 
 // account_getNotifySettings#12b3ad31
@@ -38298,11 +38815,12 @@ func (t *TL_account_getNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getNotifySettings) Decode(b []byte) {
+func (t *TL_account_getNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // account_resetNotifySettings#db7e1747
@@ -38328,8 +38846,8 @@ func (t *TL_account_resetNotifySettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_resetNotifySettings) Decode(b []byte) {
-
+func (t *TL_account_resetNotifySettings) Decode(b []byte) error {
+	return nil
 }
 
 // account_updateProfile#78515775
@@ -38394,13 +38912,14 @@ func (t *TL_account_updateProfile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updateProfile) Decode(b []byte) {
+func (t *TL_account_updateProfile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_first_name = dc.TLObject()
 	t.M_last_name = dc.TLObject()
 	t.M_about = dc.TLObject()
 
+	return dc.err
 }
 
 // account_updateStatus#6628562c
@@ -38436,11 +38955,12 @@ func (t *TL_account_updateStatus) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updateStatus) Decode(b []byte) {
+func (t *TL_account_updateStatus) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offline = dc.TLObject()
 
+	return dc.err
 }
 
 // account_getWallPapers#c04cfac2
@@ -38466,8 +38986,8 @@ func (t *TL_account_getWallPapers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getWallPapers) Decode(b []byte) {
-
+func (t *TL_account_getWallPapers) Decode(b []byte) error {
+	return nil
 }
 
 // account_reportPeer#ae189d5f
@@ -38513,12 +39033,13 @@ func (t *TL_account_reportPeer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_reportPeer) Decode(b []byte) {
+func (t *TL_account_reportPeer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_reason = dc.TLObject()
 
+	return dc.err
 }
 
 // account_checkUsername#2714d86c
@@ -38554,11 +39075,12 @@ func (t *TL_account_checkUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_checkUsername) Decode(b []byte) {
+func (t *TL_account_checkUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // account_updateUsername#3e0bdd7c
@@ -38594,11 +39116,12 @@ func (t *TL_account_updateUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updateUsername) Decode(b []byte) {
+func (t *TL_account_updateUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // account_getPrivacy#dadbc950
@@ -38634,11 +39157,12 @@ func (t *TL_account_getPrivacy) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getPrivacy) Decode(b []byte) {
+func (t *TL_account_getPrivacy) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.TLObject()
 
+	return dc.err
 }
 
 // account_setPrivacy#c9f81ce8
@@ -38684,12 +39208,13 @@ func (t *TL_account_setPrivacy) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_setPrivacy) Decode(b []byte) {
+func (t *TL_account_setPrivacy) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_key = dc.TLObject()
 	t.M_rules = dc.Vector()
 
+	return dc.err
 }
 
 // account_deleteAccount#418d4e0b
@@ -38725,11 +39250,12 @@ func (t *TL_account_deleteAccount) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_deleteAccount) Decode(b []byte) {
+func (t *TL_account_deleteAccount) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_reason = dc.String()
 
+	return dc.err
 }
 
 // account_getAccountTTL#8fc711d
@@ -38755,8 +39281,8 @@ func (t *TL_account_getAccountTTL) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getAccountTTL) Decode(b []byte) {
-
+func (t *TL_account_getAccountTTL) Decode(b []byte) error {
+	return nil
 }
 
 // account_setAccountTTL#2442485e
@@ -38792,11 +39318,12 @@ func (t *TL_account_setAccountTTL) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_setAccountTTL) Decode(b []byte) {
+func (t *TL_account_setAccountTTL) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_ttl = dc.TLObject()
 
+	return dc.err
 }
 
 // account_sendChangePhoneCode#8e57deb
@@ -38861,13 +39388,14 @@ func (t *TL_account_sendChangePhoneCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_sendChangePhoneCode) Decode(b []byte) {
+func (t *TL_account_sendChangePhoneCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_allow_flashcall = dc.TLObject()
 	t.M_phone_number = dc.String()
 	t.M_current_number = dc.TLObject()
 
+	return dc.err
 }
 
 // account_changePhone#70c32edb
@@ -38923,13 +39451,14 @@ func (t *TL_account_changePhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_changePhone) Decode(b []byte) {
+func (t *TL_account_changePhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_number = dc.String()
 	t.M_phone_code_hash = dc.String()
 	t.M_phone_code = dc.String()
 
+	return dc.err
 }
 
 // account_updateDeviceLocked#38df3532
@@ -38965,11 +39494,12 @@ func (t *TL_account_updateDeviceLocked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updateDeviceLocked) Decode(b []byte) {
+func (t *TL_account_updateDeviceLocked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_period = dc.Int()
 
+	return dc.err
 }
 
 // account_getAuthorizations#e320c158
@@ -38995,8 +39525,8 @@ func (t *TL_account_getAuthorizations) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getAuthorizations) Decode(b []byte) {
-
+func (t *TL_account_getAuthorizations) Decode(b []byte) error {
+	return nil
 }
 
 // account_resetAuthorization#df77f3bc
@@ -39032,11 +39562,12 @@ func (t *TL_account_resetAuthorization) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_resetAuthorization) Decode(b []byte) {
+func (t *TL_account_resetAuthorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Long()
 
+	return dc.err
 }
 
 // account_getPassword#548a30f5
@@ -39062,8 +39593,8 @@ func (t *TL_account_getPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getPassword) Decode(b []byte) {
-
+func (t *TL_account_getPassword) Decode(b []byte) error {
+	return nil
 }
 
 // account_getPasswordSettings#bc8d11bb
@@ -39099,11 +39630,12 @@ func (t *TL_account_getPasswordSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getPasswordSettings) Decode(b []byte) {
+func (t *TL_account_getPasswordSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_current_password_hash = dc.TLObject()
 
+	return dc.err
 }
 
 // account_updatePasswordSettings#fa7c4b86
@@ -39149,12 +39681,13 @@ func (t *TL_account_updatePasswordSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_updatePasswordSettings) Decode(b []byte) {
+func (t *TL_account_updatePasswordSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_current_password_hash = dc.TLObject()
 	t.M_new_settings = dc.TLObject()
 
+	return dc.err
 }
 
 // account_sendConfirmPhoneCode#1516d7bd
@@ -39219,13 +39752,14 @@ func (t *TL_account_sendConfirmPhoneCode) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Decode(b []byte) {
+func (t *TL_account_sendConfirmPhoneCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_allow_flashcall = dc.TLObject()
 	t.M_hash = dc.String()
 	t.M_current_number = dc.TLObject()
 
+	return dc.err
 }
 
 // account_confirmPhone#5f2178c3
@@ -39271,12 +39805,13 @@ func (t *TL_account_confirmPhone) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_confirmPhone) Decode(b []byte) {
+func (t *TL_account_confirmPhone) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_phone_code_hash = dc.String()
 	t.M_phone_code = dc.String()
 
+	return dc.err
 }
 
 // account_getTmpPassword#4a82327e
@@ -39322,12 +39857,13 @@ func (t *TL_account_getTmpPassword) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_account_getTmpPassword) Decode(b []byte) {
+func (t *TL_account_getTmpPassword) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_password_hash = dc.TLObject()
 	t.M_period = dc.Int()
 
+	return dc.err
 }
 
 // users_getUsers#d91a548
@@ -39363,11 +39899,12 @@ func (t *TL_users_getUsers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_users_getUsers) Decode(b []byte) {
+func (t *TL_users_getUsers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Vector()
 
+	return dc.err
 }
 
 // users_getFullUser#ca30a5b1
@@ -39403,11 +39940,12 @@ func (t *TL_users_getFullUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_users_getFullUser) Decode(b []byte) {
+func (t *TL_users_getFullUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_getStatuses#c4a353ee
@@ -39433,8 +39971,8 @@ func (t *TL_contacts_getStatuses) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_getStatuses) Decode(b []byte) {
-
+func (t *TL_contacts_getStatuses) Decode(b []byte) error {
+	return nil
 }
 
 // contacts_getContacts#c023849f
@@ -39470,11 +40008,12 @@ func (t *TL_contacts_getContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_getContacts) Decode(b []byte) {
+func (t *TL_contacts_getContacts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // contacts_importContacts#2c800be5
@@ -39510,11 +40049,12 @@ func (t *TL_contacts_importContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_importContacts) Decode(b []byte) {
+func (t *TL_contacts_importContacts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_contacts = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_deleteContact#8e953744
@@ -39550,11 +40090,12 @@ func (t *TL_contacts_deleteContact) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_deleteContact) Decode(b []byte) {
+func (t *TL_contacts_deleteContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_deleteContacts#59ab389e
@@ -39590,11 +40131,12 @@ func (t *TL_contacts_deleteContacts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_deleteContacts) Decode(b []byte) {
+func (t *TL_contacts_deleteContacts) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Vector()
 
+	return dc.err
 }
 
 // contacts_block#332b49fc
@@ -39630,11 +40172,12 @@ func (t *TL_contacts_block) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_block) Decode(b []byte) {
+func (t *TL_contacts_block) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_unblock#e54100bd
@@ -39670,11 +40213,12 @@ func (t *TL_contacts_unblock) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_unblock) Decode(b []byte) {
+func (t *TL_contacts_unblock) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_getBlocked#f57c350f
@@ -39720,12 +40264,13 @@ func (t *TL_contacts_getBlocked) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_getBlocked) Decode(b []byte) {
+func (t *TL_contacts_getBlocked) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // contacts_exportCard#84e53737
@@ -39751,8 +40296,8 @@ func (t *TL_contacts_exportCard) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_exportCard) Decode(b []byte) {
-
+func (t *TL_contacts_exportCard) Decode(b []byte) error {
+	return nil
 }
 
 // contacts_importCard#4fe196fe
@@ -39788,11 +40333,12 @@ func (t *TL_contacts_importCard) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_importCard) Decode(b []byte) {
+func (t *TL_contacts_importCard) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_export_card = dc.VectorInt()
 
+	return dc.err
 }
 
 // contacts_search#11f812d8
@@ -39838,12 +40384,13 @@ func (t *TL_contacts_search) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_search) Decode(b []byte) {
+func (t *TL_contacts_search) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // contacts_resolveUsername#f93ccba3
@@ -39879,11 +40426,12 @@ func (t *TL_contacts_resolveUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_resolveUsername) Decode(b []byte) {
+func (t *TL_contacts_resolveUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // contacts_getTopPeers#d4982db5
@@ -40008,7 +40556,7 @@ func (t *TL_contacts_getTopPeers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_getTopPeers) Decode(b []byte) {
+func (t *TL_contacts_getTopPeers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_correspondents = dc.TLObject()
@@ -40021,6 +40569,7 @@ func (t *TL_contacts_getTopPeers) Decode(b []byte) {
 	t.M_limit = dc.Int()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // contacts_resetTopPeerRating#1ae373ac
@@ -40066,12 +40615,13 @@ func (t *TL_contacts_resetTopPeerRating) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_resetTopPeerRating) Decode(b []byte) {
+func (t *TL_contacts_resetTopPeerRating) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_category = dc.TLObject()
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // contacts_resetSaved#879537f1
@@ -40097,8 +40647,8 @@ func (t *TL_contacts_resetSaved) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_contacts_resetSaved) Decode(b []byte) {
-
+func (t *TL_contacts_resetSaved) Decode(b []byte) error {
+	return nil
 }
 
 // messages_getMessages#4222fa74
@@ -40134,11 +40684,12 @@ func (t *TL_messages_getMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getMessages) Decode(b []byte) {
+func (t *TL_messages_getMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // messages_getDialogs#191ba9c5
@@ -40223,7 +40774,7 @@ func (t *TL_messages_getDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getDialogs) Decode(b []byte) {
+func (t *TL_messages_getDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_exclude_pinned = dc.TLObject()
@@ -40232,6 +40783,7 @@ func (t *TL_messages_getDialogs) Decode(b []byte) {
 	t.M_offset_peer = dc.TLObject()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_getHistory#dcbb8260
@@ -40337,7 +40889,7 @@ func (t *TL_messages_getHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getHistory) Decode(b []byte) {
+func (t *TL_messages_getHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -40349,6 +40901,7 @@ func (t *TL_messages_getHistory) Decode(b []byte) {
 	t.M_min_id = dc.Int()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_search#39e9ea0
@@ -40493,7 +41046,7 @@ func (t *TL_messages_search) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_search) Decode(b []byte) {
+func (t *TL_messages_search) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -40508,6 +41061,7 @@ func (t *TL_messages_search) Decode(b []byte) {
 	t.M_max_id = dc.Int()
 	t.M_min_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_readHistory#e306d3a
@@ -40553,12 +41107,13 @@ func (t *TL_messages_readHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_readHistory) Decode(b []byte) {
+func (t *TL_messages_readHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_deleteHistory#1c015b09
@@ -40623,13 +41178,14 @@ func (t *TL_messages_deleteHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_deleteHistory) Decode(b []byte) {
+func (t *TL_messages_deleteHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_just_clear = dc.TLObject()
 	t.M_peer = dc.TLObject()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_deleteMessages#e58e95d2
@@ -40684,12 +41240,13 @@ func (t *TL_messages_deleteMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_deleteMessages) Decode(b []byte) {
+func (t *TL_messages_deleteMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_revoke = dc.TLObject()
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // messages_receivedMessages#5a954c0
@@ -40725,11 +41282,12 @@ func (t *TL_messages_receivedMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_receivedMessages) Decode(b []byte) {
+func (t *TL_messages_receivedMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_setTyping#a3825e50
@@ -40775,12 +41333,13 @@ func (t *TL_messages_setTyping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setTyping) Decode(b []byte) {
+func (t *TL_messages_setTyping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_action = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sendMessage#fa88427a
@@ -40915,7 +41474,7 @@ func (t *TL_messages_sendMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendMessage) Decode(b []byte) {
+func (t *TL_messages_sendMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -40929,6 +41488,7 @@ func (t *TL_messages_sendMessage) Decode(b []byte) {
 	t.M_reply_markup = dc.TLObject()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // messages_sendMedia#c8f16791
@@ -41043,7 +41603,7 @@ func (t *TL_messages_sendMedia) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendMedia) Decode(b []byte) {
+func (t *TL_messages_sendMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_silent = dc.TLObject()
@@ -41055,6 +41615,7 @@ func (t *TL_messages_sendMedia) Decode(b []byte) {
 	t.M_random_id = dc.Long()
 	t.M_reply_markup = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_forwardMessages#708e0195
@@ -41169,7 +41730,7 @@ func (t *TL_messages_forwardMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_forwardMessages) Decode(b []byte) {
+func (t *TL_messages_forwardMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_silent = dc.TLObject()
@@ -41181,6 +41742,7 @@ func (t *TL_messages_forwardMessages) Decode(b []byte) {
 	t.M_random_id = dc.VectorLong()
 	t.M_to_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_reportSpam#cf1592db
@@ -41216,11 +41778,12 @@ func (t *TL_messages_reportSpam) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_reportSpam) Decode(b []byte) {
+func (t *TL_messages_reportSpam) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_hideReportSpam#a8f1709b
@@ -41256,11 +41819,12 @@ func (t *TL_messages_hideReportSpam) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_hideReportSpam) Decode(b []byte) {
+func (t *TL_messages_hideReportSpam) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getPeerSettings#3672e09c
@@ -41296,11 +41860,12 @@ func (t *TL_messages_getPeerSettings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getPeerSettings) Decode(b []byte) {
+func (t *TL_messages_getPeerSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getChats#3c6aa187
@@ -41336,11 +41901,12 @@ func (t *TL_messages_getChats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getChats) Decode(b []byte) {
+func (t *TL_messages_getChats) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // messages_getFullChat#3b831c66
@@ -41376,11 +41942,12 @@ func (t *TL_messages_getFullChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getFullChat) Decode(b []byte) {
+func (t *TL_messages_getFullChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_editChatTitle#dc452855
@@ -41426,12 +41993,13 @@ func (t *TL_messages_editChatTitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_editChatTitle) Decode(b []byte) {
+func (t *TL_messages_editChatTitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // messages_editChatPhoto#ca4c79d8
@@ -41477,12 +42045,13 @@ func (t *TL_messages_editChatPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_editChatPhoto) Decode(b []byte) {
+func (t *TL_messages_editChatPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_photo = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_addChatUser#f9a0aa09
@@ -41538,13 +42107,14 @@ func (t *TL_messages_addChatUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_addChatUser) Decode(b []byte) {
+func (t *TL_messages_addChatUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_user_id = dc.TLObject()
 	t.M_fwd_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_deleteChatUser#e0611f16
@@ -41590,12 +42160,13 @@ func (t *TL_messages_deleteChatUser) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_deleteChatUser) Decode(b []byte) {
+func (t *TL_messages_deleteChatUser) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_createChat#9cb126e
@@ -41641,12 +42212,13 @@ func (t *TL_messages_createChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_createChat) Decode(b []byte) {
+func (t *TL_messages_createChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_users = dc.Vector()
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // messages_forwardMessage#33963bf9
@@ -41702,13 +42274,14 @@ func (t *TL_messages_forwardMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_forwardMessage) Decode(b []byte) {
+func (t *TL_messages_forwardMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.Int()
 	t.M_random_id = dc.Long()
 
+	return dc.err
 }
 
 // messages_getDhConfig#26cf8950
@@ -41754,12 +42327,13 @@ func (t *TL_messages_getDhConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getDhConfig) Decode(b []byte) {
+func (t *TL_messages_getDhConfig) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_version = dc.Int()
 	t.M_random_length = dc.Int()
 
+	return dc.err
 }
 
 // messages_requestEncryption#f64daf43
@@ -41815,13 +42389,14 @@ func (t *TL_messages_requestEncryption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_requestEncryption) Decode(b []byte) {
+func (t *TL_messages_requestEncryption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.TLObject()
 	t.M_random_id = dc.Int()
 	t.M_g_a = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_acceptEncryption#3dbc0415
@@ -41877,13 +42452,14 @@ func (t *TL_messages_acceptEncryption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_acceptEncryption) Decode(b []byte) {
+func (t *TL_messages_acceptEncryption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_g_b = dc.TLObject()
 	t.M_key_fingerprint = dc.Long()
 
+	return dc.err
 }
 
 // messages_discardEncryption#edd923c5
@@ -41919,11 +42495,12 @@ func (t *TL_messages_discardEncryption) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_discardEncryption) Decode(b []byte) {
+func (t *TL_messages_discardEncryption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_setEncryptedTyping#791451ed
@@ -41969,12 +42546,13 @@ func (t *TL_messages_setEncryptedTyping) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setEncryptedTyping) Decode(b []byte) {
+func (t *TL_messages_setEncryptedTyping) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_typing = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_readEncryptedHistory#7f4b690a
@@ -42020,12 +42598,13 @@ func (t *TL_messages_readEncryptedHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_readEncryptedHistory) Decode(b []byte) {
+func (t *TL_messages_readEncryptedHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_max_date = dc.Int()
 
+	return dc.err
 }
 
 // messages_sendEncrypted#a9776773
@@ -42081,13 +42660,14 @@ func (t *TL_messages_sendEncrypted) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendEncrypted) Decode(b []byte) {
+func (t *TL_messages_sendEncrypted) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_random_id = dc.Long()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sendEncryptedFile#9a901b66
@@ -42153,7 +42733,7 @@ func (t *TL_messages_sendEncryptedFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendEncryptedFile) Decode(b []byte) {
+func (t *TL_messages_sendEncryptedFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -42161,6 +42741,7 @@ func (t *TL_messages_sendEncryptedFile) Decode(b []byte) {
 	t.M_data = dc.TLObject()
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sendEncryptedService#32d439a4
@@ -42216,13 +42797,14 @@ func (t *TL_messages_sendEncryptedService) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendEncryptedService) Decode(b []byte) {
+func (t *TL_messages_sendEncryptedService) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_random_id = dc.Long()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_receivedQueue#55a5bb66
@@ -42258,11 +42840,12 @@ func (t *TL_messages_receivedQueue) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_receivedQueue) Decode(b []byte) {
+func (t *TL_messages_receivedQueue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_max_qts = dc.Int()
 
+	return dc.err
 }
 
 // messages_reportEncryptedSpam#4b0c8c0f
@@ -42298,11 +42881,12 @@ func (t *TL_messages_reportEncryptedSpam) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_reportEncryptedSpam) Decode(b []byte) {
+func (t *TL_messages_reportEncryptedSpam) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_readMessageContents#36a73f77
@@ -42338,11 +42922,12 @@ func (t *TL_messages_readMessageContents) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_readMessageContents) Decode(b []byte) {
+func (t *TL_messages_readMessageContents) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // messages_getAllStickers#1c9618b1
@@ -42378,11 +42963,12 @@ func (t *TL_messages_getAllStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getAllStickers) Decode(b []byte) {
+func (t *TL_messages_getAllStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_getWebPagePreview#25223e24
@@ -42418,11 +43004,12 @@ func (t *TL_messages_getWebPagePreview) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getWebPagePreview) Decode(b []byte) {
+func (t *TL_messages_getWebPagePreview) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_message = dc.String()
 
+	return dc.err
 }
 
 // messages_exportChatInvite#7d885289
@@ -42458,11 +43045,12 @@ func (t *TL_messages_exportChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_exportChatInvite) Decode(b []byte) {
+func (t *TL_messages_exportChatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_checkChatInvite#3eadb1bb
@@ -42498,11 +43086,12 @@ func (t *TL_messages_checkChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_checkChatInvite) Decode(b []byte) {
+func (t *TL_messages_checkChatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.String()
 
+	return dc.err
 }
 
 // messages_importChatInvite#6c50051c
@@ -42538,11 +43127,12 @@ func (t *TL_messages_importChatInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_importChatInvite) Decode(b []byte) {
+func (t *TL_messages_importChatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.String()
 
+	return dc.err
 }
 
 // messages_getStickerSet#2619a90e
@@ -42578,11 +43168,12 @@ func (t *TL_messages_getStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getStickerSet) Decode(b []byte) {
+func (t *TL_messages_getStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_stickerset = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_installStickerSet#c78fe460
@@ -42628,12 +43219,13 @@ func (t *TL_messages_installStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_installStickerSet) Decode(b []byte) {
+func (t *TL_messages_installStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_stickerset = dc.TLObject()
 	t.M_archived = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_uninstallStickerSet#f96e55de
@@ -42669,11 +43261,12 @@ func (t *TL_messages_uninstallStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_uninstallStickerSet) Decode(b []byte) {
+func (t *TL_messages_uninstallStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_stickerset = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_startBot#e6df7378
@@ -42739,7 +43332,7 @@ func (t *TL_messages_startBot) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_startBot) Decode(b []byte) {
+func (t *TL_messages_startBot) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bot = dc.TLObject()
@@ -42747,6 +43340,7 @@ func (t *TL_messages_startBot) Decode(b []byte) {
 	t.M_random_id = dc.Long()
 	t.M_start_param = dc.String()
 
+	return dc.err
 }
 
 // messages_getMessagesViews#c4c8a55d
@@ -42802,13 +43396,14 @@ func (t *TL_messages_getMessagesViews) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getMessagesViews) Decode(b []byte) {
+func (t *TL_messages_getMessagesViews) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.VectorInt()
 	t.M_increment = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_toggleChatAdmins#ec8bd9e1
@@ -42854,12 +43449,13 @@ func (t *TL_messages_toggleChatAdmins) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_toggleChatAdmins) Decode(b []byte) {
+func (t *TL_messages_toggleChatAdmins) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_enabled = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_editChatAdmin#a9e69f2e
@@ -42915,13 +43511,14 @@ func (t *TL_messages_editChatAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_editChatAdmin) Decode(b []byte) {
+func (t *TL_messages_editChatAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 	t.M_user_id = dc.TLObject()
 	t.M_is_admin = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_migrateChat#15a3b8e3
@@ -42957,11 +43554,12 @@ func (t *TL_messages_migrateChat) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_migrateChat) Decode(b []byte) {
+func (t *TL_messages_migrateChat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_chat_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_searchGlobal#9e3cacb0
@@ -43037,7 +43635,7 @@ func (t *TL_messages_searchGlobal) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_searchGlobal) Decode(b []byte) {
+func (t *TL_messages_searchGlobal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
@@ -43046,6 +43644,7 @@ func (t *TL_messages_searchGlobal) Decode(b []byte) {
 	t.M_offset_id = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_reorderStickerSets#78337739
@@ -43100,12 +43699,13 @@ func (t *TL_messages_reorderStickerSets) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_reorderStickerSets) Decode(b []byte) {
+func (t *TL_messages_reorderStickerSets) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
 	t.M_order = dc.VectorLong()
 
+	return dc.err
 }
 
 // messages_getDocumentByHash#338e2464
@@ -43161,13 +43761,14 @@ func (t *TL_messages_getDocumentByHash) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getDocumentByHash) Decode(b []byte) {
+func (t *TL_messages_getDocumentByHash) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_sha256 = dc.TLObject()
 	t.M_size = dc.Int()
 	t.M_mime_type = dc.String()
 
+	return dc.err
 }
 
 // messages_searchGifs#bf9a776b
@@ -43213,12 +43814,13 @@ func (t *TL_messages_searchGifs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_searchGifs) Decode(b []byte) {
+func (t *TL_messages_searchGifs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_q = dc.String()
 	t.M_offset = dc.Int()
 
+	return dc.err
 }
 
 // messages_getSavedGifs#83bf3d52
@@ -43254,11 +43856,12 @@ func (t *TL_messages_getSavedGifs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getSavedGifs) Decode(b []byte) {
+func (t *TL_messages_getSavedGifs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_saveGif#327a30cb
@@ -43304,12 +43907,13 @@ func (t *TL_messages_saveGif) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_saveGif) Decode(b []byte) {
+func (t *TL_messages_saveGif) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_unsave = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getInlineBotResults#514e999d
@@ -43394,7 +43998,7 @@ func (t *TL_messages_getInlineBotResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getInlineBotResults) Decode(b []byte) {
+func (t *TL_messages_getInlineBotResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_bot = dc.TLObject()
@@ -43403,6 +44007,7 @@ func (t *TL_messages_getInlineBotResults) Decode(b []byte) {
 	t.M_query = dc.String()
 	t.M_offset = dc.String()
 
+	return dc.err
 }
 
 // messages_setInlineBotResults#eb5ea206
@@ -43507,7 +44112,7 @@ func (t *TL_messages_setInlineBotResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setInlineBotResults) Decode(b []byte) {
+func (t *TL_messages_setInlineBotResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_gallery = dc.TLObject()
@@ -43518,6 +44123,7 @@ func (t *TL_messages_setInlineBotResults) Decode(b []byte) {
 	t.M_next_offset = dc.TLObject()
 	t.M_switch_pm = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sendInlineBotResult#b16e06fe
@@ -43632,7 +44238,7 @@ func (t *TL_messages_sendInlineBotResult) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendInlineBotResult) Decode(b []byte) {
+func (t *TL_messages_sendInlineBotResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_silent = dc.TLObject()
@@ -43644,6 +44250,7 @@ func (t *TL_messages_sendInlineBotResult) Decode(b []byte) {
 	t.M_query_id = dc.Long()
 	t.M_id = dc.String()
 
+	return dc.err
 }
 
 // messages_getMessageEditData#fda68d36
@@ -43689,12 +44296,13 @@ func (t *TL_messages_getMessageEditData) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getMessageEditData) Decode(b []byte) {
+func (t *TL_messages_getMessageEditData) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_editMessage#5d1b8dd
@@ -43809,7 +44417,7 @@ func (t *TL_messages_editMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_editMessage) Decode(b []byte) {
+func (t *TL_messages_editMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -43821,6 +44429,7 @@ func (t *TL_messages_editMessage) Decode(b []byte) {
 	t.M_entities = dc.Vector()
 	t.M_geo_point = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_editInlineBotMessage#b0e08243
@@ -43925,7 +44534,7 @@ func (t *TL_messages_editInlineBotMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_editInlineBotMessage) Decode(b []byte) {
+func (t *TL_messages_editInlineBotMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -43936,6 +44545,7 @@ func (t *TL_messages_editInlineBotMessage) Decode(b []byte) {
 	t.M_entities = dc.Vector()
 	t.M_geo_point = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getBotCallbackAnswer#810a9fec
@@ -44010,7 +44620,7 @@ func (t *TL_messages_getBotCallbackAnswer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) {
+func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_game = dc.TLObject()
@@ -44018,6 +44628,7 @@ func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) {
 	t.M_msg_id = dc.Int()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_setBotCallbackAnswer#d58f130a
@@ -44102,7 +44713,7 @@ func (t *TL_messages_setBotCallbackAnswer) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) {
+func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_alert = dc.TLObject()
@@ -44111,6 +44722,7 @@ func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) {
 	t.M_url = dc.TLObject()
 	t.M_cache_time = dc.Int()
 
+	return dc.err
 }
 
 // messages_getPeerDialogs#2d9776b9
@@ -44146,11 +44758,12 @@ func (t *TL_messages_getPeerDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getPeerDialogs) Decode(b []byte) {
+func (t *TL_messages_getPeerDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peers = dc.Vector()
 
+	return dc.err
 }
 
 // messages_saveDraft#bc39e14b
@@ -44235,7 +44848,7 @@ func (t *TL_messages_saveDraft) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_saveDraft) Decode(b []byte) {
+func (t *TL_messages_saveDraft) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_no_webpage = dc.TLObject()
@@ -44244,6 +44857,7 @@ func (t *TL_messages_saveDraft) Decode(b []byte) {
 	t.M_message = dc.String()
 	t.M_entities = dc.Vector()
 
+	return dc.err
 }
 
 // messages_getAllDrafts#6a3f8d65
@@ -44269,8 +44883,8 @@ func (t *TL_messages_getAllDrafts) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getAllDrafts) Decode(b []byte) {
-
+func (t *TL_messages_getAllDrafts) Decode(b []byte) error {
+	return nil
 }
 
 // messages_getFeaturedStickers#2dacca4f
@@ -44306,11 +44920,12 @@ func (t *TL_messages_getFeaturedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getFeaturedStickers) Decode(b []byte) {
+func (t *TL_messages_getFeaturedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_readFeaturedStickers#5b118126
@@ -44346,11 +44961,12 @@ func (t *TL_messages_readFeaturedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_readFeaturedStickers) Decode(b []byte) {
+func (t *TL_messages_readFeaturedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.VectorLong()
 
+	return dc.err
 }
 
 // messages_getRecentStickers#5ea192c9
@@ -44405,12 +45021,13 @@ func (t *TL_messages_getRecentStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getRecentStickers) Decode(b []byte) {
+func (t *TL_messages_getRecentStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_attached = dc.TLObject()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_saveRecentSticker#392718f8
@@ -44475,13 +45092,14 @@ func (t *TL_messages_saveRecentSticker) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_saveRecentSticker) Decode(b []byte) {
+func (t *TL_messages_saveRecentSticker) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_attached = dc.TLObject()
 	t.M_id = dc.TLObject()
 	t.M_unsave = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_clearRecentStickers#8999602d
@@ -44526,11 +45144,12 @@ func (t *TL_messages_clearRecentStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_clearRecentStickers) Decode(b []byte) {
+func (t *TL_messages_clearRecentStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_attached = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getArchivedStickers#57f17692
@@ -44595,13 +45214,14 @@ func (t *TL_messages_getArchivedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getArchivedStickers) Decode(b []byte) {
+func (t *TL_messages_getArchivedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
 	t.M_offset_id = dc.Long()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_getMaskStickers#65b8c79f
@@ -44637,11 +45257,12 @@ func (t *TL_messages_getMaskStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getMaskStickers) Decode(b []byte) {
+func (t *TL_messages_getMaskStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_getAttachedStickers#cc5b67cc
@@ -44677,11 +45298,12 @@ func (t *TL_messages_getAttachedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getAttachedStickers) Decode(b []byte) {
+func (t *TL_messages_getAttachedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_media = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_setGameScore#8ef8ecc0
@@ -44776,7 +45398,7 @@ func (t *TL_messages_setGameScore) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setGameScore) Decode(b []byte) {
+func (t *TL_messages_setGameScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_edit_message = dc.TLObject()
@@ -44786,6 +45408,7 @@ func (t *TL_messages_setGameScore) Decode(b []byte) {
 	t.M_user_id = dc.TLObject()
 	t.M_score = dc.Int()
 
+	return dc.err
 }
 
 // messages_setInlineGameScore#15ad9f64
@@ -44870,7 +45493,7 @@ func (t *TL_messages_setInlineGameScore) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setInlineGameScore) Decode(b []byte) {
+func (t *TL_messages_setInlineGameScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_edit_message = dc.TLObject()
@@ -44879,6 +45502,7 @@ func (t *TL_messages_setInlineGameScore) Decode(b []byte) {
 	t.M_user_id = dc.TLObject()
 	t.M_score = dc.Int()
 
+	return dc.err
 }
 
 // messages_getGameHighScores#e822649d
@@ -44934,13 +45558,14 @@ func (t *TL_messages_getGameHighScores) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getGameHighScores) Decode(b []byte) {
+func (t *TL_messages_getGameHighScores) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.Int()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getInlineGameHighScores#f635e1b
@@ -44986,12 +45611,13 @@ func (t *TL_messages_getInlineGameHighScores) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getInlineGameHighScores) Decode(b []byte) {
+func (t *TL_messages_getInlineGameHighScores) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getCommonChats#d0a48c4
@@ -45047,13 +45673,14 @@ func (t *TL_messages_getCommonChats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getCommonChats) Decode(b []byte) {
+func (t *TL_messages_getCommonChats) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.TLObject()
 	t.M_max_id = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_getAllChats#eba80ff0
@@ -45089,11 +45716,12 @@ func (t *TL_messages_getAllChats) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getAllChats) Decode(b []byte) {
+func (t *TL_messages_getAllChats) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_except_ids = dc.VectorInt()
 
+	return dc.err
 }
 
 // messages_getWebPage#32ca8f91
@@ -45139,12 +45767,13 @@ func (t *TL_messages_getWebPage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getWebPage) Decode(b []byte) {
+func (t *TL_messages_getWebPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_url = dc.String()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_toggleDialogPin#3289be6a
@@ -45199,12 +45828,13 @@ func (t *TL_messages_toggleDialogPin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_toggleDialogPin) Decode(b []byte) {
+func (t *TL_messages_toggleDialogPin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pinned = dc.TLObject()
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_reorderPinnedDialogs#959ff644
@@ -45259,12 +45889,13 @@ func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Decode(b []byte) {
+func (t *TL_messages_reorderPinnedDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_force = dc.TLObject()
 	t.M_order = dc.Vector()
 
+	return dc.err
 }
 
 // messages_getPinnedDialogs#e254d64e
@@ -45290,8 +45921,8 @@ func (t *TL_messages_getPinnedDialogs) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getPinnedDialogs) Decode(b []byte) {
-
+func (t *TL_messages_getPinnedDialogs) Decode(b []byte) error {
+	return nil
 }
 
 // messages_setBotShippingResults#e5f672fa
@@ -45356,13 +45987,14 @@ func (t *TL_messages_setBotShippingResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setBotShippingResults) Decode(b []byte) {
+func (t *TL_messages_setBotShippingResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
 	t.M_error = dc.TLObject()
 	t.M_shipping_options = dc.Vector()
 
+	return dc.err
 }
 
 // messages_setBotPrecheckoutResults#9c2dd95
@@ -45427,13 +46059,14 @@ func (t *TL_messages_setBotPrecheckoutResults) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Decode(b []byte) {
+func (t *TL_messages_setBotPrecheckoutResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_success = dc.TLObject()
 	t.M_query_id = dc.Long()
 	t.M_error = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_uploadMedia#519bc2b1
@@ -45479,12 +46112,13 @@ func (t *TL_messages_uploadMedia) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_uploadMedia) Decode(b []byte) {
+func (t *TL_messages_uploadMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_media = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_sendScreenshotNotification#c97df020
@@ -45540,13 +46174,14 @@ func (t *TL_messages_sendScreenshotNotification) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendScreenshotNotification) Decode(b []byte) {
+func (t *TL_messages_sendScreenshotNotification) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_reply_to_msg_id = dc.Int()
 	t.M_random_id = dc.Long()
 
+	return dc.err
 }
 
 // messages_getFavedStickers#21ce0b0e
@@ -45582,11 +46217,12 @@ func (t *TL_messages_getFavedStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getFavedStickers) Decode(b []byte) {
+func (t *TL_messages_getFavedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // messages_faveSticker#b9ffc55b
@@ -45632,12 +46268,13 @@ func (t *TL_messages_faveSticker) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_faveSticker) Decode(b []byte) {
+func (t *TL_messages_faveSticker) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 	t.M_unfave = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getUnreadMentions#46578472
@@ -45723,7 +46360,7 @@ func (t *TL_messages_getUnreadMentions) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getUnreadMentions) Decode(b []byte) {
+func (t *TL_messages_getUnreadMentions) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -45733,6 +46370,7 @@ func (t *TL_messages_getUnreadMentions) Decode(b []byte) {
 	t.M_max_id = dc.Int()
 	t.M_min_id = dc.Int()
 
+	return dc.err
 }
 
 // messages_readMentions#f0189d3
@@ -45768,11 +46406,12 @@ func (t *TL_messages_readMentions) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_readMentions) Decode(b []byte) {
+func (t *TL_messages_readMentions) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // messages_getRecentLocations#249431e2
@@ -45818,12 +46457,13 @@ func (t *TL_messages_getRecentLocations) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_getRecentLocations) Decode(b []byte) {
+func (t *TL_messages_getRecentLocations) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // messages_sendMultiMedia#2095512f
@@ -45918,7 +46558,7 @@ func (t *TL_messages_sendMultiMedia) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_sendMultiMedia) Decode(b []byte) {
+func (t *TL_messages_sendMultiMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_silent = dc.TLObject()
@@ -45928,6 +46568,7 @@ func (t *TL_messages_sendMultiMedia) Decode(b []byte) {
 	t.M_reply_to_msg_id = dc.TLObject()
 	t.M_multi_media = dc.Vector()
 
+	return dc.err
 }
 
 // messages_uploadEncryptedFile#5057c497
@@ -45973,12 +46614,13 @@ func (t *TL_messages_uploadEncryptedFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_messages_uploadEncryptedFile) Decode(b []byte) {
+func (t *TL_messages_uploadEncryptedFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // updates_getState#edd4882a
@@ -46004,8 +46646,8 @@ func (t *TL_updates_getState) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_getState) Decode(b []byte) {
-
+func (t *TL_updates_getState) Decode(b []byte) error {
+	return nil
 }
 
 // updates_getDifference#25939651
@@ -46080,7 +46722,7 @@ func (t *TL_updates_getDifference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_getDifference) Decode(b []byte) {
+func (t *TL_updates_getDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pts = dc.Int()
@@ -46088,6 +46730,7 @@ func (t *TL_updates_getDifference) Decode(b []byte) {
 	t.M_date = dc.Int()
 	t.M_qts = dc.Int()
 
+	return dc.err
 }
 
 // updates_getChannelDifference#3173d78
@@ -46172,7 +46815,7 @@ func (t *TL_updates_getChannelDifference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_updates_getChannelDifference) Decode(b []byte) {
+func (t *TL_updates_getChannelDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_force = dc.TLObject()
@@ -46181,6 +46824,7 @@ func (t *TL_updates_getChannelDifference) Decode(b []byte) {
 	t.M_pts = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // photos_updateProfilePhoto#f0bb5152
@@ -46216,11 +46860,12 @@ func (t *TL_photos_updateProfilePhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_updateProfilePhoto) Decode(b []byte) {
+func (t *TL_photos_updateProfilePhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.TLObject()
 
+	return dc.err
 }
 
 // photos_uploadProfilePhoto#4f32c098
@@ -46256,11 +46901,12 @@ func (t *TL_photos_uploadProfilePhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_uploadProfilePhoto) Decode(b []byte) {
+func (t *TL_photos_uploadProfilePhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file = dc.TLObject()
 
+	return dc.err
 }
 
 // photos_deletePhotos#87cf7f2f
@@ -46296,11 +46942,12 @@ func (t *TL_photos_deletePhotos) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_deletePhotos) Decode(b []byte) {
+func (t *TL_photos_deletePhotos) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Vector()
 
+	return dc.err
 }
 
 // photos_getUserPhotos#91cd32a8
@@ -46366,7 +47013,7 @@ func (t *TL_photos_getUserPhotos) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_photos_getUserPhotos) Decode(b []byte) {
+func (t *TL_photos_getUserPhotos) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.TLObject()
@@ -46374,6 +47021,7 @@ func (t *TL_photos_getUserPhotos) Decode(b []byte) {
 	t.M_max_id = dc.Long()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // upload_saveFilePart#b304a621
@@ -46429,13 +47077,14 @@ func (t *TL_upload_saveFilePart) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_saveFilePart) Decode(b []byte) {
+func (t *TL_upload_saveFilePart) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_id = dc.Long()
 	t.M_file_part = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // upload_getFile#e3a6cfb5
@@ -46491,13 +47140,14 @@ func (t *TL_upload_getFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_getFile) Decode(b []byte) {
+func (t *TL_upload_getFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_location = dc.TLObject()
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // upload_saveBigFilePart#de7b673d
@@ -46563,7 +47213,7 @@ func (t *TL_upload_saveBigFilePart) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_saveBigFilePart) Decode(b []byte) {
+func (t *TL_upload_saveBigFilePart) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_id = dc.Long()
@@ -46571,6 +47221,7 @@ func (t *TL_upload_saveBigFilePart) Decode(b []byte) {
 	t.M_file_total_parts = dc.Int()
 	t.M_bytes = dc.TLObject()
 
+	return dc.err
 }
 
 // upload_getWebFile#24e6818d
@@ -46626,13 +47277,14 @@ func (t *TL_upload_getWebFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_getWebFile) Decode(b []byte) {
+func (t *TL_upload_getWebFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_location = dc.TLObject()
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // upload_getCdnFile#2000bcc3
@@ -46688,13 +47340,14 @@ func (t *TL_upload_getCdnFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_getCdnFile) Decode(b []byte) {
+func (t *TL_upload_getCdnFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_token = dc.TLObject()
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // upload_reuploadCdnFile#1af91c09
@@ -46740,12 +47393,13 @@ func (t *TL_upload_reuploadCdnFile) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_reuploadCdnFile) Decode(b []byte) {
+func (t *TL_upload_reuploadCdnFile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_token = dc.TLObject()
 	t.M_request_token = dc.TLObject()
 
+	return dc.err
 }
 
 // upload_getCdnFileHashes#f715c87b
@@ -46791,12 +47445,13 @@ func (t *TL_upload_getCdnFileHashes) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_upload_getCdnFileHashes) Decode(b []byte) {
+func (t *TL_upload_getCdnFileHashes) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_file_token = dc.TLObject()
 	t.M_offset = dc.Int()
 
+	return dc.err
 }
 
 // help_getConfig#c4f9186b
@@ -46822,8 +47477,8 @@ func (t *TL_help_getConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getConfig) Decode(b []byte) {
-
+func (t *TL_help_getConfig) Decode(b []byte) error {
+	return nil
 }
 
 // help_getNearestDc#1fb33026
@@ -46849,8 +47504,8 @@ func (t *TL_help_getNearestDc) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getNearestDc) Decode(b []byte) {
-
+func (t *TL_help_getNearestDc) Decode(b []byte) error {
+	return nil
 }
 
 // help_getAppUpdate#ae2de196
@@ -46876,8 +47531,8 @@ func (t *TL_help_getAppUpdate) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getAppUpdate) Decode(b []byte) {
-
+func (t *TL_help_getAppUpdate) Decode(b []byte) error {
+	return nil
 }
 
 // help_saveAppLog#6f02f748
@@ -46913,11 +47568,12 @@ func (t *TL_help_saveAppLog) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_saveAppLog) Decode(b []byte) {
+func (t *TL_help_saveAppLog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_events = dc.Vector()
 
+	return dc.err
 }
 
 // help_getInviteText#4d392343
@@ -46943,8 +47599,8 @@ func (t *TL_help_getInviteText) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getInviteText) Decode(b []byte) {
-
+func (t *TL_help_getInviteText) Decode(b []byte) error {
+	return nil
 }
 
 // help_getSupport#9cdf08cd
@@ -46970,8 +47626,8 @@ func (t *TL_help_getSupport) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getSupport) Decode(b []byte) {
-
+func (t *TL_help_getSupport) Decode(b []byte) error {
+	return nil
 }
 
 // help_getAppChangelog#9010ef6f
@@ -47007,11 +47663,12 @@ func (t *TL_help_getAppChangelog) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getAppChangelog) Decode(b []byte) {
+func (t *TL_help_getAppChangelog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_prev_app_version = dc.String()
 
+	return dc.err
 }
 
 // help_getTermsOfService#350170f3
@@ -47037,8 +47694,8 @@ func (t *TL_help_getTermsOfService) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getTermsOfService) Decode(b []byte) {
-
+func (t *TL_help_getTermsOfService) Decode(b []byte) error {
+	return nil
 }
 
 // help_setBotUpdatesStatus#ec22cfcd
@@ -47084,12 +47741,13 @@ func (t *TL_help_setBotUpdatesStatus) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_setBotUpdatesStatus) Decode(b []byte) {
+func (t *TL_help_setBotUpdatesStatus) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_pending_updates_count = dc.Int()
 	t.M_message = dc.String()
 
+	return dc.err
 }
 
 // help_getCdnConfig#52029342
@@ -47115,8 +47773,8 @@ func (t *TL_help_getCdnConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getCdnConfig) Decode(b []byte) {
-
+func (t *TL_help_getCdnConfig) Decode(b []byte) error {
+	return nil
 }
 
 // help_getRecentMeUrls#3dc0f114
@@ -47152,11 +47810,12 @@ func (t *TL_help_getRecentMeUrls) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_help_getRecentMeUrls) Decode(b []byte) {
+func (t *TL_help_getRecentMeUrls) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_referer = dc.String()
 
+	return dc.err
 }
 
 // channels_readHistory#cc104937
@@ -47202,12 +47861,13 @@ func (t *TL_channels_readHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_readHistory) Decode(b []byte) {
+func (t *TL_channels_readHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // channels_deleteMessages#84c1fd4e
@@ -47253,12 +47913,13 @@ func (t *TL_channels_deleteMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_deleteMessages) Decode(b []byte) {
+func (t *TL_channels_deleteMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // channels_deleteUserHistory#d10dd71b
@@ -47304,12 +47965,13 @@ func (t *TL_channels_deleteUserHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_deleteUserHistory) Decode(b []byte) {
+func (t *TL_channels_deleteUserHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_reportSpam#fe087810
@@ -47365,13 +48027,14 @@ func (t *TL_channels_reportSpam) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_reportSpam) Decode(b []byte) {
+func (t *TL_channels_reportSpam) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // channels_getMessages#93d7b347
@@ -47417,12 +48080,13 @@ func (t *TL_channels_getMessages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getMessages) Decode(b []byte) {
+func (t *TL_channels_getMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // channels_getParticipants#123e05e9
@@ -47498,7 +48162,7 @@ func (t *TL_channels_getParticipants) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getParticipants) Decode(b []byte) {
+func (t *TL_channels_getParticipants) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
@@ -47507,6 +48171,7 @@ func (t *TL_channels_getParticipants) Decode(b []byte) {
 	t.M_limit = dc.Int()
 	t.M_hash = dc.Int()
 
+	return dc.err
 }
 
 // channels_getParticipant#546dd7a6
@@ -47552,12 +48217,13 @@ func (t *TL_channels_getParticipant) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getParticipant) Decode(b []byte) {
+func (t *TL_channels_getParticipant) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_getChannels#a7f6bbb
@@ -47593,11 +48259,12 @@ func (t *TL_channels_getChannels) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getChannels) Decode(b []byte) {
+func (t *TL_channels_getChannels) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_id = dc.Vector()
 
+	return dc.err
 }
 
 // channels_getFullChannel#8736a09
@@ -47633,11 +48300,12 @@ func (t *TL_channels_getFullChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getFullChannel) Decode(b []byte) {
+func (t *TL_channels_getFullChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_createChannel#f4893d7f
@@ -47712,7 +48380,7 @@ func (t *TL_channels_createChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_createChannel) Decode(b []byte) {
+func (t *TL_channels_createChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_broadcast = dc.TLObject()
@@ -47720,6 +48388,7 @@ func (t *TL_channels_createChannel) Decode(b []byte) {
 	t.M_title = dc.String()
 	t.M_about = dc.String()
 
+	return dc.err
 }
 
 // channels_editAbout#13e27f1e
@@ -47765,12 +48434,13 @@ func (t *TL_channels_editAbout) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_editAbout) Decode(b []byte) {
+func (t *TL_channels_editAbout) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_about = dc.String()
 
+	return dc.err
 }
 
 // channels_editAdmin#20b88214
@@ -47826,13 +48496,14 @@ func (t *TL_channels_editAdmin) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_editAdmin) Decode(b []byte) {
+func (t *TL_channels_editAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 	t.M_admin_rights = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_editTitle#566decd0
@@ -47878,12 +48549,13 @@ func (t *TL_channels_editTitle) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_editTitle) Decode(b []byte) {
+func (t *TL_channels_editTitle) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_title = dc.String()
 
+	return dc.err
 }
 
 // channels_editPhoto#f12e57c9
@@ -47929,12 +48601,13 @@ func (t *TL_channels_editPhoto) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_editPhoto) Decode(b []byte) {
+func (t *TL_channels_editPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_photo = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_checkUsername#10e6bd2c
@@ -47980,12 +48653,13 @@ func (t *TL_channels_checkUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_checkUsername) Decode(b []byte) {
+func (t *TL_channels_checkUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // channels_updateUsername#3514b3de
@@ -48031,12 +48705,13 @@ func (t *TL_channels_updateUsername) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_updateUsername) Decode(b []byte) {
+func (t *TL_channels_updateUsername) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_username = dc.String()
 
+	return dc.err
 }
 
 // channels_joinChannel#24b524c5
@@ -48072,11 +48747,12 @@ func (t *TL_channels_joinChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_joinChannel) Decode(b []byte) {
+func (t *TL_channels_joinChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_leaveChannel#f836aa95
@@ -48112,11 +48788,12 @@ func (t *TL_channels_leaveChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_leaveChannel) Decode(b []byte) {
+func (t *TL_channels_leaveChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_inviteToChannel#199f3a6c
@@ -48162,12 +48839,13 @@ func (t *TL_channels_inviteToChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_inviteToChannel) Decode(b []byte) {
+func (t *TL_channels_inviteToChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_users = dc.Vector()
 
+	return dc.err
 }
 
 // channels_exportInvite#c7560885
@@ -48203,11 +48881,12 @@ func (t *TL_channels_exportInvite) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_exportInvite) Decode(b []byte) {
+func (t *TL_channels_exportInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_deleteChannel#c0111fe3
@@ -48243,11 +48922,12 @@ func (t *TL_channels_deleteChannel) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_deleteChannel) Decode(b []byte) {
+func (t *TL_channels_deleteChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_toggleInvites#49609307
@@ -48293,12 +48973,13 @@ func (t *TL_channels_toggleInvites) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_toggleInvites) Decode(b []byte) {
+func (t *TL_channels_toggleInvites) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_enabled = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_exportMessageLink#c846d22d
@@ -48344,12 +49025,13 @@ func (t *TL_channels_exportMessageLink) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_exportMessageLink) Decode(b []byte) {
+func (t *TL_channels_exportMessageLink) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // channels_toggleSignatures#1f69b606
@@ -48395,12 +49077,13 @@ func (t *TL_channels_toggleSignatures) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_toggleSignatures) Decode(b []byte) {
+func (t *TL_channels_toggleSignatures) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_enabled = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_updatePinnedMessage#a72ded52
@@ -48465,13 +49148,14 @@ func (t *TL_channels_updatePinnedMessage) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_updatePinnedMessage) Decode(b []byte) {
+func (t *TL_channels_updatePinnedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_silent = dc.TLObject()
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.Int()
 
+	return dc.err
 }
 
 // channels_getAdminedPublicChannels#8d8d82d7
@@ -48497,8 +49181,8 @@ func (t *TL_channels_getAdminedPublicChannels) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getAdminedPublicChannels) Decode(b []byte) {
-
+func (t *TL_channels_getAdminedPublicChannels) Decode(b []byte) error {
+	return nil
 }
 
 // channels_editBanned#bfd915cd
@@ -48554,13 +49238,14 @@ func (t *TL_channels_editBanned) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_editBanned) Decode(b []byte) {
+func (t *TL_channels_editBanned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 	t.M_banned_rights = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_getAdminLog#33ddf480
@@ -48665,7 +49350,7 @@ func (t *TL_channels_getAdminLog) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_getAdminLog) Decode(b []byte) {
+func (t *TL_channels_getAdminLog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
@@ -48676,6 +49361,7 @@ func (t *TL_channels_getAdminLog) Decode(b []byte) {
 	t.M_min_id = dc.Long()
 	t.M_limit = dc.Int()
 
+	return dc.err
 }
 
 // channels_setStickers#ea8ca4f9
@@ -48721,12 +49407,13 @@ func (t *TL_channels_setStickers) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_setStickers) Decode(b []byte) {
+func (t *TL_channels_setStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_stickerset = dc.TLObject()
 
+	return dc.err
 }
 
 // channels_readMessageContents#eab5dc38
@@ -48772,12 +49459,13 @@ func (t *TL_channels_readMessageContents) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_readMessageContents) Decode(b []byte) {
+func (t *TL_channels_readMessageContents) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.VectorInt()
 
+	return dc.err
 }
 
 // channels_deleteHistory#af369d42
@@ -48823,12 +49511,13 @@ func (t *TL_channels_deleteHistory) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_deleteHistory) Decode(b []byte) {
+func (t *TL_channels_deleteHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_max_id = dc.Int()
 
+	return dc.err
 }
 
 // channels_togglePreHistoryHidden#eabbb94c
@@ -48874,12 +49563,13 @@ func (t *TL_channels_togglePreHistoryHidden) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_channels_togglePreHistoryHidden) Decode(b []byte) {
+func (t *TL_channels_togglePreHistoryHidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_channel = dc.TLObject()
 	t.M_enabled = dc.TLObject()
 
+	return dc.err
 }
 
 // bots_sendCustomRequest#aa2769ed
@@ -48925,12 +49615,13 @@ func (t *TL_bots_sendCustomRequest) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_bots_sendCustomRequest) Decode(b []byte) {
+func (t *TL_bots_sendCustomRequest) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_custom_method = dc.String()
 	t.M_params = dc.TLObject()
 
+	return dc.err
 }
 
 // bots_answerWebhookJSONQuery#e6213f4d
@@ -48976,12 +49667,13 @@ func (t *TL_bots_answerWebhookJSONQuery) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_bots_answerWebhookJSONQuery) Decode(b []byte) {
+func (t *TL_bots_answerWebhookJSONQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_query_id = dc.Long()
 	t.M_data = dc.TLObject()
 
+	return dc.err
 }
 
 // payments_getPaymentForm#99f09745
@@ -49017,11 +49709,12 @@ func (t *TL_payments_getPaymentForm) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_getPaymentForm) Decode(b []byte) {
+func (t *TL_payments_getPaymentForm) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Int()
 
+	return dc.err
 }
 
 // payments_getPaymentReceipt#a092a980
@@ -49057,11 +49750,12 @@ func (t *TL_payments_getPaymentReceipt) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_getPaymentReceipt) Decode(b []byte) {
+func (t *TL_payments_getPaymentReceipt) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Int()
 
+	return dc.err
 }
 
 // payments_validateRequestedInfo#770a8e74
@@ -49126,13 +49820,14 @@ func (t *TL_payments_validateRequestedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_validateRequestedInfo) Decode(b []byte) {
+func (t *TL_payments_validateRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_save = dc.TLObject()
 	t.M_msg_id = dc.Int()
 	t.M_info = dc.TLObject()
 
+	return dc.err
 }
 
 // payments_sendPaymentForm#2b8879b3
@@ -49207,7 +49902,7 @@ func (t *TL_payments_sendPaymentForm) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_sendPaymentForm) Decode(b []byte) {
+func (t *TL_payments_sendPaymentForm) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_msg_id = dc.Int()
@@ -49215,6 +49910,7 @@ func (t *TL_payments_sendPaymentForm) Decode(b []byte) {
 	t.M_shipping_option_id = dc.TLObject()
 	t.M_credentials = dc.TLObject()
 
+	return dc.err
 }
 
 // payments_getSavedInfo#227d824b
@@ -49240,8 +49936,8 @@ func (t *TL_payments_getSavedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_getSavedInfo) Decode(b []byte) {
-
+func (t *TL_payments_getSavedInfo) Decode(b []byte) error {
+	return nil
 }
 
 // payments_clearSavedInfo#d83d70c1
@@ -49296,12 +49992,13 @@ func (t *TL_payments_clearSavedInfo) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_payments_clearSavedInfo) Decode(b []byte) {
+func (t *TL_payments_clearSavedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_credentials = dc.TLObject()
 	t.M_info = dc.TLObject()
 
+	return dc.err
 }
 
 // stickers_createStickerSet#9bd86e6a
@@ -49386,7 +50083,7 @@ func (t *TL_stickers_createStickerSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickers_createStickerSet) Decode(b []byte) {
+func (t *TL_stickers_createStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_masks = dc.TLObject()
@@ -49395,6 +50092,7 @@ func (t *TL_stickers_createStickerSet) Decode(b []byte) {
 	t.M_short_name = dc.String()
 	t.M_stickers = dc.Vector()
 
+	return dc.err
 }
 
 // stickers_removeStickerFromSet#f7760f51
@@ -49430,11 +50128,12 @@ func (t *TL_stickers_removeStickerFromSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickers_removeStickerFromSet) Decode(b []byte) {
+func (t *TL_stickers_removeStickerFromSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_sticker = dc.TLObject()
 
+	return dc.err
 }
 
 // stickers_changeStickerPosition#ffb6d4ca
@@ -49480,12 +50179,13 @@ func (t *TL_stickers_changeStickerPosition) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickers_changeStickerPosition) Decode(b []byte) {
+func (t *TL_stickers_changeStickerPosition) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_sticker = dc.TLObject()
 	t.M_position = dc.Int()
 
+	return dc.err
 }
 
 // stickers_addStickerToSet#8653febe
@@ -49531,12 +50231,13 @@ func (t *TL_stickers_addStickerToSet) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_stickers_addStickerToSet) Decode(b []byte) {
+func (t *TL_stickers_addStickerToSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_stickerset = dc.TLObject()
 	t.M_sticker = dc.TLObject()
 
+	return dc.err
 }
 
 // phone_getCallConfig#55451fa9
@@ -49562,8 +50263,8 @@ func (t *TL_phone_getCallConfig) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_getCallConfig) Decode(b []byte) {
-
+func (t *TL_phone_getCallConfig) Decode(b []byte) error {
+	return nil
 }
 
 // phone_requestCall#5b95b3d4
@@ -49629,7 +50330,7 @@ func (t *TL_phone_requestCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_requestCall) Decode(b []byte) {
+func (t *TL_phone_requestCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_user_id = dc.TLObject()
@@ -49637,6 +50338,7 @@ func (t *TL_phone_requestCall) Decode(b []byte) {
 	t.M_g_a_hash = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
+	return dc.err
 }
 
 // phone_acceptCall#3bd2b4a0
@@ -49692,13 +50394,14 @@ func (t *TL_phone_acceptCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_acceptCall) Decode(b []byte) {
+func (t *TL_phone_acceptCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_g_b = dc.TLObject()
 	t.M_protocol = dc.TLObject()
 
+	return dc.err
 }
 
 // phone_confirmCall#2efe1722
@@ -49764,7 +50467,7 @@ func (t *TL_phone_confirmCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_confirmCall) Decode(b []byte) {
+func (t *TL_phone_confirmCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -49772,6 +50475,7 @@ func (t *TL_phone_confirmCall) Decode(b []byte) {
 	t.M_key_fingerprint = dc.Long()
 	t.M_protocol = dc.TLObject()
 
+	return dc.err
 }
 
 // phone_receivedCall#17d54f61
@@ -49807,11 +50511,12 @@ func (t *TL_phone_receivedCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_receivedCall) Decode(b []byte) {
+func (t *TL_phone_receivedCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 
+	return dc.err
 }
 
 // phone_discardCall#78d413a6
@@ -49877,7 +50582,7 @@ func (t *TL_phone_discardCall) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_discardCall) Decode(b []byte) {
+func (t *TL_phone_discardCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
@@ -49885,6 +50590,7 @@ func (t *TL_phone_discardCall) Decode(b []byte) {
 	t.M_reason = dc.TLObject()
 	t.M_connection_id = dc.Long()
 
+	return dc.err
 }
 
 // phone_setCallRating#1c536a34
@@ -49940,13 +50646,14 @@ func (t *TL_phone_setCallRating) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_setCallRating) Decode(b []byte) {
+func (t *TL_phone_setCallRating) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_rating = dc.Int()
 	t.M_comment = dc.String()
 
+	return dc.err
 }
 
 // phone_saveCallDebug#277add7e
@@ -49992,12 +50699,13 @@ func (t *TL_phone_saveCallDebug) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_phone_saveCallDebug) Decode(b []byte) {
+func (t *TL_phone_saveCallDebug) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_peer = dc.TLObject()
 	t.M_debug = dc.TLObject()
 
+	return dc.err
 }
 
 // langpack_getLangPack#9ab5c58e
@@ -50033,11 +50741,12 @@ func (t *TL_langpack_getLangPack) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langpack_getLangPack) Decode(b []byte) {
+func (t *TL_langpack_getLangPack) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_lang_code = dc.String()
 
+	return dc.err
 }
 
 // langpack_getStrings#2e1ee318
@@ -50083,12 +50792,13 @@ func (t *TL_langpack_getStrings) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langpack_getStrings) Decode(b []byte) {
+func (t *TL_langpack_getStrings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_lang_code = dc.String()
 	t.M_keys = dc.VectorString()
 
+	return dc.err
 }
 
 // langpack_getDifference#b2e4d7d
@@ -50124,11 +50834,12 @@ func (t *TL_langpack_getDifference) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langpack_getDifference) Decode(b []byte) {
+func (t *TL_langpack_getDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
 	t.M_from_version = dc.Int()
 
+	return dc.err
 }
 
 // langpack_getLanguages#800fd57d
@@ -50154,6 +50865,6 @@ func (t *TL_langpack_getLanguages) Encode() []byte {
 	return ec.GetBuffer()
 }
 
-func (t *TL_langpack_getLanguages) Decode(b []byte) {
-
+func (t *TL_langpack_getLanguages) Decode(b []byte) error {
+	return nil
 }

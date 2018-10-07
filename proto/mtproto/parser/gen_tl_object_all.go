@@ -67,7 +67,7 @@ func (t *TLLayer) generateOneTLObjectSetterGetter(objName string, params []*TLPa
 func (t *TLLayer) generateOneTLObjectDecode(params []*TLParam) string {
 
 	if len(params) == 0 {
-		return ""
+		return "return nil"
 	}
 
 	res := "dc := NewMTPDecodeBuffer(b)\n\n"
@@ -77,6 +77,8 @@ func (t *TLLayer) generateOneTLObjectDecode(params []*TLParam) string {
 		}
 		res = res + convertDecodeField(p)
 	}
+
+	res = res + "\nreturn dc.err"
 
 	return res
 }
@@ -129,7 +131,7 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 	`, objname, t.generateOneTLObjectEncode(tlname, line.Params))
 
 	decodestr := fmt.Sprintf(`
-		func (t *%v)Decode(b []byte) {
+		func (t *%v)Decode(b []byte) error {
 			%s
 		}
 	`, objname, t.generateOneTLObjectDecode(line.Params))
