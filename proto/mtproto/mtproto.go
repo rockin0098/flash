@@ -8,7 +8,6 @@ import (
 	"io"
 	"net"
 	"sync"
-	"time"
 
 	"github.com/rockin0098/flash/base/crypto"
 
@@ -51,32 +50,6 @@ const (
 	VAL2_FLAG = 0x00000000
 )
 
-func GenerateMessageID() int64 {
-	const nano = 1000 * 1000 * 1000
-	unixnano := time.Now().UnixNano()
-
-	messageID := ((unixnano / nano) << 32) | ((unixnano % nano) & -4)
-	for {
-		//rpc_response
-		if (messageID % 4) != 1 {
-			messageID += 1
-		} else {
-			break
-		}
-
-		/****************************
-		 * // rpc_request
-		 * if (messageID % 4) != 3 {
-		 * 	messageID += 1
-		 * } else {
-		 * 	break
-		 * }
-		 */
-	}
-
-	return messageID
-}
-
 type Codec func() error
 
 type MTProto struct {
@@ -91,8 +64,8 @@ type MTProto struct {
 	remoteAddr            net.Addr
 	localAddr             net.Addr
 	sessionID             string
-	// cryptor               *MTProtoCryptor
-	// state                 *MTProtoState
+	cryptor               *MTProtoCryptor
+	state                 *MTProtoState
 
 	// 解码后赋值
 	codec      Codec
@@ -115,8 +88,8 @@ func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAdd
 		remoteAddr:     remoteAddr,
 		localAddr:      localAddr,
 		sessionID:      sessid,
-		// cryptor:        NewMTProtoCryptor(),
-		// state:          NewMTProtoState(),
+		cryptor:        NewMTProtoCryptor(),
+		state:          NewMTProtoState(),
 	}
 
 	err := mtp.selectCodec()
@@ -142,6 +115,21 @@ func (s *MTProto) Message() MTProtoMessage {
 
 func (s *MTProto) SessionID() string {
 	return s.sessionID
+}
+
+func (s *MTProto) Cryptor() *MTProtoCryptor {
+	// 暂时不上锁
+	return s.cryptor
+}
+
+func (s *MTProto) State() *MTProtoState {
+	// 暂时不上锁
+	return s.state
+}
+
+func (s *MTProto) SetState(state *MTProtoState) {
+	// 暂时不上锁
+	s.state = state
 }
 
 func (s *MTProto) Codec() Codec {
@@ -514,7 +502,7 @@ func (s *MTProto) ReadMTProtoApp() error {
 	b := make([]byte, 1)
 	n, err = io.ReadFull(stream, b)
 	if err != nil {
-		Log.Error(err)
+		Log.Warnf("read stream first byte failed, err = %v", err)
 		return err
 	}
 

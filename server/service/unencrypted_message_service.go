@@ -26,8 +26,9 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tlobj mtproto.T
 
 	Log.Infof("nonce = %v", hex.EncodeToString(nonce))
 
-	mtpcryptor := sess.MTProtoCryptor()
-	state := sess.MTProtoState()
+	mtp := sess.MTProto()
+	mtpcryptor := mtp.Cryptor()
+	state := mtp.State()
 
 	// // for debugging
 	// tmpnonce, _ := hex.DecodeString("2d91ae9c85bbbd559fc7959341106a7d")
@@ -44,7 +45,6 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tlobj mtproto.T
 	// sess 缓存 nonce
 	state.Nonce = resPQ.Get_nonce()
 	state.ServerNonce = resPQ.Get_server_nonce()
-	sess.SetMTProtoState(state)
 
 	return resPQ, nil
 }
@@ -54,8 +54,9 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mt
 
 	tl := tlobj.(*mtproto.TL_req_DH_params)
 
-	state := sess.MTProtoState()
-	cryptor := sess.MTProtoCryptor()
+	mtp := sess.MTProto()
+	state := mtp.State()
+	cryptor := mtp.Cryptor()
 
 	Log.Infof("tl.nonce = %v, state.nonce = %v",
 		hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
@@ -118,7 +119,6 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mt
 	state.NewNonce = pqInnerData.Get_new_nonce()
 	state.A = crypto.GenerateNonce(256)
 	state.P = cryptor.DH2048_P
-	sess.SetMTProtoState(state)
 
 	bigIntA := new(big.Int).SetBytes(state.A)
 
@@ -177,8 +177,9 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, t
 
 	tl := tlobj.(*mtproto.TL_set_client_DH_params)
 
-	state := sess.MTProtoState()
-	cryptor := sess.MTProtoCryptor()
+	mtp := sess.MTProto()
+	state := mtp.State()
+	cryptor := mtp.Cryptor()
 
 	Log.Infof("tl.nonce = %v, state.nonce = %v",
 		hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
@@ -250,8 +251,6 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, t
 
 	state.AuthKeyID = authKeyID
 	state.AuthKey = authKey
-
-	sess.SetMTProtoState(state)
 
 	// TODO(@benqi): error 处理
 	// do := &dataobject.AuthKeysDO{

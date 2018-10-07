@@ -15,21 +15,18 @@ func GenerateSessionID() string {
 var sessionStore = &sync.Map{}
 
 type Session struct {
-	rw         *sync.RWMutex
-	sessionID  string
-	connID     string
-	mtpCryptor *mtproto.MTProtoCryptor
-	mtpState   *mtproto.MTProtoState
+	rw        *sync.RWMutex
+	sessionID string
+	connID    string
+	mtproto   *mtproto.MTProto
 }
 
 func NewSession(connID string) *Session {
 
 	sess := &Session{
-		rw:         &sync.RWMutex{},
-		sessionID:  GenerateSessionID(),
-		connID:     connID,
-		mtpCryptor: mtproto.NewMTProtoCryptor(),
-		mtpState:   mtproto.NewMTProtoState(),
+		rw:        &sync.RWMutex{},
+		sessionID: GenerateSessionID(),
+		connID:    connID,
 	}
 
 	sessionStore.Store(sess.sessionID, sess)
@@ -60,23 +57,9 @@ func (s *Session) ConnectionID() string {
 	return s.connID
 }
 
-func (s *Session) MTProtoCryptor() *mtproto.MTProtoCryptor {
+func (s *Session) MTProto() *mtproto.MTProto {
 	s.rw.RLock()
 	defer s.rw.RUnlock()
 
-	return s.mtpCryptor
-}
-
-func (s *Session) MTProtoState() *mtproto.MTProtoState {
-	s.rw.RLock()
-	defer s.rw.RUnlock()
-
-	return s.mtpState
-}
-
-func (s *Session) SetMTProtoState(state *mtproto.MTProtoState) {
-	s.rw.Lock()
-	defer s.rw.Unlock()
-
-	s.mtpState = state
+	return s.mtproto
 }

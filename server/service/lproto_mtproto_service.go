@@ -13,8 +13,8 @@ import (
 
 func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtproto.RawMessage) (interface{}, error) {
 
-	Log.Infof("entering....... TransportType = %v, AuthKeyID = %v, QuickAckID = %v, Payload = \n%v\n",
-		raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
+	Log.Infof("entering.......sessid=%v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, Payload = \n%v\n",
+		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
 
 	if raw.AuthKeyID == 0 { // 未加密的消息, 握手协商消息
 		reqmsg := &mtproto.UnencryptedMessage{}
@@ -42,8 +42,16 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 	} else { // 加密消息
 
-		encryptedMessage := &mtproto.EncryptedMessage{}
-		// err := encryptedMessage.Decode()
+		mtp := sess.MTProto()
+		authID := mtp.State().AuthKeyID
+		authKey := mtp.State().AuthKey
+
+		Log.Debugf("client authKeyID = %v, authid = %v, authkey = %v", raw.AuthKeyID, authID, authKey)
+
+		encryptedMessage := &mtproto.EncryptedMessage{
+			AuthKeyID: raw.AuthKeyID,
+		}
+		err := encryptedMessage.Decode(authKey, raw.Payload[8:])
 
 		return s.MTProtoEncryptedMessageProcess(sess, encryptedMessage)
 	}
