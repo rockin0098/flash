@@ -1,9 +1,8 @@
 package gateserver
 
 import (
-	"bufio"
-	"bytes"
 	"encoding/hex"
+	"io"
 	"net"
 
 	"github.com/rockin0098/flash/base/grmon"
@@ -45,8 +44,8 @@ func (s *TTcpServer) Run() {
 		grm.Go("tcp_handler", func() { s.ConnectionHandler(conn) })
 
 		// for debugging, only allow one connection
-		ch := make(chan int, 0)
-		<-ch
+		// ch := make(chan int, 0)
+		// <-ch
 		// for debugging =====> end
 	}
 }
@@ -60,48 +59,49 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	sess := session.NewSession(connid)
 	MAX_RESP_CHAN_LEN := 8192
 	respChan := make(chan interface{}, MAX_RESP_CHAN_LEN)
-	bufReader := bufio.NewReader(conn)
+	bufReader := mtproto.NewBufferedReader(conn)
+	initial := true
 
 	connClose := func() {
 		conn.Close()
+		close(respChan)
 		cm.Remove(connid)
+	}
+
+	// 每个连接一个
+	mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan)
+	if mtp == nil {
+		Log.Error("create mtproto failed, will close connection...")
+		connClose()
+		return
 	}
 
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
 		for {
-			// for debugging
-			// s.test_read(conn)
-			// for debbuging ===> end
-			var buf *bytes.Buffer
 
-			{
-				b := make([]byte, 1024)
-				n, err := conn.Read(b)
-				if err != nil {
-					Log.Error(err)
+			if !initial {
+				b := make([]byte, 0)
+				n, err := io.ReadFull(conn, b) // 阻塞
+				if err != nil || n != 0 {
+					Log.Warnf("s:[%v], remote: %v, sess = %v, connection error: %v", s.addr, remoteAddr, sess.SessionID(), err)
 					connClose()
 					return
 				}
 
-				Log.Infof("test_read n : %v", n)
-				Log.Infof("test_read b : %v", hex.EncodeToString(b[:n]))
-
-				buf = bytes.NewBuffer(b[:n])
-			}
-
-			bufReader = bufio.NewReader(buf)
-			mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan)
-			err := mtp.Read()
-			if err != nil {
-				Log.Warnf("s:[%v], remote: %v, connection error: %v", s.addr, remoteAddr, err)
-				connClose()
-				return
+				err = mtp.Codec()()
+				if err != nil {
+					Log.Warnf("s:[%v], remote: %v, sess = %v,connection error: %v", s.addr, remoteAddr, sess.SessionID(), err)
+					connClose()
+					return
+				}
+			} else {
+				initial = false
 			}
 
 			// 暂时没有控制并发数量
 			grm.Go("tcp_worker", func() {
-				err = process.GateProcess(mtp)
+				err := process.GateProcess(mtp)
 				if err != nil {
 					Log.Error(err)
 					connClose()
@@ -113,9 +113,14 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 
 	grm.Go("tcp_write", func() {
 		for {
-			data := <-respChan
+			data, ok := <-respChan
+			if !ok {
+				Log.Warnf("resp channel closed, write routine will exit, sess = %v", sess.SessionID())
+				return
+			}
+
 			if data == nil { // 空数据则不处理
-				Log.Warnf("tcp will write nil. sess = %+v", sess)
+				Log.Warnf("tcp will write nil. sess = %v", sess.SessionID())
 				continue
 			}
 
@@ -123,7 +128,9 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 			nlen := len(databytes)
 			left := nlen
 			for left > 0 {
-				n, err := conn.Write(databytes)
+				sentdata := databytes[nlen-left:]
+				// Log.Debugf("sentdata = %v", hex.EncodeToString(sentdata))
+				n, err := conn.Write(sentdata)
 				if err != nil {
 					Log.Error(err)
 					connClose()

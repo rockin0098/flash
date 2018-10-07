@@ -1,7 +1,6 @@
 package mtproto
 
 import (
-	"bufio"
 	"encoding/hex"
 	"fmt"
 	"io"
@@ -73,8 +72,6 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 	// m.authKeyId = dc.Long()
 	m.MessageID = dc.Long()
 
-	Log.Info("MessageID:", m.MessageID)
-
 	messageLen := dc.Int()
 	if messageLen < 4 {
 		return fmt.Errorf("message len(%d) < 4", messageLen)
@@ -92,7 +89,6 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 type EncryptedMessage struct {
 	AuthKeyID int64
 	NeedAck   bool
-
 	MsgKey    []byte
 	Salt      int64
 	SessionID int64
@@ -113,14 +109,14 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 
 // encrypted stream
 type AesCTR128Stream struct {
-	reader    *bufio.Reader
+	reader    io.Reader
 	writer    io.Writer
 	writeChan chan interface{}
 	encrypt   *crypto.AesCTR128Encrypt
 	decrypt   *crypto.AesCTR128Encrypt
 }
 
-func NewAesCTR128Stream(reader *bufio.Reader, writer io.Writer, writeChan chan interface{}, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
+func NewAesCTR128Stream(reader io.Reader, writer io.Writer, writeChan chan interface{}, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
 	return &AesCTR128Stream{
 		reader:    reader,
 		writer:    writer,
