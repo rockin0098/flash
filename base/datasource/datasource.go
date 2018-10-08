@@ -36,8 +36,6 @@ func DataSourceInit(configs []DataSource, models ...interface{}) {
 	datasourceManager.configs = configs
 	datasourceManager.models = models
 
-	Log.Infof("datasourceManager = %+v", datasourceManager)
-
 	if len(configs) == 0 {
 		Log.Warnf("db config not found...")
 		return
