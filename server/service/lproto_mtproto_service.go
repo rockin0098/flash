@@ -52,6 +52,10 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 			AuthKeyID: raw.AuthKeyID,
 		}
 		err := encryptedMessage.Decode(authKey, raw.Payload[8:])
+		if err != nil {
+			Log.Error(err)
+			return nil, err
+		}
 
 		return s.MTProtoEncryptedMessageProcess(sess, encryptedMessage)
 	}

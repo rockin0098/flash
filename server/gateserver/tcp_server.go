@@ -74,6 +74,7 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 		connClose()
 		return
 	}
+	sess.SetMTProto(mtp)
 
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
