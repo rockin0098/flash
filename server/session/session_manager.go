@@ -12,9 +12,11 @@ func GenerateSessionID() string {
 }
 
 type SessionManager interface {
+	// server session
 	Store(sessid string, sess *Session)
 	Load(sessid string) (sess *Session, ok bool)
 	Remove(sessid string)
+	// client session
 	StoreClient(clientSessID int64, sess *Session)
 	LoadClient(clientSessID int64) (*Session, bool)
 	RemoveClient(clientSessID int64)

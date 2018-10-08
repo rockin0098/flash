@@ -2,6 +2,8 @@ package service
 
 import (
 	"github.com/rockin0098/flash/base/datasource"
+	. "github.com/rockin0098/flash/base/logger"
+	"github.com/rockin0098/flash/server/model"
 )
 
 type ModelService struct{}
@@ -17,6 +19,15 @@ func (s *ModelService) ModelAdd(m interface{}) error {
 	return db.Create(m).Error
 }
 
-func (s *ModelService) AuthKeyAdd() {
+func (s *ModelService) GetAuthKeyByAuthID(authID int64) *model.AuthKey {
+	db := datasource.DataSourceInstance().Master()
 
+	auth := &model.AuthKey{}
+	err := db.Where("auth_id=?", authID).Find(auth).Error
+	if err != nil {
+		Log.Error(err)
+		return nil
+	}
+
+	return auth
 }

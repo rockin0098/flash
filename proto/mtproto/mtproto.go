@@ -75,6 +75,11 @@ type MTProto struct {
 	e          *crypto.AesCTR128Encrypt
 	d          *crypto.AesCTR128Encrypt
 	stream     *AesCTR128Stream // 包含加解密处理
+
+	// runtime
+	salt            int64
+	nextSeqNo       uint32
+	clientSessionID int64
 }
 
 func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, sessid string, respChan chan interface{}, closeChan chan interface{}) *MTProto {
@@ -136,6 +141,27 @@ func (s *MTProto) SetState(state *MTProtoState) {
 
 func (s *MTProto) Codec() Codec {
 	return s.codec
+}
+
+func (s *MTProto) GenerateMessageSeqNo(increment bool) int32 {
+	value := s.nextSeqNo
+	if increment {
+		s.nextSeqNo++
+		return int32(value*2 + 1)
+	} else {
+		return int32(value * 2)
+	}
+}
+
+func (s *MTProto) EncodeEncryptedMessage(authKeyID int64, authKey []byte, messageID int64, confirm bool, tl TLObject) []byte {
+	message := &EncryptedMessage{
+		Salt:            s.salt,
+		SeqNo:           s.GenerateMessageSeqNo(confirm),
+		MessageID:       messageID,
+		ClientSessionID: s.clientSessionID,
+		TLObject:        tl,
+	}
+	return message.Encode(authKeyID, authKey)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////

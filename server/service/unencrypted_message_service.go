@@ -3,7 +3,6 @@ package service
 import (
 	"bytes"
 	"crypto/sha1"
-	"encoding/base64"
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
@@ -19,9 +18,10 @@ import (
 	"github.com/rockin0098/flash/server/session"
 )
 
-func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tlobj mtproto.TLObject) (interface{}, error) {
+func (s *LProtoService) TL_req_pq_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID())
 
+	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_req_pq)
 	nonce := tl.Get_nonce()
 	if nonce == nil || len(nonce) != 16 {
@@ -61,9 +61,10 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tlobj mtproto.T
 	return resPQ, nil
 }
 
-func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mtproto.TLObject) (interface{}, error) {
+func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID())
 
+	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_req_DH_params)
 
 	mtp := sess.MTProto()
@@ -194,9 +195,10 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mt
 	return server_DHParamsOk, nil
 }
 
-func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, tlobj mtproto.TLObject) (interface{}, error) {
+func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID())
 
+	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_set_client_DH_params)
 
 	mtp := sess.MTProto()
@@ -286,7 +288,7 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, t
 
 	m := &model.AuthKey{
 		AuthID: authKeyID,
-		Body:   base64.RawStdEncoding.EncodeToString(authKey),
+		Body:   hex.EncodeToString(authKey), //base64.RawStdEncoding.EncodeToString(authKey),
 	}
 
 	ms := ModelServiceInstance()

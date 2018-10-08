@@ -206,19 +206,51 @@ func (m *UnencryptedMessage) Decode(b []byte) error {
 }
 
 type EncryptedMessage struct {
-	AuthKeyID int64
-	NeedAck   bool
-	MsgKey    []byte
-	Salt      int64
-	SessionID int64
-	MessageID int64
-	SeqNo     int32
-	TLObject  TLObject
+	AuthKeyID       int64
+	NeedAck         bool
+	MsgKey          []byte
+	Salt            int64
+	ClientSessionID int64 // client session id
+	MessageID       int64
+	SeqNo           int32
+	TLObject        TLObject
 }
 
-func (m *EncryptedMessage) Encode() []byte {
+func (m *EncryptedMessage) Encode(authKeyID int64, authKey []byte) []byte {
 
-	return nil
+	objData := m.TLObject.Encode()
+	var additional_size = (32 + len(objData)) % 16
+	if additional_size != 0 {
+		additional_size = 16 - additional_size
+	}
+	if MTPROTO_VERSION == "2.0" && additional_size < 12 {
+		additional_size += 16
+	}
+
+	x := NewMTPEncodeBuffer(32 + len(objData) + additional_size)
+	// x.Long(authKeyId)
+	// msgKey := make([]byte, 16)
+	// x.Bytes(msgKey)
+	x.Long(m.Salt)
+	x.Long(m.ClientSessionID)
+	if m.MessageID == 0 {
+		m.MessageID = GenerateMessageID()
+	}
+	x.Long(m.MessageID)
+	x.Int(m.SeqNo)
+	x.Int(int32(len(objData)))
+	x.Bytes(objData)
+	x.Bytes(crypto.GenerateNonce(additional_size))
+
+	// glog.Info("Encode object: ", m.Object)
+
+	encryptedData, _ := m.encrypt(authKey, x.buffer)
+	x2 := NewMTPEncodeBuffer(56 + len(objData) + additional_size)
+	x2.Long(authKeyID)
+	x2.Bytes(m.MsgKey)
+	x2.Bytes(encryptedData)
+
+	return x2.buffer
 }
 
 func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
@@ -234,8 +266,8 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 
 	dc := NewMTPDecodeBuffer(x)
 
-	m.Salt = dc.Long()      // salt
-	m.SessionID = dc.Long() // session_id
+	m.Salt = dc.Long()            // salt
+	m.ClientSessionID = dc.Long() // session_id
 	m.MessageID = dc.Long()
 
 	// mod := m.messageId & 3
