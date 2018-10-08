@@ -24,9 +24,14 @@ func GateProcess(mtp *mtproto.MTProto) error {
 	}
 
 	// 返回消息
-	rmsg := mtproto.NewRawMessage(raw.TransportType, raw.AuthKeyID, raw.QuickAckID)
-	rmsg.Decode(ctx.Response.MTProtoResponse.([]byte))
-	err = mtp.Write(rmsg)
+	mtpResp := ctx.Response.MTProtoResponse
+	if mtpResp == nil { // 如果返回消息为空, 则表明处理出错, 关闭连接
+		mtp.Close()
+	} else {
+		rmsg := mtproto.NewRawMessage(raw.TransportType, raw.AuthKeyID, raw.QuickAckID)
+		rmsg.Decode(ctx.Response.MTProtoResponse.([]byte))
+		err = mtp.Write(rmsg)
+	}
 
 	return err
 }

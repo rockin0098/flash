@@ -1,16 +1,21 @@
 package service
 
 import (
+	"bytes"
 	"crypto/sha1"
+	"encoding/base64"
 	"encoding/binary"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"math/big"
 	"time"
 
 	"github.com/rockin0098/flash/base/crypto"
+	// . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 	"github.com/rockin0098/flash/server/session"
 )
 
@@ -42,9 +47,16 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, tlobj mtproto.T
 		M_server_public_key_fingerprints: []int64{int64(mtpcryptor.Fingerprint)},
 	}
 
+	Log.Debugf("before sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+
 	// sess 缓存 nonce
 	state.Nonce = resPQ.Get_nonce()
 	state.ServerNonce = resPQ.Get_server_nonce()
+
+	sess2 := session.GetSession(sess.SessionID())
+	mtp2 := sess2.MTProto()
+	state2 := mtp2.State()
+	Log.Debugf("after sessid = %v, mtp = %p, state = %+v", sess2.SessionID(), mtp2, state2)
 
 	return resPQ, nil
 }
@@ -57,6 +69,14 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mt
 	mtp := sess.MTProto()
 	state := mtp.State()
 	cryptor := mtp.Cryptor()
+
+	Log.Debugf("before2 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+
+	if !bytes.Equal(tl.Get_nonce(), state.Nonce) {
+		Log.Warnf("nonce not match, tl.nonce = %v, state.nonce = %v",
+			hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
+		return nil, errors.New("nonce not match")
+	}
 
 	Log.Infof("tl.nonce = %v, state.nonce = %v",
 		hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
@@ -120,6 +140,8 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, tlobj mt
 	state.A = crypto.GenerateNonce(256)
 	state.P = cryptor.DH2048_P
 
+	Log.Debugf("after2 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+
 	bigIntA := new(big.Int).SetBytes(state.A)
 
 	// 服务端计算GA = g^a mod p
@@ -180,6 +202,14 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, t
 	mtp := sess.MTProto()
 	state := mtp.State()
 	cryptor := mtp.Cryptor()
+
+	Log.Debugf("before3 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+
+	if !bytes.Equal(tl.Get_nonce(), state.Nonce) {
+		Log.Warnf("nonce not match, tl.nonce = %v, state.nonce = %v",
+			hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
+		return nil, errors.New("nonce not match")
+	}
 
 	Log.Infof("tl.nonce = %v, state.nonce = %v",
 		hex.EncodeToString(tl.Get_nonce()), hex.EncodeToString(state.Nonce))
@@ -252,26 +282,19 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, t
 	state.AuthKeyID = authKeyID
 	state.AuthKey = authKey
 
-	// TODO(@benqi): error 处理
-	// do := &dataobject.AuthKeysDO{
-	// 	AuthId: authKeyId,
-	// 	Body:   base64.RawStdEncoding.EncodeToString(authKey),
-	// }
+	Log.Debugf("after3 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
 
-	// _, err = dao.GetAuthKeysDAO(dao.DB_MASTER).Insert(do)
-	// if err != nil {
-	// 	glog.Error("store auth_key error: ", err)
-	// 	if dbErr, ok := err.(*mysql.MySQLError); ok {
-	// 		if dbErr.Number == 1062 {
-	// 			// glog.Error("duplicate store auth_key: ", err)
-	// 		}
-	// 	} else {
-	// 		// return DBERR, err
-	// 	}
-	// 	return nil, err
-	// }
+	m := &model.AuthKey{
+		AuthID: authKeyID,
+		Body:   base64.RawStdEncoding.EncodeToString(authKey),
+	}
 
-	// 插入 db
+	ms := ModelServiceInstance()
+	err = ms.ModelAdd(m)
+	if err != nil {
+		Log.Error("save authkey failed, sessid=%v, err=%v", sess.SessionID(), err)
+		return nil, err
+	}
 
 	return dhGenOk, nil
 }

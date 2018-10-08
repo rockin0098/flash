@@ -373,4 +373,5 @@ func (this *AesCTR128Stream) Write(p []byte) {
 	this.encrypt.Encrypt(p[:])
 
 	this.writeChan <- p
+	// this.writer.Write(p)
 }

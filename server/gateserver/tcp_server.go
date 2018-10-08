@@ -13,17 +13,17 @@ import (
 	. "github.com/rockin0098/flash/base/logger"
 )
 
-type TTcpServer struct {
+type TcpServer struct {
 	addr string
 }
 
-func NewTcpServer(addr string) *TTcpServer {
-	return &TTcpServer{
+func NewTcpServer(addr string) *TcpServer {
+	return &TcpServer{
 		addr: addr,
 	}
 }
 
-func (s *TTcpServer) Run() {
+func (s *TcpServer) Run() {
 	Log.Infof("TCP server listening at %v", s.addr)
 	lsn, err := net.Listen("tcp", s.addr)
 	if err != nil {
@@ -49,7 +49,7 @@ func (s *TTcpServer) Run() {
 	}
 }
 
-func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
+func (s *TcpServer) ConnectionHandler(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr()
 	localAddr := conn.LocalAddr()
 
@@ -58,17 +58,19 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	sess := session.NewSession(connid)
 	MAX_RESP_CHAN_LEN := 8192
 	respChan := make(chan interface{}, MAX_RESP_CHAN_LEN)
+	closeChan := make(chan interface{}, 1)
 	bufReader := mtproto.NewBufferedReader(conn)
 	initial := true
 
 	connClose := func() {
 		conn.Close()
 		close(respChan)
+		close(closeChan)
 		cm.Remove(connid)
 	}
 
 	// 每个连接一个
-	mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan)
+	mtp := mtproto.NewMTProto(bufReader, conn, remoteAddr, localAddr, sess.SessionID(), respChan, closeChan)
 	if mtp == nil {
 		Log.Error("create mtproto failed, will close connection...")
 		connClose()
@@ -79,7 +81,6 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 	grm := grmon.GetGRMon()
 	grm.Go("tcp_read", func() {
 		for {
-
 			if !initial {
 				b := make([]byte, 0)
 				n, err := io.ReadFull(conn, b) // 阻塞
@@ -113,9 +114,17 @@ func (s *TTcpServer) ConnectionHandler(conn net.Conn) {
 
 	grm.Go("tcp_write", func() {
 		for {
-			data, ok := <-respChan
-			if !ok {
-				Log.Warnf("resp channel closed, write routine will exit, sess = %v", sess.SessionID())
+			var data interface{}
+			var ok bool
+			select {
+			case data, ok = <-respChan:
+				if !ok {
+					Log.Warnf("resp channel closed, write routine will exit, sessid = %v", sess.SessionID())
+					return
+				}
+			case <-closeChan:
+				Log.Warnf("recieved from close channel, will close the connection, sessid = %v", sess.SessionID())
+				conn.Close() // 此处只尝试关闭连接即可
 				return
 			}
 

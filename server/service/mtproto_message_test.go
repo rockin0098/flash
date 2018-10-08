@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 // 69d7d0037bba59133377ea2cbdc4eac50f7777fe989816f98e5e2f296710c03159b710ff62dca372199ea30bec8e2102697a37b6b3e50f7e5566827ef6b6ed3c43223e60af3955e1752ae412eb9c2a909177b12845
 func TestSend(t *testing.T) {
 
-	conn, err := net.Dial("tcp", "127.0.0.1:5222")
+	conn, err := net.Dial("tcp", "localhost:5222")
 	if err != nil {
 		Log.Error(err)
 		return

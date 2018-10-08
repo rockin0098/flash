@@ -26,7 +26,8 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		res, err := s.MTProtoUnencryptedMessageProcess(sess, reqmsg)
 		if err != nil {
-			Log.Error(err)
+			// Log.Error(err)
+			Log.Warn(err)
 			return nil, err
 		}
 

@@ -61,6 +61,7 @@ type MTProto struct {
 	reader                net.Conn
 	writer                io.Writer
 	respChan              chan interface{}
+	closeChan             chan interface{}
 	remoteAddr            net.Addr
 	localAddr             net.Addr
 	sessionID             string
@@ -76,7 +77,7 @@ type MTProto struct {
 	stream     *AesCTR128Stream // 包含加解密处理
 }
 
-func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, sessid string, respChan chan interface{}) *MTProto {
+func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, sessid string, respChan chan interface{}, closeChan chan interface{}) *MTProto {
 	mtp := &MTProto{
 		MTProtoVersion: MTPROTO_VERSION, // 当前
 		TLLayerVersion: TL_LAYER_VERSION,
@@ -85,6 +86,7 @@ func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAdd
 		reader:         reader,
 		writer:         writer,
 		respChan:       respChan,
+		closeChan:      closeChan,
 		remoteAddr:     remoteAddr,
 		localAddr:      localAddr,
 		sessionID:      sessid,
@@ -268,6 +270,8 @@ func (s *MTProto) selectCodec() error { // mtproto proxy
 
 func (s *MTProto) ReadMTProtoAbriaged() error {
 	Log.Debug("entering...")
+
+	return errors.New("not implemented yet!")
 
 	// var size int
 	// var n int
@@ -757,4 +761,8 @@ func (s *MTProto) WriteMTProtoApp(msg interface{}) error {
 	Log.Debugf("mtproto app write = %v", hex.EncodeToString(b))
 
 	return nil
+}
+
+func (s *MTProto) Close() {
+	s.closeChan <- 1
 }
