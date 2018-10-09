@@ -12,26 +12,35 @@ func GateProcess(mtp *mtproto.MTProto) error {
 
 	raw := mtp.Message().(*mtproto.RawMessage)
 
+	request := &lproto.LProtoRequest{
+		LID:              guid.GenerateUID(),
+		IsDirectResponse: true,
+		SessionID:        mtp.SessionID(),
+		MTProtoRequest:   raw,
+	}
+
 	ls := service.LProtoServiceInstance()
-	ctx, err := ls.MakeLProtoContext(&lproto.LProtoRequest{
-		LID:            guid.GenerateUID(),
-		SessionID:      mtp.SessionID(),
-		MTProtoRequest: raw,
-	})
+	ctx, err := ls.MakeLProtoContext(request)
 	if err != nil {
 		Log.Error(err)
 		return err
 	}
 
-	// 返回消息
-	mtpResp := ctx.Response.MTProtoResponse
-	if mtpResp == nil { // 如果返回消息为空, 则表明处理出错, 关闭连接
-		mtp.Close()
-	} else {
-		rmsg := mtproto.NewRawMessage(raw.TransportType, raw.AuthKeyID, raw.QuickAckID)
-		rmsg.Decode(ctx.Response.MTProtoResponse.([]byte))
-		err = mtp.Write(rmsg)
+	// 需要 gate 返回
+	if !request.IsDirectResponse {
+
+		// 返回消息
+		mtpResp := ctx.Response.MTProtoResponse
+		if mtpResp == nil { // 如果返回消息为空, 则表明处理出错, 关闭连接
+			mtp.Close()
+		} else {
+			rmsg := mtproto.NewRawMessage(raw.TransportType, raw.AuthKeyID, raw.QuickAckID)
+			rmsg.Decode(ctx.Response.MTProtoResponse.([]byte))
+			err = mtp.Write(rmsg)
+		}
+
+		return err
 	}
 
-	return err
+	return nil
 }

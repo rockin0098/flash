@@ -111,6 +111,11 @@ func (s *ClientSession) ServerSessionID() string {
 	return s.serverSessionID
 }
 
+func (s *ClientSession) Write(data interface{}) {
+	sess := GetSession(s.serverSessionID)
+	sess.Write(data)
+}
+
 //// Check Server Salt
 func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int32, salt int64) (*mtproto.TL_bad_server_salt, bool) {
 	// Notice of Ignored Error Message

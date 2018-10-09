@@ -12,9 +12,10 @@ type LContext struct {
 }
 
 type LProtoRequest struct {
-	LID            int64
-	SessionID      string
-	MTProtoRequest *mtproto.RawMessage
+	LID              int64
+	IsDirectResponse bool
+	SessionID        string
+	MTProtoRequest   *mtproto.RawMessage
 }
 
 type LProtoResponse struct {
