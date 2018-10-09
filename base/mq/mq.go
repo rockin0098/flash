@@ -25,7 +25,7 @@ type MQInternal struct {
 }
 
 func (m *MQInternal) CreateChannel(channel string) {
-
+	m.channelMap.Store(channel, make(chan interface{}, 8192*10))
 }
 
 func (m *MQInternal) Put(channel string, data interface{}) {
