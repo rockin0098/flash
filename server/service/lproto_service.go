@@ -33,7 +33,9 @@ func (s *LProtoService) MakeLProtoContext(request *lproto.LProtoRequest) (*lprot
 		return nil, err
 	}
 
-	ctx.Response = lresp.(*lproto.LProtoResponse)
+	if lresp != nil {
+		ctx.Response = lresp.(*lproto.LProtoResponse)
+	}
 
 	return ctx, nil
 }
@@ -49,14 +51,22 @@ func (s *LProtoService) MessageProcess(lrequest *lproto.LProtoRequest) (interfac
 
 	mtpresp, err := s.MTProtoMessageProcess(sess, raw)
 
-	Log.Infof("response - sessid = %v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
-		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(mtpresp.([]byte)))
+	if lrequest.IsDirectResponse {
+		if mtpresp != nil {
+			sess.Write(mtpresp)
+		}
+	} else {
+		Log.Infof("direct response - sessid = %v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
+			sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(mtpresp.([]byte)))
 
-	lresp := &lproto.LProtoResponse{
-		LID:             lrequest.LID,
-		Error:           err,
-		MTProtoResponse: mtpresp,
+		lresp := &lproto.LProtoResponse{
+			LID:             lrequest.LID,
+			Error:           err,
+			MTProtoResponse: mtpresp,
+		}
+
+		return lresp, nil
 	}
 
-	return lresp, nil
+	return nil, nil
 }

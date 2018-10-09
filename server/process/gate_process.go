@@ -26,9 +26,9 @@ func GateProcess(mtp *mtproto.MTProto) error {
 		return err
 	}
 
-	// 需要 gate 返回
-	if !request.IsDirectResponse {
-
+	if request.IsDirectResponse {
+		return nil
+	} else { // 需要 gate 返回
 		// 返回消息
 		mtpResp := ctx.Response.MTProtoResponse
 		if mtpResp == nil { // 如果返回消息为空, 则表明处理出错, 关闭连接

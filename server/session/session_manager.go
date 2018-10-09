@@ -134,5 +134,8 @@ func (s *Session) CreateSessionWriter() {
 }
 
 func (s *Session) Write(data interface{}) {
-	s.mq.Put(s.sessionID, data)
+	raw := &mtproto.RawMessage{
+		Payload: data.([]byte),
+	}
+	s.mq.Put(s.sessionID, raw)
 }

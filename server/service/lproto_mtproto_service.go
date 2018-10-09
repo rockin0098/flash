@@ -42,11 +42,6 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 	} else { // 加密消息
 
-		// mtp := sess.MTProto()
-		// authID := mtp.State().AuthKeyID
-		// authKey := mtp.State().AuthKey
-
-		// Log.Debugf("client authKeyID = %v, authid = %v, authkey = %v", raw.AuthKeyID, authID, authKey)
 		Log.Debugf("client authKeyID = %v", raw.AuthKeyID)
 
 		authid := raw.AuthKeyID
@@ -94,7 +89,10 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 			return nil, err
 		}
 
-		resPayload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, res.(mtproto.TLObject))
+		var resPayload []byte = nil
+		if res != nil {
+			resPayload = cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, res.(mtproto.TLObject))
+		}
 
 		return resPayload, nil
 	}

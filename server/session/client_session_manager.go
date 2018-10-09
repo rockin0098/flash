@@ -116,6 +116,18 @@ func (s *ClientSession) Write(data interface{}) {
 	sess.Write(data)
 }
 
+func (s *ClientSession) WriteDirectly(authKeyID int64, authKey []byte, messageID int64, tl mtproto.TLObject) {
+	payload := s.EncodeMessage(authKeyID, authKey, messageID, false, tl)
+	sess := GetSession(s.serverSessionID)
+	sess.Write(payload)
+}
+
+func (s *ClientSession) WriteAckDirectly(authKeyID int64, authKey []byte, messageID int64, tl mtproto.TLObject) {
+	payload := s.EncodeMessage(authKeyID, authKey, messageID, true, tl)
+	sess := GetSession(s.serverSessionID)
+	sess.Write(payload)
+}
+
 //// Check Server Salt
 func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int32, salt int64) (*mtproto.TL_bad_server_salt, bool) {
 	// Notice of Ignored Error Message
