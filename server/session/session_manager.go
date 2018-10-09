@@ -3,7 +3,10 @@ package session
 import (
 	"sync"
 
+	"github.com/rockin0098/flash/base/grmon"
 	"github.com/rockin0098/flash/base/guid"
+	. "github.com/rockin0098/flash/base/logger"
+	"github.com/rockin0098/flash/base/mq"
 	"github.com/rockin0098/flash/proto/mtproto"
 )
 
@@ -54,6 +57,7 @@ type Session struct {
 	sessionID string
 	connID    string
 	mtproto   *mtproto.MTProto
+	mq        mq.MQ
 }
 
 func NewSession(connID string) *Session {
@@ -62,6 +66,7 @@ func NewSession(connID string) *Session {
 		rw:        &sync.RWMutex{},
 		sessionID: GenerateSessionID(),
 		connID:    connID,
+		mq:        mq.NewMQ(),
 	}
 
 	sessionManager.Store(sess.sessionID, sess)
@@ -104,4 +109,30 @@ func (s *Session) MTProto() *mtproto.MTProto {
 	defer s.rw.RUnlock()
 
 	return s.mtproto
+}
+
+func (s *Session) MQ() mq.MQ {
+	s.rw.RLock()
+	defer s.rw.RUnlock()
+
+	return s.mq
+}
+
+func (s *Session) CreateSessionWriter() {
+	// mq routine
+	s.mq.CreateChannel(s.sessionID) // 唯一channel
+	grm := grmon.GetGRMon()
+	grm.GoLoop("sess_response_loop", func() {
+		data := s.mq.Get(s.sessionID)
+		mtp := s.mtproto
+		err := mtp.Write(data)
+		if err != nil {
+			Log.Warn(err)
+			mtp.Close()
+		}
+	})
+}
+
+func (s *Session) Write(data interface{}) {
+	s.mq.Put(s.sessionID, data)
 }
