@@ -1,6 +1,8 @@
 package service
 
 import (
+	"encoding/hex"
+
 	"github.com/rockin0098/flash/server/session"
 
 	"github.com/rockin0098/flash/proto/lproto"
@@ -42,7 +44,14 @@ func (s *LProtoService) MessageProcess(lrequest *lproto.LProtoRequest) (interfac
 	raw := lrequest.MTProtoRequest
 	sess := session.GetSession(sessid)
 
+	Log.Infof("request - sessid=%v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
+		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
+
 	mtpresp, err := s.MTProtoMessageProcess(sess, raw)
+
+	Log.Infof("response - sessid = %v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
+		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(mtpresp.([]byte)))
+
 	lresp := &lproto.LProtoResponse{
 		LID:             lrequest.LID,
 		Error:           err,

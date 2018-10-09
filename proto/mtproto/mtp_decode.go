@@ -327,14 +327,13 @@ func (m *MTPDecodeBuffer) TLObject() TLObject {
 		return nil
 	}
 
-	className := TL_CLASS_NAME[classID]
-	Log.Debugf("TLObject - classID: %x, className: %v", uint32(classID), className)
-
 	tlo := NewTLObjectByClassID(classID)
 	if tlo == nil {
 		Log.Errorf("Can't find registed classID: %v", classID)
 		return nil
 	}
+
+	Log.Debugf("TLObject - classID: %x, classType: %T", uint32(classID), tlo)
 
 	tlo.Decode(m.buffer[m.off:])
 

@@ -40,8 +40,7 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, msg *mtproto.Un
 	// // for debugging ===> end
 
 	resPQ := &mtproto.TL_resPQ{
-		M_nonce: nonce,
-		// M_server_nonce:                   tmpnonce, // crypto.GenerateNonce(16),
+		M_nonce:                          nonce,
 		M_server_nonce:                   crypto.GenerateNonce(16),
 		M_pq:                             mtpcryptor.PQ,
 		M_server_public_key_fingerprints: []int64{int64(mtpcryptor.Fingerprint)},

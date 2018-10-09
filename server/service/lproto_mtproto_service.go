@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 
 	"github.com/rockin0098/flash/proto/mtproto"
@@ -14,8 +15,7 @@ import (
 
 func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtproto.RawMessage) (interface{}, error) {
 
-	Log.Infof("entering.......sessid=%v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, Payload = \n%v\n",
-		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
+	Log.Info("entering...")
 
 	if raw.AuthKeyID == 0 { // 未加密的消息, 握手协商消息
 		reqmsg := &mtproto.UnencryptedMessage{}
@@ -38,8 +38,6 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		resPayload := respmsg.Encode()
 
-		Log.Debugf("sessid = %v, resp payload = %v", sess.SessionID(), hex.EncodeToString(resPayload))
-
 		return resPayload, nil
 
 	} else { // 加密消息
@@ -51,10 +49,11 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		// Log.Debugf("client authKeyID = %v, authid = %v, authkey = %v", raw.AuthKeyID, authID, authKey)
 		Log.Debugf("client authKeyID = %v", raw.AuthKeyID)
 
+		authid := raw.AuthKeyID
 		ms := ModelServiceInstance()
-		authKey := ms.GetAuthKeyByAuthID(raw.AuthKeyID)
+		authKey := ms.GetAuthKeyByAuthID(authid)
 		if authKey == nil {
-			return nil, fmt.Errorf("authkey not found by authid=%v", raw.AuthKeyID)
+			return nil, fmt.Errorf("authkey not found by authid=%v", authid)
 		}
 		akey, err := hex.DecodeString(authKey.Body)
 		if err != nil {
@@ -63,7 +62,7 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		}
 
 		reqmsg := &mtproto.EncryptedMessage{
-			AuthKeyID: raw.AuthKeyID,
+			AuthKeyID: authid,
 		}
 		err = reqmsg.Decode(akey, raw.Payload[8:])
 		if err != nil {
@@ -72,25 +71,30 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		}
 
 		// 记录 client session id
-		sm := session.GetSessionManager()
-		_, ok := sm.LoadClient(reqmsg.ClientSessionID)
+		csm := session.GetClientSessionManager()
+		cltSess, ok := csm.Load(reqmsg.ClientSessionID)
 		if !ok {
-			sm.StoreClient(reqmsg.ClientSessionID, sess)
+			cltSess = session.NewClientSession(reqmsg.ClientSessionID, authid, reqmsg.Salt, reqmsg.MessageID, sess.SessionID())
+			csm.Store(reqmsg.ClientSessionID, cltSess)
 		}
 
-		res, err := s.MTProtoEncryptedMessageProcess(sess, reqmsg)
+		badresp, ok := cltSess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
+		if !ok {
+			payload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, badresp)
+			return payload, errors.New("check bad server salt failed")
+		}
+
+		// 暂时不处理 container
+		// _, isContainer := reqmsg.TLObject.(*mtproto.TL_msg_conta)
+
+		res, err := s.MTProtoEncryptedMessageProcess(cltSess, reqmsg)
 		if err != nil {
 			// Log.Error(err)
 			Log.Warn(err)
 			return nil, err
 		}
 
-		respmsg := &mtproto.EncryptedMessage{
-			TLObject: res.(mtproto.TLObject),
-		}
-
-		resPayload := respmsg.Encode(raw.AuthKeyID, akey)
-		Log.Debugf("sessid = %v, resp payload = %v", sess.SessionID(), hex.EncodeToString(resPayload))
+		resPayload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, res.(mtproto.TLObject))
 
 		return resPayload, nil
 	}
@@ -121,76 +125,27 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 	return res, err
 }
 
-func (s *LProtoService) MTProtoEncryptedMessageProcess(sess *session.Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("class type = %T", tlobj)
+	Log.Debugf("client sessid = %v, authid = %v, class type = %T", cltSess.SessionID(), cltSess.AuthKeyID(), tlobj)
 
 	var res interface{}
 	var err error
 
 	switch tl := tlobj.(type) {
 	case *mtproto.TL_ping:
-		res, err = s.TL_ping_Process(sess, msg)
+		res, err = s.TL_ping_Process(cltSess, msg)
+	case *mtproto.TL_invokeWithLayer:
+		res, err = s.TL_invokeWithLayer_Process(cltSess, msg)
+	case *mtproto.TL_initConnection:
+		res, err = s.TL_initConnection_Process(cltSess, msg)
+	case *mtproto.TL_help_getConfig:
+		res, err = s.TL_help_getConfig_Process(cltSess, msg)
 	default:
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}
 
 	return res, err
-}
-
-// verify encrypted messages
-func (s *LProtoService) verify1() {
-
-	// if !sess.CheckBadServerSalt(sessionMsg.connID, sessionMsg.md, message.MessageId, message.SeqNo, message.Salt) {
-	// 	glog.Infof("salt invalid - {sess: %s, conn_id: %s, md: %s}", s, sessionMsg.connID, sessionMsg.md)
-	// 	// glog.Error("salt invalid..")
-	// 	return
-	// }
-
-	// _, isContainer := message.Object.(*mtproto.TLMsgContainer)
-	// if !sess.CheckBadMsgNotification(sessionMsg.connID, sessionMsg.md, message.MessageId, message.SeqNo, isContainer) {
-	// 	glog.Infof("bad msg invalid - {sess: %s, conn_id: %s, md: %s}", s, sessionMsg.connID, sessionMsg.md)
-	// 	// glog.Error("bad msg invalid..")
-	// 	return
-	// }
-
-	// /*
-	// 	//=============================================================================================
-	// 	// Check Message Sequence Number (msg_seqno)
-	// 	//
-	// 	// https://core.telegram.org/mtproto/description#message-sequence-number-msg-seqno
-	// 	// Message Sequence Number (msg_seqno)
-	// 	//
-	// 	// A 32-bit number equal to twice the number of “content-related” messages
-	// 	// (those requiring acknowledgment, and in particular those that are not containers)
-	// 	// created by the sender prior to this message and subsequently incremented
-	// 	// by one if the current message is a content-related message.
-	// 	// A container is always generated after its entire contents; therefore,
-	// 	// its sequence number is greater than or equal to the sequence numbers of the messages contained in it.
-	// 	//
-
-	// 	if message.SeqNo < sess.lastSeqNo {
-	// 		err = fmt.Errorf("sequence number is greater than or equal to the sequence numbers of the messages contained in it: %d", message.SeqNo)
-	// 		glog.Error(err)
-
-	// 		// TODO(@benqi): ignore this message or close client conn??
-	// 		return
-	// 	}
-	// 	sess.lastSeqNo = message.SeqNo
-
-	// 	sess.onMessageData(sessionMsg.md, message.MessageId, message.SeqNo, message.Object)
-	// */
-
-	// var messages = &messageListWrapper{[]*mtproto.TLMessage2{}}
-	// extractClientMessage(message.MessageId, message.SeqNo, message.Object, messages, func(layer int32) {
-	// 	s.Layer = layer
-
-	// 	// TODO(@benqi): clear session_manager
-	// })
-}
-
-func (s *LProtoService) verify2() {
-
 }
