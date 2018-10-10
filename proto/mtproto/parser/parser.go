@@ -241,7 +241,7 @@ func ParserEntry() {
 
 	flag.Parse()
 
-	if len(os.Args) != 4 {
+	if len(os.Args) != 5 {
 		// Log.Info("\nUseage : tlparser -i [input file] -o [output dir]\nexample: tlparser -i ./proto/mtproto/schema/schema.layer73.tl,./proto/mtproto/schema/iphone_simulator_scheme.tl -o ./proto/mtproto/\n")
 		flag.Usage()
 		Log.Infof("will use default params, input = %v, output = %v", input, output)
