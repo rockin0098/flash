@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+
 	// . "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/flash/base/global"
 )
 
 var m_class_id = "M_classID"
@@ -74,9 +76,9 @@ func (t *TLLayer) generateOneTLObjectDecode(params []*TLParam) string {
 
 	res := "dc := NewMTPDecodeBuffer(b)\n\n"
 	for _, p := range params {
-		if p.Type == "#" {
-			continue
-		}
+		// if p.Type == "#" {
+		// 	continue
+		// }
 		res = res + convertDecodeField(p)
 	}
 
@@ -90,11 +92,14 @@ func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) st
 	res := "ec := NewMTPEncodeBuffer(512)\n\n"
 	res = res + fmt.Sprintf("ec.Int(int32(TL_CLASS_%v))\n", tlname)
 
-	for _, p := range params {
-		if p.Type == "#" {
-			continue
+	if len(params) > 0 && params[0].Type == "#" {
+		ASSERT(params[0].Name == "flags")
+		res = res + convertEncodeFlagsField(params)
+	} else {
+		for _, p := range params {
+			ASSERT(p.Type != "#")
+			res = res + convertEncodeField(p)
 		}
-		res = res + convertEncodeField(p)
 	}
 
 	res = res + "\nreturn ec.GetBuffer()"

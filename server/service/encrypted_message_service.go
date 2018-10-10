@@ -64,29 +64,12 @@ func (s *LProtoService) TL_initConnection_Process(cltSess *session.ClientSession
 func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
 	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
 
-	// tlobj := msg.TLObject
-	// tl := tlobj.(*mtproto.TL_help_getConfig)
+	helpConfig := mtproto.TL_config{
+		M_classID:            mtproto.TL_CLASS_config,
+		M_phonecalls_enabled: mtproto.New_TL_boolFalse(),
+	}
 
-	// layer := tl.Get_layer()
-	// query := tl.Get_query()
-
-	// Log.Debugf("invokeWithLayer layer = %v, query = %T", layer, query)
-
-	// // must be initConnection
-	// initConn := query.(*mtproto.TL_initConnection)
-
-	// initConnection := &mtproto.TL_initConnection{
-	// 	M_api_id:           initConn.M_api_id,
-	// 	M_device_model:     initConn.M_device_model,
-	// 	M_system_version:   initConn.M_system_version,
-	// 	M_app_version:      initConn.M_app_version,
-	// 	M_system_lang_code: initConn.M_system_lang_code,
-	// 	M_lang_pack:        initConn.M_lang_pack,
-	// 	M_lang_code:        initConn.M_lang_code,
-	// 	M_query:            query,
-	// }
-
-	return nil, nil
+	return helpConfig, nil
 }
 
 func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {

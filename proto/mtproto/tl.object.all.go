@@ -3429,22 +3429,22 @@ func (t *TL_inputMediaEmpty) String() string {
 // inputMediaUploadedPhoto#2f37e231
 type TL_inputMediaUploadedPhoto struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_file        TLObject
 	M_caption     string
 	M_stickers    []TLObject
-	M_ttl_seconds TLObject
+	M_ttl_seconds int32
 }
 
 func (t *TL_inputMediaUploadedPhoto) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaUploadedPhoto) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_flags() TLObject {
+func (t *TL_inputMediaUploadedPhoto) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -3472,11 +3472,11 @@ func (t *TL_inputMediaUploadedPhoto) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
-func (t *TL_inputMediaUploadedPhoto) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaUploadedPhoto) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaUploadedPhoto) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaUploadedPhoto) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -3490,10 +3490,26 @@ func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaUploadedPhoto))
+
+	var flags uint32 = 0
+	if t.M_stickers != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_file())
 	ec.String(t.Get_caption())
-	ec.Vector(t.Get_stickers())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_stickers != nil {
+		ec.Vector(t.Get_stickers())
+	}
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -3501,10 +3517,15 @@ func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
 func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_file = dc.TLObject()
 	t.M_caption = dc.String()
-	t.M_stickers = dc.Vector()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_stickers = dc.Vector()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -3516,21 +3537,21 @@ func (t *TL_inputMediaUploadedPhoto) String() string {
 // inputMediaPhoto#81fa373a
 type TL_inputMediaPhoto struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_id          TLObject
 	M_caption     string
-	M_ttl_seconds TLObject
+	M_ttl_seconds int32
 }
 
 func (t *TL_inputMediaPhoto) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaPhoto) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaPhoto) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaPhoto) Get_flags() TLObject {
+func (t *TL_inputMediaPhoto) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -3550,11 +3571,11 @@ func (t *TL_inputMediaPhoto) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaPhoto) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaPhoto) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaPhoto) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaPhoto) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -3568,9 +3589,19 @@ func (t *TL_inputMediaPhoto) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaPhoto))
+
+	var flags uint32 = 0
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_id())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -3578,9 +3609,12 @@ func (t *TL_inputMediaPhoto) Encode() []byte {
 func (t *TL_inputMediaPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.TLObject()
 	t.M_caption = dc.String()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -3704,7 +3738,7 @@ func (t *TL_inputMediaContact) String() string {
 // inputMediaUploadedDocument#e39621fd
 type TL_inputMediaUploadedDocument struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_nosound_video TLObject
 	M_file          TLObject
 	M_thumb         TLObject
@@ -3712,18 +3746,18 @@ type TL_inputMediaUploadedDocument struct {
 	M_attributes    []TLObject
 	M_caption       string
 	M_stickers      []TLObject
-	M_ttl_seconds   TLObject
+	M_ttl_seconds   int32
 }
 
 func (t *TL_inputMediaUploadedDocument) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaUploadedDocument) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_flags() TLObject {
+func (t *TL_inputMediaUploadedDocument) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -3783,11 +3817,11 @@ func (t *TL_inputMediaUploadedDocument) Get_stickers() []TLObject {
 	return t.M_stickers
 }
 
-func (t *TL_inputMediaUploadedDocument) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaUploadedDocument) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaUploadedDocument) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaUploadedDocument) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -3801,14 +3835,42 @@ func (t *TL_inputMediaUploadedDocument) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaUploadedDocument))
-	ec.TLObject(t.Get_nosound_video())
+
+	var flags uint32 = 0
+	if t.M_nosound_video != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_thumb != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_stickers != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_nosound_video != nil {
+		ec.TLObject(t.Get_nosound_video())
+	}
 	ec.TLObject(t.Get_file())
-	ec.TLObject(t.Get_thumb())
+	if t.M_thumb != nil {
+		ec.TLObject(t.Get_thumb())
+	}
 	ec.String(t.Get_mime_type())
 	ec.Vector(t.Get_attributes())
 	ec.String(t.Get_caption())
-	ec.Vector(t.Get_stickers())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_stickers != nil {
+		ec.Vector(t.Get_stickers())
+	}
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -3816,14 +3878,23 @@ func (t *TL_inputMediaUploadedDocument) Encode() []byte {
 func (t *TL_inputMediaUploadedDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_nosound_video = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_nosound_video = dc.TLObject()
+	}
 	t.M_file = dc.TLObject()
-	t.M_thumb = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_thumb = dc.TLObject()
+	}
 	t.M_mime_type = dc.String()
 	t.M_attributes = dc.Vector()
 	t.M_caption = dc.String()
-	t.M_stickers = dc.Vector()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_stickers = dc.Vector()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -3835,21 +3906,21 @@ func (t *TL_inputMediaUploadedDocument) String() string {
 // inputMediaDocument#5acb668e
 type TL_inputMediaDocument struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_id          TLObject
 	M_caption     string
-	M_ttl_seconds TLObject
+	M_ttl_seconds int32
 }
 
 func (t *TL_inputMediaDocument) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaDocument) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaDocument) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaDocument) Get_flags() TLObject {
+func (t *TL_inputMediaDocument) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -3869,11 +3940,11 @@ func (t *TL_inputMediaDocument) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaDocument) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaDocument) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaDocument) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaDocument) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -3887,9 +3958,19 @@ func (t *TL_inputMediaDocument) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaDocument))
+
+	var flags uint32 = 0
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_id())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -3897,9 +3978,12 @@ func (t *TL_inputMediaDocument) Encode() []byte {
 func (t *TL_inputMediaDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.TLObject()
 	t.M_caption = dc.String()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -4067,21 +4151,21 @@ func (t *TL_inputMediaGifExternal) String() string {
 // inputMediaPhotoExternal#922aec1
 type TL_inputMediaPhotoExternal struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_url         string
 	M_caption     string
-	M_ttl_seconds TLObject
+	M_ttl_seconds int32
 }
 
 func (t *TL_inputMediaPhotoExternal) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaPhotoExternal) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaPhotoExternal) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaPhotoExternal) Get_flags() TLObject {
+func (t *TL_inputMediaPhotoExternal) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -4101,11 +4185,11 @@ func (t *TL_inputMediaPhotoExternal) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaPhotoExternal) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaPhotoExternal) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaPhotoExternal) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaPhotoExternal) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -4119,9 +4203,19 @@ func (t *TL_inputMediaPhotoExternal) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaPhotoExternal))
+
+	var flags uint32 = 0
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_url())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -4129,9 +4223,12 @@ func (t *TL_inputMediaPhotoExternal) Encode() []byte {
 func (t *TL_inputMediaPhotoExternal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_url = dc.String()
 	t.M_caption = dc.String()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -4143,21 +4240,21 @@ func (t *TL_inputMediaPhotoExternal) String() string {
 // inputMediaDocumentExternal#b6f74335
 type TL_inputMediaDocumentExternal struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_url         string
 	M_caption     string
-	M_ttl_seconds TLObject
+	M_ttl_seconds int32
 }
 
 func (t *TL_inputMediaDocumentExternal) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaDocumentExternal) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaDocumentExternal) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaDocumentExternal) Get_flags() TLObject {
+func (t *TL_inputMediaDocumentExternal) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -4177,11 +4274,11 @@ func (t *TL_inputMediaDocumentExternal) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_inputMediaDocumentExternal) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_inputMediaDocumentExternal) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_inputMediaDocumentExternal) Get_ttl_seconds() TLObject {
+func (t *TL_inputMediaDocumentExternal) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -4195,9 +4292,19 @@ func (t *TL_inputMediaDocumentExternal) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaDocumentExternal))
+
+	var flags uint32 = 0
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_url())
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -4205,9 +4312,12 @@ func (t *TL_inputMediaDocumentExternal) Encode() []byte {
 func (t *TL_inputMediaDocumentExternal) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_url = dc.String()
 	t.M_caption = dc.String()
-	t.M_ttl_seconds = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -4264,7 +4374,7 @@ func (t *TL_inputMediaGame) String() string {
 // inputMediaInvoice#f4e096c3
 type TL_inputMediaInvoice struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_title         string
 	M_description   string
 	M_photo         TLObject
@@ -4279,11 +4389,11 @@ func (t *TL_inputMediaInvoice) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMediaInvoice) Set_flags(M_flags TLObject) {
+func (t *TL_inputMediaInvoice) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMediaInvoice) Get_flags() TLObject {
+func (t *TL_inputMediaInvoice) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -4361,9 +4471,19 @@ func (t *TL_inputMediaInvoice) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMediaInvoice))
+
+	var flags uint32 = 0
+	if t.M_photo != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_title())
 	ec.String(t.Get_description())
-	ec.TLObject(t.Get_photo())
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
 	ec.TLObject(t.Get_invoice())
 	ec.TLObject(t.Get_payload())
 	ec.String(t.Get_provider())
@@ -4376,9 +4496,12 @@ func (t *TL_inputMediaInvoice) Encode() []byte {
 func (t *TL_inputMediaInvoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_title = dc.String()
 	t.M_description = dc.String()
-	t.M_photo = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
 	t.M_invoice = dc.TLObject()
 	t.M_payload = dc.TLObject()
 	t.M_provider = dc.String()
@@ -5649,7 +5772,7 @@ func (t *TL_userEmpty) String() string {
 // user#2e13f4c3
 type TL_user struct {
 	M_classID                int32
-	M_flags                  TLObject
+	M_flags                  uint32
 	M_self                   TLObject
 	M_contact                TLObject
 	M_mutual_contact         TLObject
@@ -5662,28 +5785,28 @@ type TL_user struct {
 	M_min                    TLObject
 	M_bot_inline_geo         TLObject
 	M_id                     int32
-	M_access_hash            TLObject
-	M_first_name             TLObject
-	M_last_name              TLObject
-	M_username               TLObject
-	M_phone                  TLObject
+	M_access_hash            int64
+	M_first_name             string
+	M_last_name              string
+	M_username               string
+	M_phone                  string
 	M_photo                  TLObject
 	M_status                 TLObject
-	M_bot_info_version       TLObject
-	M_restriction_reason     TLObject
-	M_bot_inline_placeholder TLObject
-	M_lang_code              TLObject
+	M_bot_info_version       int32
+	M_restriction_reason     string
+	M_bot_inline_placeholder string
+	M_lang_code              string
 }
 
 func (t *TL_user) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_user) Set_flags(M_flags TLObject) {
+func (t *TL_user) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_user) Get_flags() TLObject {
+func (t *TL_user) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -5783,43 +5906,43 @@ func (t *TL_user) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_user) Set_access_hash(M_access_hash TLObject) {
+func (t *TL_user) Set_access_hash(M_access_hash int64) {
 	t.M_access_hash = M_access_hash
 }
 
-func (t *TL_user) Get_access_hash() TLObject {
+func (t *TL_user) Get_access_hash() int64 {
 	return t.M_access_hash
 }
 
-func (t *TL_user) Set_first_name(M_first_name TLObject) {
+func (t *TL_user) Set_first_name(M_first_name string) {
 	t.M_first_name = M_first_name
 }
 
-func (t *TL_user) Get_first_name() TLObject {
+func (t *TL_user) Get_first_name() string {
 	return t.M_first_name
 }
 
-func (t *TL_user) Set_last_name(M_last_name TLObject) {
+func (t *TL_user) Set_last_name(M_last_name string) {
 	t.M_last_name = M_last_name
 }
 
-func (t *TL_user) Get_last_name() TLObject {
+func (t *TL_user) Get_last_name() string {
 	return t.M_last_name
 }
 
-func (t *TL_user) Set_username(M_username TLObject) {
+func (t *TL_user) Set_username(M_username string) {
 	t.M_username = M_username
 }
 
-func (t *TL_user) Get_username() TLObject {
+func (t *TL_user) Get_username() string {
 	return t.M_username
 }
 
-func (t *TL_user) Set_phone(M_phone TLObject) {
+func (t *TL_user) Set_phone(M_phone string) {
 	t.M_phone = M_phone
 }
 
-func (t *TL_user) Get_phone() TLObject {
+func (t *TL_user) Get_phone() string {
 	return t.M_phone
 }
 
@@ -5839,35 +5962,35 @@ func (t *TL_user) Get_status() TLObject {
 	return t.M_status
 }
 
-func (t *TL_user) Set_bot_info_version(M_bot_info_version TLObject) {
+func (t *TL_user) Set_bot_info_version(M_bot_info_version int32) {
 	t.M_bot_info_version = M_bot_info_version
 }
 
-func (t *TL_user) Get_bot_info_version() TLObject {
+func (t *TL_user) Get_bot_info_version() int32 {
 	return t.M_bot_info_version
 }
 
-func (t *TL_user) Set_restriction_reason(M_restriction_reason TLObject) {
+func (t *TL_user) Set_restriction_reason(M_restriction_reason string) {
 	t.M_restriction_reason = M_restriction_reason
 }
 
-func (t *TL_user) Get_restriction_reason() TLObject {
+func (t *TL_user) Get_restriction_reason() string {
 	return t.M_restriction_reason
 }
 
-func (t *TL_user) Set_bot_inline_placeholder(M_bot_inline_placeholder TLObject) {
+func (t *TL_user) Set_bot_inline_placeholder(M_bot_inline_placeholder string) {
 	t.M_bot_inline_placeholder = M_bot_inline_placeholder
 }
 
-func (t *TL_user) Get_bot_inline_placeholder() TLObject {
+func (t *TL_user) Get_bot_inline_placeholder() string {
 	return t.M_bot_inline_placeholder
 }
 
-func (t *TL_user) Set_lang_code(M_lang_code TLObject) {
+func (t *TL_user) Set_lang_code(M_lang_code string) {
 	t.M_lang_code = M_lang_code
 }
 
-func (t *TL_user) Get_lang_code() TLObject {
+func (t *TL_user) Get_lang_code() string {
 	return t.M_lang_code
 }
 
@@ -5881,29 +6004,165 @@ func (t *TL_user) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_user))
-	ec.TLObject(t.Get_self())
-	ec.TLObject(t.Get_contact())
-	ec.TLObject(t.Get_mutual_contact())
-	ec.TLObject(t.Get_deleted())
-	ec.TLObject(t.Get_bot())
-	ec.TLObject(t.Get_bot_chat_history())
-	ec.TLObject(t.Get_bot_nochats())
-	ec.TLObject(t.Get_verified())
-	ec.TLObject(t.Get_restricted())
-	ec.TLObject(t.Get_min())
-	ec.TLObject(t.Get_bot_inline_geo())
+
+	var flags uint32 = 0
+	if t.M_self != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_contact != nil {
+		flags |= 1 << 11
+	}
+
+	if t.M_mutual_contact != nil {
+		flags |= 1 << 12
+	}
+
+	if t.M_deleted != nil {
+		flags |= 1 << 13
+	}
+
+	if t.M_bot != nil {
+		flags |= 1 << 14
+	}
+
+	if t.M_bot_chat_history != nil {
+		flags |= 1 << 15
+	}
+
+	if t.M_bot_nochats != nil {
+		flags |= 1 << 16
+	}
+
+	if t.M_verified != nil {
+		flags |= 1 << 17
+	}
+
+	if t.M_restricted != nil {
+		flags |= 1 << 18
+	}
+
+	if t.M_min != nil {
+		flags |= 1 << 20
+	}
+
+	if t.M_bot_inline_geo != nil {
+		flags |= 1 << 21
+	}
+
+	if t.M_access_hash != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_first_name != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_last_name != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_username != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_phone != "" {
+		flags |= 1 << 4
+	}
+
+	if t.M_photo != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_status != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_bot_info_version != 0 {
+		flags |= 1 << 14
+	}
+
+	if t.M_restriction_reason != "" {
+		flags |= 1 << 18
+	}
+
+	if t.M_bot_inline_placeholder != "" {
+		flags |= 1 << 19
+	}
+
+	if t.M_lang_code != "" {
+		flags |= 1 << 22
+	}
+
+	ec.UInt(flags)
+
+	if t.M_self != nil {
+		ec.TLObject(t.Get_self())
+	}
+	if t.M_contact != nil {
+		ec.TLObject(t.Get_contact())
+	}
+	if t.M_mutual_contact != nil {
+		ec.TLObject(t.Get_mutual_contact())
+	}
+	if t.M_deleted != nil {
+		ec.TLObject(t.Get_deleted())
+	}
+	if t.M_bot != nil {
+		ec.TLObject(t.Get_bot())
+	}
+	if t.M_bot_chat_history != nil {
+		ec.TLObject(t.Get_bot_chat_history())
+	}
+	if t.M_bot_nochats != nil {
+		ec.TLObject(t.Get_bot_nochats())
+	}
+	if t.M_verified != nil {
+		ec.TLObject(t.Get_verified())
+	}
+	if t.M_restricted != nil {
+		ec.TLObject(t.Get_restricted())
+	}
+	if t.M_min != nil {
+		ec.TLObject(t.Get_min())
+	}
+	if t.M_bot_inline_geo != nil {
+		ec.TLObject(t.Get_bot_inline_geo())
+	}
 	ec.Int(t.Get_id())
-	ec.TLObject(t.Get_access_hash())
-	ec.TLObject(t.Get_first_name())
-	ec.TLObject(t.Get_last_name())
-	ec.TLObject(t.Get_username())
-	ec.TLObject(t.Get_phone())
-	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_status())
-	ec.TLObject(t.Get_bot_info_version())
-	ec.TLObject(t.Get_restriction_reason())
-	ec.TLObject(t.Get_bot_inline_placeholder())
-	ec.TLObject(t.Get_lang_code())
+	if t.M_access_hash != 0 {
+		ec.Long(t.Get_access_hash())
+	}
+	if t.M_first_name != "" {
+		ec.String(t.Get_first_name())
+	}
+	if t.M_last_name != "" {
+		ec.String(t.Get_last_name())
+	}
+	if t.M_username != "" {
+		ec.String(t.Get_username())
+	}
+	if t.M_phone != "" {
+		ec.String(t.Get_phone())
+	}
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
+	if t.M_status != nil {
+		ec.TLObject(t.Get_status())
+	}
+	if t.M_bot_info_version != 0 {
+		ec.Int(t.Get_bot_info_version())
+	}
+	if t.M_restriction_reason != "" {
+		ec.String(t.Get_restriction_reason())
+	}
+	if t.M_bot_inline_placeholder != "" {
+		ec.String(t.Get_bot_inline_placeholder())
+	}
+	if t.M_lang_code != "" {
+		ec.String(t.Get_lang_code())
+	}
 
 	return ec.GetBuffer()
 }
@@ -5911,29 +6170,74 @@ func (t *TL_user) Encode() []byte {
 func (t *TL_user) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_self = dc.TLObject()
-	t.M_contact = dc.TLObject()
-	t.M_mutual_contact = dc.TLObject()
-	t.M_deleted = dc.TLObject()
-	t.M_bot = dc.TLObject()
-	t.M_bot_chat_history = dc.TLObject()
-	t.M_bot_nochats = dc.TLObject()
-	t.M_verified = dc.TLObject()
-	t.M_restricted = dc.TLObject()
-	t.M_min = dc.TLObject()
-	t.M_bot_inline_geo = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_self = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_contact = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 12)) != 0 {
+		t.M_mutual_contact = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_deleted = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 14)) != 0 {
+		t.M_bot = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 15)) != 0 {
+		t.M_bot_chat_history = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 16)) != 0 {
+		t.M_bot_nochats = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 17)) != 0 {
+		t.M_verified = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 18)) != 0 {
+		t.M_restricted = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 20)) != 0 {
+		t.M_min = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 21)) != 0 {
+		t.M_bot_inline_geo = dc.TLObject()
+	}
 	t.M_id = dc.Int()
-	t.M_access_hash = dc.TLObject()
-	t.M_first_name = dc.TLObject()
-	t.M_last_name = dc.TLObject()
-	t.M_username = dc.TLObject()
-	t.M_phone = dc.TLObject()
-	t.M_photo = dc.TLObject()
-	t.M_status = dc.TLObject()
-	t.M_bot_info_version = dc.TLObject()
-	t.M_restriction_reason = dc.TLObject()
-	t.M_bot_inline_placeholder = dc.TLObject()
-	t.M_lang_code = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_access_hash = dc.Long()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_first_name = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_last_name = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_username = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_phone = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_status = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 14)) != 0 {
+		t.M_bot_info_version = dc.Int()
+	}
+	if (t.M_flags & (1 << 18)) != 0 {
+		t.M_restriction_reason = dc.String()
+	}
+	if (t.M_flags & (1 << 19)) != 0 {
+		t.M_bot_inline_placeholder = dc.String()
+	}
+	if (t.M_flags & (1 << 22)) != 0 {
+		t.M_lang_code = dc.String()
+	}
 
 	return dc.err
 }
@@ -6302,7 +6606,7 @@ func (t *TL_chatEmpty) String() string {
 // chat#d91cdd54
 type TL_chat struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_creator            TLObject
 	M_kicked             TLObject
 	M_left               TLObject
@@ -6322,11 +6626,11 @@ func (t *TL_chat) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_chat) Set_flags(M_flags TLObject) {
+func (t *TL_chat) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_chat) Get_flags() TLObject {
+func (t *TL_chat) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -6444,19 +6748,65 @@ func (t *TL_chat) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chat))
-	ec.TLObject(t.Get_creator())
-	ec.TLObject(t.Get_kicked())
-	ec.TLObject(t.Get_left())
-	ec.TLObject(t.Get_admins_enabled())
-	ec.TLObject(t.Get_admin())
-	ec.TLObject(t.Get_deactivated())
+
+	var flags uint32 = 0
+	if t.M_creator != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_kicked != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_left != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_admins_enabled != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_admin != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_deactivated != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_migrated_to != nil {
+		flags |= 1 << 6
+	}
+
+	ec.UInt(flags)
+
+	if t.M_creator != nil {
+		ec.TLObject(t.Get_creator())
+	}
+	if t.M_kicked != nil {
+		ec.TLObject(t.Get_kicked())
+	}
+	if t.M_left != nil {
+		ec.TLObject(t.Get_left())
+	}
+	if t.M_admins_enabled != nil {
+		ec.TLObject(t.Get_admins_enabled())
+	}
+	if t.M_admin != nil {
+		ec.TLObject(t.Get_admin())
+	}
+	if t.M_deactivated != nil {
+		ec.TLObject(t.Get_deactivated())
+	}
 	ec.Int(t.Get_id())
 	ec.String(t.Get_title())
 	ec.TLObject(t.Get_photo())
 	ec.Int(t.Get_participants_count())
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_version())
-	ec.TLObject(t.Get_migrated_to())
+	if t.M_migrated_to != nil {
+		ec.TLObject(t.Get_migrated_to())
+	}
 
 	return ec.GetBuffer()
 }
@@ -6464,19 +6814,34 @@ func (t *TL_chat) Encode() []byte {
 func (t *TL_chat) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_creator = dc.TLObject()
-	t.M_kicked = dc.TLObject()
-	t.M_left = dc.TLObject()
-	t.M_admins_enabled = dc.TLObject()
-	t.M_admin = dc.TLObject()
-	t.M_deactivated = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_creator = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_kicked = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_left = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_admins_enabled = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_admin = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_deactivated = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_title = dc.String()
 	t.M_photo = dc.TLObject()
 	t.M_participants_count = dc.Int()
 	t.M_date = dc.Int()
 	t.M_version = dc.Int()
-	t.M_migrated_to = dc.TLObject()
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_migrated_to = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -6544,7 +6909,7 @@ func (t *TL_chatForbidden) String() string {
 // channel#450b7115
 type TL_channel struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_creator            TLObject
 	M_left               TLObject
 	M_editor             TLObject
@@ -6556,27 +6921,27 @@ type TL_channel struct {
 	M_signatures         TLObject
 	M_min                TLObject
 	M_id                 int32
-	M_access_hash        TLObject
+	M_access_hash        int64
 	M_title              string
-	M_username           TLObject
+	M_username           string
 	M_photo              TLObject
 	M_date               int32
 	M_version            int32
-	M_restriction_reason TLObject
+	M_restriction_reason string
 	M_admin_rights       TLObject
 	M_banned_rights      TLObject
-	M_participants_count TLObject
+	M_participants_count int32
 }
 
 func (t *TL_channel) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channel) Set_flags(M_flags TLObject) {
+func (t *TL_channel) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channel) Get_flags() TLObject {
+func (t *TL_channel) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -6668,11 +7033,11 @@ func (t *TL_channel) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_channel) Set_access_hash(M_access_hash TLObject) {
+func (t *TL_channel) Set_access_hash(M_access_hash int64) {
 	t.M_access_hash = M_access_hash
 }
 
-func (t *TL_channel) Get_access_hash() TLObject {
+func (t *TL_channel) Get_access_hash() int64 {
 	return t.M_access_hash
 }
 
@@ -6684,11 +7049,11 @@ func (t *TL_channel) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_channel) Set_username(M_username TLObject) {
+func (t *TL_channel) Set_username(M_username string) {
 	t.M_username = M_username
 }
 
-func (t *TL_channel) Get_username() TLObject {
+func (t *TL_channel) Get_username() string {
 	return t.M_username
 }
 
@@ -6716,11 +7081,11 @@ func (t *TL_channel) Get_version() int32 {
 	return t.M_version
 }
 
-func (t *TL_channel) Set_restriction_reason(M_restriction_reason TLObject) {
+func (t *TL_channel) Set_restriction_reason(M_restriction_reason string) {
 	t.M_restriction_reason = M_restriction_reason
 }
 
-func (t *TL_channel) Get_restriction_reason() TLObject {
+func (t *TL_channel) Get_restriction_reason() string {
 	return t.M_restriction_reason
 }
 
@@ -6740,11 +7105,11 @@ func (t *TL_channel) Get_banned_rights() TLObject {
 	return t.M_banned_rights
 }
 
-func (t *TL_channel) Set_participants_count(M_participants_count TLObject) {
+func (t *TL_channel) Set_participants_count(M_participants_count int32) {
 	t.M_participants_count = M_participants_count
 }
 
-func (t *TL_channel) Get_participants_count() TLObject {
+func (t *TL_channel) Get_participants_count() int32 {
 	return t.M_participants_count
 }
 
@@ -6758,27 +7123,127 @@ func (t *TL_channel) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channel))
-	ec.TLObject(t.Get_creator())
-	ec.TLObject(t.Get_left())
-	ec.TLObject(t.Get_editor())
-	ec.TLObject(t.Get_broadcast())
-	ec.TLObject(t.Get_verified())
-	ec.TLObject(t.Get_megagroup())
-	ec.TLObject(t.Get_restricted())
-	ec.TLObject(t.Get_democracy())
-	ec.TLObject(t.Get_signatures())
-	ec.TLObject(t.Get_min())
+
+	var flags uint32 = 0
+	if t.M_creator != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_left != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_editor != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_broadcast != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_verified != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_megagroup != nil {
+		flags |= 1 << 8
+	}
+
+	if t.M_restricted != nil {
+		flags |= 1 << 9
+	}
+
+	if t.M_democracy != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_signatures != nil {
+		flags |= 1 << 11
+	}
+
+	if t.M_min != nil {
+		flags |= 1 << 12
+	}
+
+	if t.M_access_hash != 0 {
+		flags |= 1 << 13
+	}
+
+	if t.M_username != "" {
+		flags |= 1 << 6
+	}
+
+	if t.M_restriction_reason != "" {
+		flags |= 1 << 9
+	}
+
+	if t.M_admin_rights != nil {
+		flags |= 1 << 14
+	}
+
+	if t.M_banned_rights != nil {
+		flags |= 1 << 15
+	}
+
+	if t.M_participants_count != 0 {
+		flags |= 1 << 17
+	}
+
+	ec.UInt(flags)
+
+	if t.M_creator != nil {
+		ec.TLObject(t.Get_creator())
+	}
+	if t.M_left != nil {
+		ec.TLObject(t.Get_left())
+	}
+	if t.M_editor != nil {
+		ec.TLObject(t.Get_editor())
+	}
+	if t.M_broadcast != nil {
+		ec.TLObject(t.Get_broadcast())
+	}
+	if t.M_verified != nil {
+		ec.TLObject(t.Get_verified())
+	}
+	if t.M_megagroup != nil {
+		ec.TLObject(t.Get_megagroup())
+	}
+	if t.M_restricted != nil {
+		ec.TLObject(t.Get_restricted())
+	}
+	if t.M_democracy != nil {
+		ec.TLObject(t.Get_democracy())
+	}
+	if t.M_signatures != nil {
+		ec.TLObject(t.Get_signatures())
+	}
+	if t.M_min != nil {
+		ec.TLObject(t.Get_min())
+	}
 	ec.Int(t.Get_id())
-	ec.TLObject(t.Get_access_hash())
+	if t.M_access_hash != 0 {
+		ec.Long(t.Get_access_hash())
+	}
 	ec.String(t.Get_title())
-	ec.TLObject(t.Get_username())
+	if t.M_username != "" {
+		ec.String(t.Get_username())
+	}
 	ec.TLObject(t.Get_photo())
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_version())
-	ec.TLObject(t.Get_restriction_reason())
-	ec.TLObject(t.Get_admin_rights())
-	ec.TLObject(t.Get_banned_rights())
-	ec.TLObject(t.Get_participants_count())
+	if t.M_restriction_reason != "" {
+		ec.String(t.Get_restriction_reason())
+	}
+	if t.M_admin_rights != nil {
+		ec.TLObject(t.Get_admin_rights())
+	}
+	if t.M_banned_rights != nil {
+		ec.TLObject(t.Get_banned_rights())
+	}
+	if t.M_participants_count != 0 {
+		ec.Int(t.Get_participants_count())
+	}
 
 	return ec.GetBuffer()
 }
@@ -6786,27 +7251,60 @@ func (t *TL_channel) Encode() []byte {
 func (t *TL_channel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_creator = dc.TLObject()
-	t.M_left = dc.TLObject()
-	t.M_editor = dc.TLObject()
-	t.M_broadcast = dc.TLObject()
-	t.M_verified = dc.TLObject()
-	t.M_megagroup = dc.TLObject()
-	t.M_restricted = dc.TLObject()
-	t.M_democracy = dc.TLObject()
-	t.M_signatures = dc.TLObject()
-	t.M_min = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_creator = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_left = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_editor = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_broadcast = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_verified = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_megagroup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_restricted = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_democracy = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_signatures = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 12)) != 0 {
+		t.M_min = dc.TLObject()
+	}
 	t.M_id = dc.Int()
-	t.M_access_hash = dc.TLObject()
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_access_hash = dc.Long()
+	}
 	t.M_title = dc.String()
-	t.M_username = dc.TLObject()
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_username = dc.String()
+	}
 	t.M_photo = dc.TLObject()
 	t.M_date = dc.Int()
 	t.M_version = dc.Int()
-	t.M_restriction_reason = dc.TLObject()
-	t.M_admin_rights = dc.TLObject()
-	t.M_banned_rights = dc.TLObject()
-	t.M_participants_count = dc.TLObject()
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_restriction_reason = dc.String()
+	}
+	if (t.M_flags & (1 << 14)) != 0 {
+		t.M_admin_rights = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 15)) != 0 {
+		t.M_banned_rights = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 17)) != 0 {
+		t.M_participants_count = dc.Int()
+	}
 
 	return dc.err
 }
@@ -6818,24 +7316,24 @@ func (t *TL_channel) String() string {
 // channelForbidden#289da732
 type TL_channelForbidden struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_broadcast   TLObject
 	M_megagroup   TLObject
 	M_id          int32
 	M_access_hash int64
 	M_title       string
-	M_until_date  TLObject
+	M_until_date  int32
 }
 
 func (t *TL_channelForbidden) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelForbidden) Set_flags(M_flags TLObject) {
+func (t *TL_channelForbidden) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelForbidden) Get_flags() TLObject {
+func (t *TL_channelForbidden) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -6879,11 +7377,11 @@ func (t *TL_channelForbidden) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_channelForbidden) Set_until_date(M_until_date TLObject) {
+func (t *TL_channelForbidden) Set_until_date(M_until_date int32) {
 	t.M_until_date = M_until_date
 }
 
-func (t *TL_channelForbidden) Get_until_date() TLObject {
+func (t *TL_channelForbidden) Get_until_date() int32 {
 	return t.M_until_date
 }
 
@@ -6897,12 +7395,34 @@ func (t *TL_channelForbidden) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelForbidden))
-	ec.TLObject(t.Get_broadcast())
-	ec.TLObject(t.Get_megagroup())
+
+	var flags uint32 = 0
+	if t.M_broadcast != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_megagroup != nil {
+		flags |= 1 << 8
+	}
+
+	if t.M_until_date != 0 {
+		flags |= 1 << 16
+	}
+
+	ec.UInt(flags)
+
+	if t.M_broadcast != nil {
+		ec.TLObject(t.Get_broadcast())
+	}
+	if t.M_megagroup != nil {
+		ec.TLObject(t.Get_megagroup())
+	}
 	ec.Int(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.String(t.Get_title())
-	ec.TLObject(t.Get_until_date())
+	if t.M_until_date != 0 {
+		ec.Int(t.Get_until_date())
+	}
 
 	return ec.GetBuffer()
 }
@@ -6910,12 +7430,19 @@ func (t *TL_channelForbidden) Encode() []byte {
 func (t *TL_channelForbidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_broadcast = dc.TLObject()
-	t.M_megagroup = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_broadcast = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_megagroup = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_access_hash = dc.Long()
 	t.M_title = dc.String()
-	t.M_until_date = dc.TLObject()
+	if (t.M_flags & (1 << 16)) != 0 {
+		t.M_until_date = dc.Int()
+	}
 
 	return dc.err
 }
@@ -7027,17 +7554,17 @@ func (t *TL_chatFull) String() string {
 // channelFull#76af5481
 type TL_channelFull struct {
 	M_classID               int32
-	M_flags                 TLObject
+	M_flags                 uint32
 	M_can_view_participants TLObject
 	M_can_set_username      TLObject
 	M_can_set_stickers      TLObject
 	M_hidden_prehistory     TLObject
 	M_id                    int32
 	M_about                 string
-	M_participants_count    TLObject
-	M_admins_count          TLObject
-	M_kicked_count          TLObject
-	M_banned_count          TLObject
+	M_participants_count    int32
+	M_admins_count          int32
+	M_kicked_count          int32
+	M_banned_count          int32
 	M_read_inbox_max_id     int32
 	M_read_outbox_max_id    int32
 	M_unread_count          int32
@@ -7045,22 +7572,22 @@ type TL_channelFull struct {
 	M_notify_settings       TLObject
 	M_exported_invite       TLObject
 	M_bot_info              []TLObject
-	M_migrated_from_chat_id TLObject
-	M_migrated_from_max_id  TLObject
-	M_pinned_msg_id         TLObject
+	M_migrated_from_chat_id int32
+	M_migrated_from_max_id  int32
+	M_pinned_msg_id         int32
 	M_stickerset            TLObject
-	M_available_min_id      TLObject
+	M_available_min_id      int32
 }
 
 func (t *TL_channelFull) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelFull) Set_flags(M_flags TLObject) {
+func (t *TL_channelFull) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelFull) Get_flags() TLObject {
+func (t *TL_channelFull) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -7112,35 +7639,35 @@ func (t *TL_channelFull) Get_about() string {
 	return t.M_about
 }
 
-func (t *TL_channelFull) Set_participants_count(M_participants_count TLObject) {
+func (t *TL_channelFull) Set_participants_count(M_participants_count int32) {
 	t.M_participants_count = M_participants_count
 }
 
-func (t *TL_channelFull) Get_participants_count() TLObject {
+func (t *TL_channelFull) Get_participants_count() int32 {
 	return t.M_participants_count
 }
 
-func (t *TL_channelFull) Set_admins_count(M_admins_count TLObject) {
+func (t *TL_channelFull) Set_admins_count(M_admins_count int32) {
 	t.M_admins_count = M_admins_count
 }
 
-func (t *TL_channelFull) Get_admins_count() TLObject {
+func (t *TL_channelFull) Get_admins_count() int32 {
 	return t.M_admins_count
 }
 
-func (t *TL_channelFull) Set_kicked_count(M_kicked_count TLObject) {
+func (t *TL_channelFull) Set_kicked_count(M_kicked_count int32) {
 	t.M_kicked_count = M_kicked_count
 }
 
-func (t *TL_channelFull) Get_kicked_count() TLObject {
+func (t *TL_channelFull) Get_kicked_count() int32 {
 	return t.M_kicked_count
 }
 
-func (t *TL_channelFull) Set_banned_count(M_banned_count TLObject) {
+func (t *TL_channelFull) Set_banned_count(M_banned_count int32) {
 	t.M_banned_count = M_banned_count
 }
 
-func (t *TL_channelFull) Get_banned_count() TLObject {
+func (t *TL_channelFull) Get_banned_count() int32 {
 	return t.M_banned_count
 }
 
@@ -7200,27 +7727,27 @@ func (t *TL_channelFull) Get_bot_info() []TLObject {
 	return t.M_bot_info
 }
 
-func (t *TL_channelFull) Set_migrated_from_chat_id(M_migrated_from_chat_id TLObject) {
+func (t *TL_channelFull) Set_migrated_from_chat_id(M_migrated_from_chat_id int32) {
 	t.M_migrated_from_chat_id = M_migrated_from_chat_id
 }
 
-func (t *TL_channelFull) Get_migrated_from_chat_id() TLObject {
+func (t *TL_channelFull) Get_migrated_from_chat_id() int32 {
 	return t.M_migrated_from_chat_id
 }
 
-func (t *TL_channelFull) Set_migrated_from_max_id(M_migrated_from_max_id TLObject) {
+func (t *TL_channelFull) Set_migrated_from_max_id(M_migrated_from_max_id int32) {
 	t.M_migrated_from_max_id = M_migrated_from_max_id
 }
 
-func (t *TL_channelFull) Get_migrated_from_max_id() TLObject {
+func (t *TL_channelFull) Get_migrated_from_max_id() int32 {
 	return t.M_migrated_from_max_id
 }
 
-func (t *TL_channelFull) Set_pinned_msg_id(M_pinned_msg_id TLObject) {
+func (t *TL_channelFull) Set_pinned_msg_id(M_pinned_msg_id int32) {
 	t.M_pinned_msg_id = M_pinned_msg_id
 }
 
-func (t *TL_channelFull) Get_pinned_msg_id() TLObject {
+func (t *TL_channelFull) Get_pinned_msg_id() int32 {
 	return t.M_pinned_msg_id
 }
 
@@ -7232,11 +7759,11 @@ func (t *TL_channelFull) Get_stickerset() TLObject {
 	return t.M_stickerset
 }
 
-func (t *TL_channelFull) Set_available_min_id(M_available_min_id TLObject) {
+func (t *TL_channelFull) Set_available_min_id(M_available_min_id int32) {
 	t.M_available_min_id = M_available_min_id
 }
 
-func (t *TL_channelFull) Get_available_min_id() TLObject {
+func (t *TL_channelFull) Get_available_min_id() int32 {
 	return t.M_available_min_id
 }
 
@@ -7250,16 +7777,88 @@ func (t *TL_channelFull) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelFull))
-	ec.TLObject(t.Get_can_view_participants())
-	ec.TLObject(t.Get_can_set_username())
-	ec.TLObject(t.Get_can_set_stickers())
-	ec.TLObject(t.Get_hidden_prehistory())
+
+	var flags uint32 = 0
+	if t.M_can_view_participants != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_can_set_username != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_can_set_stickers != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_hidden_prehistory != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_participants_count != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_admins_count != 0 {
+		flags |= 1 << 1
+	}
+
+	if t.M_kicked_count != 0 {
+		flags |= 1 << 2
+	}
+
+	if t.M_banned_count != 0 {
+		flags |= 1 << 2
+	}
+
+	if t.M_migrated_from_chat_id != 0 {
+		flags |= 1 << 4
+	}
+
+	if t.M_migrated_from_max_id != 0 {
+		flags |= 1 << 4
+	}
+
+	if t.M_pinned_msg_id != 0 {
+		flags |= 1 << 5
+	}
+
+	if t.M_stickerset != nil {
+		flags |= 1 << 8
+	}
+
+	if t.M_available_min_id != 0 {
+		flags |= 1 << 9
+	}
+
+	ec.UInt(flags)
+
+	if t.M_can_view_participants != nil {
+		ec.TLObject(t.Get_can_view_participants())
+	}
+	if t.M_can_set_username != nil {
+		ec.TLObject(t.Get_can_set_username())
+	}
+	if t.M_can_set_stickers != nil {
+		ec.TLObject(t.Get_can_set_stickers())
+	}
+	if t.M_hidden_prehistory != nil {
+		ec.TLObject(t.Get_hidden_prehistory())
+	}
 	ec.Int(t.Get_id())
 	ec.String(t.Get_about())
-	ec.TLObject(t.Get_participants_count())
-	ec.TLObject(t.Get_admins_count())
-	ec.TLObject(t.Get_kicked_count())
-	ec.TLObject(t.Get_banned_count())
+	if t.M_participants_count != 0 {
+		ec.Int(t.Get_participants_count())
+	}
+	if t.M_admins_count != 0 {
+		ec.Int(t.Get_admins_count())
+	}
+	if t.M_kicked_count != 0 {
+		ec.Int(t.Get_kicked_count())
+	}
+	if t.M_banned_count != 0 {
+		ec.Int(t.Get_banned_count())
+	}
 	ec.Int(t.Get_read_inbox_max_id())
 	ec.Int(t.Get_read_outbox_max_id())
 	ec.Int(t.Get_unread_count())
@@ -7267,11 +7866,21 @@ func (t *TL_channelFull) Encode() []byte {
 	ec.TLObject(t.Get_notify_settings())
 	ec.TLObject(t.Get_exported_invite())
 	ec.Vector(t.Get_bot_info())
-	ec.TLObject(t.Get_migrated_from_chat_id())
-	ec.TLObject(t.Get_migrated_from_max_id())
-	ec.TLObject(t.Get_pinned_msg_id())
-	ec.TLObject(t.Get_stickerset())
-	ec.TLObject(t.Get_available_min_id())
+	if t.M_migrated_from_chat_id != 0 {
+		ec.Int(t.Get_migrated_from_chat_id())
+	}
+	if t.M_migrated_from_max_id != 0 {
+		ec.Int(t.Get_migrated_from_max_id())
+	}
+	if t.M_pinned_msg_id != 0 {
+		ec.Int(t.Get_pinned_msg_id())
+	}
+	if t.M_stickerset != nil {
+		ec.TLObject(t.Get_stickerset())
+	}
+	if t.M_available_min_id != 0 {
+		ec.Int(t.Get_available_min_id())
+	}
 
 	return ec.GetBuffer()
 }
@@ -7279,16 +7888,33 @@ func (t *TL_channelFull) Encode() []byte {
 func (t *TL_channelFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_can_view_participants = dc.TLObject()
-	t.M_can_set_username = dc.TLObject()
-	t.M_can_set_stickers = dc.TLObject()
-	t.M_hidden_prehistory = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_can_view_participants = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_can_set_username = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_can_set_stickers = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_hidden_prehistory = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_about = dc.String()
-	t.M_participants_count = dc.TLObject()
-	t.M_admins_count = dc.TLObject()
-	t.M_kicked_count = dc.TLObject()
-	t.M_banned_count = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_participants_count = dc.Int()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_admins_count = dc.Int()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_kicked_count = dc.Int()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_banned_count = dc.Int()
+	}
 	t.M_read_inbox_max_id = dc.Int()
 	t.M_read_outbox_max_id = dc.Int()
 	t.M_unread_count = dc.Int()
@@ -7296,11 +7922,21 @@ func (t *TL_channelFull) Decode(b []byte) error {
 	t.M_notify_settings = dc.TLObject()
 	t.M_exported_invite = dc.TLObject()
 	t.M_bot_info = dc.Vector()
-	t.M_migrated_from_chat_id = dc.TLObject()
-	t.M_migrated_from_max_id = dc.TLObject()
-	t.M_pinned_msg_id = dc.TLObject()
-	t.M_stickerset = dc.TLObject()
-	t.M_available_min_id = dc.TLObject()
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_migrated_from_chat_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_migrated_from_max_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_pinned_msg_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_stickerset = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_available_min_id = dc.Int()
+	}
 
 	return dc.err
 }
@@ -7491,7 +8127,7 @@ func (t *TL_chatParticipantAdmin) String() string {
 // chatParticipantsForbidden#fc900c2b
 type TL_chatParticipantsForbidden struct {
 	M_classID          int32
-	M_flags            TLObject
+	M_flags            uint32
 	M_chat_id          int32
 	M_self_participant TLObject
 }
@@ -7500,11 +8136,11 @@ func (t *TL_chatParticipantsForbidden) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_chatParticipantsForbidden) Set_flags(M_flags TLObject) {
+func (t *TL_chatParticipantsForbidden) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_chatParticipantsForbidden) Get_flags() TLObject {
+func (t *TL_chatParticipantsForbidden) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -7534,8 +8170,18 @@ func (t *TL_chatParticipantsForbidden) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatParticipantsForbidden))
+
+	var flags uint32 = 0
+	if t.M_self_participant != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_chat_id())
-	ec.TLObject(t.Get_self_participant())
+	if t.M_self_participant != nil {
+		ec.TLObject(t.Get_self_participant())
+	}
 
 	return ec.GetBuffer()
 }
@@ -7543,8 +8189,11 @@ func (t *TL_chatParticipantsForbidden) Encode() []byte {
 func (t *TL_chatParticipantsForbidden) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_chat_id = dc.Int()
-	t.M_self_participant = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_self_participant = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -7755,38 +8404,38 @@ func (t *TL_messageEmpty) String() string {
 // message#44f9b43d
 type TL_message struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_out             TLObject
 	M_mentioned       TLObject
 	M_media_unread    TLObject
 	M_silent          TLObject
 	M_post            TLObject
 	M_id              int32
-	M_from_id         TLObject
+	M_from_id         int32
 	M_to_id           TLObject
 	M_fwd_from        TLObject
-	M_via_bot_id      TLObject
-	M_reply_to_msg_id TLObject
+	M_via_bot_id      int32
+	M_reply_to_msg_id int32
 	M_date            int32
 	M_message         string
 	M_media           TLObject
 	M_reply_markup    TLObject
 	M_entities        []TLObject
-	M_views           TLObject
-	M_edit_date       TLObject
-	M_post_author     TLObject
-	M_grouped_id      TLObject
+	M_views           int32
+	M_edit_date       int32
+	M_post_author     string
+	M_grouped_id      int64
 }
 
 func (t *TL_message) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_message) Set_flags(M_flags TLObject) {
+func (t *TL_message) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_message) Get_flags() TLObject {
+func (t *TL_message) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -7838,11 +8487,11 @@ func (t *TL_message) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_message) Set_from_id(M_from_id TLObject) {
+func (t *TL_message) Set_from_id(M_from_id int32) {
 	t.M_from_id = M_from_id
 }
 
-func (t *TL_message) Get_from_id() TLObject {
+func (t *TL_message) Get_from_id() int32 {
 	return t.M_from_id
 }
 
@@ -7862,19 +8511,19 @@ func (t *TL_message) Get_fwd_from() TLObject {
 	return t.M_fwd_from
 }
 
-func (t *TL_message) Set_via_bot_id(M_via_bot_id TLObject) {
+func (t *TL_message) Set_via_bot_id(M_via_bot_id int32) {
 	t.M_via_bot_id = M_via_bot_id
 }
 
-func (t *TL_message) Get_via_bot_id() TLObject {
+func (t *TL_message) Get_via_bot_id() int32 {
 	return t.M_via_bot_id
 }
 
-func (t *TL_message) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_message) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_message) Get_reply_to_msg_id() TLObject {
+func (t *TL_message) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -7918,35 +8567,35 @@ func (t *TL_message) Get_entities() []TLObject {
 	return t.M_entities
 }
 
-func (t *TL_message) Set_views(M_views TLObject) {
+func (t *TL_message) Set_views(M_views int32) {
 	t.M_views = M_views
 }
 
-func (t *TL_message) Get_views() TLObject {
+func (t *TL_message) Get_views() int32 {
 	return t.M_views
 }
 
-func (t *TL_message) Set_edit_date(M_edit_date TLObject) {
+func (t *TL_message) Set_edit_date(M_edit_date int32) {
 	t.M_edit_date = M_edit_date
 }
 
-func (t *TL_message) Get_edit_date() TLObject {
+func (t *TL_message) Get_edit_date() int32 {
 	return t.M_edit_date
 }
 
-func (t *TL_message) Set_post_author(M_post_author TLObject) {
+func (t *TL_message) Set_post_author(M_post_author string) {
 	t.M_post_author = M_post_author
 }
 
-func (t *TL_message) Get_post_author() TLObject {
+func (t *TL_message) Get_post_author() string {
 	return t.M_post_author
 }
 
-func (t *TL_message) Set_grouped_id(M_grouped_id TLObject) {
+func (t *TL_message) Set_grouped_id(M_grouped_id int64) {
 	t.M_grouped_id = M_grouped_id
 }
 
-func (t *TL_message) Get_grouped_id() TLObject {
+func (t *TL_message) Get_grouped_id() int64 {
 	return t.M_grouped_id
 }
 
@@ -7960,26 +8609,126 @@ func (t *TL_message) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_message))
-	ec.TLObject(t.Get_out())
-	ec.TLObject(t.Get_mentioned())
-	ec.TLObject(t.Get_media_unread())
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_post())
+
+	var flags uint32 = 0
+	if t.M_out != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_mentioned != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_media_unread != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 13
+	}
+
+	if t.M_post != nil {
+		flags |= 1 << 14
+	}
+
+	if t.M_from_id != 0 {
+		flags |= 1 << 8
+	}
+
+	if t.M_fwd_from != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_via_bot_id != 0 {
+		flags |= 1 << 11
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 3
+	}
+
+	if t.M_media != nil {
+		flags |= 1 << 9
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_views != 0 {
+		flags |= 1 << 10
+	}
+
+	if t.M_edit_date != 0 {
+		flags |= 1 << 15
+	}
+
+	if t.M_post_author != "" {
+		flags |= 1 << 16
+	}
+
+	if t.M_grouped_id != 0 {
+		flags |= 1 << 17
+	}
+
+	ec.UInt(flags)
+
+	if t.M_out != nil {
+		ec.TLObject(t.Get_out())
+	}
+	if t.M_mentioned != nil {
+		ec.TLObject(t.Get_mentioned())
+	}
+	if t.M_media_unread != nil {
+		ec.TLObject(t.Get_media_unread())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_post != nil {
+		ec.TLObject(t.Get_post())
+	}
 	ec.Int(t.Get_id())
-	ec.TLObject(t.Get_from_id())
+	if t.M_from_id != 0 {
+		ec.Int(t.Get_from_id())
+	}
 	ec.TLObject(t.Get_to_id())
-	ec.TLObject(t.Get_fwd_from())
-	ec.TLObject(t.Get_via_bot_id())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_fwd_from != nil {
+		ec.TLObject(t.Get_fwd_from())
+	}
+	if t.M_via_bot_id != 0 {
+		ec.Int(t.Get_via_bot_id())
+	}
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.Int(t.Get_date())
 	ec.String(t.Get_message())
-	ec.TLObject(t.Get_media())
-	ec.TLObject(t.Get_reply_markup())
-	ec.Vector(t.Get_entities())
-	ec.TLObject(t.Get_views())
-	ec.TLObject(t.Get_edit_date())
-	ec.TLObject(t.Get_post_author())
-	ec.TLObject(t.Get_grouped_id())
+	if t.M_media != nil {
+		ec.TLObject(t.Get_media())
+	}
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
+	if t.M_views != 0 {
+		ec.Int(t.Get_views())
+	}
+	if t.M_edit_date != 0 {
+		ec.Int(t.Get_edit_date())
+	}
+	if t.M_post_author != "" {
+		ec.String(t.Get_post_author())
+	}
+	if t.M_grouped_id != 0 {
+		ec.Long(t.Get_grouped_id())
+	}
 
 	return ec.GetBuffer()
 }
@@ -7987,26 +8736,59 @@ func (t *TL_message) Encode() []byte {
 func (t *TL_message) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_out = dc.TLObject()
-	t.M_mentioned = dc.TLObject()
-	t.M_media_unread = dc.TLObject()
-	t.M_silent = dc.TLObject()
-	t.M_post = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_out = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_mentioned = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_media_unread = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 14)) != 0 {
+		t.M_post = dc.TLObject()
+	}
 	t.M_id = dc.Int()
-	t.M_from_id = dc.TLObject()
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_from_id = dc.Int()
+	}
 	t.M_to_id = dc.TLObject()
-	t.M_fwd_from = dc.TLObject()
-	t.M_via_bot_id = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_fwd_from = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_via_bot_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_date = dc.Int()
 	t.M_message = dc.String()
-	t.M_media = dc.TLObject()
-	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.Vector()
-	t.M_views = dc.TLObject()
-	t.M_edit_date = dc.TLObject()
-	t.M_post_author = dc.TLObject()
-	t.M_grouped_id = dc.TLObject()
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_media = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_entities = dc.Vector()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_views = dc.Int()
+	}
+	if (t.M_flags & (1 << 15)) != 0 {
+		t.M_edit_date = dc.Int()
+	}
+	if (t.M_flags & (1 << 16)) != 0 {
+		t.M_post_author = dc.String()
+	}
+	if (t.M_flags & (1 << 17)) != 0 {
+		t.M_grouped_id = dc.Long()
+	}
 
 	return dc.err
 }
@@ -8018,16 +8800,16 @@ func (t *TL_message) String() string {
 // messageService#9e19a1f6
 type TL_messageService struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_out             TLObject
 	M_mentioned       TLObject
 	M_media_unread    TLObject
 	M_silent          TLObject
 	M_post            TLObject
 	M_id              int32
-	M_from_id         TLObject
+	M_from_id         int32
 	M_to_id           TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_date            int32
 	M_action          TLObject
 }
@@ -8036,11 +8818,11 @@ func (t *TL_messageService) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageService) Set_flags(M_flags TLObject) {
+func (t *TL_messageService) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageService) Get_flags() TLObject {
+func (t *TL_messageService) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -8092,11 +8874,11 @@ func (t *TL_messageService) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_messageService) Set_from_id(M_from_id TLObject) {
+func (t *TL_messageService) Set_from_id(M_from_id int32) {
 	t.M_from_id = M_from_id
 }
 
-func (t *TL_messageService) Get_from_id() TLObject {
+func (t *TL_messageService) Get_from_id() int32 {
 	return t.M_from_id
 }
 
@@ -8108,11 +8890,11 @@ func (t *TL_messageService) Get_to_id() TLObject {
 	return t.M_to_id
 }
 
-func (t *TL_messageService) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messageService) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messageService) Get_reply_to_msg_id() TLObject {
+func (t *TL_messageService) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -8142,15 +8924,61 @@ func (t *TL_messageService) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageService))
-	ec.TLObject(t.Get_out())
-	ec.TLObject(t.Get_mentioned())
-	ec.TLObject(t.Get_media_unread())
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_post())
+
+	var flags uint32 = 0
+	if t.M_out != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_mentioned != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_media_unread != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 13
+	}
+
+	if t.M_post != nil {
+		flags |= 1 << 14
+	}
+
+	if t.M_from_id != 0 {
+		flags |= 1 << 8
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_out != nil {
+		ec.TLObject(t.Get_out())
+	}
+	if t.M_mentioned != nil {
+		ec.TLObject(t.Get_mentioned())
+	}
+	if t.M_media_unread != nil {
+		ec.TLObject(t.Get_media_unread())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_post != nil {
+		ec.TLObject(t.Get_post())
+	}
 	ec.Int(t.Get_id())
-	ec.TLObject(t.Get_from_id())
+	if t.M_from_id != 0 {
+		ec.Int(t.Get_from_id())
+	}
 	ec.TLObject(t.Get_to_id())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.Int(t.Get_date())
 	ec.TLObject(t.Get_action())
 
@@ -8160,15 +8988,30 @@ func (t *TL_messageService) Encode() []byte {
 func (t *TL_messageService) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_out = dc.TLObject()
-	t.M_mentioned = dc.TLObject()
-	t.M_media_unread = dc.TLObject()
-	t.M_silent = dc.TLObject()
-	t.M_post = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_out = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_mentioned = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_media_unread = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 14)) != 0 {
+		t.M_post = dc.TLObject()
+	}
 	t.M_id = dc.Int()
-	t.M_from_id = dc.TLObject()
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_from_id = dc.Int()
+	}
 	t.M_to_id = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_date = dc.Int()
 	t.M_action = dc.TLObject()
 
@@ -8213,21 +9056,21 @@ func (t *TL_messageMediaEmpty) String() string {
 // messageMediaPhoto#b5223b0f
 type TL_messageMediaPhoto struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_photo       TLObject
-	M_caption     TLObject
-	M_ttl_seconds TLObject
+	M_caption     string
+	M_ttl_seconds int32
 }
 
 func (t *TL_messageMediaPhoto) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageMediaPhoto) Set_flags(M_flags TLObject) {
+func (t *TL_messageMediaPhoto) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageMediaPhoto) Get_flags() TLObject {
+func (t *TL_messageMediaPhoto) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -8239,19 +9082,19 @@ func (t *TL_messageMediaPhoto) Get_photo() TLObject {
 	return t.M_photo
 }
 
-func (t *TL_messageMediaPhoto) Set_caption(M_caption TLObject) {
+func (t *TL_messageMediaPhoto) Set_caption(M_caption string) {
 	t.M_caption = M_caption
 }
 
-func (t *TL_messageMediaPhoto) Get_caption() TLObject {
+func (t *TL_messageMediaPhoto) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_messageMediaPhoto) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_messageMediaPhoto) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_messageMediaPhoto) Get_ttl_seconds() TLObject {
+func (t *TL_messageMediaPhoto) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -8265,9 +9108,31 @@ func (t *TL_messageMediaPhoto) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaPhoto))
-	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+
+	var flags uint32 = 0
+	if t.M_photo != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_caption != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
+	if t.M_caption != "" {
+		ec.String(t.Get_caption())
+	}
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -8275,9 +9140,16 @@ func (t *TL_messageMediaPhoto) Encode() []byte {
 func (t *TL_messageMediaPhoto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_photo = dc.TLObject()
-	t.M_caption = dc.TLObject()
-	t.M_ttl_seconds = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_caption = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -8443,21 +9315,21 @@ func (t *TL_messageMediaUnsupported) String() string {
 // messageMediaDocument#7c4414d3
 type TL_messageMediaDocument struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_document    TLObject
-	M_caption     TLObject
-	M_ttl_seconds TLObject
+	M_caption     string
+	M_ttl_seconds int32
 }
 
 func (t *TL_messageMediaDocument) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageMediaDocument) Set_flags(M_flags TLObject) {
+func (t *TL_messageMediaDocument) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageMediaDocument) Get_flags() TLObject {
+func (t *TL_messageMediaDocument) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -8469,19 +9341,19 @@ func (t *TL_messageMediaDocument) Get_document() TLObject {
 	return t.M_document
 }
 
-func (t *TL_messageMediaDocument) Set_caption(M_caption TLObject) {
+func (t *TL_messageMediaDocument) Set_caption(M_caption string) {
 	t.M_caption = M_caption
 }
 
-func (t *TL_messageMediaDocument) Get_caption() TLObject {
+func (t *TL_messageMediaDocument) Get_caption() string {
 	return t.M_caption
 }
 
-func (t *TL_messageMediaDocument) Set_ttl_seconds(M_ttl_seconds TLObject) {
+func (t *TL_messageMediaDocument) Set_ttl_seconds(M_ttl_seconds int32) {
 	t.M_ttl_seconds = M_ttl_seconds
 }
 
-func (t *TL_messageMediaDocument) Get_ttl_seconds() TLObject {
+func (t *TL_messageMediaDocument) Get_ttl_seconds() int32 {
 	return t.M_ttl_seconds
 }
 
@@ -8495,9 +9367,31 @@ func (t *TL_messageMediaDocument) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaDocument))
-	ec.TLObject(t.Get_document())
-	ec.TLObject(t.Get_caption())
-	ec.TLObject(t.Get_ttl_seconds())
+
+	var flags uint32 = 0
+	if t.M_document != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_caption != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_ttl_seconds != 0 {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_document != nil {
+		ec.TLObject(t.Get_document())
+	}
+	if t.M_caption != "" {
+		ec.String(t.Get_caption())
+	}
+	if t.M_ttl_seconds != 0 {
+		ec.Int(t.Get_ttl_seconds())
+	}
 
 	return ec.GetBuffer()
 }
@@ -8505,9 +9399,16 @@ func (t *TL_messageMediaDocument) Encode() []byte {
 func (t *TL_messageMediaDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_document = dc.TLObject()
-	t.M_caption = dc.TLObject()
-	t.M_ttl_seconds = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_document = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_caption = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_ttl_seconds = dc.Int()
+	}
 
 	return dc.err
 }
@@ -8709,13 +9610,13 @@ func (t *TL_messageMediaGame) String() string {
 // messageMediaInvoice#84551347
 type TL_messageMediaInvoice struct {
 	M_classID                    int32
-	M_flags                      TLObject
+	M_flags                      uint32
 	M_shipping_address_requested TLObject
 	M_test                       TLObject
 	M_title                      string
 	M_description                string
 	M_photo                      TLObject
-	M_receipt_msg_id             TLObject
+	M_receipt_msg_id             int32
 	M_currency                   string
 	M_total_amount               int64
 	M_start_param                string
@@ -8725,11 +9626,11 @@ func (t *TL_messageMediaInvoice) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageMediaInvoice) Set_flags(M_flags TLObject) {
+func (t *TL_messageMediaInvoice) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageMediaInvoice) Get_flags() TLObject {
+func (t *TL_messageMediaInvoice) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -8773,11 +9674,11 @@ func (t *TL_messageMediaInvoice) Get_photo() TLObject {
 	return t.M_photo
 }
 
-func (t *TL_messageMediaInvoice) Set_receipt_msg_id(M_receipt_msg_id TLObject) {
+func (t *TL_messageMediaInvoice) Set_receipt_msg_id(M_receipt_msg_id int32) {
 	t.M_receipt_msg_id = M_receipt_msg_id
 }
 
-func (t *TL_messageMediaInvoice) Get_receipt_msg_id() TLObject {
+func (t *TL_messageMediaInvoice) Get_receipt_msg_id() int32 {
 	return t.M_receipt_msg_id
 }
 
@@ -8815,12 +9716,40 @@ func (t *TL_messageMediaInvoice) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageMediaInvoice))
-	ec.TLObject(t.Get_shipping_address_requested())
-	ec.TLObject(t.Get_test())
+
+	var flags uint32 = 0
+	if t.M_shipping_address_requested != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_test != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_photo != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_receipt_msg_id != 0 {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_shipping_address_requested != nil {
+		ec.TLObject(t.Get_shipping_address_requested())
+	}
+	if t.M_test != nil {
+		ec.TLObject(t.Get_test())
+	}
 	ec.String(t.Get_title())
 	ec.String(t.Get_description())
-	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_receipt_msg_id())
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
+	if t.M_receipt_msg_id != 0 {
+		ec.Int(t.Get_receipt_msg_id())
+	}
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
 	ec.String(t.Get_start_param())
@@ -8831,12 +9760,21 @@ func (t *TL_messageMediaInvoice) Encode() []byte {
 func (t *TL_messageMediaInvoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_shipping_address_requested = dc.TLObject()
-	t.M_test = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_address_requested = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_test = dc.TLObject()
+	}
 	t.M_title = dc.String()
 	t.M_description = dc.String()
-	t.M_photo = dc.TLObject()
-	t.M_receipt_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_receipt_msg_id = dc.Int()
+	}
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 	t.M_start_param = dc.String()
@@ -9514,12 +10452,12 @@ func (t *TL_messageActionGameScore) String() string {
 // messageActionPaymentSentMe#8f31b327
 type TL_messageActionPaymentSentMe struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_currency           string
 	M_total_amount       int64
 	M_payload            TLObject
 	M_info               TLObject
-	M_shipping_option_id TLObject
+	M_shipping_option_id string
 	M_charge             TLObject
 }
 
@@ -9527,11 +10465,11 @@ func (t *TL_messageActionPaymentSentMe) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_flags(M_flags TLObject) {
+func (t *TL_messageActionPaymentSentMe) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_flags() TLObject {
+func (t *TL_messageActionPaymentSentMe) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -9567,11 +10505,11 @@ func (t *TL_messageActionPaymentSentMe) Get_info() TLObject {
 	return t.M_info
 }
 
-func (t *TL_messageActionPaymentSentMe) Set_shipping_option_id(M_shipping_option_id TLObject) {
+func (t *TL_messageActionPaymentSentMe) Set_shipping_option_id(M_shipping_option_id string) {
 	t.M_shipping_option_id = M_shipping_option_id
 }
 
-func (t *TL_messageActionPaymentSentMe) Get_shipping_option_id() TLObject {
+func (t *TL_messageActionPaymentSentMe) Get_shipping_option_id() string {
 	return t.M_shipping_option_id
 }
 
@@ -9593,11 +10531,27 @@ func (t *TL_messageActionPaymentSentMe) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPaymentSentMe))
+
+	var flags uint32 = 0
+	if t.M_info != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping_option_id != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
 	ec.TLObject(t.Get_payload())
-	ec.TLObject(t.Get_info())
-	ec.TLObject(t.Get_shipping_option_id())
+	if t.M_info != nil {
+		ec.TLObject(t.Get_info())
+	}
+	if t.M_shipping_option_id != "" {
+		ec.String(t.Get_shipping_option_id())
+	}
 	ec.TLObject(t.Get_charge())
 
 	return ec.GetBuffer()
@@ -9606,11 +10560,16 @@ func (t *TL_messageActionPaymentSentMe) Encode() []byte {
 func (t *TL_messageActionPaymentSentMe) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 	t.M_payload = dc.TLObject()
-	t.M_info = dc.TLObject()
-	t.M_shipping_option_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_option_id = dc.String()
+	}
 	t.M_charge = dc.TLObject()
 
 	return dc.err
@@ -9679,21 +10638,21 @@ func (t *TL_messageActionPaymentSent) String() string {
 // messageActionPhoneCall#80e11a7f
 type TL_messageActionPhoneCall struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_call_id  int64
 	M_reason   TLObject
-	M_duration TLObject
+	M_duration int32
 }
 
 func (t *TL_messageActionPhoneCall) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageActionPhoneCall) Set_flags(M_flags TLObject) {
+func (t *TL_messageActionPhoneCall) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageActionPhoneCall) Get_flags() TLObject {
+func (t *TL_messageActionPhoneCall) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -9713,11 +10672,11 @@ func (t *TL_messageActionPhoneCall) Get_reason() TLObject {
 	return t.M_reason
 }
 
-func (t *TL_messageActionPhoneCall) Set_duration(M_duration TLObject) {
+func (t *TL_messageActionPhoneCall) Set_duration(M_duration int32) {
 	t.M_duration = M_duration
 }
 
-func (t *TL_messageActionPhoneCall) Get_duration() TLObject {
+func (t *TL_messageActionPhoneCall) Get_duration() int32 {
 	return t.M_duration
 }
 
@@ -9731,9 +10690,25 @@ func (t *TL_messageActionPhoneCall) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageActionPhoneCall))
+
+	var flags uint32 = 0
+	if t.M_reason != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_duration != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_call_id())
-	ec.TLObject(t.Get_reason())
-	ec.TLObject(t.Get_duration())
+	if t.M_reason != nil {
+		ec.TLObject(t.Get_reason())
+	}
+	if t.M_duration != 0 {
+		ec.Int(t.Get_duration())
+	}
 
 	return ec.GetBuffer()
 }
@@ -9741,9 +10716,14 @@ func (t *TL_messageActionPhoneCall) Encode() []byte {
 func (t *TL_messageActionPhoneCall) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_call_id = dc.Long()
-	t.M_reason = dc.TLObject()
-	t.M_duration = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reason = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_duration = dc.Int()
+	}
 
 	return dc.err
 }
@@ -9831,7 +10811,7 @@ func (t *TL_messageActionCustomAction) String() string {
 // dialog#e4def5db
 type TL_dialog struct {
 	M_classID               int32
-	M_flags                 TLObject
+	M_flags                 uint32
 	M_pinned                TLObject
 	M_peer                  TLObject
 	M_top_message           int32
@@ -9840,7 +10820,7 @@ type TL_dialog struct {
 	M_unread_count          int32
 	M_unread_mentions_count int32
 	M_notify_settings       TLObject
-	M_pts                   TLObject
+	M_pts                   int32
 	M_draft                 TLObject
 }
 
@@ -9848,11 +10828,11 @@ func (t *TL_dialog) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_dialog) Set_flags(M_flags TLObject) {
+func (t *TL_dialog) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_dialog) Get_flags() TLObject {
+func (t *TL_dialog) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -9920,11 +10900,11 @@ func (t *TL_dialog) Get_notify_settings() TLObject {
 	return t.M_notify_settings
 }
 
-func (t *TL_dialog) Set_pts(M_pts TLObject) {
+func (t *TL_dialog) Set_pts(M_pts int32) {
 	t.M_pts = M_pts
 }
 
-func (t *TL_dialog) Get_pts() TLObject {
+func (t *TL_dialog) Get_pts() int32 {
 	return t.M_pts
 }
 
@@ -9946,7 +10926,25 @@ func (t *TL_dialog) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dialog))
-	ec.TLObject(t.Get_pinned())
+
+	var flags uint32 = 0
+	if t.M_pinned != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_pts != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_draft != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_pinned != nil {
+		ec.TLObject(t.Get_pinned())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_top_message())
 	ec.Int(t.Get_read_inbox_max_id())
@@ -9954,8 +10952,12 @@ func (t *TL_dialog) Encode() []byte {
 	ec.Int(t.Get_unread_count())
 	ec.Int(t.Get_unread_mentions_count())
 	ec.TLObject(t.Get_notify_settings())
-	ec.TLObject(t.Get_pts())
-	ec.TLObject(t.Get_draft())
+	if t.M_pts != 0 {
+		ec.Int(t.Get_pts())
+	}
+	if t.M_draft != nil {
+		ec.TLObject(t.Get_draft())
+	}
 
 	return ec.GetBuffer()
 }
@@ -9963,7 +10965,10 @@ func (t *TL_dialog) Encode() []byte {
 func (t *TL_dialog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_pinned = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_pinned = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_top_message = dc.Int()
 	t.M_read_inbox_max_id = dc.Int()
@@ -9971,8 +10976,12 @@ func (t *TL_dialog) Decode(b []byte) error {
 	t.M_unread_count = dc.Int()
 	t.M_unread_mentions_count = dc.Int()
 	t.M_notify_settings = dc.TLObject()
-	t.M_pts = dc.TLObject()
-	t.M_draft = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_pts = dc.Int()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_draft = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -10029,7 +11038,7 @@ func (t *TL_photoEmpty) String() string {
 // photo#9288dd29
 type TL_photo struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_has_stickers TLObject
 	M_id           int64
 	M_access_hash  int64
@@ -10041,11 +11050,11 @@ func (t *TL_photo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_photo) Set_flags(M_flags TLObject) {
+func (t *TL_photo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_photo) Get_flags() TLObject {
+func (t *TL_photo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -10099,7 +11108,17 @@ func (t *TL_photo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_photo))
-	ec.TLObject(t.Get_has_stickers())
+
+	var flags uint32 = 0
+	if t.M_has_stickers != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_has_stickers != nil {
+		ec.TLObject(t.Get_has_stickers())
+	}
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.Int(t.Get_date())
@@ -10111,7 +11130,10 @@ func (t *TL_photo) Encode() []byte {
 func (t *TL_photo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_has_stickers = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_has_stickers = dc.TLObject()
+	}
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_date = dc.Int()
@@ -10482,23 +11504,23 @@ func (t *TL_auth_checkedPhone) String() string {
 // auth_sentCode#5e002502
 type TL_auth_sentCode struct {
 	M_classID          int32
-	M_flags            TLObject
+	M_flags            uint32
 	M_phone_registered TLObject
 	M_type             TLObject
 	M_phone_code_hash  string
 	M_next_type        TLObject
-	M_timeout          TLObject
+	M_timeout          int32
 }
 
 func (t *TL_auth_sentCode) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_sentCode) Set_flags(M_flags TLObject) {
+func (t *TL_auth_sentCode) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_auth_sentCode) Get_flags() TLObject {
+func (t *TL_auth_sentCode) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -10534,11 +11556,11 @@ func (t *TL_auth_sentCode) Get_next_type() TLObject {
 	return t.M_next_type
 }
 
-func (t *TL_auth_sentCode) Set_timeout(M_timeout TLObject) {
+func (t *TL_auth_sentCode) Set_timeout(M_timeout int32) {
 	t.M_timeout = M_timeout
 }
 
-func (t *TL_auth_sentCode) Get_timeout() TLObject {
+func (t *TL_auth_sentCode) Get_timeout() int32 {
 	return t.M_timeout
 }
 
@@ -10552,11 +11574,33 @@ func (t *TL_auth_sentCode) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sentCode))
-	ec.TLObject(t.Get_phone_registered())
+
+	var flags uint32 = 0
+	if t.M_phone_registered != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_next_type != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_timeout != 0 {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_phone_registered != nil {
+		ec.TLObject(t.Get_phone_registered())
+	}
 	ec.TLObject(t.Get_type())
 	ec.String(t.Get_phone_code_hash())
-	ec.TLObject(t.Get_next_type())
-	ec.TLObject(t.Get_timeout())
+	if t.M_next_type != nil {
+		ec.TLObject(t.Get_next_type())
+	}
+	if t.M_timeout != 0 {
+		ec.Int(t.Get_timeout())
+	}
 
 	return ec.GetBuffer()
 }
@@ -10564,11 +11608,18 @@ func (t *TL_auth_sentCode) Encode() []byte {
 func (t *TL_auth_sentCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_phone_registered = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_phone_registered = dc.TLObject()
+	}
 	t.M_type = dc.TLObject()
 	t.M_phone_code_hash = dc.String()
-	t.M_next_type = dc.TLObject()
-	t.M_timeout = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_next_type = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_timeout = dc.Int()
+	}
 
 	return dc.err
 }
@@ -10580,8 +11631,8 @@ func (t *TL_auth_sentCode) String() string {
 // auth_authorization#cd050916
 type TL_auth_authorization struct {
 	M_classID      int32
-	M_flags        TLObject
-	M_tmp_sessions TLObject
+	M_flags        uint32
+	M_tmp_sessions int32
 	M_user         TLObject
 }
 
@@ -10589,19 +11640,19 @@ func (t *TL_auth_authorization) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_authorization) Set_flags(M_flags TLObject) {
+func (t *TL_auth_authorization) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_auth_authorization) Get_flags() TLObject {
+func (t *TL_auth_authorization) Get_flags() uint32 {
 	return t.M_flags
 }
 
-func (t *TL_auth_authorization) Set_tmp_sessions(M_tmp_sessions TLObject) {
+func (t *TL_auth_authorization) Set_tmp_sessions(M_tmp_sessions int32) {
 	t.M_tmp_sessions = M_tmp_sessions
 }
 
-func (t *TL_auth_authorization) Get_tmp_sessions() TLObject {
+func (t *TL_auth_authorization) Get_tmp_sessions() int32 {
 	return t.M_tmp_sessions
 }
 
@@ -10623,7 +11674,17 @@ func (t *TL_auth_authorization) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_authorization))
-	ec.TLObject(t.Get_tmp_sessions())
+
+	var flags uint32 = 0
+	if t.M_tmp_sessions != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_tmp_sessions != 0 {
+		ec.Int(t.Get_tmp_sessions())
+	}
 	ec.TLObject(t.Get_user())
 
 	return ec.GetBuffer()
@@ -10632,7 +11693,10 @@ func (t *TL_auth_authorization) Encode() []byte {
 func (t *TL_auth_authorization) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_tmp_sessions = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_tmp_sessions = dc.Int()
+	}
 	t.M_user = dc.TLObject()
 
 	return dc.err
@@ -10901,7 +11965,7 @@ func (t *TL_inputPeerNotifyEventsAll) String() string {
 // inputPeerNotifySettings#38935eb2
 type TL_inputPeerNotifySettings struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_show_previews TLObject
 	M_silent        TLObject
 	M_mute_until    int32
@@ -10912,11 +11976,11 @@ func (t *TL_inputPeerNotifySettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputPeerNotifySettings) Set_flags(M_flags TLObject) {
+func (t *TL_inputPeerNotifySettings) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputPeerNotifySettings) Get_flags() TLObject {
+func (t *TL_inputPeerNotifySettings) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -10962,8 +12026,24 @@ func (t *TL_inputPeerNotifySettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPeerNotifySettings))
-	ec.TLObject(t.Get_show_previews())
-	ec.TLObject(t.Get_silent())
+
+	var flags uint32 = 0
+	if t.M_show_previews != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_show_previews != nil {
+		ec.TLObject(t.Get_show_previews())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
 	ec.Int(t.Get_mute_until())
 	ec.String(t.Get_sound())
 
@@ -10973,8 +12053,13 @@ func (t *TL_inputPeerNotifySettings) Encode() []byte {
 func (t *TL_inputPeerNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_show_previews = dc.TLObject()
-	t.M_silent = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_show_previews = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
 	t.M_mute_until = dc.Int()
 	t.M_sound = dc.String()
 
@@ -11081,7 +12166,7 @@ func (t *TL_peerNotifySettingsEmpty) String() string {
 // peerNotifySettings#9acda4c0
 type TL_peerNotifySettings struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_show_previews TLObject
 	M_silent        TLObject
 	M_mute_until    int32
@@ -11092,11 +12177,11 @@ func (t *TL_peerNotifySettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_peerNotifySettings) Set_flags(M_flags TLObject) {
+func (t *TL_peerNotifySettings) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_peerNotifySettings) Get_flags() TLObject {
+func (t *TL_peerNotifySettings) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -11142,8 +12227,24 @@ func (t *TL_peerNotifySettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerNotifySettings))
-	ec.TLObject(t.Get_show_previews())
-	ec.TLObject(t.Get_silent())
+
+	var flags uint32 = 0
+	if t.M_show_previews != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_show_previews != nil {
+		ec.TLObject(t.Get_show_previews())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
 	ec.Int(t.Get_mute_until())
 	ec.String(t.Get_sound())
 
@@ -11153,8 +12254,13 @@ func (t *TL_peerNotifySettings) Encode() []byte {
 func (t *TL_peerNotifySettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_show_previews = dc.TLObject()
-	t.M_silent = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_show_previews = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
 	t.M_mute_until = dc.Int()
 	t.M_sound = dc.String()
 
@@ -11168,7 +12274,7 @@ func (t *TL_peerNotifySettings) String() string {
 // peerSettings#818426cd
 type TL_peerSettings struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_report_spam TLObject
 }
 
@@ -11176,11 +12282,11 @@ func (t *TL_peerSettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_peerSettings) Set_flags(M_flags TLObject) {
+func (t *TL_peerSettings) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_peerSettings) Get_flags() TLObject {
+func (t *TL_peerSettings) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -11202,7 +12308,17 @@ func (t *TL_peerSettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_peerSettings))
-	ec.TLObject(t.Get_report_spam())
+
+	var flags uint32 = 0
+	if t.M_report_spam != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_report_spam != nil {
+		ec.TLObject(t.Get_report_spam())
+	}
 
 	return ec.GetBuffer()
 }
@@ -11210,7 +12326,10 @@ func (t *TL_peerSettings) Encode() []byte {
 func (t *TL_peerSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_report_spam = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_report_spam = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -11516,12 +12635,12 @@ func (t *TL_inputReportReasonOther) String() string {
 // userFull#f220f3f
 type TL_userFull struct {
 	M_classID               int32
-	M_flags                 TLObject
+	M_flags                 uint32
 	M_blocked               TLObject
 	M_phone_calls_available TLObject
 	M_phone_calls_private   TLObject
 	M_user                  TLObject
-	M_about                 TLObject
+	M_about                 string
 	M_link                  TLObject
 	M_profile_photo         TLObject
 	M_notify_settings       TLObject
@@ -11533,11 +12652,11 @@ func (t *TL_userFull) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_userFull) Set_flags(M_flags TLObject) {
+func (t *TL_userFull) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_userFull) Get_flags() TLObject {
+func (t *TL_userFull) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -11573,11 +12692,11 @@ func (t *TL_userFull) Get_user() TLObject {
 	return t.M_user
 }
 
-func (t *TL_userFull) Set_about(M_about TLObject) {
+func (t *TL_userFull) Set_about(M_about string) {
 	t.M_about = M_about
 }
 
-func (t *TL_userFull) Get_about() TLObject {
+func (t *TL_userFull) Get_about() string {
 	return t.M_about
 }
 
@@ -11631,15 +12750,55 @@ func (t *TL_userFull) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_userFull))
-	ec.TLObject(t.Get_blocked())
-	ec.TLObject(t.Get_phone_calls_available())
-	ec.TLObject(t.Get_phone_calls_private())
+
+	var flags uint32 = 0
+	if t.M_blocked != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_phone_calls_available != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_phone_calls_private != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_about != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_profile_photo != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_bot_info != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_blocked != nil {
+		ec.TLObject(t.Get_blocked())
+	}
+	if t.M_phone_calls_available != nil {
+		ec.TLObject(t.Get_phone_calls_available())
+	}
+	if t.M_phone_calls_private != nil {
+		ec.TLObject(t.Get_phone_calls_private())
+	}
 	ec.TLObject(t.Get_user())
-	ec.TLObject(t.Get_about())
+	if t.M_about != "" {
+		ec.String(t.Get_about())
+	}
 	ec.TLObject(t.Get_link())
-	ec.TLObject(t.Get_profile_photo())
+	if t.M_profile_photo != nil {
+		ec.TLObject(t.Get_profile_photo())
+	}
 	ec.TLObject(t.Get_notify_settings())
-	ec.TLObject(t.Get_bot_info())
+	if t.M_bot_info != nil {
+		ec.TLObject(t.Get_bot_info())
+	}
 	ec.Int(t.Get_common_chats_count())
 
 	return ec.GetBuffer()
@@ -11648,15 +12807,28 @@ func (t *TL_userFull) Encode() []byte {
 func (t *TL_userFull) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_blocked = dc.TLObject()
-	t.M_phone_calls_available = dc.TLObject()
-	t.M_phone_calls_private = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_blocked = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_phone_calls_available = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_phone_calls_private = dc.TLObject()
+	}
 	t.M_user = dc.TLObject()
-	t.M_about = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_about = dc.String()
+	}
 	t.M_link = dc.TLObject()
-	t.M_profile_photo = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_profile_photo = dc.TLObject()
+	}
 	t.M_notify_settings = dc.TLObject()
-	t.M_bot_info = dc.TLObject()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_bot_info = dc.TLObject()
+	}
 	t.M_common_chats_count = dc.Int()
 
 	return dc.err
@@ -12571,7 +13743,7 @@ func (t *TL_messages_messagesSlice) String() string {
 // messages_channelMessages#99262e37
 type TL_messages_channelMessages struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_pts      int32
 	M_count    int32
 	M_messages []TLObject
@@ -12583,11 +13755,11 @@ func (t *TL_messages_channelMessages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_channelMessages) Set_flags(M_flags TLObject) {
+func (t *TL_messages_channelMessages) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_channelMessages) Get_flags() TLObject {
+func (t *TL_messages_channelMessages) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -12641,6 +13813,10 @@ func (t *TL_messages_channelMessages) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_channelMessages))
+
+	var flags uint32 = 0
+	ec.UInt(flags)
+
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_count())
 	ec.Vector(t.Get_messages())
@@ -12653,6 +13829,7 @@ func (t *TL_messages_channelMessages) Encode() []byte {
 func (t *TL_messages_channelMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_pts = dc.Int()
 	t.M_count = dc.Int()
 	t.M_messages = dc.Vector()
@@ -13259,7 +14436,7 @@ func (t *TL_inputMessagesFilterChatPhotos) String() string {
 // inputMessagesFilterPhoneCalls#80c99768
 type TL_inputMessagesFilterPhoneCalls struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_missed  TLObject
 }
 
@@ -13267,11 +14444,11 @@ func (t *TL_inputMessagesFilterPhoneCalls) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Set_flags(M_flags TLObject) {
+func (t *TL_inputMessagesFilterPhoneCalls) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputMessagesFilterPhoneCalls) Get_flags() TLObject {
+func (t *TL_inputMessagesFilterPhoneCalls) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -13293,7 +14470,17 @@ func (t *TL_inputMessagesFilterPhoneCalls) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputMessagesFilterPhoneCalls))
-	ec.TLObject(t.Get_missed())
+
+	var flags uint32 = 0
+	if t.M_missed != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_missed != nil {
+		ec.TLObject(t.Get_missed())
+	}
 
 	return ec.GetBuffer()
 }
@@ -13301,7 +14488,10 @@ func (t *TL_inputMessagesFilterPhoneCalls) Encode() []byte {
 func (t *TL_inputMessagesFilterPhoneCalls) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_missed = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_missed = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -14698,9 +15888,9 @@ func (t *TL_updateNotifySettings) String() string {
 // updateServiceNotification#ebe46819
 type TL_updateServiceNotification struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_popup      TLObject
-	M_inbox_date TLObject
+	M_inbox_date int32
 	M_type       string
 	M_message    string
 	M_media      TLObject
@@ -14711,11 +15901,11 @@ func (t *TL_updateServiceNotification) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateServiceNotification) Set_flags(M_flags TLObject) {
+func (t *TL_updateServiceNotification) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateServiceNotification) Get_flags() TLObject {
+func (t *TL_updateServiceNotification) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -14727,11 +15917,11 @@ func (t *TL_updateServiceNotification) Get_popup() TLObject {
 	return t.M_popup
 }
 
-func (t *TL_updateServiceNotification) Set_inbox_date(M_inbox_date TLObject) {
+func (t *TL_updateServiceNotification) Set_inbox_date(M_inbox_date int32) {
 	t.M_inbox_date = M_inbox_date
 }
 
-func (t *TL_updateServiceNotification) Get_inbox_date() TLObject {
+func (t *TL_updateServiceNotification) Get_inbox_date() int32 {
 	return t.M_inbox_date
 }
 
@@ -14777,8 +15967,24 @@ func (t *TL_updateServiceNotification) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateServiceNotification))
-	ec.TLObject(t.Get_popup())
-	ec.TLObject(t.Get_inbox_date())
+
+	var flags uint32 = 0
+	if t.M_popup != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_inbox_date != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_popup != nil {
+		ec.TLObject(t.Get_popup())
+	}
+	if t.M_inbox_date != 0 {
+		ec.Int(t.Get_inbox_date())
+	}
 	ec.String(t.Get_type())
 	ec.String(t.Get_message())
 	ec.TLObject(t.Get_media())
@@ -14790,8 +15996,13 @@ func (t *TL_updateServiceNotification) Encode() []byte {
 func (t *TL_updateServiceNotification) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_popup = dc.TLObject()
-	t.M_inbox_date = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_popup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_inbox_date = dc.Int()
+	}
 	t.M_type = dc.String()
 	t.M_message = dc.String()
 	t.M_media = dc.TLObject()
@@ -15209,20 +16420,20 @@ func (t *TL_updateReadMessagesContents) String() string {
 // updateChannelTooLong#eb0467fb
 type TL_updateChannelTooLong struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_channel_id int32
-	M_pts        TLObject
+	M_pts        int32
 }
 
 func (t *TL_updateChannelTooLong) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateChannelTooLong) Set_flags(M_flags TLObject) {
+func (t *TL_updateChannelTooLong) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateChannelTooLong) Get_flags() TLObject {
+func (t *TL_updateChannelTooLong) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -15234,11 +16445,11 @@ func (t *TL_updateChannelTooLong) Get_channel_id() int32 {
 	return t.M_channel_id
 }
 
-func (t *TL_updateChannelTooLong) Set_pts(M_pts TLObject) {
+func (t *TL_updateChannelTooLong) Set_pts(M_pts int32) {
 	t.M_pts = M_pts
 }
 
-func (t *TL_updateChannelTooLong) Get_pts() TLObject {
+func (t *TL_updateChannelTooLong) Get_pts() int32 {
 	return t.M_pts
 }
 
@@ -15252,8 +16463,18 @@ func (t *TL_updateChannelTooLong) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateChannelTooLong))
+
+	var flags uint32 = 0
+	if t.M_pts != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_channel_id())
-	ec.TLObject(t.Get_pts())
+	if t.M_pts != 0 {
+		ec.Int(t.Get_pts())
+	}
 
 	return ec.GetBuffer()
 }
@@ -15261,8 +16482,11 @@ func (t *TL_updateChannelTooLong) Encode() []byte {
 func (t *TL_updateChannelTooLong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_channel_id = dc.Int()
-	t.M_pts = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_pts = dc.Int()
+	}
 
 	return dc.err
 }
@@ -15777,7 +17001,7 @@ func (t *TL_updateNewStickerSet) String() string {
 // updateStickerSetsOrder#bb2d201
 type TL_updateStickerSetsOrder struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_masks   TLObject
 	M_order   []int64
 }
@@ -15786,11 +17010,11 @@ func (t *TL_updateStickerSetsOrder) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateStickerSetsOrder) Set_flags(M_flags TLObject) {
+func (t *TL_updateStickerSetsOrder) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateStickerSetsOrder) Get_flags() TLObject {
+func (t *TL_updateStickerSetsOrder) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -15820,7 +17044,17 @@ func (t *TL_updateStickerSetsOrder) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateStickerSetsOrder))
-	ec.TLObject(t.Get_masks())
+
+	var flags uint32 = 0
+	if t.M_masks != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_masks != nil {
+		ec.TLObject(t.Get_masks())
+	}
 	ec.VectorLong(t.Get_order())
 
 	return ec.GetBuffer()
@@ -15829,7 +17063,10 @@ func (t *TL_updateStickerSetsOrder) Encode() []byte {
 func (t *TL_updateStickerSetsOrder) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_masks = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_masks = dc.TLObject()
+	}
 	t.M_order = dc.VectorLong()
 
 	return dc.err
@@ -15904,7 +17141,7 @@ func (t *TL_updateSavedGifs) String() string {
 // updateBotInlineQuery#54826690
 type TL_updateBotInlineQuery struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_query_id int64
 	M_user_id  int32
 	M_query    string
@@ -15916,11 +17153,11 @@ func (t *TL_updateBotInlineQuery) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateBotInlineQuery) Set_flags(M_flags TLObject) {
+func (t *TL_updateBotInlineQuery) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateBotInlineQuery) Get_flags() TLObject {
+func (t *TL_updateBotInlineQuery) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -15974,10 +17211,20 @@ func (t *TL_updateBotInlineQuery) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotInlineQuery))
+
+	var flags uint32 = 0
+	if t.M_geo != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
 	ec.String(t.Get_query())
-	ec.TLObject(t.Get_geo())
+	if t.M_geo != nil {
+		ec.TLObject(t.Get_geo())
+	}
 	ec.String(t.Get_offset())
 
 	return ec.GetBuffer()
@@ -15986,10 +17233,13 @@ func (t *TL_updateBotInlineQuery) Encode() []byte {
 func (t *TL_updateBotInlineQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
 	t.M_query = dc.String()
-	t.M_geo = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_geo = dc.TLObject()
+	}
 	t.M_offset = dc.String()
 
 	return dc.err
@@ -16002,7 +17252,7 @@ func (t *TL_updateBotInlineQuery) String() string {
 // updateBotInlineSend#e48f964
 type TL_updateBotInlineSend struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_user_id int32
 	M_query   string
 	M_geo     TLObject
@@ -16014,11 +17264,11 @@ func (t *TL_updateBotInlineSend) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateBotInlineSend) Set_flags(M_flags TLObject) {
+func (t *TL_updateBotInlineSend) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateBotInlineSend) Get_flags() TLObject {
+func (t *TL_updateBotInlineSend) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -16072,11 +17322,27 @@ func (t *TL_updateBotInlineSend) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotInlineSend))
+
+	var flags uint32 = 0
+	if t.M_geo != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_msg_id != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_user_id())
 	ec.String(t.Get_query())
-	ec.TLObject(t.Get_geo())
+	if t.M_geo != nil {
+		ec.TLObject(t.Get_geo())
+	}
 	ec.String(t.Get_id())
-	ec.TLObject(t.Get_msg_id())
+	if t.M_msg_id != nil {
+		ec.TLObject(t.Get_msg_id())
+	}
 
 	return ec.GetBuffer()
 }
@@ -16084,11 +17350,16 @@ func (t *TL_updateBotInlineSend) Encode() []byte {
 func (t *TL_updateBotInlineSend) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_user_id = dc.Int()
 	t.M_query = dc.String()
-	t.M_geo = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_geo = dc.TLObject()
+	}
 	t.M_id = dc.String()
-	t.M_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_msg_id = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -16223,25 +17494,25 @@ func (t *TL_updateChannelPinnedMessage) String() string {
 // updateBotCallbackQuery#e73547e1
 type TL_updateBotCallbackQuery struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_query_id        int64
 	M_user_id         int32
 	M_peer            TLObject
 	M_msg_id          int32
 	M_chat_instance   int64
 	M_data            TLObject
-	M_game_short_name TLObject
+	M_game_short_name string
 }
 
 func (t *TL_updateBotCallbackQuery) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateBotCallbackQuery) Set_flags(M_flags TLObject) {
+func (t *TL_updateBotCallbackQuery) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateBotCallbackQuery) Get_flags() TLObject {
+func (t *TL_updateBotCallbackQuery) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -16293,11 +17564,11 @@ func (t *TL_updateBotCallbackQuery) Get_data() TLObject {
 	return t.M_data
 }
 
-func (t *TL_updateBotCallbackQuery) Set_game_short_name(M_game_short_name TLObject) {
+func (t *TL_updateBotCallbackQuery) Set_game_short_name(M_game_short_name string) {
 	t.M_game_short_name = M_game_short_name
 }
 
-func (t *TL_updateBotCallbackQuery) Get_game_short_name() TLObject {
+func (t *TL_updateBotCallbackQuery) Get_game_short_name() string {
 	return t.M_game_short_name
 }
 
@@ -16311,13 +17582,29 @@ func (t *TL_updateBotCallbackQuery) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotCallbackQuery))
+
+	var flags uint32 = 0
+	if t.M_data != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_game_short_name != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_msg_id())
 	ec.Long(t.Get_chat_instance())
-	ec.TLObject(t.Get_data())
-	ec.TLObject(t.Get_game_short_name())
+	if t.M_data != nil {
+		ec.TLObject(t.Get_data())
+	}
+	if t.M_game_short_name != "" {
+		ec.String(t.Get_game_short_name())
+	}
 
 	return ec.GetBuffer()
 }
@@ -16325,13 +17612,18 @@ func (t *TL_updateBotCallbackQuery) Encode() []byte {
 func (t *TL_updateBotCallbackQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
 	t.M_peer = dc.TLObject()
 	t.M_msg_id = dc.Int()
 	t.M_chat_instance = dc.Long()
-	t.M_data = dc.TLObject()
-	t.M_game_short_name = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_data = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_game_short_name = dc.String()
+	}
 
 	return dc.err
 }
@@ -16410,24 +17702,24 @@ func (t *TL_updateEditMessage) String() string {
 // updateInlineBotCallbackQuery#f9d27a5a
 type TL_updateInlineBotCallbackQuery struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_query_id        int64
 	M_user_id         int32
 	M_msg_id          TLObject
 	M_chat_instance   int64
 	M_data            TLObject
-	M_game_short_name TLObject
+	M_game_short_name string
 }
 
 func (t *TL_updateInlineBotCallbackQuery) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_flags(M_flags TLObject) {
+func (t *TL_updateInlineBotCallbackQuery) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_flags() TLObject {
+func (t *TL_updateInlineBotCallbackQuery) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -16471,11 +17763,11 @@ func (t *TL_updateInlineBotCallbackQuery) Get_data() TLObject {
 	return t.M_data
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Set_game_short_name(M_game_short_name TLObject) {
+func (t *TL_updateInlineBotCallbackQuery) Set_game_short_name(M_game_short_name string) {
 	t.M_game_short_name = M_game_short_name
 }
 
-func (t *TL_updateInlineBotCallbackQuery) Get_game_short_name() TLObject {
+func (t *TL_updateInlineBotCallbackQuery) Get_game_short_name() string {
 	return t.M_game_short_name
 }
 
@@ -16489,12 +17781,28 @@ func (t *TL_updateInlineBotCallbackQuery) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateInlineBotCallbackQuery))
+
+	var flags uint32 = 0
+	if t.M_data != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_game_short_name != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
 	ec.TLObject(t.Get_msg_id())
 	ec.Long(t.Get_chat_instance())
-	ec.TLObject(t.Get_data())
-	ec.TLObject(t.Get_game_short_name())
+	if t.M_data != nil {
+		ec.TLObject(t.Get_data())
+	}
+	if t.M_game_short_name != "" {
+		ec.String(t.Get_game_short_name())
+	}
 
 	return ec.GetBuffer()
 }
@@ -16502,12 +17810,17 @@ func (t *TL_updateInlineBotCallbackQuery) Encode() []byte {
 func (t *TL_updateInlineBotCallbackQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
 	t.M_msg_id = dc.TLObject()
 	t.M_chat_instance = dc.Long()
-	t.M_data = dc.TLObject()
-	t.M_game_short_name = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_data = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_game_short_name = dc.String()
+	}
 
 	return dc.err
 }
@@ -16833,7 +18146,7 @@ func (t *TL_updateChannelWebPage) String() string {
 // updateDialogPinned#d711a2cc
 type TL_updateDialogPinned struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_pinned  TLObject
 	M_peer    TLObject
 }
@@ -16842,11 +18155,11 @@ func (t *TL_updateDialogPinned) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateDialogPinned) Set_flags(M_flags TLObject) {
+func (t *TL_updateDialogPinned) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateDialogPinned) Get_flags() TLObject {
+func (t *TL_updateDialogPinned) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -16876,7 +18189,17 @@ func (t *TL_updateDialogPinned) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateDialogPinned))
-	ec.TLObject(t.Get_pinned())
+
+	var flags uint32 = 0
+	if t.M_pinned != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_pinned != nil {
+		ec.TLObject(t.Get_pinned())
+	}
 	ec.TLObject(t.Get_peer())
 
 	return ec.GetBuffer()
@@ -16885,7 +18208,10 @@ func (t *TL_updateDialogPinned) Encode() []byte {
 func (t *TL_updateDialogPinned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_pinned = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_pinned = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 
 	return dc.err
@@ -16898,7 +18224,7 @@ func (t *TL_updateDialogPinned) String() string {
 // updatePinnedDialogs#d8caf68d
 type TL_updatePinnedDialogs struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_order   []TLObject
 }
 
@@ -16906,11 +18232,11 @@ func (t *TL_updatePinnedDialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updatePinnedDialogs) Set_flags(M_flags TLObject) {
+func (t *TL_updatePinnedDialogs) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updatePinnedDialogs) Get_flags() TLObject {
+func (t *TL_updatePinnedDialogs) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -16932,7 +18258,17 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updatePinnedDialogs))
-	ec.Vector(t.Get_order())
+
+	var flags uint32 = 0
+	if t.M_order != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_order != nil {
+		ec.Vector(t.Get_order())
+	}
 
 	return ec.GetBuffer()
 }
@@ -16940,7 +18276,10 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 func (t *TL_updatePinnedDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_order = dc.Vector()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_order = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -17142,12 +18481,12 @@ func (t *TL_updateBotShippingQuery) String() string {
 // updateBotPrecheckoutQuery#5d2f3aa9
 type TL_updateBotPrecheckoutQuery struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_query_id           int64
 	M_user_id            int32
 	M_payload            TLObject
 	M_info               TLObject
-	M_shipping_option_id TLObject
+	M_shipping_option_id string
 	M_currency           string
 	M_total_amount       int64
 }
@@ -17156,11 +18495,11 @@ func (t *TL_updateBotPrecheckoutQuery) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_flags(M_flags TLObject) {
+func (t *TL_updateBotPrecheckoutQuery) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_flags() TLObject {
+func (t *TL_updateBotPrecheckoutQuery) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -17196,11 +18535,11 @@ func (t *TL_updateBotPrecheckoutQuery) Get_info() TLObject {
 	return t.M_info
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Set_shipping_option_id(M_shipping_option_id TLObject) {
+func (t *TL_updateBotPrecheckoutQuery) Set_shipping_option_id(M_shipping_option_id string) {
 	t.M_shipping_option_id = M_shipping_option_id
 }
 
-func (t *TL_updateBotPrecheckoutQuery) Get_shipping_option_id() TLObject {
+func (t *TL_updateBotPrecheckoutQuery) Get_shipping_option_id() string {
 	return t.M_shipping_option_id
 }
 
@@ -17230,11 +18569,27 @@ func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateBotPrecheckoutQuery))
+
+	var flags uint32 = 0
+	if t.M_info != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping_option_id != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
 	ec.TLObject(t.Get_payload())
-	ec.TLObject(t.Get_info())
-	ec.TLObject(t.Get_shipping_option_id())
+	if t.M_info != nil {
+		ec.TLObject(t.Get_info())
+	}
+	if t.M_shipping_option_id != "" {
+		ec.String(t.Get_shipping_option_id())
+	}
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
 
@@ -17244,11 +18599,16 @@ func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
 func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_query_id = dc.Long()
 	t.M_user_id = dc.Int()
 	t.M_payload = dc.TLObject()
-	t.M_info = dc.TLObject()
-	t.M_shipping_option_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_option_id = dc.String()
+	}
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 
@@ -17978,7 +19338,7 @@ func (t *TL_updatesTooLong) String() string {
 // updateShortMessage#914fbf11
 type TL_updateShortMessage struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_out             TLObject
 	M_mentioned       TLObject
 	M_media_unread    TLObject
@@ -17990,8 +19350,8 @@ type TL_updateShortMessage struct {
 	M_pts_count       int32
 	M_date            int32
 	M_fwd_from        TLObject
-	M_via_bot_id      TLObject
-	M_reply_to_msg_id TLObject
+	M_via_bot_id      int32
+	M_reply_to_msg_id int32
 	M_entities        []TLObject
 }
 
@@ -17999,11 +19359,11 @@ func (t *TL_updateShortMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateShortMessage) Set_flags(M_flags TLObject) {
+func (t *TL_updateShortMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateShortMessage) Get_flags() TLObject {
+func (t *TL_updateShortMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -18095,19 +19455,19 @@ func (t *TL_updateShortMessage) Get_fwd_from() TLObject {
 	return t.M_fwd_from
 }
 
-func (t *TL_updateShortMessage) Set_via_bot_id(M_via_bot_id TLObject) {
+func (t *TL_updateShortMessage) Set_via_bot_id(M_via_bot_id int32) {
 	t.M_via_bot_id = M_via_bot_id
 }
 
-func (t *TL_updateShortMessage) Get_via_bot_id() TLObject {
+func (t *TL_updateShortMessage) Get_via_bot_id() int32 {
 	return t.M_via_bot_id
 }
 
-func (t *TL_updateShortMessage) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_updateShortMessage) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_updateShortMessage) Get_reply_to_msg_id() TLObject {
+func (t *TL_updateShortMessage) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -18129,20 +19489,72 @@ func (t *TL_updateShortMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortMessage))
-	ec.TLObject(t.Get_out())
-	ec.TLObject(t.Get_mentioned())
-	ec.TLObject(t.Get_media_unread())
-	ec.TLObject(t.Get_silent())
+
+	var flags uint32 = 0
+	if t.M_out != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_mentioned != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_media_unread != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 13
+	}
+
+	if t.M_fwd_from != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_via_bot_id != 0 {
+		flags |= 1 << 11
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 3
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
+	if t.M_out != nil {
+		ec.TLObject(t.Get_out())
+	}
+	if t.M_mentioned != nil {
+		ec.TLObject(t.Get_mentioned())
+	}
+	if t.M_media_unread != nil {
+		ec.TLObject(t.Get_media_unread())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
 	ec.Int(t.Get_id())
 	ec.Int(t.Get_user_id())
 	ec.String(t.Get_message())
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_fwd_from())
-	ec.TLObject(t.Get_via_bot_id())
-	ec.TLObject(t.Get_reply_to_msg_id())
-	ec.Vector(t.Get_entities())
+	if t.M_fwd_from != nil {
+		ec.TLObject(t.Get_fwd_from())
+	}
+	if t.M_via_bot_id != 0 {
+		ec.Int(t.Get_via_bot_id())
+	}
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 
 	return ec.GetBuffer()
 }
@@ -18150,20 +19562,37 @@ func (t *TL_updateShortMessage) Encode() []byte {
 func (t *TL_updateShortMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_out = dc.TLObject()
-	t.M_mentioned = dc.TLObject()
-	t.M_media_unread = dc.TLObject()
-	t.M_silent = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_out = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_mentioned = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_media_unread = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_user_id = dc.Int()
 	t.M_message = dc.String()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 	t.M_date = dc.Int()
-	t.M_fwd_from = dc.TLObject()
-	t.M_via_bot_id = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_fwd_from = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_via_bot_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -18175,7 +19604,7 @@ func (t *TL_updateShortMessage) String() string {
 // updateShortChatMessage#16812688
 type TL_updateShortChatMessage struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_out             TLObject
 	M_mentioned       TLObject
 	M_media_unread    TLObject
@@ -18188,8 +19617,8 @@ type TL_updateShortChatMessage struct {
 	M_pts_count       int32
 	M_date            int32
 	M_fwd_from        TLObject
-	M_via_bot_id      TLObject
-	M_reply_to_msg_id TLObject
+	M_via_bot_id      int32
+	M_reply_to_msg_id int32
 	M_entities        []TLObject
 }
 
@@ -18197,11 +19626,11 @@ func (t *TL_updateShortChatMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateShortChatMessage) Set_flags(M_flags TLObject) {
+func (t *TL_updateShortChatMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateShortChatMessage) Get_flags() TLObject {
+func (t *TL_updateShortChatMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -18301,19 +19730,19 @@ func (t *TL_updateShortChatMessage) Get_fwd_from() TLObject {
 	return t.M_fwd_from
 }
 
-func (t *TL_updateShortChatMessage) Set_via_bot_id(M_via_bot_id TLObject) {
+func (t *TL_updateShortChatMessage) Set_via_bot_id(M_via_bot_id int32) {
 	t.M_via_bot_id = M_via_bot_id
 }
 
-func (t *TL_updateShortChatMessage) Get_via_bot_id() TLObject {
+func (t *TL_updateShortChatMessage) Get_via_bot_id() int32 {
 	return t.M_via_bot_id
 }
 
-func (t *TL_updateShortChatMessage) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_updateShortChatMessage) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_updateShortChatMessage) Get_reply_to_msg_id() TLObject {
+func (t *TL_updateShortChatMessage) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -18335,10 +19764,54 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortChatMessage))
-	ec.TLObject(t.Get_out())
-	ec.TLObject(t.Get_mentioned())
-	ec.TLObject(t.Get_media_unread())
-	ec.TLObject(t.Get_silent())
+
+	var flags uint32 = 0
+	if t.M_out != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_mentioned != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_media_unread != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 13
+	}
+
+	if t.M_fwd_from != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_via_bot_id != 0 {
+		flags |= 1 << 11
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 3
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
+	if t.M_out != nil {
+		ec.TLObject(t.Get_out())
+	}
+	if t.M_mentioned != nil {
+		ec.TLObject(t.Get_mentioned())
+	}
+	if t.M_media_unread != nil {
+		ec.TLObject(t.Get_media_unread())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
 	ec.Int(t.Get_id())
 	ec.Int(t.Get_from_id())
 	ec.Int(t.Get_chat_id())
@@ -18346,10 +19819,18 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_fwd_from())
-	ec.TLObject(t.Get_via_bot_id())
-	ec.TLObject(t.Get_reply_to_msg_id())
-	ec.Vector(t.Get_entities())
+	if t.M_fwd_from != nil {
+		ec.TLObject(t.Get_fwd_from())
+	}
+	if t.M_via_bot_id != 0 {
+		ec.Int(t.Get_via_bot_id())
+	}
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 
 	return ec.GetBuffer()
 }
@@ -18357,10 +19838,19 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 func (t *TL_updateShortChatMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_out = dc.TLObject()
-	t.M_mentioned = dc.TLObject()
-	t.M_media_unread = dc.TLObject()
-	t.M_silent = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_out = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_mentioned = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_media_unread = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_from_id = dc.Int()
 	t.M_chat_id = dc.Int()
@@ -18368,10 +19858,18 @@ func (t *TL_updateShortChatMessage) Decode(b []byte) error {
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 	t.M_date = dc.Int()
-	t.M_fwd_from = dc.TLObject()
-	t.M_via_bot_id = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_fwd_from = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_via_bot_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -18628,7 +20126,7 @@ func (t *TL_updates) String() string {
 // updateShortSentMessage#11f1331c
 type TL_updateShortSentMessage struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_out       TLObject
 	M_id        int32
 	M_pts       int32
@@ -18642,11 +20140,11 @@ func (t *TL_updateShortSentMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updateShortSentMessage) Set_flags(M_flags TLObject) {
+func (t *TL_updateShortSentMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updateShortSentMessage) Get_flags() TLObject {
+func (t *TL_updateShortSentMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -18716,13 +20214,35 @@ func (t *TL_updateShortSentMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updateShortSentMessage))
-	ec.TLObject(t.Get_out())
+
+	var flags uint32 = 0
+	if t.M_out != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_media != nil {
+		flags |= 1 << 9
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
+	if t.M_out != nil {
+		ec.TLObject(t.Get_out())
+	}
 	ec.Int(t.Get_id())
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_pts_count())
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_media())
-	ec.Vector(t.Get_entities())
+	if t.M_media != nil {
+		ec.TLObject(t.Get_media())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 
 	return ec.GetBuffer()
 }
@@ -18730,13 +20250,20 @@ func (t *TL_updateShortSentMessage) Encode() []byte {
 func (t *TL_updateShortSentMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_out = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_out = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_pts = dc.Int()
 	t.M_pts_count = dc.Int()
 	t.M_date = dc.Int()
-	t.M_media = dc.TLObject()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_media = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -19083,7 +20610,7 @@ func (t *TL_upload_fileCdnRedirect) String() string {
 // dcOption#5d8c6cc
 type TL_dcOption struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_ipv6       TLObject
 	M_media_only TLObject
 	M_tcpo_only  TLObject
@@ -19098,11 +20625,11 @@ func (t *TL_dcOption) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_dcOption) Set_flags(M_flags TLObject) {
+func (t *TL_dcOption) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_dcOption) Get_flags() TLObject {
+func (t *TL_dcOption) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -19180,11 +20707,45 @@ func (t *TL_dcOption) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_dcOption))
-	ec.TLObject(t.Get_ipv6())
-	ec.TLObject(t.Get_media_only())
-	ec.TLObject(t.Get_tcpo_only())
-	ec.TLObject(t.Get_cdn())
-	ec.TLObject(t.Get_static())
+
+	var flags uint32 = 0
+	if t.M_ipv6 != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_media_only != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_tcpo_only != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_cdn != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_static != nil {
+		flags |= 1 << 4
+	}
+
+	ec.UInt(flags)
+
+	if t.M_ipv6 != nil {
+		ec.TLObject(t.Get_ipv6())
+	}
+	if t.M_media_only != nil {
+		ec.TLObject(t.Get_media_only())
+	}
+	if t.M_tcpo_only != nil {
+		ec.TLObject(t.Get_tcpo_only())
+	}
+	if t.M_cdn != nil {
+		ec.TLObject(t.Get_cdn())
+	}
+	if t.M_static != nil {
+		ec.TLObject(t.Get_static())
+	}
 	ec.Int(t.Get_id())
 	ec.String(t.Get_ip_address())
 	ec.Int(t.Get_port())
@@ -19195,11 +20756,22 @@ func (t *TL_dcOption) Encode() []byte {
 func (t *TL_dcOption) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_ipv6 = dc.TLObject()
-	t.M_media_only = dc.TLObject()
-	t.M_tcpo_only = dc.TLObject()
-	t.M_cdn = dc.TLObject()
-	t.M_static = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_ipv6 = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_media_only = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_tcpo_only = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_cdn = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_static = dc.TLObject()
+	}
 	t.M_id = dc.Int()
 	t.M_ip_address = dc.String()
 	t.M_port = dc.Int()
@@ -19214,7 +20786,7 @@ func (t *TL_dcOption) String() string {
 // config#9c840964
 type TL_config struct {
 	M_classID                    int32
-	M_flags                      TLObject
+	M_flags                      uint32
 	M_phonecalls_enabled         TLObject
 	M_default_p2p_contacts       TLObject
 	M_date                       int32
@@ -19240,15 +20812,15 @@ type TL_config struct {
 	M_stickers_recent_limit      int32
 	M_stickers_faved_limit       int32
 	M_channels_read_media_period int32
-	M_tmp_sessions               TLObject
+	M_tmp_sessions               int32
 	M_pinned_dialogs_count_max   int32
 	M_call_receive_timeout_ms    int32
 	M_call_ring_timeout_ms       int32
 	M_call_connect_timeout_ms    int32
 	M_call_packet_timeout_ms     int32
 	M_me_url_prefix              string
-	M_suggested_lang_code        TLObject
-	M_lang_pack_version          TLObject
+	M_suggested_lang_code        string
+	M_lang_pack_version          int32
 	M_disabled_features          []TLObject
 }
 
@@ -19256,11 +20828,11 @@ func (t *TL_config) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_config) Set_flags(M_flags TLObject) {
+func (t *TL_config) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_config) Get_flags() TLObject {
+func (t *TL_config) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -19464,11 +21036,11 @@ func (t *TL_config) Get_channels_read_media_period() int32 {
 	return t.M_channels_read_media_period
 }
 
-func (t *TL_config) Set_tmp_sessions(M_tmp_sessions TLObject) {
+func (t *TL_config) Set_tmp_sessions(M_tmp_sessions int32) {
 	t.M_tmp_sessions = M_tmp_sessions
 }
 
-func (t *TL_config) Get_tmp_sessions() TLObject {
+func (t *TL_config) Get_tmp_sessions() int32 {
 	return t.M_tmp_sessions
 }
 
@@ -19520,19 +21092,19 @@ func (t *TL_config) Get_me_url_prefix() string {
 	return t.M_me_url_prefix
 }
 
-func (t *TL_config) Set_suggested_lang_code(M_suggested_lang_code TLObject) {
+func (t *TL_config) Set_suggested_lang_code(M_suggested_lang_code string) {
 	t.M_suggested_lang_code = M_suggested_lang_code
 }
 
-func (t *TL_config) Get_suggested_lang_code() TLObject {
+func (t *TL_config) Get_suggested_lang_code() string {
 	return t.M_suggested_lang_code
 }
 
-func (t *TL_config) Set_lang_pack_version(M_lang_pack_version TLObject) {
+func (t *TL_config) Set_lang_pack_version(M_lang_pack_version int32) {
 	t.M_lang_pack_version = M_lang_pack_version
 }
 
-func (t *TL_config) Get_lang_pack_version() TLObject {
+func (t *TL_config) Get_lang_pack_version() int32 {
 	return t.M_lang_pack_version
 }
 
@@ -19554,8 +21126,36 @@ func (t *TL_config) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_config))
-	ec.TLObject(t.Get_phonecalls_enabled())
-	ec.TLObject(t.Get_default_p2p_contacts())
+
+	var flags uint32 = 0
+	if t.M_phonecalls_enabled != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_default_p2p_contacts != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_tmp_sessions != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_suggested_lang_code != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_lang_pack_version != 0 {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_phonecalls_enabled != nil {
+		ec.TLObject(t.Get_phonecalls_enabled())
+	}
+	if t.M_default_p2p_contacts != nil {
+		ec.TLObject(t.Get_default_p2p_contacts())
+	}
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_expires())
 	ec.TLObject(t.Get_test_mode())
@@ -19579,15 +21179,21 @@ func (t *TL_config) Encode() []byte {
 	ec.Int(t.Get_stickers_recent_limit())
 	ec.Int(t.Get_stickers_faved_limit())
 	ec.Int(t.Get_channels_read_media_period())
-	ec.TLObject(t.Get_tmp_sessions())
+	if t.M_tmp_sessions != 0 {
+		ec.Int(t.Get_tmp_sessions())
+	}
 	ec.Int(t.Get_pinned_dialogs_count_max())
 	ec.Int(t.Get_call_receive_timeout_ms())
 	ec.Int(t.Get_call_ring_timeout_ms())
 	ec.Int(t.Get_call_connect_timeout_ms())
 	ec.Int(t.Get_call_packet_timeout_ms())
 	ec.String(t.Get_me_url_prefix())
-	ec.TLObject(t.Get_suggested_lang_code())
-	ec.TLObject(t.Get_lang_pack_version())
+	if t.M_suggested_lang_code != "" {
+		ec.String(t.Get_suggested_lang_code())
+	}
+	if t.M_lang_pack_version != 0 {
+		ec.Int(t.Get_lang_pack_version())
+	}
 	ec.Vector(t.Get_disabled_features())
 
 	return ec.GetBuffer()
@@ -19596,8 +21202,13 @@ func (t *TL_config) Encode() []byte {
 func (t *TL_config) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_phonecalls_enabled = dc.TLObject()
-	t.M_default_p2p_contacts = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_phonecalls_enabled = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_default_p2p_contacts = dc.TLObject()
+	}
 	t.M_date = dc.Int()
 	t.M_expires = dc.Int()
 	t.M_test_mode = dc.TLObject()
@@ -19621,15 +21232,21 @@ func (t *TL_config) Decode(b []byte) error {
 	t.M_stickers_recent_limit = dc.Int()
 	t.M_stickers_faved_limit = dc.Int()
 	t.M_channels_read_media_period = dc.Int()
-	t.M_tmp_sessions = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_tmp_sessions = dc.Int()
+	}
 	t.M_pinned_dialogs_count_max = dc.Int()
 	t.M_call_receive_timeout_ms = dc.Int()
 	t.M_call_ring_timeout_ms = dc.Int()
 	t.M_call_connect_timeout_ms = dc.Int()
 	t.M_call_packet_timeout_ms = dc.Int()
 	t.M_me_url_prefix = dc.String()
-	t.M_suggested_lang_code = dc.TLObject()
-	t.M_lang_pack_version = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_suggested_lang_code = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_lang_pack_version = dc.Int()
+	}
 	t.M_disabled_features = dc.Vector()
 
 	return dc.err
@@ -22853,7 +24470,7 @@ func (t *TL_documentAttributeAnimated) String() string {
 // documentAttributeSticker#6319d612
 type TL_documentAttributeSticker struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_mask        TLObject
 	M_alt         string
 	M_stickerset  TLObject
@@ -22864,11 +24481,11 @@ func (t *TL_documentAttributeSticker) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_documentAttributeSticker) Set_flags(M_flags TLObject) {
+func (t *TL_documentAttributeSticker) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_documentAttributeSticker) Get_flags() TLObject {
+func (t *TL_documentAttributeSticker) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -22914,10 +24531,26 @@ func (t *TL_documentAttributeSticker) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeSticker))
-	ec.TLObject(t.Get_mask())
+
+	var flags uint32 = 0
+	if t.M_mask != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_mask_coords != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_mask != nil {
+		ec.TLObject(t.Get_mask())
+	}
 	ec.String(t.Get_alt())
 	ec.TLObject(t.Get_stickerset())
-	ec.TLObject(t.Get_mask_coords())
+	if t.M_mask_coords != nil {
+		ec.TLObject(t.Get_mask_coords())
+	}
 
 	return ec.GetBuffer()
 }
@@ -22925,10 +24558,15 @@ func (t *TL_documentAttributeSticker) Encode() []byte {
 func (t *TL_documentAttributeSticker) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_mask = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_mask = dc.TLObject()
+	}
 	t.M_alt = dc.String()
 	t.M_stickerset = dc.TLObject()
-	t.M_mask_coords = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_mask_coords = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -22940,7 +24578,7 @@ func (t *TL_documentAttributeSticker) String() string {
 // documentAttributeVideo#ef02ce6
 type TL_documentAttributeVideo struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_round_message TLObject
 	M_duration      int32
 	M_w             int32
@@ -22951,11 +24589,11 @@ func (t *TL_documentAttributeVideo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_documentAttributeVideo) Set_flags(M_flags TLObject) {
+func (t *TL_documentAttributeVideo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_documentAttributeVideo) Get_flags() TLObject {
+func (t *TL_documentAttributeVideo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -23001,7 +24639,17 @@ func (t *TL_documentAttributeVideo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeVideo))
-	ec.TLObject(t.Get_round_message())
+
+	var flags uint32 = 0
+	if t.M_round_message != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_round_message != nil {
+		ec.TLObject(t.Get_round_message())
+	}
 	ec.Int(t.Get_duration())
 	ec.Int(t.Get_w())
 	ec.Int(t.Get_h())
@@ -23012,7 +24660,10 @@ func (t *TL_documentAttributeVideo) Encode() []byte {
 func (t *TL_documentAttributeVideo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_round_message = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_round_message = dc.TLObject()
+	}
 	t.M_duration = dc.Int()
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
@@ -23027,11 +24678,11 @@ func (t *TL_documentAttributeVideo) String() string {
 // documentAttributeAudio#9852f9c6
 type TL_documentAttributeAudio struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_voice     TLObject
 	M_duration  int32
-	M_title     TLObject
-	M_performer TLObject
+	M_title     string
+	M_performer string
 	M_waveform  TLObject
 }
 
@@ -23039,11 +24690,11 @@ func (t *TL_documentAttributeAudio) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_documentAttributeAudio) Set_flags(M_flags TLObject) {
+func (t *TL_documentAttributeAudio) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_documentAttributeAudio) Get_flags() TLObject {
+func (t *TL_documentAttributeAudio) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -23063,19 +24714,19 @@ func (t *TL_documentAttributeAudio) Get_duration() int32 {
 	return t.M_duration
 }
 
-func (t *TL_documentAttributeAudio) Set_title(M_title TLObject) {
+func (t *TL_documentAttributeAudio) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_documentAttributeAudio) Get_title() TLObject {
+func (t *TL_documentAttributeAudio) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_documentAttributeAudio) Set_performer(M_performer TLObject) {
+func (t *TL_documentAttributeAudio) Set_performer(M_performer string) {
 	t.M_performer = M_performer
 }
 
-func (t *TL_documentAttributeAudio) Get_performer() TLObject {
+func (t *TL_documentAttributeAudio) Get_performer() string {
 	return t.M_performer
 }
 
@@ -23097,11 +24748,39 @@ func (t *TL_documentAttributeAudio) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_documentAttributeAudio))
-	ec.TLObject(t.Get_voice())
+
+	var flags uint32 = 0
+	if t.M_voice != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_title != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_performer != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_waveform != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_voice != nil {
+		ec.TLObject(t.Get_voice())
+	}
 	ec.Int(t.Get_duration())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_performer())
-	ec.TLObject(t.Get_waveform())
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_performer != "" {
+		ec.String(t.Get_performer())
+	}
+	if t.M_waveform != nil {
+		ec.TLObject(t.Get_waveform())
+	}
 
 	return ec.GetBuffer()
 }
@@ -23109,11 +24788,20 @@ func (t *TL_documentAttributeAudio) Encode() []byte {
 func (t *TL_documentAttributeAudio) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_voice = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_voice = dc.TLObject()
+	}
 	t.M_duration = dc.Int()
-	t.M_title = dc.TLObject()
-	t.M_performer = dc.TLObject()
-	t.M_waveform = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_performer = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_waveform = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -23768,22 +25456,22 @@ func (t *TL_webPagePending) String() string {
 // webPage#5f07b4bc
 type TL_webPage struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_id           int64
 	M_url          string
 	M_display_url  string
 	M_hash         int32
-	M_type         TLObject
-	M_site_name    TLObject
-	M_title        TLObject
-	M_description  TLObject
+	M_type         string
+	M_site_name    string
+	M_title        string
+	M_description  string
 	M_photo        TLObject
-	M_embed_url    TLObject
-	M_embed_type   TLObject
-	M_embed_width  TLObject
-	M_embed_height TLObject
-	M_duration     TLObject
-	M_author       TLObject
+	M_embed_url    string
+	M_embed_type   string
+	M_embed_width  int32
+	M_embed_height int32
+	M_duration     int32
+	M_author       string
 	M_document     TLObject
 	M_cached_page  TLObject
 }
@@ -23792,11 +25480,11 @@ func (t *TL_webPage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_webPage) Set_flags(M_flags TLObject) {
+func (t *TL_webPage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_webPage) Get_flags() TLObject {
+func (t *TL_webPage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -23832,35 +25520,35 @@ func (t *TL_webPage) Get_hash() int32 {
 	return t.M_hash
 }
 
-func (t *TL_webPage) Set_type(M_type TLObject) {
+func (t *TL_webPage) Set_type(M_type string) {
 	t.M_type = M_type
 }
 
-func (t *TL_webPage) Get_type() TLObject {
+func (t *TL_webPage) Get_type() string {
 	return t.M_type
 }
 
-func (t *TL_webPage) Set_site_name(M_site_name TLObject) {
+func (t *TL_webPage) Set_site_name(M_site_name string) {
 	t.M_site_name = M_site_name
 }
 
-func (t *TL_webPage) Get_site_name() TLObject {
+func (t *TL_webPage) Get_site_name() string {
 	return t.M_site_name
 }
 
-func (t *TL_webPage) Set_title(M_title TLObject) {
+func (t *TL_webPage) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_webPage) Get_title() TLObject {
+func (t *TL_webPage) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_webPage) Set_description(M_description TLObject) {
+func (t *TL_webPage) Set_description(M_description string) {
 	t.M_description = M_description
 }
 
-func (t *TL_webPage) Get_description() TLObject {
+func (t *TL_webPage) Get_description() string {
 	return t.M_description
 }
 
@@ -23872,51 +25560,51 @@ func (t *TL_webPage) Get_photo() TLObject {
 	return t.M_photo
 }
 
-func (t *TL_webPage) Set_embed_url(M_embed_url TLObject) {
+func (t *TL_webPage) Set_embed_url(M_embed_url string) {
 	t.M_embed_url = M_embed_url
 }
 
-func (t *TL_webPage) Get_embed_url() TLObject {
+func (t *TL_webPage) Get_embed_url() string {
 	return t.M_embed_url
 }
 
-func (t *TL_webPage) Set_embed_type(M_embed_type TLObject) {
+func (t *TL_webPage) Set_embed_type(M_embed_type string) {
 	t.M_embed_type = M_embed_type
 }
 
-func (t *TL_webPage) Get_embed_type() TLObject {
+func (t *TL_webPage) Get_embed_type() string {
 	return t.M_embed_type
 }
 
-func (t *TL_webPage) Set_embed_width(M_embed_width TLObject) {
+func (t *TL_webPage) Set_embed_width(M_embed_width int32) {
 	t.M_embed_width = M_embed_width
 }
 
-func (t *TL_webPage) Get_embed_width() TLObject {
+func (t *TL_webPage) Get_embed_width() int32 {
 	return t.M_embed_width
 }
 
-func (t *TL_webPage) Set_embed_height(M_embed_height TLObject) {
+func (t *TL_webPage) Set_embed_height(M_embed_height int32) {
 	t.M_embed_height = M_embed_height
 }
 
-func (t *TL_webPage) Get_embed_height() TLObject {
+func (t *TL_webPage) Get_embed_height() int32 {
 	return t.M_embed_height
 }
 
-func (t *TL_webPage) Set_duration(M_duration TLObject) {
+func (t *TL_webPage) Set_duration(M_duration int32) {
 	t.M_duration = M_duration
 }
 
-func (t *TL_webPage) Get_duration() TLObject {
+func (t *TL_webPage) Get_duration() int32 {
 	return t.M_duration
 }
 
-func (t *TL_webPage) Set_author(M_author TLObject) {
+func (t *TL_webPage) Set_author(M_author string) {
 	t.M_author = M_author
 }
 
-func (t *TL_webPage) Get_author() TLObject {
+func (t *TL_webPage) Get_author() string {
 	return t.M_author
 }
 
@@ -23946,23 +25634,105 @@ func (t *TL_webPage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_webPage))
+
+	var flags uint32 = 0
+	if t.M_type != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_site_name != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_title != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_description != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_photo != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_embed_url != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_embed_type != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_embed_width != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_embed_height != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_duration != 0 {
+		flags |= 1 << 7
+	}
+
+	if t.M_author != "" {
+		flags |= 1 << 8
+	}
+
+	if t.M_document != nil {
+		flags |= 1 << 9
+	}
+
+	if t.M_cached_page != nil {
+		flags |= 1 << 10
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_id())
 	ec.String(t.Get_url())
 	ec.String(t.Get_display_url())
 	ec.Int(t.Get_hash())
-	ec.TLObject(t.Get_type())
-	ec.TLObject(t.Get_site_name())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_description())
-	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_embed_url())
-	ec.TLObject(t.Get_embed_type())
-	ec.TLObject(t.Get_embed_width())
-	ec.TLObject(t.Get_embed_height())
-	ec.TLObject(t.Get_duration())
-	ec.TLObject(t.Get_author())
-	ec.TLObject(t.Get_document())
-	ec.TLObject(t.Get_cached_page())
+	if t.M_type != "" {
+		ec.String(t.Get_type())
+	}
+	if t.M_site_name != "" {
+		ec.String(t.Get_site_name())
+	}
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_description != "" {
+		ec.String(t.Get_description())
+	}
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
+	if t.M_embed_url != "" {
+		ec.String(t.Get_embed_url())
+	}
+	if t.M_embed_type != "" {
+		ec.String(t.Get_embed_type())
+	}
+	if t.M_embed_width != 0 {
+		ec.Int(t.Get_embed_width())
+	}
+	if t.M_embed_height != 0 {
+		ec.Int(t.Get_embed_height())
+	}
+	if t.M_duration != 0 {
+		ec.Int(t.Get_duration())
+	}
+	if t.M_author != "" {
+		ec.String(t.Get_author())
+	}
+	if t.M_document != nil {
+		ec.TLObject(t.Get_document())
+	}
+	if t.M_cached_page != nil {
+		ec.TLObject(t.Get_cached_page())
+	}
 
 	return ec.GetBuffer()
 }
@@ -23970,23 +25740,50 @@ func (t *TL_webPage) Encode() []byte {
 func (t *TL_webPage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.Long()
 	t.M_url = dc.String()
 	t.M_display_url = dc.String()
 	t.M_hash = dc.Int()
-	t.M_type = dc.TLObject()
-	t.M_site_name = dc.TLObject()
-	t.M_title = dc.TLObject()
-	t.M_description = dc.TLObject()
-	t.M_photo = dc.TLObject()
-	t.M_embed_url = dc.TLObject()
-	t.M_embed_type = dc.TLObject()
-	t.M_embed_width = dc.TLObject()
-	t.M_embed_height = dc.TLObject()
-	t.M_duration = dc.TLObject()
-	t.M_author = dc.TLObject()
-	t.M_document = dc.TLObject()
-	t.M_cached_page = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_type = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_site_name = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_description = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_embed_url = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_embed_type = dc.String()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_embed_width = dc.Int()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_embed_height = dc.Int()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_duration = dc.Int()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_author = dc.String()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_document = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_cached_page = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -24441,22 +26238,22 @@ func (t *TL_account_passwordSettings) String() string {
 // account_passwordInputSettings#86916deb
 type TL_account_passwordInputSettings struct {
 	M_classID           int32
-	M_flags             TLObject
+	M_flags             uint32
 	M_new_salt          TLObject
 	M_new_password_hash TLObject
-	M_hint              TLObject
-	M_email             TLObject
+	M_hint              string
+	M_email             string
 }
 
 func (t *TL_account_passwordInputSettings) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_passwordInputSettings) Set_flags(M_flags TLObject) {
+func (t *TL_account_passwordInputSettings) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_account_passwordInputSettings) Get_flags() TLObject {
+func (t *TL_account_passwordInputSettings) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -24476,19 +26273,19 @@ func (t *TL_account_passwordInputSettings) Get_new_password_hash() TLObject {
 	return t.M_new_password_hash
 }
 
-func (t *TL_account_passwordInputSettings) Set_hint(M_hint TLObject) {
+func (t *TL_account_passwordInputSettings) Set_hint(M_hint string) {
 	t.M_hint = M_hint
 }
 
-func (t *TL_account_passwordInputSettings) Get_hint() TLObject {
+func (t *TL_account_passwordInputSettings) Get_hint() string {
 	return t.M_hint
 }
 
-func (t *TL_account_passwordInputSettings) Set_email(M_email TLObject) {
+func (t *TL_account_passwordInputSettings) Set_email(M_email string) {
 	t.M_email = M_email
 }
 
-func (t *TL_account_passwordInputSettings) Get_email() TLObject {
+func (t *TL_account_passwordInputSettings) Get_email() string {
 	return t.M_email
 }
 
@@ -24502,10 +26299,38 @@ func (t *TL_account_passwordInputSettings) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_passwordInputSettings))
-	ec.TLObject(t.Get_new_salt())
-	ec.TLObject(t.Get_new_password_hash())
-	ec.TLObject(t.Get_hint())
-	ec.TLObject(t.Get_email())
+
+	var flags uint32 = 0
+	if t.M_new_salt != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_new_password_hash != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_hint != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_email != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_new_salt != nil {
+		ec.TLObject(t.Get_new_salt())
+	}
+	if t.M_new_password_hash != nil {
+		ec.TLObject(t.Get_new_password_hash())
+	}
+	if t.M_hint != "" {
+		ec.String(t.Get_hint())
+	}
+	if t.M_email != "" {
+		ec.String(t.Get_email())
+	}
 
 	return ec.GetBuffer()
 }
@@ -24513,10 +26338,19 @@ func (t *TL_account_passwordInputSettings) Encode() []byte {
 func (t *TL_account_passwordInputSettings) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_new_salt = dc.TLObject()
-	t.M_new_password_hash = dc.TLObject()
-	t.M_hint = dc.TLObject()
-	t.M_email = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_new_salt = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_new_password_hash = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_hint = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_email = dc.String()
+	}
 
 	return dc.err
 }
@@ -24750,7 +26584,7 @@ func (t *TL_chatInviteAlready) String() string {
 // chatInvite#db74f558
 type TL_chatInvite struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_channel            TLObject
 	M_broadcast          TLObject
 	M_public             TLObject
@@ -24765,11 +26599,11 @@ func (t *TL_chatInvite) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_chatInvite) Set_flags(M_flags TLObject) {
+func (t *TL_chatInvite) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_chatInvite) Get_flags() TLObject {
+func (t *TL_chatInvite) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -24847,14 +26681,48 @@ func (t *TL_chatInvite) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_chatInvite))
-	ec.TLObject(t.Get_channel())
-	ec.TLObject(t.Get_broadcast())
-	ec.TLObject(t.Get_public())
-	ec.TLObject(t.Get_megagroup())
+
+	var flags uint32 = 0
+	if t.M_channel != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_broadcast != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_public != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_megagroup != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_participants != nil {
+		flags |= 1 << 4
+	}
+
+	ec.UInt(flags)
+
+	if t.M_channel != nil {
+		ec.TLObject(t.Get_channel())
+	}
+	if t.M_broadcast != nil {
+		ec.TLObject(t.Get_broadcast())
+	}
+	if t.M_public != nil {
+		ec.TLObject(t.Get_public())
+	}
+	if t.M_megagroup != nil {
+		ec.TLObject(t.Get_megagroup())
+	}
 	ec.String(t.Get_title())
 	ec.TLObject(t.Get_photo())
 	ec.Int(t.Get_participants_count())
-	ec.Vector(t.Get_participants())
+	if t.M_participants != nil {
+		ec.Vector(t.Get_participants())
+	}
 
 	return ec.GetBuffer()
 }
@@ -24862,14 +26730,25 @@ func (t *TL_chatInvite) Encode() []byte {
 func (t *TL_chatInvite) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_channel = dc.TLObject()
-	t.M_broadcast = dc.TLObject()
-	t.M_public = dc.TLObject()
-	t.M_megagroup = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_channel = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_broadcast = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_public = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_megagroup = dc.TLObject()
+	}
 	t.M_title = dc.String()
 	t.M_photo = dc.TLObject()
 	t.M_participants_count = dc.Int()
-	t.M_participants = dc.Vector()
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_participants = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -25013,7 +26892,7 @@ func (t *TL_inputStickerSetShortName) String() string {
 // stickerSet#cd303b41
 type TL_stickerSet struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_installed   TLObject
 	M_archived    TLObject
 	M_official    TLObject
@@ -25030,11 +26909,11 @@ func (t *TL_stickerSet) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_stickerSet) Set_flags(M_flags TLObject) {
+func (t *TL_stickerSet) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_stickerSet) Get_flags() TLObject {
+func (t *TL_stickerSet) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -25128,10 +27007,38 @@ func (t *TL_stickerSet) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickerSet))
-	ec.TLObject(t.Get_installed())
-	ec.TLObject(t.Get_archived())
-	ec.TLObject(t.Get_official())
-	ec.TLObject(t.Get_masks())
+
+	var flags uint32 = 0
+	if t.M_installed != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_archived != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_official != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_masks != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_installed != nil {
+		ec.TLObject(t.Get_installed())
+	}
+	if t.M_archived != nil {
+		ec.TLObject(t.Get_archived())
+	}
+	if t.M_official != nil {
+		ec.TLObject(t.Get_official())
+	}
+	if t.M_masks != nil {
+		ec.TLObject(t.Get_masks())
+	}
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.String(t.Get_title())
@@ -25145,10 +27052,19 @@ func (t *TL_stickerSet) Encode() []byte {
 func (t *TL_stickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_installed = dc.TLObject()
-	t.M_archived = dc.TLObject()
-	t.M_official = dc.TLObject()
-	t.M_masks = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_installed = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_archived = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_official = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_masks = dc.TLObject()
+	}
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_title = dc.String()
@@ -25603,7 +27519,7 @@ func (t *TL_keyboardButtonRequestGeoLocation) String() string {
 // keyboardButtonSwitchInline#568a748
 type TL_keyboardButtonSwitchInline struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_same_peer TLObject
 	M_text      string
 	M_query     string
@@ -25613,11 +27529,11 @@ func (t *TL_keyboardButtonSwitchInline) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_keyboardButtonSwitchInline) Set_flags(M_flags TLObject) {
+func (t *TL_keyboardButtonSwitchInline) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_keyboardButtonSwitchInline) Get_flags() TLObject {
+func (t *TL_keyboardButtonSwitchInline) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -25655,7 +27571,17 @@ func (t *TL_keyboardButtonSwitchInline) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_keyboardButtonSwitchInline))
-	ec.TLObject(t.Get_same_peer())
+
+	var flags uint32 = 0
+	if t.M_same_peer != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_same_peer != nil {
+		ec.TLObject(t.Get_same_peer())
+	}
 	ec.String(t.Get_text())
 	ec.String(t.Get_query())
 
@@ -25665,7 +27591,10 @@ func (t *TL_keyboardButtonSwitchInline) Encode() []byte {
 func (t *TL_keyboardButtonSwitchInline) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_same_peer = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_same_peer = dc.TLObject()
+	}
 	t.M_text = dc.String()
 	t.M_query = dc.String()
 
@@ -25814,7 +27743,7 @@ func (t *TL_keyboardButtonRow) String() string {
 // replyKeyboardHide#a03e5b85
 type TL_replyKeyboardHide struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_selective TLObject
 }
 
@@ -25822,11 +27751,11 @@ func (t *TL_replyKeyboardHide) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_replyKeyboardHide) Set_flags(M_flags TLObject) {
+func (t *TL_replyKeyboardHide) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_replyKeyboardHide) Get_flags() TLObject {
+func (t *TL_replyKeyboardHide) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -25848,7 +27777,17 @@ func (t *TL_replyKeyboardHide) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardHide))
-	ec.TLObject(t.Get_selective())
+
+	var flags uint32 = 0
+	if t.M_selective != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_selective != nil {
+		ec.TLObject(t.Get_selective())
+	}
 
 	return ec.GetBuffer()
 }
@@ -25856,7 +27795,10 @@ func (t *TL_replyKeyboardHide) Encode() []byte {
 func (t *TL_replyKeyboardHide) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_selective = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_selective = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -25868,7 +27810,7 @@ func (t *TL_replyKeyboardHide) String() string {
 // replyKeyboardForceReply#f4108aa0
 type TL_replyKeyboardForceReply struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_single_use TLObject
 	M_selective  TLObject
 }
@@ -25877,11 +27819,11 @@ func (t *TL_replyKeyboardForceReply) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_replyKeyboardForceReply) Set_flags(M_flags TLObject) {
+func (t *TL_replyKeyboardForceReply) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_replyKeyboardForceReply) Get_flags() TLObject {
+func (t *TL_replyKeyboardForceReply) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -25911,8 +27853,24 @@ func (t *TL_replyKeyboardForceReply) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardForceReply))
-	ec.TLObject(t.Get_single_use())
-	ec.TLObject(t.Get_selective())
+
+	var flags uint32 = 0
+	if t.M_single_use != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_selective != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_single_use != nil {
+		ec.TLObject(t.Get_single_use())
+	}
+	if t.M_selective != nil {
+		ec.TLObject(t.Get_selective())
+	}
 
 	return ec.GetBuffer()
 }
@@ -25920,8 +27878,13 @@ func (t *TL_replyKeyboardForceReply) Encode() []byte {
 func (t *TL_replyKeyboardForceReply) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_single_use = dc.TLObject()
-	t.M_selective = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_single_use = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_selective = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -25933,7 +27896,7 @@ func (t *TL_replyKeyboardForceReply) String() string {
 // replyKeyboardMarkup#3502758c
 type TL_replyKeyboardMarkup struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_resize     TLObject
 	M_single_use TLObject
 	M_selective  TLObject
@@ -25944,11 +27907,11 @@ func (t *TL_replyKeyboardMarkup) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_replyKeyboardMarkup) Set_flags(M_flags TLObject) {
+func (t *TL_replyKeyboardMarkup) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_replyKeyboardMarkup) Get_flags() TLObject {
+func (t *TL_replyKeyboardMarkup) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -25994,9 +27957,31 @@ func (t *TL_replyKeyboardMarkup) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_replyKeyboardMarkup))
-	ec.TLObject(t.Get_resize())
-	ec.TLObject(t.Get_single_use())
-	ec.TLObject(t.Get_selective())
+
+	var flags uint32 = 0
+	if t.M_resize != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_single_use != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_selective != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_resize != nil {
+		ec.TLObject(t.Get_resize())
+	}
+	if t.M_single_use != nil {
+		ec.TLObject(t.Get_single_use())
+	}
+	if t.M_selective != nil {
+		ec.TLObject(t.Get_selective())
+	}
 	ec.Vector(t.Get_rows())
 
 	return ec.GetBuffer()
@@ -26005,9 +27990,16 @@ func (t *TL_replyKeyboardMarkup) Encode() []byte {
 func (t *TL_replyKeyboardMarkup) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_resize = dc.TLObject()
-	t.M_single_use = dc.TLObject()
-	t.M_selective = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_resize = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_single_use = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_selective = dc.TLObject()
+	}
 	t.M_rows = dc.Vector()
 
 	return dc.err
@@ -27047,21 +29039,21 @@ func (t *TL_messageRange) String() string {
 // updates_channelDifferenceEmpty#3e11affb
 type TL_updates_channelDifferenceEmpty struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_final   TLObject
 	M_pts     int32
-	M_timeout TLObject
+	M_timeout int32
 }
 
 func (t *TL_updates_channelDifferenceEmpty) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Set_flags(M_flags TLObject) {
+func (t *TL_updates_channelDifferenceEmpty) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Get_flags() TLObject {
+func (t *TL_updates_channelDifferenceEmpty) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27081,11 +29073,11 @@ func (t *TL_updates_channelDifferenceEmpty) Get_pts() int32 {
 	return t.M_pts
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Set_timeout(M_timeout TLObject) {
+func (t *TL_updates_channelDifferenceEmpty) Set_timeout(M_timeout int32) {
 	t.M_timeout = M_timeout
 }
 
-func (t *TL_updates_channelDifferenceEmpty) Get_timeout() TLObject {
+func (t *TL_updates_channelDifferenceEmpty) Get_timeout() int32 {
 	return t.M_timeout
 }
 
@@ -27099,9 +29091,25 @@ func (t *TL_updates_channelDifferenceEmpty) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifferenceEmpty))
-	ec.TLObject(t.Get_final())
+
+	var flags uint32 = 0
+	if t.M_final != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_timeout != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_final != nil {
+		ec.TLObject(t.Get_final())
+	}
 	ec.Int(t.Get_pts())
-	ec.TLObject(t.Get_timeout())
+	if t.M_timeout != 0 {
+		ec.Int(t.Get_timeout())
+	}
 
 	return ec.GetBuffer()
 }
@@ -27109,9 +29117,14 @@ func (t *TL_updates_channelDifferenceEmpty) Encode() []byte {
 func (t *TL_updates_channelDifferenceEmpty) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_final = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_final = dc.TLObject()
+	}
 	t.M_pts = dc.Int()
-	t.M_timeout = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_timeout = dc.Int()
+	}
 
 	return dc.err
 }
@@ -27123,10 +29136,10 @@ func (t *TL_updates_channelDifferenceEmpty) String() string {
 // updates_channelDifferenceTooLong#6a9d7b35
 type TL_updates_channelDifferenceTooLong struct {
 	M_classID               int32
-	M_flags                 TLObject
+	M_flags                 uint32
 	M_final                 TLObject
 	M_pts                   int32
-	M_timeout               TLObject
+	M_timeout               int32
 	M_top_message           int32
 	M_read_inbox_max_id     int32
 	M_read_outbox_max_id    int32
@@ -27141,11 +29154,11 @@ func (t *TL_updates_channelDifferenceTooLong) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_flags(M_flags TLObject) {
+func (t *TL_updates_channelDifferenceTooLong) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_flags() TLObject {
+func (t *TL_updates_channelDifferenceTooLong) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27165,11 +29178,11 @@ func (t *TL_updates_channelDifferenceTooLong) Get_pts() int32 {
 	return t.M_pts
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Set_timeout(M_timeout TLObject) {
+func (t *TL_updates_channelDifferenceTooLong) Set_timeout(M_timeout int32) {
 	t.M_timeout = M_timeout
 }
 
-func (t *TL_updates_channelDifferenceTooLong) Get_timeout() TLObject {
+func (t *TL_updates_channelDifferenceTooLong) Get_timeout() int32 {
 	return t.M_timeout
 }
 
@@ -27247,9 +29260,25 @@ func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifferenceTooLong))
-	ec.TLObject(t.Get_final())
+
+	var flags uint32 = 0
+	if t.M_final != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_timeout != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_final != nil {
+		ec.TLObject(t.Get_final())
+	}
 	ec.Int(t.Get_pts())
-	ec.TLObject(t.Get_timeout())
+	if t.M_timeout != 0 {
+		ec.Int(t.Get_timeout())
+	}
 	ec.Int(t.Get_top_message())
 	ec.Int(t.Get_read_inbox_max_id())
 	ec.Int(t.Get_read_outbox_max_id())
@@ -27265,9 +29294,14 @@ func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
 func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_final = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_final = dc.TLObject()
+	}
 	t.M_pts = dc.Int()
-	t.M_timeout = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_timeout = dc.Int()
+	}
 	t.M_top_message = dc.Int()
 	t.M_read_inbox_max_id = dc.Int()
 	t.M_read_outbox_max_id = dc.Int()
@@ -27287,10 +29321,10 @@ func (t *TL_updates_channelDifferenceTooLong) String() string {
 // updates_channelDifference#2064674e
 type TL_updates_channelDifference struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_final         TLObject
 	M_pts           int32
-	M_timeout       TLObject
+	M_timeout       int32
 	M_new_messages  []TLObject
 	M_other_updates []TLObject
 	M_chats         []TLObject
@@ -27301,11 +29335,11 @@ func (t *TL_updates_channelDifference) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_channelDifference) Set_flags(M_flags TLObject) {
+func (t *TL_updates_channelDifference) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updates_channelDifference) Get_flags() TLObject {
+func (t *TL_updates_channelDifference) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27325,11 +29359,11 @@ func (t *TL_updates_channelDifference) Get_pts() int32 {
 	return t.M_pts
 }
 
-func (t *TL_updates_channelDifference) Set_timeout(M_timeout TLObject) {
+func (t *TL_updates_channelDifference) Set_timeout(M_timeout int32) {
 	t.M_timeout = M_timeout
 }
 
-func (t *TL_updates_channelDifference) Get_timeout() TLObject {
+func (t *TL_updates_channelDifference) Get_timeout() int32 {
 	return t.M_timeout
 }
 
@@ -27375,9 +29409,25 @@ func (t *TL_updates_channelDifference) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_channelDifference))
-	ec.TLObject(t.Get_final())
+
+	var flags uint32 = 0
+	if t.M_final != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_timeout != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_final != nil {
+		ec.TLObject(t.Get_final())
+	}
 	ec.Int(t.Get_pts())
-	ec.TLObject(t.Get_timeout())
+	if t.M_timeout != 0 {
+		ec.Int(t.Get_timeout())
+	}
 	ec.Vector(t.Get_new_messages())
 	ec.Vector(t.Get_other_updates())
 	ec.Vector(t.Get_chats())
@@ -27389,9 +29439,14 @@ func (t *TL_updates_channelDifference) Encode() []byte {
 func (t *TL_updates_channelDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_final = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_final = dc.TLObject()
+	}
 	t.M_pts = dc.Int()
-	t.M_timeout = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_timeout = dc.Int()
+	}
 	t.M_new_messages = dc.Vector()
 	t.M_other_updates = dc.Vector()
 	t.M_chats = dc.Vector()
@@ -27438,7 +29493,7 @@ func (t *TL_channelMessagesFilterEmpty) String() string {
 // channelMessagesFilter#cd77d957
 type TL_channelMessagesFilter struct {
 	M_classID              int32
-	M_flags                TLObject
+	M_flags                uint32
 	M_exclude_new_messages TLObject
 	M_ranges               []TLObject
 }
@@ -27447,11 +29502,11 @@ func (t *TL_channelMessagesFilter) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelMessagesFilter) Set_flags(M_flags TLObject) {
+func (t *TL_channelMessagesFilter) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelMessagesFilter) Get_flags() TLObject {
+func (t *TL_channelMessagesFilter) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27481,7 +29536,17 @@ func (t *TL_channelMessagesFilter) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelMessagesFilter))
-	ec.TLObject(t.Get_exclude_new_messages())
+
+	var flags uint32 = 0
+	if t.M_exclude_new_messages != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_exclude_new_messages != nil {
+		ec.TLObject(t.Get_exclude_new_messages())
+	}
 	ec.Vector(t.Get_ranges())
 
 	return ec.GetBuffer()
@@ -27490,7 +29555,10 @@ func (t *TL_channelMessagesFilter) Encode() []byte {
 func (t *TL_channelMessagesFilter) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_exclude_new_messages = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_exclude_new_messages = dc.TLObject()
+	}
 	t.M_ranges = dc.Vector()
 
 	return dc.err
@@ -27671,7 +29739,7 @@ func (t *TL_channelParticipantCreator) String() string {
 // channelParticipantAdmin#a82fa898
 type TL_channelParticipantAdmin struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_can_edit     TLObject
 	M_user_id      int32
 	M_inviter_id   int32
@@ -27684,11 +29752,11 @@ func (t *TL_channelParticipantAdmin) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelParticipantAdmin) Set_flags(M_flags TLObject) {
+func (t *TL_channelParticipantAdmin) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelParticipantAdmin) Get_flags() TLObject {
+func (t *TL_channelParticipantAdmin) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27750,7 +29818,17 @@ func (t *TL_channelParticipantAdmin) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantAdmin))
-	ec.TLObject(t.Get_can_edit())
+
+	var flags uint32 = 0
+	if t.M_can_edit != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_can_edit != nil {
+		ec.TLObject(t.Get_can_edit())
+	}
 	ec.Int(t.Get_user_id())
 	ec.Int(t.Get_inviter_id())
 	ec.Int(t.Get_promoted_by())
@@ -27763,7 +29841,10 @@ func (t *TL_channelParticipantAdmin) Encode() []byte {
 func (t *TL_channelParticipantAdmin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_can_edit = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_can_edit = dc.TLObject()
+	}
 	t.M_user_id = dc.Int()
 	t.M_inviter_id = dc.Int()
 	t.M_promoted_by = dc.Int()
@@ -27780,7 +29861,7 @@ func (t *TL_channelParticipantAdmin) String() string {
 // channelParticipantBanned#222c1886
 type TL_channelParticipantBanned struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_left          TLObject
 	M_user_id       int32
 	M_kicked_by     int32
@@ -27792,11 +29873,11 @@ func (t *TL_channelParticipantBanned) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelParticipantBanned) Set_flags(M_flags TLObject) {
+func (t *TL_channelParticipantBanned) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelParticipantBanned) Get_flags() TLObject {
+func (t *TL_channelParticipantBanned) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -27850,7 +29931,17 @@ func (t *TL_channelParticipantBanned) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelParticipantBanned))
-	ec.TLObject(t.Get_left())
+
+	var flags uint32 = 0
+	if t.M_left != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_left != nil {
+		ec.TLObject(t.Get_left())
+	}
 	ec.Int(t.Get_user_id())
 	ec.Int(t.Get_kicked_by())
 	ec.Int(t.Get_date())
@@ -27862,7 +29953,10 @@ func (t *TL_channelParticipantBanned) Encode() []byte {
 func (t *TL_channelParticipantBanned) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_left = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_left = dc.TLObject()
+	}
 	t.M_user_id = dc.Int()
 	t.M_kicked_by = dc.Int()
 	t.M_date = dc.Int()
@@ -28615,7 +30709,7 @@ func (t *TL_messages_savedGifs) String() string {
 // inputBotInlineMessageMediaAuto#292fed13
 type TL_inputBotInlineMessageMediaAuto struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_caption      string
 	M_reply_markup TLObject
 }
@@ -28624,11 +30718,11 @@ func (t *TL_inputBotInlineMessageMediaAuto) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageMediaAuto) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageMediaAuto) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageMediaAuto) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -28658,8 +30752,18 @@ func (t *TL_inputBotInlineMessageMediaAuto) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaAuto))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -28667,8 +30771,11 @@ func (t *TL_inputBotInlineMessageMediaAuto) Encode() []byte {
 func (t *TL_inputBotInlineMessageMediaAuto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_caption = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -28680,7 +30787,7 @@ func (t *TL_inputBotInlineMessageMediaAuto) String() string {
 // inputBotInlineMessageText#3dcd7a87
 type TL_inputBotInlineMessageText struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_no_webpage   TLObject
 	M_message      string
 	M_entities     []TLObject
@@ -28691,11 +30798,11 @@ func (t *TL_inputBotInlineMessageText) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageText) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageText) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageText) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageText) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -28741,10 +30848,32 @@ func (t *TL_inputBotInlineMessageText) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageText))
-	ec.TLObject(t.Get_no_webpage())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
 	ec.String(t.Get_message())
-	ec.Vector(t.Get_entities())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -28752,10 +30881,17 @@ func (t *TL_inputBotInlineMessageText) Encode() []byte {
 func (t *TL_inputBotInlineMessageText) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
 	t.M_message = dc.String()
-	t.M_entities = dc.Vector()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_entities = dc.Vector()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -28767,7 +30903,7 @@ func (t *TL_inputBotInlineMessageText) String() string {
 // inputBotInlineMessageMediaGeo#c1b15d65
 type TL_inputBotInlineMessageMediaGeo struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_geo_point    TLObject
 	M_period       int32
 	M_reply_markup TLObject
@@ -28777,11 +30913,11 @@ func (t *TL_inputBotInlineMessageMediaGeo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageMediaGeo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageMediaGeo) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageMediaGeo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -28819,9 +30955,19 @@ func (t *TL_inputBotInlineMessageMediaGeo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaGeo))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_geo_point())
 	ec.Int(t.Get_period())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -28829,9 +30975,12 @@ func (t *TL_inputBotInlineMessageMediaGeo) Encode() []byte {
 func (t *TL_inputBotInlineMessageMediaGeo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_geo_point = dc.TLObject()
 	t.M_period = dc.Int()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -28843,7 +30992,7 @@ func (t *TL_inputBotInlineMessageMediaGeo) String() string {
 // inputBotInlineMessageMediaVenue#aaafadc8
 type TL_inputBotInlineMessageMediaVenue struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_geo_point    TLObject
 	M_title        string
 	M_address      string
@@ -28856,11 +31005,11 @@ func (t *TL_inputBotInlineMessageMediaVenue) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageMediaVenue) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageMediaVenue) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageMediaVenue) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -28922,12 +31071,22 @@ func (t *TL_inputBotInlineMessageMediaVenue) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaVenue))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_geo_point())
 	ec.String(t.Get_title())
 	ec.String(t.Get_address())
 	ec.String(t.Get_provider())
 	ec.String(t.Get_venue_id())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -28935,12 +31094,15 @@ func (t *TL_inputBotInlineMessageMediaVenue) Encode() []byte {
 func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_geo_point = dc.TLObject()
 	t.M_title = dc.String()
 	t.M_address = dc.String()
 	t.M_provider = dc.String()
 	t.M_venue_id = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -28952,7 +31114,7 @@ func (t *TL_inputBotInlineMessageMediaVenue) String() string {
 // inputBotInlineMessageMediaContact#2daf01a7
 type TL_inputBotInlineMessageMediaContact struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_phone_number string
 	M_first_name   string
 	M_last_name    string
@@ -28963,11 +31125,11 @@ func (t *TL_inputBotInlineMessageMediaContact) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageMediaContact) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageMediaContact) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageMediaContact) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29013,10 +31175,20 @@ func (t *TL_inputBotInlineMessageMediaContact) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageMediaContact))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_phone_number())
 	ec.String(t.Get_first_name())
 	ec.String(t.Get_last_name())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29024,10 +31196,13 @@ func (t *TL_inputBotInlineMessageMediaContact) Encode() []byte {
 func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_phone_number = dc.String()
 	t.M_first_name = dc.String()
 	t.M_last_name = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29039,7 +31214,7 @@ func (t *TL_inputBotInlineMessageMediaContact) String() string {
 // inputBotInlineMessageGame#4b425864
 type TL_inputBotInlineMessageGame struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_reply_markup TLObject
 }
 
@@ -29047,11 +31222,11 @@ func (t *TL_inputBotInlineMessageGame) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineMessageGame) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineMessageGame) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineMessageGame) Get_flags() TLObject {
+func (t *TL_inputBotInlineMessageGame) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29073,7 +31248,17 @@ func (t *TL_inputBotInlineMessageGame) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineMessageGame))
-	ec.TLObject(t.Get_reply_markup())
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29081,7 +31266,10 @@ func (t *TL_inputBotInlineMessageGame) Encode() []byte {
 func (t *TL_inputBotInlineMessageGame) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_reply_markup = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29093,18 +31281,18 @@ func (t *TL_inputBotInlineMessageGame) String() string {
 // inputBotInlineResult#2cbbe15a
 type TL_inputBotInlineResult struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_id           string
 	M_type         string
-	M_title        TLObject
-	M_description  TLObject
-	M_url          TLObject
-	M_thumb_url    TLObject
-	M_content_url  TLObject
-	M_content_type TLObject
-	M_w            TLObject
-	M_h            TLObject
-	M_duration     TLObject
+	M_title        string
+	M_description  string
+	M_url          string
+	M_thumb_url    string
+	M_content_url  string
+	M_content_type string
+	M_w            int32
+	M_h            int32
+	M_duration     int32
 	M_send_message TLObject
 }
 
@@ -29112,11 +31300,11 @@ func (t *TL_inputBotInlineResult) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineResult) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineResult) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineResult) Get_flags() TLObject {
+func (t *TL_inputBotInlineResult) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29136,75 +31324,75 @@ func (t *TL_inputBotInlineResult) Get_type() string {
 	return t.M_type
 }
 
-func (t *TL_inputBotInlineResult) Set_title(M_title TLObject) {
+func (t *TL_inputBotInlineResult) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_inputBotInlineResult) Get_title() TLObject {
+func (t *TL_inputBotInlineResult) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_inputBotInlineResult) Set_description(M_description TLObject) {
+func (t *TL_inputBotInlineResult) Set_description(M_description string) {
 	t.M_description = M_description
 }
 
-func (t *TL_inputBotInlineResult) Get_description() TLObject {
+func (t *TL_inputBotInlineResult) Get_description() string {
 	return t.M_description
 }
 
-func (t *TL_inputBotInlineResult) Set_url(M_url TLObject) {
+func (t *TL_inputBotInlineResult) Set_url(M_url string) {
 	t.M_url = M_url
 }
 
-func (t *TL_inputBotInlineResult) Get_url() TLObject {
+func (t *TL_inputBotInlineResult) Get_url() string {
 	return t.M_url
 }
 
-func (t *TL_inputBotInlineResult) Set_thumb_url(M_thumb_url TLObject) {
+func (t *TL_inputBotInlineResult) Set_thumb_url(M_thumb_url string) {
 	t.M_thumb_url = M_thumb_url
 }
 
-func (t *TL_inputBotInlineResult) Get_thumb_url() TLObject {
+func (t *TL_inputBotInlineResult) Get_thumb_url() string {
 	return t.M_thumb_url
 }
 
-func (t *TL_inputBotInlineResult) Set_content_url(M_content_url TLObject) {
+func (t *TL_inputBotInlineResult) Set_content_url(M_content_url string) {
 	t.M_content_url = M_content_url
 }
 
-func (t *TL_inputBotInlineResult) Get_content_url() TLObject {
+func (t *TL_inputBotInlineResult) Get_content_url() string {
 	return t.M_content_url
 }
 
-func (t *TL_inputBotInlineResult) Set_content_type(M_content_type TLObject) {
+func (t *TL_inputBotInlineResult) Set_content_type(M_content_type string) {
 	t.M_content_type = M_content_type
 }
 
-func (t *TL_inputBotInlineResult) Get_content_type() TLObject {
+func (t *TL_inputBotInlineResult) Get_content_type() string {
 	return t.M_content_type
 }
 
-func (t *TL_inputBotInlineResult) Set_w(M_w TLObject) {
+func (t *TL_inputBotInlineResult) Set_w(M_w int32) {
 	t.M_w = M_w
 }
 
-func (t *TL_inputBotInlineResult) Get_w() TLObject {
+func (t *TL_inputBotInlineResult) Get_w() int32 {
 	return t.M_w
 }
 
-func (t *TL_inputBotInlineResult) Set_h(M_h TLObject) {
+func (t *TL_inputBotInlineResult) Set_h(M_h int32) {
 	t.M_h = M_h
 }
 
-func (t *TL_inputBotInlineResult) Get_h() TLObject {
+func (t *TL_inputBotInlineResult) Get_h() int32 {
 	return t.M_h
 }
 
-func (t *TL_inputBotInlineResult) Set_duration(M_duration TLObject) {
+func (t *TL_inputBotInlineResult) Set_duration(M_duration int32) {
 	t.M_duration = M_duration
 }
 
-func (t *TL_inputBotInlineResult) Get_duration() TLObject {
+func (t *TL_inputBotInlineResult) Get_duration() int32 {
 	return t.M_duration
 }
 
@@ -29226,17 +31414,75 @@ func (t *TL_inputBotInlineResult) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResult))
+
+	var flags uint32 = 0
+	if t.M_title != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_description != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_url != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_thumb_url != "" {
+		flags |= 1 << 4
+	}
+
+	if t.M_content_url != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_content_type != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_w != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_h != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_duration != 0 {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_description())
-	ec.TLObject(t.Get_url())
-	ec.TLObject(t.Get_thumb_url())
-	ec.TLObject(t.Get_content_url())
-	ec.TLObject(t.Get_content_type())
-	ec.TLObject(t.Get_w())
-	ec.TLObject(t.Get_h())
-	ec.TLObject(t.Get_duration())
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_description != "" {
+		ec.String(t.Get_description())
+	}
+	if t.M_url != "" {
+		ec.String(t.Get_url())
+	}
+	if t.M_thumb_url != "" {
+		ec.String(t.Get_thumb_url())
+	}
+	if t.M_content_url != "" {
+		ec.String(t.Get_content_url())
+	}
+	if t.M_content_type != "" {
+		ec.String(t.Get_content_type())
+	}
+	if t.M_w != 0 {
+		ec.Int(t.Get_w())
+	}
+	if t.M_h != 0 {
+		ec.Int(t.Get_h())
+	}
+	if t.M_duration != 0 {
+		ec.Int(t.Get_duration())
+	}
 	ec.TLObject(t.Get_send_message())
 
 	return ec.GetBuffer()
@@ -29245,17 +31491,36 @@ func (t *TL_inputBotInlineResult) Encode() []byte {
 func (t *TL_inputBotInlineResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.String()
 	t.M_type = dc.String()
-	t.M_title = dc.TLObject()
-	t.M_description = dc.TLObject()
-	t.M_url = dc.TLObject()
-	t.M_thumb_url = dc.TLObject()
-	t.M_content_url = dc.TLObject()
-	t.M_content_type = dc.TLObject()
-	t.M_w = dc.TLObject()
-	t.M_h = dc.TLObject()
-	t.M_duration = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_description = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_url = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_thumb_url = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_content_url = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_content_type = dc.String()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_w = dc.Int()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_h = dc.Int()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_duration = dc.Int()
+	}
 	t.M_send_message = dc.TLObject()
 
 	return dc.err
@@ -29346,11 +31611,11 @@ func (t *TL_inputBotInlineResultPhoto) String() string {
 // inputBotInlineResultDocument#fff8fdc4
 type TL_inputBotInlineResultDocument struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_id           string
 	M_type         string
-	M_title        TLObject
-	M_description  TLObject
+	M_title        string
+	M_description  string
 	M_document     TLObject
 	M_send_message TLObject
 }
@@ -29359,11 +31624,11 @@ func (t *TL_inputBotInlineResultDocument) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_flags(M_flags TLObject) {
+func (t *TL_inputBotInlineResultDocument) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_flags() TLObject {
+func (t *TL_inputBotInlineResultDocument) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29383,19 +31648,19 @@ func (t *TL_inputBotInlineResultDocument) Get_type() string {
 	return t.M_type
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_title(M_title TLObject) {
+func (t *TL_inputBotInlineResultDocument) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_title() TLObject {
+func (t *TL_inputBotInlineResultDocument) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_inputBotInlineResultDocument) Set_description(M_description TLObject) {
+func (t *TL_inputBotInlineResultDocument) Set_description(M_description string) {
 	t.M_description = M_description
 }
 
-func (t *TL_inputBotInlineResultDocument) Get_description() TLObject {
+func (t *TL_inputBotInlineResultDocument) Get_description() string {
 	return t.M_description
 }
 
@@ -29425,10 +31690,26 @@ func (t *TL_inputBotInlineResultDocument) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputBotInlineResultDocument))
+
+	var flags uint32 = 0
+	if t.M_title != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_description != "" {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_description())
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_description != "" {
+		ec.String(t.Get_description())
+	}
 	ec.TLObject(t.Get_document())
 	ec.TLObject(t.Get_send_message())
 
@@ -29438,10 +31719,15 @@ func (t *TL_inputBotInlineResultDocument) Encode() []byte {
 func (t *TL_inputBotInlineResultDocument) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.String()
 	t.M_type = dc.String()
-	t.M_title = dc.TLObject()
-	t.M_description = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_description = dc.String()
+	}
 	t.M_document = dc.TLObject()
 	t.M_send_message = dc.TLObject()
 
@@ -29522,7 +31808,7 @@ func (t *TL_inputBotInlineResultGame) String() string {
 // botInlineMessageMediaAuto#a74b15b
 type TL_botInlineMessageMediaAuto struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_caption      string
 	M_reply_markup TLObject
 }
@@ -29531,11 +31817,11 @@ func (t *TL_botInlineMessageMediaAuto) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMessageMediaAuto) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMessageMediaAuto) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMessageMediaAuto) Get_flags() TLObject {
+func (t *TL_botInlineMessageMediaAuto) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29565,8 +31851,18 @@ func (t *TL_botInlineMessageMediaAuto) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaAuto))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_caption())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29574,8 +31870,11 @@ func (t *TL_botInlineMessageMediaAuto) Encode() []byte {
 func (t *TL_botInlineMessageMediaAuto) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_caption = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29587,7 +31886,7 @@ func (t *TL_botInlineMessageMediaAuto) String() string {
 // botInlineMessageText#8c7f65e2
 type TL_botInlineMessageText struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_no_webpage   TLObject
 	M_message      string
 	M_entities     []TLObject
@@ -29598,11 +31897,11 @@ func (t *TL_botInlineMessageText) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMessageText) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMessageText) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMessageText) Get_flags() TLObject {
+func (t *TL_botInlineMessageText) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29648,10 +31947,32 @@ func (t *TL_botInlineMessageText) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageText))
-	ec.TLObject(t.Get_no_webpage())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
 	ec.String(t.Get_message())
-	ec.Vector(t.Get_entities())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29659,10 +31980,17 @@ func (t *TL_botInlineMessageText) Encode() []byte {
 func (t *TL_botInlineMessageText) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
 	t.M_message = dc.String()
-	t.M_entities = dc.Vector()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_entities = dc.Vector()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29674,7 +32002,7 @@ func (t *TL_botInlineMessageText) String() string {
 // botInlineMessageMediaGeo#b722de65
 type TL_botInlineMessageMediaGeo struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_geo          TLObject
 	M_period       int32
 	M_reply_markup TLObject
@@ -29684,11 +32012,11 @@ func (t *TL_botInlineMessageMediaGeo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMessageMediaGeo) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMessageMediaGeo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMessageMediaGeo) Get_flags() TLObject {
+func (t *TL_botInlineMessageMediaGeo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29726,9 +32054,19 @@ func (t *TL_botInlineMessageMediaGeo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaGeo))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_geo())
 	ec.Int(t.Get_period())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29736,9 +32074,12 @@ func (t *TL_botInlineMessageMediaGeo) Encode() []byte {
 func (t *TL_botInlineMessageMediaGeo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_geo = dc.TLObject()
 	t.M_period = dc.Int()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29750,7 +32091,7 @@ func (t *TL_botInlineMessageMediaGeo) String() string {
 // botInlineMessageMediaVenue#4366232e
 type TL_botInlineMessageMediaVenue struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_geo          TLObject
 	M_title        string
 	M_address      string
@@ -29763,11 +32104,11 @@ func (t *TL_botInlineMessageMediaVenue) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMessageMediaVenue) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMessageMediaVenue) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMessageMediaVenue) Get_flags() TLObject {
+func (t *TL_botInlineMessageMediaVenue) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29829,12 +32170,22 @@ func (t *TL_botInlineMessageMediaVenue) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaVenue))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_geo())
 	ec.String(t.Get_title())
 	ec.String(t.Get_address())
 	ec.String(t.Get_provider())
 	ec.String(t.Get_venue_id())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29842,12 +32193,15 @@ func (t *TL_botInlineMessageMediaVenue) Encode() []byte {
 func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_geo = dc.TLObject()
 	t.M_title = dc.String()
 	t.M_address = dc.String()
 	t.M_provider = dc.String()
 	t.M_venue_id = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29859,7 +32213,7 @@ func (t *TL_botInlineMessageMediaVenue) String() string {
 // botInlineMessageMediaContact#35edb4d4
 type TL_botInlineMessageMediaContact struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_phone_number string
 	M_first_name   string
 	M_last_name    string
@@ -29870,11 +32224,11 @@ func (t *TL_botInlineMessageMediaContact) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMessageMediaContact) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMessageMediaContact) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMessageMediaContact) Get_flags() TLObject {
+func (t *TL_botInlineMessageMediaContact) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29920,10 +32274,20 @@ func (t *TL_botInlineMessageMediaContact) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMessageMediaContact))
+
+	var flags uint32 = 0
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_phone_number())
 	ec.String(t.Get_first_name())
 	ec.String(t.Get_last_name())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -29931,10 +32295,13 @@ func (t *TL_botInlineMessageMediaContact) Encode() []byte {
 func (t *TL_botInlineMessageMediaContact) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_phone_number = dc.String()
 	t.M_first_name = dc.String()
 	t.M_last_name = dc.String()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -29946,18 +32313,18 @@ func (t *TL_botInlineMessageMediaContact) String() string {
 // botInlineResult#9bebaeb9
 type TL_botInlineResult struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_id           string
 	M_type         string
-	M_title        TLObject
-	M_description  TLObject
-	M_url          TLObject
-	M_thumb_url    TLObject
-	M_content_url  TLObject
-	M_content_type TLObject
-	M_w            TLObject
-	M_h            TLObject
-	M_duration     TLObject
+	M_title        string
+	M_description  string
+	M_url          string
+	M_thumb_url    string
+	M_content_url  string
+	M_content_type string
+	M_w            int32
+	M_h            int32
+	M_duration     int32
 	M_send_message TLObject
 }
 
@@ -29965,11 +32332,11 @@ func (t *TL_botInlineResult) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineResult) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineResult) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineResult) Get_flags() TLObject {
+func (t *TL_botInlineResult) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -29989,75 +32356,75 @@ func (t *TL_botInlineResult) Get_type() string {
 	return t.M_type
 }
 
-func (t *TL_botInlineResult) Set_title(M_title TLObject) {
+func (t *TL_botInlineResult) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_botInlineResult) Get_title() TLObject {
+func (t *TL_botInlineResult) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_botInlineResult) Set_description(M_description TLObject) {
+func (t *TL_botInlineResult) Set_description(M_description string) {
 	t.M_description = M_description
 }
 
-func (t *TL_botInlineResult) Get_description() TLObject {
+func (t *TL_botInlineResult) Get_description() string {
 	return t.M_description
 }
 
-func (t *TL_botInlineResult) Set_url(M_url TLObject) {
+func (t *TL_botInlineResult) Set_url(M_url string) {
 	t.M_url = M_url
 }
 
-func (t *TL_botInlineResult) Get_url() TLObject {
+func (t *TL_botInlineResult) Get_url() string {
 	return t.M_url
 }
 
-func (t *TL_botInlineResult) Set_thumb_url(M_thumb_url TLObject) {
+func (t *TL_botInlineResult) Set_thumb_url(M_thumb_url string) {
 	t.M_thumb_url = M_thumb_url
 }
 
-func (t *TL_botInlineResult) Get_thumb_url() TLObject {
+func (t *TL_botInlineResult) Get_thumb_url() string {
 	return t.M_thumb_url
 }
 
-func (t *TL_botInlineResult) Set_content_url(M_content_url TLObject) {
+func (t *TL_botInlineResult) Set_content_url(M_content_url string) {
 	t.M_content_url = M_content_url
 }
 
-func (t *TL_botInlineResult) Get_content_url() TLObject {
+func (t *TL_botInlineResult) Get_content_url() string {
 	return t.M_content_url
 }
 
-func (t *TL_botInlineResult) Set_content_type(M_content_type TLObject) {
+func (t *TL_botInlineResult) Set_content_type(M_content_type string) {
 	t.M_content_type = M_content_type
 }
 
-func (t *TL_botInlineResult) Get_content_type() TLObject {
+func (t *TL_botInlineResult) Get_content_type() string {
 	return t.M_content_type
 }
 
-func (t *TL_botInlineResult) Set_w(M_w TLObject) {
+func (t *TL_botInlineResult) Set_w(M_w int32) {
 	t.M_w = M_w
 }
 
-func (t *TL_botInlineResult) Get_w() TLObject {
+func (t *TL_botInlineResult) Get_w() int32 {
 	return t.M_w
 }
 
-func (t *TL_botInlineResult) Set_h(M_h TLObject) {
+func (t *TL_botInlineResult) Set_h(M_h int32) {
 	t.M_h = M_h
 }
 
-func (t *TL_botInlineResult) Get_h() TLObject {
+func (t *TL_botInlineResult) Get_h() int32 {
 	return t.M_h
 }
 
-func (t *TL_botInlineResult) Set_duration(M_duration TLObject) {
+func (t *TL_botInlineResult) Set_duration(M_duration int32) {
 	t.M_duration = M_duration
 }
 
-func (t *TL_botInlineResult) Get_duration() TLObject {
+func (t *TL_botInlineResult) Get_duration() int32 {
 	return t.M_duration
 }
 
@@ -30079,17 +32446,75 @@ func (t *TL_botInlineResult) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineResult))
+
+	var flags uint32 = 0
+	if t.M_title != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_description != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_url != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_thumb_url != "" {
+		flags |= 1 << 4
+	}
+
+	if t.M_content_url != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_content_type != "" {
+		flags |= 1 << 5
+	}
+
+	if t.M_w != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_h != 0 {
+		flags |= 1 << 6
+	}
+
+	if t.M_duration != 0 {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_description())
-	ec.TLObject(t.Get_url())
-	ec.TLObject(t.Get_thumb_url())
-	ec.TLObject(t.Get_content_url())
-	ec.TLObject(t.Get_content_type())
-	ec.TLObject(t.Get_w())
-	ec.TLObject(t.Get_h())
-	ec.TLObject(t.Get_duration())
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_description != "" {
+		ec.String(t.Get_description())
+	}
+	if t.M_url != "" {
+		ec.String(t.Get_url())
+	}
+	if t.M_thumb_url != "" {
+		ec.String(t.Get_thumb_url())
+	}
+	if t.M_content_url != "" {
+		ec.String(t.Get_content_url())
+	}
+	if t.M_content_type != "" {
+		ec.String(t.Get_content_type())
+	}
+	if t.M_w != 0 {
+		ec.Int(t.Get_w())
+	}
+	if t.M_h != 0 {
+		ec.Int(t.Get_h())
+	}
+	if t.M_duration != 0 {
+		ec.Int(t.Get_duration())
+	}
 	ec.TLObject(t.Get_send_message())
 
 	return ec.GetBuffer()
@@ -30098,17 +32523,36 @@ func (t *TL_botInlineResult) Encode() []byte {
 func (t *TL_botInlineResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.String()
 	t.M_type = dc.String()
-	t.M_title = dc.TLObject()
-	t.M_description = dc.TLObject()
-	t.M_url = dc.TLObject()
-	t.M_thumb_url = dc.TLObject()
-	t.M_content_url = dc.TLObject()
-	t.M_content_type = dc.TLObject()
-	t.M_w = dc.TLObject()
-	t.M_h = dc.TLObject()
-	t.M_duration = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_description = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_url = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_thumb_url = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_content_url = dc.String()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_content_type = dc.String()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_w = dc.Int()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_h = dc.Int()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_duration = dc.Int()
+	}
 	t.M_send_message = dc.TLObject()
 
 	return dc.err
@@ -30121,13 +32565,13 @@ func (t *TL_botInlineResult) String() string {
 // botInlineMediaResult#17db940b
 type TL_botInlineMediaResult struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_id           string
 	M_type         string
 	M_photo        TLObject
 	M_document     TLObject
-	M_title        TLObject
-	M_description  TLObject
+	M_title        string
+	M_description  string
 	M_send_message TLObject
 }
 
@@ -30135,11 +32579,11 @@ func (t *TL_botInlineMediaResult) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_botInlineMediaResult) Set_flags(M_flags TLObject) {
+func (t *TL_botInlineMediaResult) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_botInlineMediaResult) Get_flags() TLObject {
+func (t *TL_botInlineMediaResult) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -30175,19 +32619,19 @@ func (t *TL_botInlineMediaResult) Get_document() TLObject {
 	return t.M_document
 }
 
-func (t *TL_botInlineMediaResult) Set_title(M_title TLObject) {
+func (t *TL_botInlineMediaResult) Set_title(M_title string) {
 	t.M_title = M_title
 }
 
-func (t *TL_botInlineMediaResult) Get_title() TLObject {
+func (t *TL_botInlineMediaResult) Get_title() string {
 	return t.M_title
 }
 
-func (t *TL_botInlineMediaResult) Set_description(M_description TLObject) {
+func (t *TL_botInlineMediaResult) Set_description(M_description string) {
 	t.M_description = M_description
 }
 
-func (t *TL_botInlineMediaResult) Get_description() TLObject {
+func (t *TL_botInlineMediaResult) Get_description() string {
 	return t.M_description
 }
 
@@ -30209,12 +32653,40 @@ func (t *TL_botInlineMediaResult) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_botInlineMediaResult))
+
+	var flags uint32 = 0
+	if t.M_photo != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_document != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_title != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_description != "" {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
-	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_document())
-	ec.TLObject(t.Get_title())
-	ec.TLObject(t.Get_description())
+	if t.M_photo != nil {
+		ec.TLObject(t.Get_photo())
+	}
+	if t.M_document != nil {
+		ec.TLObject(t.Get_document())
+	}
+	if t.M_title != "" {
+		ec.String(t.Get_title())
+	}
+	if t.M_description != "" {
+		ec.String(t.Get_description())
+	}
 	ec.TLObject(t.Get_send_message())
 
 	return ec.GetBuffer()
@@ -30223,12 +32695,21 @@ func (t *TL_botInlineMediaResult) Encode() []byte {
 func (t *TL_botInlineMediaResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.String()
 	t.M_type = dc.String()
-	t.M_photo = dc.TLObject()
-	t.M_document = dc.TLObject()
-	t.M_title = dc.TLObject()
-	t.M_description = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_photo = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_document = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_title = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_description = dc.String()
+	}
 	t.M_send_message = dc.TLObject()
 
 	return dc.err
@@ -30241,10 +32722,10 @@ func (t *TL_botInlineMediaResult) String() string {
 // messages_botResults#947ca848
 type TL_messages_botResults struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_gallery     TLObject
 	M_query_id    int64
-	M_next_offset TLObject
+	M_next_offset string
 	M_switch_pm   TLObject
 	M_results     []TLObject
 	M_cache_time  int32
@@ -30255,11 +32736,11 @@ func (t *TL_messages_botResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_botResults) Set_flags(M_flags TLObject) {
+func (t *TL_messages_botResults) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_botResults) Get_flags() TLObject {
+func (t *TL_messages_botResults) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -30279,11 +32760,11 @@ func (t *TL_messages_botResults) Get_query_id() int64 {
 	return t.M_query_id
 }
 
-func (t *TL_messages_botResults) Set_next_offset(M_next_offset TLObject) {
+func (t *TL_messages_botResults) Set_next_offset(M_next_offset string) {
 	t.M_next_offset = M_next_offset
 }
 
-func (t *TL_messages_botResults) Get_next_offset() TLObject {
+func (t *TL_messages_botResults) Get_next_offset() string {
 	return t.M_next_offset
 }
 
@@ -30329,10 +32810,32 @@ func (t *TL_messages_botResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_botResults))
-	ec.TLObject(t.Get_gallery())
+
+	var flags uint32 = 0
+	if t.M_gallery != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_next_offset != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_switch_pm != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_gallery != nil {
+		ec.TLObject(t.Get_gallery())
+	}
 	ec.Long(t.Get_query_id())
-	ec.TLObject(t.Get_next_offset())
-	ec.TLObject(t.Get_switch_pm())
+	if t.M_next_offset != "" {
+		ec.String(t.Get_next_offset())
+	}
+	if t.M_switch_pm != nil {
+		ec.TLObject(t.Get_switch_pm())
+	}
 	ec.Vector(t.Get_results())
 	ec.Int(t.Get_cache_time())
 	ec.Vector(t.Get_users())
@@ -30343,10 +32846,17 @@ func (t *TL_messages_botResults) Encode() []byte {
 func (t *TL_messages_botResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_gallery = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_gallery = dc.TLObject()
+	}
 	t.M_query_id = dc.Long()
-	t.M_next_offset = dc.TLObject()
-	t.M_switch_pm = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_next_offset = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_switch_pm = dc.TLObject()
+	}
 	t.M_results = dc.Vector()
 	t.M_cache_time = dc.Int()
 	t.M_users = dc.Vector()
@@ -30406,33 +32916,33 @@ func (t *TL_exportedMessageLink) String() string {
 // messageFwdHeader#559ebe6d
 type TL_messageFwdHeader struct {
 	M_classID           int32
-	M_flags             TLObject
-	M_from_id           TLObject
+	M_flags             uint32
+	M_from_id           int32
 	M_date              int32
-	M_channel_id        TLObject
-	M_channel_post      TLObject
-	M_post_author       TLObject
+	M_channel_id        int32
+	M_channel_post      int32
+	M_post_author       string
 	M_saved_from_peer   TLObject
-	M_saved_from_msg_id TLObject
+	M_saved_from_msg_id int32
 }
 
 func (t *TL_messageFwdHeader) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messageFwdHeader) Set_flags(M_flags TLObject) {
+func (t *TL_messageFwdHeader) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messageFwdHeader) Get_flags() TLObject {
+func (t *TL_messageFwdHeader) Get_flags() uint32 {
 	return t.M_flags
 }
 
-func (t *TL_messageFwdHeader) Set_from_id(M_from_id TLObject) {
+func (t *TL_messageFwdHeader) Set_from_id(M_from_id int32) {
 	t.M_from_id = M_from_id
 }
 
-func (t *TL_messageFwdHeader) Get_from_id() TLObject {
+func (t *TL_messageFwdHeader) Get_from_id() int32 {
 	return t.M_from_id
 }
 
@@ -30444,27 +32954,27 @@ func (t *TL_messageFwdHeader) Get_date() int32 {
 	return t.M_date
 }
 
-func (t *TL_messageFwdHeader) Set_channel_id(M_channel_id TLObject) {
+func (t *TL_messageFwdHeader) Set_channel_id(M_channel_id int32) {
 	t.M_channel_id = M_channel_id
 }
 
-func (t *TL_messageFwdHeader) Get_channel_id() TLObject {
+func (t *TL_messageFwdHeader) Get_channel_id() int32 {
 	return t.M_channel_id
 }
 
-func (t *TL_messageFwdHeader) Set_channel_post(M_channel_post TLObject) {
+func (t *TL_messageFwdHeader) Set_channel_post(M_channel_post int32) {
 	t.M_channel_post = M_channel_post
 }
 
-func (t *TL_messageFwdHeader) Get_channel_post() TLObject {
+func (t *TL_messageFwdHeader) Get_channel_post() int32 {
 	return t.M_channel_post
 }
 
-func (t *TL_messageFwdHeader) Set_post_author(M_post_author TLObject) {
+func (t *TL_messageFwdHeader) Set_post_author(M_post_author string) {
 	t.M_post_author = M_post_author
 }
 
-func (t *TL_messageFwdHeader) Get_post_author() TLObject {
+func (t *TL_messageFwdHeader) Get_post_author() string {
 	return t.M_post_author
 }
 
@@ -30476,11 +32986,11 @@ func (t *TL_messageFwdHeader) Get_saved_from_peer() TLObject {
 	return t.M_saved_from_peer
 }
 
-func (t *TL_messageFwdHeader) Set_saved_from_msg_id(M_saved_from_msg_id TLObject) {
+func (t *TL_messageFwdHeader) Set_saved_from_msg_id(M_saved_from_msg_id int32) {
 	t.M_saved_from_msg_id = M_saved_from_msg_id
 }
 
-func (t *TL_messageFwdHeader) Get_saved_from_msg_id() TLObject {
+func (t *TL_messageFwdHeader) Get_saved_from_msg_id() int32 {
 	return t.M_saved_from_msg_id
 }
 
@@ -30494,13 +33004,53 @@ func (t *TL_messageFwdHeader) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messageFwdHeader))
-	ec.TLObject(t.Get_from_id())
+
+	var flags uint32 = 0
+	if t.M_from_id != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_channel_id != 0 {
+		flags |= 1 << 1
+	}
+
+	if t.M_channel_post != 0 {
+		flags |= 1 << 2
+	}
+
+	if t.M_post_author != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_saved_from_peer != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_saved_from_msg_id != 0 {
+		flags |= 1 << 4
+	}
+
+	ec.UInt(flags)
+
+	if t.M_from_id != 0 {
+		ec.Int(t.Get_from_id())
+	}
 	ec.Int(t.Get_date())
-	ec.TLObject(t.Get_channel_id())
-	ec.TLObject(t.Get_channel_post())
-	ec.TLObject(t.Get_post_author())
-	ec.TLObject(t.Get_saved_from_peer())
-	ec.TLObject(t.Get_saved_from_msg_id())
+	if t.M_channel_id != 0 {
+		ec.Int(t.Get_channel_id())
+	}
+	if t.M_channel_post != 0 {
+		ec.Int(t.Get_channel_post())
+	}
+	if t.M_post_author != "" {
+		ec.String(t.Get_post_author())
+	}
+	if t.M_saved_from_peer != nil {
+		ec.TLObject(t.Get_saved_from_peer())
+	}
+	if t.M_saved_from_msg_id != 0 {
+		ec.Int(t.Get_saved_from_msg_id())
+	}
 
 	return ec.GetBuffer()
 }
@@ -30508,13 +33058,26 @@ func (t *TL_messageFwdHeader) Encode() []byte {
 func (t *TL_messageFwdHeader) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_from_id = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_from_id = dc.Int()
+	}
 	t.M_date = dc.Int()
-	t.M_channel_id = dc.TLObject()
-	t.M_channel_post = dc.TLObject()
-	t.M_post_author = dc.TLObject()
-	t.M_saved_from_peer = dc.TLObject()
-	t.M_saved_from_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_channel_id = dc.Int()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_channel_post = dc.Int()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_post_author = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_saved_from_peer = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_saved_from_msg_id = dc.Int()
+	}
 
 	return dc.err
 }
@@ -30799,12 +33362,12 @@ func (t *TL_auth_sentCodeTypeFlashCall) String() string {
 // messages_botCallbackAnswer#36585ea4
 type TL_messages_botCallbackAnswer struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_alert      TLObject
 	M_has_url    TLObject
 	M_native_ui  TLObject
-	M_message    TLObject
-	M_url        TLObject
+	M_message    string
+	M_url        string
 	M_cache_time int32
 }
 
@@ -30812,11 +33375,11 @@ func (t *TL_messages_botCallbackAnswer) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_flags(M_flags TLObject) {
+func (t *TL_messages_botCallbackAnswer) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_flags() TLObject {
+func (t *TL_messages_botCallbackAnswer) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -30844,19 +33407,19 @@ func (t *TL_messages_botCallbackAnswer) Get_native_ui() TLObject {
 	return t.M_native_ui
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_message(M_message TLObject) {
+func (t *TL_messages_botCallbackAnswer) Set_message(M_message string) {
 	t.M_message = M_message
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_message() TLObject {
+func (t *TL_messages_botCallbackAnswer) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_messages_botCallbackAnswer) Set_url(M_url TLObject) {
+func (t *TL_messages_botCallbackAnswer) Set_url(M_url string) {
 	t.M_url = M_url
 }
 
-func (t *TL_messages_botCallbackAnswer) Get_url() TLObject {
+func (t *TL_messages_botCallbackAnswer) Get_url() string {
 	return t.M_url
 }
 
@@ -30878,11 +33441,45 @@ func (t *TL_messages_botCallbackAnswer) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_botCallbackAnswer))
-	ec.TLObject(t.Get_alert())
-	ec.TLObject(t.Get_has_url())
-	ec.TLObject(t.Get_native_ui())
-	ec.TLObject(t.Get_message())
-	ec.TLObject(t.Get_url())
+
+	var flags uint32 = 0
+	if t.M_alert != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_has_url != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_native_ui != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_message != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_url != "" {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_alert != nil {
+		ec.TLObject(t.Get_alert())
+	}
+	if t.M_has_url != nil {
+		ec.TLObject(t.Get_has_url())
+	}
+	if t.M_native_ui != nil {
+		ec.TLObject(t.Get_native_ui())
+	}
+	if t.M_message != "" {
+		ec.String(t.Get_message())
+	}
+	if t.M_url != "" {
+		ec.String(t.Get_url())
+	}
 	ec.Int(t.Get_cache_time())
 
 	return ec.GetBuffer()
@@ -30891,11 +33488,22 @@ func (t *TL_messages_botCallbackAnswer) Encode() []byte {
 func (t *TL_messages_botCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_alert = dc.TLObject()
-	t.M_has_url = dc.TLObject()
-	t.M_native_ui = dc.TLObject()
-	t.M_message = dc.TLObject()
-	t.M_url = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_alert = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_has_url = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_native_ui = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_message = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_url = dc.String()
+	}
 	t.M_cache_time = dc.Int()
 
 	return dc.err
@@ -30908,7 +33516,7 @@ func (t *TL_messages_botCallbackAnswer) String() string {
 // messages_messageEditData#26b5dde6
 type TL_messages_messageEditData struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_caption TLObject
 }
 
@@ -30916,11 +33524,11 @@ func (t *TL_messages_messageEditData) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_messageEditData) Set_flags(M_flags TLObject) {
+func (t *TL_messages_messageEditData) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_messageEditData) Get_flags() TLObject {
+func (t *TL_messages_messageEditData) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -30942,7 +33550,17 @@ func (t *TL_messages_messageEditData) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_messageEditData))
-	ec.TLObject(t.Get_caption())
+
+	var flags uint32 = 0
+	if t.M_caption != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_caption != nil {
+		ec.TLObject(t.Get_caption())
+	}
 
 	return ec.GetBuffer()
 }
@@ -30950,7 +33568,10 @@ func (t *TL_messages_messageEditData) Encode() []byte {
 func (t *TL_messages_messageEditData) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_caption = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_caption = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -31612,9 +34233,9 @@ func (t *TL_draftMessageEmpty) String() string {
 // draftMessage#fd8e711f
 type TL_draftMessage struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_no_webpage      TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_message         string
 	M_entities        []TLObject
 	M_date            int32
@@ -31624,11 +34245,11 @@ func (t *TL_draftMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_draftMessage) Set_flags(M_flags TLObject) {
+func (t *TL_draftMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_draftMessage) Get_flags() TLObject {
+func (t *TL_draftMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -31640,11 +34261,11 @@ func (t *TL_draftMessage) Get_no_webpage() TLObject {
 	return t.M_no_webpage
 }
 
-func (t *TL_draftMessage) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_draftMessage) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_draftMessage) Get_reply_to_msg_id() TLObject {
+func (t *TL_draftMessage) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -31682,10 +34303,32 @@ func (t *TL_draftMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_draftMessage))
-	ec.TLObject(t.Get_no_webpage())
-	ec.TLObject(t.Get_reply_to_msg_id())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.String(t.Get_message())
-	ec.Vector(t.Get_entities())
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 	ec.Int(t.Get_date())
 
 	return ec.GetBuffer()
@@ -31694,10 +34337,17 @@ func (t *TL_draftMessage) Encode() []byte {
 func (t *TL_draftMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_message = dc.String()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 	t.M_date = dc.Int()
 
 	return dc.err
@@ -32307,7 +34957,7 @@ func (t *TL_inputStickeredMediaDocument) String() string {
 // game#bdf9653b
 type TL_game struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_id          int64
 	M_access_hash int64
 	M_short_name  string
@@ -32321,11 +34971,11 @@ func (t *TL_game) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_game) Set_flags(M_flags TLObject) {
+func (t *TL_game) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_game) Get_flags() TLObject {
+func (t *TL_game) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -32395,13 +35045,23 @@ func (t *TL_game) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_game))
+
+	var flags uint32 = 0
+	if t.M_document != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.String(t.Get_short_name())
 	ec.String(t.Get_title())
 	ec.String(t.Get_description())
 	ec.TLObject(t.Get_photo())
-	ec.TLObject(t.Get_document())
+	if t.M_document != nil {
+		ec.TLObject(t.Get_document())
+	}
 
 	return ec.GetBuffer()
 }
@@ -32409,13 +35069,16 @@ func (t *TL_game) Encode() []byte {
 func (t *TL_game) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_short_name = dc.String()
 	t.M_title = dc.String()
 	t.M_description = dc.String()
 	t.M_photo = dc.TLObject()
-	t.M_document = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_document = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -33844,7 +36507,7 @@ func (t *TL_pageBlockPhoto) String() string {
 // pageBlockVideo#d9d71866
 type TL_pageBlockVideo struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_autoplay TLObject
 	M_loop     TLObject
 	M_video_id int64
@@ -33855,11 +36518,11 @@ func (t *TL_pageBlockVideo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pageBlockVideo) Set_flags(M_flags TLObject) {
+func (t *TL_pageBlockVideo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_pageBlockVideo) Get_flags() TLObject {
+func (t *TL_pageBlockVideo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -33905,8 +36568,24 @@ func (t *TL_pageBlockVideo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockVideo))
-	ec.TLObject(t.Get_autoplay())
-	ec.TLObject(t.Get_loop())
+
+	var flags uint32 = 0
+	if t.M_autoplay != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_loop != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_autoplay != nil {
+		ec.TLObject(t.Get_autoplay())
+	}
+	if t.M_loop != nil {
+		ec.TLObject(t.Get_loop())
+	}
 	ec.Long(t.Get_video_id())
 	ec.TLObject(t.Get_caption())
 
@@ -33916,8 +36595,13 @@ func (t *TL_pageBlockVideo) Encode() []byte {
 func (t *TL_pageBlockVideo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_autoplay = dc.TLObject()
-	t.M_loop = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_autoplay = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_loop = dc.TLObject()
+	}
 	t.M_video_id = dc.Long()
 	t.M_caption = dc.TLObject()
 
@@ -33976,12 +36660,12 @@ func (t *TL_pageBlockCover) String() string {
 // pageBlockEmbed#cde200d1
 type TL_pageBlockEmbed struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_full_width      TLObject
 	M_allow_scrolling TLObject
-	M_url             TLObject
-	M_html            TLObject
-	M_poster_photo_id TLObject
+	M_url             string
+	M_html            string
+	M_poster_photo_id int64
 	M_w               int32
 	M_h               int32
 	M_caption         TLObject
@@ -33991,11 +36675,11 @@ func (t *TL_pageBlockEmbed) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_pageBlockEmbed) Set_flags(M_flags TLObject) {
+func (t *TL_pageBlockEmbed) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_pageBlockEmbed) Get_flags() TLObject {
+func (t *TL_pageBlockEmbed) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -34015,27 +36699,27 @@ func (t *TL_pageBlockEmbed) Get_allow_scrolling() TLObject {
 	return t.M_allow_scrolling
 }
 
-func (t *TL_pageBlockEmbed) Set_url(M_url TLObject) {
+func (t *TL_pageBlockEmbed) Set_url(M_url string) {
 	t.M_url = M_url
 }
 
-func (t *TL_pageBlockEmbed) Get_url() TLObject {
+func (t *TL_pageBlockEmbed) Get_url() string {
 	return t.M_url
 }
 
-func (t *TL_pageBlockEmbed) Set_html(M_html TLObject) {
+func (t *TL_pageBlockEmbed) Set_html(M_html string) {
 	t.M_html = M_html
 }
 
-func (t *TL_pageBlockEmbed) Get_html() TLObject {
+func (t *TL_pageBlockEmbed) Get_html() string {
 	return t.M_html
 }
 
-func (t *TL_pageBlockEmbed) Set_poster_photo_id(M_poster_photo_id TLObject) {
+func (t *TL_pageBlockEmbed) Set_poster_photo_id(M_poster_photo_id int64) {
 	t.M_poster_photo_id = M_poster_photo_id
 }
 
-func (t *TL_pageBlockEmbed) Get_poster_photo_id() TLObject {
+func (t *TL_pageBlockEmbed) Get_poster_photo_id() int64 {
 	return t.M_poster_photo_id
 }
 
@@ -34073,11 +36757,45 @@ func (t *TL_pageBlockEmbed) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_pageBlockEmbed))
-	ec.TLObject(t.Get_full_width())
-	ec.TLObject(t.Get_allow_scrolling())
-	ec.TLObject(t.Get_url())
-	ec.TLObject(t.Get_html())
-	ec.TLObject(t.Get_poster_photo_id())
+
+	var flags uint32 = 0
+	if t.M_full_width != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_allow_scrolling != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_url != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_html != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_poster_photo_id != 0 {
+		flags |= 1 << 4
+	}
+
+	ec.UInt(flags)
+
+	if t.M_full_width != nil {
+		ec.TLObject(t.Get_full_width())
+	}
+	if t.M_allow_scrolling != nil {
+		ec.TLObject(t.Get_allow_scrolling())
+	}
+	if t.M_url != "" {
+		ec.String(t.Get_url())
+	}
+	if t.M_html != "" {
+		ec.String(t.Get_html())
+	}
+	if t.M_poster_photo_id != 0 {
+		ec.Long(t.Get_poster_photo_id())
+	}
 	ec.Int(t.Get_w())
 	ec.Int(t.Get_h())
 	ec.TLObject(t.Get_caption())
@@ -34088,11 +36806,22 @@ func (t *TL_pageBlockEmbed) Encode() []byte {
 func (t *TL_pageBlockEmbed) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_full_width = dc.TLObject()
-	t.M_allow_scrolling = dc.TLObject()
-	t.M_url = dc.TLObject()
-	t.M_html = dc.TLObject()
-	t.M_poster_photo_id = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_full_width = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_allow_scrolling = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_url = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_html = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_poster_photo_id = dc.Long()
+	}
 	t.M_w = dc.Int()
 	t.M_h = dc.Int()
 	t.M_caption = dc.TLObject()
@@ -34790,7 +37519,7 @@ func (t *TL_labeledPrice) String() string {
 // invoice#c30aa358
 type TL_invoice struct {
 	M_classID                    int32
-	M_flags                      TLObject
+	M_flags                      uint32
 	M_test                       TLObject
 	M_name_requested             TLObject
 	M_phone_requested            TLObject
@@ -34807,11 +37536,11 @@ func (t *TL_invoice) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_invoice) Set_flags(M_flags TLObject) {
+func (t *TL_invoice) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_invoice) Get_flags() TLObject {
+func (t *TL_invoice) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -34905,14 +37634,66 @@ func (t *TL_invoice) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_invoice))
-	ec.TLObject(t.Get_test())
-	ec.TLObject(t.Get_name_requested())
-	ec.TLObject(t.Get_phone_requested())
-	ec.TLObject(t.Get_email_requested())
-	ec.TLObject(t.Get_shipping_address_requested())
-	ec.TLObject(t.Get_flexible())
-	ec.TLObject(t.Get_phone_to_provider())
-	ec.TLObject(t.Get_email_to_provider())
+
+	var flags uint32 = 0
+	if t.M_test != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_name_requested != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_phone_requested != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_email_requested != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_shipping_address_requested != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_flexible != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_phone_to_provider != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_email_to_provider != nil {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
+	if t.M_test != nil {
+		ec.TLObject(t.Get_test())
+	}
+	if t.M_name_requested != nil {
+		ec.TLObject(t.Get_name_requested())
+	}
+	if t.M_phone_requested != nil {
+		ec.TLObject(t.Get_phone_requested())
+	}
+	if t.M_email_requested != nil {
+		ec.TLObject(t.Get_email_requested())
+	}
+	if t.M_shipping_address_requested != nil {
+		ec.TLObject(t.Get_shipping_address_requested())
+	}
+	if t.M_flexible != nil {
+		ec.TLObject(t.Get_flexible())
+	}
+	if t.M_phone_to_provider != nil {
+		ec.TLObject(t.Get_phone_to_provider())
+	}
+	if t.M_email_to_provider != nil {
+		ec.TLObject(t.Get_email_to_provider())
+	}
 	ec.String(t.Get_currency())
 	ec.Vector(t.Get_prices())
 
@@ -34922,14 +37703,31 @@ func (t *TL_invoice) Encode() []byte {
 func (t *TL_invoice) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_test = dc.TLObject()
-	t.M_name_requested = dc.TLObject()
-	t.M_phone_requested = dc.TLObject()
-	t.M_email_requested = dc.TLObject()
-	t.M_shipping_address_requested = dc.TLObject()
-	t.M_flexible = dc.TLObject()
-	t.M_phone_to_provider = dc.TLObject()
-	t.M_email_to_provider = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_test = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_name_requested = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_phone_requested = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_email_requested = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_shipping_address_requested = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_flexible = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_phone_to_provider = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_email_to_provider = dc.TLObject()
+	}
 	t.M_currency = dc.String()
 	t.M_prices = dc.Vector()
 
@@ -35099,10 +37897,10 @@ func (t *TL_postAddress) String() string {
 // paymentRequestedInfo#909c3f94
 type TL_paymentRequestedInfo struct {
 	M_classID          int32
-	M_flags            TLObject
-	M_name             TLObject
-	M_phone            TLObject
-	M_email            TLObject
+	M_flags            uint32
+	M_name             string
+	M_phone            string
+	M_email            string
 	M_shipping_address TLObject
 }
 
@@ -35110,35 +37908,35 @@ func (t *TL_paymentRequestedInfo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_paymentRequestedInfo) Set_flags(M_flags TLObject) {
+func (t *TL_paymentRequestedInfo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_paymentRequestedInfo) Get_flags() TLObject {
+func (t *TL_paymentRequestedInfo) Get_flags() uint32 {
 	return t.M_flags
 }
 
-func (t *TL_paymentRequestedInfo) Set_name(M_name TLObject) {
+func (t *TL_paymentRequestedInfo) Set_name(M_name string) {
 	t.M_name = M_name
 }
 
-func (t *TL_paymentRequestedInfo) Get_name() TLObject {
+func (t *TL_paymentRequestedInfo) Get_name() string {
 	return t.M_name
 }
 
-func (t *TL_paymentRequestedInfo) Set_phone(M_phone TLObject) {
+func (t *TL_paymentRequestedInfo) Set_phone(M_phone string) {
 	t.M_phone = M_phone
 }
 
-func (t *TL_paymentRequestedInfo) Get_phone() TLObject {
+func (t *TL_paymentRequestedInfo) Get_phone() string {
 	return t.M_phone
 }
 
-func (t *TL_paymentRequestedInfo) Set_email(M_email TLObject) {
+func (t *TL_paymentRequestedInfo) Set_email(M_email string) {
 	t.M_email = M_email
 }
 
-func (t *TL_paymentRequestedInfo) Get_email() TLObject {
+func (t *TL_paymentRequestedInfo) Get_email() string {
 	return t.M_email
 }
 
@@ -35160,10 +37958,38 @@ func (t *TL_paymentRequestedInfo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_paymentRequestedInfo))
-	ec.TLObject(t.Get_name())
-	ec.TLObject(t.Get_phone())
-	ec.TLObject(t.Get_email())
-	ec.TLObject(t.Get_shipping_address())
+
+	var flags uint32 = 0
+	if t.M_name != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_phone != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_email != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_shipping_address != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_name != "" {
+		ec.String(t.Get_name())
+	}
+	if t.M_phone != "" {
+		ec.String(t.Get_phone())
+	}
+	if t.M_email != "" {
+		ec.String(t.Get_email())
+	}
+	if t.M_shipping_address != nil {
+		ec.TLObject(t.Get_shipping_address())
+	}
 
 	return ec.GetBuffer()
 }
@@ -35171,10 +37997,19 @@ func (t *TL_paymentRequestedInfo) Encode() []byte {
 func (t *TL_paymentRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_name = dc.TLObject()
-	t.M_phone = dc.TLObject()
-	t.M_email = dc.TLObject()
-	t.M_shipping_address = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_name = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_phone = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_email = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_shipping_address = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -35565,14 +38400,14 @@ func (t *TL_upload_webFile) String() string {
 // payments_paymentForm#3f56aea3
 type TL_payments_paymentForm struct {
 	M_classID              int32
-	M_flags                TLObject
+	M_flags                uint32
 	M_can_save_credentials TLObject
 	M_password_missing     TLObject
 	M_bot_id               int32
 	M_invoice              TLObject
 	M_provider_id          int32
 	M_url                  string
-	M_native_provider      TLObject
+	M_native_provider      string
 	M_native_params        TLObject
 	M_saved_info           TLObject
 	M_saved_credentials    TLObject
@@ -35583,11 +38418,11 @@ func (t *TL_payments_paymentForm) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_paymentForm) Set_flags(M_flags TLObject) {
+func (t *TL_payments_paymentForm) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_paymentForm) Get_flags() TLObject {
+func (t *TL_payments_paymentForm) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -35639,11 +38474,11 @@ func (t *TL_payments_paymentForm) Get_url() string {
 	return t.M_url
 }
 
-func (t *TL_payments_paymentForm) Set_native_provider(M_native_provider TLObject) {
+func (t *TL_payments_paymentForm) Set_native_provider(M_native_provider string) {
 	t.M_native_provider = M_native_provider
 }
 
-func (t *TL_payments_paymentForm) Get_native_provider() TLObject {
+func (t *TL_payments_paymentForm) Get_native_provider() string {
 	return t.M_native_provider
 }
 
@@ -35689,16 +38524,56 @@ func (t *TL_payments_paymentForm) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentForm))
-	ec.TLObject(t.Get_can_save_credentials())
-	ec.TLObject(t.Get_password_missing())
+
+	var flags uint32 = 0
+	if t.M_can_save_credentials != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_password_missing != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_native_provider != "" {
+		flags |= 1 << 4
+	}
+
+	if t.M_native_params != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_saved_info != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_saved_credentials != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_can_save_credentials != nil {
+		ec.TLObject(t.Get_can_save_credentials())
+	}
+	if t.M_password_missing != nil {
+		ec.TLObject(t.Get_password_missing())
+	}
 	ec.Int(t.Get_bot_id())
 	ec.TLObject(t.Get_invoice())
 	ec.Int(t.Get_provider_id())
 	ec.String(t.Get_url())
-	ec.TLObject(t.Get_native_provider())
-	ec.TLObject(t.Get_native_params())
-	ec.TLObject(t.Get_saved_info())
-	ec.TLObject(t.Get_saved_credentials())
+	if t.M_native_provider != "" {
+		ec.String(t.Get_native_provider())
+	}
+	if t.M_native_params != nil {
+		ec.TLObject(t.Get_native_params())
+	}
+	if t.M_saved_info != nil {
+		ec.TLObject(t.Get_saved_info())
+	}
+	if t.M_saved_credentials != nil {
+		ec.TLObject(t.Get_saved_credentials())
+	}
 	ec.Vector(t.Get_users())
 
 	return ec.GetBuffer()
@@ -35707,16 +38582,29 @@ func (t *TL_payments_paymentForm) Encode() []byte {
 func (t *TL_payments_paymentForm) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_can_save_credentials = dc.TLObject()
-	t.M_password_missing = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_can_save_credentials = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_password_missing = dc.TLObject()
+	}
 	t.M_bot_id = dc.Int()
 	t.M_invoice = dc.TLObject()
 	t.M_provider_id = dc.Int()
 	t.M_url = dc.String()
-	t.M_native_provider = dc.TLObject()
-	t.M_native_params = dc.TLObject()
-	t.M_saved_info = dc.TLObject()
-	t.M_saved_credentials = dc.TLObject()
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_native_provider = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_native_params = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_saved_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_saved_credentials = dc.TLObject()
+	}
 	t.M_users = dc.Vector()
 
 	return dc.err
@@ -35729,8 +38617,8 @@ func (t *TL_payments_paymentForm) String() string {
 // payments_validatedRequestedInfo#d1451883
 type TL_payments_validatedRequestedInfo struct {
 	M_classID          int32
-	M_flags            TLObject
-	M_id               TLObject
+	M_flags            uint32
+	M_id               string
 	M_shipping_options []TLObject
 }
 
@@ -35738,19 +38626,19 @@ func (t *TL_payments_validatedRequestedInfo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_flags(M_flags TLObject) {
+func (t *TL_payments_validatedRequestedInfo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_flags() TLObject {
+func (t *TL_payments_validatedRequestedInfo) Get_flags() uint32 {
 	return t.M_flags
 }
 
-func (t *TL_payments_validatedRequestedInfo) Set_id(M_id TLObject) {
+func (t *TL_payments_validatedRequestedInfo) Set_id(M_id string) {
 	t.M_id = M_id
 }
 
-func (t *TL_payments_validatedRequestedInfo) Get_id() TLObject {
+func (t *TL_payments_validatedRequestedInfo) Get_id() string {
 	return t.M_id
 }
 
@@ -35772,8 +38660,24 @@ func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_validatedRequestedInfo))
-	ec.TLObject(t.Get_id())
-	ec.Vector(t.Get_shipping_options())
+
+	var flags uint32 = 0
+	if t.M_id != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping_options != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_id != "" {
+		ec.String(t.Get_id())
+	}
+	if t.M_shipping_options != nil {
+		ec.Vector(t.Get_shipping_options())
+	}
 
 	return ec.GetBuffer()
 }
@@ -35781,8 +38685,13 @@ func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
 func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_id = dc.TLObject()
-	t.M_shipping_options = dc.Vector()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_id = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_options = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -35884,7 +38793,7 @@ func (t *TL_payments_paymentVerficationNeeded) String() string {
 // payments_paymentReceipt#500911e1
 type TL_payments_paymentReceipt struct {
 	M_classID           int32
-	M_flags             TLObject
+	M_flags             uint32
 	M_date              int32
 	M_bot_id            int32
 	M_invoice           TLObject
@@ -35901,11 +38810,11 @@ func (t *TL_payments_paymentReceipt) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_paymentReceipt) Set_flags(M_flags TLObject) {
+func (t *TL_payments_paymentReceipt) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_paymentReceipt) Get_flags() TLObject {
+func (t *TL_payments_paymentReceipt) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -35999,12 +38908,28 @@ func (t *TL_payments_paymentReceipt) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_paymentReceipt))
+
+	var flags uint32 = 0
+	if t.M_info != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_bot_id())
 	ec.TLObject(t.Get_invoice())
 	ec.Int(t.Get_provider_id())
-	ec.TLObject(t.Get_info())
-	ec.TLObject(t.Get_shipping())
+	if t.M_info != nil {
+		ec.TLObject(t.Get_info())
+	}
+	if t.M_shipping != nil {
+		ec.TLObject(t.Get_shipping())
+	}
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
 	ec.String(t.Get_credentials_title())
@@ -36016,12 +38941,17 @@ func (t *TL_payments_paymentReceipt) Encode() []byte {
 func (t *TL_payments_paymentReceipt) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_date = dc.Int()
 	t.M_bot_id = dc.Int()
 	t.M_invoice = dc.TLObject()
 	t.M_provider_id = dc.Int()
-	t.M_info = dc.TLObject()
-	t.M_shipping = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping = dc.TLObject()
+	}
 	t.M_currency = dc.String()
 	t.M_total_amount = dc.Long()
 	t.M_credentials_title = dc.String()
@@ -36037,7 +38967,7 @@ func (t *TL_payments_paymentReceipt) String() string {
 // payments_savedInfo#fb8fe43c
 type TL_payments_savedInfo struct {
 	M_classID               int32
-	M_flags                 TLObject
+	M_flags                 uint32
 	M_has_saved_credentials TLObject
 	M_saved_info            TLObject
 }
@@ -36046,11 +38976,11 @@ func (t *TL_payments_savedInfo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_savedInfo) Set_flags(M_flags TLObject) {
+func (t *TL_payments_savedInfo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_savedInfo) Get_flags() TLObject {
+func (t *TL_payments_savedInfo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -36080,8 +39010,24 @@ func (t *TL_payments_savedInfo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_savedInfo))
-	ec.TLObject(t.Get_has_saved_credentials())
-	ec.TLObject(t.Get_saved_info())
+
+	var flags uint32 = 0
+	if t.M_has_saved_credentials != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_saved_info != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_has_saved_credentials != nil {
+		ec.TLObject(t.Get_has_saved_credentials())
+	}
+	if t.M_saved_info != nil {
+		ec.TLObject(t.Get_saved_info())
+	}
 
 	return ec.GetBuffer()
 }
@@ -36089,8 +39035,13 @@ func (t *TL_payments_savedInfo) Encode() []byte {
 func (t *TL_payments_savedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_has_saved_credentials = dc.TLObject()
-	t.M_saved_info = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_has_saved_credentials = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_saved_info = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -36158,7 +39109,7 @@ func (t *TL_inputPaymentCredentialsSaved) String() string {
 // inputPaymentCredentials#3417d728
 type TL_inputPaymentCredentials struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_save    TLObject
 	M_data    TLObject
 }
@@ -36167,11 +39118,11 @@ func (t *TL_inputPaymentCredentials) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputPaymentCredentials) Set_flags(M_flags TLObject) {
+func (t *TL_inputPaymentCredentials) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputPaymentCredentials) Get_flags() TLObject {
+func (t *TL_inputPaymentCredentials) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -36201,7 +39152,17 @@ func (t *TL_inputPaymentCredentials) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputPaymentCredentials))
-	ec.TLObject(t.Get_save())
+
+	var flags uint32 = 0
+	if t.M_save != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_save != nil {
+		ec.TLObject(t.Get_save())
+	}
 	ec.TLObject(t.Get_data())
 
 	return ec.GetBuffer()
@@ -36210,7 +39171,10 @@ func (t *TL_inputPaymentCredentials) Encode() []byte {
 func (t *TL_inputPaymentCredentials) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_save = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_save = dc.TLObject()
+	}
 	t.M_data = dc.TLObject()
 
 	return dc.err
@@ -36436,7 +39400,7 @@ func (t *TL_shippingOption) String() string {
 // inputStickerSetItem#ffa0a496
 type TL_inputStickerSetItem struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_document    TLObject
 	M_emoji       string
 	M_mask_coords TLObject
@@ -36446,11 +39410,11 @@ func (t *TL_inputStickerSetItem) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_inputStickerSetItem) Set_flags(M_flags TLObject) {
+func (t *TL_inputStickerSetItem) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_inputStickerSetItem) Get_flags() TLObject {
+func (t *TL_inputStickerSetItem) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -36488,9 +39452,19 @@ func (t *TL_inputStickerSetItem) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_inputStickerSetItem))
+
+	var flags uint32 = 0
+	if t.M_mask_coords != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_document())
 	ec.String(t.Get_emoji())
-	ec.TLObject(t.Get_mask_coords())
+	if t.M_mask_coords != nil {
+		ec.TLObject(t.Get_mask_coords())
+	}
 
 	return ec.GetBuffer()
 }
@@ -36498,9 +39472,12 @@ func (t *TL_inputStickerSetItem) Encode() []byte {
 func (t *TL_inputStickerSetItem) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_document = dc.TLObject()
 	t.M_emoji = dc.String()
-	t.M_mask_coords = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_mask_coords = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -36613,25 +39590,25 @@ func (t *TL_phoneCallEmpty) String() string {
 // phoneCallWaiting#1b8f4ad1
 type TL_phoneCallWaiting struct {
 	M_classID        int32
-	M_flags          TLObject
+	M_flags          uint32
 	M_id             int64
 	M_access_hash    int64
 	M_date           int32
 	M_admin_id       int32
 	M_participant_id int32
 	M_protocol       TLObject
-	M_receive_date   TLObject
+	M_receive_date   int32
 }
 
 func (t *TL_phoneCallWaiting) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_phoneCallWaiting) Set_flags(M_flags TLObject) {
+func (t *TL_phoneCallWaiting) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_phoneCallWaiting) Get_flags() TLObject {
+func (t *TL_phoneCallWaiting) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -36683,11 +39660,11 @@ func (t *TL_phoneCallWaiting) Get_protocol() TLObject {
 	return t.M_protocol
 }
 
-func (t *TL_phoneCallWaiting) Set_receive_date(M_receive_date TLObject) {
+func (t *TL_phoneCallWaiting) Set_receive_date(M_receive_date int32) {
 	t.M_receive_date = M_receive_date
 }
 
-func (t *TL_phoneCallWaiting) Get_receive_date() TLObject {
+func (t *TL_phoneCallWaiting) Get_receive_date() int32 {
 	return t.M_receive_date
 }
 
@@ -36701,13 +39678,23 @@ func (t *TL_phoneCallWaiting) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallWaiting))
+
+	var flags uint32 = 0
+	if t.M_receive_date != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_admin_id())
 	ec.Int(t.Get_participant_id())
 	ec.TLObject(t.Get_protocol())
-	ec.TLObject(t.Get_receive_date())
+	if t.M_receive_date != 0 {
+		ec.Int(t.Get_receive_date())
+	}
 
 	return ec.GetBuffer()
 }
@@ -36715,13 +39702,16 @@ func (t *TL_phoneCallWaiting) Encode() []byte {
 func (t *TL_phoneCallWaiting) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_id = dc.Long()
 	t.M_access_hash = dc.Long()
 	t.M_date = dc.Int()
 	t.M_admin_id = dc.Int()
 	t.M_participant_id = dc.Int()
 	t.M_protocol = dc.TLObject()
-	t.M_receive_date = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_receive_date = dc.Int()
+	}
 
 	return dc.err
 }
@@ -37110,23 +40100,23 @@ func (t *TL_phoneCall) String() string {
 // phoneCallDiscarded#50ca4de1
 type TL_phoneCallDiscarded struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_need_rating TLObject
 	M_need_debug  TLObject
 	M_id          int64
 	M_reason      TLObject
-	M_duration    TLObject
+	M_duration    int32
 }
 
 func (t *TL_phoneCallDiscarded) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_phoneCallDiscarded) Set_flags(M_flags TLObject) {
+func (t *TL_phoneCallDiscarded) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_phoneCallDiscarded) Get_flags() TLObject {
+func (t *TL_phoneCallDiscarded) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -37162,11 +40152,11 @@ func (t *TL_phoneCallDiscarded) Get_reason() TLObject {
 	return t.M_reason
 }
 
-func (t *TL_phoneCallDiscarded) Set_duration(M_duration TLObject) {
+func (t *TL_phoneCallDiscarded) Set_duration(M_duration int32) {
 	t.M_duration = M_duration
 }
 
-func (t *TL_phoneCallDiscarded) Get_duration() TLObject {
+func (t *TL_phoneCallDiscarded) Get_duration() int32 {
 	return t.M_duration
 }
 
@@ -37180,11 +40170,39 @@ func (t *TL_phoneCallDiscarded) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallDiscarded))
-	ec.TLObject(t.Get_need_rating())
-	ec.TLObject(t.Get_need_debug())
+
+	var flags uint32 = 0
+	if t.M_need_rating != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_need_debug != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_reason != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_duration != 0 {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_need_rating != nil {
+		ec.TLObject(t.Get_need_rating())
+	}
+	if t.M_need_debug != nil {
+		ec.TLObject(t.Get_need_debug())
+	}
 	ec.Long(t.Get_id())
-	ec.TLObject(t.Get_reason())
-	ec.TLObject(t.Get_duration())
+	if t.M_reason != nil {
+		ec.TLObject(t.Get_reason())
+	}
+	if t.M_duration != 0 {
+		ec.Int(t.Get_duration())
+	}
 
 	return ec.GetBuffer()
 }
@@ -37192,11 +40210,20 @@ func (t *TL_phoneCallDiscarded) Encode() []byte {
 func (t *TL_phoneCallDiscarded) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_need_rating = dc.TLObject()
-	t.M_need_debug = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_need_rating = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_need_debug = dc.TLObject()
+	}
 	t.M_id = dc.Long()
-	t.M_reason = dc.TLObject()
-	t.M_duration = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reason = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_duration = dc.Int()
+	}
 
 	return dc.err
 }
@@ -37297,7 +40324,7 @@ func (t *TL_phoneConnection) String() string {
 // phoneCallProtocol#a2bb35cb
 type TL_phoneCallProtocol struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_udp_p2p       TLObject
 	M_udp_reflector TLObject
 	M_min_layer     int32
@@ -37308,11 +40335,11 @@ func (t *TL_phoneCallProtocol) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_phoneCallProtocol) Set_flags(M_flags TLObject) {
+func (t *TL_phoneCallProtocol) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_phoneCallProtocol) Get_flags() TLObject {
+func (t *TL_phoneCallProtocol) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -37358,8 +40385,24 @@ func (t *TL_phoneCallProtocol) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_phoneCallProtocol))
-	ec.TLObject(t.Get_udp_p2p())
-	ec.TLObject(t.Get_udp_reflector())
+
+	var flags uint32 = 0
+	if t.M_udp_p2p != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_udp_reflector != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_udp_p2p != nil {
+		ec.TLObject(t.Get_udp_p2p())
+	}
+	if t.M_udp_reflector != nil {
+		ec.TLObject(t.Get_udp_reflector())
+	}
 	ec.Int(t.Get_min_layer())
 	ec.Int(t.Get_max_layer())
 
@@ -37369,8 +40412,13 @@ func (t *TL_phoneCallProtocol) Encode() []byte {
 func (t *TL_phoneCallProtocol) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_udp_p2p = dc.TLObject()
-	t.M_udp_reflector = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_udp_p2p = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_udp_reflector = dc.TLObject()
+	}
 	t.M_min_layer = dc.Int()
 	t.M_max_layer = dc.Int()
 
@@ -37687,13 +40735,13 @@ func (t *TL_langPackString) String() string {
 // langPackStringPluralized#6c47ac9f
 type TL_langPackStringPluralized struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_key         string
-	M_zero_value  TLObject
-	M_one_value   TLObject
-	M_two_value   TLObject
-	M_few_value   TLObject
-	M_many_value  TLObject
+	M_zero_value  string
+	M_one_value   string
+	M_two_value   string
+	M_few_value   string
+	M_many_value  string
 	M_other_value string
 }
 
@@ -37701,11 +40749,11 @@ func (t *TL_langPackStringPluralized) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_langPackStringPluralized) Set_flags(M_flags TLObject) {
+func (t *TL_langPackStringPluralized) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_langPackStringPluralized) Get_flags() TLObject {
+func (t *TL_langPackStringPluralized) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -37717,43 +40765,43 @@ func (t *TL_langPackStringPluralized) Get_key() string {
 	return t.M_key
 }
 
-func (t *TL_langPackStringPluralized) Set_zero_value(M_zero_value TLObject) {
+func (t *TL_langPackStringPluralized) Set_zero_value(M_zero_value string) {
 	t.M_zero_value = M_zero_value
 }
 
-func (t *TL_langPackStringPluralized) Get_zero_value() TLObject {
+func (t *TL_langPackStringPluralized) Get_zero_value() string {
 	return t.M_zero_value
 }
 
-func (t *TL_langPackStringPluralized) Set_one_value(M_one_value TLObject) {
+func (t *TL_langPackStringPluralized) Set_one_value(M_one_value string) {
 	t.M_one_value = M_one_value
 }
 
-func (t *TL_langPackStringPluralized) Get_one_value() TLObject {
+func (t *TL_langPackStringPluralized) Get_one_value() string {
 	return t.M_one_value
 }
 
-func (t *TL_langPackStringPluralized) Set_two_value(M_two_value TLObject) {
+func (t *TL_langPackStringPluralized) Set_two_value(M_two_value string) {
 	t.M_two_value = M_two_value
 }
 
-func (t *TL_langPackStringPluralized) Get_two_value() TLObject {
+func (t *TL_langPackStringPluralized) Get_two_value() string {
 	return t.M_two_value
 }
 
-func (t *TL_langPackStringPluralized) Set_few_value(M_few_value TLObject) {
+func (t *TL_langPackStringPluralized) Set_few_value(M_few_value string) {
 	t.M_few_value = M_few_value
 }
 
-func (t *TL_langPackStringPluralized) Get_few_value() TLObject {
+func (t *TL_langPackStringPluralized) Get_few_value() string {
 	return t.M_few_value
 }
 
-func (t *TL_langPackStringPluralized) Set_many_value(M_many_value TLObject) {
+func (t *TL_langPackStringPluralized) Set_many_value(M_many_value string) {
 	t.M_many_value = M_many_value
 }
 
-func (t *TL_langPackStringPluralized) Get_many_value() TLObject {
+func (t *TL_langPackStringPluralized) Get_many_value() string {
 	return t.M_many_value
 }
 
@@ -37775,12 +40823,46 @@ func (t *TL_langPackStringPluralized) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_langPackStringPluralized))
+
+	var flags uint32 = 0
+	if t.M_zero_value != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_one_value != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_two_value != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_few_value != "" {
+		flags |= 1 << 3
+	}
+
+	if t.M_many_value != "" {
+		flags |= 1 << 4
+	}
+
+	ec.UInt(flags)
+
 	ec.String(t.Get_key())
-	ec.TLObject(t.Get_zero_value())
-	ec.TLObject(t.Get_one_value())
-	ec.TLObject(t.Get_two_value())
-	ec.TLObject(t.Get_few_value())
-	ec.TLObject(t.Get_many_value())
+	if t.M_zero_value != "" {
+		ec.String(t.Get_zero_value())
+	}
+	if t.M_one_value != "" {
+		ec.String(t.Get_one_value())
+	}
+	if t.M_two_value != "" {
+		ec.String(t.Get_two_value())
+	}
+	if t.M_few_value != "" {
+		ec.String(t.Get_few_value())
+	}
+	if t.M_many_value != "" {
+		ec.String(t.Get_many_value())
+	}
 	ec.String(t.Get_other_value())
 
 	return ec.GetBuffer()
@@ -37789,12 +40871,23 @@ func (t *TL_langPackStringPluralized) Encode() []byte {
 func (t *TL_langPackStringPluralized) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_key = dc.String()
-	t.M_zero_value = dc.TLObject()
-	t.M_one_value = dc.TLObject()
-	t.M_two_value = dc.TLObject()
-	t.M_few_value = dc.TLObject()
-	t.M_many_value = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_zero_value = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_one_value = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_two_value = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_few_value = dc.String()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_many_value = dc.String()
+	}
 	t.M_other_value = dc.String()
 
 	return dc.err
@@ -37997,7 +41090,7 @@ func (t *TL_langPackLanguage) String() string {
 // channelAdminRights#5d7ceba5
 type TL_channelAdminRights struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_change_info     TLObject
 	M_post_messages   TLObject
 	M_edit_messages   TLObject
@@ -38013,11 +41106,11 @@ func (t *TL_channelAdminRights) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelAdminRights) Set_flags(M_flags TLObject) {
+func (t *TL_channelAdminRights) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelAdminRights) Get_flags() TLObject {
+func (t *TL_channelAdminRights) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -38103,15 +41196,73 @@ func (t *TL_channelAdminRights) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminRights))
-	ec.TLObject(t.Get_change_info())
-	ec.TLObject(t.Get_post_messages())
-	ec.TLObject(t.Get_edit_messages())
-	ec.TLObject(t.Get_delete_messages())
-	ec.TLObject(t.Get_ban_users())
-	ec.TLObject(t.Get_invite_users())
-	ec.TLObject(t.Get_invite_link())
-	ec.TLObject(t.Get_pin_messages())
-	ec.TLObject(t.Get_add_admins())
+
+	var flags uint32 = 0
+	if t.M_change_info != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_post_messages != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_edit_messages != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_delete_messages != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_ban_users != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_invite_users != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_invite_link != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_pin_messages != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_add_admins != nil {
+		flags |= 1 << 9
+	}
+
+	ec.UInt(flags)
+
+	if t.M_change_info != nil {
+		ec.TLObject(t.Get_change_info())
+	}
+	if t.M_post_messages != nil {
+		ec.TLObject(t.Get_post_messages())
+	}
+	if t.M_edit_messages != nil {
+		ec.TLObject(t.Get_edit_messages())
+	}
+	if t.M_delete_messages != nil {
+		ec.TLObject(t.Get_delete_messages())
+	}
+	if t.M_ban_users != nil {
+		ec.TLObject(t.Get_ban_users())
+	}
+	if t.M_invite_users != nil {
+		ec.TLObject(t.Get_invite_users())
+	}
+	if t.M_invite_link != nil {
+		ec.TLObject(t.Get_invite_link())
+	}
+	if t.M_pin_messages != nil {
+		ec.TLObject(t.Get_pin_messages())
+	}
+	if t.M_add_admins != nil {
+		ec.TLObject(t.Get_add_admins())
+	}
 
 	return ec.GetBuffer()
 }
@@ -38119,15 +41270,34 @@ func (t *TL_channelAdminRights) Encode() []byte {
 func (t *TL_channelAdminRights) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_change_info = dc.TLObject()
-	t.M_post_messages = dc.TLObject()
-	t.M_edit_messages = dc.TLObject()
-	t.M_delete_messages = dc.TLObject()
-	t.M_ban_users = dc.TLObject()
-	t.M_invite_users = dc.TLObject()
-	t.M_invite_link = dc.TLObject()
-	t.M_pin_messages = dc.TLObject()
-	t.M_add_admins = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_change_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_post_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_edit_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_delete_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_ban_users = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_invite_users = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_invite_link = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_pin_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_add_admins = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -38139,7 +41309,7 @@ func (t *TL_channelAdminRights) String() string {
 // channelBannedRights#58cf4249
 type TL_channelBannedRights struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_view_messages TLObject
 	M_send_messages TLObject
 	M_send_media    TLObject
@@ -38155,11 +41325,11 @@ func (t *TL_channelBannedRights) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelBannedRights) Set_flags(M_flags TLObject) {
+func (t *TL_channelBannedRights) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelBannedRights) Get_flags() TLObject {
+func (t *TL_channelBannedRights) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -38245,14 +41415,66 @@ func (t *TL_channelBannedRights) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelBannedRights))
-	ec.TLObject(t.Get_view_messages())
-	ec.TLObject(t.Get_send_messages())
-	ec.TLObject(t.Get_send_media())
-	ec.TLObject(t.Get_send_stickers())
-	ec.TLObject(t.Get_send_gifs())
-	ec.TLObject(t.Get_send_games())
-	ec.TLObject(t.Get_send_inline())
-	ec.TLObject(t.Get_embed_links())
+
+	var flags uint32 = 0
+	if t.M_view_messages != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_send_messages != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_send_media != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_send_stickers != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_send_gifs != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_send_games != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_send_inline != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_embed_links != nil {
+		flags |= 1 << 7
+	}
+
+	ec.UInt(flags)
+
+	if t.M_view_messages != nil {
+		ec.TLObject(t.Get_view_messages())
+	}
+	if t.M_send_messages != nil {
+		ec.TLObject(t.Get_send_messages())
+	}
+	if t.M_send_media != nil {
+		ec.TLObject(t.Get_send_media())
+	}
+	if t.M_send_stickers != nil {
+		ec.TLObject(t.Get_send_stickers())
+	}
+	if t.M_send_gifs != nil {
+		ec.TLObject(t.Get_send_gifs())
+	}
+	if t.M_send_games != nil {
+		ec.TLObject(t.Get_send_games())
+	}
+	if t.M_send_inline != nil {
+		ec.TLObject(t.Get_send_inline())
+	}
+	if t.M_embed_links != nil {
+		ec.TLObject(t.Get_embed_links())
+	}
 	ec.Int(t.Get_until_date())
 
 	return ec.GetBuffer()
@@ -38261,14 +41483,31 @@ func (t *TL_channelBannedRights) Encode() []byte {
 func (t *TL_channelBannedRights) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_view_messages = dc.TLObject()
-	t.M_send_messages = dc.TLObject()
-	t.M_send_media = dc.TLObject()
-	t.M_send_stickers = dc.TLObject()
-	t.M_send_gifs = dc.TLObject()
-	t.M_send_games = dc.TLObject()
-	t.M_send_inline = dc.TLObject()
-	t.M_embed_links = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_view_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_send_messages = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_send_media = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_send_stickers = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_send_gifs = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_send_games = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_send_inline = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_embed_links = dc.TLObject()
+	}
 	t.M_until_date = dc.Int()
 
 	return dc.err
@@ -39206,7 +42445,7 @@ func (t *TL_channels_adminLogResults) String() string {
 // channelAdminLogEventsFilter#ea107ae4
 type TL_channelAdminLogEventsFilter struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_join     TLObject
 	M_leave    TLObject
 	M_invite   TLObject
@@ -39227,11 +42466,11 @@ func (t *TL_channelAdminLogEventsFilter) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channelAdminLogEventsFilter) Set_flags(M_flags TLObject) {
+func (t *TL_channelAdminLogEventsFilter) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channelAdminLogEventsFilter) Get_flags() TLObject {
+func (t *TL_channelAdminLogEventsFilter) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -39357,20 +42596,108 @@ func (t *TL_channelAdminLogEventsFilter) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channelAdminLogEventsFilter))
-	ec.TLObject(t.Get_join())
-	ec.TLObject(t.Get_leave())
-	ec.TLObject(t.Get_invite())
-	ec.TLObject(t.Get_ban())
-	ec.TLObject(t.Get_unban())
-	ec.TLObject(t.Get_kick())
-	ec.TLObject(t.Get_unkick())
-	ec.TLObject(t.Get_promote())
-	ec.TLObject(t.Get_demote())
-	ec.TLObject(t.Get_info())
-	ec.TLObject(t.Get_settings())
-	ec.TLObject(t.Get_pinned())
-	ec.TLObject(t.Get_edit())
-	ec.TLObject(t.Get_delete())
+
+	var flags uint32 = 0
+	if t.M_join != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_leave != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_invite != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_ban != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_unban != nil {
+		flags |= 1 << 4
+	}
+
+	if t.M_kick != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_unkick != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_promote != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_demote != nil {
+		flags |= 1 << 8
+	}
+
+	if t.M_info != nil {
+		flags |= 1 << 9
+	}
+
+	if t.M_settings != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_pinned != nil {
+		flags |= 1 << 11
+	}
+
+	if t.M_edit != nil {
+		flags |= 1 << 12
+	}
+
+	if t.M_delete != nil {
+		flags |= 1 << 13
+	}
+
+	ec.UInt(flags)
+
+	if t.M_join != nil {
+		ec.TLObject(t.Get_join())
+	}
+	if t.M_leave != nil {
+		ec.TLObject(t.Get_leave())
+	}
+	if t.M_invite != nil {
+		ec.TLObject(t.Get_invite())
+	}
+	if t.M_ban != nil {
+		ec.TLObject(t.Get_ban())
+	}
+	if t.M_unban != nil {
+		ec.TLObject(t.Get_unban())
+	}
+	if t.M_kick != nil {
+		ec.TLObject(t.Get_kick())
+	}
+	if t.M_unkick != nil {
+		ec.TLObject(t.Get_unkick())
+	}
+	if t.M_promote != nil {
+		ec.TLObject(t.Get_promote())
+	}
+	if t.M_demote != nil {
+		ec.TLObject(t.Get_demote())
+	}
+	if t.M_info != nil {
+		ec.TLObject(t.Get_info())
+	}
+	if t.M_settings != nil {
+		ec.TLObject(t.Get_settings())
+	}
+	if t.M_pinned != nil {
+		ec.TLObject(t.Get_pinned())
+	}
+	if t.M_edit != nil {
+		ec.TLObject(t.Get_edit())
+	}
+	if t.M_delete != nil {
+		ec.TLObject(t.Get_delete())
+	}
 
 	return ec.GetBuffer()
 }
@@ -39378,20 +42705,49 @@ func (t *TL_channelAdminLogEventsFilter) Encode() []byte {
 func (t *TL_channelAdminLogEventsFilter) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_join = dc.TLObject()
-	t.M_leave = dc.TLObject()
-	t.M_invite = dc.TLObject()
-	t.M_ban = dc.TLObject()
-	t.M_unban = dc.TLObject()
-	t.M_kick = dc.TLObject()
-	t.M_unkick = dc.TLObject()
-	t.M_promote = dc.TLObject()
-	t.M_demote = dc.TLObject()
-	t.M_info = dc.TLObject()
-	t.M_settings = dc.TLObject()
-	t.M_pinned = dc.TLObject()
-	t.M_edit = dc.TLObject()
-	t.M_delete = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_join = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_leave = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_invite = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_ban = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 4)) != 0 {
+		t.M_unban = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_kick = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_unkick = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_promote = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_demote = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_info = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_settings = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_pinned = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 12)) != 0 {
+		t.M_edit = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_delete = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -40396,7 +43752,7 @@ func (t *TL_auth_checkPhone) String() string {
 // auth_sendCode#86aef0ec
 type TL_auth_sendCode struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_allow_flashcall TLObject
 	M_phone_number    string
 	M_current_number  TLObject
@@ -40408,11 +43764,11 @@ func (t *TL_auth_sendCode) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_auth_sendCode) Set_flags(M_flags TLObject) {
+func (t *TL_auth_sendCode) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_auth_sendCode) Get_flags() TLObject {
+func (t *TL_auth_sendCode) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -40466,9 +43822,25 @@ func (t *TL_auth_sendCode) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_auth_sendCode))
-	ec.TLObject(t.Get_allow_flashcall())
+
+	var flags uint32 = 0
+	if t.M_allow_flashcall != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_current_number != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_allow_flashcall != nil {
+		ec.TLObject(t.Get_allow_flashcall())
+	}
 	ec.String(t.Get_phone_number())
-	ec.TLObject(t.Get_current_number())
+	if t.M_current_number != nil {
+		ec.TLObject(t.Get_current_number())
+	}
 	ec.Int(t.Get_api_id())
 	ec.String(t.Get_api_hash())
 
@@ -40478,9 +43850,14 @@ func (t *TL_auth_sendCode) Encode() []byte {
 func (t *TL_auth_sendCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_allow_flashcall = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_allow_flashcall = dc.TLObject()
+	}
 	t.M_phone_number = dc.String()
-	t.M_current_number = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_current_number = dc.TLObject()
+	}
 	t.M_api_id = dc.Int()
 	t.M_api_hash = dc.String()
 
@@ -41547,45 +44924,45 @@ func (t *TL_account_resetNotifySettings) String() string {
 // account_updateProfile#78515775
 type TL_account_updateProfile struct {
 	M_classID    int32
-	M_flags      TLObject
-	M_first_name TLObject
-	M_last_name  TLObject
-	M_about      TLObject
+	M_flags      uint32
+	M_first_name string
+	M_last_name  string
+	M_about      string
 }
 
 func (t *TL_account_updateProfile) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_updateProfile) Set_flags(M_flags TLObject) {
+func (t *TL_account_updateProfile) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_account_updateProfile) Get_flags() TLObject {
+func (t *TL_account_updateProfile) Get_flags() uint32 {
 	return t.M_flags
 }
 
-func (t *TL_account_updateProfile) Set_first_name(M_first_name TLObject) {
+func (t *TL_account_updateProfile) Set_first_name(M_first_name string) {
 	t.M_first_name = M_first_name
 }
 
-func (t *TL_account_updateProfile) Get_first_name() TLObject {
+func (t *TL_account_updateProfile) Get_first_name() string {
 	return t.M_first_name
 }
 
-func (t *TL_account_updateProfile) Set_last_name(M_last_name TLObject) {
+func (t *TL_account_updateProfile) Set_last_name(M_last_name string) {
 	t.M_last_name = M_last_name
 }
 
-func (t *TL_account_updateProfile) Get_last_name() TLObject {
+func (t *TL_account_updateProfile) Get_last_name() string {
 	return t.M_last_name
 }
 
-func (t *TL_account_updateProfile) Set_about(M_about TLObject) {
+func (t *TL_account_updateProfile) Set_about(M_about string) {
 	t.M_about = M_about
 }
 
-func (t *TL_account_updateProfile) Get_about() TLObject {
+func (t *TL_account_updateProfile) Get_about() string {
 	return t.M_about
 }
 
@@ -41599,9 +44976,31 @@ func (t *TL_account_updateProfile) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_updateProfile))
-	ec.TLObject(t.Get_first_name())
-	ec.TLObject(t.Get_last_name())
-	ec.TLObject(t.Get_about())
+
+	var flags uint32 = 0
+	if t.M_first_name != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_last_name != "" {
+		flags |= 1 << 1
+	}
+
+	if t.M_about != "" {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_first_name != "" {
+		ec.String(t.Get_first_name())
+	}
+	if t.M_last_name != "" {
+		ec.String(t.Get_last_name())
+	}
+	if t.M_about != "" {
+		ec.String(t.Get_about())
+	}
 
 	return ec.GetBuffer()
 }
@@ -41609,9 +45008,16 @@ func (t *TL_account_updateProfile) Encode() []byte {
 func (t *TL_account_updateProfile) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_first_name = dc.TLObject()
-	t.M_last_name = dc.TLObject()
-	t.M_about = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_first_name = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_last_name = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_about = dc.String()
+	}
 
 	return dc.err
 }
@@ -42067,7 +45473,7 @@ func (t *TL_account_setAccountTTL) String() string {
 // account_sendChangePhoneCode#8e57deb
 type TL_account_sendChangePhoneCode struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_allow_flashcall TLObject
 	M_phone_number    string
 	M_current_number  TLObject
@@ -42077,11 +45483,11 @@ func (t *TL_account_sendChangePhoneCode) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_sendChangePhoneCode) Set_flags(M_flags TLObject) {
+func (t *TL_account_sendChangePhoneCode) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_account_sendChangePhoneCode) Get_flags() TLObject {
+func (t *TL_account_sendChangePhoneCode) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -42119,9 +45525,25 @@ func (t *TL_account_sendChangePhoneCode) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_sendChangePhoneCode))
-	ec.TLObject(t.Get_allow_flashcall())
+
+	var flags uint32 = 0
+	if t.M_allow_flashcall != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_current_number != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_allow_flashcall != nil {
+		ec.TLObject(t.Get_allow_flashcall())
+	}
 	ec.String(t.Get_phone_number())
-	ec.TLObject(t.Get_current_number())
+	if t.M_current_number != nil {
+		ec.TLObject(t.Get_current_number())
+	}
 
 	return ec.GetBuffer()
 }
@@ -42129,9 +45551,14 @@ func (t *TL_account_sendChangePhoneCode) Encode() []byte {
 func (t *TL_account_sendChangePhoneCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_allow_flashcall = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_allow_flashcall = dc.TLObject()
+	}
 	t.M_phone_number = dc.String()
-	t.M_current_number = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_current_number = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -42463,7 +45890,7 @@ func (t *TL_account_updatePasswordSettings) String() string {
 // account_sendConfirmPhoneCode#1516d7bd
 type TL_account_sendConfirmPhoneCode struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_allow_flashcall TLObject
 	M_hash            string
 	M_current_number  TLObject
@@ -42473,11 +45900,11 @@ func (t *TL_account_sendConfirmPhoneCode) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Set_flags(M_flags TLObject) {
+func (t *TL_account_sendConfirmPhoneCode) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_account_sendConfirmPhoneCode) Get_flags() TLObject {
+func (t *TL_account_sendConfirmPhoneCode) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -42515,9 +45942,25 @@ func (t *TL_account_sendConfirmPhoneCode) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_account_sendConfirmPhoneCode))
-	ec.TLObject(t.Get_allow_flashcall())
+
+	var flags uint32 = 0
+	if t.M_allow_flashcall != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_current_number != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_allow_flashcall != nil {
+		ec.TLObject(t.Get_allow_flashcall())
+	}
 	ec.String(t.Get_hash())
-	ec.TLObject(t.Get_current_number())
+	if t.M_current_number != nil {
+		ec.TLObject(t.Get_current_number())
+	}
 
 	return ec.GetBuffer()
 }
@@ -42525,9 +45968,14 @@ func (t *TL_account_sendConfirmPhoneCode) Encode() []byte {
 func (t *TL_account_sendConfirmPhoneCode) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_allow_flashcall = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_allow_flashcall = dc.TLObject()
+	}
 	t.M_hash = dc.String()
-	t.M_current_number = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_current_number = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -43275,7 +46723,7 @@ func (t *TL_contacts_resolveUsername) String() string {
 // contacts_getTopPeers#d4982db5
 type TL_contacts_getTopPeers struct {
 	M_classID        int32
-	M_flags          TLObject
+	M_flags          uint32
 	M_correspondents TLObject
 	M_bots_pm        TLObject
 	M_bots_inline    TLObject
@@ -43291,11 +46739,11 @@ func (t *TL_contacts_getTopPeers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_contacts_getTopPeers) Set_flags(M_flags TLObject) {
+func (t *TL_contacts_getTopPeers) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_contacts_getTopPeers) Get_flags() TLObject {
+func (t *TL_contacts_getTopPeers) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -43381,12 +46829,52 @@ func (t *TL_contacts_getTopPeers) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_contacts_getTopPeers))
-	ec.TLObject(t.Get_correspondents())
-	ec.TLObject(t.Get_bots_pm())
-	ec.TLObject(t.Get_bots_inline())
-	ec.TLObject(t.Get_phone_calls())
-	ec.TLObject(t.Get_groups())
-	ec.TLObject(t.Get_channels())
+
+	var flags uint32 = 0
+	if t.M_correspondents != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_bots_pm != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_bots_inline != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_phone_calls != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_groups != nil {
+		flags |= 1 << 10
+	}
+
+	if t.M_channels != nil {
+		flags |= 1 << 15
+	}
+
+	ec.UInt(flags)
+
+	if t.M_correspondents != nil {
+		ec.TLObject(t.Get_correspondents())
+	}
+	if t.M_bots_pm != nil {
+		ec.TLObject(t.Get_bots_pm())
+	}
+	if t.M_bots_inline != nil {
+		ec.TLObject(t.Get_bots_inline())
+	}
+	if t.M_phone_calls != nil {
+		ec.TLObject(t.Get_phone_calls())
+	}
+	if t.M_groups != nil {
+		ec.TLObject(t.Get_groups())
+	}
+	if t.M_channels != nil {
+		ec.TLObject(t.Get_channels())
+	}
 	ec.Int(t.Get_offset())
 	ec.Int(t.Get_limit())
 	ec.Int(t.Get_hash())
@@ -43397,12 +46885,25 @@ func (t *TL_contacts_getTopPeers) Encode() []byte {
 func (t *TL_contacts_getTopPeers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_correspondents = dc.TLObject()
-	t.M_bots_pm = dc.TLObject()
-	t.M_bots_inline = dc.TLObject()
-	t.M_phone_calls = dc.TLObject()
-	t.M_groups = dc.TLObject()
-	t.M_channels = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_correspondents = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_bots_pm = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_bots_inline = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_phone_calls = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 10)) != 0 {
+		t.M_groups = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 15)) != 0 {
+		t.M_channels = dc.TLObject()
+	}
 	t.M_offset = dc.Int()
 	t.M_limit = dc.Int()
 	t.M_hash = dc.Int()
@@ -43549,7 +47050,7 @@ func (t *TL_messages_getMessages) String() string {
 // messages_getDialogs#191ba9c5
 type TL_messages_getDialogs struct {
 	M_classID        int32
-	M_flags          TLObject
+	M_flags          uint32
 	M_exclude_pinned TLObject
 	M_offset_date    int32
 	M_offset_id      int32
@@ -43561,11 +47062,11 @@ func (t *TL_messages_getDialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getDialogs) Set_flags(M_flags TLObject) {
+func (t *TL_messages_getDialogs) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_getDialogs) Get_flags() TLObject {
+func (t *TL_messages_getDialogs) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -43619,7 +47120,17 @@ func (t *TL_messages_getDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getDialogs))
-	ec.TLObject(t.Get_exclude_pinned())
+
+	var flags uint32 = 0
+	if t.M_exclude_pinned != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_exclude_pinned != nil {
+		ec.TLObject(t.Get_exclude_pinned())
+	}
 	ec.Int(t.Get_offset_date())
 	ec.Int(t.Get_offset_id())
 	ec.TLObject(t.Get_offset_peer())
@@ -43631,7 +47142,10 @@ func (t *TL_messages_getDialogs) Encode() []byte {
 func (t *TL_messages_getDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_exclude_pinned = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_exclude_pinned = dc.TLObject()
+	}
 	t.M_offset_date = dc.Int()
 	t.M_offset_id = dc.Int()
 	t.M_offset_peer = dc.TLObject()
@@ -43769,7 +47283,7 @@ func (t *TL_messages_getHistory) String() string {
 // messages_search#39e9ea0
 type TL_messages_search struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_peer       TLObject
 	M_q          string
 	M_from_id    TLObject
@@ -43787,11 +47301,11 @@ func (t *TL_messages_search) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_search) Set_flags(M_flags TLObject) {
+func (t *TL_messages_search) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_search) Get_flags() TLObject {
+func (t *TL_messages_search) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -43893,9 +47407,19 @@ func (t *TL_messages_search) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_search))
+
+	var flags uint32 = 0
+	if t.M_from_id != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_peer())
 	ec.String(t.Get_q())
-	ec.TLObject(t.Get_from_id())
+	if t.M_from_id != nil {
+		ec.TLObject(t.Get_from_id())
+	}
 	ec.TLObject(t.Get_filter())
 	ec.Int(t.Get_min_date())
 	ec.Int(t.Get_max_date())
@@ -43911,9 +47435,12 @@ func (t *TL_messages_search) Encode() []byte {
 func (t *TL_messages_search) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_peer = dc.TLObject()
 	t.M_q = dc.String()
-	t.M_from_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_from_id = dc.TLObject()
+	}
 	t.M_filter = dc.TLObject()
 	t.M_min_date = dc.Int()
 	t.M_max_date = dc.Int()
@@ -43989,7 +47516,7 @@ func (t *TL_messages_readHistory) String() string {
 // messages_deleteHistory#1c015b09
 type TL_messages_deleteHistory struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_just_clear TLObject
 	M_peer       TLObject
 	M_max_id     int32
@@ -43999,11 +47526,11 @@ func (t *TL_messages_deleteHistory) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_deleteHistory) Set_flags(M_flags TLObject) {
+func (t *TL_messages_deleteHistory) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_deleteHistory) Get_flags() TLObject {
+func (t *TL_messages_deleteHistory) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -44041,7 +47568,17 @@ func (t *TL_messages_deleteHistory) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_deleteHistory))
-	ec.TLObject(t.Get_just_clear())
+
+	var flags uint32 = 0
+	if t.M_just_clear != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_just_clear != nil {
+		ec.TLObject(t.Get_just_clear())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_max_id())
 
@@ -44051,7 +47588,10 @@ func (t *TL_messages_deleteHistory) Encode() []byte {
 func (t *TL_messages_deleteHistory) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_just_clear = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_just_clear = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_max_id = dc.Int()
 
@@ -44065,7 +47605,7 @@ func (t *TL_messages_deleteHistory) String() string {
 // messages_deleteMessages#e58e95d2
 type TL_messages_deleteMessages struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_revoke  TLObject
 	M_id      []int32
 }
@@ -44074,11 +47614,11 @@ func (t *TL_messages_deleteMessages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_deleteMessages) Set_flags(M_flags TLObject) {
+func (t *TL_messages_deleteMessages) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_deleteMessages) Get_flags() TLObject {
+func (t *TL_messages_deleteMessages) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -44108,7 +47648,17 @@ func (t *TL_messages_deleteMessages) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_deleteMessages))
-	ec.TLObject(t.Get_revoke())
+
+	var flags uint32 = 0
+	if t.M_revoke != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_revoke != nil {
+		ec.TLObject(t.Get_revoke())
+	}
 	ec.VectorInt(t.Get_id())
 
 	return ec.GetBuffer()
@@ -44117,7 +47667,10 @@ func (t *TL_messages_deleteMessages) Encode() []byte {
 func (t *TL_messages_deleteMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_revoke = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_revoke = dc.TLObject()
+	}
 	t.M_id = dc.VectorInt()
 
 	return dc.err
@@ -44231,13 +47784,13 @@ func (t *TL_messages_setTyping) String() string {
 // messages_sendMessage#fa88427a
 type TL_messages_sendMessage struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_no_webpage      TLObject
 	M_silent          TLObject
 	M_background      TLObject
 	M_clear_draft     TLObject
 	M_peer            TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_message         string
 	M_random_id       int64
 	M_reply_markup    TLObject
@@ -44248,11 +47801,11 @@ func (t *TL_messages_sendMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_sendMessage) Set_flags(M_flags TLObject) {
+func (t *TL_messages_sendMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_sendMessage) Get_flags() TLObject {
+func (t *TL_messages_sendMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -44296,11 +47849,11 @@ func (t *TL_messages_sendMessage) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_sendMessage) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messages_sendMessage) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messages_sendMessage) Get_reply_to_msg_id() TLObject {
+func (t *TL_messages_sendMessage) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -44346,16 +47899,62 @@ func (t *TL_messages_sendMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMessage))
-	ec.TLObject(t.Get_no_webpage())
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_background())
-	ec.TLObject(t.Get_clear_draft())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_silent != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_background != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_clear_draft != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_background != nil {
+		ec.TLObject(t.Get_background())
+	}
+	if t.M_clear_draft != nil {
+		ec.TLObject(t.Get_clear_draft())
+	}
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.String(t.Get_message())
 	ec.Long(t.Get_random_id())
-	ec.TLObject(t.Get_reply_markup())
-	ec.Vector(t.Get_entities())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 
 	return ec.GetBuffer()
 }
@@ -44363,16 +47962,31 @@ func (t *TL_messages_sendMessage) Encode() []byte {
 func (t *TL_messages_sendMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
-	t.M_silent = dc.TLObject()
-	t.M_background = dc.TLObject()
-	t.M_clear_draft = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_background = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_clear_draft = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_message = dc.String()
 	t.M_random_id = dc.Long()
-	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -44384,12 +47998,12 @@ func (t *TL_messages_sendMessage) String() string {
 // messages_sendMedia#c8f16791
 type TL_messages_sendMedia struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_silent          TLObject
 	M_background      TLObject
 	M_clear_draft     TLObject
 	M_peer            TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_media           TLObject
 	M_random_id       int64
 	M_reply_markup    TLObject
@@ -44399,11 +48013,11 @@ func (t *TL_messages_sendMedia) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_sendMedia) Set_flags(M_flags TLObject) {
+func (t *TL_messages_sendMedia) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_sendMedia) Get_flags() TLObject {
+func (t *TL_messages_sendMedia) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -44439,11 +48053,11 @@ func (t *TL_messages_sendMedia) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_sendMedia) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messages_sendMedia) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messages_sendMedia) Get_reply_to_msg_id() TLObject {
+func (t *TL_messages_sendMedia) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -44481,14 +48095,48 @@ func (t *TL_messages_sendMedia) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMedia))
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_background())
-	ec.TLObject(t.Get_clear_draft())
+
+	var flags uint32 = 0
+	if t.M_silent != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_background != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_clear_draft != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_background != nil {
+		ec.TLObject(t.Get_background())
+	}
+	if t.M_clear_draft != nil {
+		ec.TLObject(t.Get_clear_draft())
+	}
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.TLObject(t.Get_media())
 	ec.Long(t.Get_random_id())
-	ec.TLObject(t.Get_reply_markup())
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
 
 	return ec.GetBuffer()
 }
@@ -44496,14 +48144,25 @@ func (t *TL_messages_sendMedia) Encode() []byte {
 func (t *TL_messages_sendMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_silent = dc.TLObject()
-	t.M_background = dc.TLObject()
-	t.M_clear_draft = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_background = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_clear_draft = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_media = dc.TLObject()
 	t.M_random_id = dc.Long()
-	t.M_reply_markup = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -44515,7 +48174,7 @@ func (t *TL_messages_sendMedia) String() string {
 // messages_forwardMessages#708e0195
 type TL_messages_forwardMessages struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_silent        TLObject
 	M_background    TLObject
 	M_with_my_score TLObject
@@ -44530,11 +48189,11 @@ func (t *TL_messages_forwardMessages) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_forwardMessages) Set_flags(M_flags TLObject) {
+func (t *TL_messages_forwardMessages) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_forwardMessages) Get_flags() TLObject {
+func (t *TL_messages_forwardMessages) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -44612,10 +48271,38 @@ func (t *TL_messages_forwardMessages) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_forwardMessages))
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_background())
-	ec.TLObject(t.Get_with_my_score())
-	ec.TLObject(t.Get_grouped())
+
+	var flags uint32 = 0
+	if t.M_silent != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_background != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_with_my_score != nil {
+		flags |= 1 << 8
+	}
+
+	if t.M_grouped != nil {
+		flags |= 1 << 9
+	}
+
+	ec.UInt(flags)
+
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_background != nil {
+		ec.TLObject(t.Get_background())
+	}
+	if t.M_with_my_score != nil {
+		ec.TLObject(t.Get_with_my_score())
+	}
+	if t.M_grouped != nil {
+		ec.TLObject(t.Get_grouped())
+	}
 	ec.TLObject(t.Get_from_peer())
 	ec.VectorInt(t.Get_id())
 	ec.VectorLong(t.Get_random_id())
@@ -44627,10 +48314,19 @@ func (t *TL_messages_forwardMessages) Encode() []byte {
 func (t *TL_messages_forwardMessages) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_silent = dc.TLObject()
-	t.M_background = dc.TLObject()
-	t.M_with_my_score = dc.TLObject()
-	t.M_grouped = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_background = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 8)) != 0 {
+		t.M_with_my_score = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 9)) != 0 {
+		t.M_grouped = dc.TLObject()
+	}
 	t.M_from_peer = dc.TLObject()
 	t.M_id = dc.VectorInt()
 	t.M_random_id = dc.VectorLong()
@@ -46696,7 +50392,7 @@ func (t *TL_messages_searchGlobal) String() string {
 // messages_reorderStickerSets#78337739
 type TL_messages_reorderStickerSets struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_masks   TLObject
 	M_order   []int64
 }
@@ -46705,11 +50401,11 @@ func (t *TL_messages_reorderStickerSets) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_reorderStickerSets) Set_flags(M_flags TLObject) {
+func (t *TL_messages_reorderStickerSets) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_reorderStickerSets) Get_flags() TLObject {
+func (t *TL_messages_reorderStickerSets) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -46739,7 +50435,17 @@ func (t *TL_messages_reorderStickerSets) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reorderStickerSets))
-	ec.TLObject(t.Get_masks())
+
+	var flags uint32 = 0
+	if t.M_masks != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_masks != nil {
+		ec.TLObject(t.Get_masks())
+	}
 	ec.VectorLong(t.Get_order())
 
 	return ec.GetBuffer()
@@ -46748,7 +50454,10 @@ func (t *TL_messages_reorderStickerSets) Encode() []byte {
 func (t *TL_messages_reorderStickerSets) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_masks = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_masks = dc.TLObject()
+	}
 	t.M_order = dc.VectorLong()
 
 	return dc.err
@@ -46985,7 +50694,7 @@ func (t *TL_messages_saveGif) String() string {
 // messages_getInlineBotResults#514e999d
 type TL_messages_getInlineBotResults struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_bot       TLObject
 	M_peer      TLObject
 	M_geo_point TLObject
@@ -46997,11 +50706,11 @@ func (t *TL_messages_getInlineBotResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getInlineBotResults) Set_flags(M_flags TLObject) {
+func (t *TL_messages_getInlineBotResults) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_getInlineBotResults) Get_flags() TLObject {
+func (t *TL_messages_getInlineBotResults) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47055,9 +50764,19 @@ func (t *TL_messages_getInlineBotResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getInlineBotResults))
+
+	var flags uint32 = 0
+	if t.M_geo_point != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_bot())
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_geo_point())
+	if t.M_geo_point != nil {
+		ec.TLObject(t.Get_geo_point())
+	}
 	ec.String(t.Get_query())
 	ec.String(t.Get_offset())
 
@@ -47067,9 +50786,12 @@ func (t *TL_messages_getInlineBotResults) Encode() []byte {
 func (t *TL_messages_getInlineBotResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_bot = dc.TLObject()
 	t.M_peer = dc.TLObject()
-	t.M_geo_point = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_geo_point = dc.TLObject()
+	}
 	t.M_query = dc.String()
 	t.M_offset = dc.String()
 
@@ -47083,13 +50805,13 @@ func (t *TL_messages_getInlineBotResults) String() string {
 // messages_setInlineBotResults#eb5ea206
 type TL_messages_setInlineBotResults struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_gallery     TLObject
 	M_private     TLObject
 	M_query_id    int64
 	M_results     []TLObject
 	M_cache_time  int32
-	M_next_offset TLObject
+	M_next_offset string
 	M_switch_pm   TLObject
 }
 
@@ -47097,11 +50819,11 @@ func (t *TL_messages_setInlineBotResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setInlineBotResults) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setInlineBotResults) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setInlineBotResults) Get_flags() TLObject {
+func (t *TL_messages_setInlineBotResults) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47145,11 +50867,11 @@ func (t *TL_messages_setInlineBotResults) Get_cache_time() int32 {
 	return t.M_cache_time
 }
 
-func (t *TL_messages_setInlineBotResults) Set_next_offset(M_next_offset TLObject) {
+func (t *TL_messages_setInlineBotResults) Set_next_offset(M_next_offset string) {
 	t.M_next_offset = M_next_offset
 }
 
-func (t *TL_messages_setInlineBotResults) Get_next_offset() TLObject {
+func (t *TL_messages_setInlineBotResults) Get_next_offset() string {
 	return t.M_next_offset
 }
 
@@ -47171,13 +50893,41 @@ func (t *TL_messages_setInlineBotResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setInlineBotResults))
-	ec.TLObject(t.Get_gallery())
-	ec.TLObject(t.Get_private())
+
+	var flags uint32 = 0
+	if t.M_gallery != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_private != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_next_offset != "" {
+		flags |= 1 << 2
+	}
+
+	if t.M_switch_pm != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_gallery != nil {
+		ec.TLObject(t.Get_gallery())
+	}
+	if t.M_private != nil {
+		ec.TLObject(t.Get_private())
+	}
 	ec.Long(t.Get_query_id())
 	ec.Vector(t.Get_results())
 	ec.Int(t.Get_cache_time())
-	ec.TLObject(t.Get_next_offset())
-	ec.TLObject(t.Get_switch_pm())
+	if t.M_next_offset != "" {
+		ec.String(t.Get_next_offset())
+	}
+	if t.M_switch_pm != nil {
+		ec.TLObject(t.Get_switch_pm())
+	}
 
 	return ec.GetBuffer()
 }
@@ -47185,13 +50935,22 @@ func (t *TL_messages_setInlineBotResults) Encode() []byte {
 func (t *TL_messages_setInlineBotResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_gallery = dc.TLObject()
-	t.M_private = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_gallery = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_private = dc.TLObject()
+	}
 	t.M_query_id = dc.Long()
 	t.M_results = dc.Vector()
 	t.M_cache_time = dc.Int()
-	t.M_next_offset = dc.TLObject()
-	t.M_switch_pm = dc.TLObject()
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_next_offset = dc.String()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_switch_pm = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -47203,12 +50962,12 @@ func (t *TL_messages_setInlineBotResults) String() string {
 // messages_sendInlineBotResult#b16e06fe
 type TL_messages_sendInlineBotResult struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_silent          TLObject
 	M_background      TLObject
 	M_clear_draft     TLObject
 	M_peer            TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_random_id       int64
 	M_query_id        int64
 	M_id              string
@@ -47218,11 +50977,11 @@ func (t *TL_messages_sendInlineBotResult) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_flags(M_flags TLObject) {
+func (t *TL_messages_sendInlineBotResult) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_flags() TLObject {
+func (t *TL_messages_sendInlineBotResult) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47258,11 +51017,11 @@ func (t *TL_messages_sendInlineBotResult) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_sendInlineBotResult) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messages_sendInlineBotResult) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messages_sendInlineBotResult) Get_reply_to_msg_id() TLObject {
+func (t *TL_messages_sendInlineBotResult) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -47300,11 +51059,39 @@ func (t *TL_messages_sendInlineBotResult) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendInlineBotResult))
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_background())
-	ec.TLObject(t.Get_clear_draft())
+
+	var flags uint32 = 0
+	if t.M_silent != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_background != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_clear_draft != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_background != nil {
+		ec.TLObject(t.Get_background())
+	}
+	if t.M_clear_draft != nil {
+		ec.TLObject(t.Get_clear_draft())
+	}
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.Long(t.Get_random_id())
 	ec.Long(t.Get_query_id())
 	ec.String(t.Get_id())
@@ -47315,11 +51102,20 @@ func (t *TL_messages_sendInlineBotResult) Encode() []byte {
 func (t *TL_messages_sendInlineBotResult) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_silent = dc.TLObject()
-	t.M_background = dc.TLObject()
-	t.M_clear_draft = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_background = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_clear_draft = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_random_id = dc.Long()
 	t.M_query_id = dc.Long()
 	t.M_id = dc.String()
@@ -47390,12 +51186,12 @@ func (t *TL_messages_getMessageEditData) String() string {
 // messages_editMessage#5d1b8dd
 type TL_messages_editMessage struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_no_webpage    TLObject
 	M_stop_geo_live TLObject
 	M_peer          TLObject
 	M_id            int32
-	M_message       TLObject
+	M_message       string
 	M_reply_markup  TLObject
 	M_entities      []TLObject
 	M_geo_point     TLObject
@@ -47405,11 +51201,11 @@ func (t *TL_messages_editMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_editMessage) Set_flags(M_flags TLObject) {
+func (t *TL_messages_editMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_editMessage) Get_flags() TLObject {
+func (t *TL_messages_editMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47445,11 +51241,11 @@ func (t *TL_messages_editMessage) Get_id() int32 {
 	return t.M_id
 }
 
-func (t *TL_messages_editMessage) Set_message(M_message TLObject) {
+func (t *TL_messages_editMessage) Set_message(M_message string) {
 	t.M_message = M_message
 }
 
-func (t *TL_messages_editMessage) Get_message() TLObject {
+func (t *TL_messages_editMessage) Get_message() string {
 	return t.M_message
 }
 
@@ -47487,14 +51283,54 @@ func (t *TL_messages_editMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editMessage))
-	ec.TLObject(t.Get_no_webpage())
-	ec.TLObject(t.Get_stop_geo_live())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_stop_geo_live != nil {
+		flags |= 1 << 12
+	}
+
+	if t.M_message != "" {
+		flags |= 1 << 11
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_geo_point != nil {
+		flags |= 1 << 13
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
+	if t.M_stop_geo_live != nil {
+		ec.TLObject(t.Get_stop_geo_live())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_id())
-	ec.TLObject(t.Get_message())
-	ec.TLObject(t.Get_reply_markup())
-	ec.Vector(t.Get_entities())
-	ec.TLObject(t.Get_geo_point())
+	if t.M_message != "" {
+		ec.String(t.Get_message())
+	}
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
+	if t.M_geo_point != nil {
+		ec.TLObject(t.Get_geo_point())
+	}
 
 	return ec.GetBuffer()
 }
@@ -47502,14 +51338,27 @@ func (t *TL_messages_editMessage) Encode() []byte {
 func (t *TL_messages_editMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
-	t.M_stop_geo_live = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 12)) != 0 {
+		t.M_stop_geo_live = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.Int()
-	t.M_message = dc.TLObject()
-	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.Vector()
-	t.M_geo_point = dc.TLObject()
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_message = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_entities = dc.Vector()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_geo_point = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -47521,11 +51370,11 @@ func (t *TL_messages_editMessage) String() string {
 // messages_editInlineBotMessage#b0e08243
 type TL_messages_editInlineBotMessage struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_no_webpage    TLObject
 	M_stop_geo_live TLObject
 	M_id            TLObject
-	M_message       TLObject
+	M_message       string
 	M_reply_markup  TLObject
 	M_entities      []TLObject
 	M_geo_point     TLObject
@@ -47535,11 +51384,11 @@ func (t *TL_messages_editInlineBotMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_flags(M_flags TLObject) {
+func (t *TL_messages_editInlineBotMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_flags() TLObject {
+func (t *TL_messages_editInlineBotMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47567,11 +51416,11 @@ func (t *TL_messages_editInlineBotMessage) Get_id() TLObject {
 	return t.M_id
 }
 
-func (t *TL_messages_editInlineBotMessage) Set_message(M_message TLObject) {
+func (t *TL_messages_editInlineBotMessage) Set_message(M_message string) {
 	t.M_message = M_message
 }
 
-func (t *TL_messages_editInlineBotMessage) Get_message() TLObject {
+func (t *TL_messages_editInlineBotMessage) Get_message() string {
 	return t.M_message
 }
 
@@ -47609,13 +51458,53 @@ func (t *TL_messages_editInlineBotMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_editInlineBotMessage))
-	ec.TLObject(t.Get_no_webpage())
-	ec.TLObject(t.Get_stop_geo_live())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_stop_geo_live != nil {
+		flags |= 1 << 12
+	}
+
+	if t.M_message != "" {
+		flags |= 1 << 11
+	}
+
+	if t.M_reply_markup != nil {
+		flags |= 1 << 2
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 3
+	}
+
+	if t.M_geo_point != nil {
+		flags |= 1 << 13
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
+	if t.M_stop_geo_live != nil {
+		ec.TLObject(t.Get_stop_geo_live())
+	}
 	ec.TLObject(t.Get_id())
-	ec.TLObject(t.Get_message())
-	ec.TLObject(t.Get_reply_markup())
-	ec.Vector(t.Get_entities())
-	ec.TLObject(t.Get_geo_point())
+	if t.M_message != "" {
+		ec.String(t.Get_message())
+	}
+	if t.M_reply_markup != nil {
+		ec.TLObject(t.Get_reply_markup())
+	}
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
+	if t.M_geo_point != nil {
+		ec.TLObject(t.Get_geo_point())
+	}
 
 	return ec.GetBuffer()
 }
@@ -47623,13 +51512,26 @@ func (t *TL_messages_editInlineBotMessage) Encode() []byte {
 func (t *TL_messages_editInlineBotMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
-	t.M_stop_geo_live = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 12)) != 0 {
+		t.M_stop_geo_live = dc.TLObject()
+	}
 	t.M_id = dc.TLObject()
-	t.M_message = dc.TLObject()
-	t.M_reply_markup = dc.TLObject()
-	t.M_entities = dc.Vector()
-	t.M_geo_point = dc.TLObject()
+	if (t.M_flags & (1 << 11)) != 0 {
+		t.M_message = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_reply_markup = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_entities = dc.Vector()
+	}
+	if (t.M_flags & (1 << 13)) != 0 {
+		t.M_geo_point = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -47641,7 +51543,7 @@ func (t *TL_messages_editInlineBotMessage) String() string {
 // messages_getBotCallbackAnswer#810a9fec
 type TL_messages_getBotCallbackAnswer struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_game    TLObject
 	M_peer    TLObject
 	M_msg_id  int32
@@ -47652,11 +51554,11 @@ func (t *TL_messages_getBotCallbackAnswer) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Set_flags(M_flags TLObject) {
+func (t *TL_messages_getBotCallbackAnswer) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_getBotCallbackAnswer) Get_flags() TLObject {
+func (t *TL_messages_getBotCallbackAnswer) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47702,10 +51604,26 @@ func (t *TL_messages_getBotCallbackAnswer) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getBotCallbackAnswer))
-	ec.TLObject(t.Get_game())
+
+	var flags uint32 = 0
+	if t.M_game != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_data != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_game != nil {
+		ec.TLObject(t.Get_game())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_msg_id())
-	ec.TLObject(t.Get_data())
+	if t.M_data != nil {
+		ec.TLObject(t.Get_data())
+	}
 
 	return ec.GetBuffer()
 }
@@ -47713,10 +51631,15 @@ func (t *TL_messages_getBotCallbackAnswer) Encode() []byte {
 func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_game = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_game = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_msg_id = dc.Int()
-	t.M_data = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_data = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -47728,11 +51651,11 @@ func (t *TL_messages_getBotCallbackAnswer) String() string {
 // messages_setBotCallbackAnswer#d58f130a
 type TL_messages_setBotCallbackAnswer struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_alert      TLObject
 	M_query_id   int64
-	M_message    TLObject
-	M_url        TLObject
+	M_message    string
+	M_url        string
 	M_cache_time int32
 }
 
@@ -47740,11 +51663,11 @@ func (t *TL_messages_setBotCallbackAnswer) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setBotCallbackAnswer) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_flags() TLObject {
+func (t *TL_messages_setBotCallbackAnswer) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47764,19 +51687,19 @@ func (t *TL_messages_setBotCallbackAnswer) Get_query_id() int64 {
 	return t.M_query_id
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_message(M_message TLObject) {
+func (t *TL_messages_setBotCallbackAnswer) Set_message(M_message string) {
 	t.M_message = M_message
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_message() TLObject {
+func (t *TL_messages_setBotCallbackAnswer) Get_message() string {
 	return t.M_message
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Set_url(M_url TLObject) {
+func (t *TL_messages_setBotCallbackAnswer) Set_url(M_url string) {
 	t.M_url = M_url
 }
 
-func (t *TL_messages_setBotCallbackAnswer) Get_url() TLObject {
+func (t *TL_messages_setBotCallbackAnswer) Get_url() string {
 	return t.M_url
 }
 
@@ -47798,10 +51721,32 @@ func (t *TL_messages_setBotCallbackAnswer) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotCallbackAnswer))
-	ec.TLObject(t.Get_alert())
+
+	var flags uint32 = 0
+	if t.M_alert != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_message != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_url != "" {
+		flags |= 1 << 2
+	}
+
+	ec.UInt(flags)
+
+	if t.M_alert != nil {
+		ec.TLObject(t.Get_alert())
+	}
 	ec.Long(t.Get_query_id())
-	ec.TLObject(t.Get_message())
-	ec.TLObject(t.Get_url())
+	if t.M_message != "" {
+		ec.String(t.Get_message())
+	}
+	if t.M_url != "" {
+		ec.String(t.Get_url())
+	}
 	ec.Int(t.Get_cache_time())
 
 	return ec.GetBuffer()
@@ -47810,10 +51755,17 @@ func (t *TL_messages_setBotCallbackAnswer) Encode() []byte {
 func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_alert = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_alert = dc.TLObject()
+	}
 	t.M_query_id = dc.Long()
-	t.M_message = dc.TLObject()
-	t.M_url = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_message = dc.String()
+	}
+	if (t.M_flags & (1 << 2)) != 0 {
+		t.M_url = dc.String()
+	}
 	t.M_cache_time = dc.Int()
 
 	return dc.err
@@ -47871,9 +51823,9 @@ func (t *TL_messages_getPeerDialogs) String() string {
 // messages_saveDraft#bc39e14b
 type TL_messages_saveDraft struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_no_webpage      TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_peer            TLObject
 	M_message         string
 	M_entities        []TLObject
@@ -47883,11 +51835,11 @@ func (t *TL_messages_saveDraft) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_saveDraft) Set_flags(M_flags TLObject) {
+func (t *TL_messages_saveDraft) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_saveDraft) Get_flags() TLObject {
+func (t *TL_messages_saveDraft) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -47899,11 +51851,11 @@ func (t *TL_messages_saveDraft) Get_no_webpage() TLObject {
 	return t.M_no_webpage
 }
 
-func (t *TL_messages_saveDraft) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messages_saveDraft) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messages_saveDraft) Get_reply_to_msg_id() TLObject {
+func (t *TL_messages_saveDraft) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -47941,11 +51893,33 @@ func (t *TL_messages_saveDraft) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_saveDraft))
-	ec.TLObject(t.Get_no_webpage())
-	ec.TLObject(t.Get_reply_to_msg_id())
+
+	var flags uint32 = 0
+	if t.M_no_webpage != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	if t.M_entities != nil {
+		flags |= 1 << 3
+	}
+
+	ec.UInt(flags)
+
+	if t.M_no_webpage != nil {
+		ec.TLObject(t.Get_no_webpage())
+	}
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.String(t.Get_message())
-	ec.Vector(t.Get_entities())
+	if t.M_entities != nil {
+		ec.Vector(t.Get_entities())
+	}
 
 	return ec.GetBuffer()
 }
@@ -47953,11 +51927,18 @@ func (t *TL_messages_saveDraft) Encode() []byte {
 func (t *TL_messages_saveDraft) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_no_webpage = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_no_webpage = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_message = dc.String()
-	t.M_entities = dc.Vector()
+	if (t.M_flags & (1 << 3)) != 0 {
+		t.M_entities = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -48090,7 +52071,7 @@ func (t *TL_messages_readFeaturedStickers) String() string {
 // messages_getRecentStickers#5ea192c9
 type TL_messages_getRecentStickers struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_attached TLObject
 	M_hash     int32
 }
@@ -48099,11 +52080,11 @@ func (t *TL_messages_getRecentStickers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getRecentStickers) Set_flags(M_flags TLObject) {
+func (t *TL_messages_getRecentStickers) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_getRecentStickers) Get_flags() TLObject {
+func (t *TL_messages_getRecentStickers) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48133,7 +52114,17 @@ func (t *TL_messages_getRecentStickers) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getRecentStickers))
-	ec.TLObject(t.Get_attached())
+
+	var flags uint32 = 0
+	if t.M_attached != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_attached != nil {
+		ec.TLObject(t.Get_attached())
+	}
 	ec.Int(t.Get_hash())
 
 	return ec.GetBuffer()
@@ -48142,7 +52133,10 @@ func (t *TL_messages_getRecentStickers) Encode() []byte {
 func (t *TL_messages_getRecentStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_attached = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_attached = dc.TLObject()
+	}
 	t.M_hash = dc.Int()
 
 	return dc.err
@@ -48155,7 +52149,7 @@ func (t *TL_messages_getRecentStickers) String() string {
 // messages_saveRecentSticker#392718f8
 type TL_messages_saveRecentSticker struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_attached TLObject
 	M_id       TLObject
 	M_unsave   TLObject
@@ -48165,11 +52159,11 @@ func (t *TL_messages_saveRecentSticker) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_saveRecentSticker) Set_flags(M_flags TLObject) {
+func (t *TL_messages_saveRecentSticker) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_saveRecentSticker) Get_flags() TLObject {
+func (t *TL_messages_saveRecentSticker) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48207,7 +52201,17 @@ func (t *TL_messages_saveRecentSticker) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_saveRecentSticker))
-	ec.TLObject(t.Get_attached())
+
+	var flags uint32 = 0
+	if t.M_attached != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_attached != nil {
+		ec.TLObject(t.Get_attached())
+	}
 	ec.TLObject(t.Get_id())
 	ec.TLObject(t.Get_unsave())
 
@@ -48217,7 +52221,10 @@ func (t *TL_messages_saveRecentSticker) Encode() []byte {
 func (t *TL_messages_saveRecentSticker) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_attached = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_attached = dc.TLObject()
+	}
 	t.M_id = dc.TLObject()
 	t.M_unsave = dc.TLObject()
 
@@ -48231,7 +52238,7 @@ func (t *TL_messages_saveRecentSticker) String() string {
 // messages_clearRecentStickers#8999602d
 type TL_messages_clearRecentStickers struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_attached TLObject
 }
 
@@ -48239,11 +52246,11 @@ func (t *TL_messages_clearRecentStickers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_clearRecentStickers) Set_flags(M_flags TLObject) {
+func (t *TL_messages_clearRecentStickers) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_clearRecentStickers) Get_flags() TLObject {
+func (t *TL_messages_clearRecentStickers) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48265,7 +52272,17 @@ func (t *TL_messages_clearRecentStickers) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_clearRecentStickers))
-	ec.TLObject(t.Get_attached())
+
+	var flags uint32 = 0
+	if t.M_attached != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_attached != nil {
+		ec.TLObject(t.Get_attached())
+	}
 
 	return ec.GetBuffer()
 }
@@ -48273,7 +52290,10 @@ func (t *TL_messages_clearRecentStickers) Encode() []byte {
 func (t *TL_messages_clearRecentStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_attached = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_attached = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -48285,7 +52305,7 @@ func (t *TL_messages_clearRecentStickers) String() string {
 // messages_getArchivedStickers#57f17692
 type TL_messages_getArchivedStickers struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_masks     TLObject
 	M_offset_id int64
 	M_limit     int32
@@ -48295,11 +52315,11 @@ func (t *TL_messages_getArchivedStickers) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_getArchivedStickers) Set_flags(M_flags TLObject) {
+func (t *TL_messages_getArchivedStickers) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_getArchivedStickers) Get_flags() TLObject {
+func (t *TL_messages_getArchivedStickers) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48337,7 +52357,17 @@ func (t *TL_messages_getArchivedStickers) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_getArchivedStickers))
-	ec.TLObject(t.Get_masks())
+
+	var flags uint32 = 0
+	if t.M_masks != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_masks != nil {
+		ec.TLObject(t.Get_masks())
+	}
 	ec.Long(t.Get_offset_id())
 	ec.Int(t.Get_limit())
 
@@ -48347,7 +52377,10 @@ func (t *TL_messages_getArchivedStickers) Encode() []byte {
 func (t *TL_messages_getArchivedStickers) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_masks = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_masks = dc.TLObject()
+	}
 	t.M_offset_id = dc.Long()
 	t.M_limit = dc.Int()
 
@@ -48451,7 +52484,7 @@ func (t *TL_messages_getAttachedStickers) String() string {
 // messages_setGameScore#8ef8ecc0
 type TL_messages_setGameScore struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_edit_message TLObject
 	M_force        TLObject
 	M_peer         TLObject
@@ -48464,11 +52497,11 @@ func (t *TL_messages_setGameScore) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setGameScore) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setGameScore) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setGameScore) Get_flags() TLObject {
+func (t *TL_messages_setGameScore) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48530,8 +52563,24 @@ func (t *TL_messages_setGameScore) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setGameScore))
-	ec.TLObject(t.Get_edit_message())
-	ec.TLObject(t.Get_force())
+
+	var flags uint32 = 0
+	if t.M_edit_message != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_force != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_edit_message != nil {
+		ec.TLObject(t.Get_edit_message())
+	}
+	if t.M_force != nil {
+		ec.TLObject(t.Get_force())
+	}
 	ec.TLObject(t.Get_peer())
 	ec.Int(t.Get_id())
 	ec.TLObject(t.Get_user_id())
@@ -48543,8 +52592,13 @@ func (t *TL_messages_setGameScore) Encode() []byte {
 func (t *TL_messages_setGameScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_edit_message = dc.TLObject()
-	t.M_force = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_edit_message = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_force = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 	t.M_id = dc.Int()
 	t.M_user_id = dc.TLObject()
@@ -48560,7 +52614,7 @@ func (t *TL_messages_setGameScore) String() string {
 // messages_setInlineGameScore#15ad9f64
 type TL_messages_setInlineGameScore struct {
 	M_classID      int32
-	M_flags        TLObject
+	M_flags        uint32
 	M_edit_message TLObject
 	M_force        TLObject
 	M_id           TLObject
@@ -48572,11 +52626,11 @@ func (t *TL_messages_setInlineGameScore) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setInlineGameScore) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setInlineGameScore) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setInlineGameScore) Get_flags() TLObject {
+func (t *TL_messages_setInlineGameScore) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48630,8 +52684,24 @@ func (t *TL_messages_setInlineGameScore) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setInlineGameScore))
-	ec.TLObject(t.Get_edit_message())
-	ec.TLObject(t.Get_force())
+
+	var flags uint32 = 0
+	if t.M_edit_message != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_force != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_edit_message != nil {
+		ec.TLObject(t.Get_edit_message())
+	}
+	if t.M_force != nil {
+		ec.TLObject(t.Get_force())
+	}
 	ec.TLObject(t.Get_id())
 	ec.TLObject(t.Get_user_id())
 	ec.Int(t.Get_score())
@@ -48642,8 +52712,13 @@ func (t *TL_messages_setInlineGameScore) Encode() []byte {
 func (t *TL_messages_setInlineGameScore) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_edit_message = dc.TLObject()
-	t.M_force = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_edit_message = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_force = dc.TLObject()
+	}
 	t.M_id = dc.TLObject()
 	t.M_user_id = dc.TLObject()
 	t.M_score = dc.Int()
@@ -48949,7 +53024,7 @@ func (t *TL_messages_getWebPage) String() string {
 // messages_toggleDialogPin#3289be6a
 type TL_messages_toggleDialogPin struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_pinned  TLObject
 	M_peer    TLObject
 }
@@ -48958,11 +53033,11 @@ func (t *TL_messages_toggleDialogPin) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_toggleDialogPin) Set_flags(M_flags TLObject) {
+func (t *TL_messages_toggleDialogPin) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_toggleDialogPin) Get_flags() TLObject {
+func (t *TL_messages_toggleDialogPin) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -48992,7 +53067,17 @@ func (t *TL_messages_toggleDialogPin) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_toggleDialogPin))
-	ec.TLObject(t.Get_pinned())
+
+	var flags uint32 = 0
+	if t.M_pinned != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_pinned != nil {
+		ec.TLObject(t.Get_pinned())
+	}
 	ec.TLObject(t.Get_peer())
 
 	return ec.GetBuffer()
@@ -49001,7 +53086,10 @@ func (t *TL_messages_toggleDialogPin) Encode() []byte {
 func (t *TL_messages_toggleDialogPin) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_pinned = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_pinned = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
 
 	return dc.err
@@ -49014,7 +53102,7 @@ func (t *TL_messages_toggleDialogPin) String() string {
 // messages_reorderPinnedDialogs#959ff644
 type TL_messages_reorderPinnedDialogs struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_force   TLObject
 	M_order   []TLObject
 }
@@ -49023,11 +53111,11 @@ func (t *TL_messages_reorderPinnedDialogs) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Set_flags(M_flags TLObject) {
+func (t *TL_messages_reorderPinnedDialogs) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_reorderPinnedDialogs) Get_flags() TLObject {
+func (t *TL_messages_reorderPinnedDialogs) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -49057,7 +53145,17 @@ func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_reorderPinnedDialogs))
-	ec.TLObject(t.Get_force())
+
+	var flags uint32 = 0
+	if t.M_force != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_force != nil {
+		ec.TLObject(t.Get_force())
+	}
 	ec.Vector(t.Get_order())
 
 	return ec.GetBuffer()
@@ -49066,7 +53164,10 @@ func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
 func (t *TL_messages_reorderPinnedDialogs) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_force = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_force = dc.TLObject()
+	}
 	t.M_order = dc.Vector()
 
 	return dc.err
@@ -49110,9 +53211,9 @@ func (t *TL_messages_getPinnedDialogs) String() string {
 // messages_setBotShippingResults#e5f672fa
 type TL_messages_setBotShippingResults struct {
 	M_classID          int32
-	M_flags            TLObject
+	M_flags            uint32
 	M_query_id         int64
-	M_error            TLObject
+	M_error            string
 	M_shipping_options []TLObject
 }
 
@@ -49120,11 +53221,11 @@ func (t *TL_messages_setBotShippingResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setBotShippingResults) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setBotShippingResults) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setBotShippingResults) Get_flags() TLObject {
+func (t *TL_messages_setBotShippingResults) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -49136,11 +53237,11 @@ func (t *TL_messages_setBotShippingResults) Get_query_id() int64 {
 	return t.M_query_id
 }
 
-func (t *TL_messages_setBotShippingResults) Set_error(M_error TLObject) {
+func (t *TL_messages_setBotShippingResults) Set_error(M_error string) {
 	t.M_error = M_error
 }
 
-func (t *TL_messages_setBotShippingResults) Get_error() TLObject {
+func (t *TL_messages_setBotShippingResults) Get_error() string {
 	return t.M_error
 }
 
@@ -49162,9 +53263,25 @@ func (t *TL_messages_setBotShippingResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotShippingResults))
+
+	var flags uint32 = 0
+	if t.M_error != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping_options != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Long(t.Get_query_id())
-	ec.TLObject(t.Get_error())
-	ec.Vector(t.Get_shipping_options())
+	if t.M_error != "" {
+		ec.String(t.Get_error())
+	}
+	if t.M_shipping_options != nil {
+		ec.Vector(t.Get_shipping_options())
+	}
 
 	return ec.GetBuffer()
 }
@@ -49172,9 +53289,14 @@ func (t *TL_messages_setBotShippingResults) Encode() []byte {
 func (t *TL_messages_setBotShippingResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_query_id = dc.Long()
-	t.M_error = dc.TLObject()
-	t.M_shipping_options = dc.Vector()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_error = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_options = dc.Vector()
+	}
 
 	return dc.err
 }
@@ -49186,21 +53308,21 @@ func (t *TL_messages_setBotShippingResults) String() string {
 // messages_setBotPrecheckoutResults#9c2dd95
 type TL_messages_setBotPrecheckoutResults struct {
 	M_classID  int32
-	M_flags    TLObject
+	M_flags    uint32
 	M_success  TLObject
 	M_query_id int64
-	M_error    TLObject
+	M_error    string
 }
 
 func (t *TL_messages_setBotPrecheckoutResults) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Set_flags(M_flags TLObject) {
+func (t *TL_messages_setBotPrecheckoutResults) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Get_flags() TLObject {
+func (t *TL_messages_setBotPrecheckoutResults) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -49220,11 +53342,11 @@ func (t *TL_messages_setBotPrecheckoutResults) Get_query_id() int64 {
 	return t.M_query_id
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Set_error(M_error TLObject) {
+func (t *TL_messages_setBotPrecheckoutResults) Set_error(M_error string) {
 	t.M_error = M_error
 }
 
-func (t *TL_messages_setBotPrecheckoutResults) Get_error() TLObject {
+func (t *TL_messages_setBotPrecheckoutResults) Get_error() string {
 	return t.M_error
 }
 
@@ -49238,9 +53360,25 @@ func (t *TL_messages_setBotPrecheckoutResults) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_setBotPrecheckoutResults))
-	ec.TLObject(t.Get_success())
+
+	var flags uint32 = 0
+	if t.M_success != nil {
+		flags |= 1 << 1
+	}
+
+	if t.M_error != "" {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_success != nil {
+		ec.TLObject(t.Get_success())
+	}
 	ec.Long(t.Get_query_id())
-	ec.TLObject(t.Get_error())
+	if t.M_error != "" {
+		ec.String(t.Get_error())
+	}
 
 	return ec.GetBuffer()
 }
@@ -49248,9 +53386,14 @@ func (t *TL_messages_setBotPrecheckoutResults) Encode() []byte {
 func (t *TL_messages_setBotPrecheckoutResults) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_success = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_success = dc.TLObject()
+	}
 	t.M_query_id = dc.Long()
-	t.M_error = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_error = dc.String()
+	}
 
 	return dc.err
 }
@@ -49687,12 +53830,12 @@ func (t *TL_messages_getRecentLocations) String() string {
 // messages_sendMultiMedia#2095512f
 type TL_messages_sendMultiMedia struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_silent          TLObject
 	M_background      TLObject
 	M_clear_draft     TLObject
 	M_peer            TLObject
-	M_reply_to_msg_id TLObject
+	M_reply_to_msg_id int32
 	M_multi_media     []TLObject
 }
 
@@ -49700,11 +53843,11 @@ func (t *TL_messages_sendMultiMedia) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_messages_sendMultiMedia) Set_flags(M_flags TLObject) {
+func (t *TL_messages_sendMultiMedia) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_messages_sendMultiMedia) Get_flags() TLObject {
+func (t *TL_messages_sendMultiMedia) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -49740,11 +53883,11 @@ func (t *TL_messages_sendMultiMedia) Get_peer() TLObject {
 	return t.M_peer
 }
 
-func (t *TL_messages_sendMultiMedia) Set_reply_to_msg_id(M_reply_to_msg_id TLObject) {
+func (t *TL_messages_sendMultiMedia) Set_reply_to_msg_id(M_reply_to_msg_id int32) {
 	t.M_reply_to_msg_id = M_reply_to_msg_id
 }
 
-func (t *TL_messages_sendMultiMedia) Get_reply_to_msg_id() TLObject {
+func (t *TL_messages_sendMultiMedia) Get_reply_to_msg_id() int32 {
 	return t.M_reply_to_msg_id
 }
 
@@ -49766,11 +53909,39 @@ func (t *TL_messages_sendMultiMedia) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_messages_sendMultiMedia))
-	ec.TLObject(t.Get_silent())
-	ec.TLObject(t.Get_background())
-	ec.TLObject(t.Get_clear_draft())
+
+	var flags uint32 = 0
+	if t.M_silent != nil {
+		flags |= 1 << 5
+	}
+
+	if t.M_background != nil {
+		flags |= 1 << 6
+	}
+
+	if t.M_clear_draft != nil {
+		flags |= 1 << 7
+	}
+
+	if t.M_reply_to_msg_id != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
+	if t.M_background != nil {
+		ec.TLObject(t.Get_background())
+	}
+	if t.M_clear_draft != nil {
+		ec.TLObject(t.Get_clear_draft())
+	}
 	ec.TLObject(t.Get_peer())
-	ec.TLObject(t.Get_reply_to_msg_id())
+	if t.M_reply_to_msg_id != 0 {
+		ec.Int(t.Get_reply_to_msg_id())
+	}
 	ec.Vector(t.Get_multi_media())
 
 	return ec.GetBuffer()
@@ -49779,11 +53950,20 @@ func (t *TL_messages_sendMultiMedia) Encode() []byte {
 func (t *TL_messages_sendMultiMedia) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_silent = dc.TLObject()
-	t.M_background = dc.TLObject()
-	t.M_clear_draft = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 5)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 6)) != 0 {
+		t.M_background = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 7)) != 0 {
+		t.M_clear_draft = dc.TLObject()
+	}
 	t.M_peer = dc.TLObject()
-	t.M_reply_to_msg_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_reply_to_msg_id = dc.Int()
+	}
 	t.M_multi_media = dc.Vector()
 
 	return dc.err
@@ -49883,9 +54063,9 @@ func (t *TL_updates_getState) String() string {
 // updates_getDifference#25939651
 type TL_updates_getDifference struct {
 	M_classID         int32
-	M_flags           TLObject
+	M_flags           uint32
 	M_pts             int32
-	M_pts_total_limit TLObject
+	M_pts_total_limit int32
 	M_date            int32
 	M_qts             int32
 }
@@ -49894,11 +54074,11 @@ func (t *TL_updates_getDifference) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_getDifference) Set_flags(M_flags TLObject) {
+func (t *TL_updates_getDifference) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updates_getDifference) Get_flags() TLObject {
+func (t *TL_updates_getDifference) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -49910,11 +54090,11 @@ func (t *TL_updates_getDifference) Get_pts() int32 {
 	return t.M_pts
 }
 
-func (t *TL_updates_getDifference) Set_pts_total_limit(M_pts_total_limit TLObject) {
+func (t *TL_updates_getDifference) Set_pts_total_limit(M_pts_total_limit int32) {
 	t.M_pts_total_limit = M_pts_total_limit
 }
 
-func (t *TL_updates_getDifference) Get_pts_total_limit() TLObject {
+func (t *TL_updates_getDifference) Get_pts_total_limit() int32 {
 	return t.M_pts_total_limit
 }
 
@@ -49944,8 +54124,18 @@ func (t *TL_updates_getDifference) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_getDifference))
+
+	var flags uint32 = 0
+	if t.M_pts_total_limit != 0 {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_pts())
-	ec.TLObject(t.Get_pts_total_limit())
+	if t.M_pts_total_limit != 0 {
+		ec.Int(t.Get_pts_total_limit())
+	}
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_qts())
 
@@ -49955,8 +54145,11 @@ func (t *TL_updates_getDifference) Encode() []byte {
 func (t *TL_updates_getDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_pts = dc.Int()
-	t.M_pts_total_limit = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_pts_total_limit = dc.Int()
+	}
 	t.M_date = dc.Int()
 	t.M_qts = dc.Int()
 
@@ -49970,7 +54163,7 @@ func (t *TL_updates_getDifference) String() string {
 // updates_getChannelDifference#3173d78
 type TL_updates_getChannelDifference struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_force   TLObject
 	M_channel TLObject
 	M_filter  TLObject
@@ -49982,11 +54175,11 @@ func (t *TL_updates_getChannelDifference) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_updates_getChannelDifference) Set_flags(M_flags TLObject) {
+func (t *TL_updates_getChannelDifference) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_updates_getChannelDifference) Get_flags() TLObject {
+func (t *TL_updates_getChannelDifference) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -50040,7 +54233,17 @@ func (t *TL_updates_getChannelDifference) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_updates_getChannelDifference))
-	ec.TLObject(t.Get_force())
+
+	var flags uint32 = 0
+	if t.M_force != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_force != nil {
+		ec.TLObject(t.Get_force())
+	}
 	ec.TLObject(t.Get_channel())
 	ec.TLObject(t.Get_filter())
 	ec.Int(t.Get_pts())
@@ -50052,7 +54255,10 @@ func (t *TL_updates_getChannelDifference) Encode() []byte {
 func (t *TL_updates_getChannelDifference) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_force = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_force = dc.TLObject()
+	}
 	t.M_channel = dc.TLObject()
 	t.M_filter = dc.TLObject()
 	t.M_pts = dc.Int()
@@ -51673,7 +55879,7 @@ func (t *TL_channels_getFullChannel) String() string {
 // channels_createChannel#f4893d7f
 type TL_channels_createChannel struct {
 	M_classID   int32
-	M_flags     TLObject
+	M_flags     uint32
 	M_broadcast TLObject
 	M_megagroup TLObject
 	M_title     string
@@ -51684,11 +55890,11 @@ func (t *TL_channels_createChannel) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channels_createChannel) Set_flags(M_flags TLObject) {
+func (t *TL_channels_createChannel) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channels_createChannel) Get_flags() TLObject {
+func (t *TL_channels_createChannel) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -51734,8 +55940,24 @@ func (t *TL_channels_createChannel) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_createChannel))
-	ec.TLObject(t.Get_broadcast())
-	ec.TLObject(t.Get_megagroup())
+
+	var flags uint32 = 0
+	if t.M_broadcast != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_megagroup != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_broadcast != nil {
+		ec.TLObject(t.Get_broadcast())
+	}
+	if t.M_megagroup != nil {
+		ec.TLObject(t.Get_megagroup())
+	}
 	ec.String(t.Get_title())
 	ec.String(t.Get_about())
 
@@ -51745,8 +55967,13 @@ func (t *TL_channels_createChannel) Encode() []byte {
 func (t *TL_channels_createChannel) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_broadcast = dc.TLObject()
-	t.M_megagroup = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_broadcast = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_megagroup = dc.TLObject()
+	}
 	t.M_title = dc.String()
 	t.M_about = dc.String()
 
@@ -52511,7 +56738,7 @@ func (t *TL_channels_toggleSignatures) String() string {
 // channels_updatePinnedMessage#a72ded52
 type TL_channels_updatePinnedMessage struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_silent  TLObject
 	M_channel TLObject
 	M_id      int32
@@ -52521,11 +56748,11 @@ func (t *TL_channels_updatePinnedMessage) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channels_updatePinnedMessage) Set_flags(M_flags TLObject) {
+func (t *TL_channels_updatePinnedMessage) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channels_updatePinnedMessage) Get_flags() TLObject {
+func (t *TL_channels_updatePinnedMessage) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -52563,7 +56790,17 @@ func (t *TL_channels_updatePinnedMessage) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_updatePinnedMessage))
-	ec.TLObject(t.Get_silent())
+
+	var flags uint32 = 0
+	if t.M_silent != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_silent != nil {
+		ec.TLObject(t.Get_silent())
+	}
 	ec.TLObject(t.Get_channel())
 	ec.Int(t.Get_id())
 
@@ -52573,7 +56810,10 @@ func (t *TL_channels_updatePinnedMessage) Encode() []byte {
 func (t *TL_channels_updatePinnedMessage) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_silent = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_silent = dc.TLObject()
+	}
 	t.M_channel = dc.TLObject()
 	t.M_id = dc.Int()
 
@@ -52685,7 +56925,7 @@ func (t *TL_channels_editBanned) String() string {
 // channels_getAdminLog#33ddf480
 type TL_channels_getAdminLog struct {
 	M_classID       int32
-	M_flags         TLObject
+	M_flags         uint32
 	M_channel       TLObject
 	M_q             string
 	M_events_filter TLObject
@@ -52699,11 +56939,11 @@ func (t *TL_channels_getAdminLog) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_channels_getAdminLog) Set_flags(M_flags TLObject) {
+func (t *TL_channels_getAdminLog) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_channels_getAdminLog) Get_flags() TLObject {
+func (t *TL_channels_getAdminLog) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -52773,10 +57013,26 @@ func (t *TL_channels_getAdminLog) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_channels_getAdminLog))
+
+	var flags uint32 = 0
+	if t.M_events_filter != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_admins != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.TLObject(t.Get_channel())
 	ec.String(t.Get_q())
-	ec.TLObject(t.Get_events_filter())
-	ec.Vector(t.Get_admins())
+	if t.M_events_filter != nil {
+		ec.TLObject(t.Get_events_filter())
+	}
+	if t.M_admins != nil {
+		ec.Vector(t.Get_admins())
+	}
 	ec.Long(t.Get_max_id())
 	ec.Long(t.Get_min_id())
 	ec.Int(t.Get_limit())
@@ -52787,10 +57043,15 @@ func (t *TL_channels_getAdminLog) Encode() []byte {
 func (t *TL_channels_getAdminLog) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_channel = dc.TLObject()
 	t.M_q = dc.String()
-	t.M_events_filter = dc.TLObject()
-	t.M_admins = dc.Vector()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_events_filter = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_admins = dc.Vector()
+	}
 	t.M_max_id = dc.Long()
 	t.M_min_id = dc.Long()
 	t.M_limit = dc.Int()
@@ -53231,7 +57492,7 @@ func (t *TL_payments_getPaymentReceipt) String() string {
 // payments_validateRequestedInfo#770a8e74
 type TL_payments_validateRequestedInfo struct {
 	M_classID int32
-	M_flags   TLObject
+	M_flags   uint32
 	M_save    TLObject
 	M_msg_id  int32
 	M_info    TLObject
@@ -53241,11 +57502,11 @@ func (t *TL_payments_validateRequestedInfo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_validateRequestedInfo) Set_flags(M_flags TLObject) {
+func (t *TL_payments_validateRequestedInfo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_validateRequestedInfo) Get_flags() TLObject {
+func (t *TL_payments_validateRequestedInfo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -53283,7 +57544,17 @@ func (t *TL_payments_validateRequestedInfo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_validateRequestedInfo))
-	ec.TLObject(t.Get_save())
+
+	var flags uint32 = 0
+	if t.M_save != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_save != nil {
+		ec.TLObject(t.Get_save())
+	}
 	ec.Int(t.Get_msg_id())
 	ec.TLObject(t.Get_info())
 
@@ -53293,7 +57564,10 @@ func (t *TL_payments_validateRequestedInfo) Encode() []byte {
 func (t *TL_payments_validateRequestedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_save = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_save = dc.TLObject()
+	}
 	t.M_msg_id = dc.Int()
 	t.M_info = dc.TLObject()
 
@@ -53307,10 +57581,10 @@ func (t *TL_payments_validateRequestedInfo) String() string {
 // payments_sendPaymentForm#2b8879b3
 type TL_payments_sendPaymentForm struct {
 	M_classID            int32
-	M_flags              TLObject
+	M_flags              uint32
 	M_msg_id             int32
-	M_requested_info_id  TLObject
-	M_shipping_option_id TLObject
+	M_requested_info_id  string
+	M_shipping_option_id string
 	M_credentials        TLObject
 }
 
@@ -53318,11 +57592,11 @@ func (t *TL_payments_sendPaymentForm) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_sendPaymentForm) Set_flags(M_flags TLObject) {
+func (t *TL_payments_sendPaymentForm) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_sendPaymentForm) Get_flags() TLObject {
+func (t *TL_payments_sendPaymentForm) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -53334,19 +57608,19 @@ func (t *TL_payments_sendPaymentForm) Get_msg_id() int32 {
 	return t.M_msg_id
 }
 
-func (t *TL_payments_sendPaymentForm) Set_requested_info_id(M_requested_info_id TLObject) {
+func (t *TL_payments_sendPaymentForm) Set_requested_info_id(M_requested_info_id string) {
 	t.M_requested_info_id = M_requested_info_id
 }
 
-func (t *TL_payments_sendPaymentForm) Get_requested_info_id() TLObject {
+func (t *TL_payments_sendPaymentForm) Get_requested_info_id() string {
 	return t.M_requested_info_id
 }
 
-func (t *TL_payments_sendPaymentForm) Set_shipping_option_id(M_shipping_option_id TLObject) {
+func (t *TL_payments_sendPaymentForm) Set_shipping_option_id(M_shipping_option_id string) {
 	t.M_shipping_option_id = M_shipping_option_id
 }
 
-func (t *TL_payments_sendPaymentForm) Get_shipping_option_id() TLObject {
+func (t *TL_payments_sendPaymentForm) Get_shipping_option_id() string {
 	return t.M_shipping_option_id
 }
 
@@ -53368,9 +57642,25 @@ func (t *TL_payments_sendPaymentForm) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_sendPaymentForm))
+
+	var flags uint32 = 0
+	if t.M_requested_info_id != "" {
+		flags |= 1 << 0
+	}
+
+	if t.M_shipping_option_id != "" {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
 	ec.Int(t.Get_msg_id())
-	ec.TLObject(t.Get_requested_info_id())
-	ec.TLObject(t.Get_shipping_option_id())
+	if t.M_requested_info_id != "" {
+		ec.String(t.Get_requested_info_id())
+	}
+	if t.M_shipping_option_id != "" {
+		ec.String(t.Get_shipping_option_id())
+	}
 	ec.TLObject(t.Get_credentials())
 
 	return ec.GetBuffer()
@@ -53379,9 +57669,14 @@ func (t *TL_payments_sendPaymentForm) Encode() []byte {
 func (t *TL_payments_sendPaymentForm) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
+	t.M_flags = dc.UInt()
 	t.M_msg_id = dc.Int()
-	t.M_requested_info_id = dc.TLObject()
-	t.M_shipping_option_id = dc.TLObject()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_requested_info_id = dc.String()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_shipping_option_id = dc.String()
+	}
 	t.M_credentials = dc.TLObject()
 
 	return dc.err
@@ -53425,7 +57720,7 @@ func (t *TL_payments_getSavedInfo) String() string {
 // payments_clearSavedInfo#d83d70c1
 type TL_payments_clearSavedInfo struct {
 	M_classID     int32
-	M_flags       TLObject
+	M_flags       uint32
 	M_credentials TLObject
 	M_info        TLObject
 }
@@ -53434,11 +57729,11 @@ func (t *TL_payments_clearSavedInfo) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_payments_clearSavedInfo) Set_flags(M_flags TLObject) {
+func (t *TL_payments_clearSavedInfo) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_payments_clearSavedInfo) Get_flags() TLObject {
+func (t *TL_payments_clearSavedInfo) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -53468,8 +57763,24 @@ func (t *TL_payments_clearSavedInfo) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_payments_clearSavedInfo))
-	ec.TLObject(t.Get_credentials())
-	ec.TLObject(t.Get_info())
+
+	var flags uint32 = 0
+	if t.M_credentials != nil {
+		flags |= 1 << 0
+	}
+
+	if t.M_info != nil {
+		flags |= 1 << 1
+	}
+
+	ec.UInt(flags)
+
+	if t.M_credentials != nil {
+		ec.TLObject(t.Get_credentials())
+	}
+	if t.M_info != nil {
+		ec.TLObject(t.Get_info())
+	}
 
 	return ec.GetBuffer()
 }
@@ -53477,8 +57788,13 @@ func (t *TL_payments_clearSavedInfo) Encode() []byte {
 func (t *TL_payments_clearSavedInfo) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_credentials = dc.TLObject()
-	t.M_info = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_credentials = dc.TLObject()
+	}
+	if (t.M_flags & (1 << 1)) != 0 {
+		t.M_info = dc.TLObject()
+	}
 
 	return dc.err
 }
@@ -53490,7 +57806,7 @@ func (t *TL_payments_clearSavedInfo) String() string {
 // stickers_createStickerSet#9bd86e6a
 type TL_stickers_createStickerSet struct {
 	M_classID    int32
-	M_flags      TLObject
+	M_flags      uint32
 	M_masks      TLObject
 	M_user_id    TLObject
 	M_title      string
@@ -53502,11 +57818,11 @@ func (t *TL_stickers_createStickerSet) ClassID() int32 {
 	return t.M_classID
 }
 
-func (t *TL_stickers_createStickerSet) Set_flags(M_flags TLObject) {
+func (t *TL_stickers_createStickerSet) Set_flags(M_flags uint32) {
 	t.M_flags = M_flags
 }
 
-func (t *TL_stickers_createStickerSet) Get_flags() TLObject {
+func (t *TL_stickers_createStickerSet) Get_flags() uint32 {
 	return t.M_flags
 }
 
@@ -53560,7 +57876,17 @@ func (t *TL_stickers_createStickerSet) Encode() []byte {
 	ec := NewMTPEncodeBuffer(512)
 
 	ec.Int(int32(TL_CLASS_stickers_createStickerSet))
-	ec.TLObject(t.Get_masks())
+
+	var flags uint32 = 0
+	if t.M_masks != nil {
+		flags |= 1 << 0
+	}
+
+	ec.UInt(flags)
+
+	if t.M_masks != nil {
+		ec.TLObject(t.Get_masks())
+	}
 	ec.TLObject(t.Get_user_id())
 	ec.String(t.Get_title())
 	ec.String(t.Get_short_name())
@@ -53572,7 +57898,10 @@ func (t *TL_stickers_createStickerSet) Encode() []byte {
 func (t *TL_stickers_createStickerSet) Decode(b []byte) error {
 	dc := NewMTPDecodeBuffer(b)
 
-	t.M_masks = dc.TLObject()
+	t.M_flags = dc.UInt()
+	if (t.M_flags & (1 << 0)) != 0 {
+		t.M_masks = dc.TLObject()
+	}
 	t.M_user_id = dc.TLObject()
 	t.M_title = dc.String()
 	t.M_short_name = dc.String()
