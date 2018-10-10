@@ -29,7 +29,7 @@ func (s *LProtoService) TL_invokeWithLayer_Process(cltSess *session.ClientSessio
 	layer := tl.Get_layer()
 	query := tl.Get_query()
 
-	Log.Debugf("invokeWithLayer layer = %v, query = %T", layer, query)
+	Log.Debugf("invokeWithLayer layer = %v, query = %T, \nquery = %s", layer, query, query)
 
 	// must be initConnection
 	initConn := query.(*mtproto.TL_initConnection)
@@ -53,6 +53,8 @@ func (s *LProtoService) TL_initConnection_Process(cltSess *session.ClientSession
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_initConnection)
+
+	Log.Infof("tl.Query = %v", tl.Get_query().String())
 
 	// todo
 
@@ -83,6 +85,12 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 	// 	M_lang_code:        initConn.M_lang_code,
 	// 	M_query:            query,
 	// }
+
+	return nil, nil
+}
+
+func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
 
 	return nil, nil
 }

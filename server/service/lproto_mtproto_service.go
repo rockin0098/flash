@@ -75,12 +75,10 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		badresp, ok := cltSess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
 		if !ok {
+			Log.Warnf("check bad server salt. authid = %v", authid)
 			payload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, badresp)
 			return payload, errors.New("check bad server salt failed")
 		}
-
-		// 暂时不处理 container
-		// _, isContainer := reqmsg.TLObject.(*mtproto.TL_msg_conta)
 
 		res, err := s.MTProtoEncryptedMessageProcess(cltSess, reqmsg)
 		if err != nil {
@@ -104,7 +102,7 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("class type = %T", tlobj)
+	Log.Debugf("class type = %T, \ntlobj=%s", tlobj, tlobj)
 
 	var res interface{}
 	var err error
@@ -141,6 +139,8 @@ func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSe
 		res, err = s.TL_initConnection_Process(cltSess, msg)
 	case *mtproto.TL_help_getConfig:
 		res, err = s.TL_help_getConfig_Process(cltSess, msg)
+	case *mtproto.TL_msg_container:
+		res, err = s.TL_msg_container_Process(cltSess, msg)
 	default:
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}
