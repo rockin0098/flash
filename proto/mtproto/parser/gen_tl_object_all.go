@@ -15,6 +15,7 @@ var tlobject_template = `
 package mtproto
 
 import "fmt"
+import "encoding/hex"
 
 %v
 
@@ -128,7 +129,12 @@ func (t *TLLayer) generateOneTLObjectString(objname string, line *TLLine) string
 		res = res + `",`
 
 		for _, p := range params {
-			res = res + fmt.Sprintf("t.%v,", convertFieldName(p.Name))
+			cvType := convertDataType(p.Type)
+			if cvType == "[]byte" {
+				res = res + fmt.Sprintf("hex.EncodeToString(t.%v),", convertFieldName(p.Name))
+			} else {
+				res = res + fmt.Sprintf("t.%v,", convertFieldName(p.Name))
+			}
 		}
 
 		// 去掉尾巴

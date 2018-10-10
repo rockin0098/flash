@@ -75,7 +75,7 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		badresp, ok := cltSess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
 		if !ok {
-			Log.Warnf("check bad server salt. authid = %v", authid)
+			Log.Warnf("check bad server salt. authid = %v, class type = %T", authid, reqmsg.TLObject)
 			payload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, badresp)
 			return payload, errors.New("check bad server salt failed")
 		}
@@ -102,7 +102,7 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("class type = %T, \ntlobj=%s", tlobj, tlobj)
+	Log.Debugf("class type = %T, \ntlobj = %s", tlobj, tlobj)
 
 	var res interface{}
 	var err error
@@ -118,6 +118,8 @@ func (s *LProtoService) MTProtoUnencryptedMessageProcess(sess *session.Session, 
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}
 
+	Log.Debugf("class type = %T, \nresp tlobj = %s", tlobj, res)
+
 	return res, err
 }
 
@@ -125,7 +127,8 @@ func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSe
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("client sessid = %v, authid = %v, class type = %T", cltSess.SessionID(), cltSess.AuthKeyID(), tlobj)
+	Log.Debugf("client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
+		cltSess.SessionID(), cltSess.AuthKeyID(), tlobj, tlobj)
 
 	var res interface{}
 	var err error
@@ -144,6 +147,9 @@ func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSe
 	default:
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}
+
+	Log.Debugf("client sessid = %v, authid = %v, class type = %T, \nresp tlobj = %v",
+		cltSess.SessionID(), cltSess.AuthKeyID(), res, res)
 
 	return res, err
 }

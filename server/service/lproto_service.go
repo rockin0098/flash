@@ -12,6 +12,10 @@ import (
 	. "github.com/rockin0098/flash/base/logger"
 )
 
+const (
+	EXPIRE_TIMEOUT = 3600
+)
+
 type LProtoService struct{}
 
 var lprotoService = &LProtoService{}

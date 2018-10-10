@@ -1,6 +1,7 @@
 package mtproto
 
 import "fmt"
+import "encoding/hex"
 
 // resPQ#05162463
 type TL_resPQ struct {
@@ -77,7 +78,7 @@ func (t *TL_resPQ) Decode(b []byte) error {
 }
 
 func (t *TL_resPQ) String() string {
-	return fmt.Sprintf("- resPQ#05162463\n	-- nonce : %v\n	-- server_nonce : %v\n	-- pq : %v\n	-- server_public_key_fingerprints : %v\n", t.M_nonce, t.M_server_nonce, t.M_pq, t.M_server_public_key_fingerprints)
+	return fmt.Sprintf("- resPQ#05162463\n	-- nonce : %v\n	-- server_nonce : %v\n	-- pq : %v\n	-- server_public_key_fingerprints : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_pq, t.M_server_public_key_fingerprints)
 }
 
 // p_q_inner_data#83c95aec
@@ -177,7 +178,7 @@ func (t *TL_p_q_inner_data) Decode(b []byte) error {
 }
 
 func (t *TL_p_q_inner_data) String() string {
-	return fmt.Sprintf("- p_q_inner_data#83c95aec\n	-- pq : %v\n	-- p : %v\n	-- q : %v\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce : %v\n", t.M_pq, t.M_p, t.M_q, t.M_nonce, t.M_server_nonce, t.M_new_nonce)
+	return fmt.Sprintf("- p_q_inner_data#83c95aec\n	-- pq : %v\n	-- p : %v\n	-- q : %v\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce : %v\n", t.M_pq, t.M_p, t.M_q, hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), hex.EncodeToString(t.M_new_nonce))
 }
 
 // server_DH_params_fail#79cb045d
@@ -244,7 +245,7 @@ func (t *TL_server_DH_params_fail) Decode(b []byte) error {
 }
 
 func (t *TL_server_DH_params_fail) String() string {
-	return fmt.Sprintf("- server_DH_params_fail#79cb045d\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash)
+	return fmt.Sprintf("- server_DH_params_fail#79cb045d\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), hex.EncodeToString(t.M_new_nonce_hash))
 }
 
 // server_DH_params_ok#d0e8075c
@@ -311,7 +312,7 @@ func (t *TL_server_DH_params_ok) Decode(b []byte) error {
 }
 
 func (t *TL_server_DH_params_ok) String() string {
-	return fmt.Sprintf("- server_DH_params_ok#d0e8075c\n	-- nonce : %v\n	-- server_nonce : %v\n	-- encrypted_answer : %v\n", t.M_nonce, t.M_server_nonce, t.M_encrypted_answer)
+	return fmt.Sprintf("- server_DH_params_ok#d0e8075c\n	-- nonce : %v\n	-- server_nonce : %v\n	-- encrypted_answer : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_encrypted_answer)
 }
 
 // server_DH_inner_data#b5890dba
@@ -411,7 +412,7 @@ func (t *TL_server_DH_inner_data) Decode(b []byte) error {
 }
 
 func (t *TL_server_DH_inner_data) String() string {
-	return fmt.Sprintf("- server_DH_inner_data#b5890dba\n	-- nonce : %v\n	-- server_nonce : %v\n	-- g : %v\n	-- dh_prime : %v\n	-- g_a : %v\n	-- server_time : %v\n", t.M_nonce, t.M_server_nonce, t.M_g, t.M_dh_prime, t.M_g_a, t.M_server_time)
+	return fmt.Sprintf("- server_DH_inner_data#b5890dba\n	-- nonce : %v\n	-- server_nonce : %v\n	-- g : %v\n	-- dh_prime : %v\n	-- g_a : %v\n	-- server_time : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_g, t.M_dh_prime, t.M_g_a, t.M_server_time)
 }
 
 // client_DH_inner_data#6643b654
@@ -489,7 +490,7 @@ func (t *TL_client_DH_inner_data) Decode(b []byte) error {
 }
 
 func (t *TL_client_DH_inner_data) String() string {
-	return fmt.Sprintf("- client_DH_inner_data#6643b654\n	-- nonce : %v\n	-- server_nonce : %v\n	-- retry_id : %v\n	-- g_b : %v\n", t.M_nonce, t.M_server_nonce, t.M_retry_id, t.M_g_b)
+	return fmt.Sprintf("- client_DH_inner_data#6643b654\n	-- nonce : %v\n	-- server_nonce : %v\n	-- retry_id : %v\n	-- g_b : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_retry_id, t.M_g_b)
 }
 
 // dh_gen_ok#3bcbf734
@@ -556,7 +557,7 @@ func (t *TL_dh_gen_ok) Decode(b []byte) error {
 }
 
 func (t *TL_dh_gen_ok) String() string {
-	return fmt.Sprintf("- dh_gen_ok#3bcbf734\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash1 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash1)
+	return fmt.Sprintf("- dh_gen_ok#3bcbf734\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash1 : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), hex.EncodeToString(t.M_new_nonce_hash1))
 }
 
 // dh_gen_retry#46dc1fb9
@@ -623,7 +624,7 @@ func (t *TL_dh_gen_retry) Decode(b []byte) error {
 }
 
 func (t *TL_dh_gen_retry) String() string {
-	return fmt.Sprintf("- dh_gen_retry#46dc1fb9\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash2 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash2)
+	return fmt.Sprintf("- dh_gen_retry#46dc1fb9\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash2 : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), hex.EncodeToString(t.M_new_nonce_hash2))
 }
 
 // dh_gen_fail#a69dae02
@@ -690,7 +691,7 @@ func (t *TL_dh_gen_fail) Decode(b []byte) error {
 }
 
 func (t *TL_dh_gen_fail) String() string {
-	return fmt.Sprintf("- dh_gen_fail#a69dae02\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash3 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash3)
+	return fmt.Sprintf("- dh_gen_fail#a69dae02\n	-- nonce : %v\n	-- server_nonce : %v\n	-- new_nonce_hash3 : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), hex.EncodeToString(t.M_new_nonce_hash3))
 }
 
 // destroy_auth_key_ok#f660e1d4
@@ -828,7 +829,7 @@ func (t *TL_req_pq) Decode(b []byte) error {
 }
 
 func (t *TL_req_pq) String() string {
-	return fmt.Sprintf("- req_pq#60469778\n	-- nonce : %v\n", t.M_nonce)
+	return fmt.Sprintf("- req_pq#60469778\n	-- nonce : %v\n", hex.EncodeToString(t.M_nonce))
 }
 
 // req_DH_params#d712e4be
@@ -928,7 +929,7 @@ func (t *TL_req_DH_params) Decode(b []byte) error {
 }
 
 func (t *TL_req_DH_params) String() string {
-	return fmt.Sprintf("- req_DH_params#d712e4be\n	-- nonce : %v\n	-- server_nonce : %v\n	-- p : %v\n	-- q : %v\n	-- public_key_fingerprint : %v\n	-- encrypted_data : %v\n", t.M_nonce, t.M_server_nonce, t.M_p, t.M_q, t.M_public_key_fingerprint, t.M_encrypted_data)
+	return fmt.Sprintf("- req_DH_params#d712e4be\n	-- nonce : %v\n	-- server_nonce : %v\n	-- p : %v\n	-- q : %v\n	-- public_key_fingerprint : %v\n	-- encrypted_data : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_p, t.M_q, t.M_public_key_fingerprint, t.M_encrypted_data)
 }
 
 // set_client_DH_params#f5045f1f
@@ -995,7 +996,7 @@ func (t *TL_set_client_DH_params) Decode(b []byte) error {
 }
 
 func (t *TL_set_client_DH_params) String() string {
-	return fmt.Sprintf("- set_client_DH_params#f5045f1f\n	-- nonce : %v\n	-- server_nonce : %v\n	-- encrypted_data : %v\n", t.M_nonce, t.M_server_nonce, t.M_encrypted_data)
+	return fmt.Sprintf("- set_client_DH_params#f5045f1f\n	-- nonce : %v\n	-- server_nonce : %v\n	-- encrypted_data : %v\n", hex.EncodeToString(t.M_nonce), hex.EncodeToString(t.M_server_nonce), t.M_encrypted_data)
 }
 
 // destroy_auth_key#d1435160
