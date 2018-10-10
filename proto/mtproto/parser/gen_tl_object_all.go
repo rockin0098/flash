@@ -116,7 +116,7 @@ func (t *TLLayer) generateOneTLObjectString(objname string, line *TLLine) string
 	if len(params) > 0 {
 
 		for _, p := range params {
-			res = res + fmt.Sprintf("-- %v : ", p.Name)
+			res = res + fmt.Sprintf("\t-- %v : ", p.Name)
 			res = res + "%v\\n"
 		}
 

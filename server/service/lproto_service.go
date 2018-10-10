@@ -46,7 +46,7 @@ func (s *LProtoService) MessageProcess(lrequest *lproto.LProtoRequest) (interfac
 	raw := lrequest.MTProtoRequest
 	sess := session.GetSession(sessid)
 
-	Log.Infof("request - sessid=%v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
+	Log.Infof("request - sessid=%v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \nRequest Payload = %v\n",
 		sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(raw.Payload))
 
 	mtpresp, err := s.MTProtoMessageProcess(sess, raw)
@@ -56,7 +56,7 @@ func (s *LProtoService) MessageProcess(lrequest *lproto.LProtoRequest) (interfac
 			sess.Write(mtpresp)
 		}
 	} else {
-		Log.Infof("direct response - sessid = %v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \n Req Payload = %v\n",
+		Log.Infof("direct response - sessid = %v, TransportType = %v, AuthKeyID = %v, QuickAckID = %v, \nResponse Payload = %v\n",
 			sess.SessionID(), raw.TransportType, raw.AuthKeyID, raw.QuickAckID, hex.EncodeToString(mtpresp.([]byte)))
 
 		lresp := &lproto.LProtoResponse{
