@@ -893,6 +893,12 @@ const (
 	TL_CLASS_langpack_getStrings                              int32 = 773776152
 	TL_CLASS_langpack_getDifference                           int32 = 187583869
 	TL_CLASS_langpack_getLanguages                            int32 = -2146445955
+	TL_CLASS_schemeNotModified                                int32 = 641506392
+	TL_CLASS_scheme                                           int32 = 1315894878
+	TL_CLASS_schemeParam                                      int32 = 565550063
+	TL_CLASS_schemeMethod                                     int32 = 1200838592
+	TL_CLASS_schemeType                                       int32 = -1461589623
+	TL_CLASS_help_getScheme                                   int32 = -608789858
 )
 
 var TL_CLASS_NAME = map[int32]string{
@@ -1783,6 +1789,12 @@ var TL_CLASS_NAME = map[int32]string{
 	773776152:   "TL_CLASS_langpack_getStrings",
 	187583869:   "TL_CLASS_langpack_getDifference",
 	-2146445955: "TL_CLASS_langpack_getLanguages",
+	641506392:   "TL_CLASS_schemeNotModified",
+	1315894878:  "TL_CLASS_scheme",
+	565550063:   "TL_CLASS_schemeParam",
+	1200838592:  "TL_CLASS_schemeMethod",
+	-1461589623: "TL_CLASS_schemeType",
+	-608789858:  "TL_CLASS_help_getScheme",
 }
 
 var TL_CLASS_NAME_ID = map[string]int32{
@@ -2673,4 +2685,10 @@ var TL_CLASS_NAME_ID = map[string]int32{
 	"TL_CLASS_langpack_getStrings":                              773776152,
 	"TL_CLASS_langpack_getDifference":                           187583869,
 	"TL_CLASS_langpack_getLanguages":                            -2146445955,
+	"TL_CLASS_schemeNotModified":                                641506392,
+	"TL_CLASS_scheme":                                           1315894878,
+	"TL_CLASS_schemeParam":                                      565550063,
+	"TL_CLASS_schemeMethod":                                     1200838592,
+	"TL_CLASS_schemeType":                                       -1461589623,
+	"TL_CLASS_help_getScheme":                                   -608789858,
 }

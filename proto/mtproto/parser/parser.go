@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"flag"
 	"fmt"
 	"hash/crc32"
 	"io/ioutil"
@@ -228,30 +229,39 @@ func ParseTLLayer(tl string) *TLLayer {
 func ParserEntry() {
 	UseMaxCpu()
 
-	Log.Infof("###################################")
-	Log.Infof("############ TL Parser ############")
-	Log.Infof("###################################")
+	// Log.Infof("###################################")
+	// Log.Infof("############ TL Parser ############")
+	// Log.Infof("###################################")
 
 	input := ""
 	output := ""
 
-	if len(os.Args) != 2 {
-		Log.Info("\nUseage : tlparser [input file] [output dir]\nexample: tlparser ./proto/mtproto/schema/schema.layer73.tl ./proto/mtproto/\n")
-		input = "./proto/mtproto/schema/schema.layer73.tl"
-		output = "./proto/mtproto/"
-	} else {
-		input = os.Args[0]
-		output = os.Args[1]
+	flag.StringVar(&input, "i", "./proto/mtproto/schema/schema.layer73.tl,./proto/mtproto/schema/iphone_simulator_scheme.tl", "input TL files")
+	flag.StringVar(&output, "o", "./proto/mtproto/", "output directory")
+
+	flag.Parse()
+
+	if len(os.Args) != 4 {
+		// Log.Info("\nUseage : tlparser -i [input file] -o [output dir]\nexample: tlparser -i ./proto/mtproto/schema/schema.layer73.tl,./proto/mtproto/schema/iphone_simulator_scheme.tl -o ./proto/mtproto/\n")
+		flag.Usage()
+		Log.Infof("will use default params, input = %v, output = %v", input, output)
 	}
 
-	content, err := ioutil.ReadFile(input)
-	if err != nil {
-		Log.Warnf("read input file failed, err = %v", err)
-		return
+	fileContent := ""
+	files := strings.Split(input, ",")
+
+	for _, f := range files {
+		content, err := ioutil.ReadFile(f)
+		if err != nil {
+			Log.Warnf("read input file failed, err = %v", err)
+			return
+		}
+
+		fileContent = fileContent + string(content)
 	}
 
 	// layer := ParseTLLayer(TLContent)
-	layer := ParseTLLayer(string(content))
+	layer := ParseTLLayer(string(fileContent))
 	layer.OutputDir = output
 	// Log.Infof("layer = %v", FormatStruct(layer))
 

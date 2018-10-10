@@ -890,4 +890,10 @@ var tlObjectClassMap = map[int32]newTLObjectFunc{
 	int32(TL_CLASS_langpack_getStrings):                              func() TLObject { return New_TL_langpack_getStrings() },
 	int32(TL_CLASS_langpack_getDifference):                           func() TLObject { return New_TL_langpack_getDifference() },
 	int32(TL_CLASS_langpack_getLanguages):                            func() TLObject { return New_TL_langpack_getLanguages() },
+	int32(TL_CLASS_schemeNotModified):                                func() TLObject { return New_TL_schemeNotModified() },
+	int32(TL_CLASS_scheme):                                           func() TLObject { return New_TL_scheme() },
+	int32(TL_CLASS_schemeParam):                                      func() TLObject { return New_TL_schemeParam() },
+	int32(TL_CLASS_schemeMethod):                                     func() TLObject { return New_TL_schemeMethod() },
+	int32(TL_CLASS_schemeType):                                       func() TLObject { return New_TL_schemeType() },
+	int32(TL_CLASS_help_getScheme):                                   func() TLObject { return New_TL_help_getScheme() },
 }

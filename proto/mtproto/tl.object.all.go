@@ -50868,3 +50868,345 @@ func (t *TL_langpack_getLanguages) Encode() []byte {
 func (t *TL_langpack_getLanguages) Decode(b []byte) error {
 	return nil
 }
+
+// schemeNotModified#263c9c58
+type TL_schemeNotModified struct {
+	M_classID int32
+}
+
+func (t *TL_schemeNotModified) ClassID() int32 {
+	return t.M_classID
+}
+
+func New_TL_schemeNotModified() *TL_schemeNotModified {
+	return &TL_schemeNotModified{
+		M_classID: TL_CLASS_schemeNotModified,
+	}
+}
+
+func (t *TL_schemeNotModified) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_schemeNotModified))
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_schemeNotModified) Decode(b []byte) error {
+	return nil
+}
+
+// scheme#4e6ef65e
+type TL_scheme struct {
+	M_classID    int32
+	M_scheme_raw string
+	M_types      []TLObject
+	M_methods    []TLObject
+	M_version    int32
+}
+
+func (t *TL_scheme) ClassID() int32 {
+	return t.M_classID
+}
+
+func (t *TL_scheme) Set_scheme_raw(M_scheme_raw string) {
+	t.M_scheme_raw = M_scheme_raw
+}
+
+func (t *TL_scheme) Get_scheme_raw() string {
+	return t.M_scheme_raw
+}
+
+func (t *TL_scheme) Set_types(M_types []TLObject) {
+	t.M_types = M_types
+}
+
+func (t *TL_scheme) Get_types() []TLObject {
+	return t.M_types
+}
+
+func (t *TL_scheme) Set_methods(M_methods []TLObject) {
+	t.M_methods = M_methods
+}
+
+func (t *TL_scheme) Get_methods() []TLObject {
+	return t.M_methods
+}
+
+func (t *TL_scheme) Set_version(M_version int32) {
+	t.M_version = M_version
+}
+
+func (t *TL_scheme) Get_version() int32 {
+	return t.M_version
+}
+
+func New_TL_scheme() *TL_scheme {
+	return &TL_scheme{
+		M_classID: TL_CLASS_scheme,
+	}
+}
+
+func (t *TL_scheme) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_scheme))
+	ec.String(t.Get_scheme_raw())
+	ec.Vector(t.Get_types())
+	ec.Vector(t.Get_methods())
+	ec.Int(t.Get_version())
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_scheme) Decode(b []byte) error {
+	dc := NewMTPDecodeBuffer(b)
+
+	t.M_scheme_raw = dc.String()
+	t.M_types = dc.Vector()
+	t.M_methods = dc.Vector()
+	t.M_version = dc.Int()
+
+	return dc.err
+}
+
+// schemeParam#21b59bef
+type TL_schemeParam struct {
+	M_classID int32
+	M_name    string
+	M_type    string
+}
+
+func (t *TL_schemeParam) ClassID() int32 {
+	return t.M_classID
+}
+
+func (t *TL_schemeParam) Set_name(M_name string) {
+	t.M_name = M_name
+}
+
+func (t *TL_schemeParam) Get_name() string {
+	return t.M_name
+}
+
+func (t *TL_schemeParam) Set_type(M_type string) {
+	t.M_type = M_type
+}
+
+func (t *TL_schemeParam) Get_type() string {
+	return t.M_type
+}
+
+func New_TL_schemeParam() *TL_schemeParam {
+	return &TL_schemeParam{
+		M_classID: TL_CLASS_schemeParam,
+	}
+}
+
+func (t *TL_schemeParam) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_schemeParam))
+	ec.String(t.Get_name())
+	ec.String(t.Get_type())
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_schemeParam) Decode(b []byte) error {
+	dc := NewMTPDecodeBuffer(b)
+
+	t.M_name = dc.String()
+	t.M_type = dc.String()
+
+	return dc.err
+}
+
+// schemeMethod#479357c0
+type TL_schemeMethod struct {
+	M_classID int32
+	M_id      int32
+	M_method  string
+	M_params  []TLObject
+	M_type    string
+}
+
+func (t *TL_schemeMethod) ClassID() int32 {
+	return t.M_classID
+}
+
+func (t *TL_schemeMethod) Set_id(M_id int32) {
+	t.M_id = M_id
+}
+
+func (t *TL_schemeMethod) Get_id() int32 {
+	return t.M_id
+}
+
+func (t *TL_schemeMethod) Set_method(M_method string) {
+	t.M_method = M_method
+}
+
+func (t *TL_schemeMethod) Get_method() string {
+	return t.M_method
+}
+
+func (t *TL_schemeMethod) Set_params(M_params []TLObject) {
+	t.M_params = M_params
+}
+
+func (t *TL_schemeMethod) Get_params() []TLObject {
+	return t.M_params
+}
+
+func (t *TL_schemeMethod) Set_type(M_type string) {
+	t.M_type = M_type
+}
+
+func (t *TL_schemeMethod) Get_type() string {
+	return t.M_type
+}
+
+func New_TL_schemeMethod() *TL_schemeMethod {
+	return &TL_schemeMethod{
+		M_classID: TL_CLASS_schemeMethod,
+	}
+}
+
+func (t *TL_schemeMethod) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_schemeMethod))
+	ec.Int(t.Get_id())
+	ec.String(t.Get_method())
+	ec.Vector(t.Get_params())
+	ec.String(t.Get_type())
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_schemeMethod) Decode(b []byte) error {
+	dc := NewMTPDecodeBuffer(b)
+
+	t.M_id = dc.Int()
+	t.M_method = dc.String()
+	t.M_params = dc.Vector()
+	t.M_type = dc.String()
+
+	return dc.err
+}
+
+// schemeType#a8e1e989
+type TL_schemeType struct {
+	M_classID   int32
+	M_id        int32
+	M_predicate string
+	M_params    []TLObject
+	M_type      string
+}
+
+func (t *TL_schemeType) ClassID() int32 {
+	return t.M_classID
+}
+
+func (t *TL_schemeType) Set_id(M_id int32) {
+	t.M_id = M_id
+}
+
+func (t *TL_schemeType) Get_id() int32 {
+	return t.M_id
+}
+
+func (t *TL_schemeType) Set_predicate(M_predicate string) {
+	t.M_predicate = M_predicate
+}
+
+func (t *TL_schemeType) Get_predicate() string {
+	return t.M_predicate
+}
+
+func (t *TL_schemeType) Set_params(M_params []TLObject) {
+	t.M_params = M_params
+}
+
+func (t *TL_schemeType) Get_params() []TLObject {
+	return t.M_params
+}
+
+func (t *TL_schemeType) Set_type(M_type string) {
+	t.M_type = M_type
+}
+
+func (t *TL_schemeType) Get_type() string {
+	return t.M_type
+}
+
+func New_TL_schemeType() *TL_schemeType {
+	return &TL_schemeType{
+		M_classID: TL_CLASS_schemeType,
+	}
+}
+
+func (t *TL_schemeType) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_schemeType))
+	ec.Int(t.Get_id())
+	ec.String(t.Get_predicate())
+	ec.Vector(t.Get_params())
+	ec.String(t.Get_type())
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_schemeType) Decode(b []byte) error {
+	dc := NewMTPDecodeBuffer(b)
+
+	t.M_id = dc.Int()
+	t.M_predicate = dc.String()
+	t.M_params = dc.Vector()
+	t.M_type = dc.String()
+
+	return dc.err
+}
+
+// help_getScheme#dbb69a9e
+type TL_help_getScheme struct {
+	M_classID int32
+	M_version int32
+}
+
+func (t *TL_help_getScheme) ClassID() int32 {
+	return t.M_classID
+}
+
+func (t *TL_help_getScheme) Set_version(M_version int32) {
+	t.M_version = M_version
+}
+
+func (t *TL_help_getScheme) Get_version() int32 {
+	return t.M_version
+}
+
+func New_TL_help_getScheme() *TL_help_getScheme {
+	return &TL_help_getScheme{
+		M_classID: TL_CLASS_help_getScheme,
+	}
+}
+
+func (t *TL_help_getScheme) Encode() []byte {
+	ec := NewMTPEncodeBuffer(512)
+
+	ec.Int(int32(TL_CLASS_help_getScheme))
+	ec.Int(t.Get_version())
+
+	return ec.GetBuffer()
+}
+
+func (t *TL_help_getScheme) Decode(b []byte) error {
+	dc := NewMTPDecodeBuffer(b)
+
+	t.M_version = dc.Int()
+
+	return dc.err
+}
