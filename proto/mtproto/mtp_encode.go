@@ -117,9 +117,7 @@ func (e *MTPEncodeBuffer) VectorString(v []string) {
 }
 
 func (e *MTPEncodeBuffer) TLObject(obj TLObject) {
-	if obj != nil {
-		e.buffer = append(e.buffer, obj.Encode()...)
-	}
+	e.buffer = append(e.buffer, obj.Encode()...)
 }
 
 // will do it in the future

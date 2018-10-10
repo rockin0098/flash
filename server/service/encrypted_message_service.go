@@ -80,7 +80,7 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 		M_default_p2p_contacts:       nil,
 		M_date:                       timenow,
 		M_expires:                    timenow + EXPIRE_TIMEOUT,
-		M_test_mode:                  nil,
+		M_test_mode:                  mtproto.New_TL_boolFalse(),
 		M_this_dc:                    2,
 		M_dc_options:                 nil,
 		M_chat_size_max:              200,
