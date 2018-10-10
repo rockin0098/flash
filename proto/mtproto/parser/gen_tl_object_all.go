@@ -12,6 +12,8 @@ var tlobject_output_file = "tl.object.all.go"
 var tlobject_template = `
 package mtproto
 
+import "fmt"
+
 %v
 
 `
@@ -100,6 +102,44 @@ func (t *TLLayer) generateOneTLObjectEncode(tlname string, params []*TLParam) st
 	return res
 }
 
+func (t *TLLayer) generateOneTLObjectString(objname string, line *TLLine) string {
+
+	res := `
+	func (t *%v)String() string {
+	`
+	res = fmt.Sprintf(res, objname)
+
+	formatstr := fmt.Sprintf(`- %v#%v\n`, line.Predicate, line.ID)
+	res = res + `return fmt.Sprintf("` + formatstr
+
+	params := line.Params
+	if len(params) > 0 {
+
+		for _, p := range params {
+			res = res + fmt.Sprintf("-- %v : ", p.Name)
+			res = res + "%v\\n"
+		}
+
+		res = res + `",`
+
+		for _, p := range params {
+			res = res + fmt.Sprintf("t.%v,", convertFieldName(p.Name))
+		}
+
+		// 去掉尾巴
+		c := string(res[len(res)-1])
+		if c == "," {
+			res = res[:len(res)-1]
+		}
+
+		res = res + ")}"
+	} else {
+		res = res + `")}`
+	}
+
+	return res
+}
+
 func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 
 	tlname := strings.Replace(line.Predicate, ".", "_", -1)
@@ -136,13 +176,16 @@ func (t *TLLayer) generateOneTLObject(line *TLLine) string {
 		}
 	`, objname, t.generateOneTLObjectDecode(line.Params))
 
+	stringstr := t.generateOneTLObjectString(objname, line)
+
 	res := fmt.Sprintf(`
 		%v
 		%v
 		%v
 		%v
 		%v
-	`, defstr, sgstr, newfuncstr, encodestr, decodestr)
+		%v
+	`, defstr, sgstr, newfuncstr, encodestr, decodestr, stringstr)
 
 	return res
 }

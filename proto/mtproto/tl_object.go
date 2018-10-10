@@ -12,6 +12,7 @@ func init() {
 
 type TLObject interface {
 	ClassID() int32
+	String() string
 	Encode() []byte
 	Decode(b []byte) error
 }

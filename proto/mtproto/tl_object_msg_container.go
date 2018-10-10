@@ -1,5 +1,7 @@
 package mtproto
 
+import "fmt"
+
 //msg_container#73f1f8dc messages:vector<message> = MessageContainer; // parsed manually
 type TL_msg_container struct {
 	M_classID  int32
@@ -22,6 +24,10 @@ func New_TL_msg_container() *TL_msg_container {
 	return &TL_msg_container{
 		M_classID: TL_CLASS_msg_container,
 	}
+}
+
+func (t *TL_msg_container) String() string {
+	return fmt.Sprintf("TL_msg_container")
 }
 
 func (t *TL_msg_container) Encode() []byte {

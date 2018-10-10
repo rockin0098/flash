@@ -1,5 +1,7 @@
 package mtproto
 
+import "fmt"
+
 // resPQ#05162463
 type TL_resPQ struct {
 	M_classID                        int32
@@ -72,6 +74,10 @@ func (t *TL_resPQ) Decode(b []byte) error {
 	t.M_server_public_key_fingerprints = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_resPQ) String() string {
+	return fmt.Sprintf("- resPQ#05162463\n-- nonce : %v\n-- server_nonce : %v\n-- pq : %v\n-- server_public_key_fingerprints : %v\n", t.M_nonce, t.M_server_nonce, t.M_pq, t.M_server_public_key_fingerprints)
 }
 
 // p_q_inner_data#83c95aec
@@ -170,6 +176,10 @@ func (t *TL_p_q_inner_data) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_p_q_inner_data) String() string {
+	return fmt.Sprintf("- p_q_inner_data#83c95aec\n-- pq : %v\n-- p : %v\n-- q : %v\n-- nonce : %v\n-- server_nonce : %v\n-- new_nonce : %v\n", t.M_pq, t.M_p, t.M_q, t.M_nonce, t.M_server_nonce, t.M_new_nonce)
+}
+
 // server_DH_params_fail#79cb045d
 type TL_server_DH_params_fail struct {
 	M_classID        int32
@@ -233,6 +243,10 @@ func (t *TL_server_DH_params_fail) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_server_DH_params_fail) String() string {
+	return fmt.Sprintf("- server_DH_params_fail#79cb045d\n-- nonce : %v\n-- server_nonce : %v\n-- new_nonce_hash : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash)
+}
+
 // server_DH_params_ok#d0e8075c
 type TL_server_DH_params_ok struct {
 	M_classID          int32
@@ -294,6 +308,10 @@ func (t *TL_server_DH_params_ok) Decode(b []byte) error {
 	t.M_encrypted_answer = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_server_DH_params_ok) String() string {
+	return fmt.Sprintf("- server_DH_params_ok#d0e8075c\n-- nonce : %v\n-- server_nonce : %v\n-- encrypted_answer : %v\n", t.M_nonce, t.M_server_nonce, t.M_encrypted_answer)
 }
 
 // server_DH_inner_data#b5890dba
@@ -392,6 +410,10 @@ func (t *TL_server_DH_inner_data) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_server_DH_inner_data) String() string {
+	return fmt.Sprintf("- server_DH_inner_data#b5890dba\n-- nonce : %v\n-- server_nonce : %v\n-- g : %v\n-- dh_prime : %v\n-- g_a : %v\n-- server_time : %v\n", t.M_nonce, t.M_server_nonce, t.M_g, t.M_dh_prime, t.M_g_a, t.M_server_time)
+}
+
 // client_DH_inner_data#6643b654
 type TL_client_DH_inner_data struct {
 	M_classID      int32
@@ -466,6 +488,10 @@ func (t *TL_client_DH_inner_data) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_client_DH_inner_data) String() string {
+	return fmt.Sprintf("- client_DH_inner_data#6643b654\n-- nonce : %v\n-- server_nonce : %v\n-- retry_id : %v\n-- g_b : %v\n", t.M_nonce, t.M_server_nonce, t.M_retry_id, t.M_g_b)
+}
+
 // dh_gen_ok#3bcbf734
 type TL_dh_gen_ok struct {
 	M_classID         int32
@@ -527,6 +553,10 @@ func (t *TL_dh_gen_ok) Decode(b []byte) error {
 	t.M_new_nonce_hash1 = dc.Bytes(16)
 
 	return dc.err
+}
+
+func (t *TL_dh_gen_ok) String() string {
+	return fmt.Sprintf("- dh_gen_ok#3bcbf734\n-- nonce : %v\n-- server_nonce : %v\n-- new_nonce_hash1 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash1)
 }
 
 // dh_gen_retry#46dc1fb9
@@ -592,6 +622,10 @@ func (t *TL_dh_gen_retry) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_dh_gen_retry) String() string {
+	return fmt.Sprintf("- dh_gen_retry#46dc1fb9\n-- nonce : %v\n-- server_nonce : %v\n-- new_nonce_hash2 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash2)
+}
+
 // dh_gen_fail#a69dae02
 type TL_dh_gen_fail struct {
 	M_classID         int32
@@ -655,6 +689,10 @@ func (t *TL_dh_gen_fail) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_dh_gen_fail) String() string {
+	return fmt.Sprintf("- dh_gen_fail#a69dae02\n-- nonce : %v\n-- server_nonce : %v\n-- new_nonce_hash3 : %v\n", t.M_nonce, t.M_server_nonce, t.M_new_nonce_hash3)
+}
+
 // destroy_auth_key_ok#f660e1d4
 type TL_destroy_auth_key_ok struct {
 	M_classID int32
@@ -680,6 +718,10 @@ func (t *TL_destroy_auth_key_ok) Encode() []byte {
 
 func (t *TL_destroy_auth_key_ok) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_destroy_auth_key_ok) String() string {
+	return fmt.Sprintf("- destroy_auth_key_ok#f660e1d4\n")
 }
 
 // destroy_auth_key_none#0a9f2259
@@ -709,6 +751,10 @@ func (t *TL_destroy_auth_key_none) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_destroy_auth_key_none) String() string {
+	return fmt.Sprintf("- destroy_auth_key_none#0a9f2259\n")
+}
+
 // destroy_auth_key_fail#ea109b13
 type TL_destroy_auth_key_fail struct {
 	M_classID int32
@@ -734,6 +780,10 @@ func (t *TL_destroy_auth_key_fail) Encode() []byte {
 
 func (t *TL_destroy_auth_key_fail) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_destroy_auth_key_fail) String() string {
+	return fmt.Sprintf("- destroy_auth_key_fail#ea109b13\n")
 }
 
 // req_pq#60469778
@@ -775,6 +825,10 @@ func (t *TL_req_pq) Decode(b []byte) error {
 	t.M_nonce = dc.Bytes(16)
 
 	return dc.err
+}
+
+func (t *TL_req_pq) String() string {
+	return fmt.Sprintf("- req_pq#60469778\n-- nonce : %v\n", t.M_nonce)
 }
 
 // req_DH_params#d712e4be
@@ -873,6 +927,10 @@ func (t *TL_req_DH_params) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_req_DH_params) String() string {
+	return fmt.Sprintf("- req_DH_params#d712e4be\n-- nonce : %v\n-- server_nonce : %v\n-- p : %v\n-- q : %v\n-- public_key_fingerprint : %v\n-- encrypted_data : %v\n", t.M_nonce, t.M_server_nonce, t.M_p, t.M_q, t.M_public_key_fingerprint, t.M_encrypted_data)
+}
+
 // set_client_DH_params#f5045f1f
 type TL_set_client_DH_params struct {
 	M_classID        int32
@@ -936,6 +994,10 @@ func (t *TL_set_client_DH_params) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_set_client_DH_params) String() string {
+	return fmt.Sprintf("- set_client_DH_params#f5045f1f\n-- nonce : %v\n-- server_nonce : %v\n-- encrypted_data : %v\n", t.M_nonce, t.M_server_nonce, t.M_encrypted_data)
+}
+
 // destroy_auth_key#d1435160
 type TL_destroy_auth_key struct {
 	M_classID int32
@@ -961,6 +1023,10 @@ func (t *TL_destroy_auth_key) Encode() []byte {
 
 func (t *TL_destroy_auth_key) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_destroy_auth_key) String() string {
+	return fmt.Sprintf("- destroy_auth_key#d1435160\n")
 }
 
 // msgs_ack#62d6b459
@@ -1002,6 +1068,10 @@ func (t *TL_msgs_ack) Decode(b []byte) error {
 	t.M_msg_ids = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_msgs_ack) String() string {
+	return fmt.Sprintf("- msgs_ack#62d6b459\n-- msg_ids : %v\n", t.M_msg_ids)
 }
 
 // bad_msg_notification#a7eff811
@@ -1065,6 +1135,10 @@ func (t *TL_bad_msg_notification) Decode(b []byte) error {
 	t.M_error_code = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_bad_msg_notification) String() string {
+	return fmt.Sprintf("- bad_msg_notification#a7eff811\n-- bad_msg_id : %v\n-- bad_msg_seqno : %v\n-- error_code : %v\n", t.M_bad_msg_id, t.M_bad_msg_seqno, t.M_error_code)
 }
 
 // bad_server_salt#edab447b
@@ -1141,6 +1215,10 @@ func (t *TL_bad_server_salt) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_bad_server_salt) String() string {
+	return fmt.Sprintf("- bad_server_salt#edab447b\n-- bad_msg_id : %v\n-- bad_msg_seqno : %v\n-- error_code : %v\n-- new_server_salt : %v\n", t.M_bad_msg_id, t.M_bad_msg_seqno, t.M_error_code, t.M_new_server_salt)
+}
+
 // msgs_state_req#da69fb52
 type TL_msgs_state_req struct {
 	M_classID int32
@@ -1180,6 +1258,10 @@ func (t *TL_msgs_state_req) Decode(b []byte) error {
 	t.M_msg_ids = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_msgs_state_req) String() string {
+	return fmt.Sprintf("- msgs_state_req#da69fb52\n-- msg_ids : %v\n", t.M_msg_ids)
 }
 
 // msgs_state_info#04deb57d
@@ -1234,6 +1316,10 @@ func (t *TL_msgs_state_info) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_msgs_state_info) String() string {
+	return fmt.Sprintf("- msgs_state_info#04deb57d\n-- req_msg_id : %v\n-- info : %v\n", t.M_req_msg_id, t.M_info)
+}
+
 // msgs_all_info#8cc0d131
 type TL_msgs_all_info struct {
 	M_classID int32
@@ -1284,6 +1370,10 @@ func (t *TL_msgs_all_info) Decode(b []byte) error {
 	t.M_info = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_msgs_all_info) String() string {
+	return fmt.Sprintf("- msgs_all_info#8cc0d131\n-- msg_ids : %v\n-- info : %v\n", t.M_msg_ids, t.M_info)
 }
 
 // msg_detailed_info#276d3ec6
@@ -1360,6 +1450,10 @@ func (t *TL_msg_detailed_info) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_msg_detailed_info) String() string {
+	return fmt.Sprintf("- msg_detailed_info#276d3ec6\n-- msg_id : %v\n-- answer_msg_id : %v\n-- bytes : %v\n-- status : %v\n", t.M_msg_id, t.M_answer_msg_id, t.M_bytes, t.M_status)
+}
+
 // msg_new_detailed_info#809db6df
 type TL_msg_new_detailed_info struct {
 	M_classID       int32
@@ -1423,6 +1517,10 @@ func (t *TL_msg_new_detailed_info) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_msg_new_detailed_info) String() string {
+	return fmt.Sprintf("- msg_new_detailed_info#809db6df\n-- answer_msg_id : %v\n-- bytes : %v\n-- status : %v\n", t.M_answer_msg_id, t.M_bytes, t.M_status)
+}
+
 // msg_resend_req#7d861a08
 type TL_msg_resend_req struct {
 	M_classID int32
@@ -1462,6 +1560,10 @@ func (t *TL_msg_resend_req) Decode(b []byte) error {
 	t.M_msg_ids = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_msg_resend_req) String() string {
+	return fmt.Sprintf("- msg_resend_req#7d861a08\n-- msg_ids : %v\n", t.M_msg_ids)
 }
 
 // rpc_error#2144ca19
@@ -1516,6 +1618,10 @@ func (t *TL_rpc_error) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_rpc_error) String() string {
+	return fmt.Sprintf("- rpc_error#2144ca19\n-- error_code : %v\n-- error_message : %v\n", t.M_error_code, t.M_error_message)
+}
+
 // rpc_answer_unknown#5e2ad36e
 type TL_rpc_answer_unknown struct {
 	M_classID int32
@@ -1543,6 +1649,10 @@ func (t *TL_rpc_answer_unknown) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_rpc_answer_unknown) String() string {
+	return fmt.Sprintf("- rpc_answer_unknown#5e2ad36e\n")
+}
+
 // rpc_answer_dropped_running#cd78e586
 type TL_rpc_answer_dropped_running struct {
 	M_classID int32
@@ -1568,6 +1678,10 @@ func (t *TL_rpc_answer_dropped_running) Encode() []byte {
 
 func (t *TL_rpc_answer_dropped_running) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_rpc_answer_dropped_running) String() string {
+	return fmt.Sprintf("- rpc_answer_dropped_running#cd78e586\n")
 }
 
 // rpc_answer_dropped#a43ad8b7
@@ -1633,6 +1747,10 @@ func (t *TL_rpc_answer_dropped) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_rpc_answer_dropped) String() string {
+	return fmt.Sprintf("- rpc_answer_dropped#a43ad8b7\n-- msg_id : %v\n-- seq_no : %v\n-- bytes : %v\n", t.M_msg_id, t.M_seq_no, t.M_bytes)
+}
+
 // future_salt#0949d9dc
 type TL_future_salt struct {
 	M_classID     int32
@@ -1694,6 +1812,10 @@ func (t *TL_future_salt) Decode(b []byte) error {
 	t.M_salt = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_future_salt) String() string {
+	return fmt.Sprintf("- future_salt#0949d9dc\n-- valid_since : %v\n-- valid_until : %v\n-- salt : %v\n", t.M_valid_since, t.M_valid_until, t.M_salt)
 }
 
 // future_salts#ae500895
@@ -1759,6 +1881,10 @@ func (t *TL_future_salts) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_future_salts) String() string {
+	return fmt.Sprintf("- future_salts#ae500895\n-- req_msg_id : %v\n-- now : %v\n-- salts : %v\n", t.M_req_msg_id, t.M_now, t.M_salts)
+}
+
 // pong#347773c5
 type TL_pong struct {
 	M_classID int32
@@ -1811,6 +1937,10 @@ func (t *TL_pong) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pong) String() string {
+	return fmt.Sprintf("- pong#347773c5\n-- msg_id : %v\n-- ping_id : %v\n", t.M_msg_id, t.M_ping_id)
+}
+
 // destroy_session_ok#e22045fc
 type TL_destroy_session_ok struct {
 	M_classID    int32
@@ -1852,6 +1982,10 @@ func (t *TL_destroy_session_ok) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_destroy_session_ok) String() string {
+	return fmt.Sprintf("- destroy_session_ok#e22045fc\n-- session_id : %v\n", t.M_session_id)
+}
+
 // destroy_session_none#62d350c9
 type TL_destroy_session_none struct {
 	M_classID    int32
@@ -1891,6 +2025,10 @@ func (t *TL_destroy_session_none) Decode(b []byte) error {
 	t.M_session_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_destroy_session_none) String() string {
+	return fmt.Sprintf("- destroy_session_none#62d350c9\n-- session_id : %v\n", t.M_session_id)
 }
 
 // new_session_created#9ec20908
@@ -1956,6 +2094,10 @@ func (t *TL_new_session_created) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_new_session_created) String() string {
+	return fmt.Sprintf("- new_session_created#9ec20908\n-- first_msg_id : %v\n-- unique_id : %v\n-- server_salt : %v\n", t.M_first_msg_id, t.M_unique_id, t.M_server_salt)
+}
+
 // http_wait#9299359f
 type TL_http_wait struct {
 	M_classID    int32
@@ -2019,6 +2161,10 @@ func (t *TL_http_wait) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_http_wait) String() string {
+	return fmt.Sprintf("- http_wait#9299359f\n-- max_delay : %v\n-- wait_after : %v\n-- max_wait : %v\n", t.M_max_delay, t.M_wait_after, t.M_max_wait)
+}
+
 // ipPort#d433ad73
 type TL_ipPort struct {
 	M_classID int32
@@ -2069,6 +2215,10 @@ func (t *TL_ipPort) Decode(b []byte) error {
 	t.M_port = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_ipPort) String() string {
+	return fmt.Sprintf("- ipPort#d433ad73\n-- ipv4 : %v\n-- port : %v\n", t.M_ipv4, t.M_port)
 }
 
 // help_configSimple#d997c3c5
@@ -2145,6 +2295,10 @@ func (t *TL_help_configSimple) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_configSimple) String() string {
+	return fmt.Sprintf("- help_configSimple#d997c3c5\n-- date : %v\n-- expires : %v\n-- dc_id : %v\n-- ip_port_list : %v\n", t.M_date, t.M_expires, t.M_dc_id, t.M_ip_port_list)
+}
+
 // rpc_drop_answer#58e4a740
 type TL_rpc_drop_answer struct {
 	M_classID    int32
@@ -2184,6 +2338,10 @@ func (t *TL_rpc_drop_answer) Decode(b []byte) error {
 	t.M_req_msg_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_rpc_drop_answer) String() string {
+	return fmt.Sprintf("- rpc_drop_answer#58e4a740\n-- req_msg_id : %v\n", t.M_req_msg_id)
 }
 
 // get_future_salts#b921bd04
@@ -2227,6 +2385,10 @@ func (t *TL_get_future_salts) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_get_future_salts) String() string {
+	return fmt.Sprintf("- get_future_salts#b921bd04\n-- num : %v\n", t.M_num)
+}
+
 // ping#7abe77ec
 type TL_ping struct {
 	M_classID int32
@@ -2266,6 +2428,10 @@ func (t *TL_ping) Decode(b []byte) error {
 	t.M_ping_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_ping) String() string {
+	return fmt.Sprintf("- ping#7abe77ec\n-- ping_id : %v\n", t.M_ping_id)
 }
 
 // ping_delay_disconnect#f3427b8c
@@ -2320,6 +2486,10 @@ func (t *TL_ping_delay_disconnect) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_ping_delay_disconnect) String() string {
+	return fmt.Sprintf("- ping_delay_disconnect#f3427b8c\n-- ping_id : %v\n-- disconnect_delay : %v\n", t.M_ping_id, t.M_disconnect_delay)
+}
+
 // destroy_session#e7512126
 type TL_destroy_session struct {
 	M_classID    int32
@@ -2359,6 +2529,10 @@ func (t *TL_destroy_session) Decode(b []byte) error {
 	t.M_session_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_destroy_session) String() string {
+	return fmt.Sprintf("- destroy_session#e7512126\n-- session_id : %v\n", t.M_session_id)
 }
 
 // contest_saveDeveloperInfo#9a5f6e95
@@ -2446,6 +2620,10 @@ func (t *TL_contest_saveDeveloperInfo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contest_saveDeveloperInfo) String() string {
+	return fmt.Sprintf("- contest_saveDeveloperInfo#9a5f6e95\n-- vk_id : %v\n-- name : %v\n-- phone_number : %v\n-- age : %v\n-- city : %v\n", t.M_vk_id, t.M_name, t.M_phone_number, t.M_age, t.M_city)
+}
+
 // boolFalse#bc799737
 type TL_boolFalse struct {
 	M_classID int32
@@ -2471,6 +2649,10 @@ func (t *TL_boolFalse) Encode() []byte {
 
 func (t *TL_boolFalse) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_boolFalse) String() string {
+	return fmt.Sprintf("- boolFalse#bc799737\n")
 }
 
 // boolTrue#997275b5
@@ -2500,6 +2682,10 @@ func (t *TL_boolTrue) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_boolTrue) String() string {
+	return fmt.Sprintf("- boolTrue#997275b5\n")
+}
+
 // true#3fedd339
 type TL_true struct {
 	M_classID int32
@@ -2527,6 +2713,10 @@ func (t *TL_true) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_true) String() string {
+	return fmt.Sprintf("- true#3fedd339\n")
+}
+
 // vector#1cb5c415
 type TL_vector struct {
 	M_classID int32
@@ -2552,6 +2742,10 @@ func (t *TL_vector) Encode() []byte {
 
 func (t *TL_vector) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_vector) String() string {
+	return fmt.Sprintf("- vector#1cb5c415\n")
 }
 
 // error#c4b9f9bb
@@ -2606,6 +2800,10 @@ func (t *TL_error) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_error) String() string {
+	return fmt.Sprintf("- error#c4b9f9bb\n-- code : %v\n-- text : %v\n", t.M_code, t.M_text)
+}
+
 // null#56730bcc
 type TL_null struct {
 	M_classID int32
@@ -2631,6 +2829,10 @@ func (t *TL_null) Encode() []byte {
 
 func (t *TL_null) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_null) String() string {
+	return fmt.Sprintf("- null#56730bcc\n")
 }
 
 // inputPeerEmpty#7f3b18ea
@@ -2660,6 +2862,10 @@ func (t *TL_inputPeerEmpty) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputPeerEmpty) String() string {
+	return fmt.Sprintf("- inputPeerEmpty#7f3b18ea\n")
+}
+
 // inputPeerSelf#7da07ec9
 type TL_inputPeerSelf struct {
 	M_classID int32
@@ -2685,6 +2891,10 @@ func (t *TL_inputPeerSelf) Encode() []byte {
 
 func (t *TL_inputPeerSelf) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPeerSelf) String() string {
+	return fmt.Sprintf("- inputPeerSelf#7da07ec9\n")
 }
 
 // inputPeerChat#179be863
@@ -2726,6 +2936,10 @@ func (t *TL_inputPeerChat) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_inputPeerChat) String() string {
+	return fmt.Sprintf("- inputPeerChat#179be863\n-- chat_id : %v\n", t.M_chat_id)
 }
 
 // inputPeerUser#7b8e7de6
@@ -2780,6 +2994,10 @@ func (t *TL_inputPeerUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPeerUser) String() string {
+	return fmt.Sprintf("- inputPeerUser#7b8e7de6\n-- user_id : %v\n-- access_hash : %v\n", t.M_user_id, t.M_access_hash)
+}
+
 // inputPeerChannel#20adaef8
 type TL_inputPeerChannel struct {
 	M_classID     int32
@@ -2832,6 +3050,10 @@ func (t *TL_inputPeerChannel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPeerChannel) String() string {
+	return fmt.Sprintf("- inputPeerChannel#20adaef8\n-- channel_id : %v\n-- access_hash : %v\n", t.M_channel_id, t.M_access_hash)
+}
+
 // inputUserEmpty#b98886cf
 type TL_inputUserEmpty struct {
 	M_classID int32
@@ -2859,6 +3081,10 @@ func (t *TL_inputUserEmpty) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputUserEmpty) String() string {
+	return fmt.Sprintf("- inputUserEmpty#b98886cf\n")
+}
+
 // inputUserSelf#f7c1b13f
 type TL_inputUserSelf struct {
 	M_classID int32
@@ -2884,6 +3110,10 @@ func (t *TL_inputUserSelf) Encode() []byte {
 
 func (t *TL_inputUserSelf) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputUserSelf) String() string {
+	return fmt.Sprintf("- inputUserSelf#f7c1b13f\n")
 }
 
 // inputUser#d8292816
@@ -2936,6 +3166,10 @@ func (t *TL_inputUser) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputUser) String() string {
+	return fmt.Sprintf("- inputUser#d8292816\n-- user_id : %v\n-- access_hash : %v\n", t.M_user_id, t.M_access_hash)
 }
 
 // inputPhoneContact#f392b7f4
@@ -3012,6 +3246,10 @@ func (t *TL_inputPhoneContact) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPhoneContact) String() string {
+	return fmt.Sprintf("- inputPhoneContact#f392b7f4\n-- client_id : %v\n-- phone : %v\n-- first_name : %v\n-- last_name : %v\n", t.M_client_id, t.M_phone, t.M_first_name, t.M_last_name)
+}
+
 // inputFile#f52ff27f
 type TL_inputFile struct {
 	M_classID      int32
@@ -3086,6 +3324,10 @@ func (t *TL_inputFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputFile) String() string {
+	return fmt.Sprintf("- inputFile#f52ff27f\n-- id : %v\n-- parts : %v\n-- name : %v\n-- md5_checksum : %v\n", t.M_id, t.M_parts, t.M_name, t.M_md5_checksum)
+}
+
 // inputFileBig#fa4f0bb5
 type TL_inputFileBig struct {
 	M_classID int32
@@ -3149,6 +3391,10 @@ func (t *TL_inputFileBig) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputFileBig) String() string {
+	return fmt.Sprintf("- inputFileBig#fa4f0bb5\n-- id : %v\n-- parts : %v\n-- name : %v\n", t.M_id, t.M_parts, t.M_name)
+}
+
 // inputMediaEmpty#9664f57f
 type TL_inputMediaEmpty struct {
 	M_classID int32
@@ -3174,6 +3420,10 @@ func (t *TL_inputMediaEmpty) Encode() []byte {
 
 func (t *TL_inputMediaEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMediaEmpty) String() string {
+	return fmt.Sprintf("- inputMediaEmpty#9664f57f\n")
 }
 
 // inputMediaUploadedPhoto#2f37e231
@@ -3259,6 +3509,10 @@ func (t *TL_inputMediaUploadedPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaUploadedPhoto) String() string {
+	return fmt.Sprintf("- inputMediaUploadedPhoto#2f37e231\n-- flags : %v\n-- file : %v\n-- caption : %v\n-- stickers : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_file, t.M_caption, t.M_stickers, t.M_ttl_seconds)
+}
+
 // inputMediaPhoto#81fa373a
 type TL_inputMediaPhoto struct {
 	M_classID     int32
@@ -3331,6 +3585,10 @@ func (t *TL_inputMediaPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaPhoto) String() string {
+	return fmt.Sprintf("- inputMediaPhoto#81fa373a\n-- flags : %v\n-- id : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_id, t.M_caption, t.M_ttl_seconds)
+}
+
 // inputMediaGeoPoint#f9c44144
 type TL_inputMediaGeoPoint struct {
 	M_classID   int32
@@ -3370,6 +3628,10 @@ func (t *TL_inputMediaGeoPoint) Decode(b []byte) error {
 	t.M_geo_point = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputMediaGeoPoint) String() string {
+	return fmt.Sprintf("- inputMediaGeoPoint#f9c44144\n-- geo_point : %v\n", t.M_geo_point)
 }
 
 // inputMediaContact#a6e45987
@@ -3433,6 +3695,10 @@ func (t *TL_inputMediaContact) Decode(b []byte) error {
 	t.M_last_name = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inputMediaContact) String() string {
+	return fmt.Sprintf("- inputMediaContact#a6e45987\n-- phone_number : %v\n-- first_name : %v\n-- last_name : %v\n", t.M_phone_number, t.M_first_name, t.M_last_name)
 }
 
 // inputMediaUploadedDocument#e39621fd
@@ -3562,6 +3828,10 @@ func (t *TL_inputMediaUploadedDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaUploadedDocument) String() string {
+	return fmt.Sprintf("- inputMediaUploadedDocument#e39621fd\n-- flags : %v\n-- nosound_video : %v\n-- file : %v\n-- thumb : %v\n-- mime_type : %v\n-- attributes : %v\n-- caption : %v\n-- stickers : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_nosound_video, t.M_file, t.M_thumb, t.M_mime_type, t.M_attributes, t.M_caption, t.M_stickers, t.M_ttl_seconds)
+}
+
 // inputMediaDocument#5acb668e
 type TL_inputMediaDocument struct {
 	M_classID     int32
@@ -3632,6 +3902,10 @@ func (t *TL_inputMediaDocument) Decode(b []byte) error {
 	t.M_ttl_seconds = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputMediaDocument) String() string {
+	return fmt.Sprintf("- inputMediaDocument#5acb668e\n-- flags : %v\n-- id : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_id, t.M_caption, t.M_ttl_seconds)
 }
 
 // inputMediaVenue#c13d1c11
@@ -3730,6 +4004,10 @@ func (t *TL_inputMediaVenue) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaVenue) String() string {
+	return fmt.Sprintf("- inputMediaVenue#c13d1c11\n-- geo_point : %v\n-- title : %v\n-- address : %v\n-- provider : %v\n-- venue_id : %v\n-- venue_type : %v\n", t.M_geo_point, t.M_title, t.M_address, t.M_provider, t.M_venue_id, t.M_venue_type)
+}
+
 // inputMediaGifExternal#4843b0fd
 type TL_inputMediaGifExternal struct {
 	M_classID int32
@@ -3780,6 +4058,10 @@ func (t *TL_inputMediaGifExternal) Decode(b []byte) error {
 	t.M_q = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inputMediaGifExternal) String() string {
+	return fmt.Sprintf("- inputMediaGifExternal#4843b0fd\n-- url : %v\n-- q : %v\n", t.M_url, t.M_q)
 }
 
 // inputMediaPhotoExternal#922aec1
@@ -3854,6 +4136,10 @@ func (t *TL_inputMediaPhotoExternal) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaPhotoExternal) String() string {
+	return fmt.Sprintf("- inputMediaPhotoExternal#922aec1\n-- flags : %v\n-- url : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_url, t.M_caption, t.M_ttl_seconds)
+}
+
 // inputMediaDocumentExternal#b6f74335
 type TL_inputMediaDocumentExternal struct {
 	M_classID     int32
@@ -3926,6 +4212,10 @@ func (t *TL_inputMediaDocumentExternal) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaDocumentExternal) String() string {
+	return fmt.Sprintf("- inputMediaDocumentExternal#b6f74335\n-- flags : %v\n-- url : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_url, t.M_caption, t.M_ttl_seconds)
+}
+
 // inputMediaGame#d33f43f3
 type TL_inputMediaGame struct {
 	M_classID int32
@@ -3965,6 +4255,10 @@ func (t *TL_inputMediaGame) Decode(b []byte) error {
 	t.M_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputMediaGame) String() string {
+	return fmt.Sprintf("- inputMediaGame#d33f43f3\n-- id : %v\n", t.M_id)
 }
 
 // inputMediaInvoice#f4e096c3
@@ -4094,6 +4388,10 @@ func (t *TL_inputMediaInvoice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaInvoice) String() string {
+	return fmt.Sprintf("- inputMediaInvoice#f4e096c3\n-- flags : %v\n-- title : %v\n-- description : %v\n-- photo : %v\n-- invoice : %v\n-- payload : %v\n-- provider : %v\n-- provider_data : %v\n-- start_param : %v\n", t.M_flags, t.M_title, t.M_description, t.M_photo, t.M_invoice, t.M_payload, t.M_provider, t.M_provider_data, t.M_start_param)
+}
+
 // inputMediaGeoLive#7b1a118f
 type TL_inputMediaGeoLive struct {
 	M_classID   int32
@@ -4146,6 +4444,10 @@ func (t *TL_inputMediaGeoLive) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMediaGeoLive) String() string {
+	return fmt.Sprintf("- inputMediaGeoLive#7b1a118f\n-- geo_point : %v\n-- period : %v\n", t.M_geo_point, t.M_period)
+}
+
 // inputChatPhotoEmpty#1ca48f57
 type TL_inputChatPhotoEmpty struct {
 	M_classID int32
@@ -4171,6 +4473,10 @@ func (t *TL_inputChatPhotoEmpty) Encode() []byte {
 
 func (t *TL_inputChatPhotoEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputChatPhotoEmpty) String() string {
+	return fmt.Sprintf("- inputChatPhotoEmpty#1ca48f57\n")
 }
 
 // inputChatUploadedPhoto#927c55b4
@@ -4214,6 +4520,10 @@ func (t *TL_inputChatUploadedPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputChatUploadedPhoto) String() string {
+	return fmt.Sprintf("- inputChatUploadedPhoto#927c55b4\n-- file : %v\n", t.M_file)
+}
+
 // inputChatPhoto#8953ad37
 type TL_inputChatPhoto struct {
 	M_classID int32
@@ -4255,6 +4565,10 @@ func (t *TL_inputChatPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputChatPhoto) String() string {
+	return fmt.Sprintf("- inputChatPhoto#8953ad37\n-- id : %v\n", t.M_id)
+}
+
 // inputGeoPointEmpty#e4c123d6
 type TL_inputGeoPointEmpty struct {
 	M_classID int32
@@ -4280,6 +4594,10 @@ func (t *TL_inputGeoPointEmpty) Encode() []byte {
 
 func (t *TL_inputGeoPointEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputGeoPointEmpty) String() string {
+	return fmt.Sprintf("- inputGeoPointEmpty#e4c123d6\n")
 }
 
 // inputGeoPoint#f3b7acc9
@@ -4334,6 +4652,10 @@ func (t *TL_inputGeoPoint) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputGeoPoint) String() string {
+	return fmt.Sprintf("- inputGeoPoint#f3b7acc9\n-- lat : %v\n-- long : %v\n", t.M_lat, t.M_long)
+}
+
 // inputPhotoEmpty#1cd7bf0d
 type TL_inputPhotoEmpty struct {
 	M_classID int32
@@ -4359,6 +4681,10 @@ func (t *TL_inputPhotoEmpty) Encode() []byte {
 
 func (t *TL_inputPhotoEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPhotoEmpty) String() string {
+	return fmt.Sprintf("- inputPhotoEmpty#1cd7bf0d\n")
 }
 
 // inputPhoto#fb95c6c4
@@ -4411,6 +4737,10 @@ func (t *TL_inputPhoto) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputPhoto) String() string {
+	return fmt.Sprintf("- inputPhoto#fb95c6c4\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
 }
 
 // inputFileLocation#14637196
@@ -4476,6 +4806,10 @@ func (t *TL_inputFileLocation) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputFileLocation) String() string {
+	return fmt.Sprintf("- inputFileLocation#14637196\n-- volume_id : %v\n-- local_id : %v\n-- secret : %v\n", t.M_volume_id, t.M_local_id, t.M_secret)
+}
+
 // inputEncryptedFileLocation#f5235d55
 type TL_inputEncryptedFileLocation struct {
 	M_classID     int32
@@ -4526,6 +4860,10 @@ func (t *TL_inputEncryptedFileLocation) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputEncryptedFileLocation) String() string {
+	return fmt.Sprintf("- inputEncryptedFileLocation#f5235d55\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
 }
 
 // inputDocumentFileLocation#430f0724
@@ -4589,6 +4927,10 @@ func (t *TL_inputDocumentFileLocation) Decode(b []byte) error {
 	t.M_version = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_inputDocumentFileLocation) String() string {
+	return fmt.Sprintf("- inputDocumentFileLocation#430f0724\n-- id : %v\n-- access_hash : %v\n-- version : %v\n", t.M_id, t.M_access_hash, t.M_version)
 }
 
 // inputAppEvent#770656a8
@@ -4665,6 +5007,10 @@ func (t *TL_inputAppEvent) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputAppEvent) String() string {
+	return fmt.Sprintf("- inputAppEvent#770656a8\n-- time : %v\n-- type : %v\n-- peer : %v\n-- data : %v\n", t.M_time, t.M_type, t.M_peer, t.M_data)
+}
+
 // peerUser#9db1bc6d
 type TL_peerUser struct {
 	M_classID int32
@@ -4704,6 +5050,10 @@ func (t *TL_peerUser) Decode(b []byte) error {
 	t.M_user_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_peerUser) String() string {
+	return fmt.Sprintf("- peerUser#9db1bc6d\n-- user_id : %v\n", t.M_user_id)
 }
 
 // peerChat#bad0e5bb
@@ -4747,6 +5097,10 @@ func (t *TL_peerChat) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_peerChat) String() string {
+	return fmt.Sprintf("- peerChat#bad0e5bb\n-- chat_id : %v\n", t.M_chat_id)
+}
+
 // peerChannel#bddde532
 type TL_peerChannel struct {
 	M_classID    int32
@@ -4788,6 +5142,10 @@ func (t *TL_peerChannel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_peerChannel) String() string {
+	return fmt.Sprintf("- peerChannel#bddde532\n-- channel_id : %v\n", t.M_channel_id)
+}
+
 // storage_fileUnknown#aa963b05
 type TL_storage_fileUnknown struct {
 	M_classID int32
@@ -4813,6 +5171,10 @@ func (t *TL_storage_fileUnknown) Encode() []byte {
 
 func (t *TL_storage_fileUnknown) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_storage_fileUnknown) String() string {
+	return fmt.Sprintf("- storage_fileUnknown#aa963b05\n")
 }
 
 // storage_filePartial#40bc6f52
@@ -4842,6 +5204,10 @@ func (t *TL_storage_filePartial) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_storage_filePartial) String() string {
+	return fmt.Sprintf("- storage_filePartial#40bc6f52\n")
+}
+
 // storage_fileJpeg#7efe0e
 type TL_storage_fileJpeg struct {
 	M_classID int32
@@ -4867,6 +5233,10 @@ func (t *TL_storage_fileJpeg) Encode() []byte {
 
 func (t *TL_storage_fileJpeg) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_storage_fileJpeg) String() string {
+	return fmt.Sprintf("- storage_fileJpeg#7efe0e\n")
 }
 
 // storage_fileGif#cae1aadf
@@ -4896,6 +5266,10 @@ func (t *TL_storage_fileGif) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_storage_fileGif) String() string {
+	return fmt.Sprintf("- storage_fileGif#cae1aadf\n")
+}
+
 // storage_filePng#a4f63c0
 type TL_storage_filePng struct {
 	M_classID int32
@@ -4921,6 +5295,10 @@ func (t *TL_storage_filePng) Encode() []byte {
 
 func (t *TL_storage_filePng) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_storage_filePng) String() string {
+	return fmt.Sprintf("- storage_filePng#a4f63c0\n")
 }
 
 // storage_filePdf#ae1e508d
@@ -4950,6 +5328,10 @@ func (t *TL_storage_filePdf) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_storage_filePdf) String() string {
+	return fmt.Sprintf("- storage_filePdf#ae1e508d\n")
+}
+
 // storage_fileMp3#528a0677
 type TL_storage_fileMp3 struct {
 	M_classID int32
@@ -4975,6 +5357,10 @@ func (t *TL_storage_fileMp3) Encode() []byte {
 
 func (t *TL_storage_fileMp3) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_storage_fileMp3) String() string {
+	return fmt.Sprintf("- storage_fileMp3#528a0677\n")
 }
 
 // storage_fileMov#4b09ebbc
@@ -5004,6 +5390,10 @@ func (t *TL_storage_fileMov) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_storage_fileMov) String() string {
+	return fmt.Sprintf("- storage_fileMov#4b09ebbc\n")
+}
+
 // storage_fileMp4#b3cea0e4
 type TL_storage_fileMp4 struct {
 	M_classID int32
@@ -5031,6 +5421,10 @@ func (t *TL_storage_fileMp4) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_storage_fileMp4) String() string {
+	return fmt.Sprintf("- storage_fileMp4#b3cea0e4\n")
+}
+
 // storage_fileWebp#1081464c
 type TL_storage_fileWebp struct {
 	M_classID int32
@@ -5056,6 +5450,10 @@ func (t *TL_storage_fileWebp) Encode() []byte {
 
 func (t *TL_storage_fileWebp) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_storage_fileWebp) String() string {
+	return fmt.Sprintf("- storage_fileWebp#1081464c\n")
 }
 
 // fileLocationUnavailable#7c596b46
@@ -5119,6 +5517,10 @@ func (t *TL_fileLocationUnavailable) Decode(b []byte) error {
 	t.M_secret = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_fileLocationUnavailable) String() string {
+	return fmt.Sprintf("- fileLocationUnavailable#7c596b46\n-- volume_id : %v\n-- local_id : %v\n-- secret : %v\n", t.M_volume_id, t.M_local_id, t.M_secret)
 }
 
 // fileLocation#53d69076
@@ -5195,6 +5597,10 @@ func (t *TL_fileLocation) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_fileLocation) String() string {
+	return fmt.Sprintf("- fileLocation#53d69076\n-- dc_id : %v\n-- volume_id : %v\n-- local_id : %v\n-- secret : %v\n", t.M_dc_id, t.M_volume_id, t.M_local_id, t.M_secret)
+}
+
 // userEmpty#200250ba
 type TL_userEmpty struct {
 	M_classID int32
@@ -5234,6 +5640,10 @@ func (t *TL_userEmpty) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_userEmpty) String() string {
+	return fmt.Sprintf("- userEmpty#200250ba\n-- id : %v\n", t.M_id)
 }
 
 // user#2e13f4c3
@@ -5528,6 +5938,10 @@ func (t *TL_user) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_user) String() string {
+	return fmt.Sprintf("- user#2e13f4c3\n-- flags : %v\n-- self : %v\n-- contact : %v\n-- mutual_contact : %v\n-- deleted : %v\n-- bot : %v\n-- bot_chat_history : %v\n-- bot_nochats : %v\n-- verified : %v\n-- restricted : %v\n-- min : %v\n-- bot_inline_geo : %v\n-- id : %v\n-- access_hash : %v\n-- first_name : %v\n-- last_name : %v\n-- username : %v\n-- phone : %v\n-- photo : %v\n-- status : %v\n-- bot_info_version : %v\n-- restriction_reason : %v\n-- bot_inline_placeholder : %v\n-- lang_code : %v\n", t.M_flags, t.M_self, t.M_contact, t.M_mutual_contact, t.M_deleted, t.M_bot, t.M_bot_chat_history, t.M_bot_nochats, t.M_verified, t.M_restricted, t.M_min, t.M_bot_inline_geo, t.M_id, t.M_access_hash, t.M_first_name, t.M_last_name, t.M_username, t.M_phone, t.M_photo, t.M_status, t.M_bot_info_version, t.M_restriction_reason, t.M_bot_inline_placeholder, t.M_lang_code)
+}
+
 // userProfilePhotoEmpty#4f11bae1
 type TL_userProfilePhotoEmpty struct {
 	M_classID int32
@@ -5553,6 +5967,10 @@ func (t *TL_userProfilePhotoEmpty) Encode() []byte {
 
 func (t *TL_userProfilePhotoEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_userProfilePhotoEmpty) String() string {
+	return fmt.Sprintf("- userProfilePhotoEmpty#4f11bae1\n")
 }
 
 // userProfilePhoto#d559d8c8
@@ -5618,6 +6036,10 @@ func (t *TL_userProfilePhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_userProfilePhoto) String() string {
+	return fmt.Sprintf("- userProfilePhoto#d559d8c8\n-- photo_id : %v\n-- photo_small : %v\n-- photo_big : %v\n", t.M_photo_id, t.M_photo_small, t.M_photo_big)
+}
+
 // userStatusEmpty#9d05049
 type TL_userStatusEmpty struct {
 	M_classID int32
@@ -5643,6 +6065,10 @@ func (t *TL_userStatusEmpty) Encode() []byte {
 
 func (t *TL_userStatusEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_userStatusEmpty) String() string {
+	return fmt.Sprintf("- userStatusEmpty#9d05049\n")
 }
 
 // userStatusOnline#edb93949
@@ -5686,6 +6112,10 @@ func (t *TL_userStatusOnline) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_userStatusOnline) String() string {
+	return fmt.Sprintf("- userStatusOnline#edb93949\n-- expires : %v\n", t.M_expires)
+}
+
 // userStatusOffline#8c703f
 type TL_userStatusOffline struct {
 	M_classID    int32
@@ -5727,6 +6157,10 @@ func (t *TL_userStatusOffline) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_userStatusOffline) String() string {
+	return fmt.Sprintf("- userStatusOffline#8c703f\n-- was_online : %v\n", t.M_was_online)
+}
+
 // userStatusRecently#e26f42f1
 type TL_userStatusRecently struct {
 	M_classID int32
@@ -5752,6 +6186,10 @@ func (t *TL_userStatusRecently) Encode() []byte {
 
 func (t *TL_userStatusRecently) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_userStatusRecently) String() string {
+	return fmt.Sprintf("- userStatusRecently#e26f42f1\n")
 }
 
 // userStatusLastWeek#7bf09fc
@@ -5781,6 +6219,10 @@ func (t *TL_userStatusLastWeek) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_userStatusLastWeek) String() string {
+	return fmt.Sprintf("- userStatusLastWeek#7bf09fc\n")
+}
+
 // userStatusLastMonth#77ebc742
 type TL_userStatusLastMonth struct {
 	M_classID int32
@@ -5806,6 +6248,10 @@ func (t *TL_userStatusLastMonth) Encode() []byte {
 
 func (t *TL_userStatusLastMonth) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_userStatusLastMonth) String() string {
+	return fmt.Sprintf("- userStatusLastMonth#77ebc742\n")
 }
 
 // chatEmpty#9ba2d800
@@ -5847,6 +6293,10 @@ func (t *TL_chatEmpty) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_chatEmpty) String() string {
+	return fmt.Sprintf("- chatEmpty#9ba2d800\n-- id : %v\n", t.M_id)
 }
 
 // chat#d91cdd54
@@ -6031,6 +6481,10 @@ func (t *TL_chat) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chat) String() string {
+	return fmt.Sprintf("- chat#d91cdd54\n-- flags : %v\n-- creator : %v\n-- kicked : %v\n-- left : %v\n-- admins_enabled : %v\n-- admin : %v\n-- deactivated : %v\n-- id : %v\n-- title : %v\n-- photo : %v\n-- participants_count : %v\n-- date : %v\n-- version : %v\n-- migrated_to : %v\n", t.M_flags, t.M_creator, t.M_kicked, t.M_left, t.M_admins_enabled, t.M_admin, t.M_deactivated, t.M_id, t.M_title, t.M_photo, t.M_participants_count, t.M_date, t.M_version, t.M_migrated_to)
+}
+
 // chatForbidden#7328bdb
 type TL_chatForbidden struct {
 	M_classID int32
@@ -6081,6 +6535,10 @@ func (t *TL_chatForbidden) Decode(b []byte) error {
 	t.M_title = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_chatForbidden) String() string {
+	return fmt.Sprintf("- chatForbidden#7328bdb\n-- id : %v\n-- title : %v\n", t.M_id, t.M_title)
 }
 
 // channel#450b7115
@@ -6353,6 +6811,10 @@ func (t *TL_channel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channel) String() string {
+	return fmt.Sprintf("- channel#450b7115\n-- flags : %v\n-- creator : %v\n-- left : %v\n-- editor : %v\n-- broadcast : %v\n-- verified : %v\n-- megagroup : %v\n-- restricted : %v\n-- democracy : %v\n-- signatures : %v\n-- min : %v\n-- id : %v\n-- access_hash : %v\n-- title : %v\n-- username : %v\n-- photo : %v\n-- date : %v\n-- version : %v\n-- restriction_reason : %v\n-- admin_rights : %v\n-- banned_rights : %v\n-- participants_count : %v\n", t.M_flags, t.M_creator, t.M_left, t.M_editor, t.M_broadcast, t.M_verified, t.M_megagroup, t.M_restricted, t.M_democracy, t.M_signatures, t.M_min, t.M_id, t.M_access_hash, t.M_title, t.M_username, t.M_photo, t.M_date, t.M_version, t.M_restriction_reason, t.M_admin_rights, t.M_banned_rights, t.M_participants_count)
+}
+
 // channelForbidden#289da732
 type TL_channelForbidden struct {
 	M_classID     int32
@@ -6458,6 +6920,10 @@ func (t *TL_channelForbidden) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelForbidden) String() string {
+	return fmt.Sprintf("- channelForbidden#289da732\n-- flags : %v\n-- broadcast : %v\n-- megagroup : %v\n-- id : %v\n-- access_hash : %v\n-- title : %v\n-- until_date : %v\n", t.M_flags, t.M_broadcast, t.M_megagroup, t.M_id, t.M_access_hash, t.M_title, t.M_until_date)
+}
+
 // chatFull#2e02a614
 type TL_chatFull struct {
 	M_classID         int32
@@ -6552,6 +7018,10 @@ func (t *TL_chatFull) Decode(b []byte) error {
 	t.M_bot_info = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_chatFull) String() string {
+	return fmt.Sprintf("- chatFull#2e02a614\n-- id : %v\n-- participants : %v\n-- chat_photo : %v\n-- notify_settings : %v\n-- exported_invite : %v\n-- bot_info : %v\n", t.M_id, t.M_participants, t.M_chat_photo, t.M_notify_settings, t.M_exported_invite, t.M_bot_info)
 }
 
 // channelFull#76af5481
@@ -6835,6 +7305,10 @@ func (t *TL_channelFull) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelFull) String() string {
+	return fmt.Sprintf("- channelFull#76af5481\n-- flags : %v\n-- can_view_participants : %v\n-- can_set_username : %v\n-- can_set_stickers : %v\n-- hidden_prehistory : %v\n-- id : %v\n-- about : %v\n-- participants_count : %v\n-- admins_count : %v\n-- kicked_count : %v\n-- banned_count : %v\n-- read_inbox_max_id : %v\n-- read_outbox_max_id : %v\n-- unread_count : %v\n-- chat_photo : %v\n-- notify_settings : %v\n-- exported_invite : %v\n-- bot_info : %v\n-- migrated_from_chat_id : %v\n-- migrated_from_max_id : %v\n-- pinned_msg_id : %v\n-- stickerset : %v\n-- available_min_id : %v\n", t.M_flags, t.M_can_view_participants, t.M_can_set_username, t.M_can_set_stickers, t.M_hidden_prehistory, t.M_id, t.M_about, t.M_participants_count, t.M_admins_count, t.M_kicked_count, t.M_banned_count, t.M_read_inbox_max_id, t.M_read_outbox_max_id, t.M_unread_count, t.M_chat_photo, t.M_notify_settings, t.M_exported_invite, t.M_bot_info, t.M_migrated_from_chat_id, t.M_migrated_from_max_id, t.M_pinned_msg_id, t.M_stickerset, t.M_available_min_id)
+}
+
 // chatParticipant#c8d7493e
 type TL_chatParticipant struct {
 	M_classID    int32
@@ -6898,6 +7372,10 @@ func (t *TL_chatParticipant) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatParticipant) String() string {
+	return fmt.Sprintf("- chatParticipant#c8d7493e\n-- user_id : %v\n-- inviter_id : %v\n-- date : %v\n", t.M_user_id, t.M_inviter_id, t.M_date)
+}
+
 // chatParticipantCreator#da13538a
 type TL_chatParticipantCreator struct {
 	M_classID int32
@@ -6937,6 +7415,10 @@ func (t *TL_chatParticipantCreator) Decode(b []byte) error {
 	t.M_user_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_chatParticipantCreator) String() string {
+	return fmt.Sprintf("- chatParticipantCreator#da13538a\n-- user_id : %v\n", t.M_user_id)
 }
 
 // chatParticipantAdmin#e2d6e436
@@ -7002,6 +7484,10 @@ func (t *TL_chatParticipantAdmin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatParticipantAdmin) String() string {
+	return fmt.Sprintf("- chatParticipantAdmin#e2d6e436\n-- user_id : %v\n-- inviter_id : %v\n-- date : %v\n", t.M_user_id, t.M_inviter_id, t.M_date)
+}
+
 // chatParticipantsForbidden#fc900c2b
 type TL_chatParticipantsForbidden struct {
 	M_classID          int32
@@ -7061,6 +7547,10 @@ func (t *TL_chatParticipantsForbidden) Decode(b []byte) error {
 	t.M_self_participant = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_chatParticipantsForbidden) String() string {
+	return fmt.Sprintf("- chatParticipantsForbidden#fc900c2b\n-- flags : %v\n-- chat_id : %v\n-- self_participant : %v\n", t.M_flags, t.M_chat_id, t.M_self_participant)
 }
 
 // chatParticipants#3f460fed
@@ -7126,6 +7616,10 @@ func (t *TL_chatParticipants) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatParticipants) String() string {
+	return fmt.Sprintf("- chatParticipants#3f460fed\n-- chat_id : %v\n-- participants : %v\n-- version : %v\n", t.M_chat_id, t.M_participants, t.M_version)
+}
+
 // chatPhotoEmpty#37c1011c
 type TL_chatPhotoEmpty struct {
 	M_classID int32
@@ -7151,6 +7645,10 @@ func (t *TL_chatPhotoEmpty) Encode() []byte {
 
 func (t *TL_chatPhotoEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_chatPhotoEmpty) String() string {
+	return fmt.Sprintf("- chatPhotoEmpty#37c1011c\n")
 }
 
 // chatPhoto#6153276a
@@ -7205,6 +7703,10 @@ func (t *TL_chatPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatPhoto) String() string {
+	return fmt.Sprintf("- chatPhoto#6153276a\n-- photo_small : %v\n-- photo_big : %v\n", t.M_photo_small, t.M_photo_big)
+}
+
 // messageEmpty#83e5de54
 type TL_messageEmpty struct {
 	M_classID int32
@@ -7244,6 +7746,10 @@ func (t *TL_messageEmpty) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageEmpty) String() string {
+	return fmt.Sprintf("- messageEmpty#83e5de54\n-- id : %v\n", t.M_id)
 }
 
 // message#44f9b43d
@@ -7505,6 +8011,10 @@ func (t *TL_message) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_message) String() string {
+	return fmt.Sprintf("- message#44f9b43d\n-- flags : %v\n-- out : %v\n-- mentioned : %v\n-- media_unread : %v\n-- silent : %v\n-- post : %v\n-- id : %v\n-- from_id : %v\n-- to_id : %v\n-- fwd_from : %v\n-- via_bot_id : %v\n-- reply_to_msg_id : %v\n-- date : %v\n-- message : %v\n-- media : %v\n-- reply_markup : %v\n-- entities : %v\n-- views : %v\n-- edit_date : %v\n-- post_author : %v\n-- grouped_id : %v\n", t.M_flags, t.M_out, t.M_mentioned, t.M_media_unread, t.M_silent, t.M_post, t.M_id, t.M_from_id, t.M_to_id, t.M_fwd_from, t.M_via_bot_id, t.M_reply_to_msg_id, t.M_date, t.M_message, t.M_media, t.M_reply_markup, t.M_entities, t.M_views, t.M_edit_date, t.M_post_author, t.M_grouped_id)
+}
+
 // messageService#9e19a1f6
 type TL_messageService struct {
 	M_classID         int32
@@ -7665,6 +8175,10 @@ func (t *TL_messageService) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageService) String() string {
+	return fmt.Sprintf("- messageService#9e19a1f6\n-- flags : %v\n-- out : %v\n-- mentioned : %v\n-- media_unread : %v\n-- silent : %v\n-- post : %v\n-- id : %v\n-- from_id : %v\n-- to_id : %v\n-- reply_to_msg_id : %v\n-- date : %v\n-- action : %v\n", t.M_flags, t.M_out, t.M_mentioned, t.M_media_unread, t.M_silent, t.M_post, t.M_id, t.M_from_id, t.M_to_id, t.M_reply_to_msg_id, t.M_date, t.M_action)
+}
+
 // messageMediaEmpty#3ded6320
 type TL_messageMediaEmpty struct {
 	M_classID int32
@@ -7690,6 +8204,10 @@ func (t *TL_messageMediaEmpty) Encode() []byte {
 
 func (t *TL_messageMediaEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageMediaEmpty) String() string {
+	return fmt.Sprintf("- messageMediaEmpty#3ded6320\n")
 }
 
 // messageMediaPhoto#b5223b0f
@@ -7764,6 +8282,10 @@ func (t *TL_messageMediaPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaPhoto) String() string {
+	return fmt.Sprintf("- messageMediaPhoto#b5223b0f\n-- flags : %v\n-- photo : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_photo, t.M_caption, t.M_ttl_seconds)
+}
+
 // messageMediaGeo#56e0d474
 type TL_messageMediaGeo struct {
 	M_classID int32
@@ -7803,6 +8325,10 @@ func (t *TL_messageMediaGeo) Decode(b []byte) error {
 	t.M_geo = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messageMediaGeo) String() string {
+	return fmt.Sprintf("- messageMediaGeo#56e0d474\n-- geo : %v\n", t.M_geo)
 }
 
 // messageMediaContact#5e7d2f39
@@ -7879,6 +8405,10 @@ func (t *TL_messageMediaContact) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaContact) String() string {
+	return fmt.Sprintf("- messageMediaContact#5e7d2f39\n-- phone_number : %v\n-- first_name : %v\n-- last_name : %v\n-- user_id : %v\n", t.M_phone_number, t.M_first_name, t.M_last_name, t.M_user_id)
+}
+
 // messageMediaUnsupported#9f84f49e
 type TL_messageMediaUnsupported struct {
 	M_classID int32
@@ -7904,6 +8434,10 @@ func (t *TL_messageMediaUnsupported) Encode() []byte {
 
 func (t *TL_messageMediaUnsupported) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageMediaUnsupported) String() string {
+	return fmt.Sprintf("- messageMediaUnsupported#9f84f49e\n")
 }
 
 // messageMediaDocument#7c4414d3
@@ -7978,6 +8512,10 @@ func (t *TL_messageMediaDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaDocument) String() string {
+	return fmt.Sprintf("- messageMediaDocument#7c4414d3\n-- flags : %v\n-- document : %v\n-- caption : %v\n-- ttl_seconds : %v\n", t.M_flags, t.M_document, t.M_caption, t.M_ttl_seconds)
+}
+
 // messageMediaWebPage#a32dd600
 type TL_messageMediaWebPage struct {
 	M_classID int32
@@ -8017,6 +8555,10 @@ func (t *TL_messageMediaWebPage) Decode(b []byte) error {
 	t.M_webpage = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messageMediaWebPage) String() string {
+	return fmt.Sprintf("- messageMediaWebPage#a32dd600\n-- webpage : %v\n", t.M_webpage)
 }
 
 // messageMediaVenue#2ec0533f
@@ -8115,6 +8657,10 @@ func (t *TL_messageMediaVenue) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaVenue) String() string {
+	return fmt.Sprintf("- messageMediaVenue#2ec0533f\n-- geo : %v\n-- title : %v\n-- address : %v\n-- provider : %v\n-- venue_id : %v\n-- venue_type : %v\n", t.M_geo, t.M_title, t.M_address, t.M_provider, t.M_venue_id, t.M_venue_type)
+}
+
 // messageMediaGame#fdb19008
 type TL_messageMediaGame struct {
 	M_classID int32
@@ -8154,6 +8700,10 @@ func (t *TL_messageMediaGame) Decode(b []byte) error {
 	t.M_game = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messageMediaGame) String() string {
+	return fmt.Sprintf("- messageMediaGame#fdb19008\n-- game : %v\n", t.M_game)
 }
 
 // messageMediaInvoice#84551347
@@ -8294,6 +8844,10 @@ func (t *TL_messageMediaInvoice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaInvoice) String() string {
+	return fmt.Sprintf("- messageMediaInvoice#84551347\n-- flags : %v\n-- shipping_address_requested : %v\n-- test : %v\n-- title : %v\n-- description : %v\n-- photo : %v\n-- receipt_msg_id : %v\n-- currency : %v\n-- total_amount : %v\n-- start_param : %v\n", t.M_flags, t.M_shipping_address_requested, t.M_test, t.M_title, t.M_description, t.M_photo, t.M_receipt_msg_id, t.M_currency, t.M_total_amount, t.M_start_param)
+}
+
 // messageMediaGeoLive#7c3c2609
 type TL_messageMediaGeoLive struct {
 	M_classID int32
@@ -8346,6 +8900,10 @@ func (t *TL_messageMediaGeoLive) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageMediaGeoLive) String() string {
+	return fmt.Sprintf("- messageMediaGeoLive#7c3c2609\n-- geo : %v\n-- period : %v\n", t.M_geo, t.M_period)
+}
+
 // messageActionEmpty#b6aef7b0
 type TL_messageActionEmpty struct {
 	M_classID int32
@@ -8371,6 +8929,10 @@ func (t *TL_messageActionEmpty) Encode() []byte {
 
 func (t *TL_messageActionEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageActionEmpty) String() string {
+	return fmt.Sprintf("- messageActionEmpty#b6aef7b0\n")
 }
 
 // messageActionChatCreate#a6638b9a
@@ -8425,6 +8987,10 @@ func (t *TL_messageActionChatCreate) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChatCreate) String() string {
+	return fmt.Sprintf("- messageActionChatCreate#a6638b9a\n-- title : %v\n-- users : %v\n", t.M_title, t.M_users)
+}
+
 // messageActionChatEditTitle#b5a1ce5a
 type TL_messageActionChatEditTitle struct {
 	M_classID int32
@@ -8464,6 +9030,10 @@ func (t *TL_messageActionChatEditTitle) Decode(b []byte) error {
 	t.M_title = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messageActionChatEditTitle) String() string {
+	return fmt.Sprintf("- messageActionChatEditTitle#b5a1ce5a\n-- title : %v\n", t.M_title)
 }
 
 // messageActionChatEditPhoto#7fcb13a8
@@ -8507,6 +9077,10 @@ func (t *TL_messageActionChatEditPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChatEditPhoto) String() string {
+	return fmt.Sprintf("- messageActionChatEditPhoto#7fcb13a8\n-- photo : %v\n", t.M_photo)
+}
+
 // messageActionChatDeletePhoto#95e3fbef
 type TL_messageActionChatDeletePhoto struct {
 	M_classID int32
@@ -8532,6 +9106,10 @@ func (t *TL_messageActionChatDeletePhoto) Encode() []byte {
 
 func (t *TL_messageActionChatDeletePhoto) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageActionChatDeletePhoto) String() string {
+	return fmt.Sprintf("- messageActionChatDeletePhoto#95e3fbef\n")
 }
 
 // messageActionChatAddUser#488a7337
@@ -8575,6 +9153,10 @@ func (t *TL_messageActionChatAddUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChatAddUser) String() string {
+	return fmt.Sprintf("- messageActionChatAddUser#488a7337\n-- users : %v\n", t.M_users)
+}
+
 // messageActionChatDeleteUser#b2ae9b0c
 type TL_messageActionChatDeleteUser struct {
 	M_classID int32
@@ -8614,6 +9196,10 @@ func (t *TL_messageActionChatDeleteUser) Decode(b []byte) error {
 	t.M_user_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageActionChatDeleteUser) String() string {
+	return fmt.Sprintf("- messageActionChatDeleteUser#b2ae9b0c\n-- user_id : %v\n", t.M_user_id)
 }
 
 // messageActionChatJoinedByLink#f89cf5e8
@@ -8657,6 +9243,10 @@ func (t *TL_messageActionChatJoinedByLink) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChatJoinedByLink) String() string {
+	return fmt.Sprintf("- messageActionChatJoinedByLink#f89cf5e8\n-- inviter_id : %v\n", t.M_inviter_id)
+}
+
 // messageActionChannelCreate#95d2ac92
 type TL_messageActionChannelCreate struct {
 	M_classID int32
@@ -8698,6 +9288,10 @@ func (t *TL_messageActionChannelCreate) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChannelCreate) String() string {
+	return fmt.Sprintf("- messageActionChannelCreate#95d2ac92\n-- title : %v\n", t.M_title)
+}
+
 // messageActionChatMigrateTo#51bdb021
 type TL_messageActionChatMigrateTo struct {
 	M_classID    int32
@@ -8737,6 +9331,10 @@ func (t *TL_messageActionChatMigrateTo) Decode(b []byte) error {
 	t.M_channel_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageActionChatMigrateTo) String() string {
+	return fmt.Sprintf("- messageActionChatMigrateTo#51bdb021\n-- channel_id : %v\n", t.M_channel_id)
 }
 
 // messageActionChannelMigrateFrom#b055eaee
@@ -8791,6 +9389,10 @@ func (t *TL_messageActionChannelMigrateFrom) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionChannelMigrateFrom) String() string {
+	return fmt.Sprintf("- messageActionChannelMigrateFrom#b055eaee\n-- title : %v\n-- chat_id : %v\n", t.M_title, t.M_chat_id)
+}
+
 // messageActionPinMessage#94bd38ed
 type TL_messageActionPinMessage struct {
 	M_classID int32
@@ -8818,6 +9420,10 @@ func (t *TL_messageActionPinMessage) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_messageActionPinMessage) String() string {
+	return fmt.Sprintf("- messageActionPinMessage#94bd38ed\n")
+}
+
 // messageActionHistoryClear#9fbab604
 type TL_messageActionHistoryClear struct {
 	M_classID int32
@@ -8843,6 +9449,10 @@ func (t *TL_messageActionHistoryClear) Encode() []byte {
 
 func (t *TL_messageActionHistoryClear) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageActionHistoryClear) String() string {
+	return fmt.Sprintf("- messageActionHistoryClear#9fbab604\n")
 }
 
 // messageActionGameScore#92a72876
@@ -8895,6 +9505,10 @@ func (t *TL_messageActionGameScore) Decode(b []byte) error {
 	t.M_score = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageActionGameScore) String() string {
+	return fmt.Sprintf("- messageActionGameScore#92a72876\n-- game_id : %v\n-- score : %v\n", t.M_game_id, t.M_score)
 }
 
 // messageActionPaymentSentMe#8f31b327
@@ -9002,6 +9616,10 @@ func (t *TL_messageActionPaymentSentMe) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionPaymentSentMe) String() string {
+	return fmt.Sprintf("- messageActionPaymentSentMe#8f31b327\n-- flags : %v\n-- currency : %v\n-- total_amount : %v\n-- payload : %v\n-- info : %v\n-- shipping_option_id : %v\n-- charge : %v\n", t.M_flags, t.M_currency, t.M_total_amount, t.M_payload, t.M_info, t.M_shipping_option_id, t.M_charge)
+}
+
 // messageActionPaymentSent#40699cd0
 type TL_messageActionPaymentSent struct {
 	M_classID      int32
@@ -9052,6 +9670,10 @@ func (t *TL_messageActionPaymentSent) Decode(b []byte) error {
 	t.M_total_amount = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_messageActionPaymentSent) String() string {
+	return fmt.Sprintf("- messageActionPaymentSent#40699cd0\n-- currency : %v\n-- total_amount : %v\n", t.M_currency, t.M_total_amount)
 }
 
 // messageActionPhoneCall#80e11a7f
@@ -9126,6 +9748,10 @@ func (t *TL_messageActionPhoneCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageActionPhoneCall) String() string {
+	return fmt.Sprintf("- messageActionPhoneCall#80e11a7f\n-- flags : %v\n-- call_id : %v\n-- reason : %v\n-- duration : %v\n", t.M_flags, t.M_call_id, t.M_reason, t.M_duration)
+}
+
 // messageActionScreenshotTaken#4792929b
 type TL_messageActionScreenshotTaken struct {
 	M_classID int32
@@ -9151,6 +9777,10 @@ func (t *TL_messageActionScreenshotTaken) Encode() []byte {
 
 func (t *TL_messageActionScreenshotTaken) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messageActionScreenshotTaken) String() string {
+	return fmt.Sprintf("- messageActionScreenshotTaken#4792929b\n")
 }
 
 // messageActionCustomAction#fae69f56
@@ -9192,6 +9822,10 @@ func (t *TL_messageActionCustomAction) Decode(b []byte) error {
 	t.M_message = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messageActionCustomAction) String() string {
+	return fmt.Sprintf("- messageActionCustomAction#fae69f56\n-- message : %v\n", t.M_message)
 }
 
 // dialog#e4def5db
@@ -9343,6 +9977,10 @@ func (t *TL_dialog) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_dialog) String() string {
+	return fmt.Sprintf("- dialog#e4def5db\n-- flags : %v\n-- pinned : %v\n-- peer : %v\n-- top_message : %v\n-- read_inbox_max_id : %v\n-- read_outbox_max_id : %v\n-- unread_count : %v\n-- unread_mentions_count : %v\n-- notify_settings : %v\n-- pts : %v\n-- draft : %v\n", t.M_flags, t.M_pinned, t.M_peer, t.M_top_message, t.M_read_inbox_max_id, t.M_read_outbox_max_id, t.M_unread_count, t.M_unread_mentions_count, t.M_notify_settings, t.M_pts, t.M_draft)
+}
+
 // photoEmpty#2331b22d
 type TL_photoEmpty struct {
 	M_classID int32
@@ -9382,6 +10020,10 @@ func (t *TL_photoEmpty) Decode(b []byte) error {
 	t.M_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_photoEmpty) String() string {
+	return fmt.Sprintf("- photoEmpty#2331b22d\n-- id : %v\n", t.M_id)
 }
 
 // photo#9288dd29
@@ -9478,6 +10120,10 @@ func (t *TL_photo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photo) String() string {
+	return fmt.Sprintf("- photo#9288dd29\n-- flags : %v\n-- has_stickers : %v\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- sizes : %v\n", t.M_flags, t.M_has_stickers, t.M_id, t.M_access_hash, t.M_date, t.M_sizes)
+}
+
 // photoSizeEmpty#e17e23c
 type TL_photoSizeEmpty struct {
 	M_classID int32
@@ -9517,6 +10163,10 @@ func (t *TL_photoSizeEmpty) Decode(b []byte) error {
 	t.M_type = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_photoSizeEmpty) String() string {
+	return fmt.Sprintf("- photoSizeEmpty#e17e23c\n-- type : %v\n", t.M_type)
 }
 
 // photoSize#77bfb61b
@@ -9604,6 +10254,10 @@ func (t *TL_photoSize) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photoSize) String() string {
+	return fmt.Sprintf("- photoSize#77bfb61b\n-- type : %v\n-- location : %v\n-- w : %v\n-- h : %v\n-- size : %v\n", t.M_type, t.M_location, t.M_w, t.M_h, t.M_size)
+}
+
 // photoCachedSize#e9a734fa
 type TL_photoCachedSize struct {
 	M_classID  int32
@@ -9689,6 +10343,10 @@ func (t *TL_photoCachedSize) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photoCachedSize) String() string {
+	return fmt.Sprintf("- photoCachedSize#e9a734fa\n-- type : %v\n-- location : %v\n-- w : %v\n-- h : %v\n-- bytes : %v\n", t.M_type, t.M_location, t.M_w, t.M_h, t.M_bytes)
+}
+
 // geoPointEmpty#1117dd5f
 type TL_geoPointEmpty struct {
 	M_classID int32
@@ -9714,6 +10372,10 @@ func (t *TL_geoPointEmpty) Encode() []byte {
 
 func (t *TL_geoPointEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_geoPointEmpty) String() string {
+	return fmt.Sprintf("- geoPointEmpty#1117dd5f\n")
 }
 
 // geoPoint#2049d70c
@@ -9768,6 +10430,10 @@ func (t *TL_geoPoint) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_geoPoint) String() string {
+	return fmt.Sprintf("- geoPoint#2049d70c\n-- long : %v\n-- lat : %v\n", t.M_long, t.M_lat)
+}
+
 // auth_checkedPhone#811ea28e
 type TL_auth_checkedPhone struct {
 	M_classID          int32
@@ -9807,6 +10473,10 @@ func (t *TL_auth_checkedPhone) Decode(b []byte) error {
 	t.M_phone_registered = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_auth_checkedPhone) String() string {
+	return fmt.Sprintf("- auth_checkedPhone#811ea28e\n-- phone_registered : %v\n", t.M_phone_registered)
 }
 
 // auth_sentCode#5e002502
@@ -9903,6 +10573,10 @@ func (t *TL_auth_sentCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_sentCode) String() string {
+	return fmt.Sprintf("- auth_sentCode#5e002502\n-- flags : %v\n-- phone_registered : %v\n-- type : %v\n-- phone_code_hash : %v\n-- next_type : %v\n-- timeout : %v\n", t.M_flags, t.M_phone_registered, t.M_type, t.M_phone_code_hash, t.M_next_type, t.M_timeout)
+}
+
 // auth_authorization#cd050916
 type TL_auth_authorization struct {
 	M_classID      int32
@@ -9964,6 +10638,10 @@ func (t *TL_auth_authorization) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_authorization) String() string {
+	return fmt.Sprintf("- auth_authorization#cd050916\n-- flags : %v\n-- tmp_sessions : %v\n-- user : %v\n", t.M_flags, t.M_tmp_sessions, t.M_user)
+}
+
 // auth_exportedAuthorization#df969c2d
 type TL_auth_exportedAuthorization struct {
 	M_classID int32
@@ -10016,6 +10694,10 @@ func (t *TL_auth_exportedAuthorization) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_exportedAuthorization) String() string {
+	return fmt.Sprintf("- auth_exportedAuthorization#df969c2d\n-- id : %v\n-- bytes : %v\n", t.M_id, t.M_bytes)
+}
+
 // inputNotifyPeer#b8bc5b0c
 type TL_inputNotifyPeer struct {
 	M_classID int32
@@ -10057,6 +10739,10 @@ func (t *TL_inputNotifyPeer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputNotifyPeer) String() string {
+	return fmt.Sprintf("- inputNotifyPeer#b8bc5b0c\n-- peer : %v\n", t.M_peer)
+}
+
 // inputNotifyUsers#193b4417
 type TL_inputNotifyUsers struct {
 	M_classID int32
@@ -10082,6 +10768,10 @@ func (t *TL_inputNotifyUsers) Encode() []byte {
 
 func (t *TL_inputNotifyUsers) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputNotifyUsers) String() string {
+	return fmt.Sprintf("- inputNotifyUsers#193b4417\n")
 }
 
 // inputNotifyChats#4a95e84e
@@ -10111,6 +10801,10 @@ func (t *TL_inputNotifyChats) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputNotifyChats) String() string {
+	return fmt.Sprintf("- inputNotifyChats#4a95e84e\n")
+}
+
 // inputNotifyAll#a429b886
 type TL_inputNotifyAll struct {
 	M_classID int32
@@ -10136,6 +10830,10 @@ func (t *TL_inputNotifyAll) Encode() []byte {
 
 func (t *TL_inputNotifyAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputNotifyAll) String() string {
+	return fmt.Sprintf("- inputNotifyAll#a429b886\n")
 }
 
 // inputPeerNotifyEventsEmpty#f03064d8
@@ -10165,6 +10863,10 @@ func (t *TL_inputPeerNotifyEventsEmpty) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputPeerNotifyEventsEmpty) String() string {
+	return fmt.Sprintf("- inputPeerNotifyEventsEmpty#f03064d8\n")
+}
+
 // inputPeerNotifyEventsAll#e86a2c74
 type TL_inputPeerNotifyEventsAll struct {
 	M_classID int32
@@ -10190,6 +10892,10 @@ func (t *TL_inputPeerNotifyEventsAll) Encode() []byte {
 
 func (t *TL_inputPeerNotifyEventsAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPeerNotifyEventsAll) String() string {
+	return fmt.Sprintf("- inputPeerNotifyEventsAll#e86a2c74\n")
 }
 
 // inputPeerNotifySettings#38935eb2
@@ -10275,6 +10981,10 @@ func (t *TL_inputPeerNotifySettings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPeerNotifySettings) String() string {
+	return fmt.Sprintf("- inputPeerNotifySettings#38935eb2\n-- flags : %v\n-- show_previews : %v\n-- silent : %v\n-- mute_until : %v\n-- sound : %v\n", t.M_flags, t.M_show_previews, t.M_silent, t.M_mute_until, t.M_sound)
+}
+
 // peerNotifyEventsEmpty#add53cb3
 type TL_peerNotifyEventsEmpty struct {
 	M_classID int32
@@ -10300,6 +11010,10 @@ func (t *TL_peerNotifyEventsEmpty) Encode() []byte {
 
 func (t *TL_peerNotifyEventsEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_peerNotifyEventsEmpty) String() string {
+	return fmt.Sprintf("- peerNotifyEventsEmpty#add53cb3\n")
 }
 
 // peerNotifyEventsAll#6d1ded88
@@ -10329,6 +11043,10 @@ func (t *TL_peerNotifyEventsAll) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_peerNotifyEventsAll) String() string {
+	return fmt.Sprintf("- peerNotifyEventsAll#6d1ded88\n")
+}
+
 // peerNotifySettingsEmpty#70a68512
 type TL_peerNotifySettingsEmpty struct {
 	M_classID int32
@@ -10354,6 +11072,10 @@ func (t *TL_peerNotifySettingsEmpty) Encode() []byte {
 
 func (t *TL_peerNotifySettingsEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_peerNotifySettingsEmpty) String() string {
+	return fmt.Sprintf("- peerNotifySettingsEmpty#70a68512\n")
 }
 
 // peerNotifySettings#9acda4c0
@@ -10439,6 +11161,10 @@ func (t *TL_peerNotifySettings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_peerNotifySettings) String() string {
+	return fmt.Sprintf("- peerNotifySettings#9acda4c0\n-- flags : %v\n-- show_previews : %v\n-- silent : %v\n-- mute_until : %v\n-- sound : %v\n", t.M_flags, t.M_show_previews, t.M_silent, t.M_mute_until, t.M_sound)
+}
+
 // peerSettings#818426cd
 type TL_peerSettings struct {
 	M_classID     int32
@@ -10487,6 +11213,10 @@ func (t *TL_peerSettings) Decode(b []byte) error {
 	t.M_report_spam = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_peerSettings) String() string {
+	return fmt.Sprintf("- peerSettings#818426cd\n-- flags : %v\n-- report_spam : %v\n", t.M_flags, t.M_report_spam)
 }
 
 // wallPaper#ccb03657
@@ -10563,6 +11293,10 @@ func (t *TL_wallPaper) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_wallPaper) String() string {
+	return fmt.Sprintf("- wallPaper#ccb03657\n-- id : %v\n-- title : %v\n-- sizes : %v\n-- color : %v\n", t.M_id, t.M_title, t.M_sizes, t.M_color)
+}
+
 // wallPaperSolid#63117f24
 type TL_wallPaperSolid struct {
 	M_classID  int32
@@ -10637,6 +11371,10 @@ func (t *TL_wallPaperSolid) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_wallPaperSolid) String() string {
+	return fmt.Sprintf("- wallPaperSolid#63117f24\n-- id : %v\n-- title : %v\n-- bg_color : %v\n-- color : %v\n", t.M_id, t.M_title, t.M_bg_color, t.M_color)
+}
+
 // inputReportReasonSpam#58dbcab8
 type TL_inputReportReasonSpam struct {
 	M_classID int32
@@ -10662,6 +11400,10 @@ func (t *TL_inputReportReasonSpam) Encode() []byte {
 
 func (t *TL_inputReportReasonSpam) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputReportReasonSpam) String() string {
+	return fmt.Sprintf("- inputReportReasonSpam#58dbcab8\n")
 }
 
 // inputReportReasonViolence#1e22c78d
@@ -10691,6 +11433,10 @@ func (t *TL_inputReportReasonViolence) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputReportReasonViolence) String() string {
+	return fmt.Sprintf("- inputReportReasonViolence#1e22c78d\n")
+}
+
 // inputReportReasonPornography#2e59d922
 type TL_inputReportReasonPornography struct {
 	M_classID int32
@@ -10716,6 +11462,10 @@ func (t *TL_inputReportReasonPornography) Encode() []byte {
 
 func (t *TL_inputReportReasonPornography) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputReportReasonPornography) String() string {
+	return fmt.Sprintf("- inputReportReasonPornography#2e59d922\n")
 }
 
 // inputReportReasonOther#e1746d0a
@@ -10757,6 +11507,10 @@ func (t *TL_inputReportReasonOther) Decode(b []byte) error {
 	t.M_text = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inputReportReasonOther) String() string {
+	return fmt.Sprintf("- inputReportReasonOther#e1746d0a\n-- text : %v\n", t.M_text)
 }
 
 // userFull#f220f3f
@@ -10908,6 +11662,10 @@ func (t *TL_userFull) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_userFull) String() string {
+	return fmt.Sprintf("- userFull#f220f3f\n-- flags : %v\n-- blocked : %v\n-- phone_calls_available : %v\n-- phone_calls_private : %v\n-- user : %v\n-- about : %v\n-- link : %v\n-- profile_photo : %v\n-- notify_settings : %v\n-- bot_info : %v\n-- common_chats_count : %v\n", t.M_flags, t.M_blocked, t.M_phone_calls_available, t.M_phone_calls_private, t.M_user, t.M_about, t.M_link, t.M_profile_photo, t.M_notify_settings, t.M_bot_info, t.M_common_chats_count)
+}
+
 // contact#f911c994
 type TL_contact struct {
 	M_classID int32
@@ -10958,6 +11716,10 @@ func (t *TL_contact) Decode(b []byte) error {
 	t.M_mutual = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_contact) String() string {
+	return fmt.Sprintf("- contact#f911c994\n-- user_id : %v\n-- mutual : %v\n", t.M_user_id, t.M_mutual)
 }
 
 // importedContact#d0028438
@@ -11012,6 +11774,10 @@ func (t *TL_importedContact) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_importedContact) String() string {
+	return fmt.Sprintf("- importedContact#d0028438\n-- user_id : %v\n-- client_id : %v\n", t.M_user_id, t.M_client_id)
+}
+
 // contactBlocked#561bc879
 type TL_contactBlocked struct {
 	M_classID int32
@@ -11064,6 +11830,10 @@ func (t *TL_contactBlocked) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contactBlocked) String() string {
+	return fmt.Sprintf("- contactBlocked#561bc879\n-- user_id : %v\n-- date : %v\n", t.M_user_id, t.M_date)
+}
+
 // contactStatus#d3680c61
 type TL_contactStatus struct {
 	M_classID int32
@@ -11114,6 +11884,10 @@ func (t *TL_contactStatus) Decode(b []byte) error {
 	t.M_status = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_contactStatus) String() string {
+	return fmt.Sprintf("- contactStatus#d3680c61\n-- user_id : %v\n-- status : %v\n", t.M_user_id, t.M_status)
 }
 
 // contacts_link#3ace484c
@@ -11179,6 +11953,10 @@ func (t *TL_contacts_link) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_link) String() string {
+	return fmt.Sprintf("- contacts_link#3ace484c\n-- my_link : %v\n-- foreign_link : %v\n-- user : %v\n", t.M_my_link, t.M_foreign_link, t.M_user)
+}
+
 // contacts_contactsNotModified#b74ba9d2
 type TL_contacts_contactsNotModified struct {
 	M_classID int32
@@ -11204,6 +11982,10 @@ func (t *TL_contacts_contactsNotModified) Encode() []byte {
 
 func (t *TL_contacts_contactsNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contacts_contactsNotModified) String() string {
+	return fmt.Sprintf("- contacts_contactsNotModified#b74ba9d2\n")
 }
 
 // contacts_contacts#eae87e42
@@ -11267,6 +12049,10 @@ func (t *TL_contacts_contacts) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_contacts_contacts) String() string {
+	return fmt.Sprintf("- contacts_contacts#eae87e42\n-- contacts : %v\n-- saved_count : %v\n-- users : %v\n", t.M_contacts, t.M_saved_count, t.M_users)
 }
 
 // contacts_importedContacts#77d01c3b
@@ -11343,6 +12129,10 @@ func (t *TL_contacts_importedContacts) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_importedContacts) String() string {
+	return fmt.Sprintf("- contacts_importedContacts#77d01c3b\n-- imported : %v\n-- popular_invites : %v\n-- retry_contacts : %v\n-- users : %v\n", t.M_imported, t.M_popular_invites, t.M_retry_contacts, t.M_users)
+}
+
 // contacts_blocked#1c138d15
 type TL_contacts_blocked struct {
 	M_classID int32
@@ -11393,6 +12183,10 @@ func (t *TL_contacts_blocked) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_contacts_blocked) String() string {
+	return fmt.Sprintf("- contacts_blocked#1c138d15\n-- blocked : %v\n-- users : %v\n", t.M_blocked, t.M_users)
 }
 
 // contacts_blockedSlice#900802a1
@@ -11456,6 +12250,10 @@ func (t *TL_contacts_blockedSlice) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_contacts_blockedSlice) String() string {
+	return fmt.Sprintf("- contacts_blockedSlice#900802a1\n-- count : %v\n-- blocked : %v\n-- users : %v\n", t.M_count, t.M_blocked, t.M_users)
 }
 
 // messages_dialogs#15ba6c40
@@ -11530,6 +12328,10 @@ func (t *TL_messages_dialogs) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_dialogs) String() string {
+	return fmt.Sprintf("- messages_dialogs#15ba6c40\n-- dialogs : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_dialogs, t.M_messages, t.M_chats, t.M_users)
 }
 
 // messages_dialogsSlice#71e094f3
@@ -11617,6 +12419,10 @@ func (t *TL_messages_dialogsSlice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_dialogsSlice) String() string {
+	return fmt.Sprintf("- messages_dialogsSlice#71e094f3\n-- count : %v\n-- dialogs : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_count, t.M_dialogs, t.M_messages, t.M_chats, t.M_users)
+}
+
 // messages_messages#8c718e87
 type TL_messages_messages struct {
 	M_classID  int32
@@ -11678,6 +12484,10 @@ func (t *TL_messages_messages) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_messages) String() string {
+	return fmt.Sprintf("- messages_messages#8c718e87\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_messages, t.M_chats, t.M_users)
 }
 
 // messages_messagesSlice#b446ae3
@@ -11752,6 +12562,10 @@ func (t *TL_messages_messagesSlice) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_messagesSlice) String() string {
+	return fmt.Sprintf("- messages_messagesSlice#b446ae3\n-- count : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_count, t.M_messages, t.M_chats, t.M_users)
 }
 
 // messages_channelMessages#99262e37
@@ -11848,6 +12662,10 @@ func (t *TL_messages_channelMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_channelMessages) String() string {
+	return fmt.Sprintf("- messages_channelMessages#99262e37\n-- flags : %v\n-- pts : %v\n-- count : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_flags, t.M_pts, t.M_count, t.M_messages, t.M_chats, t.M_users)
+}
+
 // messages_messagesNotModified#74535f21
 type TL_messages_messagesNotModified struct {
 	M_classID int32
@@ -11889,6 +12707,10 @@ func (t *TL_messages_messagesNotModified) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_messagesNotModified) String() string {
+	return fmt.Sprintf("- messages_messagesNotModified#74535f21\n-- count : %v\n", t.M_count)
+}
+
 // messages_chats#64ff9fd5
 type TL_messages_chats struct {
 	M_classID int32
@@ -11928,6 +12750,10 @@ func (t *TL_messages_chats) Decode(b []byte) error {
 	t.M_chats = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_chats) String() string {
+	return fmt.Sprintf("- messages_chats#64ff9fd5\n-- chats : %v\n", t.M_chats)
 }
 
 // messages_chatsSlice#9cd81144
@@ -11980,6 +12806,10 @@ func (t *TL_messages_chatsSlice) Decode(b []byte) error {
 	t.M_chats = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_chatsSlice) String() string {
+	return fmt.Sprintf("- messages_chatsSlice#9cd81144\n-- count : %v\n-- chats : %v\n", t.M_count, t.M_chats)
 }
 
 // messages_chatFull#e5d7d19c
@@ -12045,6 +12875,10 @@ func (t *TL_messages_chatFull) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_chatFull) String() string {
+	return fmt.Sprintf("- messages_chatFull#e5d7d19c\n-- full_chat : %v\n-- chats : %v\n-- users : %v\n", t.M_full_chat, t.M_chats, t.M_users)
+}
+
 // messages_affectedHistory#b45c69d1
 type TL_messages_affectedHistory struct {
 	M_classID   int32
@@ -12108,6 +12942,10 @@ func (t *TL_messages_affectedHistory) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_affectedHistory) String() string {
+	return fmt.Sprintf("- messages_affectedHistory#b45c69d1\n-- pts : %v\n-- pts_count : %v\n-- offset : %v\n", t.M_pts, t.M_pts_count, t.M_offset)
+}
+
 // inputMessagesFilterEmpty#57e2f66c
 type TL_inputMessagesFilterEmpty struct {
 	M_classID int32
@@ -12133,6 +12971,10 @@ func (t *TL_inputMessagesFilterEmpty) Encode() []byte {
 
 func (t *TL_inputMessagesFilterEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterEmpty) String() string {
+	return fmt.Sprintf("- inputMessagesFilterEmpty#57e2f66c\n")
 }
 
 // inputMessagesFilterPhotos#9609a51c
@@ -12162,6 +13004,10 @@ func (t *TL_inputMessagesFilterPhotos) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterPhotos) String() string {
+	return fmt.Sprintf("- inputMessagesFilterPhotos#9609a51c\n")
+}
+
 // inputMessagesFilterVideo#9fc00e65
 type TL_inputMessagesFilterVideo struct {
 	M_classID int32
@@ -12187,6 +13033,10 @@ func (t *TL_inputMessagesFilterVideo) Encode() []byte {
 
 func (t *TL_inputMessagesFilterVideo) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterVideo) String() string {
+	return fmt.Sprintf("- inputMessagesFilterVideo#9fc00e65\n")
 }
 
 // inputMessagesFilterPhotoVideo#56e9f0e4
@@ -12216,6 +13066,10 @@ func (t *TL_inputMessagesFilterPhotoVideo) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterPhotoVideo) String() string {
+	return fmt.Sprintf("- inputMessagesFilterPhotoVideo#56e9f0e4\n")
+}
+
 // inputMessagesFilterDocument#9eddf188
 type TL_inputMessagesFilterDocument struct {
 	M_classID int32
@@ -12241,6 +13095,10 @@ func (t *TL_inputMessagesFilterDocument) Encode() []byte {
 
 func (t *TL_inputMessagesFilterDocument) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterDocument) String() string {
+	return fmt.Sprintf("- inputMessagesFilterDocument#9eddf188\n")
 }
 
 // inputMessagesFilterUrl#7ef0dd87
@@ -12270,6 +13128,10 @@ func (t *TL_inputMessagesFilterUrl) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterUrl) String() string {
+	return fmt.Sprintf("- inputMessagesFilterUrl#7ef0dd87\n")
+}
+
 // inputMessagesFilterGif#ffc86587
 type TL_inputMessagesFilterGif struct {
 	M_classID int32
@@ -12295,6 +13157,10 @@ func (t *TL_inputMessagesFilterGif) Encode() []byte {
 
 func (t *TL_inputMessagesFilterGif) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterGif) String() string {
+	return fmt.Sprintf("- inputMessagesFilterGif#ffc86587\n")
 }
 
 // inputMessagesFilterVoice#50f5c392
@@ -12324,6 +13190,10 @@ func (t *TL_inputMessagesFilterVoice) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterVoice) String() string {
+	return fmt.Sprintf("- inputMessagesFilterVoice#50f5c392\n")
+}
+
 // inputMessagesFilterMusic#3751b49e
 type TL_inputMessagesFilterMusic struct {
 	M_classID int32
@@ -12351,6 +13221,10 @@ func (t *TL_inputMessagesFilterMusic) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterMusic) String() string {
+	return fmt.Sprintf("- inputMessagesFilterMusic#3751b49e\n")
+}
+
 // inputMessagesFilterChatPhotos#3a20ecb8
 type TL_inputMessagesFilterChatPhotos struct {
 	M_classID int32
@@ -12376,6 +13250,10 @@ func (t *TL_inputMessagesFilterChatPhotos) Encode() []byte {
 
 func (t *TL_inputMessagesFilterChatPhotos) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterChatPhotos) String() string {
+	return fmt.Sprintf("- inputMessagesFilterChatPhotos#3a20ecb8\n")
 }
 
 // inputMessagesFilterPhoneCalls#80c99768
@@ -12428,6 +13306,10 @@ func (t *TL_inputMessagesFilterPhoneCalls) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMessagesFilterPhoneCalls) String() string {
+	return fmt.Sprintf("- inputMessagesFilterPhoneCalls#80c99768\n-- flags : %v\n-- missed : %v\n", t.M_flags, t.M_missed)
+}
+
 // inputMessagesFilterRoundVoice#7a7c17a4
 type TL_inputMessagesFilterRoundVoice struct {
 	M_classID int32
@@ -12453,6 +13335,10 @@ func (t *TL_inputMessagesFilterRoundVoice) Encode() []byte {
 
 func (t *TL_inputMessagesFilterRoundVoice) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterRoundVoice) String() string {
+	return fmt.Sprintf("- inputMessagesFilterRoundVoice#7a7c17a4\n")
 }
 
 // inputMessagesFilterRoundVideo#b549da53
@@ -12482,6 +13368,10 @@ func (t *TL_inputMessagesFilterRoundVideo) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterRoundVideo) String() string {
+	return fmt.Sprintf("- inputMessagesFilterRoundVideo#b549da53\n")
+}
+
 // inputMessagesFilterMyMentions#c1f8e69a
 type TL_inputMessagesFilterMyMentions struct {
 	M_classID int32
@@ -12507,6 +13397,10 @@ func (t *TL_inputMessagesFilterMyMentions) Encode() []byte {
 
 func (t *TL_inputMessagesFilterMyMentions) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterMyMentions) String() string {
+	return fmt.Sprintf("- inputMessagesFilterMyMentions#c1f8e69a\n")
 }
 
 // inputMessagesFilterGeo#e7026d0d
@@ -12536,6 +13430,10 @@ func (t *TL_inputMessagesFilterGeo) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputMessagesFilterGeo) String() string {
+	return fmt.Sprintf("- inputMessagesFilterGeo#e7026d0d\n")
+}
+
 // inputMessagesFilterContacts#e062db83
 type TL_inputMessagesFilterContacts struct {
 	M_classID int32
@@ -12561,6 +13459,10 @@ func (t *TL_inputMessagesFilterContacts) Encode() []byte {
 
 func (t *TL_inputMessagesFilterContacts) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputMessagesFilterContacts) String() string {
+	return fmt.Sprintf("- inputMessagesFilterContacts#e062db83\n")
 }
 
 // updateNewMessage#1f2b0afd
@@ -12626,6 +13528,10 @@ func (t *TL_updateNewMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateNewMessage) String() string {
+	return fmt.Sprintf("- updateNewMessage#1f2b0afd\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_message, t.M_pts, t.M_pts_count)
+}
+
 // updateMessageID#4e90bfd6
 type TL_updateMessageID struct {
 	M_classID   int32
@@ -12676,6 +13582,10 @@ func (t *TL_updateMessageID) Decode(b []byte) error {
 	t.M_random_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_updateMessageID) String() string {
+	return fmt.Sprintf("- updateMessageID#4e90bfd6\n-- id : %v\n-- random_id : %v\n", t.M_id, t.M_random_id)
 }
 
 // updateDeleteMessages#a20db0e5
@@ -12741,6 +13651,10 @@ func (t *TL_updateDeleteMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateDeleteMessages) String() string {
+	return fmt.Sprintf("- updateDeleteMessages#a20db0e5\n-- messages : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_messages, t.M_pts, t.M_pts_count)
+}
+
 // updateUserTyping#5c486927
 type TL_updateUserTyping struct {
 	M_classID int32
@@ -12791,6 +13705,10 @@ func (t *TL_updateUserTyping) Decode(b []byte) error {
 	t.M_action = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateUserTyping) String() string {
+	return fmt.Sprintf("- updateUserTyping#5c486927\n-- user_id : %v\n-- action : %v\n", t.M_user_id, t.M_action)
 }
 
 // updateChatUserTyping#9a65ea1f
@@ -12856,6 +13774,10 @@ func (t *TL_updateChatUserTyping) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChatUserTyping) String() string {
+	return fmt.Sprintf("- updateChatUserTyping#9a65ea1f\n-- chat_id : %v\n-- user_id : %v\n-- action : %v\n", t.M_chat_id, t.M_user_id, t.M_action)
+}
+
 // updateChatParticipants#7761198
 type TL_updateChatParticipants struct {
 	M_classID      int32
@@ -12895,6 +13817,10 @@ func (t *TL_updateChatParticipants) Decode(b []byte) error {
 	t.M_participants = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateChatParticipants) String() string {
+	return fmt.Sprintf("- updateChatParticipants#7761198\n-- participants : %v\n", t.M_participants)
 }
 
 // updateUserStatus#1bfbd823
@@ -12947,6 +13873,10 @@ func (t *TL_updateUserStatus) Decode(b []byte) error {
 	t.M_status = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateUserStatus) String() string {
+	return fmt.Sprintf("- updateUserStatus#1bfbd823\n-- user_id : %v\n-- status : %v\n", t.M_user_id, t.M_status)
 }
 
 // updateUserName#a7332b73
@@ -13023,6 +13953,10 @@ func (t *TL_updateUserName) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateUserName) String() string {
+	return fmt.Sprintf("- updateUserName#a7332b73\n-- user_id : %v\n-- first_name : %v\n-- last_name : %v\n-- username : %v\n", t.M_user_id, t.M_first_name, t.M_last_name, t.M_username)
+}
+
 // updateUserPhoto#95313b0c
 type TL_updateUserPhoto struct {
 	M_classID  int32
@@ -13097,6 +14031,10 @@ func (t *TL_updateUserPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateUserPhoto) String() string {
+	return fmt.Sprintf("- updateUserPhoto#95313b0c\n-- user_id : %v\n-- date : %v\n-- photo : %v\n-- previous : %v\n", t.M_user_id, t.M_date, t.M_photo, t.M_previous)
+}
+
 // updateContactRegistered#2575bbb9
 type TL_updateContactRegistered struct {
 	M_classID int32
@@ -13147,6 +14085,10 @@ func (t *TL_updateContactRegistered) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateContactRegistered) String() string {
+	return fmt.Sprintf("- updateContactRegistered#2575bbb9\n-- user_id : %v\n-- date : %v\n", t.M_user_id, t.M_date)
 }
 
 // updateContactLink#9d2e67c5
@@ -13212,6 +14154,10 @@ func (t *TL_updateContactLink) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateContactLink) String() string {
+	return fmt.Sprintf("- updateContactLink#9d2e67c5\n-- user_id : %v\n-- my_link : %v\n-- foreign_link : %v\n", t.M_user_id, t.M_my_link, t.M_foreign_link)
+}
+
 // updateNewEncryptedMessage#12bcbd9a
 type TL_updateNewEncryptedMessage struct {
 	M_classID int32
@@ -13264,6 +14210,10 @@ func (t *TL_updateNewEncryptedMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateNewEncryptedMessage) String() string {
+	return fmt.Sprintf("- updateNewEncryptedMessage#12bcbd9a\n-- message : %v\n-- qts : %v\n", t.M_message, t.M_qts)
+}
+
 // updateEncryptedChatTyping#1710f156
 type TL_updateEncryptedChatTyping struct {
 	M_classID int32
@@ -13303,6 +14253,10 @@ func (t *TL_updateEncryptedChatTyping) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateEncryptedChatTyping) String() string {
+	return fmt.Sprintf("- updateEncryptedChatTyping#1710f156\n-- chat_id : %v\n", t.M_chat_id)
 }
 
 // updateEncryption#b4a2e88d
@@ -13355,6 +14309,10 @@ func (t *TL_updateEncryption) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateEncryption) String() string {
+	return fmt.Sprintf("- updateEncryption#b4a2e88d\n-- chat : %v\n-- date : %v\n", t.M_chat, t.M_date)
 }
 
 // updateEncryptedMessagesRead#38fe25b7
@@ -13418,6 +14376,10 @@ func (t *TL_updateEncryptedMessagesRead) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateEncryptedMessagesRead) String() string {
+	return fmt.Sprintf("- updateEncryptedMessagesRead#38fe25b7\n-- chat_id : %v\n-- max_date : %v\n-- date : %v\n", t.M_chat_id, t.M_max_date, t.M_date)
 }
 
 // updateChatParticipantAdd#ea4b0e5c
@@ -13505,6 +14467,10 @@ func (t *TL_updateChatParticipantAdd) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChatParticipantAdd) String() string {
+	return fmt.Sprintf("- updateChatParticipantAdd#ea4b0e5c\n-- chat_id : %v\n-- user_id : %v\n-- inviter_id : %v\n-- date : %v\n-- version : %v\n", t.M_chat_id, t.M_user_id, t.M_inviter_id, t.M_date, t.M_version)
+}
+
 // updateChatParticipantDelete#6e5f8c22
 type TL_updateChatParticipantDelete struct {
 	M_classID int32
@@ -13568,6 +14534,10 @@ func (t *TL_updateChatParticipantDelete) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChatParticipantDelete) String() string {
+	return fmt.Sprintf("- updateChatParticipantDelete#6e5f8c22\n-- chat_id : %v\n-- user_id : %v\n-- version : %v\n", t.M_chat_id, t.M_user_id, t.M_version)
+}
+
 // updateDcOptions#8e5e9873
 type TL_updateDcOptions struct {
 	M_classID    int32
@@ -13607,6 +14577,10 @@ func (t *TL_updateDcOptions) Decode(b []byte) error {
 	t.M_dc_options = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_updateDcOptions) String() string {
+	return fmt.Sprintf("- updateDcOptions#8e5e9873\n-- dc_options : %v\n", t.M_dc_options)
 }
 
 // updateUserBlocked#80ece81a
@@ -13661,6 +14635,10 @@ func (t *TL_updateUserBlocked) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateUserBlocked) String() string {
+	return fmt.Sprintf("- updateUserBlocked#80ece81a\n-- user_id : %v\n-- blocked : %v\n", t.M_user_id, t.M_blocked)
+}
+
 // updateNotifySettings#bec268ef
 type TL_updateNotifySettings struct {
 	M_classID         int32
@@ -13711,6 +14689,10 @@ func (t *TL_updateNotifySettings) Decode(b []byte) error {
 	t.M_notify_settings = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateNotifySettings) String() string {
+	return fmt.Sprintf("- updateNotifySettings#bec268ef\n-- peer : %v\n-- notify_settings : %v\n", t.M_peer, t.M_notify_settings)
 }
 
 // updateServiceNotification#ebe46819
@@ -13818,6 +14800,10 @@ func (t *TL_updateServiceNotification) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateServiceNotification) String() string {
+	return fmt.Sprintf("- updateServiceNotification#ebe46819\n-- flags : %v\n-- popup : %v\n-- inbox_date : %v\n-- type : %v\n-- message : %v\n-- media : %v\n-- entities : %v\n", t.M_flags, t.M_popup, t.M_inbox_date, t.M_type, t.M_message, t.M_media, t.M_entities)
+}
+
 // updatePrivacy#ee3b272a
 type TL_updatePrivacy struct {
 	M_classID int32
@@ -13870,6 +14856,10 @@ func (t *TL_updatePrivacy) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updatePrivacy) String() string {
+	return fmt.Sprintf("- updatePrivacy#ee3b272a\n-- key : %v\n-- rules : %v\n", t.M_key, t.M_rules)
+}
+
 // updateUserPhone#12b9417b
 type TL_updateUserPhone struct {
 	M_classID int32
@@ -13920,6 +14910,10 @@ func (t *TL_updateUserPhone) Decode(b []byte) error {
 	t.M_phone = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_updateUserPhone) String() string {
+	return fmt.Sprintf("- updateUserPhone#12b9417b\n-- user_id : %v\n-- phone : %v\n", t.M_user_id, t.M_phone)
 }
 
 // updateReadHistoryInbox#9961fd5c
@@ -13996,6 +14990,10 @@ func (t *TL_updateReadHistoryInbox) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateReadHistoryInbox) String() string {
+	return fmt.Sprintf("- updateReadHistoryInbox#9961fd5c\n-- peer : %v\n-- max_id : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_peer, t.M_max_id, t.M_pts, t.M_pts_count)
+}
+
 // updateReadHistoryOutbox#2f2f21bf
 type TL_updateReadHistoryOutbox struct {
 	M_classID   int32
@@ -14070,6 +15068,10 @@ func (t *TL_updateReadHistoryOutbox) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateReadHistoryOutbox) String() string {
+	return fmt.Sprintf("- updateReadHistoryOutbox#2f2f21bf\n-- peer : %v\n-- max_id : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_peer, t.M_max_id, t.M_pts, t.M_pts_count)
+}
+
 // updateWebPage#7f891213
 type TL_updateWebPage struct {
 	M_classID   int32
@@ -14131,6 +15133,10 @@ func (t *TL_updateWebPage) Decode(b []byte) error {
 	t.M_pts_count = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateWebPage) String() string {
+	return fmt.Sprintf("- updateWebPage#7f891213\n-- webpage : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_webpage, t.M_pts, t.M_pts_count)
 }
 
 // updateReadMessagesContents#68c13933
@@ -14196,6 +15202,10 @@ func (t *TL_updateReadMessagesContents) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateReadMessagesContents) String() string {
+	return fmt.Sprintf("- updateReadMessagesContents#68c13933\n-- messages : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_messages, t.M_pts, t.M_pts_count)
+}
+
 // updateChannelTooLong#eb0467fb
 type TL_updateChannelTooLong struct {
 	M_classID    int32
@@ -14257,6 +15267,10 @@ func (t *TL_updateChannelTooLong) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChannelTooLong) String() string {
+	return fmt.Sprintf("- updateChannelTooLong#eb0467fb\n-- flags : %v\n-- channel_id : %v\n-- pts : %v\n", t.M_flags, t.M_channel_id, t.M_pts)
+}
+
 // updateChannel#b6d45656
 type TL_updateChannel struct {
 	M_classID    int32
@@ -14296,6 +15310,10 @@ func (t *TL_updateChannel) Decode(b []byte) error {
 	t.M_channel_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateChannel) String() string {
+	return fmt.Sprintf("- updateChannel#b6d45656\n-- channel_id : %v\n", t.M_channel_id)
 }
 
 // updateNewChannelMessage#62ba04d9
@@ -14361,6 +15379,10 @@ func (t *TL_updateNewChannelMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateNewChannelMessage) String() string {
+	return fmt.Sprintf("- updateNewChannelMessage#62ba04d9\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_message, t.M_pts, t.M_pts_count)
+}
+
 // updateReadChannelInbox#4214f37f
 type TL_updateReadChannelInbox struct {
 	M_classID    int32
@@ -14411,6 +15433,10 @@ func (t *TL_updateReadChannelInbox) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateReadChannelInbox) String() string {
+	return fmt.Sprintf("- updateReadChannelInbox#4214f37f\n-- channel_id : %v\n-- max_id : %v\n", t.M_channel_id, t.M_max_id)
 }
 
 // updateDeleteChannelMessages#c37521c9
@@ -14487,6 +15513,10 @@ func (t *TL_updateDeleteChannelMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateDeleteChannelMessages) String() string {
+	return fmt.Sprintf("- updateDeleteChannelMessages#c37521c9\n-- channel_id : %v\n-- messages : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_channel_id, t.M_messages, t.M_pts, t.M_pts_count)
+}
+
 // updateChannelMessageViews#98a12b4b
 type TL_updateChannelMessageViews struct {
 	M_classID    int32
@@ -14550,6 +15580,10 @@ func (t *TL_updateChannelMessageViews) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChannelMessageViews) String() string {
+	return fmt.Sprintf("- updateChannelMessageViews#98a12b4b\n-- channel_id : %v\n-- id : %v\n-- views : %v\n", t.M_channel_id, t.M_id, t.M_views)
+}
+
 // updateChatAdmins#6e947941
 type TL_updateChatAdmins struct {
 	M_classID int32
@@ -14611,6 +15645,10 @@ func (t *TL_updateChatAdmins) Decode(b []byte) error {
 	t.M_version = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateChatAdmins) String() string {
+	return fmt.Sprintf("- updateChatAdmins#6e947941\n-- chat_id : %v\n-- enabled : %v\n-- version : %v\n", t.M_chat_id, t.M_enabled, t.M_version)
 }
 
 // updateChatParticipantAdmin#b6901959
@@ -14687,6 +15725,10 @@ func (t *TL_updateChatParticipantAdmin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChatParticipantAdmin) String() string {
+	return fmt.Sprintf("- updateChatParticipantAdmin#b6901959\n-- chat_id : %v\n-- user_id : %v\n-- is_admin : %v\n-- version : %v\n", t.M_chat_id, t.M_user_id, t.M_is_admin, t.M_version)
+}
+
 // updateNewStickerSet#688a30aa
 type TL_updateNewStickerSet struct {
 	M_classID    int32
@@ -14726,6 +15768,10 @@ func (t *TL_updateNewStickerSet) Decode(b []byte) error {
 	t.M_stickerset = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateNewStickerSet) String() string {
+	return fmt.Sprintf("- updateNewStickerSet#688a30aa\n-- stickerset : %v\n", t.M_stickerset)
 }
 
 // updateStickerSetsOrder#bb2d201
@@ -14789,6 +15835,10 @@ func (t *TL_updateStickerSetsOrder) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateStickerSetsOrder) String() string {
+	return fmt.Sprintf("- updateStickerSetsOrder#bb2d201\n-- flags : %v\n-- masks : %v\n-- order : %v\n", t.M_flags, t.M_masks, t.M_order)
+}
+
 // updateStickerSets#43ae3dec
 type TL_updateStickerSets struct {
 	M_classID int32
@@ -14816,6 +15866,10 @@ func (t *TL_updateStickerSets) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_updateStickerSets) String() string {
+	return fmt.Sprintf("- updateStickerSets#43ae3dec\n")
+}
+
 // updateSavedGifs#9375341e
 type TL_updateSavedGifs struct {
 	M_classID int32
@@ -14841,6 +15895,10 @@ func (t *TL_updateSavedGifs) Encode() []byte {
 
 func (t *TL_updateSavedGifs) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updateSavedGifs) String() string {
+	return fmt.Sprintf("- updateSavedGifs#9375341e\n")
 }
 
 // updateBotInlineQuery#54826690
@@ -14937,6 +15995,10 @@ func (t *TL_updateBotInlineQuery) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateBotInlineQuery) String() string {
+	return fmt.Sprintf("- updateBotInlineQuery#54826690\n-- flags : %v\n-- query_id : %v\n-- user_id : %v\n-- query : %v\n-- geo : %v\n-- offset : %v\n", t.M_flags, t.M_query_id, t.M_user_id, t.M_query, t.M_geo, t.M_offset)
+}
+
 // updateBotInlineSend#e48f964
 type TL_updateBotInlineSend struct {
 	M_classID int32
@@ -15031,6 +16093,10 @@ func (t *TL_updateBotInlineSend) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateBotInlineSend) String() string {
+	return fmt.Sprintf("- updateBotInlineSend#e48f964\n-- flags : %v\n-- user_id : %v\n-- query : %v\n-- geo : %v\n-- id : %v\n-- msg_id : %v\n", t.M_flags, t.M_user_id, t.M_query, t.M_geo, t.M_id, t.M_msg_id)
+}
+
 // updateEditChannelMessage#1b3f4df7
 type TL_updateEditChannelMessage struct {
 	M_classID   int32
@@ -15094,6 +16160,10 @@ func (t *TL_updateEditChannelMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateEditChannelMessage) String() string {
+	return fmt.Sprintf("- updateEditChannelMessage#1b3f4df7\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_message, t.M_pts, t.M_pts_count)
+}
+
 // updateChannelPinnedMessage#98592475
 type TL_updateChannelPinnedMessage struct {
 	M_classID    int32
@@ -15144,6 +16214,10 @@ func (t *TL_updateChannelPinnedMessage) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateChannelPinnedMessage) String() string {
+	return fmt.Sprintf("- updateChannelPinnedMessage#98592475\n-- channel_id : %v\n-- id : %v\n", t.M_channel_id, t.M_id)
 }
 
 // updateBotCallbackQuery#e73547e1
@@ -15262,6 +16336,10 @@ func (t *TL_updateBotCallbackQuery) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateBotCallbackQuery) String() string {
+	return fmt.Sprintf("- updateBotCallbackQuery#e73547e1\n-- flags : %v\n-- query_id : %v\n-- user_id : %v\n-- peer : %v\n-- msg_id : %v\n-- chat_instance : %v\n-- data : %v\n-- game_short_name : %v\n", t.M_flags, t.M_query_id, t.M_user_id, t.M_peer, t.M_msg_id, t.M_chat_instance, t.M_data, t.M_game_short_name)
+}
+
 // updateEditMessage#e40370a3
 type TL_updateEditMessage struct {
 	M_classID   int32
@@ -15323,6 +16401,10 @@ func (t *TL_updateEditMessage) Decode(b []byte) error {
 	t.M_pts_count = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateEditMessage) String() string {
+	return fmt.Sprintf("- updateEditMessage#e40370a3\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_message, t.M_pts, t.M_pts_count)
 }
 
 // updateInlineBotCallbackQuery#f9d27a5a
@@ -15430,6 +16512,10 @@ func (t *TL_updateInlineBotCallbackQuery) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateInlineBotCallbackQuery) String() string {
+	return fmt.Sprintf("- updateInlineBotCallbackQuery#f9d27a5a\n-- flags : %v\n-- query_id : %v\n-- user_id : %v\n-- msg_id : %v\n-- chat_instance : %v\n-- data : %v\n-- game_short_name : %v\n", t.M_flags, t.M_query_id, t.M_user_id, t.M_msg_id, t.M_chat_instance, t.M_data, t.M_game_short_name)
+}
+
 // updateReadChannelOutbox#25d6c9c7
 type TL_updateReadChannelOutbox struct {
 	M_classID    int32
@@ -15480,6 +16566,10 @@ func (t *TL_updateReadChannelOutbox) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateReadChannelOutbox) String() string {
+	return fmt.Sprintf("- updateReadChannelOutbox#25d6c9c7\n-- channel_id : %v\n-- max_id : %v\n", t.M_channel_id, t.M_max_id)
 }
 
 // updateDraftMessage#ee2bb969
@@ -15534,6 +16624,10 @@ func (t *TL_updateDraftMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateDraftMessage) String() string {
+	return fmt.Sprintf("- updateDraftMessage#ee2bb969\n-- peer : %v\n-- draft : %v\n", t.M_peer, t.M_draft)
+}
+
 // updateReadFeaturedStickers#571d2742
 type TL_updateReadFeaturedStickers struct {
 	M_classID int32
@@ -15559,6 +16653,10 @@ func (t *TL_updateReadFeaturedStickers) Encode() []byte {
 
 func (t *TL_updateReadFeaturedStickers) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updateReadFeaturedStickers) String() string {
+	return fmt.Sprintf("- updateReadFeaturedStickers#571d2742\n")
 }
 
 // updateRecentStickers#9a422c20
@@ -15588,6 +16686,10 @@ func (t *TL_updateRecentStickers) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_updateRecentStickers) String() string {
+	return fmt.Sprintf("- updateRecentStickers#9a422c20\n")
+}
+
 // updateConfig#a229dd06
 type TL_updateConfig struct {
 	M_classID int32
@@ -15615,6 +16717,10 @@ func (t *TL_updateConfig) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_updateConfig) String() string {
+	return fmt.Sprintf("- updateConfig#a229dd06\n")
+}
+
 // updatePtsChanged#3354678f
 type TL_updatePtsChanged struct {
 	M_classID int32
@@ -15640,6 +16746,10 @@ func (t *TL_updatePtsChanged) Encode() []byte {
 
 func (t *TL_updatePtsChanged) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updatePtsChanged) String() string {
+	return fmt.Sprintf("- updatePtsChanged#3354678f\n")
 }
 
 // updateChannelWebPage#40771900
@@ -15716,6 +16826,10 @@ func (t *TL_updateChannelWebPage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChannelWebPage) String() string {
+	return fmt.Sprintf("- updateChannelWebPage#40771900\n-- channel_id : %v\n-- webpage : %v\n-- pts : %v\n-- pts_count : %v\n", t.M_channel_id, t.M_webpage, t.M_pts, t.M_pts_count)
+}
+
 // updateDialogPinned#d711a2cc
 type TL_updateDialogPinned struct {
 	M_classID int32
@@ -15777,6 +16891,10 @@ func (t *TL_updateDialogPinned) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateDialogPinned) String() string {
+	return fmt.Sprintf("- updateDialogPinned#d711a2cc\n-- flags : %v\n-- pinned : %v\n-- peer : %v\n", t.M_flags, t.M_pinned, t.M_peer)
+}
+
 // updatePinnedDialogs#d8caf68d
 type TL_updatePinnedDialogs struct {
 	M_classID int32
@@ -15827,6 +16945,10 @@ func (t *TL_updatePinnedDialogs) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updatePinnedDialogs) String() string {
+	return fmt.Sprintf("- updatePinnedDialogs#d8caf68d\n-- flags : %v\n-- order : %v\n", t.M_flags, t.M_order)
+}
+
 // updateBotWebhookJSON#8317c0c3
 type TL_updateBotWebhookJSON struct {
 	M_classID int32
@@ -15866,6 +16988,10 @@ func (t *TL_updateBotWebhookJSON) Decode(b []byte) error {
 	t.M_data = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateBotWebhookJSON) String() string {
+	return fmt.Sprintf("- updateBotWebhookJSON#8317c0c3\n-- data : %v\n", t.M_data)
 }
 
 // updateBotWebhookJSONQuery#9b9240a6
@@ -15929,6 +17055,10 @@ func (t *TL_updateBotWebhookJSONQuery) Decode(b []byte) error {
 	t.M_timeout = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateBotWebhookJSONQuery) String() string {
+	return fmt.Sprintf("- updateBotWebhookJSONQuery#9b9240a6\n-- query_id : %v\n-- data : %v\n-- timeout : %v\n", t.M_query_id, t.M_data, t.M_timeout)
 }
 
 // updateBotShippingQuery#e0cdc940
@@ -16003,6 +17133,10 @@ func (t *TL_updateBotShippingQuery) Decode(b []byte) error {
 	t.M_shipping_address = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updateBotShippingQuery) String() string {
+	return fmt.Sprintf("- updateBotShippingQuery#e0cdc940\n-- query_id : %v\n-- user_id : %v\n-- payload : %v\n-- shipping_address : %v\n", t.M_query_id, t.M_user_id, t.M_payload, t.M_shipping_address)
 }
 
 // updateBotPrecheckoutQuery#5d2f3aa9
@@ -16121,6 +17255,10 @@ func (t *TL_updateBotPrecheckoutQuery) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateBotPrecheckoutQuery) String() string {
+	return fmt.Sprintf("- updateBotPrecheckoutQuery#5d2f3aa9\n-- flags : %v\n-- query_id : %v\n-- user_id : %v\n-- payload : %v\n-- info : %v\n-- shipping_option_id : %v\n-- currency : %v\n-- total_amount : %v\n", t.M_flags, t.M_query_id, t.M_user_id, t.M_payload, t.M_info, t.M_shipping_option_id, t.M_currency, t.M_total_amount)
+}
+
 // updatePhoneCall#ab0f6b1e
 type TL_updatePhoneCall struct {
 	M_classID    int32
@@ -16162,6 +17300,10 @@ func (t *TL_updatePhoneCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updatePhoneCall) String() string {
+	return fmt.Sprintf("- updatePhoneCall#ab0f6b1e\n-- phone_call : %v\n", t.M_phone_call)
+}
+
 // updateLangPackTooLong#10c2404b
 type TL_updateLangPackTooLong struct {
 	M_classID int32
@@ -16187,6 +17329,10 @@ func (t *TL_updateLangPackTooLong) Encode() []byte {
 
 func (t *TL_updateLangPackTooLong) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updateLangPackTooLong) String() string {
+	return fmt.Sprintf("- updateLangPackTooLong#10c2404b\n")
 }
 
 // updateLangPack#56022f4d
@@ -16230,6 +17376,10 @@ func (t *TL_updateLangPack) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateLangPack) String() string {
+	return fmt.Sprintf("- updateLangPack#56022f4d\n-- difference : %v\n", t.M_difference)
+}
+
 // updateFavedStickers#e511996d
 type TL_updateFavedStickers struct {
 	M_classID int32
@@ -16255,6 +17405,10 @@ func (t *TL_updateFavedStickers) Encode() []byte {
 
 func (t *TL_updateFavedStickers) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updateFavedStickers) String() string {
+	return fmt.Sprintf("- updateFavedStickers#e511996d\n")
 }
 
 // updateChannelReadMessagesContents#89893b45
@@ -16309,6 +17463,10 @@ func (t *TL_updateChannelReadMessagesContents) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateChannelReadMessagesContents) String() string {
+	return fmt.Sprintf("- updateChannelReadMessagesContents#89893b45\n-- channel_id : %v\n-- messages : %v\n", t.M_channel_id, t.M_messages)
+}
+
 // updateContactsReset#7084a7be
 type TL_updateContactsReset struct {
 	M_classID int32
@@ -16334,6 +17492,10 @@ func (t *TL_updateContactsReset) Encode() []byte {
 
 func (t *TL_updateContactsReset) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updateContactsReset) String() string {
+	return fmt.Sprintf("- updateContactsReset#7084a7be\n")
 }
 
 // updateChannelAvailableMessages#70db6837
@@ -16386,6 +17548,10 @@ func (t *TL_updateChannelAvailableMessages) Decode(b []byte) error {
 	t.M_available_min_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateChannelAvailableMessages) String() string {
+	return fmt.Sprintf("- updateChannelAvailableMessages#70db6837\n-- channel_id : %v\n-- available_min_id : %v\n", t.M_channel_id, t.M_available_min_id)
 }
 
 // updates_state#a56c2a3e
@@ -16473,6 +17639,10 @@ func (t *TL_updates_state) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_state) String() string {
+	return fmt.Sprintf("- updates_state#a56c2a3e\n-- pts : %v\n-- qts : %v\n-- date : %v\n-- seq : %v\n-- unread_count : %v\n", t.M_pts, t.M_qts, t.M_date, t.M_seq, t.M_unread_count)
+}
+
 // updates_differenceEmpty#5d75a138
 type TL_updates_differenceEmpty struct {
 	M_classID int32
@@ -16523,6 +17693,10 @@ func (t *TL_updates_differenceEmpty) Decode(b []byte) error {
 	t.M_seq = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updates_differenceEmpty) String() string {
+	return fmt.Sprintf("- updates_differenceEmpty#5d75a138\n-- date : %v\n-- seq : %v\n", t.M_date, t.M_seq)
 }
 
 // updates_difference#f49ca0
@@ -16621,6 +17795,10 @@ func (t *TL_updates_difference) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_difference) String() string {
+	return fmt.Sprintf("- updates_difference#f49ca0\n-- new_messages : %v\n-- new_encrypted_messages : %v\n-- other_updates : %v\n-- chats : %v\n-- users : %v\n-- state : %v\n", t.M_new_messages, t.M_new_encrypted_messages, t.M_other_updates, t.M_chats, t.M_users, t.M_state)
+}
+
 // updates_differenceSlice#a8fb1981
 type TL_updates_differenceSlice struct {
 	M_classID                int32
@@ -16717,6 +17895,10 @@ func (t *TL_updates_differenceSlice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_differenceSlice) String() string {
+	return fmt.Sprintf("- updates_differenceSlice#a8fb1981\n-- new_messages : %v\n-- new_encrypted_messages : %v\n-- other_updates : %v\n-- chats : %v\n-- users : %v\n-- intermediate_state : %v\n", t.M_new_messages, t.M_new_encrypted_messages, t.M_other_updates, t.M_chats, t.M_users, t.M_intermediate_state)
+}
+
 // updates_differenceTooLong#4afe8f6d
 type TL_updates_differenceTooLong struct {
 	M_classID int32
@@ -16758,6 +17940,10 @@ func (t *TL_updates_differenceTooLong) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_differenceTooLong) String() string {
+	return fmt.Sprintf("- updates_differenceTooLong#4afe8f6d\n-- pts : %v\n", t.M_pts)
+}
+
 // updatesTooLong#e317af7e
 type TL_updatesTooLong struct {
 	M_classID int32
@@ -16783,6 +17969,10 @@ func (t *TL_updatesTooLong) Encode() []byte {
 
 func (t *TL_updatesTooLong) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updatesTooLong) String() string {
+	return fmt.Sprintf("- updatesTooLong#e317af7e\n")
 }
 
 // updateShortMessage#914fbf11
@@ -16976,6 +18166,10 @@ func (t *TL_updateShortMessage) Decode(b []byte) error {
 	t.M_entities = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_updateShortMessage) String() string {
+	return fmt.Sprintf("- updateShortMessage#914fbf11\n-- flags : %v\n-- out : %v\n-- mentioned : %v\n-- media_unread : %v\n-- silent : %v\n-- id : %v\n-- user_id : %v\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n-- date : %v\n-- fwd_from : %v\n-- via_bot_id : %v\n-- reply_to_msg_id : %v\n-- entities : %v\n", t.M_flags, t.M_out, t.M_mentioned, t.M_media_unread, t.M_silent, t.M_id, t.M_user_id, t.M_message, t.M_pts, t.M_pts_count, t.M_date, t.M_fwd_from, t.M_via_bot_id, t.M_reply_to_msg_id, t.M_entities)
 }
 
 // updateShortChatMessage#16812688
@@ -17182,6 +18376,10 @@ func (t *TL_updateShortChatMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateShortChatMessage) String() string {
+	return fmt.Sprintf("- updateShortChatMessage#16812688\n-- flags : %v\n-- out : %v\n-- mentioned : %v\n-- media_unread : %v\n-- silent : %v\n-- id : %v\n-- from_id : %v\n-- chat_id : %v\n-- message : %v\n-- pts : %v\n-- pts_count : %v\n-- date : %v\n-- fwd_from : %v\n-- via_bot_id : %v\n-- reply_to_msg_id : %v\n-- entities : %v\n", t.M_flags, t.M_out, t.M_mentioned, t.M_media_unread, t.M_silent, t.M_id, t.M_from_id, t.M_chat_id, t.M_message, t.M_pts, t.M_pts_count, t.M_date, t.M_fwd_from, t.M_via_bot_id, t.M_reply_to_msg_id, t.M_entities)
+}
+
 // updateShort#78d4dec1
 type TL_updateShort struct {
 	M_classID int32
@@ -17232,6 +18430,10 @@ func (t *TL_updateShort) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updateShort) String() string {
+	return fmt.Sprintf("- updateShort#78d4dec1\n-- update : %v\n-- date : %v\n", t.M_update, t.M_date)
 }
 
 // updatesCombined#725b04c3
@@ -17330,6 +18532,10 @@ func (t *TL_updatesCombined) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updatesCombined) String() string {
+	return fmt.Sprintf("- updatesCombined#725b04c3\n-- updates : %v\n-- users : %v\n-- chats : %v\n-- date : %v\n-- seq_start : %v\n-- seq : %v\n", t.M_updates, t.M_users, t.M_chats, t.M_date, t.M_seq_start, t.M_seq)
+}
+
 // updates#74ae4240
 type TL_updates struct {
 	M_classID int32
@@ -17413,6 +18619,10 @@ func (t *TL_updates) Decode(b []byte) error {
 	t.M_seq = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updates) String() string {
+	return fmt.Sprintf("- updates#74ae4240\n-- updates : %v\n-- users : %v\n-- chats : %v\n-- date : %v\n-- seq : %v\n", t.M_updates, t.M_users, t.M_chats, t.M_date, t.M_seq)
 }
 
 // updateShortSentMessage#11f1331c
@@ -17531,6 +18741,10 @@ func (t *TL_updateShortSentMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updateShortSentMessage) String() string {
+	return fmt.Sprintf("- updateShortSentMessage#11f1331c\n-- flags : %v\n-- out : %v\n-- id : %v\n-- pts : %v\n-- pts_count : %v\n-- date : %v\n-- media : %v\n-- entities : %v\n", t.M_flags, t.M_out, t.M_id, t.M_pts, t.M_pts_count, t.M_date, t.M_media, t.M_entities)
+}
+
 // photos_photos#8dca6aa5
 type TL_photos_photos struct {
 	M_classID int32
@@ -17581,6 +18795,10 @@ func (t *TL_photos_photos) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_photos_photos) String() string {
+	return fmt.Sprintf("- photos_photos#8dca6aa5\n-- photos : %v\n-- users : %v\n", t.M_photos, t.M_users)
 }
 
 // photos_photosSlice#15051f54
@@ -17646,6 +18864,10 @@ func (t *TL_photos_photosSlice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photos_photosSlice) String() string {
+	return fmt.Sprintf("- photos_photosSlice#15051f54\n-- count : %v\n-- photos : %v\n-- users : %v\n", t.M_count, t.M_photos, t.M_users)
+}
+
 // photos_photo#20212ca8
 type TL_photos_photo struct {
 	M_classID int32
@@ -17696,6 +18918,10 @@ func (t *TL_photos_photo) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_photos_photo) String() string {
+	return fmt.Sprintf("- photos_photo#20212ca8\n-- photo : %v\n-- users : %v\n", t.M_photo, t.M_users)
 }
 
 // upload_file#96a18d5
@@ -17759,6 +18985,10 @@ func (t *TL_upload_file) Decode(b []byte) error {
 	t.M_bytes = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_upload_file) String() string {
+	return fmt.Sprintf("- upload_file#96a18d5\n-- type : %v\n-- mtime : %v\n-- bytes : %v\n", t.M_type, t.M_mtime, t.M_bytes)
 }
 
 // upload_fileCdnRedirect#ea52fe5a
@@ -17844,6 +19074,10 @@ func (t *TL_upload_fileCdnRedirect) Decode(b []byte) error {
 	t.M_cdn_file_hashes = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_upload_fileCdnRedirect) String() string {
+	return fmt.Sprintf("- upload_fileCdnRedirect#ea52fe5a\n-- dc_id : %v\n-- file_token : %v\n-- encryption_key : %v\n-- encryption_iv : %v\n-- cdn_file_hashes : %v\n", t.M_dc_id, t.M_file_token, t.M_encryption_key, t.M_encryption_iv, t.M_cdn_file_hashes)
 }
 
 // dcOption#5d8c6cc
@@ -17971,6 +19205,10 @@ func (t *TL_dcOption) Decode(b []byte) error {
 	t.M_port = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_dcOption) String() string {
+	return fmt.Sprintf("- dcOption#5d8c6cc\n-- flags : %v\n-- ipv6 : %v\n-- media_only : %v\n-- tcpo_only : %v\n-- cdn : %v\n-- static : %v\n-- id : %v\n-- ip_address : %v\n-- port : %v\n", t.M_flags, t.M_ipv6, t.M_media_only, t.M_tcpo_only, t.M_cdn, t.M_static, t.M_id, t.M_ip_address, t.M_port)
 }
 
 // config#9c840964
@@ -18397,6 +19635,10 @@ func (t *TL_config) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_config) String() string {
+	return fmt.Sprintf("- config#9c840964\n-- flags : %v\n-- phonecalls_enabled : %v\n-- default_p2p_contacts : %v\n-- date : %v\n-- expires : %v\n-- test_mode : %v\n-- this_dc : %v\n-- dc_options : %v\n-- chat_size_max : %v\n-- megagroup_size_max : %v\n-- forwarded_count_max : %v\n-- online_update_period_ms : %v\n-- offline_blur_timeout_ms : %v\n-- offline_idle_timeout_ms : %v\n-- online_cloud_timeout_ms : %v\n-- notify_cloud_delay_ms : %v\n-- notify_default_delay_ms : %v\n-- chat_big_size : %v\n-- push_chat_period_ms : %v\n-- push_chat_limit : %v\n-- saved_gifs_limit : %v\n-- edit_time_limit : %v\n-- rating_e_decay : %v\n-- stickers_recent_limit : %v\n-- stickers_faved_limit : %v\n-- channels_read_media_period : %v\n-- tmp_sessions : %v\n-- pinned_dialogs_count_max : %v\n-- call_receive_timeout_ms : %v\n-- call_ring_timeout_ms : %v\n-- call_connect_timeout_ms : %v\n-- call_packet_timeout_ms : %v\n-- me_url_prefix : %v\n-- suggested_lang_code : %v\n-- lang_pack_version : %v\n-- disabled_features : %v\n", t.M_flags, t.M_phonecalls_enabled, t.M_default_p2p_contacts, t.M_date, t.M_expires, t.M_test_mode, t.M_this_dc, t.M_dc_options, t.M_chat_size_max, t.M_megagroup_size_max, t.M_forwarded_count_max, t.M_online_update_period_ms, t.M_offline_blur_timeout_ms, t.M_offline_idle_timeout_ms, t.M_online_cloud_timeout_ms, t.M_notify_cloud_delay_ms, t.M_notify_default_delay_ms, t.M_chat_big_size, t.M_push_chat_period_ms, t.M_push_chat_limit, t.M_saved_gifs_limit, t.M_edit_time_limit, t.M_rating_e_decay, t.M_stickers_recent_limit, t.M_stickers_faved_limit, t.M_channels_read_media_period, t.M_tmp_sessions, t.M_pinned_dialogs_count_max, t.M_call_receive_timeout_ms, t.M_call_ring_timeout_ms, t.M_call_connect_timeout_ms, t.M_call_packet_timeout_ms, t.M_me_url_prefix, t.M_suggested_lang_code, t.M_lang_pack_version, t.M_disabled_features)
+}
+
 // nearestDc#8e1a1775
 type TL_nearestDc struct {
 	M_classID    int32
@@ -18458,6 +19700,10 @@ func (t *TL_nearestDc) Decode(b []byte) error {
 	t.M_nearest_dc = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_nearestDc) String() string {
+	return fmt.Sprintf("- nearestDc#8e1a1775\n-- country : %v\n-- this_dc : %v\n-- nearest_dc : %v\n", t.M_country, t.M_this_dc, t.M_nearest_dc)
 }
 
 // help_appUpdate#8987f311
@@ -18534,6 +19780,10 @@ func (t *TL_help_appUpdate) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_appUpdate) String() string {
+	return fmt.Sprintf("- help_appUpdate#8987f311\n-- id : %v\n-- critical : %v\n-- url : %v\n-- text : %v\n", t.M_id, t.M_critical, t.M_url, t.M_text)
+}
+
 // help_noAppUpdate#c45a6536
 type TL_help_noAppUpdate struct {
 	M_classID int32
@@ -18559,6 +19809,10 @@ func (t *TL_help_noAppUpdate) Encode() []byte {
 
 func (t *TL_help_noAppUpdate) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_noAppUpdate) String() string {
+	return fmt.Sprintf("- help_noAppUpdate#c45a6536\n")
 }
 
 // help_inviteText#18cb9f78
@@ -18602,6 +19856,10 @@ func (t *TL_help_inviteText) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_inviteText) String() string {
+	return fmt.Sprintf("- help_inviteText#18cb9f78\n-- message : %v\n", t.M_message)
+}
+
 // encryptedChatEmpty#ab7ec0a0
 type TL_encryptedChatEmpty struct {
 	M_classID int32
@@ -18641,6 +19899,10 @@ func (t *TL_encryptedChatEmpty) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_encryptedChatEmpty) String() string {
+	return fmt.Sprintf("- encryptedChatEmpty#ab7ec0a0\n-- id : %v\n", t.M_id)
 }
 
 // encryptedChatWaiting#3bf703dc
@@ -18726,6 +19988,10 @@ func (t *TL_encryptedChatWaiting) Decode(b []byte) error {
 	t.M_participant_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_encryptedChatWaiting) String() string {
+	return fmt.Sprintf("- encryptedChatWaiting#3bf703dc\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id)
 }
 
 // encryptedChatRequested#c878527e
@@ -18822,6 +20088,10 @@ func (t *TL_encryptedChatRequested) Decode(b []byte) error {
 	t.M_g_a = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_encryptedChatRequested) String() string {
+	return fmt.Sprintf("- encryptedChatRequested#c878527e\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- g_a : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_g_a)
 }
 
 // encryptedChat#fa56ce36
@@ -18931,6 +20201,10 @@ func (t *TL_encryptedChat) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_encryptedChat) String() string {
+	return fmt.Sprintf("- encryptedChat#fa56ce36\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- g_a_or_b : %v\n-- key_fingerprint : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_g_a_or_b, t.M_key_fingerprint)
+}
+
 // encryptedChatDiscarded#13d6dd27
 type TL_encryptedChatDiscarded struct {
 	M_classID int32
@@ -18970,6 +20244,10 @@ func (t *TL_encryptedChatDiscarded) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_encryptedChatDiscarded) String() string {
+	return fmt.Sprintf("- encryptedChatDiscarded#13d6dd27\n-- id : %v\n", t.M_id)
 }
 
 // inputEncryptedChat#f141b5e1
@@ -19024,6 +20302,10 @@ func (t *TL_inputEncryptedChat) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputEncryptedChat) String() string {
+	return fmt.Sprintf("- inputEncryptedChat#f141b5e1\n-- chat_id : %v\n-- access_hash : %v\n", t.M_chat_id, t.M_access_hash)
+}
+
 // encryptedFileEmpty#c21f497e
 type TL_encryptedFileEmpty struct {
 	M_classID int32
@@ -19049,6 +20331,10 @@ func (t *TL_encryptedFileEmpty) Encode() []byte {
 
 func (t *TL_encryptedFileEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_encryptedFileEmpty) String() string {
+	return fmt.Sprintf("- encryptedFileEmpty#c21f497e\n")
 }
 
 // encryptedFile#4a70994c
@@ -19136,6 +20422,10 @@ func (t *TL_encryptedFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_encryptedFile) String() string {
+	return fmt.Sprintf("- encryptedFile#4a70994c\n-- id : %v\n-- access_hash : %v\n-- size : %v\n-- dc_id : %v\n-- key_fingerprint : %v\n", t.M_id, t.M_access_hash, t.M_size, t.M_dc_id, t.M_key_fingerprint)
+}
+
 // inputEncryptedFileEmpty#1837c364
 type TL_inputEncryptedFileEmpty struct {
 	M_classID int32
@@ -19161,6 +20451,10 @@ func (t *TL_inputEncryptedFileEmpty) Encode() []byte {
 
 func (t *TL_inputEncryptedFileEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputEncryptedFileEmpty) String() string {
+	return fmt.Sprintf("- inputEncryptedFileEmpty#1837c364\n")
 }
 
 // inputEncryptedFileUploaded#64bd0306
@@ -19237,6 +20531,10 @@ func (t *TL_inputEncryptedFileUploaded) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputEncryptedFileUploaded) String() string {
+	return fmt.Sprintf("- inputEncryptedFileUploaded#64bd0306\n-- id : %v\n-- parts : %v\n-- md5_checksum : %v\n-- key_fingerprint : %v\n", t.M_id, t.M_parts, t.M_md5_checksum, t.M_key_fingerprint)
+}
+
 // inputEncryptedFile#5a17b5e5
 type TL_inputEncryptedFile struct {
 	M_classID     int32
@@ -19287,6 +20585,10 @@ func (t *TL_inputEncryptedFile) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputEncryptedFile) String() string {
+	return fmt.Sprintf("- inputEncryptedFile#5a17b5e5\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
 }
 
 // inputEncryptedFileBigUploaded#2dc173c8
@@ -19350,6 +20652,10 @@ func (t *TL_inputEncryptedFileBigUploaded) Decode(b []byte) error {
 	t.M_key_fingerprint = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_inputEncryptedFileBigUploaded) String() string {
+	return fmt.Sprintf("- inputEncryptedFileBigUploaded#2dc173c8\n-- id : %v\n-- parts : %v\n-- key_fingerprint : %v\n", t.M_id, t.M_parts, t.M_key_fingerprint)
 }
 
 // encryptedMessage#ed18c118
@@ -19437,6 +20743,10 @@ func (t *TL_encryptedMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_encryptedMessage) String() string {
+	return fmt.Sprintf("- encryptedMessage#ed18c118\n-- random_id : %v\n-- chat_id : %v\n-- date : %v\n-- bytes : %v\n-- file : %v\n", t.M_random_id, t.M_chat_id, t.M_date, t.M_bytes, t.M_file)
+}
+
 // encryptedMessageService#23734b06
 type TL_encryptedMessageService struct {
 	M_classID   int32
@@ -19511,6 +20821,10 @@ func (t *TL_encryptedMessageService) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_encryptedMessageService) String() string {
+	return fmt.Sprintf("- encryptedMessageService#23734b06\n-- random_id : %v\n-- chat_id : %v\n-- date : %v\n-- bytes : %v\n", t.M_random_id, t.M_chat_id, t.M_date, t.M_bytes)
+}
+
 // messages_dhConfigNotModified#c0e24635
 type TL_messages_dhConfigNotModified struct {
 	M_classID int32
@@ -19550,6 +20864,10 @@ func (t *TL_messages_dhConfigNotModified) Decode(b []byte) error {
 	t.M_random = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_dhConfigNotModified) String() string {
+	return fmt.Sprintf("- messages_dhConfigNotModified#c0e24635\n-- random : %v\n", t.M_random)
 }
 
 // messages_dhConfig#2c221edd
@@ -19626,6 +20944,10 @@ func (t *TL_messages_dhConfig) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_dhConfig) String() string {
+	return fmt.Sprintf("- messages_dhConfig#2c221edd\n-- g : %v\n-- p : %v\n-- version : %v\n-- random : %v\n", t.M_g, t.M_p, t.M_version, t.M_random)
+}
+
 // messages_sentEncryptedMessage#560f8935
 type TL_messages_sentEncryptedMessage struct {
 	M_classID int32
@@ -19665,6 +20987,10 @@ func (t *TL_messages_sentEncryptedMessage) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_sentEncryptedMessage) String() string {
+	return fmt.Sprintf("- messages_sentEncryptedMessage#560f8935\n-- date : %v\n", t.M_date)
 }
 
 // messages_sentEncryptedFile#9493ff32
@@ -19719,6 +21045,10 @@ func (t *TL_messages_sentEncryptedFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sentEncryptedFile) String() string {
+	return fmt.Sprintf("- messages_sentEncryptedFile#9493ff32\n-- date : %v\n-- file : %v\n", t.M_date, t.M_file)
+}
+
 // inputDocumentEmpty#72f0eaae
 type TL_inputDocumentEmpty struct {
 	M_classID int32
@@ -19744,6 +21074,10 @@ func (t *TL_inputDocumentEmpty) Encode() []byte {
 
 func (t *TL_inputDocumentEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputDocumentEmpty) String() string {
+	return fmt.Sprintf("- inputDocumentEmpty#72f0eaae\n")
 }
 
 // inputDocument#18798952
@@ -19798,6 +21132,10 @@ func (t *TL_inputDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputDocument) String() string {
+	return fmt.Sprintf("- inputDocument#18798952\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
+}
+
 // documentEmpty#36f8c871
 type TL_documentEmpty struct {
 	M_classID int32
@@ -19837,6 +21175,10 @@ func (t *TL_documentEmpty) Decode(b []byte) error {
 	t.M_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_documentEmpty) String() string {
+	return fmt.Sprintf("- documentEmpty#36f8c871\n-- id : %v\n", t.M_id)
 }
 
 // document#87232bc7
@@ -19968,6 +21310,10 @@ func (t *TL_document) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_document) String() string {
+	return fmt.Sprintf("- document#87232bc7\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- mime_type : %v\n-- size : %v\n-- thumb : %v\n-- dc_id : %v\n-- version : %v\n-- attributes : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_mime_type, t.M_size, t.M_thumb, t.M_dc_id, t.M_version, t.M_attributes)
+}
+
 // help_support#17c6b5f6
 type TL_help_support struct {
 	M_classID      int32
@@ -20020,6 +21366,10 @@ func (t *TL_help_support) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_support) String() string {
+	return fmt.Sprintf("- help_support#17c6b5f6\n-- phone_number : %v\n-- user : %v\n", t.M_phone_number, t.M_user)
+}
+
 // notifyPeer#9fd40bd8
 type TL_notifyPeer struct {
 	M_classID int32
@@ -20061,6 +21411,10 @@ func (t *TL_notifyPeer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_notifyPeer) String() string {
+	return fmt.Sprintf("- notifyPeer#9fd40bd8\n-- peer : %v\n", t.M_peer)
+}
+
 // notifyUsers#b4c83b4c
 type TL_notifyUsers struct {
 	M_classID int32
@@ -20086,6 +21440,10 @@ func (t *TL_notifyUsers) Encode() []byte {
 
 func (t *TL_notifyUsers) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_notifyUsers) String() string {
+	return fmt.Sprintf("- notifyUsers#b4c83b4c\n")
 }
 
 // notifyChats#c007cec3
@@ -20115,6 +21473,10 @@ func (t *TL_notifyChats) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_notifyChats) String() string {
+	return fmt.Sprintf("- notifyChats#c007cec3\n")
+}
+
 // notifyAll#74d07c60
 type TL_notifyAll struct {
 	M_classID int32
@@ -20140,6 +21502,10 @@ func (t *TL_notifyAll) Encode() []byte {
 
 func (t *TL_notifyAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_notifyAll) String() string {
+	return fmt.Sprintf("- notifyAll#74d07c60\n")
 }
 
 // sendMessageTypingAction#16bf744e
@@ -20169,6 +21535,10 @@ func (t *TL_sendMessageTypingAction) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_sendMessageTypingAction) String() string {
+	return fmt.Sprintf("- sendMessageTypingAction#16bf744e\n")
+}
+
 // sendMessageCancelAction#fd5ec8f5
 type TL_sendMessageCancelAction struct {
 	M_classID int32
@@ -20196,6 +21566,10 @@ func (t *TL_sendMessageCancelAction) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_sendMessageCancelAction) String() string {
+	return fmt.Sprintf("- sendMessageCancelAction#fd5ec8f5\n")
+}
+
 // sendMessageRecordVideoAction#a187d66f
 type TL_sendMessageRecordVideoAction struct {
 	M_classID int32
@@ -20221,6 +21595,10 @@ func (t *TL_sendMessageRecordVideoAction) Encode() []byte {
 
 func (t *TL_sendMessageRecordVideoAction) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_sendMessageRecordVideoAction) String() string {
+	return fmt.Sprintf("- sendMessageRecordVideoAction#a187d66f\n")
 }
 
 // sendMessageUploadVideoAction#e9763aec
@@ -20264,6 +21642,10 @@ func (t *TL_sendMessageUploadVideoAction) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_sendMessageUploadVideoAction) String() string {
+	return fmt.Sprintf("- sendMessageUploadVideoAction#e9763aec\n-- progress : %v\n", t.M_progress)
+}
+
 // sendMessageRecordAudioAction#d52f73f7
 type TL_sendMessageRecordAudioAction struct {
 	M_classID int32
@@ -20289,6 +21671,10 @@ func (t *TL_sendMessageRecordAudioAction) Encode() []byte {
 
 func (t *TL_sendMessageRecordAudioAction) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_sendMessageRecordAudioAction) String() string {
+	return fmt.Sprintf("- sendMessageRecordAudioAction#d52f73f7\n")
 }
 
 // sendMessageUploadAudioAction#f351d7ab
@@ -20332,6 +21718,10 @@ func (t *TL_sendMessageUploadAudioAction) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_sendMessageUploadAudioAction) String() string {
+	return fmt.Sprintf("- sendMessageUploadAudioAction#f351d7ab\n-- progress : %v\n", t.M_progress)
+}
+
 // sendMessageUploadPhotoAction#d1d34a26
 type TL_sendMessageUploadPhotoAction struct {
 	M_classID  int32
@@ -20371,6 +21761,10 @@ func (t *TL_sendMessageUploadPhotoAction) Decode(b []byte) error {
 	t.M_progress = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_sendMessageUploadPhotoAction) String() string {
+	return fmt.Sprintf("- sendMessageUploadPhotoAction#d1d34a26\n-- progress : %v\n", t.M_progress)
 }
 
 // sendMessageUploadDocumentAction#aa0cd9e4
@@ -20414,6 +21808,10 @@ func (t *TL_sendMessageUploadDocumentAction) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_sendMessageUploadDocumentAction) String() string {
+	return fmt.Sprintf("- sendMessageUploadDocumentAction#aa0cd9e4\n-- progress : %v\n", t.M_progress)
+}
+
 // sendMessageGeoLocationAction#176f8ba1
 type TL_sendMessageGeoLocationAction struct {
 	M_classID int32
@@ -20439,6 +21837,10 @@ func (t *TL_sendMessageGeoLocationAction) Encode() []byte {
 
 func (t *TL_sendMessageGeoLocationAction) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_sendMessageGeoLocationAction) String() string {
+	return fmt.Sprintf("- sendMessageGeoLocationAction#176f8ba1\n")
 }
 
 // sendMessageChooseContactAction#628cbc6f
@@ -20468,6 +21870,10 @@ func (t *TL_sendMessageChooseContactAction) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_sendMessageChooseContactAction) String() string {
+	return fmt.Sprintf("- sendMessageChooseContactAction#628cbc6f\n")
+}
+
 // sendMessageGamePlayAction#dd6a8f48
 type TL_sendMessageGamePlayAction struct {
 	M_classID int32
@@ -20495,6 +21901,10 @@ func (t *TL_sendMessageGamePlayAction) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_sendMessageGamePlayAction) String() string {
+	return fmt.Sprintf("- sendMessageGamePlayAction#dd6a8f48\n")
+}
+
 // sendMessageRecordRoundAction#88f27fbc
 type TL_sendMessageRecordRoundAction struct {
 	M_classID int32
@@ -20520,6 +21930,10 @@ func (t *TL_sendMessageRecordRoundAction) Encode() []byte {
 
 func (t *TL_sendMessageRecordRoundAction) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_sendMessageRecordRoundAction) String() string {
+	return fmt.Sprintf("- sendMessageRecordRoundAction#88f27fbc\n")
 }
 
 // sendMessageUploadRoundAction#243e1c66
@@ -20561,6 +21975,10 @@ func (t *TL_sendMessageUploadRoundAction) Decode(b []byte) error {
 	t.M_progress = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_sendMessageUploadRoundAction) String() string {
+	return fmt.Sprintf("- sendMessageUploadRoundAction#243e1c66\n-- progress : %v\n", t.M_progress)
 }
 
 // contacts_found#1aa1f784
@@ -20626,6 +22044,10 @@ func (t *TL_contacts_found) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_found) String() string {
+	return fmt.Sprintf("- contacts_found#1aa1f784\n-- results : %v\n-- chats : %v\n-- users : %v\n", t.M_results, t.M_chats, t.M_users)
+}
+
 // inputPrivacyKeyStatusTimestamp#4f96cb18
 type TL_inputPrivacyKeyStatusTimestamp struct {
 	M_classID int32
@@ -20651,6 +22073,10 @@ func (t *TL_inputPrivacyKeyStatusTimestamp) Encode() []byte {
 
 func (t *TL_inputPrivacyKeyStatusTimestamp) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPrivacyKeyStatusTimestamp) String() string {
+	return fmt.Sprintf("- inputPrivacyKeyStatusTimestamp#4f96cb18\n")
 }
 
 // inputPrivacyKeyChatInvite#bdfb0426
@@ -20680,6 +22106,10 @@ func (t *TL_inputPrivacyKeyChatInvite) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputPrivacyKeyChatInvite) String() string {
+	return fmt.Sprintf("- inputPrivacyKeyChatInvite#bdfb0426\n")
+}
+
 // inputPrivacyKeyPhoneCall#fabadc5f
 type TL_inputPrivacyKeyPhoneCall struct {
 	M_classID int32
@@ -20705,6 +22135,10 @@ func (t *TL_inputPrivacyKeyPhoneCall) Encode() []byte {
 
 func (t *TL_inputPrivacyKeyPhoneCall) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPrivacyKeyPhoneCall) String() string {
+	return fmt.Sprintf("- inputPrivacyKeyPhoneCall#fabadc5f\n")
 }
 
 // privacyKeyStatusTimestamp#bc2eab30
@@ -20734,6 +22168,10 @@ func (t *TL_privacyKeyStatusTimestamp) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_privacyKeyStatusTimestamp) String() string {
+	return fmt.Sprintf("- privacyKeyStatusTimestamp#bc2eab30\n")
+}
+
 // privacyKeyChatInvite#500e6dfa
 type TL_privacyKeyChatInvite struct {
 	M_classID int32
@@ -20759,6 +22197,10 @@ func (t *TL_privacyKeyChatInvite) Encode() []byte {
 
 func (t *TL_privacyKeyChatInvite) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_privacyKeyChatInvite) String() string {
+	return fmt.Sprintf("- privacyKeyChatInvite#500e6dfa\n")
 }
 
 // privacyKeyPhoneCall#3d662b7b
@@ -20788,6 +22230,10 @@ func (t *TL_privacyKeyPhoneCall) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_privacyKeyPhoneCall) String() string {
+	return fmt.Sprintf("- privacyKeyPhoneCall#3d662b7b\n")
+}
+
 // inputPrivacyValueAllowContacts#d09e07b
 type TL_inputPrivacyValueAllowContacts struct {
 	M_classID int32
@@ -20815,6 +22261,10 @@ func (t *TL_inputPrivacyValueAllowContacts) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputPrivacyValueAllowContacts) String() string {
+	return fmt.Sprintf("- inputPrivacyValueAllowContacts#d09e07b\n")
+}
+
 // inputPrivacyValueAllowAll#184b35ce
 type TL_inputPrivacyValueAllowAll struct {
 	M_classID int32
@@ -20840,6 +22290,10 @@ func (t *TL_inputPrivacyValueAllowAll) Encode() []byte {
 
 func (t *TL_inputPrivacyValueAllowAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPrivacyValueAllowAll) String() string {
+	return fmt.Sprintf("- inputPrivacyValueAllowAll#184b35ce\n")
 }
 
 // inputPrivacyValueAllowUsers#131cc67f
@@ -20883,6 +22337,10 @@ func (t *TL_inputPrivacyValueAllowUsers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPrivacyValueAllowUsers) String() string {
+	return fmt.Sprintf("- inputPrivacyValueAllowUsers#131cc67f\n-- users : %v\n", t.M_users)
+}
+
 // inputPrivacyValueDisallowContacts#ba52007
 type TL_inputPrivacyValueDisallowContacts struct {
 	M_classID int32
@@ -20910,6 +22368,10 @@ func (t *TL_inputPrivacyValueDisallowContacts) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_inputPrivacyValueDisallowContacts) String() string {
+	return fmt.Sprintf("- inputPrivacyValueDisallowContacts#ba52007\n")
+}
+
 // inputPrivacyValueDisallowAll#d66b66c9
 type TL_inputPrivacyValueDisallowAll struct {
 	M_classID int32
@@ -20935,6 +22397,10 @@ func (t *TL_inputPrivacyValueDisallowAll) Encode() []byte {
 
 func (t *TL_inputPrivacyValueDisallowAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputPrivacyValueDisallowAll) String() string {
+	return fmt.Sprintf("- inputPrivacyValueDisallowAll#d66b66c9\n")
 }
 
 // inputPrivacyValueDisallowUsers#90110467
@@ -20978,6 +22444,10 @@ func (t *TL_inputPrivacyValueDisallowUsers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPrivacyValueDisallowUsers) String() string {
+	return fmt.Sprintf("- inputPrivacyValueDisallowUsers#90110467\n-- users : %v\n", t.M_users)
+}
+
 // privacyValueAllowContacts#fffe1bac
 type TL_privacyValueAllowContacts struct {
 	M_classID int32
@@ -21005,6 +22475,10 @@ func (t *TL_privacyValueAllowContacts) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_privacyValueAllowContacts) String() string {
+	return fmt.Sprintf("- privacyValueAllowContacts#fffe1bac\n")
+}
+
 // privacyValueAllowAll#65427b82
 type TL_privacyValueAllowAll struct {
 	M_classID int32
@@ -21030,6 +22504,10 @@ func (t *TL_privacyValueAllowAll) Encode() []byte {
 
 func (t *TL_privacyValueAllowAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_privacyValueAllowAll) String() string {
+	return fmt.Sprintf("- privacyValueAllowAll#65427b82\n")
 }
 
 // privacyValueAllowUsers#4d5bbe0c
@@ -21073,6 +22551,10 @@ func (t *TL_privacyValueAllowUsers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_privacyValueAllowUsers) String() string {
+	return fmt.Sprintf("- privacyValueAllowUsers#4d5bbe0c\n-- users : %v\n", t.M_users)
+}
+
 // privacyValueDisallowContacts#f888fa1a
 type TL_privacyValueDisallowContacts struct {
 	M_classID int32
@@ -21100,6 +22582,10 @@ func (t *TL_privacyValueDisallowContacts) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_privacyValueDisallowContacts) String() string {
+	return fmt.Sprintf("- privacyValueDisallowContacts#f888fa1a\n")
+}
+
 // privacyValueDisallowAll#8b73e763
 type TL_privacyValueDisallowAll struct {
 	M_classID int32
@@ -21125,6 +22611,10 @@ func (t *TL_privacyValueDisallowAll) Encode() []byte {
 
 func (t *TL_privacyValueDisallowAll) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_privacyValueDisallowAll) String() string {
+	return fmt.Sprintf("- privacyValueDisallowAll#8b73e763\n")
 }
 
 // privacyValueDisallowUsers#c7f49b7
@@ -21166,6 +22656,10 @@ func (t *TL_privacyValueDisallowUsers) Decode(b []byte) error {
 	t.M_users = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_privacyValueDisallowUsers) String() string {
+	return fmt.Sprintf("- privacyValueDisallowUsers#c7f49b7\n-- users : %v\n", t.M_users)
 }
 
 // account_privacyRules#554abb6f
@@ -21220,6 +22714,10 @@ func (t *TL_account_privacyRules) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_privacyRules) String() string {
+	return fmt.Sprintf("- account_privacyRules#554abb6f\n-- rules : %v\n-- users : %v\n", t.M_rules, t.M_users)
+}
+
 // accountDaysTTL#b8d0afdf
 type TL_accountDaysTTL struct {
 	M_classID int32
@@ -21259,6 +22757,10 @@ func (t *TL_accountDaysTTL) Decode(b []byte) error {
 	t.M_days = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_accountDaysTTL) String() string {
+	return fmt.Sprintf("- accountDaysTTL#b8d0afdf\n-- days : %v\n", t.M_days)
 }
 
 // documentAttributeImageSize#6c37c15c
@@ -21313,6 +22815,10 @@ func (t *TL_documentAttributeImageSize) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_documentAttributeImageSize) String() string {
+	return fmt.Sprintf("- documentAttributeImageSize#6c37c15c\n-- w : %v\n-- h : %v\n", t.M_w, t.M_h)
+}
+
 // documentAttributeAnimated#11b58939
 type TL_documentAttributeAnimated struct {
 	M_classID int32
@@ -21338,6 +22844,10 @@ func (t *TL_documentAttributeAnimated) Encode() []byte {
 
 func (t *TL_documentAttributeAnimated) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_documentAttributeAnimated) String() string {
+	return fmt.Sprintf("- documentAttributeAnimated#11b58939\n")
 }
 
 // documentAttributeSticker#6319d612
@@ -21423,6 +22933,10 @@ func (t *TL_documentAttributeSticker) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_documentAttributeSticker) String() string {
+	return fmt.Sprintf("- documentAttributeSticker#6319d612\n-- flags : %v\n-- mask : %v\n-- alt : %v\n-- stickerset : %v\n-- mask_coords : %v\n", t.M_flags, t.M_mask, t.M_alt, t.M_stickerset, t.M_mask_coords)
+}
+
 // documentAttributeVideo#ef02ce6
 type TL_documentAttributeVideo struct {
 	M_classID       int32
@@ -21504,6 +23018,10 @@ func (t *TL_documentAttributeVideo) Decode(b []byte) error {
 	t.M_h = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_documentAttributeVideo) String() string {
+	return fmt.Sprintf("- documentAttributeVideo#ef02ce6\n-- flags : %v\n-- round_message : %v\n-- duration : %v\n-- w : %v\n-- h : %v\n", t.M_flags, t.M_round_message, t.M_duration, t.M_w, t.M_h)
 }
 
 // documentAttributeAudio#9852f9c6
@@ -21600,6 +23118,10 @@ func (t *TL_documentAttributeAudio) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_documentAttributeAudio) String() string {
+	return fmt.Sprintf("- documentAttributeAudio#9852f9c6\n-- flags : %v\n-- voice : %v\n-- duration : %v\n-- title : %v\n-- performer : %v\n-- waveform : %v\n", t.M_flags, t.M_voice, t.M_duration, t.M_title, t.M_performer, t.M_waveform)
+}
+
 // documentAttributeFilename#15590068
 type TL_documentAttributeFilename struct {
 	M_classID   int32
@@ -21641,6 +23163,10 @@ func (t *TL_documentAttributeFilename) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_documentAttributeFilename) String() string {
+	return fmt.Sprintf("- documentAttributeFilename#15590068\n-- file_name : %v\n", t.M_file_name)
+}
+
 // documentAttributeHasStickers#9801d2f7
 type TL_documentAttributeHasStickers struct {
 	M_classID int32
@@ -21668,6 +23194,10 @@ func (t *TL_documentAttributeHasStickers) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_documentAttributeHasStickers) String() string {
+	return fmt.Sprintf("- documentAttributeHasStickers#9801d2f7\n")
+}
+
 // messages_stickersNotModified#f1749a22
 type TL_messages_stickersNotModified struct {
 	M_classID int32
@@ -21693,6 +23223,10 @@ func (t *TL_messages_stickersNotModified) Encode() []byte {
 
 func (t *TL_messages_stickersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_stickersNotModified) String() string {
+	return fmt.Sprintf("- messages_stickersNotModified#f1749a22\n")
 }
 
 // messages_stickers#8a8ecd32
@@ -21747,6 +23281,10 @@ func (t *TL_messages_stickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_stickers) String() string {
+	return fmt.Sprintf("- messages_stickers#8a8ecd32\n-- hash : %v\n-- stickers : %v\n", t.M_hash, t.M_stickers)
+}
+
 // stickerPack#12b299d4
 type TL_stickerPack struct {
 	M_classID   int32
@@ -21799,6 +23337,10 @@ func (t *TL_stickerPack) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickerPack) String() string {
+	return fmt.Sprintf("- stickerPack#12b299d4\n-- emoticon : %v\n-- documents : %v\n", t.M_emoticon, t.M_documents)
+}
+
 // messages_allStickersNotModified#e86602c3
 type TL_messages_allStickersNotModified struct {
 	M_classID int32
@@ -21824,6 +23366,10 @@ func (t *TL_messages_allStickersNotModified) Encode() []byte {
 
 func (t *TL_messages_allStickersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_allStickersNotModified) String() string {
+	return fmt.Sprintf("- messages_allStickersNotModified#e86602c3\n")
 }
 
 // messages_allStickers#edfd405f
@@ -21878,6 +23424,10 @@ func (t *TL_messages_allStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_allStickers) String() string {
+	return fmt.Sprintf("- messages_allStickers#edfd405f\n-- hash : %v\n-- sets : %v\n", t.M_hash, t.M_sets)
+}
+
 // disabledFeature#ae636f24
 type TL_disabledFeature struct {
 	M_classID     int32
@@ -21928,6 +23478,10 @@ func (t *TL_disabledFeature) Decode(b []byte) error {
 	t.M_description = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_disabledFeature) String() string {
+	return fmt.Sprintf("- disabledFeature#ae636f24\n-- feature : %v\n-- description : %v\n", t.M_feature, t.M_description)
 }
 
 // messages_affectedMessages#84d19185
@@ -21982,6 +23536,10 @@ func (t *TL_messages_affectedMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_affectedMessages) String() string {
+	return fmt.Sprintf("- messages_affectedMessages#84d19185\n-- pts : %v\n-- pts_count : %v\n", t.M_pts, t.M_pts_count)
+}
+
 // contactLinkUnknown#5f4f9247
 type TL_contactLinkUnknown struct {
 	M_classID int32
@@ -22007,6 +23565,10 @@ func (t *TL_contactLinkUnknown) Encode() []byte {
 
 func (t *TL_contactLinkUnknown) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contactLinkUnknown) String() string {
+	return fmt.Sprintf("- contactLinkUnknown#5f4f9247\n")
 }
 
 // contactLinkNone#feedd3ad
@@ -22036,6 +23598,10 @@ func (t *TL_contactLinkNone) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_contactLinkNone) String() string {
+	return fmt.Sprintf("- contactLinkNone#feedd3ad\n")
+}
+
 // contactLinkHasPhone#268f3f59
 type TL_contactLinkHasPhone struct {
 	M_classID int32
@@ -22063,6 +23629,10 @@ func (t *TL_contactLinkHasPhone) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_contactLinkHasPhone) String() string {
+	return fmt.Sprintf("- contactLinkHasPhone#268f3f59\n")
+}
+
 // contactLinkContact#d502c2d0
 type TL_contactLinkContact struct {
 	M_classID int32
@@ -22088,6 +23658,10 @@ func (t *TL_contactLinkContact) Encode() []byte {
 
 func (t *TL_contactLinkContact) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contactLinkContact) String() string {
+	return fmt.Sprintf("- contactLinkContact#d502c2d0\n")
 }
 
 // webPageEmpty#eb1477e8
@@ -22129,6 +23703,10 @@ func (t *TL_webPageEmpty) Decode(b []byte) error {
 	t.M_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_webPageEmpty) String() string {
+	return fmt.Sprintf("- webPageEmpty#eb1477e8\n-- id : %v\n", t.M_id)
 }
 
 // webPagePending#c586da1c
@@ -22181,6 +23759,10 @@ func (t *TL_webPagePending) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_webPagePending) String() string {
+	return fmt.Sprintf("- webPagePending#c586da1c\n-- id : %v\n-- date : %v\n", t.M_id, t.M_date)
 }
 
 // webPage#5f07b4bc
@@ -22409,6 +23991,10 @@ func (t *TL_webPage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_webPage) String() string {
+	return fmt.Sprintf("- webPage#5f07b4bc\n-- flags : %v\n-- id : %v\n-- url : %v\n-- display_url : %v\n-- hash : %v\n-- type : %v\n-- site_name : %v\n-- title : %v\n-- description : %v\n-- photo : %v\n-- embed_url : %v\n-- embed_type : %v\n-- embed_width : %v\n-- embed_height : %v\n-- duration : %v\n-- author : %v\n-- document : %v\n-- cached_page : %v\n", t.M_flags, t.M_id, t.M_url, t.M_display_url, t.M_hash, t.M_type, t.M_site_name, t.M_title, t.M_description, t.M_photo, t.M_embed_url, t.M_embed_type, t.M_embed_width, t.M_embed_height, t.M_duration, t.M_author, t.M_document, t.M_cached_page)
+}
+
 // webPageNotModified#85849473
 type TL_webPageNotModified struct {
 	M_classID int32
@@ -22434,6 +24020,10 @@ func (t *TL_webPageNotModified) Encode() []byte {
 
 func (t *TL_webPageNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_webPageNotModified) String() string {
+	return fmt.Sprintf("- webPageNotModified#85849473\n")
 }
 
 // authorization#7bf2e6f6
@@ -22609,6 +24199,10 @@ func (t *TL_authorization) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_authorization) String() string {
+	return fmt.Sprintf("- authorization#7bf2e6f6\n-- hash : %v\n-- flags : %v\n-- device_model : %v\n-- platform : %v\n-- system_version : %v\n-- api_id : %v\n-- app_name : %v\n-- app_version : %v\n-- date_created : %v\n-- date_active : %v\n-- ip : %v\n-- country : %v\n-- region : %v\n", t.M_hash, t.M_flags, t.M_device_model, t.M_platform, t.M_system_version, t.M_api_id, t.M_app_name, t.M_app_version, t.M_date_created, t.M_date_active, t.M_ip, t.M_country, t.M_region)
+}
+
 // account_authorizations#1250abde
 type TL_account_authorizations struct {
 	M_classID        int32
@@ -22648,6 +24242,10 @@ func (t *TL_account_authorizations) Decode(b []byte) error {
 	t.M_authorizations = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_account_authorizations) String() string {
+	return fmt.Sprintf("- account_authorizations#1250abde\n-- authorizations : %v\n", t.M_authorizations)
 }
 
 // account_noPassword#96dabc18
@@ -22700,6 +24298,10 @@ func (t *TL_account_noPassword) Decode(b []byte) error {
 	t.M_email_unconfirmed_pattern = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_account_noPassword) String() string {
+	return fmt.Sprintf("- account_noPassword#96dabc18\n-- new_salt : %v\n-- email_unconfirmed_pattern : %v\n", t.M_new_salt, t.M_email_unconfirmed_pattern)
 }
 
 // account_password#7c18141c
@@ -22787,6 +24389,10 @@ func (t *TL_account_password) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_password) String() string {
+	return fmt.Sprintf("- account_password#7c18141c\n-- current_salt : %v\n-- new_salt : %v\n-- hint : %v\n-- has_recovery : %v\n-- email_unconfirmed_pattern : %v\n", t.M_current_salt, t.M_new_salt, t.M_hint, t.M_has_recovery, t.M_email_unconfirmed_pattern)
+}
+
 // account_passwordSettings#b7b72ab3
 type TL_account_passwordSettings struct {
 	M_classID int32
@@ -22826,6 +24432,10 @@ func (t *TL_account_passwordSettings) Decode(b []byte) error {
 	t.M_email = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_account_passwordSettings) String() string {
+	return fmt.Sprintf("- account_passwordSettings#b7b72ab3\n-- email : %v\n", t.M_email)
 }
 
 // account_passwordInputSettings#86916deb
@@ -22911,6 +24521,10 @@ func (t *TL_account_passwordInputSettings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_passwordInputSettings) String() string {
+	return fmt.Sprintf("- account_passwordInputSettings#86916deb\n-- flags : %v\n-- new_salt : %v\n-- new_password_hash : %v\n-- hint : %v\n-- email : %v\n", t.M_flags, t.M_new_salt, t.M_new_password_hash, t.M_hint, t.M_email)
+}
+
 // auth_passwordRecovery#137948a5
 type TL_auth_passwordRecovery struct {
 	M_classID       int32
@@ -22950,6 +24564,10 @@ func (t *TL_auth_passwordRecovery) Decode(b []byte) error {
 	t.M_email_pattern = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_auth_passwordRecovery) String() string {
+	return fmt.Sprintf("- auth_passwordRecovery#137948a5\n-- email_pattern : %v\n", t.M_email_pattern)
 }
 
 // receivedNotifyMessage#a384b779
@@ -23004,6 +24622,10 @@ func (t *TL_receivedNotifyMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_receivedNotifyMessage) String() string {
+	return fmt.Sprintf("- receivedNotifyMessage#a384b779\n-- id : %v\n-- flags : %v\n", t.M_id, t.M_flags)
+}
+
 // chatInviteEmpty#69df3769
 type TL_chatInviteEmpty struct {
 	M_classID int32
@@ -23029,6 +24651,10 @@ func (t *TL_chatInviteEmpty) Encode() []byte {
 
 func (t *TL_chatInviteEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_chatInviteEmpty) String() string {
+	return fmt.Sprintf("- chatInviteEmpty#69df3769\n")
 }
 
 // chatInviteExported#fc2e05bc
@@ -23072,6 +24698,10 @@ func (t *TL_chatInviteExported) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatInviteExported) String() string {
+	return fmt.Sprintf("- chatInviteExported#fc2e05bc\n-- link : %v\n", t.M_link)
+}
+
 // chatInviteAlready#5a686d7c
 type TL_chatInviteAlready struct {
 	M_classID int32
@@ -23111,6 +24741,10 @@ func (t *TL_chatInviteAlready) Decode(b []byte) error {
 	t.M_chat = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_chatInviteAlready) String() string {
+	return fmt.Sprintf("- chatInviteAlready#5a686d7c\n-- chat : %v\n", t.M_chat)
 }
 
 // chatInvite#db74f558
@@ -23240,6 +24874,10 @@ func (t *TL_chatInvite) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_chatInvite) String() string {
+	return fmt.Sprintf("- chatInvite#db74f558\n-- flags : %v\n-- channel : %v\n-- broadcast : %v\n-- public : %v\n-- megagroup : %v\n-- title : %v\n-- photo : %v\n-- participants_count : %v\n-- participants : %v\n", t.M_flags, t.M_channel, t.M_broadcast, t.M_public, t.M_megagroup, t.M_title, t.M_photo, t.M_participants_count, t.M_participants)
+}
+
 // inputStickerSetEmpty#ffb62b95
 type TL_inputStickerSetEmpty struct {
 	M_classID int32
@@ -23265,6 +24903,10 @@ func (t *TL_inputStickerSetEmpty) Encode() []byte {
 
 func (t *TL_inputStickerSetEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputStickerSetEmpty) String() string {
+	return fmt.Sprintf("- inputStickerSetEmpty#ffb62b95\n")
 }
 
 // inputStickerSetID#9de7a269
@@ -23319,6 +24961,10 @@ func (t *TL_inputStickerSetID) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputStickerSetID) String() string {
+	return fmt.Sprintf("- inputStickerSetID#9de7a269\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
+}
+
 // inputStickerSetShortName#861cc8a0
 type TL_inputStickerSetShortName struct {
 	M_classID    int32
@@ -23358,6 +25004,10 @@ func (t *TL_inputStickerSetShortName) Decode(b []byte) error {
 	t.M_short_name = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inputStickerSetShortName) String() string {
+	return fmt.Sprintf("- inputStickerSetShortName#861cc8a0\n-- short_name : %v\n", t.M_short_name)
 }
 
 // stickerSet#cd303b41
@@ -23509,6 +25159,10 @@ func (t *TL_stickerSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickerSet) String() string {
+	return fmt.Sprintf("- stickerSet#cd303b41\n-- flags : %v\n-- installed : %v\n-- archived : %v\n-- official : %v\n-- masks : %v\n-- id : %v\n-- access_hash : %v\n-- title : %v\n-- short_name : %v\n-- count : %v\n-- hash : %v\n", t.M_flags, t.M_installed, t.M_archived, t.M_official, t.M_masks, t.M_id, t.M_access_hash, t.M_title, t.M_short_name, t.M_count, t.M_hash)
+}
+
 // messages_stickerSet#b60a24a6
 type TL_messages_stickerSet struct {
 	M_classID   int32
@@ -23572,6 +25226,10 @@ func (t *TL_messages_stickerSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_stickerSet) String() string {
+	return fmt.Sprintf("- messages_stickerSet#b60a24a6\n-- set : %v\n-- packs : %v\n-- documents : %v\n", t.M_set, t.M_packs, t.M_documents)
+}
+
 // botCommand#c27ac8c7
 type TL_botCommand struct {
 	M_classID     int32
@@ -23622,6 +25280,10 @@ func (t *TL_botCommand) Decode(b []byte) error {
 	t.M_description = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_botCommand) String() string {
+	return fmt.Sprintf("- botCommand#c27ac8c7\n-- command : %v\n-- description : %v\n", t.M_command, t.M_description)
 }
 
 // botInfo#98e81d3a
@@ -23687,6 +25349,10 @@ func (t *TL_botInfo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_botInfo) String() string {
+	return fmt.Sprintf("- botInfo#98e81d3a\n-- user_id : %v\n-- description : %v\n-- commands : %v\n", t.M_user_id, t.M_description, t.M_commands)
+}
+
 // keyboardButton#a2fa4880
 type TL_keyboardButton struct {
 	M_classID int32
@@ -23726,6 +25392,10 @@ func (t *TL_keyboardButton) Decode(b []byte) error {
 	t.M_text = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_keyboardButton) String() string {
+	return fmt.Sprintf("- keyboardButton#a2fa4880\n-- text : %v\n", t.M_text)
 }
 
 // keyboardButtonUrl#258aff05
@@ -23780,6 +25450,10 @@ func (t *TL_keyboardButtonUrl) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_keyboardButtonUrl) String() string {
+	return fmt.Sprintf("- keyboardButtonUrl#258aff05\n-- text : %v\n-- url : %v\n", t.M_text, t.M_url)
+}
+
 // keyboardButtonCallback#683a5e46
 type TL_keyboardButtonCallback struct {
 	M_classID int32
@@ -23832,6 +25506,10 @@ func (t *TL_keyboardButtonCallback) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_keyboardButtonCallback) String() string {
+	return fmt.Sprintf("- keyboardButtonCallback#683a5e46\n-- text : %v\n-- data : %v\n", t.M_text, t.M_data)
+}
+
 // keyboardButtonRequestPhone#b16a6c29
 type TL_keyboardButtonRequestPhone struct {
 	M_classID int32
@@ -23873,6 +25551,10 @@ func (t *TL_keyboardButtonRequestPhone) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_keyboardButtonRequestPhone) String() string {
+	return fmt.Sprintf("- keyboardButtonRequestPhone#b16a6c29\n-- text : %v\n", t.M_text)
+}
+
 // keyboardButtonRequestGeoLocation#fc796b3f
 type TL_keyboardButtonRequestGeoLocation struct {
 	M_classID int32
@@ -23912,6 +25594,10 @@ func (t *TL_keyboardButtonRequestGeoLocation) Decode(b []byte) error {
 	t.M_text = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_keyboardButtonRequestGeoLocation) String() string {
+	return fmt.Sprintf("- keyboardButtonRequestGeoLocation#fc796b3f\n-- text : %v\n", t.M_text)
 }
 
 // keyboardButtonSwitchInline#568a748
@@ -23986,6 +25672,10 @@ func (t *TL_keyboardButtonSwitchInline) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_keyboardButtonSwitchInline) String() string {
+	return fmt.Sprintf("- keyboardButtonSwitchInline#568a748\n-- flags : %v\n-- same_peer : %v\n-- text : %v\n-- query : %v\n", t.M_flags, t.M_same_peer, t.M_text, t.M_query)
+}
+
 // keyboardButtonGame#50f41ccf
 type TL_keyboardButtonGame struct {
 	M_classID int32
@@ -24025,6 +25715,10 @@ func (t *TL_keyboardButtonGame) Decode(b []byte) error {
 	t.M_text = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_keyboardButtonGame) String() string {
+	return fmt.Sprintf("- keyboardButtonGame#50f41ccf\n-- text : %v\n", t.M_text)
 }
 
 // keyboardButtonBuy#afd93fbb
@@ -24068,6 +25762,10 @@ func (t *TL_keyboardButtonBuy) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_keyboardButtonBuy) String() string {
+	return fmt.Sprintf("- keyboardButtonBuy#afd93fbb\n-- text : %v\n", t.M_text)
+}
+
 // keyboardButtonRow#77608b83
 type TL_keyboardButtonRow struct {
 	M_classID int32
@@ -24107,6 +25805,10 @@ func (t *TL_keyboardButtonRow) Decode(b []byte) error {
 	t.M_buttons = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_keyboardButtonRow) String() string {
+	return fmt.Sprintf("- keyboardButtonRow#77608b83\n-- buttons : %v\n", t.M_buttons)
 }
 
 // replyKeyboardHide#a03e5b85
@@ -24157,6 +25859,10 @@ func (t *TL_replyKeyboardHide) Decode(b []byte) error {
 	t.M_selective = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_replyKeyboardHide) String() string {
+	return fmt.Sprintf("- replyKeyboardHide#a03e5b85\n-- flags : %v\n-- selective : %v\n", t.M_flags, t.M_selective)
 }
 
 // replyKeyboardForceReply#f4108aa0
@@ -24218,6 +25924,10 @@ func (t *TL_replyKeyboardForceReply) Decode(b []byte) error {
 	t.M_selective = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_replyKeyboardForceReply) String() string {
+	return fmt.Sprintf("- replyKeyboardForceReply#f4108aa0\n-- flags : %v\n-- single_use : %v\n-- selective : %v\n", t.M_flags, t.M_single_use, t.M_selective)
 }
 
 // replyKeyboardMarkup#3502758c
@@ -24303,6 +26013,10 @@ func (t *TL_replyKeyboardMarkup) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_replyKeyboardMarkup) String() string {
+	return fmt.Sprintf("- replyKeyboardMarkup#3502758c\n-- flags : %v\n-- resize : %v\n-- single_use : %v\n-- selective : %v\n-- rows : %v\n", t.M_flags, t.M_resize, t.M_single_use, t.M_selective, t.M_rows)
+}
+
 // replyInlineMarkup#48a30254
 type TL_replyInlineMarkup struct {
 	M_classID int32
@@ -24342,6 +26056,10 @@ func (t *TL_replyInlineMarkup) Decode(b []byte) error {
 	t.M_rows = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_replyInlineMarkup) String() string {
+	return fmt.Sprintf("- replyInlineMarkup#48a30254\n-- rows : %v\n", t.M_rows)
 }
 
 // messageEntityUnknown#bb92ba95
@@ -24396,6 +26114,10 @@ func (t *TL_messageEntityUnknown) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityUnknown) String() string {
+	return fmt.Sprintf("- messageEntityUnknown#bb92ba95\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
+}
+
 // messageEntityMention#fa04579d
 type TL_messageEntityMention struct {
 	M_classID int32
@@ -24446,6 +26168,10 @@ func (t *TL_messageEntityMention) Decode(b []byte) error {
 	t.M_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageEntityMention) String() string {
+	return fmt.Sprintf("- messageEntityMention#fa04579d\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
 }
 
 // messageEntityHashtag#6f635b0d
@@ -24500,6 +26226,10 @@ func (t *TL_messageEntityHashtag) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityHashtag) String() string {
+	return fmt.Sprintf("- messageEntityHashtag#6f635b0d\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
+}
+
 // messageEntityBotCommand#6cef8ac7
 type TL_messageEntityBotCommand struct {
 	M_classID int32
@@ -24550,6 +26280,10 @@ func (t *TL_messageEntityBotCommand) Decode(b []byte) error {
 	t.M_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageEntityBotCommand) String() string {
+	return fmt.Sprintf("- messageEntityBotCommand#6cef8ac7\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
 }
 
 // messageEntityUrl#6ed02538
@@ -24604,6 +26338,10 @@ func (t *TL_messageEntityUrl) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityUrl) String() string {
+	return fmt.Sprintf("- messageEntityUrl#6ed02538\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
+}
+
 // messageEntityEmail#64e475c2
 type TL_messageEntityEmail struct {
 	M_classID int32
@@ -24654,6 +26392,10 @@ func (t *TL_messageEntityEmail) Decode(b []byte) error {
 	t.M_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageEntityEmail) String() string {
+	return fmt.Sprintf("- messageEntityEmail#64e475c2\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
 }
 
 // messageEntityBold#bd610bc9
@@ -24708,6 +26450,10 @@ func (t *TL_messageEntityBold) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityBold) String() string {
+	return fmt.Sprintf("- messageEntityBold#bd610bc9\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
+}
+
 // messageEntityItalic#826f8b60
 type TL_messageEntityItalic struct {
 	M_classID int32
@@ -24760,6 +26506,10 @@ func (t *TL_messageEntityItalic) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityItalic) String() string {
+	return fmt.Sprintf("- messageEntityItalic#826f8b60\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
+}
+
 // messageEntityCode#28a20571
 type TL_messageEntityCode struct {
 	M_classID int32
@@ -24810,6 +26560,10 @@ func (t *TL_messageEntityCode) Decode(b []byte) error {
 	t.M_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageEntityCode) String() string {
+	return fmt.Sprintf("- messageEntityCode#28a20571\n-- offset : %v\n-- length : %v\n", t.M_offset, t.M_length)
 }
 
 // messageEntityPre#73924be0
@@ -24875,6 +26629,10 @@ func (t *TL_messageEntityPre) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityPre) String() string {
+	return fmt.Sprintf("- messageEntityPre#73924be0\n-- offset : %v\n-- length : %v\n-- language : %v\n", t.M_offset, t.M_length, t.M_language)
+}
+
 // messageEntityTextUrl#76a6d327
 type TL_messageEntityTextUrl struct {
 	M_classID int32
@@ -24936,6 +26694,10 @@ func (t *TL_messageEntityTextUrl) Decode(b []byte) error {
 	t.M_url = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messageEntityTextUrl) String() string {
+	return fmt.Sprintf("- messageEntityTextUrl#76a6d327\n-- offset : %v\n-- length : %v\n-- url : %v\n", t.M_offset, t.M_length, t.M_url)
 }
 
 // messageEntityMentionName#352dca58
@@ -25001,6 +26763,10 @@ func (t *TL_messageEntityMentionName) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageEntityMentionName) String() string {
+	return fmt.Sprintf("- messageEntityMentionName#352dca58\n-- offset : %v\n-- length : %v\n-- user_id : %v\n", t.M_offset, t.M_length, t.M_user_id)
+}
+
 // inputMessageEntityMentionName#208e68c9
 type TL_inputMessageEntityMentionName struct {
 	M_classID int32
@@ -25064,6 +26830,10 @@ func (t *TL_inputMessageEntityMentionName) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputMessageEntityMentionName) String() string {
+	return fmt.Sprintf("- inputMessageEntityMentionName#208e68c9\n-- offset : %v\n-- length : %v\n-- user_id : %v\n", t.M_offset, t.M_length, t.M_user_id)
+}
+
 // inputChannelEmpty#ee8c1e86
 type TL_inputChannelEmpty struct {
 	M_classID int32
@@ -25089,6 +26859,10 @@ func (t *TL_inputChannelEmpty) Encode() []byte {
 
 func (t *TL_inputChannelEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_inputChannelEmpty) String() string {
+	return fmt.Sprintf("- inputChannelEmpty#ee8c1e86\n")
 }
 
 // inputChannel#afeb712e
@@ -25141,6 +26915,10 @@ func (t *TL_inputChannel) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputChannel) String() string {
+	return fmt.Sprintf("- inputChannel#afeb712e\n-- channel_id : %v\n-- access_hash : %v\n", t.M_channel_id, t.M_access_hash)
 }
 
 // contacts_resolvedPeer#7f077ad9
@@ -25206,6 +26984,10 @@ func (t *TL_contacts_resolvedPeer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_resolvedPeer) String() string {
+	return fmt.Sprintf("- contacts_resolvedPeer#7f077ad9\n-- peer : %v\n-- chats : %v\n-- users : %v\n", t.M_peer, t.M_chats, t.M_users)
+}
+
 // messageRange#ae30253
 type TL_messageRange struct {
 	M_classID int32
@@ -25256,6 +27038,10 @@ func (t *TL_messageRange) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messageRange) String() string {
+	return fmt.Sprintf("- messageRange#ae30253\n-- min_id : %v\n-- max_id : %v\n", t.M_min_id, t.M_max_id)
 }
 
 // updates_channelDifferenceEmpty#3e11affb
@@ -25328,6 +27114,10 @@ func (t *TL_updates_channelDifferenceEmpty) Decode(b []byte) error {
 	t.M_timeout = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_updates_channelDifferenceEmpty) String() string {
+	return fmt.Sprintf("- updates_channelDifferenceEmpty#3e11affb\n-- flags : %v\n-- final : %v\n-- pts : %v\n-- timeout : %v\n", t.M_flags, t.M_final, t.M_pts, t.M_timeout)
 }
 
 // updates_channelDifferenceTooLong#6a9d7b35
@@ -25490,6 +27280,10 @@ func (t *TL_updates_channelDifferenceTooLong) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_channelDifferenceTooLong) String() string {
+	return fmt.Sprintf("- updates_channelDifferenceTooLong#6a9d7b35\n-- flags : %v\n-- final : %v\n-- pts : %v\n-- timeout : %v\n-- top_message : %v\n-- read_inbox_max_id : %v\n-- read_outbox_max_id : %v\n-- unread_count : %v\n-- unread_mentions_count : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n", t.M_flags, t.M_final, t.M_pts, t.M_timeout, t.M_top_message, t.M_read_inbox_max_id, t.M_read_outbox_max_id, t.M_unread_count, t.M_unread_mentions_count, t.M_messages, t.M_chats, t.M_users)
+}
+
 // updates_channelDifference#2064674e
 type TL_updates_channelDifference struct {
 	M_classID       int32
@@ -25606,6 +27400,10 @@ func (t *TL_updates_channelDifference) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_channelDifference) String() string {
+	return fmt.Sprintf("- updates_channelDifference#2064674e\n-- flags : %v\n-- final : %v\n-- pts : %v\n-- timeout : %v\n-- new_messages : %v\n-- other_updates : %v\n-- chats : %v\n-- users : %v\n", t.M_flags, t.M_final, t.M_pts, t.M_timeout, t.M_new_messages, t.M_other_updates, t.M_chats, t.M_users)
+}
+
 // channelMessagesFilterEmpty#94d42ee7
 type TL_channelMessagesFilterEmpty struct {
 	M_classID int32
@@ -25631,6 +27429,10 @@ func (t *TL_channelMessagesFilterEmpty) Encode() []byte {
 
 func (t *TL_channelMessagesFilterEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channelMessagesFilterEmpty) String() string {
+	return fmt.Sprintf("- channelMessagesFilterEmpty#94d42ee7\n")
 }
 
 // channelMessagesFilter#cd77d957
@@ -25694,6 +27496,10 @@ func (t *TL_channelMessagesFilter) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelMessagesFilter) String() string {
+	return fmt.Sprintf("- channelMessagesFilter#cd77d957\n-- flags : %v\n-- exclude_new_messages : %v\n-- ranges : %v\n", t.M_flags, t.M_exclude_new_messages, t.M_ranges)
+}
+
 // channelParticipant#15ebac1d
 type TL_channelParticipant struct {
 	M_classID int32
@@ -25744,6 +27550,10 @@ func (t *TL_channelParticipant) Decode(b []byte) error {
 	t.M_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_channelParticipant) String() string {
+	return fmt.Sprintf("- channelParticipant#15ebac1d\n-- user_id : %v\n-- date : %v\n", t.M_user_id, t.M_date)
 }
 
 // channelParticipantSelf#a3289a6d
@@ -25809,6 +27619,10 @@ func (t *TL_channelParticipantSelf) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelParticipantSelf) String() string {
+	return fmt.Sprintf("- channelParticipantSelf#a3289a6d\n-- user_id : %v\n-- inviter_id : %v\n-- date : %v\n", t.M_user_id, t.M_inviter_id, t.M_date)
+}
+
 // channelParticipantCreator#e3e2e1f9
 type TL_channelParticipantCreator struct {
 	M_classID int32
@@ -25848,6 +27662,10 @@ func (t *TL_channelParticipantCreator) Decode(b []byte) error {
 	t.M_user_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_channelParticipantCreator) String() string {
+	return fmt.Sprintf("- channelParticipantCreator#e3e2e1f9\n-- user_id : %v\n", t.M_user_id)
 }
 
 // channelParticipantAdmin#a82fa898
@@ -25955,6 +27773,10 @@ func (t *TL_channelParticipantAdmin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelParticipantAdmin) String() string {
+	return fmt.Sprintf("- channelParticipantAdmin#a82fa898\n-- flags : %v\n-- can_edit : %v\n-- user_id : %v\n-- inviter_id : %v\n-- promoted_by : %v\n-- date : %v\n-- admin_rights : %v\n", t.M_flags, t.M_can_edit, t.M_user_id, t.M_inviter_id, t.M_promoted_by, t.M_date, t.M_admin_rights)
+}
+
 // channelParticipantBanned#222c1886
 type TL_channelParticipantBanned struct {
 	M_classID       int32
@@ -26049,6 +27871,10 @@ func (t *TL_channelParticipantBanned) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelParticipantBanned) String() string {
+	return fmt.Sprintf("- channelParticipantBanned#222c1886\n-- flags : %v\n-- left : %v\n-- user_id : %v\n-- kicked_by : %v\n-- date : %v\n-- banned_rights : %v\n", t.M_flags, t.M_left, t.M_user_id, t.M_kicked_by, t.M_date, t.M_banned_rights)
+}
+
 // channelParticipantsRecent#de3f3c79
 type TL_channelParticipantsRecent struct {
 	M_classID int32
@@ -26076,6 +27902,10 @@ func (t *TL_channelParticipantsRecent) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_channelParticipantsRecent) String() string {
+	return fmt.Sprintf("- channelParticipantsRecent#de3f3c79\n")
+}
+
 // channelParticipantsAdmins#b4608969
 type TL_channelParticipantsAdmins struct {
 	M_classID int32
@@ -26101,6 +27931,10 @@ func (t *TL_channelParticipantsAdmins) Encode() []byte {
 
 func (t *TL_channelParticipantsAdmins) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channelParticipantsAdmins) String() string {
+	return fmt.Sprintf("- channelParticipantsAdmins#b4608969\n")
 }
 
 // channelParticipantsKicked#a3b54985
@@ -26144,6 +27978,10 @@ func (t *TL_channelParticipantsKicked) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelParticipantsKicked) String() string {
+	return fmt.Sprintf("- channelParticipantsKicked#a3b54985\n-- q : %v\n", t.M_q)
+}
+
 // channelParticipantsBots#b0d1865b
 type TL_channelParticipantsBots struct {
 	M_classID int32
@@ -26169,6 +28007,10 @@ func (t *TL_channelParticipantsBots) Encode() []byte {
 
 func (t *TL_channelParticipantsBots) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channelParticipantsBots) String() string {
+	return fmt.Sprintf("- channelParticipantsBots#b0d1865b\n")
 }
 
 // channelParticipantsBanned#1427a5e1
@@ -26212,6 +28054,10 @@ func (t *TL_channelParticipantsBanned) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelParticipantsBanned) String() string {
+	return fmt.Sprintf("- channelParticipantsBanned#1427a5e1\n-- q : %v\n", t.M_q)
+}
+
 // channelParticipantsSearch#656ac4b
 type TL_channelParticipantsSearch struct {
 	M_classID int32
@@ -26251,6 +28097,10 @@ func (t *TL_channelParticipantsSearch) Decode(b []byte) error {
 	t.M_q = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channelParticipantsSearch) String() string {
+	return fmt.Sprintf("- channelParticipantsSearch#656ac4b\n-- q : %v\n", t.M_q)
 }
 
 // channels_channelParticipants#f56ee2a8
@@ -26316,6 +28166,10 @@ func (t *TL_channels_channelParticipants) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_channelParticipants) String() string {
+	return fmt.Sprintf("- channels_channelParticipants#f56ee2a8\n-- count : %v\n-- participants : %v\n-- users : %v\n", t.M_count, t.M_participants, t.M_users)
+}
+
 // channels_channelParticipantsNotModified#f0173fe9
 type TL_channels_channelParticipantsNotModified struct {
 	M_classID int32
@@ -26341,6 +28195,10 @@ func (t *TL_channels_channelParticipantsNotModified) Encode() []byte {
 
 func (t *TL_channels_channelParticipantsNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channels_channelParticipantsNotModified) String() string {
+	return fmt.Sprintf("- channels_channelParticipantsNotModified#f0173fe9\n")
 }
 
 // channels_channelParticipant#d0d9b163
@@ -26395,6 +28253,10 @@ func (t *TL_channels_channelParticipant) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_channelParticipant) String() string {
+	return fmt.Sprintf("- channels_channelParticipant#d0d9b163\n-- participant : %v\n-- users : %v\n", t.M_participant, t.M_users)
+}
+
 // help_termsOfService#f1ee3e90
 type TL_help_termsOfService struct {
 	M_classID int32
@@ -26434,6 +28296,10 @@ func (t *TL_help_termsOfService) Decode(b []byte) error {
 	t.M_text = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_help_termsOfService) String() string {
+	return fmt.Sprintf("- help_termsOfService#f1ee3e90\n-- text : %v\n", t.M_text)
 }
 
 // foundGif#162ecc1f
@@ -26532,6 +28398,10 @@ func (t *TL_foundGif) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_foundGif) String() string {
+	return fmt.Sprintf("- foundGif#162ecc1f\n-- url : %v\n-- thumb_url : %v\n-- content_url : %v\n-- content_type : %v\n-- w : %v\n-- h : %v\n", t.M_url, t.M_thumb_url, t.M_content_url, t.M_content_type, t.M_w, t.M_h)
+}
+
 // foundGifCached#9c750409
 type TL_foundGifCached struct {
 	M_classID  int32
@@ -26595,6 +28465,10 @@ func (t *TL_foundGifCached) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_foundGifCached) String() string {
+	return fmt.Sprintf("- foundGifCached#9c750409\n-- url : %v\n-- photo : %v\n-- document : %v\n", t.M_url, t.M_photo, t.M_document)
+}
+
 // messages_foundGifs#450a1c0a
 type TL_messages_foundGifs struct {
 	M_classID     int32
@@ -26647,6 +28521,10 @@ func (t *TL_messages_foundGifs) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_foundGifs) String() string {
+	return fmt.Sprintf("- messages_foundGifs#450a1c0a\n-- next_offset : %v\n-- results : %v\n", t.M_next_offset, t.M_results)
+}
+
 // messages_savedGifsNotModified#e8025ca2
 type TL_messages_savedGifsNotModified struct {
 	M_classID int32
@@ -26672,6 +28550,10 @@ func (t *TL_messages_savedGifsNotModified) Encode() []byte {
 
 func (t *TL_messages_savedGifsNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_savedGifsNotModified) String() string {
+	return fmt.Sprintf("- messages_savedGifsNotModified#e8025ca2\n")
 }
 
 // messages_savedGifs#2e0709a5
@@ -26724,6 +28606,10 @@ func (t *TL_messages_savedGifs) Decode(b []byte) error {
 	t.M_gifs = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_savedGifs) String() string {
+	return fmt.Sprintf("- messages_savedGifs#2e0709a5\n-- hash : %v\n-- gifs : %v\n", t.M_hash, t.M_gifs)
 }
 
 // inputBotInlineMessageMediaAuto#292fed13
@@ -26785,6 +28671,10 @@ func (t *TL_inputBotInlineMessageMediaAuto) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputBotInlineMessageMediaAuto) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageMediaAuto#292fed13\n-- flags : %v\n-- caption : %v\n-- reply_markup : %v\n", t.M_flags, t.M_caption, t.M_reply_markup)
 }
 
 // inputBotInlineMessageText#3dcd7a87
@@ -26870,6 +28760,10 @@ func (t *TL_inputBotInlineMessageText) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineMessageText) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageText#3dcd7a87\n-- flags : %v\n-- no_webpage : %v\n-- message : %v\n-- entities : %v\n-- reply_markup : %v\n", t.M_flags, t.M_no_webpage, t.M_message, t.M_entities, t.M_reply_markup)
+}
+
 // inputBotInlineMessageMediaGeo#c1b15d65
 type TL_inputBotInlineMessageMediaGeo struct {
 	M_classID      int32
@@ -26940,6 +28834,10 @@ func (t *TL_inputBotInlineMessageMediaGeo) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputBotInlineMessageMediaGeo) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageMediaGeo#c1b15d65\n-- flags : %v\n-- geo_point : %v\n-- period : %v\n-- reply_markup : %v\n", t.M_flags, t.M_geo_point, t.M_period, t.M_reply_markup)
 }
 
 // inputBotInlineMessageMediaVenue#aaafadc8
@@ -27047,6 +28945,10 @@ func (t *TL_inputBotInlineMessageMediaVenue) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineMessageMediaVenue) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageMediaVenue#aaafadc8\n-- flags : %v\n-- geo_point : %v\n-- title : %v\n-- address : %v\n-- provider : %v\n-- venue_id : %v\n-- reply_markup : %v\n", t.M_flags, t.M_geo_point, t.M_title, t.M_address, t.M_provider, t.M_venue_id, t.M_reply_markup)
+}
+
 // inputBotInlineMessageMediaContact#2daf01a7
 type TL_inputBotInlineMessageMediaContact struct {
 	M_classID      int32
@@ -27130,6 +29032,10 @@ func (t *TL_inputBotInlineMessageMediaContact) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineMessageMediaContact) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageMediaContact#2daf01a7\n-- flags : %v\n-- phone_number : %v\n-- first_name : %v\n-- last_name : %v\n-- reply_markup : %v\n", t.M_flags, t.M_phone_number, t.M_first_name, t.M_last_name, t.M_reply_markup)
+}
+
 // inputBotInlineMessageGame#4b425864
 type TL_inputBotInlineMessageGame struct {
 	M_classID      int32
@@ -27178,6 +29084,10 @@ func (t *TL_inputBotInlineMessageGame) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputBotInlineMessageGame) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageGame#4b425864\n-- flags : %v\n-- reply_markup : %v\n", t.M_flags, t.M_reply_markup)
 }
 
 // inputBotInlineResult#2cbbe15a
@@ -27351,6 +29261,10 @@ func (t *TL_inputBotInlineResult) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineResult) String() string {
+	return fmt.Sprintf("- inputBotInlineResult#2cbbe15a\n-- flags : %v\n-- id : %v\n-- type : %v\n-- title : %v\n-- description : %v\n-- url : %v\n-- thumb_url : %v\n-- content_url : %v\n-- content_type : %v\n-- w : %v\n-- h : %v\n-- duration : %v\n-- send_message : %v\n", t.M_flags, t.M_id, t.M_type, t.M_title, t.M_description, t.M_url, t.M_thumb_url, t.M_content_url, t.M_content_type, t.M_w, t.M_h, t.M_duration, t.M_send_message)
+}
+
 // inputBotInlineResultPhoto#a8d864a7
 type TL_inputBotInlineResultPhoto struct {
 	M_classID      int32
@@ -27423,6 +29337,10 @@ func (t *TL_inputBotInlineResultPhoto) Decode(b []byte) error {
 	t.M_send_message = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputBotInlineResultPhoto) String() string {
+	return fmt.Sprintf("- inputBotInlineResultPhoto#a8d864a7\n-- id : %v\n-- type : %v\n-- photo : %v\n-- send_message : %v\n", t.M_id, t.M_type, t.M_photo, t.M_send_message)
 }
 
 // inputBotInlineResultDocument#fff8fdc4
@@ -27530,6 +29448,10 @@ func (t *TL_inputBotInlineResultDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineResultDocument) String() string {
+	return fmt.Sprintf("- inputBotInlineResultDocument#fff8fdc4\n-- flags : %v\n-- id : %v\n-- type : %v\n-- title : %v\n-- description : %v\n-- document : %v\n-- send_message : %v\n", t.M_flags, t.M_id, t.M_type, t.M_title, t.M_description, t.M_document, t.M_send_message)
+}
+
 // inputBotInlineResultGame#4fa417f2
 type TL_inputBotInlineResultGame struct {
 	M_classID      int32
@@ -27593,6 +29515,10 @@ func (t *TL_inputBotInlineResultGame) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineResultGame) String() string {
+	return fmt.Sprintf("- inputBotInlineResultGame#4fa417f2\n-- id : %v\n-- short_name : %v\n-- send_message : %v\n", t.M_id, t.M_short_name, t.M_send_message)
+}
+
 // botInlineMessageMediaAuto#a74b15b
 type TL_botInlineMessageMediaAuto struct {
 	M_classID      int32
@@ -27652,6 +29578,10 @@ func (t *TL_botInlineMessageMediaAuto) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_botInlineMessageMediaAuto) String() string {
+	return fmt.Sprintf("- botInlineMessageMediaAuto#a74b15b\n-- flags : %v\n-- caption : %v\n-- reply_markup : %v\n", t.M_flags, t.M_caption, t.M_reply_markup)
 }
 
 // botInlineMessageText#8c7f65e2
@@ -27737,6 +29667,10 @@ func (t *TL_botInlineMessageText) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_botInlineMessageText) String() string {
+	return fmt.Sprintf("- botInlineMessageText#8c7f65e2\n-- flags : %v\n-- no_webpage : %v\n-- message : %v\n-- entities : %v\n-- reply_markup : %v\n", t.M_flags, t.M_no_webpage, t.M_message, t.M_entities, t.M_reply_markup)
+}
+
 // botInlineMessageMediaGeo#b722de65
 type TL_botInlineMessageMediaGeo struct {
 	M_classID      int32
@@ -27807,6 +29741,10 @@ func (t *TL_botInlineMessageMediaGeo) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_botInlineMessageMediaGeo) String() string {
+	return fmt.Sprintf("- botInlineMessageMediaGeo#b722de65\n-- flags : %v\n-- geo : %v\n-- period : %v\n-- reply_markup : %v\n", t.M_flags, t.M_geo, t.M_period, t.M_reply_markup)
 }
 
 // botInlineMessageMediaVenue#4366232e
@@ -27914,6 +29852,10 @@ func (t *TL_botInlineMessageMediaVenue) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_botInlineMessageMediaVenue) String() string {
+	return fmt.Sprintf("- botInlineMessageMediaVenue#4366232e\n-- flags : %v\n-- geo : %v\n-- title : %v\n-- address : %v\n-- provider : %v\n-- venue_id : %v\n-- reply_markup : %v\n", t.M_flags, t.M_geo, t.M_title, t.M_address, t.M_provider, t.M_venue_id, t.M_reply_markup)
+}
+
 // botInlineMessageMediaContact#35edb4d4
 type TL_botInlineMessageMediaContact struct {
 	M_classID      int32
@@ -27995,6 +29937,10 @@ func (t *TL_botInlineMessageMediaContact) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_botInlineMessageMediaContact) String() string {
+	return fmt.Sprintf("- botInlineMessageMediaContact#35edb4d4\n-- flags : %v\n-- phone_number : %v\n-- first_name : %v\n-- last_name : %v\n-- reply_markup : %v\n", t.M_flags, t.M_phone_number, t.M_first_name, t.M_last_name, t.M_reply_markup)
 }
 
 // botInlineResult#9bebaeb9
@@ -28168,6 +30114,10 @@ func (t *TL_botInlineResult) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_botInlineResult) String() string {
+	return fmt.Sprintf("- botInlineResult#9bebaeb9\n-- flags : %v\n-- id : %v\n-- type : %v\n-- title : %v\n-- description : %v\n-- url : %v\n-- thumb_url : %v\n-- content_url : %v\n-- content_type : %v\n-- w : %v\n-- h : %v\n-- duration : %v\n-- send_message : %v\n", t.M_flags, t.M_id, t.M_type, t.M_title, t.M_description, t.M_url, t.M_thumb_url, t.M_content_url, t.M_content_type, t.M_w, t.M_h, t.M_duration, t.M_send_message)
+}
+
 // botInlineMediaResult#17db940b
 type TL_botInlineMediaResult struct {
 	M_classID      int32
@@ -28282,6 +30232,10 @@ func (t *TL_botInlineMediaResult) Decode(b []byte) error {
 	t.M_send_message = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_botInlineMediaResult) String() string {
+	return fmt.Sprintf("- botInlineMediaResult#17db940b\n-- flags : %v\n-- id : %v\n-- type : %v\n-- photo : %v\n-- document : %v\n-- title : %v\n-- description : %v\n-- send_message : %v\n", t.M_flags, t.M_id, t.M_type, t.M_photo, t.M_document, t.M_title, t.M_description, t.M_send_message)
 }
 
 // messages_botResults#947ca848
@@ -28400,6 +30354,10 @@ func (t *TL_messages_botResults) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_botResults) String() string {
+	return fmt.Sprintf("- messages_botResults#947ca848\n-- flags : %v\n-- gallery : %v\n-- query_id : %v\n-- next_offset : %v\n-- switch_pm : %v\n-- results : %v\n-- cache_time : %v\n-- users : %v\n", t.M_flags, t.M_gallery, t.M_query_id, t.M_next_offset, t.M_switch_pm, t.M_results, t.M_cache_time, t.M_users)
+}
+
 // exportedMessageLink#1f486803
 type TL_exportedMessageLink struct {
 	M_classID int32
@@ -28439,6 +30397,10 @@ func (t *TL_exportedMessageLink) Decode(b []byte) error {
 	t.M_link = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_exportedMessageLink) String() string {
+	return fmt.Sprintf("- exportedMessageLink#1f486803\n-- link : %v\n", t.M_link)
 }
 
 // messageFwdHeader#559ebe6d
@@ -28557,6 +30519,10 @@ func (t *TL_messageFwdHeader) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messageFwdHeader) String() string {
+	return fmt.Sprintf("- messageFwdHeader#559ebe6d\n-- flags : %v\n-- from_id : %v\n-- date : %v\n-- channel_id : %v\n-- channel_post : %v\n-- post_author : %v\n-- saved_from_peer : %v\n-- saved_from_msg_id : %v\n", t.M_flags, t.M_from_id, t.M_date, t.M_channel_id, t.M_channel_post, t.M_post_author, t.M_saved_from_peer, t.M_saved_from_msg_id)
+}
+
 // auth_codeTypeSms#72a3158c
 type TL_auth_codeTypeSms struct {
 	M_classID int32
@@ -28582,6 +30548,10 @@ func (t *TL_auth_codeTypeSms) Encode() []byte {
 
 func (t *TL_auth_codeTypeSms) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_auth_codeTypeSms) String() string {
+	return fmt.Sprintf("- auth_codeTypeSms#72a3158c\n")
 }
 
 // auth_codeTypeCall#741cd3e3
@@ -28611,6 +30581,10 @@ func (t *TL_auth_codeTypeCall) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_auth_codeTypeCall) String() string {
+	return fmt.Sprintf("- auth_codeTypeCall#741cd3e3\n")
+}
+
 // auth_codeTypeFlashCall#226ccefb
 type TL_auth_codeTypeFlashCall struct {
 	M_classID int32
@@ -28636,6 +30610,10 @@ func (t *TL_auth_codeTypeFlashCall) Encode() []byte {
 
 func (t *TL_auth_codeTypeFlashCall) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_auth_codeTypeFlashCall) String() string {
+	return fmt.Sprintf("- auth_codeTypeFlashCall#226ccefb\n")
 }
 
 // auth_sentCodeTypeApp#3dbb5986
@@ -28679,6 +30657,10 @@ func (t *TL_auth_sentCodeTypeApp) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_sentCodeTypeApp) String() string {
+	return fmt.Sprintf("- auth_sentCodeTypeApp#3dbb5986\n-- length : %v\n", t.M_length)
+}
+
 // auth_sentCodeTypeSms#c000bba2
 type TL_auth_sentCodeTypeSms struct {
 	M_classID int32
@@ -28718,6 +30700,10 @@ func (t *TL_auth_sentCodeTypeSms) Decode(b []byte) error {
 	t.M_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_auth_sentCodeTypeSms) String() string {
+	return fmt.Sprintf("- auth_sentCodeTypeSms#c000bba2\n-- length : %v\n", t.M_length)
 }
 
 // auth_sentCodeTypeCall#5353e5a7
@@ -28761,6 +30747,10 @@ func (t *TL_auth_sentCodeTypeCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_sentCodeTypeCall) String() string {
+	return fmt.Sprintf("- auth_sentCodeTypeCall#5353e5a7\n-- length : %v\n", t.M_length)
+}
+
 // auth_sentCodeTypeFlashCall#ab03c6d9
 type TL_auth_sentCodeTypeFlashCall struct {
 	M_classID int32
@@ -28800,6 +30790,10 @@ func (t *TL_auth_sentCodeTypeFlashCall) Decode(b []byte) error {
 	t.M_pattern = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_auth_sentCodeTypeFlashCall) String() string {
+	return fmt.Sprintf("- auth_sentCodeTypeFlashCall#ab03c6d9\n-- pattern : %v\n", t.M_pattern)
 }
 
 // messages_botCallbackAnswer#36585ea4
@@ -28907,6 +30901,10 @@ func (t *TL_messages_botCallbackAnswer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_botCallbackAnswer) String() string {
+	return fmt.Sprintf("- messages_botCallbackAnswer#36585ea4\n-- flags : %v\n-- alert : %v\n-- has_url : %v\n-- native_ui : %v\n-- message : %v\n-- url : %v\n-- cache_time : %v\n", t.M_flags, t.M_alert, t.M_has_url, t.M_native_ui, t.M_message, t.M_url, t.M_cache_time)
+}
+
 // messages_messageEditData#26b5dde6
 type TL_messages_messageEditData struct {
 	M_classID int32
@@ -28955,6 +30953,10 @@ func (t *TL_messages_messageEditData) Decode(b []byte) error {
 	t.M_caption = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_messageEditData) String() string {
+	return fmt.Sprintf("- messages_messageEditData#26b5dde6\n-- flags : %v\n-- caption : %v\n", t.M_flags, t.M_caption)
 }
 
 // inputBotInlineMessageID#890c3d89
@@ -29020,6 +31022,10 @@ func (t *TL_inputBotInlineMessageID) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputBotInlineMessageID) String() string {
+	return fmt.Sprintf("- inputBotInlineMessageID#890c3d89\n-- dc_id : %v\n-- id : %v\n-- access_hash : %v\n", t.M_dc_id, t.M_id, t.M_access_hash)
+}
+
 // inlineBotSwitchPM#3c20629f
 type TL_inlineBotSwitchPM struct {
 	M_classID     int32
@@ -29070,6 +31076,10 @@ func (t *TL_inlineBotSwitchPM) Decode(b []byte) error {
 	t.M_start_param = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inlineBotSwitchPM) String() string {
+	return fmt.Sprintf("- inlineBotSwitchPM#3c20629f\n-- text : %v\n-- start_param : %v\n", t.M_text, t.M_start_param)
 }
 
 // messages_peerDialogs#3371c354
@@ -29157,6 +31167,10 @@ func (t *TL_messages_peerDialogs) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_peerDialogs) String() string {
+	return fmt.Sprintf("- messages_peerDialogs#3371c354\n-- dialogs : %v\n-- messages : %v\n-- chats : %v\n-- users : %v\n-- state : %v\n", t.M_dialogs, t.M_messages, t.M_chats, t.M_users, t.M_state)
+}
+
 // topPeer#edcdc05b
 type TL_topPeer struct {
 	M_classID int32
@@ -29209,6 +31223,10 @@ func (t *TL_topPeer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_topPeer) String() string {
+	return fmt.Sprintf("- topPeer#edcdc05b\n-- peer : %v\n-- rating : %v\n", t.M_peer, t.M_rating)
+}
+
 // topPeerCategoryBotsPM#ab661b5b
 type TL_topPeerCategoryBotsPM struct {
 	M_classID int32
@@ -29234,6 +31252,10 @@ func (t *TL_topPeerCategoryBotsPM) Encode() []byte {
 
 func (t *TL_topPeerCategoryBotsPM) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_topPeerCategoryBotsPM) String() string {
+	return fmt.Sprintf("- topPeerCategoryBotsPM#ab661b5b\n")
 }
 
 // topPeerCategoryBotsInline#148677e2
@@ -29263,6 +31285,10 @@ func (t *TL_topPeerCategoryBotsInline) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_topPeerCategoryBotsInline) String() string {
+	return fmt.Sprintf("- topPeerCategoryBotsInline#148677e2\n")
+}
+
 // topPeerCategoryCorrespondents#637b7ed
 type TL_topPeerCategoryCorrespondents struct {
 	M_classID int32
@@ -29288,6 +31314,10 @@ func (t *TL_topPeerCategoryCorrespondents) Encode() []byte {
 
 func (t *TL_topPeerCategoryCorrespondents) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_topPeerCategoryCorrespondents) String() string {
+	return fmt.Sprintf("- topPeerCategoryCorrespondents#637b7ed\n")
 }
 
 // topPeerCategoryGroups#bd17a14a
@@ -29317,6 +31347,10 @@ func (t *TL_topPeerCategoryGroups) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_topPeerCategoryGroups) String() string {
+	return fmt.Sprintf("- topPeerCategoryGroups#bd17a14a\n")
+}
+
 // topPeerCategoryChannels#161d9628
 type TL_topPeerCategoryChannels struct {
 	M_classID int32
@@ -29344,6 +31378,10 @@ func (t *TL_topPeerCategoryChannels) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_topPeerCategoryChannels) String() string {
+	return fmt.Sprintf("- topPeerCategoryChannels#161d9628\n")
+}
+
 // topPeerCategoryPhoneCalls#1e76a78c
 type TL_topPeerCategoryPhoneCalls struct {
 	M_classID int32
@@ -29369,6 +31407,10 @@ func (t *TL_topPeerCategoryPhoneCalls) Encode() []byte {
 
 func (t *TL_topPeerCategoryPhoneCalls) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_topPeerCategoryPhoneCalls) String() string {
+	return fmt.Sprintf("- topPeerCategoryPhoneCalls#1e76a78c\n")
 }
 
 // topPeerCategoryPeers#fb834291
@@ -29434,6 +31476,10 @@ func (t *TL_topPeerCategoryPeers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_topPeerCategoryPeers) String() string {
+	return fmt.Sprintf("- topPeerCategoryPeers#fb834291\n-- category : %v\n-- count : %v\n-- peers : %v\n", t.M_category, t.M_count, t.M_peers)
+}
+
 // contacts_topPeersNotModified#de266ef5
 type TL_contacts_topPeersNotModified struct {
 	M_classID int32
@@ -29459,6 +31505,10 @@ func (t *TL_contacts_topPeersNotModified) Encode() []byte {
 
 func (t *TL_contacts_topPeersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contacts_topPeersNotModified) String() string {
+	return fmt.Sprintf("- contacts_topPeersNotModified#de266ef5\n")
 }
 
 // contacts_topPeers#70b772a8
@@ -29524,6 +31574,10 @@ func (t *TL_contacts_topPeers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_topPeers) String() string {
+	return fmt.Sprintf("- contacts_topPeers#70b772a8\n-- categories : %v\n-- chats : %v\n-- users : %v\n", t.M_categories, t.M_chats, t.M_users)
+}
+
 // draftMessageEmpty#ba4baec5
 type TL_draftMessageEmpty struct {
 	M_classID int32
@@ -29549,6 +31603,10 @@ func (t *TL_draftMessageEmpty) Encode() []byte {
 
 func (t *TL_draftMessageEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_draftMessageEmpty) String() string {
+	return fmt.Sprintf("- draftMessageEmpty#ba4baec5\n")
 }
 
 // draftMessage#fd8e711f
@@ -29645,6 +31703,10 @@ func (t *TL_draftMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_draftMessage) String() string {
+	return fmt.Sprintf("- draftMessage#fd8e711f\n-- flags : %v\n-- no_webpage : %v\n-- reply_to_msg_id : %v\n-- message : %v\n-- entities : %v\n-- date : %v\n", t.M_flags, t.M_no_webpage, t.M_reply_to_msg_id, t.M_message, t.M_entities, t.M_date)
+}
+
 // messages_featuredStickersNotModified#4ede3cf
 type TL_messages_featuredStickersNotModified struct {
 	M_classID int32
@@ -29670,6 +31732,10 @@ func (t *TL_messages_featuredStickersNotModified) Encode() []byte {
 
 func (t *TL_messages_featuredStickersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_featuredStickersNotModified) String() string {
+	return fmt.Sprintf("- messages_featuredStickersNotModified#4ede3cf\n")
 }
 
 // messages_featuredStickers#f89d88e5
@@ -29735,6 +31801,10 @@ func (t *TL_messages_featuredStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_featuredStickers) String() string {
+	return fmt.Sprintf("- messages_featuredStickers#f89d88e5\n-- hash : %v\n-- sets : %v\n-- unread : %v\n", t.M_hash, t.M_sets, t.M_unread)
+}
+
 // messages_recentStickersNotModified#b17f890
 type TL_messages_recentStickersNotModified struct {
 	M_classID int32
@@ -29760,6 +31830,10 @@ func (t *TL_messages_recentStickersNotModified) Encode() []byte {
 
 func (t *TL_messages_recentStickersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_recentStickersNotModified) String() string {
+	return fmt.Sprintf("- messages_recentStickersNotModified#b17f890\n")
 }
 
 // messages_recentStickers#5ce20970
@@ -29814,6 +31888,10 @@ func (t *TL_messages_recentStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_recentStickers) String() string {
+	return fmt.Sprintf("- messages_recentStickers#5ce20970\n-- hash : %v\n-- stickers : %v\n", t.M_hash, t.M_stickers)
+}
+
 // messages_archivedStickers#4fcba9c8
 type TL_messages_archivedStickers struct {
 	M_classID int32
@@ -29866,6 +31944,10 @@ func (t *TL_messages_archivedStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_archivedStickers) String() string {
+	return fmt.Sprintf("- messages_archivedStickers#4fcba9c8\n-- count : %v\n-- sets : %v\n", t.M_count, t.M_sets)
+}
+
 // messages_stickerSetInstallResultSuccess#38641628
 type TL_messages_stickerSetInstallResultSuccess struct {
 	M_classID int32
@@ -29891,6 +31973,10 @@ func (t *TL_messages_stickerSetInstallResultSuccess) Encode() []byte {
 
 func (t *TL_messages_stickerSetInstallResultSuccess) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_stickerSetInstallResultSuccess) String() string {
+	return fmt.Sprintf("- messages_stickerSetInstallResultSuccess#38641628\n")
 }
 
 // messages_stickerSetInstallResultArchive#35e410a8
@@ -29932,6 +32018,10 @@ func (t *TL_messages_stickerSetInstallResultArchive) Decode(b []byte) error {
 	t.M_sets = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_stickerSetInstallResultArchive) String() string {
+	return fmt.Sprintf("- messages_stickerSetInstallResultArchive#35e410a8\n-- sets : %v\n", t.M_sets)
 }
 
 // stickerSetCovered#6410a5d2
@@ -29986,6 +32076,10 @@ func (t *TL_stickerSetCovered) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickerSetCovered) String() string {
+	return fmt.Sprintf("- stickerSetCovered#6410a5d2\n-- set : %v\n-- cover : %v\n", t.M_set, t.M_cover)
+}
+
 // stickerSetMultiCovered#3407e51b
 type TL_stickerSetMultiCovered struct {
 	M_classID int32
@@ -30036,6 +32130,10 @@ func (t *TL_stickerSetMultiCovered) Decode(b []byte) error {
 	t.M_covers = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_stickerSetMultiCovered) String() string {
+	return fmt.Sprintf("- stickerSetMultiCovered#3407e51b\n-- set : %v\n-- covers : %v\n", t.M_set, t.M_covers)
 }
 
 // maskCoords#aed6dbb2
@@ -30112,6 +32210,10 @@ func (t *TL_maskCoords) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_maskCoords) String() string {
+	return fmt.Sprintf("- maskCoords#aed6dbb2\n-- n : %v\n-- x : %v\n-- y : %v\n-- zoom : %v\n", t.M_n, t.M_x, t.M_y, t.M_zoom)
+}
+
 // inputStickeredMediaPhoto#4a992157
 type TL_inputStickeredMediaPhoto struct {
 	M_classID int32
@@ -30153,6 +32255,10 @@ func (t *TL_inputStickeredMediaPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputStickeredMediaPhoto) String() string {
+	return fmt.Sprintf("- inputStickeredMediaPhoto#4a992157\n-- id : %v\n", t.M_id)
+}
+
 // inputStickeredMediaDocument#438865b
 type TL_inputStickeredMediaDocument struct {
 	M_classID int32
@@ -30192,6 +32298,10 @@ func (t *TL_inputStickeredMediaDocument) Decode(b []byte) error {
 	t.M_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputStickeredMediaDocument) String() string {
+	return fmt.Sprintf("- inputStickeredMediaDocument#438865b\n-- id : %v\n", t.M_id)
 }
 
 // game#bdf9653b
@@ -30310,6 +32420,10 @@ func (t *TL_game) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_game) String() string {
+	return fmt.Sprintf("- game#bdf9653b\n-- flags : %v\n-- id : %v\n-- access_hash : %v\n-- short_name : %v\n-- title : %v\n-- description : %v\n-- photo : %v\n-- document : %v\n", t.M_flags, t.M_id, t.M_access_hash, t.M_short_name, t.M_title, t.M_description, t.M_photo, t.M_document)
+}
+
 // inputGameID#32c3e77
 type TL_inputGameID struct {
 	M_classID     int32
@@ -30362,6 +32476,10 @@ func (t *TL_inputGameID) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputGameID) String() string {
+	return fmt.Sprintf("- inputGameID#32c3e77\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
+}
+
 // inputGameShortName#c331e80a
 type TL_inputGameShortName struct {
 	M_classID    int32
@@ -30412,6 +32530,10 @@ func (t *TL_inputGameShortName) Decode(b []byte) error {
 	t.M_short_name = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_inputGameShortName) String() string {
+	return fmt.Sprintf("- inputGameShortName#c331e80a\n-- bot_id : %v\n-- short_name : %v\n", t.M_bot_id, t.M_short_name)
 }
 
 // highScore#58fffcd0
@@ -30477,6 +32599,10 @@ func (t *TL_highScore) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_highScore) String() string {
+	return fmt.Sprintf("- highScore#58fffcd0\n-- pos : %v\n-- user_id : %v\n-- score : %v\n", t.M_pos, t.M_user_id, t.M_score)
+}
+
 // messages_highScores#9a3bfd99
 type TL_messages_highScores struct {
 	M_classID int32
@@ -30529,6 +32655,10 @@ func (t *TL_messages_highScores) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_highScores) String() string {
+	return fmt.Sprintf("- messages_highScores#9a3bfd99\n-- scores : %v\n-- users : %v\n", t.M_scores, t.M_users)
+}
+
 // textEmpty#dc3d824f
 type TL_textEmpty struct {
 	M_classID int32
@@ -30554,6 +32684,10 @@ func (t *TL_textEmpty) Encode() []byte {
 
 func (t *TL_textEmpty) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_textEmpty) String() string {
+	return fmt.Sprintf("- textEmpty#dc3d824f\n")
 }
 
 // textPlain#744694e0
@@ -30597,6 +32731,10 @@ func (t *TL_textPlain) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textPlain) String() string {
+	return fmt.Sprintf("- textPlain#744694e0\n-- text : %v\n", t.M_text)
+}
+
 // textBold#6724abc4
 type TL_textBold struct {
 	M_classID int32
@@ -30636,6 +32774,10 @@ func (t *TL_textBold) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_textBold) String() string {
+	return fmt.Sprintf("- textBold#6724abc4\n-- text : %v\n", t.M_text)
 }
 
 // textItalic#d912a59c
@@ -30679,6 +32821,10 @@ func (t *TL_textItalic) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textItalic) String() string {
+	return fmt.Sprintf("- textItalic#d912a59c\n-- text : %v\n", t.M_text)
+}
+
 // textUnderline#c12622c4
 type TL_textUnderline struct {
 	M_classID int32
@@ -30718,6 +32864,10 @@ func (t *TL_textUnderline) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_textUnderline) String() string {
+	return fmt.Sprintf("- textUnderline#c12622c4\n-- text : %v\n", t.M_text)
 }
 
 // textStrike#9bf8bb95
@@ -30761,6 +32911,10 @@ func (t *TL_textStrike) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textStrike) String() string {
+	return fmt.Sprintf("- textStrike#9bf8bb95\n-- text : %v\n", t.M_text)
+}
+
 // textFixed#6c3f19b9
 type TL_textFixed struct {
 	M_classID int32
@@ -30800,6 +32954,10 @@ func (t *TL_textFixed) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_textFixed) String() string {
+	return fmt.Sprintf("- textFixed#6c3f19b9\n-- text : %v\n", t.M_text)
 }
 
 // textUrl#3c2884c1
@@ -30865,6 +33023,10 @@ func (t *TL_textUrl) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textUrl) String() string {
+	return fmt.Sprintf("- textUrl#3c2884c1\n-- text : %v\n-- url : %v\n-- webpage_id : %v\n", t.M_text, t.M_url, t.M_webpage_id)
+}
+
 // textEmail#de5a0dd6
 type TL_textEmail struct {
 	M_classID int32
@@ -30917,6 +33079,10 @@ func (t *TL_textEmail) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textEmail) String() string {
+	return fmt.Sprintf("- textEmail#de5a0dd6\n-- text : %v\n-- email : %v\n", t.M_text, t.M_email)
+}
+
 // textConcat#7e6260d7
 type TL_textConcat struct {
 	M_classID int32
@@ -30958,6 +33124,10 @@ func (t *TL_textConcat) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_textConcat) String() string {
+	return fmt.Sprintf("- textConcat#7e6260d7\n-- texts : %v\n", t.M_texts)
+}
+
 // pageBlockUnsupported#13567e8a
 type TL_pageBlockUnsupported struct {
 	M_classID int32
@@ -30983,6 +33153,10 @@ func (t *TL_pageBlockUnsupported) Encode() []byte {
 
 func (t *TL_pageBlockUnsupported) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_pageBlockUnsupported) String() string {
+	return fmt.Sprintf("- pageBlockUnsupported#13567e8a\n")
 }
 
 // pageBlockTitle#70abc3fd
@@ -31026,6 +33200,10 @@ func (t *TL_pageBlockTitle) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockTitle) String() string {
+	return fmt.Sprintf("- pageBlockTitle#70abc3fd\n-- text : %v\n", t.M_text)
+}
+
 // pageBlockSubtitle#8ffa9a1f
 type TL_pageBlockSubtitle struct {
 	M_classID int32
@@ -31065,6 +33243,10 @@ func (t *TL_pageBlockSubtitle) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockSubtitle) String() string {
+	return fmt.Sprintf("- pageBlockSubtitle#8ffa9a1f\n-- text : %v\n", t.M_text)
 }
 
 // pageBlockAuthorDate#baafe5e0
@@ -31119,6 +33301,10 @@ func (t *TL_pageBlockAuthorDate) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockAuthorDate) String() string {
+	return fmt.Sprintf("- pageBlockAuthorDate#baafe5e0\n-- author : %v\n-- published_date : %v\n", t.M_author, t.M_published_date)
+}
+
 // pageBlockHeader#bfd064ec
 type TL_pageBlockHeader struct {
 	M_classID int32
@@ -31158,6 +33344,10 @@ func (t *TL_pageBlockHeader) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockHeader) String() string {
+	return fmt.Sprintf("- pageBlockHeader#bfd064ec\n-- text : %v\n", t.M_text)
 }
 
 // pageBlockSubheader#f12bb6e1
@@ -31201,6 +33391,10 @@ func (t *TL_pageBlockSubheader) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockSubheader) String() string {
+	return fmt.Sprintf("- pageBlockSubheader#f12bb6e1\n-- text : %v\n", t.M_text)
+}
+
 // pageBlockParagraph#467a0766
 type TL_pageBlockParagraph struct {
 	M_classID int32
@@ -31240,6 +33434,10 @@ func (t *TL_pageBlockParagraph) Decode(b []byte) error {
 	t.M_text = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockParagraph) String() string {
+	return fmt.Sprintf("- pageBlockParagraph#467a0766\n-- text : %v\n", t.M_text)
 }
 
 // pageBlockPreformatted#c070d93e
@@ -31294,6 +33492,10 @@ func (t *TL_pageBlockPreformatted) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockPreformatted) String() string {
+	return fmt.Sprintf("- pageBlockPreformatted#c070d93e\n-- text : %v\n-- language : %v\n", t.M_text, t.M_language)
+}
+
 // pageBlockFooter#48870999
 type TL_pageBlockFooter struct {
 	M_classID int32
@@ -31335,6 +33537,10 @@ func (t *TL_pageBlockFooter) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockFooter) String() string {
+	return fmt.Sprintf("- pageBlockFooter#48870999\n-- text : %v\n", t.M_text)
+}
+
 // pageBlockDivider#db20b188
 type TL_pageBlockDivider struct {
 	M_classID int32
@@ -31360,6 +33566,10 @@ func (t *TL_pageBlockDivider) Encode() []byte {
 
 func (t *TL_pageBlockDivider) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_pageBlockDivider) String() string {
+	return fmt.Sprintf("- pageBlockDivider#db20b188\n")
 }
 
 // pageBlockAnchor#ce0d37b0
@@ -31401,6 +33611,10 @@ func (t *TL_pageBlockAnchor) Decode(b []byte) error {
 	t.M_name = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockAnchor) String() string {
+	return fmt.Sprintf("- pageBlockAnchor#ce0d37b0\n-- name : %v\n", t.M_name)
 }
 
 // pageBlockList#3a58c7f4
@@ -31455,6 +33669,10 @@ func (t *TL_pageBlockList) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockList) String() string {
+	return fmt.Sprintf("- pageBlockList#3a58c7f4\n-- ordered : %v\n-- items : %v\n", t.M_ordered, t.M_items)
+}
+
 // pageBlockBlockquote#263d7c26
 type TL_pageBlockBlockquote struct {
 	M_classID int32
@@ -31505,6 +33723,10 @@ func (t *TL_pageBlockBlockquote) Decode(b []byte) error {
 	t.M_caption = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockBlockquote) String() string {
+	return fmt.Sprintf("- pageBlockBlockquote#263d7c26\n-- text : %v\n-- caption : %v\n", t.M_text, t.M_caption)
 }
 
 // pageBlockPullquote#4f4456d3
@@ -31559,6 +33781,10 @@ func (t *TL_pageBlockPullquote) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockPullquote) String() string {
+	return fmt.Sprintf("- pageBlockPullquote#4f4456d3\n-- text : %v\n-- caption : %v\n", t.M_text, t.M_caption)
+}
+
 // pageBlockPhoto#e9c69982
 type TL_pageBlockPhoto struct {
 	M_classID  int32
@@ -31609,6 +33835,10 @@ func (t *TL_pageBlockPhoto) Decode(b []byte) error {
 	t.M_caption = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockPhoto) String() string {
+	return fmt.Sprintf("- pageBlockPhoto#e9c69982\n-- photo_id : %v\n-- caption : %v\n", t.M_photo_id, t.M_caption)
 }
 
 // pageBlockVideo#d9d71866
@@ -31694,6 +33924,10 @@ func (t *TL_pageBlockVideo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockVideo) String() string {
+	return fmt.Sprintf("- pageBlockVideo#d9d71866\n-- flags : %v\n-- autoplay : %v\n-- loop : %v\n-- video_id : %v\n-- caption : %v\n", t.M_flags, t.M_autoplay, t.M_loop, t.M_video_id, t.M_caption)
+}
+
 // pageBlockCover#39f23300
 type TL_pageBlockCover struct {
 	M_classID int32
@@ -31733,6 +33967,10 @@ func (t *TL_pageBlockCover) Decode(b []byte) error {
 	t.M_cover = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockCover) String() string {
+	return fmt.Sprintf("- pageBlockCover#39f23300\n-- cover : %v\n", t.M_cover)
 }
 
 // pageBlockEmbed#cde200d1
@@ -31862,6 +34100,10 @@ func (t *TL_pageBlockEmbed) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockEmbed) String() string {
+	return fmt.Sprintf("- pageBlockEmbed#cde200d1\n-- flags : %v\n-- full_width : %v\n-- allow_scrolling : %v\n-- url : %v\n-- html : %v\n-- poster_photo_id : %v\n-- w : %v\n-- h : %v\n-- caption : %v\n", t.M_flags, t.M_full_width, t.M_allow_scrolling, t.M_url, t.M_html, t.M_poster_photo_id, t.M_w, t.M_h, t.M_caption)
+}
+
 // pageBlockEmbedPost#292c7be9
 type TL_pageBlockEmbedPost struct {
 	M_classID         int32
@@ -31969,6 +34211,10 @@ func (t *TL_pageBlockEmbedPost) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockEmbedPost) String() string {
+	return fmt.Sprintf("- pageBlockEmbedPost#292c7be9\n-- url : %v\n-- webpage_id : %v\n-- author_photo_id : %v\n-- author : %v\n-- date : %v\n-- blocks : %v\n-- caption : %v\n", t.M_url, t.M_webpage_id, t.M_author_photo_id, t.M_author, t.M_date, t.M_blocks, t.M_caption)
+}
+
 // pageBlockCollage#8b31c4f
 type TL_pageBlockCollage struct {
 	M_classID int32
@@ -32019,6 +34265,10 @@ func (t *TL_pageBlockCollage) Decode(b []byte) error {
 	t.M_caption = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockCollage) String() string {
+	return fmt.Sprintf("- pageBlockCollage#8b31c4f\n-- items : %v\n-- caption : %v\n", t.M_items, t.M_caption)
 }
 
 // pageBlockSlideshow#130c8963
@@ -32073,6 +34323,10 @@ func (t *TL_pageBlockSlideshow) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageBlockSlideshow) String() string {
+	return fmt.Sprintf("- pageBlockSlideshow#130c8963\n-- items : %v\n-- caption : %v\n", t.M_items, t.M_caption)
+}
+
 // pageBlockChannel#ef1751b5
 type TL_pageBlockChannel struct {
 	M_classID int32
@@ -32112,6 +34366,10 @@ func (t *TL_pageBlockChannel) Decode(b []byte) error {
 	t.M_channel = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockChannel) String() string {
+	return fmt.Sprintf("- pageBlockChannel#ef1751b5\n-- channel : %v\n", t.M_channel)
 }
 
 // pageBlockAudio#31b81a7f
@@ -32164,6 +34422,10 @@ func (t *TL_pageBlockAudio) Decode(b []byte) error {
 	t.M_caption = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_pageBlockAudio) String() string {
+	return fmt.Sprintf("- pageBlockAudio#31b81a7f\n-- audio_id : %v\n-- caption : %v\n", t.M_audio_id, t.M_caption)
 }
 
 // pagePart#8e3f9ebe
@@ -32229,6 +34491,10 @@ func (t *TL_pagePart) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pagePart) String() string {
+	return fmt.Sprintf("- pagePart#8e3f9ebe\n-- blocks : %v\n-- photos : %v\n-- documents : %v\n", t.M_blocks, t.M_photos, t.M_documents)
+}
+
 // pageFull#556ec7aa
 type TL_pageFull struct {
 	M_classID   int32
@@ -32292,6 +34558,10 @@ func (t *TL_pageFull) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_pageFull) String() string {
+	return fmt.Sprintf("- pageFull#556ec7aa\n-- blocks : %v\n-- photos : %v\n-- documents : %v\n", t.M_blocks, t.M_photos, t.M_documents)
+}
+
 // phoneCallDiscardReasonMissed#85e42301
 type TL_phoneCallDiscardReasonMissed struct {
 	M_classID int32
@@ -32317,6 +34587,10 @@ func (t *TL_phoneCallDiscardReasonMissed) Encode() []byte {
 
 func (t *TL_phoneCallDiscardReasonMissed) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_phoneCallDiscardReasonMissed) String() string {
+	return fmt.Sprintf("- phoneCallDiscardReasonMissed#85e42301\n")
 }
 
 // phoneCallDiscardReasonDisconnect#e095c1a0
@@ -32346,6 +34620,10 @@ func (t *TL_phoneCallDiscardReasonDisconnect) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_phoneCallDiscardReasonDisconnect) String() string {
+	return fmt.Sprintf("- phoneCallDiscardReasonDisconnect#e095c1a0\n")
+}
+
 // phoneCallDiscardReasonHangup#57adc690
 type TL_phoneCallDiscardReasonHangup struct {
 	M_classID int32
@@ -32373,6 +34651,10 @@ func (t *TL_phoneCallDiscardReasonHangup) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_phoneCallDiscardReasonHangup) String() string {
+	return fmt.Sprintf("- phoneCallDiscardReasonHangup#57adc690\n")
+}
+
 // phoneCallDiscardReasonBusy#faf7e8c9
 type TL_phoneCallDiscardReasonBusy struct {
 	M_classID int32
@@ -32398,6 +34680,10 @@ func (t *TL_phoneCallDiscardReasonBusy) Encode() []byte {
 
 func (t *TL_phoneCallDiscardReasonBusy) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_phoneCallDiscardReasonBusy) String() string {
+	return fmt.Sprintf("- phoneCallDiscardReasonBusy#faf7e8c9\n")
 }
 
 // dataJSON#7d748d04
@@ -32439,6 +34725,10 @@ func (t *TL_dataJSON) Decode(b []byte) error {
 	t.M_data = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_dataJSON) String() string {
+	return fmt.Sprintf("- dataJSON#7d748d04\n-- data : %v\n", t.M_data)
 }
 
 // labeledPrice#cb296bf8
@@ -32491,6 +34781,10 @@ func (t *TL_labeledPrice) Decode(b []byte) error {
 	t.M_amount = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_labeledPrice) String() string {
+	return fmt.Sprintf("- labeledPrice#cb296bf8\n-- label : %v\n-- amount : %v\n", t.M_label, t.M_amount)
 }
 
 // invoice#c30aa358
@@ -32642,6 +34936,10 @@ func (t *TL_invoice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_invoice) String() string {
+	return fmt.Sprintf("- invoice#c30aa358\n-- flags : %v\n-- test : %v\n-- name_requested : %v\n-- phone_requested : %v\n-- email_requested : %v\n-- shipping_address_requested : %v\n-- flexible : %v\n-- phone_to_provider : %v\n-- email_to_provider : %v\n-- currency : %v\n-- prices : %v\n", t.M_flags, t.M_test, t.M_name_requested, t.M_phone_requested, t.M_email_requested, t.M_shipping_address_requested, t.M_flexible, t.M_phone_to_provider, t.M_email_to_provider, t.M_currency, t.M_prices)
+}
+
 // paymentCharge#ea02c27e
 type TL_paymentCharge struct {
 	M_classID            int32
@@ -32692,6 +34990,10 @@ func (t *TL_paymentCharge) Decode(b []byte) error {
 	t.M_provider_charge_id = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_paymentCharge) String() string {
+	return fmt.Sprintf("- paymentCharge#ea02c27e\n-- id : %v\n-- provider_charge_id : %v\n", t.M_id, t.M_provider_charge_id)
 }
 
 // postAddress#1e8caaeb
@@ -32790,6 +35092,10 @@ func (t *TL_postAddress) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_postAddress) String() string {
+	return fmt.Sprintf("- postAddress#1e8caaeb\n-- street_line1 : %v\n-- street_line2 : %v\n-- city : %v\n-- state : %v\n-- country_iso2 : %v\n-- post_code : %v\n", t.M_street_line1, t.M_street_line2, t.M_city, t.M_state, t.M_country_iso2, t.M_post_code)
+}
+
 // paymentRequestedInfo#909c3f94
 type TL_paymentRequestedInfo struct {
 	M_classID          int32
@@ -32873,6 +35179,10 @@ func (t *TL_paymentRequestedInfo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_paymentRequestedInfo) String() string {
+	return fmt.Sprintf("- paymentRequestedInfo#909c3f94\n-- flags : %v\n-- name : %v\n-- phone : %v\n-- email : %v\n-- shipping_address : %v\n", t.M_flags, t.M_name, t.M_phone, t.M_email, t.M_shipping_address)
+}
+
 // paymentSavedCredentialsCard#cdc27a1f
 type TL_paymentSavedCredentialsCard struct {
 	M_classID int32
@@ -32923,6 +35233,10 @@ func (t *TL_paymentSavedCredentialsCard) Decode(b []byte) error {
 	t.M_title = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_paymentSavedCredentialsCard) String() string {
+	return fmt.Sprintf("- paymentSavedCredentialsCard#cdc27a1f\n-- id : %v\n-- title : %v\n", t.M_id, t.M_title)
 }
 
 // webDocument#c61acbd8
@@ -33021,6 +35335,10 @@ func (t *TL_webDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_webDocument) String() string {
+	return fmt.Sprintf("- webDocument#c61acbd8\n-- url : %v\n-- access_hash : %v\n-- size : %v\n-- mime_type : %v\n-- attributes : %v\n-- dc_id : %v\n", t.M_url, t.M_access_hash, t.M_size, t.M_mime_type, t.M_attributes, t.M_dc_id)
+}
+
 // inputWebDocument#9bed434d
 type TL_inputWebDocument struct {
 	M_classID    int32
@@ -33095,6 +35413,10 @@ func (t *TL_inputWebDocument) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputWebDocument) String() string {
+	return fmt.Sprintf("- inputWebDocument#9bed434d\n-- url : %v\n-- size : %v\n-- mime_type : %v\n-- attributes : %v\n", t.M_url, t.M_size, t.M_mime_type, t.M_attributes)
+}
+
 // inputWebFileLocation#c239d686
 type TL_inputWebFileLocation struct {
 	M_classID     int32
@@ -33145,6 +35467,10 @@ func (t *TL_inputWebFileLocation) Decode(b []byte) error {
 	t.M_access_hash = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputWebFileLocation) String() string {
+	return fmt.Sprintf("- inputWebFileLocation#c239d686\n-- url : %v\n-- access_hash : %v\n", t.M_url, t.M_access_hash)
 }
 
 // upload_webFile#21e753bc
@@ -33230,6 +35556,10 @@ func (t *TL_upload_webFile) Decode(b []byte) error {
 	t.M_bytes = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_upload_webFile) String() string {
+	return fmt.Sprintf("- upload_webFile#21e753bc\n-- size : %v\n-- mime_type : %v\n-- file_type : %v\n-- mtime : %v\n-- bytes : %v\n", t.M_size, t.M_mime_type, t.M_file_type, t.M_mtime, t.M_bytes)
 }
 
 // payments_paymentForm#3f56aea3
@@ -33392,6 +35722,10 @@ func (t *TL_payments_paymentForm) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_paymentForm) String() string {
+	return fmt.Sprintf("- payments_paymentForm#3f56aea3\n-- flags : %v\n-- can_save_credentials : %v\n-- password_missing : %v\n-- bot_id : %v\n-- invoice : %v\n-- provider_id : %v\n-- url : %v\n-- native_provider : %v\n-- native_params : %v\n-- saved_info : %v\n-- saved_credentials : %v\n-- users : %v\n", t.M_flags, t.M_can_save_credentials, t.M_password_missing, t.M_bot_id, t.M_invoice, t.M_provider_id, t.M_url, t.M_native_provider, t.M_native_params, t.M_saved_info, t.M_saved_credentials, t.M_users)
+}
+
 // payments_validatedRequestedInfo#d1451883
 type TL_payments_validatedRequestedInfo struct {
 	M_classID          int32
@@ -33453,6 +35787,10 @@ func (t *TL_payments_validatedRequestedInfo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_validatedRequestedInfo) String() string {
+	return fmt.Sprintf("- payments_validatedRequestedInfo#d1451883\n-- flags : %v\n-- id : %v\n-- shipping_options : %v\n", t.M_flags, t.M_id, t.M_shipping_options)
+}
+
 // payments_paymentResult#4e5f810d
 type TL_payments_paymentResult struct {
 	M_classID int32
@@ -33494,6 +35832,10 @@ func (t *TL_payments_paymentResult) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_paymentResult) String() string {
+	return fmt.Sprintf("- payments_paymentResult#4e5f810d\n-- updates : %v\n", t.M_updates)
+}
+
 // payments_paymentVerficationNeeded#6b56b921
 type TL_payments_paymentVerficationNeeded struct {
 	M_classID int32
@@ -33533,6 +35875,10 @@ func (t *TL_payments_paymentVerficationNeeded) Decode(b []byte) error {
 	t.M_url = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_payments_paymentVerficationNeeded) String() string {
+	return fmt.Sprintf("- payments_paymentVerficationNeeded#6b56b921\n-- url : %v\n", t.M_url)
 }
 
 // payments_paymentReceipt#500911e1
@@ -33684,6 +36030,10 @@ func (t *TL_payments_paymentReceipt) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_paymentReceipt) String() string {
+	return fmt.Sprintf("- payments_paymentReceipt#500911e1\n-- flags : %v\n-- date : %v\n-- bot_id : %v\n-- invoice : %v\n-- provider_id : %v\n-- info : %v\n-- shipping : %v\n-- currency : %v\n-- total_amount : %v\n-- credentials_title : %v\n-- users : %v\n", t.M_flags, t.M_date, t.M_bot_id, t.M_invoice, t.M_provider_id, t.M_info, t.M_shipping, t.M_currency, t.M_total_amount, t.M_credentials_title, t.M_users)
+}
+
 // payments_savedInfo#fb8fe43c
 type TL_payments_savedInfo struct {
 	M_classID               int32
@@ -33745,6 +36095,10 @@ func (t *TL_payments_savedInfo) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_savedInfo) String() string {
+	return fmt.Sprintf("- payments_savedInfo#fb8fe43c\n-- flags : %v\n-- has_saved_credentials : %v\n-- saved_info : %v\n", t.M_flags, t.M_has_saved_credentials, t.M_saved_info)
+}
+
 // inputPaymentCredentialsSaved#c10eb2cf
 type TL_inputPaymentCredentialsSaved struct {
 	M_classID      int32
@@ -33795,6 +36149,10 @@ func (t *TL_inputPaymentCredentialsSaved) Decode(b []byte) error {
 	t.M_tmp_password = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputPaymentCredentialsSaved) String() string {
+	return fmt.Sprintf("- inputPaymentCredentialsSaved#c10eb2cf\n-- id : %v\n-- tmp_password : %v\n", t.M_id, t.M_tmp_password)
 }
 
 // inputPaymentCredentials#3417d728
@@ -33858,6 +36216,10 @@ func (t *TL_inputPaymentCredentials) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPaymentCredentials) String() string {
+	return fmt.Sprintf("- inputPaymentCredentials#3417d728\n-- flags : %v\n-- save : %v\n-- data : %v\n", t.M_flags, t.M_save, t.M_data)
+}
+
 // inputPaymentCredentialsApplePay#aa1c39f
 type TL_inputPaymentCredentialsApplePay struct {
 	M_classID      int32
@@ -33899,6 +36261,10 @@ func (t *TL_inputPaymentCredentialsApplePay) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPaymentCredentialsApplePay) String() string {
+	return fmt.Sprintf("- inputPaymentCredentialsApplePay#aa1c39f\n-- payment_data : %v\n", t.M_payment_data)
+}
+
 // inputPaymentCredentialsAndroidPay#795667a6
 type TL_inputPaymentCredentialsAndroidPay struct {
 	M_classID       int32
@@ -33938,6 +36304,10 @@ func (t *TL_inputPaymentCredentialsAndroidPay) Decode(b []byte) error {
 	t.M_payment_token = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_inputPaymentCredentialsAndroidPay) String() string {
+	return fmt.Sprintf("- inputPaymentCredentialsAndroidPay#795667a6\n-- payment_token : %v\n", t.M_payment_token)
 }
 
 // account_tmpPassword#db64fd34
@@ -33990,6 +36360,10 @@ func (t *TL_account_tmpPassword) Decode(b []byte) error {
 	t.M_valid_until = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_account_tmpPassword) String() string {
+	return fmt.Sprintf("- account_tmpPassword#db64fd34\n-- tmp_password : %v\n-- valid_until : %v\n", t.M_tmp_password, t.M_valid_until)
 }
 
 // shippingOption#b6213cdf
@@ -34053,6 +36427,10 @@ func (t *TL_shippingOption) Decode(b []byte) error {
 	t.M_prices = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_shippingOption) String() string {
+	return fmt.Sprintf("- shippingOption#b6213cdf\n-- id : %v\n-- title : %v\n-- prices : %v\n", t.M_id, t.M_title, t.M_prices)
 }
 
 // inputStickerSetItem#ffa0a496
@@ -34127,6 +36505,10 @@ func (t *TL_inputStickerSetItem) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputStickerSetItem) String() string {
+	return fmt.Sprintf("- inputStickerSetItem#ffa0a496\n-- flags : %v\n-- document : %v\n-- emoji : %v\n-- mask_coords : %v\n", t.M_flags, t.M_document, t.M_emoji, t.M_mask_coords)
+}
+
 // inputPhoneCall#1e36fded
 type TL_inputPhoneCall struct {
 	M_classID     int32
@@ -34179,6 +36561,10 @@ func (t *TL_inputPhoneCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_inputPhoneCall) String() string {
+	return fmt.Sprintf("- inputPhoneCall#1e36fded\n-- id : %v\n-- access_hash : %v\n", t.M_id, t.M_access_hash)
+}
+
 // phoneCallEmpty#5366c915
 type TL_phoneCallEmpty struct {
 	M_classID int32
@@ -34218,6 +36604,10 @@ func (t *TL_phoneCallEmpty) Decode(b []byte) error {
 	t.M_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_phoneCallEmpty) String() string {
+	return fmt.Sprintf("- phoneCallEmpty#5366c915\n-- id : %v\n", t.M_id)
 }
 
 // phoneCallWaiting#1b8f4ad1
@@ -34336,6 +36726,10 @@ func (t *TL_phoneCallWaiting) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneCallWaiting) String() string {
+	return fmt.Sprintf("- phoneCallWaiting#1b8f4ad1\n-- flags : %v\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- protocol : %v\n-- receive_date : %v\n", t.M_flags, t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_protocol, t.M_receive_date)
+}
+
 // phoneCallRequested#83761ce4
 type TL_phoneCallRequested struct {
 	M_classID        int32
@@ -34443,6 +36837,10 @@ func (t *TL_phoneCallRequested) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneCallRequested) String() string {
+	return fmt.Sprintf("- phoneCallRequested#83761ce4\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- g_a_hash : %v\n-- protocol : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_g_a_hash, t.M_protocol)
+}
+
 // phoneCallAccepted#6d003d3f
 type TL_phoneCallAccepted struct {
 	M_classID        int32
@@ -34548,6 +36946,10 @@ func (t *TL_phoneCallAccepted) Decode(b []byte) error {
 	t.M_protocol = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_phoneCallAccepted) String() string {
+	return fmt.Sprintf("- phoneCallAccepted#6d003d3f\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- g_b : %v\n-- protocol : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_g_b, t.M_protocol)
 }
 
 // phoneCall#ffe6ab67
@@ -34701,6 +37103,10 @@ func (t *TL_phoneCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneCall) String() string {
+	return fmt.Sprintf("- phoneCall#ffe6ab67\n-- id : %v\n-- access_hash : %v\n-- date : %v\n-- admin_id : %v\n-- participant_id : %v\n-- g_a_or_b : %v\n-- key_fingerprint : %v\n-- protocol : %v\n-- connection : %v\n-- alternative_connections : %v\n-- start_date : %v\n", t.M_id, t.M_access_hash, t.M_date, t.M_admin_id, t.M_participant_id, t.M_g_a_or_b, t.M_key_fingerprint, t.M_protocol, t.M_connection, t.M_alternative_connections, t.M_start_date)
+}
+
 // phoneCallDiscarded#50ca4de1
 type TL_phoneCallDiscarded struct {
 	M_classID     int32
@@ -34795,6 +37201,10 @@ func (t *TL_phoneCallDiscarded) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneCallDiscarded) String() string {
+	return fmt.Sprintf("- phoneCallDiscarded#50ca4de1\n-- flags : %v\n-- need_rating : %v\n-- need_debug : %v\n-- id : %v\n-- reason : %v\n-- duration : %v\n", t.M_flags, t.M_need_rating, t.M_need_debug, t.M_id, t.M_reason, t.M_duration)
+}
+
 // phoneConnection#9d4c17c0
 type TL_phoneConnection struct {
 	M_classID  int32
@@ -34880,6 +37290,10 @@ func (t *TL_phoneConnection) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneConnection) String() string {
+	return fmt.Sprintf("- phoneConnection#9d4c17c0\n-- id : %v\n-- ip : %v\n-- ipv6 : %v\n-- port : %v\n-- peer_tag : %v\n", t.M_id, t.M_ip, t.M_ipv6, t.M_port, t.M_peer_tag)
+}
+
 // phoneCallProtocol#a2bb35cb
 type TL_phoneCallProtocol struct {
 	M_classID       int32
@@ -34963,6 +37377,10 @@ func (t *TL_phoneCallProtocol) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phoneCallProtocol) String() string {
+	return fmt.Sprintf("- phoneCallProtocol#a2bb35cb\n-- flags : %v\n-- udp_p2p : %v\n-- udp_reflector : %v\n-- min_layer : %v\n-- max_layer : %v\n", t.M_flags, t.M_udp_p2p, t.M_udp_reflector, t.M_min_layer, t.M_max_layer)
+}
+
 // phone_phoneCall#ec82e140
 type TL_phone_phoneCall struct {
 	M_classID    int32
@@ -35015,6 +37433,10 @@ func (t *TL_phone_phoneCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_phoneCall) String() string {
+	return fmt.Sprintf("- phone_phoneCall#ec82e140\n-- phone_call : %v\n-- users : %v\n", t.M_phone_call, t.M_users)
+}
+
 // upload_cdnFileReuploadNeeded#eea8e46e
 type TL_upload_cdnFileReuploadNeeded struct {
 	M_classID       int32
@@ -35056,6 +37478,10 @@ func (t *TL_upload_cdnFileReuploadNeeded) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_upload_cdnFileReuploadNeeded) String() string {
+	return fmt.Sprintf("- upload_cdnFileReuploadNeeded#eea8e46e\n-- request_token : %v\n", t.M_request_token)
+}
+
 // upload_cdnFile#a99fca4f
 type TL_upload_cdnFile struct {
 	M_classID int32
@@ -35095,6 +37521,10 @@ func (t *TL_upload_cdnFile) Decode(b []byte) error {
 	t.M_bytes = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_upload_cdnFile) String() string {
+	return fmt.Sprintf("- upload_cdnFile#a99fca4f\n-- bytes : %v\n", t.M_bytes)
 }
 
 // cdnPublicKey#c982eaba
@@ -35149,6 +37579,10 @@ func (t *TL_cdnPublicKey) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_cdnPublicKey) String() string {
+	return fmt.Sprintf("- cdnPublicKey#c982eaba\n-- dc_id : %v\n-- public_key : %v\n", t.M_dc_id, t.M_public_key)
+}
+
 // cdnConfig#5725e40a
 type TL_cdnConfig struct {
 	M_classID     int32
@@ -35188,6 +37622,10 @@ func (t *TL_cdnConfig) Decode(b []byte) error {
 	t.M_public_keys = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_cdnConfig) String() string {
+	return fmt.Sprintf("- cdnConfig#5725e40a\n-- public_keys : %v\n", t.M_public_keys)
 }
 
 // langPackString#cad181f6
@@ -35240,6 +37678,10 @@ func (t *TL_langPackString) Decode(b []byte) error {
 	t.M_value = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_langPackString) String() string {
+	return fmt.Sprintf("- langPackString#cad181f6\n-- key : %v\n-- value : %v\n", t.M_key, t.M_value)
 }
 
 // langPackStringPluralized#6c47ac9f
@@ -35358,6 +37800,10 @@ func (t *TL_langPackStringPluralized) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_langPackStringPluralized) String() string {
+	return fmt.Sprintf("- langPackStringPluralized#6c47ac9f\n-- flags : %v\n-- key : %v\n-- zero_value : %v\n-- one_value : %v\n-- two_value : %v\n-- few_value : %v\n-- many_value : %v\n-- other_value : %v\n", t.M_flags, t.M_key, t.M_zero_value, t.M_one_value, t.M_two_value, t.M_few_value, t.M_many_value, t.M_other_value)
+}
+
 // langPackStringDeleted#2979eeb2
 type TL_langPackStringDeleted struct {
 	M_classID int32
@@ -35397,6 +37843,10 @@ func (t *TL_langPackStringDeleted) Decode(b []byte) error {
 	t.M_key = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_langPackStringDeleted) String() string {
+	return fmt.Sprintf("- langPackStringDeleted#2979eeb2\n-- key : %v\n", t.M_key)
 }
 
 // langPackDifference#f385c1f6
@@ -35473,6 +37923,10 @@ func (t *TL_langPackDifference) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_langPackDifference) String() string {
+	return fmt.Sprintf("- langPackDifference#f385c1f6\n-- lang_code : %v\n-- from_version : %v\n-- version : %v\n-- strings : %v\n", t.M_lang_code, t.M_from_version, t.M_version, t.M_strings)
+}
+
 // langPackLanguage#117698f1
 type TL_langPackLanguage struct {
 	M_classID     int32
@@ -35534,6 +37988,10 @@ func (t *TL_langPackLanguage) Decode(b []byte) error {
 	t.M_lang_code = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_langPackLanguage) String() string {
+	return fmt.Sprintf("- langPackLanguage#117698f1\n-- name : %v\n-- native_name : %v\n-- lang_code : %v\n", t.M_name, t.M_native_name, t.M_lang_code)
 }
 
 // channelAdminRights#5d7ceba5
@@ -35674,6 +38132,10 @@ func (t *TL_channelAdminRights) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminRights) String() string {
+	return fmt.Sprintf("- channelAdminRights#5d7ceba5\n-- flags : %v\n-- change_info : %v\n-- post_messages : %v\n-- edit_messages : %v\n-- delete_messages : %v\n-- ban_users : %v\n-- invite_users : %v\n-- invite_link : %v\n-- pin_messages : %v\n-- add_admins : %v\n", t.M_flags, t.M_change_info, t.M_post_messages, t.M_edit_messages, t.M_delete_messages, t.M_ban_users, t.M_invite_users, t.M_invite_link, t.M_pin_messages, t.M_add_admins)
+}
+
 // channelBannedRights#58cf4249
 type TL_channelBannedRights struct {
 	M_classID       int32
@@ -35812,6 +38274,10 @@ func (t *TL_channelBannedRights) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelBannedRights) String() string {
+	return fmt.Sprintf("- channelBannedRights#58cf4249\n-- flags : %v\n-- view_messages : %v\n-- send_messages : %v\n-- send_media : %v\n-- send_stickers : %v\n-- send_gifs : %v\n-- send_games : %v\n-- send_inline : %v\n-- embed_links : %v\n-- until_date : %v\n", t.M_flags, t.M_view_messages, t.M_send_messages, t.M_send_media, t.M_send_stickers, t.M_send_gifs, t.M_send_games, t.M_send_inline, t.M_embed_links, t.M_until_date)
+}
+
 // channelAdminLogEventActionChangeTitle#e6dfb825
 type TL_channelAdminLogEventActionChangeTitle struct {
 	M_classID    int32
@@ -35862,6 +38328,10 @@ func (t *TL_channelAdminLogEventActionChangeTitle) Decode(b []byte) error {
 	t.M_new_value = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionChangeTitle) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionChangeTitle#e6dfb825\n-- prev_value : %v\n-- new_value : %v\n", t.M_prev_value, t.M_new_value)
 }
 
 // channelAdminLogEventActionChangeAbout#55188a2e
@@ -35916,6 +38386,10 @@ func (t *TL_channelAdminLogEventActionChangeAbout) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionChangeAbout) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionChangeAbout#55188a2e\n-- prev_value : %v\n-- new_value : %v\n", t.M_prev_value, t.M_new_value)
+}
+
 // channelAdminLogEventActionChangeUsername#6a4afc38
 type TL_channelAdminLogEventActionChangeUsername struct {
 	M_classID    int32
@@ -35966,6 +38440,10 @@ func (t *TL_channelAdminLogEventActionChangeUsername) Decode(b []byte) error {
 	t.M_new_value = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionChangeUsername) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionChangeUsername#6a4afc38\n-- prev_value : %v\n-- new_value : %v\n", t.M_prev_value, t.M_new_value)
 }
 
 // channelAdminLogEventActionChangePhoto#b82f55c3
@@ -36020,6 +38498,10 @@ func (t *TL_channelAdminLogEventActionChangePhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionChangePhoto) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionChangePhoto#b82f55c3\n-- prev_photo : %v\n-- new_photo : %v\n", t.M_prev_photo, t.M_new_photo)
+}
+
 // channelAdminLogEventActionToggleInvites#1b7907ae
 type TL_channelAdminLogEventActionToggleInvites struct {
 	M_classID   int32
@@ -36059,6 +38541,10 @@ func (t *TL_channelAdminLogEventActionToggleInvites) Decode(b []byte) error {
 	t.M_new_value = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionToggleInvites) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionToggleInvites#1b7907ae\n-- new_value : %v\n", t.M_new_value)
 }
 
 // channelAdminLogEventActionToggleSignatures#26ae0971
@@ -36102,6 +38588,10 @@ func (t *TL_channelAdminLogEventActionToggleSignatures) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionToggleSignatures) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionToggleSignatures#26ae0971\n-- new_value : %v\n", t.M_new_value)
+}
+
 // channelAdminLogEventActionUpdatePinned#e9e82c18
 type TL_channelAdminLogEventActionUpdatePinned struct {
 	M_classID int32
@@ -36141,6 +38631,10 @@ func (t *TL_channelAdminLogEventActionUpdatePinned) Decode(b []byte) error {
 	t.M_message = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionUpdatePinned) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionUpdatePinned#e9e82c18\n-- message : %v\n", t.M_message)
 }
 
 // channelAdminLogEventActionEditMessage#709b2405
@@ -36195,6 +38689,10 @@ func (t *TL_channelAdminLogEventActionEditMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionEditMessage) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionEditMessage#709b2405\n-- prev_message : %v\n-- new_message : %v\n", t.M_prev_message, t.M_new_message)
+}
+
 // channelAdminLogEventActionDeleteMessage#42e047bb
 type TL_channelAdminLogEventActionDeleteMessage struct {
 	M_classID int32
@@ -36236,6 +38734,10 @@ func (t *TL_channelAdminLogEventActionDeleteMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionDeleteMessage) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionDeleteMessage#42e047bb\n-- message : %v\n", t.M_message)
+}
+
 // channelAdminLogEventActionParticipantJoin#183040d3
 type TL_channelAdminLogEventActionParticipantJoin struct {
 	M_classID int32
@@ -36263,6 +38765,10 @@ func (t *TL_channelAdminLogEventActionParticipantJoin) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_channelAdminLogEventActionParticipantJoin) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionParticipantJoin#183040d3\n")
+}
+
 // channelAdminLogEventActionParticipantLeave#f89777f2
 type TL_channelAdminLogEventActionParticipantLeave struct {
 	M_classID int32
@@ -36288,6 +38794,10 @@ func (t *TL_channelAdminLogEventActionParticipantLeave) Encode() []byte {
 
 func (t *TL_channelAdminLogEventActionParticipantLeave) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channelAdminLogEventActionParticipantLeave) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionParticipantLeave#f89777f2\n")
 }
 
 // channelAdminLogEventActionParticipantInvite#e31c34d8
@@ -36329,6 +38839,10 @@ func (t *TL_channelAdminLogEventActionParticipantInvite) Decode(b []byte) error 
 	t.M_participant = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionParticipantInvite) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionParticipantInvite#e31c34d8\n-- participant : %v\n", t.M_participant)
 }
 
 // channelAdminLogEventActionParticipantToggleBan#e6d83d7e
@@ -36383,6 +38897,10 @@ func (t *TL_channelAdminLogEventActionParticipantToggleBan) Decode(b []byte) err
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionParticipantToggleBan) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionParticipantToggleBan#e6d83d7e\n-- prev_participant : %v\n-- new_participant : %v\n", t.M_prev_participant, t.M_new_participant)
+}
+
 // channelAdminLogEventActionParticipantToggleAdmin#d5676710
 type TL_channelAdminLogEventActionParticipantToggleAdmin struct {
 	M_classID          int32
@@ -36433,6 +38951,10 @@ func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) Decode(b []byte) e
 	t.M_new_participant = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionParticipantToggleAdmin) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionParticipantToggleAdmin#d5676710\n-- prev_participant : %v\n-- new_participant : %v\n", t.M_prev_participant, t.M_new_participant)
 }
 
 // channelAdminLogEventActionChangeStickerSet#b1c3caa7
@@ -36487,6 +39009,10 @@ func (t *TL_channelAdminLogEventActionChangeStickerSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventActionChangeStickerSet) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionChangeStickerSet#b1c3caa7\n-- prev_stickerset : %v\n-- new_stickerset : %v\n", t.M_prev_stickerset, t.M_new_stickerset)
+}
+
 // channelAdminLogEventActionTogglePreHistoryHidden#5f5c95f1
 type TL_channelAdminLogEventActionTogglePreHistoryHidden struct {
 	M_classID   int32
@@ -36526,6 +39052,10 @@ func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) Decode(b []byte) e
 	t.M_new_value = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channelAdminLogEventActionTogglePreHistoryHidden) String() string {
+	return fmt.Sprintf("- channelAdminLogEventActionTogglePreHistoryHidden#5f5c95f1\n-- new_value : %v\n", t.M_new_value)
 }
 
 // channelAdminLogEvent#3b5a3e40
@@ -36602,6 +39132,10 @@ func (t *TL_channelAdminLogEvent) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEvent) String() string {
+	return fmt.Sprintf("- channelAdminLogEvent#3b5a3e40\n-- id : %v\n-- date : %v\n-- user_id : %v\n-- action : %v\n", t.M_id, t.M_date, t.M_user_id, t.M_action)
+}
+
 // channels_adminLogResults#ed8af74d
 type TL_channels_adminLogResults struct {
 	M_classID int32
@@ -36663,6 +39197,10 @@ func (t *TL_channels_adminLogResults) Decode(b []byte) error {
 	t.M_users = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_channels_adminLogResults) String() string {
+	return fmt.Sprintf("- channels_adminLogResults#ed8af74d\n-- events : %v\n-- chats : %v\n-- users : %v\n", t.M_events, t.M_chats, t.M_users)
 }
 
 // channelAdminLogEventsFilter#ea107ae4
@@ -36858,6 +39396,10 @@ func (t *TL_channelAdminLogEventsFilter) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channelAdminLogEventsFilter) String() string {
+	return fmt.Sprintf("- channelAdminLogEventsFilter#ea107ae4\n-- flags : %v\n-- join : %v\n-- leave : %v\n-- invite : %v\n-- ban : %v\n-- unban : %v\n-- kick : %v\n-- unkick : %v\n-- promote : %v\n-- demote : %v\n-- info : %v\n-- settings : %v\n-- pinned : %v\n-- edit : %v\n-- delete : %v\n", t.M_flags, t.M_join, t.M_leave, t.M_invite, t.M_ban, t.M_unban, t.M_kick, t.M_unkick, t.M_promote, t.M_demote, t.M_info, t.M_settings, t.M_pinned, t.M_edit, t.M_delete)
+}
+
 // popularContact#5ce14175
 type TL_popularContact struct {
 	M_classID   int32
@@ -36908,6 +39450,10 @@ func (t *TL_popularContact) Decode(b []byte) error {
 	t.M_importers = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_popularContact) String() string {
+	return fmt.Sprintf("- popularContact#5ce14175\n-- client_id : %v\n-- importers : %v\n", t.M_client_id, t.M_importers)
 }
 
 // cdnFileHash#77eec38f
@@ -36973,6 +39519,10 @@ func (t *TL_cdnFileHash) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_cdnFileHash) String() string {
+	return fmt.Sprintf("- cdnFileHash#77eec38f\n-- offset : %v\n-- limit : %v\n-- hash : %v\n", t.M_offset, t.M_limit, t.M_hash)
+}
+
 // messages_favedStickersNotModified#9e8fa6d3
 type TL_messages_favedStickersNotModified struct {
 	M_classID int32
@@ -36998,6 +39548,10 @@ func (t *TL_messages_favedStickersNotModified) Encode() []byte {
 
 func (t *TL_messages_favedStickersNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_favedStickersNotModified) String() string {
+	return fmt.Sprintf("- messages_favedStickersNotModified#9e8fa6d3\n")
 }
 
 // messages_favedStickers#f37f2f16
@@ -37063,6 +39617,10 @@ func (t *TL_messages_favedStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_favedStickers) String() string {
+	return fmt.Sprintf("- messages_favedStickers#f37f2f16\n-- hash : %v\n-- packs : %v\n-- stickers : %v\n", t.M_hash, t.M_packs, t.M_stickers)
+}
+
 // recentMeUrlUnknown#46e1d13d
 type TL_recentMeUrlUnknown struct {
 	M_classID int32
@@ -37102,6 +39660,10 @@ func (t *TL_recentMeUrlUnknown) Decode(b []byte) error {
 	t.M_url = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_recentMeUrlUnknown) String() string {
+	return fmt.Sprintf("- recentMeUrlUnknown#46e1d13d\n-- url : %v\n", t.M_url)
 }
 
 // recentMeUrlUser#8dbc3336
@@ -37156,6 +39718,10 @@ func (t *TL_recentMeUrlUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_recentMeUrlUser) String() string {
+	return fmt.Sprintf("- recentMeUrlUser#8dbc3336\n-- url : %v\n-- user_id : %v\n", t.M_url, t.M_user_id)
+}
+
 // recentMeUrlChat#a01b22f9
 type TL_recentMeUrlChat struct {
 	M_classID int32
@@ -37206,6 +39772,10 @@ func (t *TL_recentMeUrlChat) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_recentMeUrlChat) String() string {
+	return fmt.Sprintf("- recentMeUrlChat#a01b22f9\n-- url : %v\n-- chat_id : %v\n", t.M_url, t.M_chat_id)
 }
 
 // recentMeUrlChatInvite#eb49081d
@@ -37260,6 +39830,10 @@ func (t *TL_recentMeUrlChatInvite) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_recentMeUrlChatInvite) String() string {
+	return fmt.Sprintf("- recentMeUrlChatInvite#eb49081d\n-- url : %v\n-- chat_invite : %v\n", t.M_url, t.M_chat_invite)
+}
+
 // recentMeUrlStickerSet#bc0a57dc
 type TL_recentMeUrlStickerSet struct {
 	M_classID int32
@@ -37310,6 +39884,10 @@ func (t *TL_recentMeUrlStickerSet) Decode(b []byte) error {
 	t.M_set = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_recentMeUrlStickerSet) String() string {
+	return fmt.Sprintf("- recentMeUrlStickerSet#bc0a57dc\n-- url : %v\n-- set : %v\n", t.M_url, t.M_set)
 }
 
 // help_recentMeUrls#e0310d7
@@ -37375,6 +39953,10 @@ func (t *TL_help_recentMeUrls) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_recentMeUrls) String() string {
+	return fmt.Sprintf("- help_recentMeUrls#e0310d7\n-- urls : %v\n-- chats : %v\n-- users : %v\n", t.M_urls, t.M_chats, t.M_users)
+}
+
 // inputSingleMedia#5eaa7809
 type TL_inputSingleMedia struct {
 	M_classID   int32
@@ -37425,6 +40007,10 @@ func (t *TL_inputSingleMedia) Decode(b []byte) error {
 	t.M_random_id = dc.Long()
 
 	return dc.err
+}
+
+func (t *TL_inputSingleMedia) String() string {
+	return fmt.Sprintf("- inputSingleMedia#5eaa7809\n-- media : %v\n-- random_id : %v\n", t.M_media, t.M_random_id)
 }
 
 // invokeAfterMsg#cb9f372d
@@ -37479,6 +40065,10 @@ func (t *TL_invokeAfterMsg) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_invokeAfterMsg) String() string {
+	return fmt.Sprintf("- invokeAfterMsg#cb9f372d\n-- msg_id : %v\n-- query : %v\n", t.M_msg_id, t.M_query)
+}
+
 // invokeAfterMsgs#3dc4b4f0
 type TL_invokeAfterMsgs struct {
 	M_classID int32
@@ -37529,6 +40119,10 @@ func (t *TL_invokeAfterMsgs) Decode(b []byte) error {
 	t.M_query = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_invokeAfterMsgs) String() string {
+	return fmt.Sprintf("- invokeAfterMsgs#3dc4b4f0\n-- msg_ids : %v\n-- query : %v\n", t.M_msg_ids, t.M_query)
 }
 
 // initConnection#c7481da6
@@ -37649,6 +40243,10 @@ func (t *TL_initConnection) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_initConnection) String() string {
+	return fmt.Sprintf("- initConnection#c7481da6\n-- api_id : %v\n-- device_model : %v\n-- system_version : %v\n-- app_version : %v\n-- system_lang_code : %v\n-- lang_pack : %v\n-- lang_code : %v\n-- query : %v\n", t.M_api_id, t.M_device_model, t.M_system_version, t.M_app_version, t.M_system_lang_code, t.M_lang_pack, t.M_lang_code, t.M_query)
+}
+
 // invokeWithLayer#da9b0d0d
 type TL_invokeWithLayer struct {
 	M_classID int32
@@ -37701,6 +40299,10 @@ func (t *TL_invokeWithLayer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_invokeWithLayer) String() string {
+	return fmt.Sprintf("- invokeWithLayer#da9b0d0d\n-- layer : %v\n-- query : %v\n", t.M_layer, t.M_query)
+}
+
 // invokeWithoutUpdates#bf9459b7
 type TL_invokeWithoutUpdates struct {
 	M_classID int32
@@ -37742,6 +40344,10 @@ func (t *TL_invokeWithoutUpdates) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_invokeWithoutUpdates) String() string {
+	return fmt.Sprintf("- invokeWithoutUpdates#bf9459b7\n-- query : %v\n", t.M_query)
+}
+
 // auth_checkPhone#6fe51dfb
 type TL_auth_checkPhone struct {
 	M_classID      int32
@@ -37781,6 +40387,10 @@ func (t *TL_auth_checkPhone) Decode(b []byte) error {
 	t.M_phone_number = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_auth_checkPhone) String() string {
+	return fmt.Sprintf("- auth_checkPhone#6fe51dfb\n-- phone_number : %v\n", t.M_phone_number)
 }
 
 // auth_sendCode#86aef0ec
@@ -37877,6 +40487,10 @@ func (t *TL_auth_sendCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_sendCode) String() string {
+	return fmt.Sprintf("- auth_sendCode#86aef0ec\n-- flags : %v\n-- allow_flashcall : %v\n-- phone_number : %v\n-- current_number : %v\n-- api_id : %v\n-- api_hash : %v\n", t.M_flags, t.M_allow_flashcall, t.M_phone_number, t.M_current_number, t.M_api_id, t.M_api_hash)
+}
+
 // auth_signUp#1b067634
 type TL_auth_signUp struct {
 	M_classID         int32
@@ -37962,6 +40576,10 @@ func (t *TL_auth_signUp) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_signUp) String() string {
+	return fmt.Sprintf("- auth_signUp#1b067634\n-- phone_number : %v\n-- phone_code_hash : %v\n-- phone_code : %v\n-- first_name : %v\n-- last_name : %v\n", t.M_phone_number, t.M_phone_code_hash, t.M_phone_code, t.M_first_name, t.M_last_name)
+}
+
 // auth_signIn#bcd51581
 type TL_auth_signIn struct {
 	M_classID         int32
@@ -38025,6 +40643,10 @@ func (t *TL_auth_signIn) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_signIn) String() string {
+	return fmt.Sprintf("- auth_signIn#bcd51581\n-- phone_number : %v\n-- phone_code_hash : %v\n-- phone_code : %v\n", t.M_phone_number, t.M_phone_code_hash, t.M_phone_code)
+}
+
 // auth_logOut#5717da40
 type TL_auth_logOut struct {
 	M_classID int32
@@ -38052,6 +40674,10 @@ func (t *TL_auth_logOut) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_auth_logOut) String() string {
+	return fmt.Sprintf("- auth_logOut#5717da40\n")
+}
+
 // auth_resetAuthorizations#9fab0d1a
 type TL_auth_resetAuthorizations struct {
 	M_classID int32
@@ -38077,6 +40703,10 @@ func (t *TL_auth_resetAuthorizations) Encode() []byte {
 
 func (t *TL_auth_resetAuthorizations) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_auth_resetAuthorizations) String() string {
+	return fmt.Sprintf("- auth_resetAuthorizations#9fab0d1a\n")
 }
 
 // auth_sendInvites#771c1d97
@@ -38131,6 +40761,10 @@ func (t *TL_auth_sendInvites) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_sendInvites) String() string {
+	return fmt.Sprintf("- auth_sendInvites#771c1d97\n-- phone_numbers : %v\n-- message : %v\n", t.M_phone_numbers, t.M_message)
+}
+
 // auth_exportAuthorization#e5bfffcd
 type TL_auth_exportAuthorization struct {
 	M_classID int32
@@ -38170,6 +40804,10 @@ func (t *TL_auth_exportAuthorization) Decode(b []byte) error {
 	t.M_dc_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_auth_exportAuthorization) String() string {
+	return fmt.Sprintf("- auth_exportAuthorization#e5bfffcd\n-- dc_id : %v\n", t.M_dc_id)
 }
 
 // auth_importAuthorization#e3ef9613
@@ -38222,6 +40860,10 @@ func (t *TL_auth_importAuthorization) Decode(b []byte) error {
 	t.M_bytes = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_auth_importAuthorization) String() string {
+	return fmt.Sprintf("- auth_importAuthorization#e3ef9613\n-- id : %v\n-- bytes : %v\n", t.M_id, t.M_bytes)
 }
 
 // auth_bindTempAuthKey#cdd42a05
@@ -38298,6 +40940,10 @@ func (t *TL_auth_bindTempAuthKey) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_bindTempAuthKey) String() string {
+	return fmt.Sprintf("- auth_bindTempAuthKey#cdd42a05\n-- perm_auth_key_id : %v\n-- nonce : %v\n-- expires_at : %v\n-- encrypted_message : %v\n", t.M_perm_auth_key_id, t.M_nonce, t.M_expires_at, t.M_encrypted_message)
+}
+
 // auth_importBotAuthorization#67a3ff2c
 type TL_auth_importBotAuthorization struct {
 	M_classID        int32
@@ -38372,6 +41018,10 @@ func (t *TL_auth_importBotAuthorization) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_importBotAuthorization) String() string {
+	return fmt.Sprintf("- auth_importBotAuthorization#67a3ff2c\n-- flags : %v\n-- api_id : %v\n-- api_hash : %v\n-- bot_auth_token : %v\n", t.M_flags, t.M_api_id, t.M_api_hash, t.M_bot_auth_token)
+}
+
 // auth_checkPassword#a63011e
 type TL_auth_checkPassword struct {
 	M_classID       int32
@@ -38413,6 +41063,10 @@ func (t *TL_auth_checkPassword) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_checkPassword) String() string {
+	return fmt.Sprintf("- auth_checkPassword#a63011e\n-- password_hash : %v\n", t.M_password_hash)
+}
+
 // auth_requestPasswordRecovery#d897bc66
 type TL_auth_requestPasswordRecovery struct {
 	M_classID int32
@@ -38438,6 +41092,10 @@ func (t *TL_auth_requestPasswordRecovery) Encode() []byte {
 
 func (t *TL_auth_requestPasswordRecovery) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_auth_requestPasswordRecovery) String() string {
+	return fmt.Sprintf("- auth_requestPasswordRecovery#d897bc66\n")
 }
 
 // auth_recoverPassword#4ea56e92
@@ -38479,6 +41137,10 @@ func (t *TL_auth_recoverPassword) Decode(b []byte) error {
 	t.M_code = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_auth_recoverPassword) String() string {
+	return fmt.Sprintf("- auth_recoverPassword#4ea56e92\n-- code : %v\n", t.M_code)
 }
 
 // auth_resendCode#3ef1a9bf
@@ -38533,6 +41195,10 @@ func (t *TL_auth_resendCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_resendCode) String() string {
+	return fmt.Sprintf("- auth_resendCode#3ef1a9bf\n-- phone_number : %v\n-- phone_code_hash : %v\n", t.M_phone_number, t.M_phone_code_hash)
+}
+
 // auth_cancelCode#1f040578
 type TL_auth_cancelCode struct {
 	M_classID         int32
@@ -38585,6 +41251,10 @@ func (t *TL_auth_cancelCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_auth_cancelCode) String() string {
+	return fmt.Sprintf("- auth_cancelCode#1f040578\n-- phone_number : %v\n-- phone_code_hash : %v\n", t.M_phone_number, t.M_phone_code_hash)
+}
+
 // auth_dropTempAuthKeys#8e48a188
 type TL_auth_dropTempAuthKeys struct {
 	M_classID          int32
@@ -38624,6 +41294,10 @@ func (t *TL_auth_dropTempAuthKeys) Decode(b []byte) error {
 	t.M_except_auth_keys = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_auth_dropTempAuthKeys) String() string {
+	return fmt.Sprintf("- auth_dropTempAuthKeys#8e48a188\n-- except_auth_keys : %v\n", t.M_except_auth_keys)
 }
 
 // account_registerDevice#637ea878
@@ -38678,6 +41352,10 @@ func (t *TL_account_registerDevice) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_registerDevice) String() string {
+	return fmt.Sprintf("- account_registerDevice#637ea878\n-- token_type : %v\n-- token : %v\n", t.M_token_type, t.M_token)
+}
+
 // account_unregisterDevice#65c55b40
 type TL_account_unregisterDevice struct {
 	M_classID    int32
@@ -38728,6 +41406,10 @@ func (t *TL_account_unregisterDevice) Decode(b []byte) error {
 	t.M_token = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_account_unregisterDevice) String() string {
+	return fmt.Sprintf("- account_unregisterDevice#65c55b40\n-- token_type : %v\n-- token : %v\n", t.M_token_type, t.M_token)
 }
 
 // account_updateNotifySettings#84be5b93
@@ -38782,6 +41464,10 @@ func (t *TL_account_updateNotifySettings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_updateNotifySettings) String() string {
+	return fmt.Sprintf("- account_updateNotifySettings#84be5b93\n-- peer : %v\n-- settings : %v\n", t.M_peer, t.M_settings)
+}
+
 // account_getNotifySettings#12b3ad31
 type TL_account_getNotifySettings struct {
 	M_classID int32
@@ -38823,6 +41509,10 @@ func (t *TL_account_getNotifySettings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_getNotifySettings) String() string {
+	return fmt.Sprintf("- account_getNotifySettings#12b3ad31\n-- peer : %v\n", t.M_peer)
+}
+
 // account_resetNotifySettings#db7e1747
 type TL_account_resetNotifySettings struct {
 	M_classID int32
@@ -38848,6 +41538,10 @@ func (t *TL_account_resetNotifySettings) Encode() []byte {
 
 func (t *TL_account_resetNotifySettings) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_account_resetNotifySettings) String() string {
+	return fmt.Sprintf("- account_resetNotifySettings#db7e1747\n")
 }
 
 // account_updateProfile#78515775
@@ -38922,6 +41616,10 @@ func (t *TL_account_updateProfile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_updateProfile) String() string {
+	return fmt.Sprintf("- account_updateProfile#78515775\n-- flags : %v\n-- first_name : %v\n-- last_name : %v\n-- about : %v\n", t.M_flags, t.M_first_name, t.M_last_name, t.M_about)
+}
+
 // account_updateStatus#6628562c
 type TL_account_updateStatus struct {
 	M_classID int32
@@ -38963,6 +41661,10 @@ func (t *TL_account_updateStatus) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_updateStatus) String() string {
+	return fmt.Sprintf("- account_updateStatus#6628562c\n-- offline : %v\n", t.M_offline)
+}
+
 // account_getWallPapers#c04cfac2
 type TL_account_getWallPapers struct {
 	M_classID int32
@@ -38988,6 +41690,10 @@ func (t *TL_account_getWallPapers) Encode() []byte {
 
 func (t *TL_account_getWallPapers) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_account_getWallPapers) String() string {
+	return fmt.Sprintf("- account_getWallPapers#c04cfac2\n")
 }
 
 // account_reportPeer#ae189d5f
@@ -39042,6 +41748,10 @@ func (t *TL_account_reportPeer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_reportPeer) String() string {
+	return fmt.Sprintf("- account_reportPeer#ae189d5f\n-- peer : %v\n-- reason : %v\n", t.M_peer, t.M_reason)
+}
+
 // account_checkUsername#2714d86c
 type TL_account_checkUsername struct {
 	M_classID  int32
@@ -39081,6 +41791,10 @@ func (t *TL_account_checkUsername) Decode(b []byte) error {
 	t.M_username = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_account_checkUsername) String() string {
+	return fmt.Sprintf("- account_checkUsername#2714d86c\n-- username : %v\n", t.M_username)
 }
 
 // account_updateUsername#3e0bdd7c
@@ -39124,6 +41838,10 @@ func (t *TL_account_updateUsername) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_updateUsername) String() string {
+	return fmt.Sprintf("- account_updateUsername#3e0bdd7c\n-- username : %v\n", t.M_username)
+}
+
 // account_getPrivacy#dadbc950
 type TL_account_getPrivacy struct {
 	M_classID int32
@@ -39163,6 +41881,10 @@ func (t *TL_account_getPrivacy) Decode(b []byte) error {
 	t.M_key = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_account_getPrivacy) String() string {
+	return fmt.Sprintf("- account_getPrivacy#dadbc950\n-- key : %v\n", t.M_key)
 }
 
 // account_setPrivacy#c9f81ce8
@@ -39217,6 +41939,10 @@ func (t *TL_account_setPrivacy) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_setPrivacy) String() string {
+	return fmt.Sprintf("- account_setPrivacy#c9f81ce8\n-- key : %v\n-- rules : %v\n", t.M_key, t.M_rules)
+}
+
 // account_deleteAccount#418d4e0b
 type TL_account_deleteAccount struct {
 	M_classID int32
@@ -39258,6 +41984,10 @@ func (t *TL_account_deleteAccount) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_deleteAccount) String() string {
+	return fmt.Sprintf("- account_deleteAccount#418d4e0b\n-- reason : %v\n", t.M_reason)
+}
+
 // account_getAccountTTL#8fc711d
 type TL_account_getAccountTTL struct {
 	M_classID int32
@@ -39283,6 +42013,10 @@ func (t *TL_account_getAccountTTL) Encode() []byte {
 
 func (t *TL_account_getAccountTTL) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_account_getAccountTTL) String() string {
+	return fmt.Sprintf("- account_getAccountTTL#8fc711d\n")
 }
 
 // account_setAccountTTL#2442485e
@@ -39324,6 +42058,10 @@ func (t *TL_account_setAccountTTL) Decode(b []byte) error {
 	t.M_ttl = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_account_setAccountTTL) String() string {
+	return fmt.Sprintf("- account_setAccountTTL#2442485e\n-- ttl : %v\n", t.M_ttl)
 }
 
 // account_sendChangePhoneCode#8e57deb
@@ -39398,6 +42136,10 @@ func (t *TL_account_sendChangePhoneCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_sendChangePhoneCode) String() string {
+	return fmt.Sprintf("- account_sendChangePhoneCode#8e57deb\n-- flags : %v\n-- allow_flashcall : %v\n-- phone_number : %v\n-- current_number : %v\n", t.M_flags, t.M_allow_flashcall, t.M_phone_number, t.M_current_number)
+}
+
 // account_changePhone#70c32edb
 type TL_account_changePhone struct {
 	M_classID         int32
@@ -39461,6 +42203,10 @@ func (t *TL_account_changePhone) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_changePhone) String() string {
+	return fmt.Sprintf("- account_changePhone#70c32edb\n-- phone_number : %v\n-- phone_code_hash : %v\n-- phone_code : %v\n", t.M_phone_number, t.M_phone_code_hash, t.M_phone_code)
+}
+
 // account_updateDeviceLocked#38df3532
 type TL_account_updateDeviceLocked struct {
 	M_classID int32
@@ -39502,6 +42248,10 @@ func (t *TL_account_updateDeviceLocked) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_updateDeviceLocked) String() string {
+	return fmt.Sprintf("- account_updateDeviceLocked#38df3532\n-- period : %v\n", t.M_period)
+}
+
 // account_getAuthorizations#e320c158
 type TL_account_getAuthorizations struct {
 	M_classID int32
@@ -39527,6 +42277,10 @@ func (t *TL_account_getAuthorizations) Encode() []byte {
 
 func (t *TL_account_getAuthorizations) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_account_getAuthorizations) String() string {
+	return fmt.Sprintf("- account_getAuthorizations#e320c158\n")
 }
 
 // account_resetAuthorization#df77f3bc
@@ -39570,6 +42324,10 @@ func (t *TL_account_resetAuthorization) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_resetAuthorization) String() string {
+	return fmt.Sprintf("- account_resetAuthorization#df77f3bc\n-- hash : %v\n", t.M_hash)
+}
+
 // account_getPassword#548a30f5
 type TL_account_getPassword struct {
 	M_classID int32
@@ -39595,6 +42353,10 @@ func (t *TL_account_getPassword) Encode() []byte {
 
 func (t *TL_account_getPassword) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_account_getPassword) String() string {
+	return fmt.Sprintf("- account_getPassword#548a30f5\n")
 }
 
 // account_getPasswordSettings#bc8d11bb
@@ -39636,6 +42398,10 @@ func (t *TL_account_getPasswordSettings) Decode(b []byte) error {
 	t.M_current_password_hash = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_account_getPasswordSettings) String() string {
+	return fmt.Sprintf("- account_getPasswordSettings#bc8d11bb\n-- current_password_hash : %v\n", t.M_current_password_hash)
 }
 
 // account_updatePasswordSettings#fa7c4b86
@@ -39688,6 +42454,10 @@ func (t *TL_account_updatePasswordSettings) Decode(b []byte) error {
 	t.M_new_settings = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_account_updatePasswordSettings) String() string {
+	return fmt.Sprintf("- account_updatePasswordSettings#fa7c4b86\n-- current_password_hash : %v\n-- new_settings : %v\n", t.M_current_password_hash, t.M_new_settings)
 }
 
 // account_sendConfirmPhoneCode#1516d7bd
@@ -39762,6 +42532,10 @@ func (t *TL_account_sendConfirmPhoneCode) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_sendConfirmPhoneCode) String() string {
+	return fmt.Sprintf("- account_sendConfirmPhoneCode#1516d7bd\n-- flags : %v\n-- allow_flashcall : %v\n-- hash : %v\n-- current_number : %v\n", t.M_flags, t.M_allow_flashcall, t.M_hash, t.M_current_number)
+}
+
 // account_confirmPhone#5f2178c3
 type TL_account_confirmPhone struct {
 	M_classID         int32
@@ -39812,6 +42586,10 @@ func (t *TL_account_confirmPhone) Decode(b []byte) error {
 	t.M_phone_code = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_account_confirmPhone) String() string {
+	return fmt.Sprintf("- account_confirmPhone#5f2178c3\n-- phone_code_hash : %v\n-- phone_code : %v\n", t.M_phone_code_hash, t.M_phone_code)
 }
 
 // account_getTmpPassword#4a82327e
@@ -39866,6 +42644,10 @@ func (t *TL_account_getTmpPassword) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_account_getTmpPassword) String() string {
+	return fmt.Sprintf("- account_getTmpPassword#4a82327e\n-- password_hash : %v\n-- period : %v\n", t.M_password_hash, t.M_period)
+}
+
 // users_getUsers#d91a548
 type TL_users_getUsers struct {
 	M_classID int32
@@ -39905,6 +42687,10 @@ func (t *TL_users_getUsers) Decode(b []byte) error {
 	t.M_id = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_users_getUsers) String() string {
+	return fmt.Sprintf("- users_getUsers#d91a548\n-- id : %v\n", t.M_id)
 }
 
 // users_getFullUser#ca30a5b1
@@ -39948,6 +42734,10 @@ func (t *TL_users_getFullUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_users_getFullUser) String() string {
+	return fmt.Sprintf("- users_getFullUser#ca30a5b1\n-- id : %v\n", t.M_id)
+}
+
 // contacts_getStatuses#c4a353ee
 type TL_contacts_getStatuses struct {
 	M_classID int32
@@ -39973,6 +42763,10 @@ func (t *TL_contacts_getStatuses) Encode() []byte {
 
 func (t *TL_contacts_getStatuses) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contacts_getStatuses) String() string {
+	return fmt.Sprintf("- contacts_getStatuses#c4a353ee\n")
 }
 
 // contacts_getContacts#c023849f
@@ -40016,6 +42810,10 @@ func (t *TL_contacts_getContacts) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_getContacts) String() string {
+	return fmt.Sprintf("- contacts_getContacts#c023849f\n-- hash : %v\n", t.M_hash)
+}
+
 // contacts_importContacts#2c800be5
 type TL_contacts_importContacts struct {
 	M_classID  int32
@@ -40055,6 +42853,10 @@ func (t *TL_contacts_importContacts) Decode(b []byte) error {
 	t.M_contacts = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_contacts_importContacts) String() string {
+	return fmt.Sprintf("- contacts_importContacts#2c800be5\n-- contacts : %v\n", t.M_contacts)
 }
 
 // contacts_deleteContact#8e953744
@@ -40098,6 +42900,10 @@ func (t *TL_contacts_deleteContact) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_deleteContact) String() string {
+	return fmt.Sprintf("- contacts_deleteContact#8e953744\n-- id : %v\n", t.M_id)
+}
+
 // contacts_deleteContacts#59ab389e
 type TL_contacts_deleteContacts struct {
 	M_classID int32
@@ -40137,6 +42943,10 @@ func (t *TL_contacts_deleteContacts) Decode(b []byte) error {
 	t.M_id = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_contacts_deleteContacts) String() string {
+	return fmt.Sprintf("- contacts_deleteContacts#59ab389e\n-- id : %v\n", t.M_id)
 }
 
 // contacts_block#332b49fc
@@ -40180,6 +42990,10 @@ func (t *TL_contacts_block) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_block) String() string {
+	return fmt.Sprintf("- contacts_block#332b49fc\n-- id : %v\n", t.M_id)
+}
+
 // contacts_unblock#e54100bd
 type TL_contacts_unblock struct {
 	M_classID int32
@@ -40219,6 +43033,10 @@ func (t *TL_contacts_unblock) Decode(b []byte) error {
 	t.M_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_contacts_unblock) String() string {
+	return fmt.Sprintf("- contacts_unblock#e54100bd\n-- id : %v\n", t.M_id)
 }
 
 // contacts_getBlocked#f57c350f
@@ -40273,6 +43091,10 @@ func (t *TL_contacts_getBlocked) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_getBlocked) String() string {
+	return fmt.Sprintf("- contacts_getBlocked#f57c350f\n-- offset : %v\n-- limit : %v\n", t.M_offset, t.M_limit)
+}
+
 // contacts_exportCard#84e53737
 type TL_contacts_exportCard struct {
 	M_classID int32
@@ -40298,6 +43120,10 @@ func (t *TL_contacts_exportCard) Encode() []byte {
 
 func (t *TL_contacts_exportCard) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contacts_exportCard) String() string {
+	return fmt.Sprintf("- contacts_exportCard#84e53737\n")
 }
 
 // contacts_importCard#4fe196fe
@@ -40339,6 +43165,10 @@ func (t *TL_contacts_importCard) Decode(b []byte) error {
 	t.M_export_card = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_contacts_importCard) String() string {
+	return fmt.Sprintf("- contacts_importCard#4fe196fe\n-- export_card : %v\n", t.M_export_card)
 }
 
 // contacts_search#11f812d8
@@ -40393,6 +43223,10 @@ func (t *TL_contacts_search) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_search) String() string {
+	return fmt.Sprintf("- contacts_search#11f812d8\n-- q : %v\n-- limit : %v\n", t.M_q, t.M_limit)
+}
+
 // contacts_resolveUsername#f93ccba3
 type TL_contacts_resolveUsername struct {
 	M_classID  int32
@@ -40432,6 +43266,10 @@ func (t *TL_contacts_resolveUsername) Decode(b []byte) error {
 	t.M_username = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_contacts_resolveUsername) String() string {
+	return fmt.Sprintf("- contacts_resolveUsername#f93ccba3\n-- username : %v\n", t.M_username)
 }
 
 // contacts_getTopPeers#d4982db5
@@ -40572,6 +43410,10 @@ func (t *TL_contacts_getTopPeers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_getTopPeers) String() string {
+	return fmt.Sprintf("- contacts_getTopPeers#d4982db5\n-- flags : %v\n-- correspondents : %v\n-- bots_pm : %v\n-- bots_inline : %v\n-- phone_calls : %v\n-- groups : %v\n-- channels : %v\n-- offset : %v\n-- limit : %v\n-- hash : %v\n", t.M_flags, t.M_correspondents, t.M_bots_pm, t.M_bots_inline, t.M_phone_calls, t.M_groups, t.M_channels, t.M_offset, t.M_limit, t.M_hash)
+}
+
 // contacts_resetTopPeerRating#1ae373ac
 type TL_contacts_resetTopPeerRating struct {
 	M_classID  int32
@@ -40624,6 +43466,10 @@ func (t *TL_contacts_resetTopPeerRating) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_contacts_resetTopPeerRating) String() string {
+	return fmt.Sprintf("- contacts_resetTopPeerRating#1ae373ac\n-- category : %v\n-- peer : %v\n", t.M_category, t.M_peer)
+}
+
 // contacts_resetSaved#879537f1
 type TL_contacts_resetSaved struct {
 	M_classID int32
@@ -40649,6 +43495,10 @@ func (t *TL_contacts_resetSaved) Encode() []byte {
 
 func (t *TL_contacts_resetSaved) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_contacts_resetSaved) String() string {
+	return fmt.Sprintf("- contacts_resetSaved#879537f1\n")
 }
 
 // messages_getMessages#4222fa74
@@ -40690,6 +43540,10 @@ func (t *TL_messages_getMessages) Decode(b []byte) error {
 	t.M_id = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_messages_getMessages) String() string {
+	return fmt.Sprintf("- messages_getMessages#4222fa74\n-- id : %v\n", t.M_id)
 }
 
 // messages_getDialogs#191ba9c5
@@ -40784,6 +43638,10 @@ func (t *TL_messages_getDialogs) Decode(b []byte) error {
 	t.M_limit = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getDialogs) String() string {
+	return fmt.Sprintf("- messages_getDialogs#191ba9c5\n-- flags : %v\n-- exclude_pinned : %v\n-- offset_date : %v\n-- offset_id : %v\n-- offset_peer : %v\n-- limit : %v\n", t.M_flags, t.M_exclude_pinned, t.M_offset_date, t.M_offset_id, t.M_offset_peer, t.M_limit)
 }
 
 // messages_getHistory#dcbb8260
@@ -40902,6 +43760,10 @@ func (t *TL_messages_getHistory) Decode(b []byte) error {
 	t.M_hash = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getHistory) String() string {
+	return fmt.Sprintf("- messages_getHistory#dcbb8260\n-- peer : %v\n-- offset_id : %v\n-- offset_date : %v\n-- add_offset : %v\n-- limit : %v\n-- max_id : %v\n-- min_id : %v\n-- hash : %v\n", t.M_peer, t.M_offset_id, t.M_offset_date, t.M_add_offset, t.M_limit, t.M_max_id, t.M_min_id, t.M_hash)
 }
 
 // messages_search#39e9ea0
@@ -41064,6 +43926,10 @@ func (t *TL_messages_search) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_search) String() string {
+	return fmt.Sprintf("- messages_search#39e9ea0\n-- flags : %v\n-- peer : %v\n-- q : %v\n-- from_id : %v\n-- filter : %v\n-- min_date : %v\n-- max_date : %v\n-- offset_id : %v\n-- add_offset : %v\n-- limit : %v\n-- max_id : %v\n-- min_id : %v\n", t.M_flags, t.M_peer, t.M_q, t.M_from_id, t.M_filter, t.M_min_date, t.M_max_date, t.M_offset_id, t.M_add_offset, t.M_limit, t.M_max_id, t.M_min_id)
+}
+
 // messages_readHistory#e306d3a
 type TL_messages_readHistory struct {
 	M_classID int32
@@ -41114,6 +43980,10 @@ func (t *TL_messages_readHistory) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_readHistory) String() string {
+	return fmt.Sprintf("- messages_readHistory#e306d3a\n-- peer : %v\n-- max_id : %v\n", t.M_peer, t.M_max_id)
 }
 
 // messages_deleteHistory#1c015b09
@@ -41188,6 +44058,10 @@ func (t *TL_messages_deleteHistory) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_deleteHistory) String() string {
+	return fmt.Sprintf("- messages_deleteHistory#1c015b09\n-- flags : %v\n-- just_clear : %v\n-- peer : %v\n-- max_id : %v\n", t.M_flags, t.M_just_clear, t.M_peer, t.M_max_id)
+}
+
 // messages_deleteMessages#e58e95d2
 type TL_messages_deleteMessages struct {
 	M_classID int32
@@ -41249,6 +44123,10 @@ func (t *TL_messages_deleteMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_deleteMessages) String() string {
+	return fmt.Sprintf("- messages_deleteMessages#e58e95d2\n-- flags : %v\n-- revoke : %v\n-- id : %v\n", t.M_flags, t.M_revoke, t.M_id)
+}
+
 // messages_receivedMessages#5a954c0
 type TL_messages_receivedMessages struct {
 	M_classID int32
@@ -41288,6 +44166,10 @@ func (t *TL_messages_receivedMessages) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_receivedMessages) String() string {
+	return fmt.Sprintf("- messages_receivedMessages#5a954c0\n-- max_id : %v\n", t.M_max_id)
 }
 
 // messages_setTyping#a3825e50
@@ -41340,6 +44222,10 @@ func (t *TL_messages_setTyping) Decode(b []byte) error {
 	t.M_action = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_setTyping) String() string {
+	return fmt.Sprintf("- messages_setTyping#a3825e50\n-- peer : %v\n-- action : %v\n", t.M_peer, t.M_action)
 }
 
 // messages_sendMessage#fa88427a
@@ -41491,6 +44377,10 @@ func (t *TL_messages_sendMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendMessage) String() string {
+	return fmt.Sprintf("- messages_sendMessage#fa88427a\n-- flags : %v\n-- no_webpage : %v\n-- silent : %v\n-- background : %v\n-- clear_draft : %v\n-- peer : %v\n-- reply_to_msg_id : %v\n-- message : %v\n-- random_id : %v\n-- reply_markup : %v\n-- entities : %v\n", t.M_flags, t.M_no_webpage, t.M_silent, t.M_background, t.M_clear_draft, t.M_peer, t.M_reply_to_msg_id, t.M_message, t.M_random_id, t.M_reply_markup, t.M_entities)
+}
+
 // messages_sendMedia#c8f16791
 type TL_messages_sendMedia struct {
 	M_classID         int32
@@ -41616,6 +44506,10 @@ func (t *TL_messages_sendMedia) Decode(b []byte) error {
 	t.M_reply_markup = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_sendMedia) String() string {
+	return fmt.Sprintf("- messages_sendMedia#c8f16791\n-- flags : %v\n-- silent : %v\n-- background : %v\n-- clear_draft : %v\n-- peer : %v\n-- reply_to_msg_id : %v\n-- media : %v\n-- random_id : %v\n-- reply_markup : %v\n", t.M_flags, t.M_silent, t.M_background, t.M_clear_draft, t.M_peer, t.M_reply_to_msg_id, t.M_media, t.M_random_id, t.M_reply_markup)
 }
 
 // messages_forwardMessages#708e0195
@@ -41745,6 +44639,10 @@ func (t *TL_messages_forwardMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_forwardMessages) String() string {
+	return fmt.Sprintf("- messages_forwardMessages#708e0195\n-- flags : %v\n-- silent : %v\n-- background : %v\n-- with_my_score : %v\n-- grouped : %v\n-- from_peer : %v\n-- id : %v\n-- random_id : %v\n-- to_peer : %v\n", t.M_flags, t.M_silent, t.M_background, t.M_with_my_score, t.M_grouped, t.M_from_peer, t.M_id, t.M_random_id, t.M_to_peer)
+}
+
 // messages_reportSpam#cf1592db
 type TL_messages_reportSpam struct {
 	M_classID int32
@@ -41784,6 +44682,10 @@ func (t *TL_messages_reportSpam) Decode(b []byte) error {
 	t.M_peer = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_reportSpam) String() string {
+	return fmt.Sprintf("- messages_reportSpam#cf1592db\n-- peer : %v\n", t.M_peer)
 }
 
 // messages_hideReportSpam#a8f1709b
@@ -41827,6 +44729,10 @@ func (t *TL_messages_hideReportSpam) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_hideReportSpam) String() string {
+	return fmt.Sprintf("- messages_hideReportSpam#a8f1709b\n-- peer : %v\n", t.M_peer)
+}
+
 // messages_getPeerSettings#3672e09c
 type TL_messages_getPeerSettings struct {
 	M_classID int32
@@ -41866,6 +44772,10 @@ func (t *TL_messages_getPeerSettings) Decode(b []byte) error {
 	t.M_peer = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_getPeerSettings) String() string {
+	return fmt.Sprintf("- messages_getPeerSettings#3672e09c\n-- peer : %v\n", t.M_peer)
 }
 
 // messages_getChats#3c6aa187
@@ -41909,6 +44819,10 @@ func (t *TL_messages_getChats) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getChats) String() string {
+	return fmt.Sprintf("- messages_getChats#3c6aa187\n-- id : %v\n", t.M_id)
+}
+
 // messages_getFullChat#3b831c66
 type TL_messages_getFullChat struct {
 	M_classID int32
@@ -41948,6 +44862,10 @@ func (t *TL_messages_getFullChat) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getFullChat) String() string {
+	return fmt.Sprintf("- messages_getFullChat#3b831c66\n-- chat_id : %v\n", t.M_chat_id)
 }
 
 // messages_editChatTitle#dc452855
@@ -42002,6 +44920,10 @@ func (t *TL_messages_editChatTitle) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_editChatTitle) String() string {
+	return fmt.Sprintf("- messages_editChatTitle#dc452855\n-- chat_id : %v\n-- title : %v\n", t.M_chat_id, t.M_title)
+}
+
 // messages_editChatPhoto#ca4c79d8
 type TL_messages_editChatPhoto struct {
 	M_classID int32
@@ -42052,6 +44974,10 @@ func (t *TL_messages_editChatPhoto) Decode(b []byte) error {
 	t.M_photo = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_editChatPhoto) String() string {
+	return fmt.Sprintf("- messages_editChatPhoto#ca4c79d8\n-- chat_id : %v\n-- photo : %v\n", t.M_chat_id, t.M_photo)
 }
 
 // messages_addChatUser#f9a0aa09
@@ -42117,6 +45043,10 @@ func (t *TL_messages_addChatUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_addChatUser) String() string {
+	return fmt.Sprintf("- messages_addChatUser#f9a0aa09\n-- chat_id : %v\n-- user_id : %v\n-- fwd_limit : %v\n", t.M_chat_id, t.M_user_id, t.M_fwd_limit)
+}
+
 // messages_deleteChatUser#e0611f16
 type TL_messages_deleteChatUser struct {
 	M_classID int32
@@ -42169,6 +45099,10 @@ func (t *TL_messages_deleteChatUser) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_deleteChatUser) String() string {
+	return fmt.Sprintf("- messages_deleteChatUser#e0611f16\n-- chat_id : %v\n-- user_id : %v\n", t.M_chat_id, t.M_user_id)
+}
+
 // messages_createChat#9cb126e
 type TL_messages_createChat struct {
 	M_classID int32
@@ -42219,6 +45153,10 @@ func (t *TL_messages_createChat) Decode(b []byte) error {
 	t.M_title = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messages_createChat) String() string {
+	return fmt.Sprintf("- messages_createChat#9cb126e\n-- users : %v\n-- title : %v\n", t.M_users, t.M_title)
 }
 
 // messages_forwardMessage#33963bf9
@@ -42284,6 +45222,10 @@ func (t *TL_messages_forwardMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_forwardMessage) String() string {
+	return fmt.Sprintf("- messages_forwardMessage#33963bf9\n-- peer : %v\n-- id : %v\n-- random_id : %v\n", t.M_peer, t.M_id, t.M_random_id)
+}
+
 // messages_getDhConfig#26cf8950
 type TL_messages_getDhConfig struct {
 	M_classID       int32
@@ -42334,6 +45276,10 @@ func (t *TL_messages_getDhConfig) Decode(b []byte) error {
 	t.M_random_length = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getDhConfig) String() string {
+	return fmt.Sprintf("- messages_getDhConfig#26cf8950\n-- version : %v\n-- random_length : %v\n", t.M_version, t.M_random_length)
 }
 
 // messages_requestEncryption#f64daf43
@@ -42399,6 +45345,10 @@ func (t *TL_messages_requestEncryption) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_requestEncryption) String() string {
+	return fmt.Sprintf("- messages_requestEncryption#f64daf43\n-- user_id : %v\n-- random_id : %v\n-- g_a : %v\n", t.M_user_id, t.M_random_id, t.M_g_a)
+}
+
 // messages_acceptEncryption#3dbc0415
 type TL_messages_acceptEncryption struct {
 	M_classID         int32
@@ -42462,6 +45412,10 @@ func (t *TL_messages_acceptEncryption) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_acceptEncryption) String() string {
+	return fmt.Sprintf("- messages_acceptEncryption#3dbc0415\n-- peer : %v\n-- g_b : %v\n-- key_fingerprint : %v\n", t.M_peer, t.M_g_b, t.M_key_fingerprint)
+}
+
 // messages_discardEncryption#edd923c5
 type TL_messages_discardEncryption struct {
 	M_classID int32
@@ -42501,6 +45455,10 @@ func (t *TL_messages_discardEncryption) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_discardEncryption) String() string {
+	return fmt.Sprintf("- messages_discardEncryption#edd923c5\n-- chat_id : %v\n", t.M_chat_id)
 }
 
 // messages_setEncryptedTyping#791451ed
@@ -42555,6 +45513,10 @@ func (t *TL_messages_setEncryptedTyping) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setEncryptedTyping) String() string {
+	return fmt.Sprintf("- messages_setEncryptedTyping#791451ed\n-- peer : %v\n-- typing : %v\n", t.M_peer, t.M_typing)
+}
+
 // messages_readEncryptedHistory#7f4b690a
 type TL_messages_readEncryptedHistory struct {
 	M_classID  int32
@@ -42605,6 +45567,10 @@ func (t *TL_messages_readEncryptedHistory) Decode(b []byte) error {
 	t.M_max_date = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_readEncryptedHistory) String() string {
+	return fmt.Sprintf("- messages_readEncryptedHistory#7f4b690a\n-- peer : %v\n-- max_date : %v\n", t.M_peer, t.M_max_date)
 }
 
 // messages_sendEncrypted#a9776773
@@ -42668,6 +45634,10 @@ func (t *TL_messages_sendEncrypted) Decode(b []byte) error {
 	t.M_data = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_sendEncrypted) String() string {
+	return fmt.Sprintf("- messages_sendEncrypted#a9776773\n-- peer : %v\n-- random_id : %v\n-- data : %v\n", t.M_peer, t.M_random_id, t.M_data)
 }
 
 // messages_sendEncryptedFile#9a901b66
@@ -42744,6 +45714,10 @@ func (t *TL_messages_sendEncryptedFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendEncryptedFile) String() string {
+	return fmt.Sprintf("- messages_sendEncryptedFile#9a901b66\n-- peer : %v\n-- random_id : %v\n-- data : %v\n-- file : %v\n", t.M_peer, t.M_random_id, t.M_data, t.M_file)
+}
+
 // messages_sendEncryptedService#32d439a4
 type TL_messages_sendEncryptedService struct {
 	M_classID   int32
@@ -42807,6 +45781,10 @@ func (t *TL_messages_sendEncryptedService) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendEncryptedService) String() string {
+	return fmt.Sprintf("- messages_sendEncryptedService#32d439a4\n-- peer : %v\n-- random_id : %v\n-- data : %v\n", t.M_peer, t.M_random_id, t.M_data)
+}
+
 // messages_receivedQueue#55a5bb66
 type TL_messages_receivedQueue struct {
 	M_classID int32
@@ -42846,6 +45824,10 @@ func (t *TL_messages_receivedQueue) Decode(b []byte) error {
 	t.M_max_qts = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_receivedQueue) String() string {
+	return fmt.Sprintf("- messages_receivedQueue#55a5bb66\n-- max_qts : %v\n", t.M_max_qts)
 }
 
 // messages_reportEncryptedSpam#4b0c8c0f
@@ -42889,6 +45871,10 @@ func (t *TL_messages_reportEncryptedSpam) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_reportEncryptedSpam) String() string {
+	return fmt.Sprintf("- messages_reportEncryptedSpam#4b0c8c0f\n-- peer : %v\n", t.M_peer)
+}
+
 // messages_readMessageContents#36a73f77
 type TL_messages_readMessageContents struct {
 	M_classID int32
@@ -42928,6 +45914,10 @@ func (t *TL_messages_readMessageContents) Decode(b []byte) error {
 	t.M_id = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_messages_readMessageContents) String() string {
+	return fmt.Sprintf("- messages_readMessageContents#36a73f77\n-- id : %v\n", t.M_id)
 }
 
 // messages_getAllStickers#1c9618b1
@@ -42971,6 +45961,10 @@ func (t *TL_messages_getAllStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getAllStickers) String() string {
+	return fmt.Sprintf("- messages_getAllStickers#1c9618b1\n-- hash : %v\n", t.M_hash)
+}
+
 // messages_getWebPagePreview#25223e24
 type TL_messages_getWebPagePreview struct {
 	M_classID int32
@@ -43010,6 +46004,10 @@ func (t *TL_messages_getWebPagePreview) Decode(b []byte) error {
 	t.M_message = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messages_getWebPagePreview) String() string {
+	return fmt.Sprintf("- messages_getWebPagePreview#25223e24\n-- message : %v\n", t.M_message)
 }
 
 // messages_exportChatInvite#7d885289
@@ -43053,6 +46051,10 @@ func (t *TL_messages_exportChatInvite) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_exportChatInvite) String() string {
+	return fmt.Sprintf("- messages_exportChatInvite#7d885289\n-- chat_id : %v\n", t.M_chat_id)
+}
+
 // messages_checkChatInvite#3eadb1bb
 type TL_messages_checkChatInvite struct {
 	M_classID int32
@@ -43092,6 +46094,10 @@ func (t *TL_messages_checkChatInvite) Decode(b []byte) error {
 	t.M_hash = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messages_checkChatInvite) String() string {
+	return fmt.Sprintf("- messages_checkChatInvite#3eadb1bb\n-- hash : %v\n", t.M_hash)
 }
 
 // messages_importChatInvite#6c50051c
@@ -43135,6 +46141,10 @@ func (t *TL_messages_importChatInvite) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_importChatInvite) String() string {
+	return fmt.Sprintf("- messages_importChatInvite#6c50051c\n-- hash : %v\n", t.M_hash)
+}
+
 // messages_getStickerSet#2619a90e
 type TL_messages_getStickerSet struct {
 	M_classID    int32
@@ -43174,6 +46184,10 @@ func (t *TL_messages_getStickerSet) Decode(b []byte) error {
 	t.M_stickerset = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_getStickerSet) String() string {
+	return fmt.Sprintf("- messages_getStickerSet#2619a90e\n-- stickerset : %v\n", t.M_stickerset)
 }
 
 // messages_installStickerSet#c78fe460
@@ -43228,6 +46242,10 @@ func (t *TL_messages_installStickerSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_installStickerSet) String() string {
+	return fmt.Sprintf("- messages_installStickerSet#c78fe460\n-- stickerset : %v\n-- archived : %v\n", t.M_stickerset, t.M_archived)
+}
+
 // messages_uninstallStickerSet#f96e55de
 type TL_messages_uninstallStickerSet struct {
 	M_classID    int32
@@ -43267,6 +46285,10 @@ func (t *TL_messages_uninstallStickerSet) Decode(b []byte) error {
 	t.M_stickerset = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_uninstallStickerSet) String() string {
+	return fmt.Sprintf("- messages_uninstallStickerSet#f96e55de\n-- stickerset : %v\n", t.M_stickerset)
 }
 
 // messages_startBot#e6df7378
@@ -43343,6 +46365,10 @@ func (t *TL_messages_startBot) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_startBot) String() string {
+	return fmt.Sprintf("- messages_startBot#e6df7378\n-- bot : %v\n-- peer : %v\n-- random_id : %v\n-- start_param : %v\n", t.M_bot, t.M_peer, t.M_random_id, t.M_start_param)
+}
+
 // messages_getMessagesViews#c4c8a55d
 type TL_messages_getMessagesViews struct {
 	M_classID   int32
@@ -43406,6 +46432,10 @@ func (t *TL_messages_getMessagesViews) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getMessagesViews) String() string {
+	return fmt.Sprintf("- messages_getMessagesViews#c4c8a55d\n-- peer : %v\n-- id : %v\n-- increment : %v\n", t.M_peer, t.M_id, t.M_increment)
+}
+
 // messages_toggleChatAdmins#ec8bd9e1
 type TL_messages_toggleChatAdmins struct {
 	M_classID int32
@@ -43456,6 +46486,10 @@ func (t *TL_messages_toggleChatAdmins) Decode(b []byte) error {
 	t.M_enabled = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_toggleChatAdmins) String() string {
+	return fmt.Sprintf("- messages_toggleChatAdmins#ec8bd9e1\n-- chat_id : %v\n-- enabled : %v\n", t.M_chat_id, t.M_enabled)
 }
 
 // messages_editChatAdmin#a9e69f2e
@@ -43521,6 +46555,10 @@ func (t *TL_messages_editChatAdmin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_editChatAdmin) String() string {
+	return fmt.Sprintf("- messages_editChatAdmin#a9e69f2e\n-- chat_id : %v\n-- user_id : %v\n-- is_admin : %v\n", t.M_chat_id, t.M_user_id, t.M_is_admin)
+}
+
 // messages_migrateChat#15a3b8e3
 type TL_messages_migrateChat struct {
 	M_classID int32
@@ -43560,6 +46598,10 @@ func (t *TL_messages_migrateChat) Decode(b []byte) error {
 	t.M_chat_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_migrateChat) String() string {
+	return fmt.Sprintf("- messages_migrateChat#15a3b8e3\n-- chat_id : %v\n", t.M_chat_id)
 }
 
 // messages_searchGlobal#9e3cacb0
@@ -43647,6 +46689,10 @@ func (t *TL_messages_searchGlobal) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_searchGlobal) String() string {
+	return fmt.Sprintf("- messages_searchGlobal#9e3cacb0\n-- q : %v\n-- offset_date : %v\n-- offset_peer : %v\n-- offset_id : %v\n-- limit : %v\n", t.M_q, t.M_offset_date, t.M_offset_peer, t.M_offset_id, t.M_limit)
+}
+
 // messages_reorderStickerSets#78337739
 type TL_messages_reorderStickerSets struct {
 	M_classID int32
@@ -43706,6 +46752,10 @@ func (t *TL_messages_reorderStickerSets) Decode(b []byte) error {
 	t.M_order = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_messages_reorderStickerSets) String() string {
+	return fmt.Sprintf("- messages_reorderStickerSets#78337739\n-- flags : %v\n-- masks : %v\n-- order : %v\n", t.M_flags, t.M_masks, t.M_order)
 }
 
 // messages_getDocumentByHash#338e2464
@@ -43771,6 +46821,10 @@ func (t *TL_messages_getDocumentByHash) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getDocumentByHash) String() string {
+	return fmt.Sprintf("- messages_getDocumentByHash#338e2464\n-- sha256 : %v\n-- size : %v\n-- mime_type : %v\n", t.M_sha256, t.M_size, t.M_mime_type)
+}
+
 // messages_searchGifs#bf9a776b
 type TL_messages_searchGifs struct {
 	M_classID int32
@@ -43823,6 +46877,10 @@ func (t *TL_messages_searchGifs) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_searchGifs) String() string {
+	return fmt.Sprintf("- messages_searchGifs#bf9a776b\n-- q : %v\n-- offset : %v\n", t.M_q, t.M_offset)
+}
+
 // messages_getSavedGifs#83bf3d52
 type TL_messages_getSavedGifs struct {
 	M_classID int32
@@ -43862,6 +46920,10 @@ func (t *TL_messages_getSavedGifs) Decode(b []byte) error {
 	t.M_hash = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getSavedGifs) String() string {
+	return fmt.Sprintf("- messages_getSavedGifs#83bf3d52\n-- hash : %v\n", t.M_hash)
 }
 
 // messages_saveGif#327a30cb
@@ -43914,6 +46976,10 @@ func (t *TL_messages_saveGif) Decode(b []byte) error {
 	t.M_unsave = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_saveGif) String() string {
+	return fmt.Sprintf("- messages_saveGif#327a30cb\n-- id : %v\n-- unsave : %v\n", t.M_id, t.M_unsave)
 }
 
 // messages_getInlineBotResults#514e999d
@@ -44008,6 +47074,10 @@ func (t *TL_messages_getInlineBotResults) Decode(b []byte) error {
 	t.M_offset = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_messages_getInlineBotResults) String() string {
+	return fmt.Sprintf("- messages_getInlineBotResults#514e999d\n-- flags : %v\n-- bot : %v\n-- peer : %v\n-- geo_point : %v\n-- query : %v\n-- offset : %v\n", t.M_flags, t.M_bot, t.M_peer, t.M_geo_point, t.M_query, t.M_offset)
 }
 
 // messages_setInlineBotResults#eb5ea206
@@ -44124,6 +47194,10 @@ func (t *TL_messages_setInlineBotResults) Decode(b []byte) error {
 	t.M_switch_pm = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_setInlineBotResults) String() string {
+	return fmt.Sprintf("- messages_setInlineBotResults#eb5ea206\n-- flags : %v\n-- gallery : %v\n-- private : %v\n-- query_id : %v\n-- results : %v\n-- cache_time : %v\n-- next_offset : %v\n-- switch_pm : %v\n", t.M_flags, t.M_gallery, t.M_private, t.M_query_id, t.M_results, t.M_cache_time, t.M_next_offset, t.M_switch_pm)
 }
 
 // messages_sendInlineBotResult#b16e06fe
@@ -44253,6 +47327,10 @@ func (t *TL_messages_sendInlineBotResult) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendInlineBotResult) String() string {
+	return fmt.Sprintf("- messages_sendInlineBotResult#b16e06fe\n-- flags : %v\n-- silent : %v\n-- background : %v\n-- clear_draft : %v\n-- peer : %v\n-- reply_to_msg_id : %v\n-- random_id : %v\n-- query_id : %v\n-- id : %v\n", t.M_flags, t.M_silent, t.M_background, t.M_clear_draft, t.M_peer, t.M_reply_to_msg_id, t.M_random_id, t.M_query_id, t.M_id)
+}
+
 // messages_getMessageEditData#fda68d36
 type TL_messages_getMessageEditData struct {
 	M_classID int32
@@ -44303,6 +47381,10 @@ func (t *TL_messages_getMessageEditData) Decode(b []byte) error {
 	t.M_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getMessageEditData) String() string {
+	return fmt.Sprintf("- messages_getMessageEditData#fda68d36\n-- peer : %v\n-- id : %v\n", t.M_peer, t.M_id)
 }
 
 // messages_editMessage#5d1b8dd
@@ -44432,6 +47514,10 @@ func (t *TL_messages_editMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_editMessage) String() string {
+	return fmt.Sprintf("- messages_editMessage#5d1b8dd\n-- flags : %v\n-- no_webpage : %v\n-- stop_geo_live : %v\n-- peer : %v\n-- id : %v\n-- message : %v\n-- reply_markup : %v\n-- entities : %v\n-- geo_point : %v\n", t.M_flags, t.M_no_webpage, t.M_stop_geo_live, t.M_peer, t.M_id, t.M_message, t.M_reply_markup, t.M_entities, t.M_geo_point)
+}
+
 // messages_editInlineBotMessage#b0e08243
 type TL_messages_editInlineBotMessage struct {
 	M_classID       int32
@@ -44548,6 +47634,10 @@ func (t *TL_messages_editInlineBotMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_editInlineBotMessage) String() string {
+	return fmt.Sprintf("- messages_editInlineBotMessage#b0e08243\n-- flags : %v\n-- no_webpage : %v\n-- stop_geo_live : %v\n-- id : %v\n-- message : %v\n-- reply_markup : %v\n-- entities : %v\n-- geo_point : %v\n", t.M_flags, t.M_no_webpage, t.M_stop_geo_live, t.M_id, t.M_message, t.M_reply_markup, t.M_entities, t.M_geo_point)
+}
+
 // messages_getBotCallbackAnswer#810a9fec
 type TL_messages_getBotCallbackAnswer struct {
 	M_classID int32
@@ -44629,6 +47719,10 @@ func (t *TL_messages_getBotCallbackAnswer) Decode(b []byte) error {
 	t.M_data = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_getBotCallbackAnswer) String() string {
+	return fmt.Sprintf("- messages_getBotCallbackAnswer#810a9fec\n-- flags : %v\n-- game : %v\n-- peer : %v\n-- msg_id : %v\n-- data : %v\n", t.M_flags, t.M_game, t.M_peer, t.M_msg_id, t.M_data)
 }
 
 // messages_setBotCallbackAnswer#d58f130a
@@ -44725,6 +47819,10 @@ func (t *TL_messages_setBotCallbackAnswer) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setBotCallbackAnswer) String() string {
+	return fmt.Sprintf("- messages_setBotCallbackAnswer#d58f130a\n-- flags : %v\n-- alert : %v\n-- query_id : %v\n-- message : %v\n-- url : %v\n-- cache_time : %v\n", t.M_flags, t.M_alert, t.M_query_id, t.M_message, t.M_url, t.M_cache_time)
+}
+
 // messages_getPeerDialogs#2d9776b9
 type TL_messages_getPeerDialogs struct {
 	M_classID int32
@@ -44764,6 +47862,10 @@ func (t *TL_messages_getPeerDialogs) Decode(b []byte) error {
 	t.M_peers = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_messages_getPeerDialogs) String() string {
+	return fmt.Sprintf("- messages_getPeerDialogs#2d9776b9\n-- peers : %v\n", t.M_peers)
 }
 
 // messages_saveDraft#bc39e14b
@@ -44860,6 +47962,10 @@ func (t *TL_messages_saveDraft) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_saveDraft) String() string {
+	return fmt.Sprintf("- messages_saveDraft#bc39e14b\n-- flags : %v\n-- no_webpage : %v\n-- reply_to_msg_id : %v\n-- peer : %v\n-- message : %v\n-- entities : %v\n", t.M_flags, t.M_no_webpage, t.M_reply_to_msg_id, t.M_peer, t.M_message, t.M_entities)
+}
+
 // messages_getAllDrafts#6a3f8d65
 type TL_messages_getAllDrafts struct {
 	M_classID int32
@@ -44885,6 +47991,10 @@ func (t *TL_messages_getAllDrafts) Encode() []byte {
 
 func (t *TL_messages_getAllDrafts) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_getAllDrafts) String() string {
+	return fmt.Sprintf("- messages_getAllDrafts#6a3f8d65\n")
 }
 
 // messages_getFeaturedStickers#2dacca4f
@@ -44928,6 +48038,10 @@ func (t *TL_messages_getFeaturedStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getFeaturedStickers) String() string {
+	return fmt.Sprintf("- messages_getFeaturedStickers#2dacca4f\n-- hash : %v\n", t.M_hash)
+}
+
 // messages_readFeaturedStickers#5b118126
 type TL_messages_readFeaturedStickers struct {
 	M_classID int32
@@ -44967,6 +48081,10 @@ func (t *TL_messages_readFeaturedStickers) Decode(b []byte) error {
 	t.M_id = dc.VectorLong()
 
 	return dc.err
+}
+
+func (t *TL_messages_readFeaturedStickers) String() string {
+	return fmt.Sprintf("- messages_readFeaturedStickers#5b118126\n-- id : %v\n", t.M_id)
 }
 
 // messages_getRecentStickers#5ea192c9
@@ -45028,6 +48146,10 @@ func (t *TL_messages_getRecentStickers) Decode(b []byte) error {
 	t.M_hash = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getRecentStickers) String() string {
+	return fmt.Sprintf("- messages_getRecentStickers#5ea192c9\n-- flags : %v\n-- attached : %v\n-- hash : %v\n", t.M_flags, t.M_attached, t.M_hash)
 }
 
 // messages_saveRecentSticker#392718f8
@@ -45102,6 +48224,10 @@ func (t *TL_messages_saveRecentSticker) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_saveRecentSticker) String() string {
+	return fmt.Sprintf("- messages_saveRecentSticker#392718f8\n-- flags : %v\n-- attached : %v\n-- id : %v\n-- unsave : %v\n", t.M_flags, t.M_attached, t.M_id, t.M_unsave)
+}
+
 // messages_clearRecentStickers#8999602d
 type TL_messages_clearRecentStickers struct {
 	M_classID  int32
@@ -45150,6 +48276,10 @@ func (t *TL_messages_clearRecentStickers) Decode(b []byte) error {
 	t.M_attached = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_clearRecentStickers) String() string {
+	return fmt.Sprintf("- messages_clearRecentStickers#8999602d\n-- flags : %v\n-- attached : %v\n", t.M_flags, t.M_attached)
 }
 
 // messages_getArchivedStickers#57f17692
@@ -45224,6 +48354,10 @@ func (t *TL_messages_getArchivedStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getArchivedStickers) String() string {
+	return fmt.Sprintf("- messages_getArchivedStickers#57f17692\n-- flags : %v\n-- masks : %v\n-- offset_id : %v\n-- limit : %v\n", t.M_flags, t.M_masks, t.M_offset_id, t.M_limit)
+}
+
 // messages_getMaskStickers#65b8c79f
 type TL_messages_getMaskStickers struct {
 	M_classID int32
@@ -45265,6 +48399,10 @@ func (t *TL_messages_getMaskStickers) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getMaskStickers) String() string {
+	return fmt.Sprintf("- messages_getMaskStickers#65b8c79f\n-- hash : %v\n", t.M_hash)
+}
+
 // messages_getAttachedStickers#cc5b67cc
 type TL_messages_getAttachedStickers struct {
 	M_classID int32
@@ -45304,6 +48442,10 @@ func (t *TL_messages_getAttachedStickers) Decode(b []byte) error {
 	t.M_media = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_getAttachedStickers) String() string {
+	return fmt.Sprintf("- messages_getAttachedStickers#cc5b67cc\n-- media : %v\n", t.M_media)
 }
 
 // messages_setGameScore#8ef8ecc0
@@ -45411,6 +48553,10 @@ func (t *TL_messages_setGameScore) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setGameScore) String() string {
+	return fmt.Sprintf("- messages_setGameScore#8ef8ecc0\n-- flags : %v\n-- edit_message : %v\n-- force : %v\n-- peer : %v\n-- id : %v\n-- user_id : %v\n-- score : %v\n", t.M_flags, t.M_edit_message, t.M_force, t.M_peer, t.M_id, t.M_user_id, t.M_score)
+}
+
 // messages_setInlineGameScore#15ad9f64
 type TL_messages_setInlineGameScore struct {
 	M_classID      int32
@@ -45505,6 +48651,10 @@ func (t *TL_messages_setInlineGameScore) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setInlineGameScore) String() string {
+	return fmt.Sprintf("- messages_setInlineGameScore#15ad9f64\n-- flags : %v\n-- edit_message : %v\n-- force : %v\n-- id : %v\n-- user_id : %v\n-- score : %v\n", t.M_flags, t.M_edit_message, t.M_force, t.M_id, t.M_user_id, t.M_score)
+}
+
 // messages_getGameHighScores#e822649d
 type TL_messages_getGameHighScores struct {
 	M_classID int32
@@ -45568,6 +48718,10 @@ func (t *TL_messages_getGameHighScores) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getGameHighScores) String() string {
+	return fmt.Sprintf("- messages_getGameHighScores#e822649d\n-- peer : %v\n-- id : %v\n-- user_id : %v\n", t.M_peer, t.M_id, t.M_user_id)
+}
+
 // messages_getInlineGameHighScores#f635e1b
 type TL_messages_getInlineGameHighScores struct {
 	M_classID int32
@@ -45618,6 +48772,10 @@ func (t *TL_messages_getInlineGameHighScores) Decode(b []byte) error {
 	t.M_user_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_getInlineGameHighScores) String() string {
+	return fmt.Sprintf("- messages_getInlineGameHighScores#f635e1b\n-- id : %v\n-- user_id : %v\n", t.M_id, t.M_user_id)
 }
 
 // messages_getCommonChats#d0a48c4
@@ -45683,6 +48841,10 @@ func (t *TL_messages_getCommonChats) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getCommonChats) String() string {
+	return fmt.Sprintf("- messages_getCommonChats#d0a48c4\n-- user_id : %v\n-- max_id : %v\n-- limit : %v\n", t.M_user_id, t.M_max_id, t.M_limit)
+}
+
 // messages_getAllChats#eba80ff0
 type TL_messages_getAllChats struct {
 	M_classID    int32
@@ -45722,6 +48884,10 @@ func (t *TL_messages_getAllChats) Decode(b []byte) error {
 	t.M_except_ids = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_messages_getAllChats) String() string {
+	return fmt.Sprintf("- messages_getAllChats#eba80ff0\n-- except_ids : %v\n", t.M_except_ids)
 }
 
 // messages_getWebPage#32ca8f91
@@ -45774,6 +48940,10 @@ func (t *TL_messages_getWebPage) Decode(b []byte) error {
 	t.M_hash = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getWebPage) String() string {
+	return fmt.Sprintf("- messages_getWebPage#32ca8f91\n-- url : %v\n-- hash : %v\n", t.M_url, t.M_hash)
 }
 
 // messages_toggleDialogPin#3289be6a
@@ -45837,6 +49007,10 @@ func (t *TL_messages_toggleDialogPin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_toggleDialogPin) String() string {
+	return fmt.Sprintf("- messages_toggleDialogPin#3289be6a\n-- flags : %v\n-- pinned : %v\n-- peer : %v\n", t.M_flags, t.M_pinned, t.M_peer)
+}
+
 // messages_reorderPinnedDialogs#959ff644
 type TL_messages_reorderPinnedDialogs struct {
 	M_classID int32
@@ -45898,6 +49072,10 @@ func (t *TL_messages_reorderPinnedDialogs) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_reorderPinnedDialogs) String() string {
+	return fmt.Sprintf("- messages_reorderPinnedDialogs#959ff644\n-- flags : %v\n-- force : %v\n-- order : %v\n", t.M_flags, t.M_force, t.M_order)
+}
+
 // messages_getPinnedDialogs#e254d64e
 type TL_messages_getPinnedDialogs struct {
 	M_classID int32
@@ -45923,6 +49101,10 @@ func (t *TL_messages_getPinnedDialogs) Encode() []byte {
 
 func (t *TL_messages_getPinnedDialogs) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_messages_getPinnedDialogs) String() string {
+	return fmt.Sprintf("- messages_getPinnedDialogs#e254d64e\n")
 }
 
 // messages_setBotShippingResults#e5f672fa
@@ -45997,6 +49179,10 @@ func (t *TL_messages_setBotShippingResults) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setBotShippingResults) String() string {
+	return fmt.Sprintf("- messages_setBotShippingResults#e5f672fa\n-- flags : %v\n-- query_id : %v\n-- error : %v\n-- shipping_options : %v\n", t.M_flags, t.M_query_id, t.M_error, t.M_shipping_options)
+}
+
 // messages_setBotPrecheckoutResults#9c2dd95
 type TL_messages_setBotPrecheckoutResults struct {
 	M_classID  int32
@@ -46069,6 +49255,10 @@ func (t *TL_messages_setBotPrecheckoutResults) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_setBotPrecheckoutResults) String() string {
+	return fmt.Sprintf("- messages_setBotPrecheckoutResults#9c2dd95\n-- flags : %v\n-- success : %v\n-- query_id : %v\n-- error : %v\n", t.M_flags, t.M_success, t.M_query_id, t.M_error)
+}
+
 // messages_uploadMedia#519bc2b1
 type TL_messages_uploadMedia struct {
 	M_classID int32
@@ -46119,6 +49309,10 @@ func (t *TL_messages_uploadMedia) Decode(b []byte) error {
 	t.M_media = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_uploadMedia) String() string {
+	return fmt.Sprintf("- messages_uploadMedia#519bc2b1\n-- peer : %v\n-- media : %v\n", t.M_peer, t.M_media)
 }
 
 // messages_sendScreenshotNotification#c97df020
@@ -46184,6 +49378,10 @@ func (t *TL_messages_sendScreenshotNotification) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendScreenshotNotification) String() string {
+	return fmt.Sprintf("- messages_sendScreenshotNotification#c97df020\n-- peer : %v\n-- reply_to_msg_id : %v\n-- random_id : %v\n", t.M_peer, t.M_reply_to_msg_id, t.M_random_id)
+}
+
 // messages_getFavedStickers#21ce0b0e
 type TL_messages_getFavedStickers struct {
 	M_classID int32
@@ -46223,6 +49421,10 @@ func (t *TL_messages_getFavedStickers) Decode(b []byte) error {
 	t.M_hash = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getFavedStickers) String() string {
+	return fmt.Sprintf("- messages_getFavedStickers#21ce0b0e\n-- hash : %v\n", t.M_hash)
 }
 
 // messages_faveSticker#b9ffc55b
@@ -46275,6 +49477,10 @@ func (t *TL_messages_faveSticker) Decode(b []byte) error {
 	t.M_unfave = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_faveSticker) String() string {
+	return fmt.Sprintf("- messages_faveSticker#b9ffc55b\n-- id : %v\n-- unfave : %v\n", t.M_id, t.M_unfave)
 }
 
 // messages_getUnreadMentions#46578472
@@ -46373,6 +49579,10 @@ func (t *TL_messages_getUnreadMentions) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_getUnreadMentions) String() string {
+	return fmt.Sprintf("- messages_getUnreadMentions#46578472\n-- peer : %v\n-- offset_id : %v\n-- add_offset : %v\n-- limit : %v\n-- max_id : %v\n-- min_id : %v\n", t.M_peer, t.M_offset_id, t.M_add_offset, t.M_limit, t.M_max_id, t.M_min_id)
+}
+
 // messages_readMentions#f0189d3
 type TL_messages_readMentions struct {
 	M_classID int32
@@ -46412,6 +49622,10 @@ func (t *TL_messages_readMentions) Decode(b []byte) error {
 	t.M_peer = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_messages_readMentions) String() string {
+	return fmt.Sprintf("- messages_readMentions#f0189d3\n-- peer : %v\n", t.M_peer)
 }
 
 // messages_getRecentLocations#249431e2
@@ -46464,6 +49678,10 @@ func (t *TL_messages_getRecentLocations) Decode(b []byte) error {
 	t.M_limit = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_messages_getRecentLocations) String() string {
+	return fmt.Sprintf("- messages_getRecentLocations#249431e2\n-- peer : %v\n-- limit : %v\n", t.M_peer, t.M_limit)
 }
 
 // messages_sendMultiMedia#2095512f
@@ -46571,6 +49789,10 @@ func (t *TL_messages_sendMultiMedia) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_sendMultiMedia) String() string {
+	return fmt.Sprintf("- messages_sendMultiMedia#2095512f\n-- flags : %v\n-- silent : %v\n-- background : %v\n-- clear_draft : %v\n-- peer : %v\n-- reply_to_msg_id : %v\n-- multi_media : %v\n", t.M_flags, t.M_silent, t.M_background, t.M_clear_draft, t.M_peer, t.M_reply_to_msg_id, t.M_multi_media)
+}
+
 // messages_uploadEncryptedFile#5057c497
 type TL_messages_uploadEncryptedFile struct {
 	M_classID int32
@@ -46623,6 +49845,10 @@ func (t *TL_messages_uploadEncryptedFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_messages_uploadEncryptedFile) String() string {
+	return fmt.Sprintf("- messages_uploadEncryptedFile#5057c497\n-- peer : %v\n-- file : %v\n", t.M_peer, t.M_file)
+}
+
 // updates_getState#edd4882a
 type TL_updates_getState struct {
 	M_classID int32
@@ -46648,6 +49874,10 @@ func (t *TL_updates_getState) Encode() []byte {
 
 func (t *TL_updates_getState) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_updates_getState) String() string {
+	return fmt.Sprintf("- updates_getState#edd4882a\n")
 }
 
 // updates_getDifference#25939651
@@ -46731,6 +49961,10 @@ func (t *TL_updates_getDifference) Decode(b []byte) error {
 	t.M_qts = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_updates_getDifference) String() string {
+	return fmt.Sprintf("- updates_getDifference#25939651\n-- flags : %v\n-- pts : %v\n-- pts_total_limit : %v\n-- date : %v\n-- qts : %v\n", t.M_flags, t.M_pts, t.M_pts_total_limit, t.M_date, t.M_qts)
 }
 
 // updates_getChannelDifference#3173d78
@@ -46827,6 +50061,10 @@ func (t *TL_updates_getChannelDifference) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_updates_getChannelDifference) String() string {
+	return fmt.Sprintf("- updates_getChannelDifference#3173d78\n-- flags : %v\n-- force : %v\n-- channel : %v\n-- filter : %v\n-- pts : %v\n-- limit : %v\n", t.M_flags, t.M_force, t.M_channel, t.M_filter, t.M_pts, t.M_limit)
+}
+
 // photos_updateProfilePhoto#f0bb5152
 type TL_photos_updateProfilePhoto struct {
 	M_classID int32
@@ -46866,6 +50104,10 @@ func (t *TL_photos_updateProfilePhoto) Decode(b []byte) error {
 	t.M_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_photos_updateProfilePhoto) String() string {
+	return fmt.Sprintf("- photos_updateProfilePhoto#f0bb5152\n-- id : %v\n", t.M_id)
 }
 
 // photos_uploadProfilePhoto#4f32c098
@@ -46909,6 +50151,10 @@ func (t *TL_photos_uploadProfilePhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photos_uploadProfilePhoto) String() string {
+	return fmt.Sprintf("- photos_uploadProfilePhoto#4f32c098\n-- file : %v\n", t.M_file)
+}
+
 // photos_deletePhotos#87cf7f2f
 type TL_photos_deletePhotos struct {
 	M_classID int32
@@ -46948,6 +50194,10 @@ func (t *TL_photos_deletePhotos) Decode(b []byte) error {
 	t.M_id = dc.Vector()
 
 	return dc.err
+}
+
+func (t *TL_photos_deletePhotos) String() string {
+	return fmt.Sprintf("- photos_deletePhotos#87cf7f2f\n-- id : %v\n", t.M_id)
 }
 
 // photos_getUserPhotos#91cd32a8
@@ -47024,6 +50274,10 @@ func (t *TL_photos_getUserPhotos) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_photos_getUserPhotos) String() string {
+	return fmt.Sprintf("- photos_getUserPhotos#91cd32a8\n-- user_id : %v\n-- offset : %v\n-- max_id : %v\n-- limit : %v\n", t.M_user_id, t.M_offset, t.M_max_id, t.M_limit)
+}
+
 // upload_saveFilePart#b304a621
 type TL_upload_saveFilePart struct {
 	M_classID   int32
@@ -47087,6 +50341,10 @@ func (t *TL_upload_saveFilePart) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_upload_saveFilePart) String() string {
+	return fmt.Sprintf("- upload_saveFilePart#b304a621\n-- file_id : %v\n-- file_part : %v\n-- bytes : %v\n", t.M_file_id, t.M_file_part, t.M_bytes)
+}
+
 // upload_getFile#e3a6cfb5
 type TL_upload_getFile struct {
 	M_classID  int32
@@ -47148,6 +50406,10 @@ func (t *TL_upload_getFile) Decode(b []byte) error {
 	t.M_limit = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_upload_getFile) String() string {
+	return fmt.Sprintf("- upload_getFile#e3a6cfb5\n-- location : %v\n-- offset : %v\n-- limit : %v\n", t.M_location, t.M_offset, t.M_limit)
 }
 
 // upload_saveBigFilePart#de7b673d
@@ -47224,6 +50486,10 @@ func (t *TL_upload_saveBigFilePart) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_upload_saveBigFilePart) String() string {
+	return fmt.Sprintf("- upload_saveBigFilePart#de7b673d\n-- file_id : %v\n-- file_part : %v\n-- file_total_parts : %v\n-- bytes : %v\n", t.M_file_id, t.M_file_part, t.M_file_total_parts, t.M_bytes)
+}
+
 // upload_getWebFile#24e6818d
 type TL_upload_getWebFile struct {
 	M_classID  int32
@@ -47285,6 +50551,10 @@ func (t *TL_upload_getWebFile) Decode(b []byte) error {
 	t.M_limit = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_upload_getWebFile) String() string {
+	return fmt.Sprintf("- upload_getWebFile#24e6818d\n-- location : %v\n-- offset : %v\n-- limit : %v\n", t.M_location, t.M_offset, t.M_limit)
 }
 
 // upload_getCdnFile#2000bcc3
@@ -47350,6 +50620,10 @@ func (t *TL_upload_getCdnFile) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_upload_getCdnFile) String() string {
+	return fmt.Sprintf("- upload_getCdnFile#2000bcc3\n-- file_token : %v\n-- offset : %v\n-- limit : %v\n", t.M_file_token, t.M_offset, t.M_limit)
+}
+
 // upload_reuploadCdnFile#1af91c09
 type TL_upload_reuploadCdnFile struct {
 	M_classID       int32
@@ -47400,6 +50674,10 @@ func (t *TL_upload_reuploadCdnFile) Decode(b []byte) error {
 	t.M_request_token = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_upload_reuploadCdnFile) String() string {
+	return fmt.Sprintf("- upload_reuploadCdnFile#1af91c09\n-- file_token : %v\n-- request_token : %v\n", t.M_file_token, t.M_request_token)
 }
 
 // upload_getCdnFileHashes#f715c87b
@@ -47454,6 +50732,10 @@ func (t *TL_upload_getCdnFileHashes) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_upload_getCdnFileHashes) String() string {
+	return fmt.Sprintf("- upload_getCdnFileHashes#f715c87b\n-- file_token : %v\n-- offset : %v\n", t.M_file_token, t.M_offset)
+}
+
 // help_getConfig#c4f9186b
 type TL_help_getConfig struct {
 	M_classID int32
@@ -47479,6 +50761,10 @@ func (t *TL_help_getConfig) Encode() []byte {
 
 func (t *TL_help_getConfig) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_getConfig) String() string {
+	return fmt.Sprintf("- help_getConfig#c4f9186b\n")
 }
 
 // help_getNearestDc#1fb33026
@@ -47508,6 +50794,10 @@ func (t *TL_help_getNearestDc) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_help_getNearestDc) String() string {
+	return fmt.Sprintf("- help_getNearestDc#1fb33026\n")
+}
+
 // help_getAppUpdate#ae2de196
 type TL_help_getAppUpdate struct {
 	M_classID int32
@@ -47533,6 +50823,10 @@ func (t *TL_help_getAppUpdate) Encode() []byte {
 
 func (t *TL_help_getAppUpdate) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_getAppUpdate) String() string {
+	return fmt.Sprintf("- help_getAppUpdate#ae2de196\n")
 }
 
 // help_saveAppLog#6f02f748
@@ -47576,6 +50870,10 @@ func (t *TL_help_saveAppLog) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_saveAppLog) String() string {
+	return fmt.Sprintf("- help_saveAppLog#6f02f748\n-- events : %v\n", t.M_events)
+}
+
 // help_getInviteText#4d392343
 type TL_help_getInviteText struct {
 	M_classID int32
@@ -47603,6 +50901,10 @@ func (t *TL_help_getInviteText) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_help_getInviteText) String() string {
+	return fmt.Sprintf("- help_getInviteText#4d392343\n")
+}
+
 // help_getSupport#9cdf08cd
 type TL_help_getSupport struct {
 	M_classID int32
@@ -47628,6 +50930,10 @@ func (t *TL_help_getSupport) Encode() []byte {
 
 func (t *TL_help_getSupport) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_getSupport) String() string {
+	return fmt.Sprintf("- help_getSupport#9cdf08cd\n")
 }
 
 // help_getAppChangelog#9010ef6f
@@ -47671,6 +50977,10 @@ func (t *TL_help_getAppChangelog) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_getAppChangelog) String() string {
+	return fmt.Sprintf("- help_getAppChangelog#9010ef6f\n-- prev_app_version : %v\n", t.M_prev_app_version)
+}
+
 // help_getTermsOfService#350170f3
 type TL_help_getTermsOfService struct {
 	M_classID int32
@@ -47696,6 +51006,10 @@ func (t *TL_help_getTermsOfService) Encode() []byte {
 
 func (t *TL_help_getTermsOfService) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_getTermsOfService) String() string {
+	return fmt.Sprintf("- help_getTermsOfService#350170f3\n")
 }
 
 // help_setBotUpdatesStatus#ec22cfcd
@@ -47750,6 +51064,10 @@ func (t *TL_help_setBotUpdatesStatus) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_help_setBotUpdatesStatus) String() string {
+	return fmt.Sprintf("- help_setBotUpdatesStatus#ec22cfcd\n-- pending_updates_count : %v\n-- message : %v\n", t.M_pending_updates_count, t.M_message)
+}
+
 // help_getCdnConfig#52029342
 type TL_help_getCdnConfig struct {
 	M_classID int32
@@ -47775,6 +51093,10 @@ func (t *TL_help_getCdnConfig) Encode() []byte {
 
 func (t *TL_help_getCdnConfig) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_help_getCdnConfig) String() string {
+	return fmt.Sprintf("- help_getCdnConfig#52029342\n")
 }
 
 // help_getRecentMeUrls#3dc0f114
@@ -47816,6 +51138,10 @@ func (t *TL_help_getRecentMeUrls) Decode(b []byte) error {
 	t.M_referer = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_help_getRecentMeUrls) String() string {
+	return fmt.Sprintf("- help_getRecentMeUrls#3dc0f114\n-- referer : %v\n", t.M_referer)
 }
 
 // channels_readHistory#cc104937
@@ -47870,6 +51196,10 @@ func (t *TL_channels_readHistory) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_readHistory) String() string {
+	return fmt.Sprintf("- channels_readHistory#cc104937\n-- channel : %v\n-- max_id : %v\n", t.M_channel, t.M_max_id)
+}
+
 // channels_deleteMessages#84c1fd4e
 type TL_channels_deleteMessages struct {
 	M_classID int32
@@ -47922,6 +51252,10 @@ func (t *TL_channels_deleteMessages) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_deleteMessages) String() string {
+	return fmt.Sprintf("- channels_deleteMessages#84c1fd4e\n-- channel : %v\n-- id : %v\n", t.M_channel, t.M_id)
+}
+
 // channels_deleteUserHistory#d10dd71b
 type TL_channels_deleteUserHistory struct {
 	M_classID int32
@@ -47972,6 +51306,10 @@ func (t *TL_channels_deleteUserHistory) Decode(b []byte) error {
 	t.M_user_id = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_deleteUserHistory) String() string {
+	return fmt.Sprintf("- channels_deleteUserHistory#d10dd71b\n-- channel : %v\n-- user_id : %v\n", t.M_channel, t.M_user_id)
 }
 
 // channels_reportSpam#fe087810
@@ -48037,6 +51375,10 @@ func (t *TL_channels_reportSpam) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_reportSpam) String() string {
+	return fmt.Sprintf("- channels_reportSpam#fe087810\n-- channel : %v\n-- user_id : %v\n-- id : %v\n", t.M_channel, t.M_user_id, t.M_id)
+}
+
 // channels_getMessages#93d7b347
 type TL_channels_getMessages struct {
 	M_classID int32
@@ -48087,6 +51429,10 @@ func (t *TL_channels_getMessages) Decode(b []byte) error {
 	t.M_id = dc.VectorInt()
 
 	return dc.err
+}
+
+func (t *TL_channels_getMessages) String() string {
+	return fmt.Sprintf("- channels_getMessages#93d7b347\n-- channel : %v\n-- id : %v\n", t.M_channel, t.M_id)
 }
 
 // channels_getParticipants#123e05e9
@@ -48174,6 +51520,10 @@ func (t *TL_channels_getParticipants) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_getParticipants) String() string {
+	return fmt.Sprintf("- channels_getParticipants#123e05e9\n-- channel : %v\n-- filter : %v\n-- offset : %v\n-- limit : %v\n-- hash : %v\n", t.M_channel, t.M_filter, t.M_offset, t.M_limit, t.M_hash)
+}
+
 // channels_getParticipant#546dd7a6
 type TL_channels_getParticipant struct {
 	M_classID int32
@@ -48226,6 +51576,10 @@ func (t *TL_channels_getParticipant) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_getParticipant) String() string {
+	return fmt.Sprintf("- channels_getParticipant#546dd7a6\n-- channel : %v\n-- user_id : %v\n", t.M_channel, t.M_user_id)
+}
+
 // channels_getChannels#a7f6bbb
 type TL_channels_getChannels struct {
 	M_classID int32
@@ -48267,6 +51621,10 @@ func (t *TL_channels_getChannels) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_getChannels) String() string {
+	return fmt.Sprintf("- channels_getChannels#a7f6bbb\n-- id : %v\n", t.M_id)
+}
+
 // channels_getFullChannel#8736a09
 type TL_channels_getFullChannel struct {
 	M_classID int32
@@ -48306,6 +51664,10 @@ func (t *TL_channels_getFullChannel) Decode(b []byte) error {
 	t.M_channel = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_getFullChannel) String() string {
+	return fmt.Sprintf("- channels_getFullChannel#8736a09\n-- channel : %v\n", t.M_channel)
 }
 
 // channels_createChannel#f4893d7f
@@ -48391,6 +51753,10 @@ func (t *TL_channels_createChannel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_createChannel) String() string {
+	return fmt.Sprintf("- channels_createChannel#f4893d7f\n-- flags : %v\n-- broadcast : %v\n-- megagroup : %v\n-- title : %v\n-- about : %v\n", t.M_flags, t.M_broadcast, t.M_megagroup, t.M_title, t.M_about)
+}
+
 // channels_editAbout#13e27f1e
 type TL_channels_editAbout struct {
 	M_classID int32
@@ -48441,6 +51807,10 @@ func (t *TL_channels_editAbout) Decode(b []byte) error {
 	t.M_about = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channels_editAbout) String() string {
+	return fmt.Sprintf("- channels_editAbout#13e27f1e\n-- channel : %v\n-- about : %v\n", t.M_channel, t.M_about)
 }
 
 // channels_editAdmin#20b88214
@@ -48506,6 +51876,10 @@ func (t *TL_channels_editAdmin) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_editAdmin) String() string {
+	return fmt.Sprintf("- channels_editAdmin#20b88214\n-- channel : %v\n-- user_id : %v\n-- admin_rights : %v\n", t.M_channel, t.M_user_id, t.M_admin_rights)
+}
+
 // channels_editTitle#566decd0
 type TL_channels_editTitle struct {
 	M_classID int32
@@ -48556,6 +51930,10 @@ func (t *TL_channels_editTitle) Decode(b []byte) error {
 	t.M_title = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channels_editTitle) String() string {
+	return fmt.Sprintf("- channels_editTitle#566decd0\n-- channel : %v\n-- title : %v\n", t.M_channel, t.M_title)
 }
 
 // channels_editPhoto#f12e57c9
@@ -48610,6 +51988,10 @@ func (t *TL_channels_editPhoto) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_editPhoto) String() string {
+	return fmt.Sprintf("- channels_editPhoto#f12e57c9\n-- channel : %v\n-- photo : %v\n", t.M_channel, t.M_photo)
+}
+
 // channels_checkUsername#10e6bd2c
 type TL_channels_checkUsername struct {
 	M_classID  int32
@@ -48660,6 +52042,10 @@ func (t *TL_channels_checkUsername) Decode(b []byte) error {
 	t.M_username = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_channels_checkUsername) String() string {
+	return fmt.Sprintf("- channels_checkUsername#10e6bd2c\n-- channel : %v\n-- username : %v\n", t.M_channel, t.M_username)
 }
 
 // channels_updateUsername#3514b3de
@@ -48714,6 +52100,10 @@ func (t *TL_channels_updateUsername) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_updateUsername) String() string {
+	return fmt.Sprintf("- channels_updateUsername#3514b3de\n-- channel : %v\n-- username : %v\n", t.M_channel, t.M_username)
+}
+
 // channels_joinChannel#24b524c5
 type TL_channels_joinChannel struct {
 	M_classID int32
@@ -48755,6 +52145,10 @@ func (t *TL_channels_joinChannel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_joinChannel) String() string {
+	return fmt.Sprintf("- channels_joinChannel#24b524c5\n-- channel : %v\n", t.M_channel)
+}
+
 // channels_leaveChannel#f836aa95
 type TL_channels_leaveChannel struct {
 	M_classID int32
@@ -48794,6 +52188,10 @@ func (t *TL_channels_leaveChannel) Decode(b []byte) error {
 	t.M_channel = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_leaveChannel) String() string {
+	return fmt.Sprintf("- channels_leaveChannel#f836aa95\n-- channel : %v\n", t.M_channel)
 }
 
 // channels_inviteToChannel#199f3a6c
@@ -48848,6 +52246,10 @@ func (t *TL_channels_inviteToChannel) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_inviteToChannel) String() string {
+	return fmt.Sprintf("- channels_inviteToChannel#199f3a6c\n-- channel : %v\n-- users : %v\n", t.M_channel, t.M_users)
+}
+
 // channels_exportInvite#c7560885
 type TL_channels_exportInvite struct {
 	M_classID int32
@@ -48889,6 +52291,10 @@ func (t *TL_channels_exportInvite) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_exportInvite) String() string {
+	return fmt.Sprintf("- channels_exportInvite#c7560885\n-- channel : %v\n", t.M_channel)
+}
+
 // channels_deleteChannel#c0111fe3
 type TL_channels_deleteChannel struct {
 	M_classID int32
@@ -48928,6 +52334,10 @@ func (t *TL_channels_deleteChannel) Decode(b []byte) error {
 	t.M_channel = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_deleteChannel) String() string {
+	return fmt.Sprintf("- channels_deleteChannel#c0111fe3\n-- channel : %v\n", t.M_channel)
 }
 
 // channels_toggleInvites#49609307
@@ -48982,6 +52392,10 @@ func (t *TL_channels_toggleInvites) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_toggleInvites) String() string {
+	return fmt.Sprintf("- channels_toggleInvites#49609307\n-- channel : %v\n-- enabled : %v\n", t.M_channel, t.M_enabled)
+}
+
 // channels_exportMessageLink#c846d22d
 type TL_channels_exportMessageLink struct {
 	M_classID int32
@@ -49034,6 +52448,10 @@ func (t *TL_channels_exportMessageLink) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_exportMessageLink) String() string {
+	return fmt.Sprintf("- channels_exportMessageLink#c846d22d\n-- channel : %v\n-- id : %v\n", t.M_channel, t.M_id)
+}
+
 // channels_toggleSignatures#1f69b606
 type TL_channels_toggleSignatures struct {
 	M_classID int32
@@ -49084,6 +52502,10 @@ func (t *TL_channels_toggleSignatures) Decode(b []byte) error {
 	t.M_enabled = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_toggleSignatures) String() string {
+	return fmt.Sprintf("- channels_toggleSignatures#1f69b606\n-- channel : %v\n-- enabled : %v\n", t.M_channel, t.M_enabled)
 }
 
 // channels_updatePinnedMessage#a72ded52
@@ -49158,6 +52580,10 @@ func (t *TL_channels_updatePinnedMessage) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_updatePinnedMessage) String() string {
+	return fmt.Sprintf("- channels_updatePinnedMessage#a72ded52\n-- flags : %v\n-- silent : %v\n-- channel : %v\n-- id : %v\n", t.M_flags, t.M_silent, t.M_channel, t.M_id)
+}
+
 // channels_getAdminedPublicChannels#8d8d82d7
 type TL_channels_getAdminedPublicChannels struct {
 	M_classID int32
@@ -49183,6 +52609,10 @@ func (t *TL_channels_getAdminedPublicChannels) Encode() []byte {
 
 func (t *TL_channels_getAdminedPublicChannels) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_channels_getAdminedPublicChannels) String() string {
+	return fmt.Sprintf("- channels_getAdminedPublicChannels#8d8d82d7\n")
 }
 
 // channels_editBanned#bfd915cd
@@ -49246,6 +52676,10 @@ func (t *TL_channels_editBanned) Decode(b []byte) error {
 	t.M_banned_rights = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_editBanned) String() string {
+	return fmt.Sprintf("- channels_editBanned#bfd915cd\n-- channel : %v\n-- user_id : %v\n-- banned_rights : %v\n", t.M_channel, t.M_user_id, t.M_banned_rights)
 }
 
 // channels_getAdminLog#33ddf480
@@ -49364,6 +52798,10 @@ func (t *TL_channels_getAdminLog) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_getAdminLog) String() string {
+	return fmt.Sprintf("- channels_getAdminLog#33ddf480\n-- flags : %v\n-- channel : %v\n-- q : %v\n-- events_filter : %v\n-- admins : %v\n-- max_id : %v\n-- min_id : %v\n-- limit : %v\n", t.M_flags, t.M_channel, t.M_q, t.M_events_filter, t.M_admins, t.M_max_id, t.M_min_id, t.M_limit)
+}
+
 // channels_setStickers#ea8ca4f9
 type TL_channels_setStickers struct {
 	M_classID    int32
@@ -49414,6 +52852,10 @@ func (t *TL_channels_setStickers) Decode(b []byte) error {
 	t.M_stickerset = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_channels_setStickers) String() string {
+	return fmt.Sprintf("- channels_setStickers#ea8ca4f9\n-- channel : %v\n-- stickerset : %v\n", t.M_channel, t.M_stickerset)
 }
 
 // channels_readMessageContents#eab5dc38
@@ -49468,6 +52910,10 @@ func (t *TL_channels_readMessageContents) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_readMessageContents) String() string {
+	return fmt.Sprintf("- channels_readMessageContents#eab5dc38\n-- channel : %v\n-- id : %v\n", t.M_channel, t.M_id)
+}
+
 // channels_deleteHistory#af369d42
 type TL_channels_deleteHistory struct {
 	M_classID int32
@@ -49518,6 +52964,10 @@ func (t *TL_channels_deleteHistory) Decode(b []byte) error {
 	t.M_max_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_channels_deleteHistory) String() string {
+	return fmt.Sprintf("- channels_deleteHistory#af369d42\n-- channel : %v\n-- max_id : %v\n", t.M_channel, t.M_max_id)
 }
 
 // channels_togglePreHistoryHidden#eabbb94c
@@ -49572,6 +53022,10 @@ func (t *TL_channels_togglePreHistoryHidden) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_channels_togglePreHistoryHidden) String() string {
+	return fmt.Sprintf("- channels_togglePreHistoryHidden#eabbb94c\n-- channel : %v\n-- enabled : %v\n", t.M_channel, t.M_enabled)
+}
+
 // bots_sendCustomRequest#aa2769ed
 type TL_bots_sendCustomRequest struct {
 	M_classID       int32
@@ -49622,6 +53076,10 @@ func (t *TL_bots_sendCustomRequest) Decode(b []byte) error {
 	t.M_params = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_bots_sendCustomRequest) String() string {
+	return fmt.Sprintf("- bots_sendCustomRequest#aa2769ed\n-- custom_method : %v\n-- params : %v\n", t.M_custom_method, t.M_params)
 }
 
 // bots_answerWebhookJSONQuery#e6213f4d
@@ -49676,6 +53134,10 @@ func (t *TL_bots_answerWebhookJSONQuery) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_bots_answerWebhookJSONQuery) String() string {
+	return fmt.Sprintf("- bots_answerWebhookJSONQuery#e6213f4d\n-- query_id : %v\n-- data : %v\n", t.M_query_id, t.M_data)
+}
+
 // payments_getPaymentForm#99f09745
 type TL_payments_getPaymentForm struct {
 	M_classID int32
@@ -49717,6 +53179,10 @@ func (t *TL_payments_getPaymentForm) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_getPaymentForm) String() string {
+	return fmt.Sprintf("- payments_getPaymentForm#99f09745\n-- msg_id : %v\n", t.M_msg_id)
+}
+
 // payments_getPaymentReceipt#a092a980
 type TL_payments_getPaymentReceipt struct {
 	M_classID int32
@@ -49756,6 +53222,10 @@ func (t *TL_payments_getPaymentReceipt) Decode(b []byte) error {
 	t.M_msg_id = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_payments_getPaymentReceipt) String() string {
+	return fmt.Sprintf("- payments_getPaymentReceipt#a092a980\n-- msg_id : %v\n", t.M_msg_id)
 }
 
 // payments_validateRequestedInfo#770a8e74
@@ -49828,6 +53298,10 @@ func (t *TL_payments_validateRequestedInfo) Decode(b []byte) error {
 	t.M_info = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_payments_validateRequestedInfo) String() string {
+	return fmt.Sprintf("- payments_validateRequestedInfo#770a8e74\n-- flags : %v\n-- save : %v\n-- msg_id : %v\n-- info : %v\n", t.M_flags, t.M_save, t.M_msg_id, t.M_info)
 }
 
 // payments_sendPaymentForm#2b8879b3
@@ -49913,6 +53387,10 @@ func (t *TL_payments_sendPaymentForm) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_payments_sendPaymentForm) String() string {
+	return fmt.Sprintf("- payments_sendPaymentForm#2b8879b3\n-- flags : %v\n-- msg_id : %v\n-- requested_info_id : %v\n-- shipping_option_id : %v\n-- credentials : %v\n", t.M_flags, t.M_msg_id, t.M_requested_info_id, t.M_shipping_option_id, t.M_credentials)
+}
+
 // payments_getSavedInfo#227d824b
 type TL_payments_getSavedInfo struct {
 	M_classID int32
@@ -49938,6 +53416,10 @@ func (t *TL_payments_getSavedInfo) Encode() []byte {
 
 func (t *TL_payments_getSavedInfo) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_payments_getSavedInfo) String() string {
+	return fmt.Sprintf("- payments_getSavedInfo#227d824b\n")
 }
 
 // payments_clearSavedInfo#d83d70c1
@@ -49999,6 +53481,10 @@ func (t *TL_payments_clearSavedInfo) Decode(b []byte) error {
 	t.M_info = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_payments_clearSavedInfo) String() string {
+	return fmt.Sprintf("- payments_clearSavedInfo#d83d70c1\n-- flags : %v\n-- credentials : %v\n-- info : %v\n", t.M_flags, t.M_credentials, t.M_info)
 }
 
 // stickers_createStickerSet#9bd86e6a
@@ -50095,6 +53581,10 @@ func (t *TL_stickers_createStickerSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickers_createStickerSet) String() string {
+	return fmt.Sprintf("- stickers_createStickerSet#9bd86e6a\n-- flags : %v\n-- masks : %v\n-- user_id : %v\n-- title : %v\n-- short_name : %v\n-- stickers : %v\n", t.M_flags, t.M_masks, t.M_user_id, t.M_title, t.M_short_name, t.M_stickers)
+}
+
 // stickers_removeStickerFromSet#f7760f51
 type TL_stickers_removeStickerFromSet struct {
 	M_classID int32
@@ -50134,6 +53624,10 @@ func (t *TL_stickers_removeStickerFromSet) Decode(b []byte) error {
 	t.M_sticker = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_stickers_removeStickerFromSet) String() string {
+	return fmt.Sprintf("- stickers_removeStickerFromSet#f7760f51\n-- sticker : %v\n", t.M_sticker)
 }
 
 // stickers_changeStickerPosition#ffb6d4ca
@@ -50188,6 +53682,10 @@ func (t *TL_stickers_changeStickerPosition) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickers_changeStickerPosition) String() string {
+	return fmt.Sprintf("- stickers_changeStickerPosition#ffb6d4ca\n-- sticker : %v\n-- position : %v\n", t.M_sticker, t.M_position)
+}
+
 // stickers_addStickerToSet#8653febe
 type TL_stickers_addStickerToSet struct {
 	M_classID    int32
@@ -50240,6 +53738,10 @@ func (t *TL_stickers_addStickerToSet) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_stickers_addStickerToSet) String() string {
+	return fmt.Sprintf("- stickers_addStickerToSet#8653febe\n-- stickerset : %v\n-- sticker : %v\n", t.M_stickerset, t.M_sticker)
+}
+
 // phone_getCallConfig#55451fa9
 type TL_phone_getCallConfig struct {
 	M_classID int32
@@ -50265,6 +53767,10 @@ func (t *TL_phone_getCallConfig) Encode() []byte {
 
 func (t *TL_phone_getCallConfig) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_phone_getCallConfig) String() string {
+	return fmt.Sprintf("- phone_getCallConfig#55451fa9\n")
 }
 
 // phone_requestCall#5b95b3d4
@@ -50341,6 +53847,10 @@ func (t *TL_phone_requestCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_requestCall) String() string {
+	return fmt.Sprintf("- phone_requestCall#5b95b3d4\n-- user_id : %v\n-- random_id : %v\n-- g_a_hash : %v\n-- protocol : %v\n", t.M_user_id, t.M_random_id, t.M_g_a_hash, t.M_protocol)
+}
+
 // phone_acceptCall#3bd2b4a0
 type TL_phone_acceptCall struct {
 	M_classID  int32
@@ -50402,6 +53912,10 @@ func (t *TL_phone_acceptCall) Decode(b []byte) error {
 	t.M_protocol = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_phone_acceptCall) String() string {
+	return fmt.Sprintf("- phone_acceptCall#3bd2b4a0\n-- peer : %v\n-- g_b : %v\n-- protocol : %v\n", t.M_peer, t.M_g_b, t.M_protocol)
 }
 
 // phone_confirmCall#2efe1722
@@ -50478,6 +53992,10 @@ func (t *TL_phone_confirmCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_confirmCall) String() string {
+	return fmt.Sprintf("- phone_confirmCall#2efe1722\n-- peer : %v\n-- g_a : %v\n-- key_fingerprint : %v\n-- protocol : %v\n", t.M_peer, t.M_g_a, t.M_key_fingerprint, t.M_protocol)
+}
+
 // phone_receivedCall#17d54f61
 type TL_phone_receivedCall struct {
 	M_classID int32
@@ -50517,6 +54035,10 @@ func (t *TL_phone_receivedCall) Decode(b []byte) error {
 	t.M_peer = dc.TLObject()
 
 	return dc.err
+}
+
+func (t *TL_phone_receivedCall) String() string {
+	return fmt.Sprintf("- phone_receivedCall#17d54f61\n-- peer : %v\n", t.M_peer)
 }
 
 // phone_discardCall#78d413a6
@@ -50593,6 +54115,10 @@ func (t *TL_phone_discardCall) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_discardCall) String() string {
+	return fmt.Sprintf("- phone_discardCall#78d413a6\n-- peer : %v\n-- duration : %v\n-- reason : %v\n-- connection_id : %v\n", t.M_peer, t.M_duration, t.M_reason, t.M_connection_id)
+}
+
 // phone_setCallRating#1c536a34
 type TL_phone_setCallRating struct {
 	M_classID int32
@@ -50656,6 +54182,10 @@ func (t *TL_phone_setCallRating) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_setCallRating) String() string {
+	return fmt.Sprintf("- phone_setCallRating#1c536a34\n-- peer : %v\n-- rating : %v\n-- comment : %v\n", t.M_peer, t.M_rating, t.M_comment)
+}
+
 // phone_saveCallDebug#277add7e
 type TL_phone_saveCallDebug struct {
 	M_classID int32
@@ -50708,6 +54238,10 @@ func (t *TL_phone_saveCallDebug) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_phone_saveCallDebug) String() string {
+	return fmt.Sprintf("- phone_saveCallDebug#277add7e\n-- peer : %v\n-- debug : %v\n", t.M_peer, t.M_debug)
+}
+
 // langpack_getLangPack#9ab5c58e
 type TL_langpack_getLangPack struct {
 	M_classID   int32
@@ -50747,6 +54281,10 @@ func (t *TL_langpack_getLangPack) Decode(b []byte) error {
 	t.M_lang_code = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_langpack_getLangPack) String() string {
+	return fmt.Sprintf("- langpack_getLangPack#9ab5c58e\n-- lang_code : %v\n", t.M_lang_code)
 }
 
 // langpack_getStrings#2e1ee318
@@ -50801,6 +54339,10 @@ func (t *TL_langpack_getStrings) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_langpack_getStrings) String() string {
+	return fmt.Sprintf("- langpack_getStrings#2e1ee318\n-- lang_code : %v\n-- keys : %v\n", t.M_lang_code, t.M_keys)
+}
+
 // langpack_getDifference#b2e4d7d
 type TL_langpack_getDifference struct {
 	M_classID      int32
@@ -50842,6 +54384,10 @@ func (t *TL_langpack_getDifference) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_langpack_getDifference) String() string {
+	return fmt.Sprintf("- langpack_getDifference#b2e4d7d\n-- from_version : %v\n", t.M_from_version)
+}
+
 // langpack_getLanguages#800fd57d
 type TL_langpack_getLanguages struct {
 	M_classID int32
@@ -50869,6 +54415,10 @@ func (t *TL_langpack_getLanguages) Decode(b []byte) error {
 	return nil
 }
 
+func (t *TL_langpack_getLanguages) String() string {
+	return fmt.Sprintf("- langpack_getLanguages#800fd57d\n")
+}
+
 // schemeNotModified#263c9c58
 type TL_schemeNotModified struct {
 	M_classID int32
@@ -50894,6 +54444,10 @@ func (t *TL_schemeNotModified) Encode() []byte {
 
 func (t *TL_schemeNotModified) Decode(b []byte) error {
 	return nil
+}
+
+func (t *TL_schemeNotModified) String() string {
+	return fmt.Sprintf("- schemeNotModified#263c9c58\n")
 }
 
 // scheme#4e6ef65e
@@ -50970,6 +54524,10 @@ func (t *TL_scheme) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_scheme) String() string {
+	return fmt.Sprintf("- scheme#4e6ef65e\n-- scheme_raw : %v\n-- types : %v\n-- methods : %v\n-- version : %v\n", t.M_scheme_raw, t.M_types, t.M_methods, t.M_version)
+}
+
 // schemeParam#21b59bef
 type TL_schemeParam struct {
 	M_classID int32
@@ -51020,6 +54578,10 @@ func (t *TL_schemeParam) Decode(b []byte) error {
 	t.M_type = dc.String()
 
 	return dc.err
+}
+
+func (t *TL_schemeParam) String() string {
+	return fmt.Sprintf("- schemeParam#21b59bef\n-- name : %v\n-- type : %v\n", t.M_name, t.M_type)
 }
 
 // schemeMethod#479357c0
@@ -51096,6 +54658,10 @@ func (t *TL_schemeMethod) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_schemeMethod) String() string {
+	return fmt.Sprintf("- schemeMethod#479357c0\n-- id : %v\n-- method : %v\n-- params : %v\n-- type : %v\n", t.M_id, t.M_method, t.M_params, t.M_type)
+}
+
 // schemeType#a8e1e989
 type TL_schemeType struct {
 	M_classID   int32
@@ -51170,6 +54736,10 @@ func (t *TL_schemeType) Decode(b []byte) error {
 	return dc.err
 }
 
+func (t *TL_schemeType) String() string {
+	return fmt.Sprintf("- schemeType#a8e1e989\n-- id : %v\n-- predicate : %v\n-- params : %v\n-- type : %v\n", t.M_id, t.M_predicate, t.M_params, t.M_type)
+}
+
 // help_getScheme#dbb69a9e
 type TL_help_getScheme struct {
 	M_classID int32
@@ -51209,4 +54779,8 @@ func (t *TL_help_getScheme) Decode(b []byte) error {
 	t.M_version = dc.Int()
 
 	return dc.err
+}
+
+func (t *TL_help_getScheme) String() string {
+	return fmt.Sprintf("- help_getScheme#dbb69a9e\n-- version : %v\n", t.M_version)
 }
