@@ -7,6 +7,7 @@ import (
 
 	"github.com/rockin0098/flash/base/datasource"
 	"github.com/rockin0098/flash/base/grmon"
+	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
 
 	. "github.com/rockin0098/flash/base/global"
@@ -14,8 +15,9 @@ import (
 )
 
 const (
-	SERVER_NAME   = "GateServer"
-	SERVER_CONFIG = "config/gate.json"
+	SERVER_NAME    = "GateServer"
+	SERVER_CONFIG  = "config/gate.json"
+	MTPROTO_CONFIG = "config/config.json"
 )
 
 type GateServerConfig struct {
@@ -80,6 +82,7 @@ func LoadConfig() *GateServerConfig {
 
 func ServerInit() {
 	serverConfig := LoadConfig()
+	mtproto.LoadConfig(MTPROTO_CONFIG)
 
 	datasource.DataSourceInit(
 		serverConfig.DataSource,

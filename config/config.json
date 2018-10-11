@@ -1,0 +1,48 @@
+{
+  "M_phonecalls_enabled": true,
+  "M_default_p2p_contacts": true,
+  "M_date": 1536119427,
+  "M_expires": 1536122938,
+  "M_test_mode":false,
+  "M_this_dc": 2,
+  "M_dc_options": [
+    {
+      "M_id": 2,
+      "M_ip_address": "127.0.0.1",
+      "M_port": 5222
+    }
+  ],
+  "M_chat_size_max": 200,
+  "M_megagroup_size_max": 100000,
+  "M_forwarded_count_max": 100,
+  "M_online_update_period_ms": 120000,
+  "M_offline_blur_timeout_ms": 5000,
+  "M_offline_idle_timeout_ms": 30000,
+  "M_online_cloud_timeout_ms": 300000,
+  "M_notify_cloud_delay_ms": 30000,
+  "M_notify_default_delay_ms": 1500,
+  "M_chat_big_size": 10,
+  "M_push_chat_period_ms": 60000,
+  "M_push_chat_limit": 2,
+  "M_saved_gifs_limit": 200,
+  "M_edit_time_limit": 172800,
+  "M_rating_e_decay": 2419200,
+  "M_stickers_recent_limit": 200,
+  "M_stickers_faved_limit": 5,
+  "M_channels_read_media_period": 604800,
+  "M_tmp_sessions": 0,
+  "M_pinned_dialogs_count_max": 5,
+  "M_call_receive_timeout_ms": 20000,
+  "M_call_ring_timeout_ms": 90000,
+  "M_call_connect_timeout_ms": 30000,
+  "M_call_packet_timeout_ms": 10000,
+  "M_me_url_prefix": "https://t.me/",
+  "M_suggested_lang_code": "en",
+  "M_lang_pack_version": 31,
+  "M_disabled_features": [
+    {
+      "M_feature": "",
+      "M_description": ""
+    }
+  ]
+}
