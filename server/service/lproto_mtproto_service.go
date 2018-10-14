@@ -143,6 +143,8 @@ func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSe
 		res, err = s.TL_msg_container_Process(cltSess, msg)
 	case *mtproto.TL_message2:
 		res, err = s.TL_message2_Process(cltSess, msg)
+	case *mtproto.TL_auth_logOut:
+		res, err = s.TL_auth_logOut_Process(cltSess, msg)
 	default:
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}

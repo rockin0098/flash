@@ -219,3 +219,14 @@ func (s *LProtoService) TL_message2_Process(cltSess *session.ClientSession, msg 
 
 	return nil, nil
 }
+
+func (s *LProtoService) TL_auth_logOut_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+
+	// tlobj := msg.TLObject
+	// tl := tlobj.(*mtproto.TL_ping)
+
+	tltrue := &mtproto.TL_boolTrue{}
+
+	return tltrue, nil
+}
