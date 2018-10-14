@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 	"github.com/rockin0098/flash/server/session"
 
 	. "github.com/rockin0098/flash/base/logger"
@@ -44,8 +45,8 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		Log.Debugf("client authKeyID = %v", raw.AuthKeyID)
 
 		authid := raw.AuthKeyID
-		ms := ModelServiceInstance()
-		akey := ms.GetAuthKeyValueByAuthID(authid)
+		mm := model.GetModelManager()
+		akey := mm.GetAuthKeyValueByAuthID(authid)
 		if akey == nil {
 			return nil, fmt.Errorf("authkey not found by authid=%v", authid)
 		}
@@ -59,6 +60,8 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 			return nil, err
 		}
 
+		Log.Infof("Decode encrypted message, authid=%v, msgid=%v, salt=%v, seqno=%v, classType=%v", reqmsg.AuthKeyID, reqmsg.MessageID, reqmsg.Salt, reqmsg.SeqNo, reqmsg.TLObject)
+
 		// 记录 client session id
 		csm := session.GetClientSessionManager()
 		cltSess, ok := csm.Load(reqmsg.ClientSessionID)
@@ -70,7 +73,7 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 		badresp, ok := cltSess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
 		if !ok {
 			Log.Warnf("check bad server salt. authid = %v, class type = %T", authid, reqmsg.TLObject)
-			payload := cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, badresp)
+			payload := cltSess.EncodeMessage(authid, akey, 0, false, badresp)
 			return payload, errors.New("check bad server salt failed")
 		}
 
@@ -138,6 +141,8 @@ func (s *LProtoService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSe
 		res, err = s.TL_help_getConfig_Process(cltSess, msg)
 	case *mtproto.TL_msg_container:
 		res, err = s.TL_msg_container_Process(cltSess, msg)
+	case *mtproto.TL_message2:
+		res, err = s.TL_message2_Process(cltSess, msg)
 	default:
 		Log.Debugf("havent implemented yet, type = %T", tl)
 	}

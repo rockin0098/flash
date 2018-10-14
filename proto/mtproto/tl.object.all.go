@@ -2,6 +2,8 @@ package mtproto
 
 import "fmt"
 import "encoding/hex"
+import . "github.com/rockin0098/flash/base/global"
+import . "github.com/rockin0098/flash/base/logger"
 
 // resPQ#05162463
 type TL_resPQ struct {
@@ -3502,6 +3504,7 @@ func (t *TL_inputMediaUploadedPhoto) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_file())
 	ec.String(t.Get_caption())
@@ -3597,6 +3600,7 @@ func (t *TL_inputMediaPhoto) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_id())
 	ec.String(t.Get_caption())
@@ -3855,6 +3859,7 @@ func (t *TL_inputMediaUploadedDocument) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_nosound_video != nil {
 		ec.TLObject(t.Get_nosound_video())
@@ -3966,6 +3971,7 @@ func (t *TL_inputMediaDocument) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_id())
 	ec.String(t.Get_caption())
@@ -4211,6 +4217,7 @@ func (t *TL_inputMediaPhotoExternal) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_url())
 	ec.String(t.Get_caption())
@@ -4300,6 +4307,7 @@ func (t *TL_inputMediaDocumentExternal) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_url())
 	ec.String(t.Get_caption())
@@ -4479,6 +4487,7 @@ func (t *TL_inputMediaInvoice) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_title())
 	ec.String(t.Get_description())
@@ -6096,6 +6105,7 @@ func (t *TL_user) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_self != nil {
 		ec.TLObject(t.Get_self())
@@ -6780,6 +6790,7 @@ func (t *TL_chat) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_creator != nil {
 		ec.TLObject(t.Get_creator())
@@ -7191,6 +7202,7 @@ func (t *TL_channel) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_creator != nil {
 		ec.TLObject(t.Get_creator())
@@ -7411,6 +7423,7 @@ func (t *TL_channelForbidden) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_broadcast != nil {
 		ec.TLObject(t.Get_broadcast())
@@ -7833,6 +7846,7 @@ func (t *TL_channelFull) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_can_view_participants != nil {
 		ec.TLObject(t.Get_can_view_participants())
@@ -8178,6 +8192,7 @@ func (t *TL_chatParticipantsForbidden) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_chat_id())
 	if t.M_self_participant != nil {
@@ -8677,6 +8692,7 @@ func (t *TL_message) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_out != nil {
 		ec.TLObject(t.Get_out())
@@ -8956,6 +8972,7 @@ func (t *TL_messageService) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_out != nil {
 		ec.TLObject(t.Get_out())
@@ -9124,6 +9141,7 @@ func (t *TL_messageMediaPhoto) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_photo != nil {
 		ec.TLObject(t.Get_photo())
@@ -9383,6 +9401,7 @@ func (t *TL_messageMediaDocument) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_document != nil {
 		ec.TLObject(t.Get_document())
@@ -9736,6 +9755,7 @@ func (t *TL_messageMediaInvoice) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_shipping_address_requested != nil {
 		ec.TLObject(t.Get_shipping_address_requested())
@@ -10543,6 +10563,7 @@ func (t *TL_messageActionPaymentSentMe) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_currency())
 	ec.Long(t.Get_total_amount())
@@ -10702,6 +10723,7 @@ func (t *TL_messageActionPhoneCall) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_call_id())
 	if t.M_reason != nil {
@@ -10942,6 +10964,7 @@ func (t *TL_dialog) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_pinned != nil {
 		ec.TLObject(t.Get_pinned())
@@ -11116,6 +11139,7 @@ func (t *TL_photo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_has_stickers != nil {
 		ec.TLObject(t.Get_has_stickers())
@@ -11590,6 +11614,7 @@ func (t *TL_auth_sentCode) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_phone_registered != nil {
 		ec.TLObject(t.Get_phone_registered())
@@ -11682,6 +11707,7 @@ func (t *TL_auth_authorization) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_tmp_sessions != 0 {
 		ec.Int(t.Get_tmp_sessions())
@@ -12038,6 +12064,7 @@ func (t *TL_inputPeerNotifySettings) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_show_previews != nil {
 		ec.TLObject(t.Get_show_previews())
@@ -12239,6 +12266,7 @@ func (t *TL_peerNotifySettings) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_show_previews != nil {
 		ec.TLObject(t.Get_show_previews())
@@ -12316,6 +12344,7 @@ func (t *TL_peerSettings) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_report_spam != nil {
 		ec.TLObject(t.Get_report_spam())
@@ -12778,6 +12807,7 @@ func (t *TL_userFull) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_blocked != nil {
 		ec.TLObject(t.Get_blocked())
@@ -13817,6 +13847,7 @@ func (t *TL_messages_channelMessages) Encode() []byte {
 
 	var flags uint32 = 0
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_pts())
 	ec.Int(t.Get_count())
@@ -14478,6 +14509,7 @@ func (t *TL_inputMessagesFilterPhoneCalls) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_missed != nil {
 		ec.TLObject(t.Get_missed())
@@ -15979,6 +16011,7 @@ func (t *TL_updateServiceNotification) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_popup != nil {
 		ec.TLObject(t.Get_popup())
@@ -16471,6 +16504,7 @@ func (t *TL_updateChannelTooLong) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_channel_id())
 	if t.M_pts != 0 {
@@ -17052,6 +17086,7 @@ func (t *TL_updateStickerSetsOrder) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_masks != nil {
 		ec.TLObject(t.Get_masks())
@@ -17219,6 +17254,7 @@ func (t *TL_updateBotInlineQuery) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
@@ -17334,6 +17370,7 @@ func (t *TL_updateBotInlineSend) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_user_id())
 	ec.String(t.Get_query())
@@ -17594,6 +17631,7 @@ func (t *TL_updateBotCallbackQuery) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
@@ -17793,6 +17831,7 @@ func (t *TL_updateInlineBotCallbackQuery) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
@@ -18197,6 +18236,7 @@ func (t *TL_updateDialogPinned) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_pinned != nil {
 		ec.TLObject(t.Get_pinned())
@@ -18266,6 +18306,7 @@ func (t *TL_updatePinnedDialogs) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_order != nil {
 		ec.Vector(t.Get_order())
@@ -18581,6 +18622,7 @@ func (t *TL_updateBotPrecheckoutQuery) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_query_id())
 	ec.Int(t.Get_user_id())
@@ -19525,6 +19567,7 @@ func (t *TL_updateShortMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_out != nil {
 		ec.TLObject(t.Get_out())
@@ -19800,6 +19843,7 @@ func (t *TL_updateShortChatMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_out != nil {
 		ec.TLObject(t.Get_out())
@@ -20230,6 +20274,7 @@ func (t *TL_updateShortSentMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_out != nil {
 		ec.TLObject(t.Get_out())
@@ -20731,6 +20776,7 @@ func (t *TL_dcOption) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_ipv6 != nil {
 		ec.TLObject(t.Get_ipv6())
@@ -21150,6 +21196,9 @@ func (t *TL_config) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
+
+	Log.Infof("TL_config encoding = %+v", FormatStruct(t))
 
 	if t.M_phonecalls_enabled != nil {
 		ec.TLObject(t.Get_phonecalls_enabled())
@@ -24543,6 +24592,7 @@ func (t *TL_documentAttributeSticker) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_mask != nil {
 		ec.TLObject(t.Get_mask())
@@ -24647,6 +24697,7 @@ func (t *TL_documentAttributeVideo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_round_message != nil {
 		ec.TLObject(t.Get_round_message())
@@ -24768,6 +24819,7 @@ func (t *TL_documentAttributeAudio) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_voice != nil {
 		ec.TLObject(t.Get_voice())
@@ -25690,6 +25742,7 @@ func (t *TL_webPage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_id())
 	ec.String(t.Get_url())
@@ -26319,6 +26372,7 @@ func (t *TL_account_passwordInputSettings) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_new_salt != nil {
 		ec.TLObject(t.Get_new_salt())
@@ -26705,6 +26759,7 @@ func (t *TL_chatInvite) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_channel != nil {
 		ec.TLObject(t.Get_channel())
@@ -27027,6 +27082,7 @@ func (t *TL_stickerSet) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_installed != nil {
 		ec.TLObject(t.Get_installed())
@@ -27579,6 +27635,7 @@ func (t *TL_keyboardButtonSwitchInline) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_same_peer != nil {
 		ec.TLObject(t.Get_same_peer())
@@ -27785,6 +27842,7 @@ func (t *TL_replyKeyboardHide) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_selective != nil {
 		ec.TLObject(t.Get_selective())
@@ -27865,6 +27923,7 @@ func (t *TL_replyKeyboardForceReply) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_single_use != nil {
 		ec.TLObject(t.Get_single_use())
@@ -27973,6 +28032,7 @@ func (t *TL_replyKeyboardMarkup) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_resize != nil {
 		ec.TLObject(t.Get_resize())
@@ -29103,6 +29163,7 @@ func (t *TL_updates_channelDifferenceEmpty) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_final != nil {
 		ec.TLObject(t.Get_final())
@@ -29272,6 +29333,7 @@ func (t *TL_updates_channelDifferenceTooLong) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_final != nil {
 		ec.TLObject(t.Get_final())
@@ -29421,6 +29483,7 @@ func (t *TL_updates_channelDifference) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_final != nil {
 		ec.TLObject(t.Get_final())
@@ -29544,6 +29607,7 @@ func (t *TL_channelMessagesFilter) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_exclude_new_messages != nil {
 		ec.TLObject(t.Get_exclude_new_messages())
@@ -29826,6 +29890,7 @@ func (t *TL_channelParticipantAdmin) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_can_edit != nil {
 		ec.TLObject(t.Get_can_edit())
@@ -29939,6 +30004,7 @@ func (t *TL_channelParticipantBanned) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_left != nil {
 		ec.TLObject(t.Get_left())
@@ -30760,6 +30826,7 @@ func (t *TL_inputBotInlineMessageMediaAuto) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_caption())
 	if t.M_reply_markup != nil {
@@ -30864,6 +30931,7 @@ func (t *TL_inputBotInlineMessageText) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -30963,6 +31031,7 @@ func (t *TL_inputBotInlineMessageMediaGeo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_geo_point())
 	ec.Int(t.Get_period())
@@ -31079,6 +31148,7 @@ func (t *TL_inputBotInlineMessageMediaVenue) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_geo_point())
 	ec.String(t.Get_title())
@@ -31183,6 +31253,7 @@ func (t *TL_inputBotInlineMessageMediaContact) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_phone_number())
 	ec.String(t.Get_first_name())
@@ -31256,6 +31327,7 @@ func (t *TL_inputBotInlineMessageGame) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_reply_markup != nil {
 		ec.TLObject(t.Get_reply_markup())
@@ -31454,6 +31526,7 @@ func (t *TL_inputBotInlineResult) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
@@ -31702,6 +31775,7 @@ func (t *TL_inputBotInlineResultDocument) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
@@ -31859,6 +31933,7 @@ func (t *TL_botInlineMessageMediaAuto) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_caption())
 	if t.M_reply_markup != nil {
@@ -31963,6 +32038,7 @@ func (t *TL_botInlineMessageText) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -32062,6 +32138,7 @@ func (t *TL_botInlineMessageMediaGeo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_geo())
 	ec.Int(t.Get_period())
@@ -32178,6 +32255,7 @@ func (t *TL_botInlineMessageMediaVenue) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_geo())
 	ec.String(t.Get_title())
@@ -32282,6 +32360,7 @@ func (t *TL_botInlineMessageMediaContact) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_phone_number())
 	ec.String(t.Get_first_name())
@@ -32486,6 +32565,7 @@ func (t *TL_botInlineResult) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
@@ -32673,6 +32753,7 @@ func (t *TL_botInlineMediaResult) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_id())
 	ec.String(t.Get_type())
@@ -32826,6 +32907,7 @@ func (t *TL_messages_botResults) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_gallery != nil {
 		ec.TLObject(t.Get_gallery())
@@ -33032,6 +33114,7 @@ func (t *TL_messageFwdHeader) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_from_id != 0 {
 		ec.Int(t.Get_from_id())
@@ -33465,6 +33548,7 @@ func (t *TL_messages_botCallbackAnswer) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_alert != nil {
 		ec.TLObject(t.Get_alert())
@@ -33558,6 +33642,7 @@ func (t *TL_messages_messageEditData) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_caption != nil {
 		ec.TLObject(t.Get_caption())
@@ -34319,6 +34404,7 @@ func (t *TL_draftMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -35053,6 +35139,7 @@ func (t *TL_game) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
@@ -36580,6 +36667,7 @@ func (t *TL_pageBlockVideo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_autoplay != nil {
 		ec.TLObject(t.Get_autoplay())
@@ -36781,6 +36869,7 @@ func (t *TL_pageBlockEmbed) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_full_width != nil {
 		ec.TLObject(t.Get_full_width())
@@ -37670,6 +37759,7 @@ func (t *TL_invoice) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_test != nil {
 		ec.TLObject(t.Get_test())
@@ -37978,6 +38068,7 @@ func (t *TL_paymentRequestedInfo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_name != "" {
 		ec.String(t.Get_name())
@@ -38552,6 +38643,7 @@ func (t *TL_payments_paymentForm) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_can_save_credentials != nil {
 		ec.TLObject(t.Get_can_save_credentials())
@@ -38672,6 +38764,7 @@ func (t *TL_payments_validatedRequestedInfo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_id != "" {
 		ec.String(t.Get_id())
@@ -38920,6 +39013,7 @@ func (t *TL_payments_paymentReceipt) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_date())
 	ec.Int(t.Get_bot_id())
@@ -39022,6 +39116,7 @@ func (t *TL_payments_savedInfo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_has_saved_credentials != nil {
 		ec.TLObject(t.Get_has_saved_credentials())
@@ -39160,6 +39255,7 @@ func (t *TL_inputPaymentCredentials) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_save != nil {
 		ec.TLObject(t.Get_save())
@@ -39460,6 +39556,7 @@ func (t *TL_inputStickerSetItem) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_document())
 	ec.String(t.Get_emoji())
@@ -39686,6 +39783,7 @@ func (t *TL_phoneCallWaiting) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_id())
 	ec.Long(t.Get_access_hash())
@@ -40190,6 +40288,7 @@ func (t *TL_phoneCallDiscarded) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_need_rating != nil {
 		ec.TLObject(t.Get_need_rating())
@@ -40397,6 +40496,7 @@ func (t *TL_phoneCallProtocol) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_udp_p2p != nil {
 		ec.TLObject(t.Get_udp_p2p())
@@ -40847,6 +40947,7 @@ func (t *TL_langPackStringPluralized) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.String(t.Get_key())
 	if t.M_zero_value != "" {
@@ -41236,6 +41337,7 @@ func (t *TL_channelAdminRights) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_change_info != nil {
 		ec.TLObject(t.Get_change_info())
@@ -41451,6 +41553,7 @@ func (t *TL_channelBannedRights) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_view_messages != nil {
 		ec.TLObject(t.Get_view_messages())
@@ -42656,6 +42759,7 @@ func (t *TL_channelAdminLogEventsFilter) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_join != nil {
 		ec.TLObject(t.Get_join())
@@ -43834,6 +43938,7 @@ func (t *TL_auth_sendCode) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_allow_flashcall != nil {
 		ec.TLObject(t.Get_allow_flashcall())
@@ -44992,6 +45097,7 @@ func (t *TL_account_updateProfile) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_first_name != "" {
 		ec.String(t.Get_first_name())
@@ -45537,6 +45643,7 @@ func (t *TL_account_sendChangePhoneCode) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_allow_flashcall != nil {
 		ec.TLObject(t.Get_allow_flashcall())
@@ -45954,6 +46061,7 @@ func (t *TL_account_sendConfirmPhoneCode) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_allow_flashcall != nil {
 		ec.TLObject(t.Get_allow_flashcall())
@@ -46857,6 +46965,7 @@ func (t *TL_contacts_getTopPeers) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_correspondents != nil {
 		ec.TLObject(t.Get_correspondents())
@@ -47128,6 +47237,7 @@ func (t *TL_messages_getDialogs) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_exclude_pinned != nil {
 		ec.TLObject(t.Get_exclude_pinned())
@@ -47415,6 +47525,7 @@ func (t *TL_messages_search) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_peer())
 	ec.String(t.Get_q())
@@ -47576,6 +47687,7 @@ func (t *TL_messages_deleteHistory) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_just_clear != nil {
 		ec.TLObject(t.Get_just_clear())
@@ -47656,6 +47768,7 @@ func (t *TL_messages_deleteMessages) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_revoke != nil {
 		ec.TLObject(t.Get_revoke())
@@ -47931,6 +48044,7 @@ func (t *TL_messages_sendMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -48119,6 +48233,7 @@ func (t *TL_messages_sendMedia) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_silent != nil {
 		ec.TLObject(t.Get_silent())
@@ -48291,6 +48406,7 @@ func (t *TL_messages_forwardMessages) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_silent != nil {
 		ec.TLObject(t.Get_silent())
@@ -50443,6 +50559,7 @@ func (t *TL_messages_reorderStickerSets) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_masks != nil {
 		ec.TLObject(t.Get_masks())
@@ -50772,6 +50889,7 @@ func (t *TL_messages_getInlineBotResults) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_bot())
 	ec.TLObject(t.Get_peer())
@@ -50913,6 +51031,7 @@ func (t *TL_messages_setInlineBotResults) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_gallery != nil {
 		ec.TLObject(t.Get_gallery())
@@ -51079,6 +51198,7 @@ func (t *TL_messages_sendInlineBotResult) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_silent != nil {
 		ec.TLObject(t.Get_silent())
@@ -51311,6 +51431,7 @@ func (t *TL_messages_editMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -51486,6 +51607,7 @@ func (t *TL_messages_editInlineBotMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -51616,6 +51738,7 @@ func (t *TL_messages_getBotCallbackAnswer) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_game != nil {
 		ec.TLObject(t.Get_game())
@@ -51737,6 +51860,7 @@ func (t *TL_messages_setBotCallbackAnswer) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_alert != nil {
 		ec.TLObject(t.Get_alert())
@@ -51909,6 +52033,7 @@ func (t *TL_messages_saveDraft) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_no_webpage != nil {
 		ec.TLObject(t.Get_no_webpage())
@@ -52122,6 +52247,7 @@ func (t *TL_messages_getRecentStickers) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_attached != nil {
 		ec.TLObject(t.Get_attached())
@@ -52209,6 +52335,7 @@ func (t *TL_messages_saveRecentSticker) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_attached != nil {
 		ec.TLObject(t.Get_attached())
@@ -52280,6 +52407,7 @@ func (t *TL_messages_clearRecentStickers) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_attached != nil {
 		ec.TLObject(t.Get_attached())
@@ -52365,6 +52493,7 @@ func (t *TL_messages_getArchivedStickers) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_masks != nil {
 		ec.TLObject(t.Get_masks())
@@ -52575,6 +52704,7 @@ func (t *TL_messages_setGameScore) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_edit_message != nil {
 		ec.TLObject(t.Get_edit_message())
@@ -52696,6 +52826,7 @@ func (t *TL_messages_setInlineGameScore) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_edit_message != nil {
 		ec.TLObject(t.Get_edit_message())
@@ -53075,6 +53206,7 @@ func (t *TL_messages_toggleDialogPin) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_pinned != nil {
 		ec.TLObject(t.Get_pinned())
@@ -53153,6 +53285,7 @@ func (t *TL_messages_reorderPinnedDialogs) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_force != nil {
 		ec.TLObject(t.Get_force())
@@ -53275,6 +53408,7 @@ func (t *TL_messages_setBotShippingResults) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Long(t.Get_query_id())
 	if t.M_error != "" {
@@ -53372,6 +53506,7 @@ func (t *TL_messages_setBotPrecheckoutResults) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_success != nil {
 		ec.TLObject(t.Get_success())
@@ -53929,6 +54064,7 @@ func (t *TL_messages_sendMultiMedia) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_silent != nil {
 		ec.TLObject(t.Get_silent())
@@ -54132,6 +54268,7 @@ func (t *TL_updates_getDifference) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_pts())
 	if t.M_pts_total_limit != 0 {
@@ -54241,6 +54378,7 @@ func (t *TL_updates_getChannelDifference) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_force != nil {
 		ec.TLObject(t.Get_force())
@@ -55952,6 +56090,7 @@ func (t *TL_channels_createChannel) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_broadcast != nil {
 		ec.TLObject(t.Get_broadcast())
@@ -56798,6 +56937,7 @@ func (t *TL_channels_updatePinnedMessage) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_silent != nil {
 		ec.TLObject(t.Get_silent())
@@ -57025,6 +57165,7 @@ func (t *TL_channels_getAdminLog) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.TLObject(t.Get_channel())
 	ec.String(t.Get_q())
@@ -57552,6 +57693,7 @@ func (t *TL_payments_validateRequestedInfo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_save != nil {
 		ec.TLObject(t.Get_save())
@@ -57654,6 +57796,7 @@ func (t *TL_payments_sendPaymentForm) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	ec.Int(t.Get_msg_id())
 	if t.M_requested_info_id != "" {
@@ -57775,6 +57918,7 @@ func (t *TL_payments_clearSavedInfo) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_credentials != nil {
 		ec.TLObject(t.Get_credentials())
@@ -57884,6 +58028,7 @@ func (t *TL_stickers_createStickerSet) Encode() []byte {
 	}
 
 	ec.UInt(flags)
+	t.M_flags = flags
 
 	if t.M_masks != nil {
 		ec.TLObject(t.Get_masks())

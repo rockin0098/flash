@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 )
 
 const (
@@ -154,7 +155,14 @@ func (s *AuthManagerMemory) CheckBySalt(authid int64, salt int64) bool {
 	// var salt int64 = 0
 	auth, ok := s.Load(authid)
 	if !ok {
-		return false
+		mm := model.GetModelManager()
+		a := mm.GetAuthKeyByAuthID(authid)
+		if a == nil {
+			return false
+		}
+
+		auth = &Auth{}
+		s.Store(authid, auth)
 	}
 
 	salts := auth.salts

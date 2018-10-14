@@ -3,6 +3,7 @@ package service
 import (
 	"time"
 
+	. "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/session"
@@ -138,14 +139,22 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 		helpConfig.M_dc_options = append(helpConfig.M_dc_options, dcOption)
 	}
 
-	// pack
-	rpc_result := &mtproto.TL_rpc_result{
-		M_classID:    mtproto.TL_CLASS_rpc_result,
-		M_req_msg_id: msg.MessageID,
-		M_result:     helpConfig,
-	}
+	Log.Info("helpConfig = %v", FormatStruct(helpConfig))
 
-	return rpc_result, nil
+	cltSess.WriteDirectly(msg.AuthKeyID, 0, false, helpConfig)
+
+	return nil, nil
+
+	// return helpConfig, nil
+
+	// pack
+	// rpc_result := &mtproto.TL_rpc_result{
+	// 	M_classID:    mtproto.TL_CLASS_rpc_result,
+	// 	M_req_msg_id: msg.MessageID,
+	// 	M_result:     helpConfig,
+	// }
+
+	// return rpc_result, nil
 }
 
 func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
@@ -171,16 +180,42 @@ func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession,
 			continue
 		}
 
-		ms := ModelServiceInstance()
-		ak := ms.GetAuthKeyValueByAuthID(msg.AuthKeyID)
-		if ak == nil {
-			Log.Error("AuthKey not found, authkeyid = %v", msg.AuthKeyID)
+		if res == nil {
 			continue
 		}
 
 		Log.Infof("cltSess.WriteDirectly resp = %v", res)
-		cltSess.WriteDirectly(msg.AuthKeyID, ak, msg.MessageID, false, res.(mtproto.TLObject))
+		cltSess.WriteDirectly(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
 	}
+
+	return nil, nil
+}
+
+//message2 msg_id:long seqno:int bytes:int body:Object = Message; // parsed manually
+func (s *LProtoService) TL_message2_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+
+	Log.Infof("msg.TLObject = %v", msg.TLObject.(*mtproto.TL_message2))
+	tlmsg2 := msg.TLObject.(*mtproto.TL_message2)
+
+	Log.Infof("TL_message2.TLObject = %T, msg_id=%v, seqno=%v, bytes=%v",
+		tlmsg2.M_body, tlmsg2.M_msg_id, tlmsg2.M_seqno, tlmsg2.M_bytes)
+
+	msg2 := *msg
+	msg2.TLObject = tlmsg2.M_body
+
+	res, err := s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+	if err != nil {
+		Log.Error(err)
+		return nil, nil
+	}
+
+	if res == nil {
+		return nil, nil
+	}
+
+	Log.Infof("cltSess.WriteDirectly resp = %v", res)
+	cltSess.WriteDirectly(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
 
 	return nil, nil
 }

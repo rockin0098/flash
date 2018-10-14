@@ -4,7 +4,10 @@ import (
 	"sync"
 	"time"
 
+	. "github.com/rockin0098/flash/base/global"
+	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 )
 
 type ClientSessionManager interface {
@@ -116,8 +119,11 @@ func (s *ClientSession) Write(data interface{}) {
 	sess.Write(data)
 }
 
-func (s *ClientSession) WriteDirectly(authKeyID int64, authKey []byte, messageID int64, confirm bool, tl mtproto.TLObject) {
-	payload := s.EncodeMessage(authKeyID, authKey, messageID, confirm, tl)
+func (s *ClientSession) WriteDirectly(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) {
+
+	mm := model.GetModelManager()
+	ak := mm.GetAuthKeyValueByAuthID(authKeyID)
+	payload := s.EncodeMessage(authKeyID, ak, messageID, confirm, tl)
 	s.Write(payload)
 }
 
@@ -140,6 +146,9 @@ func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int3
 			M_bad_msg_seqno:   seqNo,
 			M_new_server_salt: s.salt,
 		}
+
+		Log.Infof("badServerSalt = %+v", FormatStruct(badServerSalt))
+
 		// c.sendToClient(connID, md, 0, false, badServerSalt.To_BadMsgNotification())
 		return badServerSalt, false
 	}

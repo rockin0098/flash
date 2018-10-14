@@ -218,8 +218,6 @@ type EncryptedMessage struct {
 
 func (m *EncryptedMessage) Encode(authKeyID int64, authKey []byte) []byte {
 
-	Log.Infof("encrypted message encoding, authid=%v", authKeyID)
-
 	objData := m.TLObject.Encode()
 	var additional_size = (32 + len(objData)) % 16
 	if additional_size != 0 {
@@ -249,6 +247,8 @@ func (m *EncryptedMessage) Encode(authKeyID int64, authKey []byte) []byte {
 	x2.Long(authKeyID)
 	x2.Bytes(m.MsgKey)
 	x2.Bytes(encryptedData)
+
+	Log.Infof("encrypted message encoding, authid=%v, MessageID=%v, classType=%T ", authKeyID, m.MessageID, m.TLObject)
 
 	return x2.buffer
 }

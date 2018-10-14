@@ -1,6 +1,6 @@
 {
-  "M_phonecalls_enabled": true,
-  "M_default_p2p_contacts": true,
+  "M_phonecalls_enabled": false,
+  "M_default_p2p_contacts": false,
   "M_date": 1536119427,
   "M_expires": 1536122938,
   "M_test_mode":false,

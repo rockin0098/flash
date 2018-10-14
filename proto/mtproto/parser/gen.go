@@ -298,7 +298,7 @@ func convertEncodeFlagsField(params []*TLParam) string {
 		res = res + fmt.Sprintf(ft, convertFieldName(fp.Name), right, pos)
 	}
 
-	res = res + "ec.UInt(flags)\n\n"
+	res = res + "ec.UInt(flags)\nt.M_flags=flags\n\n"
 
 	p2 := params[1:]
 	for _, pp := range p2 {

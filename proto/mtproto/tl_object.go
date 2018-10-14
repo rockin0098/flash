@@ -43,7 +43,7 @@ func ToBool(b bool) TLObject {
 
 func ToBool2(b bool) TLObject {
 	if b {
-		return New_TL_boolTrue()
+		return New_TL_true()
 	} else {
 		return nil
 	}
