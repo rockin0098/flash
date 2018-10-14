@@ -1,7 +1,6 @@
 package service
 
 import (
-	"encoding/hex"
 	"errors"
 	"fmt"
 
@@ -46,20 +45,15 @@ func (s *LProtoService) MTProtoMessageProcess(sess *session.Session, raw *mtprot
 
 		authid := raw.AuthKeyID
 		ms := ModelServiceInstance()
-		authKey := ms.GetAuthKeyByAuthID(authid)
-		if authKey == nil {
+		akey := ms.GetAuthKeyValueByAuthID(authid)
+		if akey == nil {
 			return nil, fmt.Errorf("authkey not found by authid=%v", authid)
-		}
-		akey, err := hex.DecodeString(authKey.Body)
-		if err != nil {
-			Log.Error(err)
-			return nil, err
 		}
 
 		reqmsg := &mtproto.EncryptedMessage{
 			AuthKeyID: authid,
 		}
-		err = reqmsg.Decode(akey, raw.Payload[8:])
+		err := reqmsg.Decode(akey, raw.Payload[8:])
 		if err != nil {
 			Log.Error(err)
 			return nil, err

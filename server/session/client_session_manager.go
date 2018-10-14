@@ -116,16 +116,9 @@ func (s *ClientSession) Write(data interface{}) {
 	sess.Write(data)
 }
 
-func (s *ClientSession) WriteDirectly(authKeyID int64, authKey []byte, messageID int64, tl mtproto.TLObject) {
-	payload := s.EncodeMessage(authKeyID, authKey, messageID, false, tl)
-	sess := GetSession(s.serverSessionID)
-	sess.Write(payload)
-}
-
-func (s *ClientSession) WriteAckDirectly(authKeyID int64, authKey []byte, messageID int64, tl mtproto.TLObject) {
-	payload := s.EncodeMessage(authKeyID, authKey, messageID, true, tl)
-	sess := GetSession(s.serverSessionID)
-	sess.Write(payload)
+func (s *ClientSession) WriteDirectly(authKeyID int64, authKey []byte, messageID int64, confirm bool, tl mtproto.TLObject) {
+	payload := s.EncodeMessage(authKeyID, authKey, messageID, confirm, tl)
+	s.Write(payload)
 }
 
 //// Check Server Salt

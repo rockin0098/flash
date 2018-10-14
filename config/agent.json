@@ -1,0 +1,12 @@
+{
+  "NodeID": "gate-01",
+  "DataSource" : [
+    {
+      "URL": "root:111111@tcp(127.0.0.1:3306)/panda?charset=utf8&parseTime=True&loc=Local",
+      "IdleSize": 4,      
+      "MaxSize": 8,    
+      "MaxLifeTime":300,   
+      "SqlDebug":1
+    }
+  ]
+}

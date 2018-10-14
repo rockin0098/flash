@@ -218,6 +218,8 @@ type EncryptedMessage struct {
 
 func (m *EncryptedMessage) Encode(authKeyID int64, authKey []byte) []byte {
 
+	Log.Infof("encrypted message encoding, authid=%v", authKeyID)
+
 	objData := m.TLObject.Encode()
 	var additional_size = (32 + len(objData)) % 16
 	if additional_size != 0 {
@@ -241,8 +243,6 @@ func (m *EncryptedMessage) Encode(authKeyID int64, authKey []byte) []byte {
 	x.Int(int32(len(objData)))
 	x.Bytes(objData)
 	x.Bytes(crypto.GenerateNonce(additional_size))
-
-	// glog.Info("Encode object: ", m.Object)
 
 	encryptedData, _ := m.encrypt(authKey, x.buffer)
 	x2 := NewMTPEncodeBuffer(56 + len(objData) + additional_size)

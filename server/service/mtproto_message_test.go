@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/binary"
 	"encoding/hex"
 	"net"
 	"testing"
@@ -60,4 +61,13 @@ func TestSend(t *testing.T) {
 	Log.Infof("n = %v bytes read, rb = %v", n, hex.EncodeToString(rb[:n]))
 
 	time.Sleep(time.Duration(5) * time.Second)
+}
+
+// -1099002127
+func TestInt32(t *testing.T) {
+	x := make([]byte, 4)
+	c := int32(-1099002127)
+	binary.BigEndian.PutUint32(x, uint32(c))
+
+	Log.Infof("x = %v", hex.EncodeToString(x))
 }

@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	TL_CLASS_rpc_result    int32 = -212046591
 	TL_CLASS_message2      int32 = 1538843921
 	TL_CLASS_msg_container int32 = 1945237724
 )

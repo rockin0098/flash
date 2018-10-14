@@ -74,7 +74,7 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 
 	timenow := int32(time.Now().Unix())
 
-	helpConfig := mtproto.TL_config{
+	helpConfig := &mtproto.TL_config{
 		M_classID:                    mtproto.TL_CLASS_config,
 		M_phonecalls_enabled:         mtproto.ToBool2(mtproto.Config.M_phonecalls_enabled),
 		M_default_p2p_contacts:       mtproto.ToBool2(mtproto.Config.M_default_p2p_contacts),
@@ -138,11 +138,49 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 		helpConfig.M_dc_options = append(helpConfig.M_dc_options, dcOption)
 	}
 
-	return &helpConfig, nil
+	// pack
+	rpc_result := &mtproto.TL_rpc_result{
+		M_classID:    mtproto.TL_CLASS_rpc_result,
+		M_req_msg_id: msg.MessageID,
+		M_result:     helpConfig,
+	}
+
+	return rpc_result, nil
 }
 
 func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
 	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+
+	seqno := msg.SeqNo
+	if seqno%2 != 0 {
+		Log.Error("A container does not require an acknowledgment.")
+		return nil, nil
+	}
+
+	Log.Infof("msg.TLObject = %v", msg.TLObject.(*mtproto.TL_msg_container))
+	message2s := msg.TLObject.(*mtproto.TL_msg_container).M_message2s
+	for idx, m := range message2s {
+		Log.Infof("idx = %v, m = %T, m = %v", idx, m, m)
+
+		msg2 := *msg
+		msg2.TLObject = m
+
+		res, err := s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+		if err != nil {
+			Log.Error(err)
+			continue
+		}
+
+		ms := ModelServiceInstance()
+		ak := ms.GetAuthKeyValueByAuthID(msg.AuthKeyID)
+		if ak == nil {
+			Log.Error("AuthKey not found, authkeyid = %v", msg.AuthKeyID)
+			continue
+		}
+
+		Log.Infof("cltSess.WriteDirectly resp = %v", res)
+		cltSess.WriteDirectly(msg.AuthKeyID, ak, msg.MessageID, false, res.(mtproto.TLObject))
+	}
 
 	return nil, nil
 }

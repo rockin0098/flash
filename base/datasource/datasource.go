@@ -53,7 +53,7 @@ func DataSourceInit(configs []DataSource, models ...interface{}) {
 func (d *DataSourceManager) openDBConn(ds DataSource) *gorm.DB {
 	db, err := gorm.Open("mysql", ds.URL)
 	if err != nil {
-		Log.Error("connect to mysql failed, err = %v", err)
+		Log.Errorf("connect to mysql failed, err = %v", err)
 		return nil
 	}
 

@@ -1,7 +1,10 @@
 package mtproto
 
 import (
+	"encoding/hex"
 	"fmt"
+
+	. "github.com/rockin0098/flash/base/logger"
 )
 
 //message msg_id:long seqno:int bytes:int body:Object = Message; // parsed manually
@@ -45,7 +48,15 @@ func (t *TL_message2) Decode(b []byte) error {
 	t.M_msg_id = dc.Long()
 	t.M_seqno = dc.Int()
 	t.M_bytes = dc.Int()
-	t.M_body = dc.TLObject()
+
+	b2 := dc.Bytes(int(t.M_bytes))
+	dc2 := NewMTPDecodeBuffer(b2)
+	t.M_body = dc2.TLObject()
+	if t.M_body == nil {
+		err := fmt.Errorf("parse body failed, b2 = %v", hex.EncodeToString(b2))
+		Log.Error(err)
+		return err
+	}
 
 	return dc.err
 }
