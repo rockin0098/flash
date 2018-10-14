@@ -304,6 +304,10 @@ func convertEncodeFlagsField(params []*TLParam) string {
 	for _, pp := range p2 {
 		if strings.Contains(pp.Type, "flags") {
 			_, tp2 := parseFlagField(pp.Type)
+			if tp2 == "true" { // bool型 flag 不需要序列化
+				continue
+			}
+
 			right := getRightValue(tp2)
 			tpp := &TLParam{
 				Name: pp.Name,
