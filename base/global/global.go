@@ -42,6 +42,12 @@ func ASSERT(exp bool, info ...string) { // 接受一个字符串参数
 	}
 }
 
+func CatchPanic() {
+	if err := recover(); err != nil {
+		Log.Errorf("panic !!! err = %v ", err)
+	}
+}
+
 func UseMaxCpu() {
 	// multiple cups using
 	runtime.GOMAXPROCS(runtime.NumCPU())

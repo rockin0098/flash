@@ -3,7 +3,8 @@ package grmon
 import (
 	"sync"
 
-	. "github.com/rockin0098/flash/base/logger"
+	"github.com/rockin0098/flash/base/global"
+	// . "github.com/rockin0098/flash/base/logger"
 )
 
 type TGRMon struct {
@@ -18,12 +19,6 @@ func GetGRMon() *TGRMon {
 	return grmon
 }
 
-func (s *TGRMon) catchPanic() {
-	if err := recover(); err != nil {
-		Log.Errorf("panic !!! err = %v ", err)
-	}
-}
-
 func (s *TGRMon) addGR(name string) {
 	s.grmap.Store(name, 1)
 }
@@ -36,7 +31,7 @@ func (s *TGRMon) Go(name string, fn interface{}, args ...interface{}) {
 
 	go func() {
 
-		defer s.catchPanic()
+		defer global.CatchPanic()
 
 		s.addGR(name)
 		defer s.removeGR(name)
@@ -55,7 +50,7 @@ func (s *TGRMon) GoLoop(name string, fn interface{}, args ...interface{}) {
 
 	go func() {
 
-		defer s.catchPanic()
+		defer global.CatchPanic()
 
 		s.addGR(name)
 		defer s.removeGR(name)
