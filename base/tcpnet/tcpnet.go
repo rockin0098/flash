@@ -2,6 +2,7 @@ package tcpnet
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"sync"
 
@@ -22,6 +23,11 @@ type TcpContext struct {
 	Mutex      *sync.Mutex
 	writeChan  chan interface{}
 	closeChan  chan interface{}
+}
+
+func (c *TcpContext) ReadFull(b []byte) error {
+	_, err := io.ReadFull(c.Conn, b)
+	return err
 }
 
 func (c *TcpContext) WriteFull(b []byte) {

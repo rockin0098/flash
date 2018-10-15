@@ -11,5 +11,5 @@ type Model struct {
 type AuthKey struct {
 	Model
 	AuthID int64  `gorm:""`
-	Body   string `gorm:"size:512"`
+	Body   string `gorm:"size:1024"`
 }

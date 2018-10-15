@@ -160,6 +160,7 @@ func (m *RawMessage) Decode(b []byte) error {
 }
 
 type UnencryptedMessage struct {
+	// AuthKeyID int64 // must be 0
 	NeedAck   bool
 	MessageID int64
 	TLObject  TLObject
@@ -381,13 +382,11 @@ type AesCTR128Stream struct {
 	decrypt   *crypto.AesCTR128Encrypt
 }
 
-func NewAesCTR128Stream(reader io.Reader, writer io.Writer, writeChan chan interface{}, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
+func NewAesCTR128Stream(reader io.Reader, d *crypto.AesCTR128Encrypt, e *crypto.AesCTR128Encrypt) *AesCTR128Stream {
 	return &AesCTR128Stream{
-		reader:    reader,
-		writer:    writer,
-		writeChan: writeChan,
-		decrypt:   d,
-		encrypt:   e,
+		reader:  reader,
+		decrypt: d,
+		encrypt: e,
 	}
 }
 
@@ -401,9 +400,6 @@ func (this *AesCTR128Stream) Read(p []byte) (int, error) {
 	return n, err
 }
 
-func (this *AesCTR128Stream) Write(p []byte) {
+func (this *AesCTR128Stream) Encrypt(p []byte) {
 	this.encrypt.Encrypt(p[:])
-
-	this.writeChan <- p
-	// this.writer.Write(p)
 }

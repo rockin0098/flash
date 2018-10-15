@@ -6,8 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net"
-	"sync"
 
 	"github.com/rockin0098/flash/base/crypto"
 
@@ -50,31 +48,23 @@ const (
 	VAL2_FLAG = 0x00000000
 )
 
-type Codec func() error
+type Codec func(reader io.Reader) error
 
 type MTProto struct {
 	MTProtoMessageVersion int
 	MTProtoVersion        string
 	TLLayerVersion        string
-	readerMutex           *sync.Mutex
-	writerMutex           *sync.Mutex
-	reader                net.Conn
-	writer                io.Writer
-	respChan              chan interface{}
-	closeChan             chan interface{}
-	remoteAddr            net.Addr
-	localAddr             net.Addr
-	sessionID             string
-	cryptor               *MTProtoCryptor
-	state                 *MTProtoState
+	SessionID             string
+	Cryptor               *MTProtoCryptor
+	State                 *MTProtoState
+	Codec                 Codec // 解码后赋值
+	CodecParam            interface{}
+	Message               MTProtoMessage
 
-	// 解码后赋值
-	codec      Codec
-	codecParam interface{}
-	message    MTProtoMessage
-	e          *crypto.AesCTR128Encrypt
-	d          *crypto.AesCTR128Encrypt
-	stream     *AesCTR128Stream // 包含加解密处理
+	// communication encrypt
+	e      *crypto.AesCTR128Encrypt
+	d      *crypto.AesCTR128Encrypt
+	stream *AesCTR128Stream // 包含加解密处理
 
 	// runtime
 	salt            int64
@@ -82,65 +72,16 @@ type MTProto struct {
 	clientSessionID int64
 }
 
-func NewMTProto(reader net.Conn, writer io.Writer, remoteAddr net.Addr, localAddr net.Addr, sessid string, respChan chan interface{}, closeChan chan interface{}) *MTProto {
+func NewMTProto(sessid string) *MTProto {
 	mtp := &MTProto{
 		MTProtoVersion: MTPROTO_VERSION, // 当前
 		TLLayerVersion: TL_LAYER_VERSION,
-		readerMutex:    &sync.Mutex{},
-		writerMutex:    &sync.Mutex{},
-		reader:         reader,
-		writer:         writer,
-		respChan:       respChan,
-		closeChan:      closeChan,
-		remoteAddr:     remoteAddr,
-		localAddr:      localAddr,
-		sessionID:      sessid,
-		cryptor:        NewMTProtoCryptor(),
-		state:          NewMTProtoState(),
-	}
-
-	err := mtp.selectCodec()
-	if err != nil {
-		Log.Error(err)
-		return nil
+		SessionID:      sessid,
+		Cryptor:        NewMTProtoCryptor(),
+		State:          NewMTProtoState(),
 	}
 
 	return mtp
-}
-
-func (s *MTProto) RemoteAddr() net.Addr {
-	return s.remoteAddr
-}
-
-func (s *MTProto) LocalAddr() net.Addr {
-	return s.localAddr
-}
-
-func (s *MTProto) Message() MTProtoMessage {
-	return s.message
-}
-
-func (s *MTProto) SessionID() string {
-	return s.sessionID
-}
-
-func (s *MTProto) Cryptor() *MTProtoCryptor {
-	// 暂时不上锁
-	return s.cryptor
-}
-
-func (s *MTProto) State() *MTProtoState {
-	// 暂时不上锁
-	return s.state
-}
-
-func (s *MTProto) SetState(state *MTProtoState) {
-	// 暂时不上锁
-	s.state = state
-}
-
-func (s *MTProto) Codec() Codec {
-	return s.codec
 }
 
 func (s *MTProto) GenerateMessageSeqNo(increment bool) int32 {
@@ -182,13 +123,12 @@ func (s *MTProto) EncodeEncryptedMessage(authKeyID int64, authKey []byte, messag
 		break;
 	}
 */
-func (s *MTProto) selectCodec() error { // mtproto proxy
+func (s *MTProto) SelectCodec(reader io.Reader) error { //
 
 	Log.Debug("entering...")
 
-	br := s.reader.(*BufferedReader)
 	var b_0_1 = make([]byte, 1)
-	_, err := io.ReadFull(br, b_0_1)
+	_, err := io.ReadFull(reader, b_0_1)
 	if err != nil {
 		Log.Errorf("read b_0_1 error: %v", err)
 		return err
@@ -198,15 +138,15 @@ func (s *MTProto) selectCodec() error { // mtproto proxy
 	if b_0_1[0] == MTPROTO_ABRIDGED_FLAG {
 		Log.Debug("mtproto abridged version.")
 		s.MTProtoMessageVersion = MTPROTO_ABRIDGED_VERSION
-		s.codec = s.ReadMTProtoAbriaged
-		s.codecParam = b_0_1
-		return s.codec()
+		s.Codec = s.DecodeMTProtoAbriaged
+		s.CodecParam = b_0_1
+		return s.Codec(reader)
 	}
 
 	// not abridged version, we'll lookup codec!
-	// b_1_3, err := br.Peek(4)
+	// b_1_3, err := reader.Peek(4)
 	var b_1_3 = make([]byte, 3)
-	_, err = io.ReadFull(br, b_1_3)
+	_, err = io.ReadFull(reader, b_1_3)
 	if err != nil {
 		Log.Errorf("read b_1_3 error: %v", err)
 		return err
@@ -222,24 +162,24 @@ func (s *MTProto) selectCodec() error { // mtproto proxy
 		// http 协议
 		Log.Info("mtproto http.")
 		s.MTProtoMessageVersion = MTPROTO_HTTP_PROXY_VERSION
-		s.codec = s.ReadMTProtoHttpProxy
-		s.codecParam = leading
-		return s.codec()
+		s.Codec = s.DecodeMTProtoHttpProxy
+		s.CodecParam = leading
+		return s.Codec(reader)
 	}
 
 	// an intermediate version
 	if val == MTPROTO_INTERMEDIATE_FLAG {
 		Log.Info("mtproto intermediate version.")
 		s.MTProtoMessageVersion = MTPROTO_INTERMEDIATE_VERSION
-		s.codec = s.ReadMTProtoIntermidiate
-		s.codecParam = leading
-		return s.codec()
+		s.Codec = s.DecodeMTProtoIntermidiate
+		s.CodecParam = leading
+		return s.Codec(reader)
 	}
 
 	// recv 4~64 bytes
 	var b_4_60 = make([]byte, 60)
-	_, err = io.ReadFull(br, b_4_60)
-	// b_4_60, err := br.Peek(64)
+	_, err = io.ReadFull(reader, b_4_60)
+	// b_4_60, err := reader.Peek(64)
 	if err != nil {
 		Log.Errorf("read b_4_60 error: %v", err)
 		return err
@@ -251,9 +191,9 @@ func (s *MTProto) selectCodec() error { // mtproto proxy
 	if val2 == VAL2_FLAG {
 		Log.Info("mtproto full version.")
 		s.MTProtoMessageVersion = MTPROTO_FULL_VERSION
-		s.codec = s.ReadMTProtoFull
-		s.codecParam = leading
-		return s.codec()
+		s.Codec = s.DecodeMTProtoFull
+		s.CodecParam = leading
+		return s.Codec(reader)
 	}
 
 	// app version , making crypto key
@@ -283,18 +223,18 @@ func (s *MTProto) selectCodec() error { // mtproto proxy
 	d.Encrypt(b_4_60)
 
 	if b_4_60[52] != 0xef && b_4_60[53] != 0xef && b_4_60[54] != 0xef && b_4_60[55] != 0xef {
-		Log.Errorf("first 56~59 byte != 0xef, remoteaddr = %v, sessid = %v", s.remoteAddr, s.SessionID())
+		Log.Errorf("first 56~59 byte != 0xef, sessid = %v", s.SessionID)
 		return errors.New("mtproto buf[56:60]'s byte != 0xef!!")
 	}
 
 	// app version
 	s.MTProtoMessageVersion = MTPROTO_APP_VERSION
-	s.codec = s.ReadMTProtoApp
-	s.codecParam = leading
-	return s.codec()
+	s.Codec = s.DecodeMTProtoApp
+	s.CodecParam = leading
+	return s.Codec(reader)
 }
 
-func (s *MTProto) ReadMTProtoAbriaged() error {
+func (s *MTProto) DecodeMTProtoAbriaged(reader io.Reader) error {
 	Log.Debug("entering...")
 
 	return errors.New("not implemented yet!")
@@ -363,8 +303,10 @@ func (s *MTProto) ReadMTProtoAbriaged() error {
 	return nil
 }
 
-func (s *MTProto) ReadMTProtoIntermidiate() error {
+func (s *MTProto) DecodeMTProtoIntermidiate(reader io.Reader) error {
 	Log.Debug("entering...")
+
+	return errors.New("not implemented yet!")
 
 	// var size int
 	// var n int
@@ -432,8 +374,10 @@ func (s *MTProto) ReadMTProtoIntermidiate() error {
 	return nil
 }
 
-func (s *MTProto) ReadMTProtoFull() error {
+func (s *MTProto) DecodeMTProtoFull(reader io.Reader) error {
 	Log.Debug("entering...")
+
+	return errors.New("not implemented yet!")
 
 	// var size int
 	// var n int
@@ -485,9 +429,10 @@ func (s *MTProto) ReadMTProtoFull() error {
 	return nil
 }
 
-func (s *MTProto) ReadMTProtoHttpProxy() error {
+func (s *MTProto) DecodeMTProtoHttpProxy(reader io.Reader) error {
 	Log.Debug("entering...")
 
+	return errors.New("not implemented yet!")
 	// req, err := http.ReadRequest(c.conn.(*net2.BufferedConn).BufioReader())
 	// if err != nil {
 	// 	glog.Error(err)
@@ -520,14 +465,14 @@ func (s *MTProto) ReadMTProtoHttpProxy() error {
 	return nil
 }
 
-func (s *MTProto) ReadMTProtoApp() error {
+func (s *MTProto) DecodeMTProtoApp(reader io.Reader) error {
 	Log.Debug("entering...")
 
 	var size int
 	var n int
 	var err error
 
-	stream := NewAesCTR128Stream(s.reader, s.writer, s.respChan, s.d, s.e)
+	stream := NewAesCTR128Stream(reader, s.d, s.e)
 	s.stream = stream // 保存 stream 返回消息时加密使用
 	b := make([]byte, 1)
 	n, err = io.ReadFull(stream, b)
@@ -585,35 +530,35 @@ func (s *MTProto) ReadMTProtoApp() error {
 	message := NewRawMessage(TRANSPORT_TCP, authKeyID, 0)
 	message.Decode(buf)
 
-	Log.Debugf("sessid = %v, message.Payload = %v", s.SessionID(), hex.EncodeToString(message.Payload))
-	s.message = message
+	Log.Debugf("sessid = %v, message.Payload = %v", s.SessionID, hex.EncodeToString(message.Payload))
+	s.Message = message
 
 	return nil
 }
 
-func (s *MTProto) Write(msg interface{}) error { // mtproto proxy
+func (s *MTProto) Encode(b []byte) error { // mtproto proxy
 
 	switch s.MTProtoMessageVersion {
 	case MTPROTO_ABRIDGED_VERSION:
-		return s.WriteMTProtoAbriaged(msg)
+		return s.EncodeMTProtoAbriaged(b)
 	case MTPROTO_INTERMEDIATE_VERSION:
-		return s.WriteMTProtoIntermidiate(msg)
+		return s.EncodeMTProtoIntermidiate(b)
 	case MTPROTO_FULL_VERSION:
-		return s.WriteMTProtoFull(msg)
+		return s.EncodeMTProtoFull(b)
 	case MTPROTO_HTTP_PROXY_VERSION:
-		return s.WriteMTProtoHttpProxy(msg)
+		return s.EncodeMTProtoHttpProxy(b)
 	case MTPROTO_APP_VERSION:
-		return s.WriteMTProtoApp(msg)
+		return s.EncodeMTProtoApp(b)
 	default:
 		err := fmt.Errorf("unknown mtproto message version = %v", s.MTProtoMessageVersion)
 		Log.Error(err)
 		return err
 	}
-
-	return nil
 }
 
-func (s *MTProto) WriteMTProtoAbriaged(msg interface{}) error {
+func (s *MTProto) EncodeMTProtoAbriaged(b []byte) error {
+
+	return fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -644,7 +589,9 @@ func (s *MTProto) WriteMTProtoAbriaged(msg interface{}) error {
 	return nil
 }
 
-func (s *MTProto) WriteMTProtoIntermidiate(msg interface{}) error {
+func (s *MTProto) EncodeMTProtoIntermidiate(b []byte) error {
+
+	return fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -677,7 +624,9 @@ func (s *MTProto) WriteMTProtoIntermidiate(msg interface{}) error {
 	return nil
 }
 
-func (s *MTProto) WriteMTProtoFull(msg interface{}) error {
+func (s *MTProto) EncodeMTProtoFull(b []byte) error {
+
+	return fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -715,7 +664,9 @@ func (s *MTProto) WriteMTProtoFull(msg interface{}) error {
 	return nil
 }
 
-func (s *MTProto) WriteMTProtoHttpProxy(msg interface{}) error {
+func (s *MTProto) EncodeMTProtoHttpProxy(b []byte) error {
+
+	return fmt.Errorf("have not implemented yet")
 
 	// // SendToHttpReply(msg, w)
 	// message, ok := msg.(*MTPRawMessage)
@@ -759,17 +710,8 @@ func (s *MTProto) WriteMTProtoHttpProxy(msg interface{}) error {
 	return nil
 }
 
-func (s *MTProto) WriteMTProtoApp(msg interface{}) error {
+func (s *MTProto) EncodeMTProtoApp(b []byte) error {
 	Log.Debug("entering...")
-
-	message, ok := msg.(*RawMessage)
-	if !ok {
-		err := fmt.Errorf("msg type error, only MTP RawMessage, msg: {%v}", msg)
-		Log.Error(err)
-		return err
-	}
-
-	b := message.Encode()
 
 	sb := make([]byte, 4)
 	// minus padding
@@ -782,13 +724,9 @@ func (s *MTProto) WriteMTProtoApp(msg interface{}) error {
 	}
 
 	b = append(sb, b...)
-	s.stream.Write(b)
+	s.stream.Encrypt(b)
 
 	Log.Debugf("mtproto app write = %v", hex.EncodeToString(b))
 
 	return nil
-}
-
-func (s *MTProto) Close() {
-	s.closeChan <- 1
 }

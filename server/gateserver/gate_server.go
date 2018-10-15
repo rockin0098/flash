@@ -10,6 +10,7 @@ import (
 	"github.com/rockin0098/flash/base/tcpnet"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
+	"github.com/rockin0098/flash/server/service"
 
 	. "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
@@ -111,20 +112,55 @@ func newServerStart(addr string) {
 
 func OnAccept(ctx *tcpnet.TcpContext) error {
 
+	ss := service.SessionServiceInstance()
+	sess := ss.CreateSession(ctx.ConnID)
+	ctx.Set(service.SESSION, sess)
+	sess.TcpContext = ctx
+	sess.MTProto = mtproto.NewMTProto(sess.SessionID)
+
 	return nil
 }
 
 func OnData(ctx *tcpnet.TcpContext) (interface{}, error) {
 
-	return nil, nil
+	conn := ctx.Conn
+	sess := ctx.MustGet(service.SESSION).(*service.Session)
+	mtp := sess.MTProto
+	var err error
+	if ctx.PacketNum == 0 { // 第一次要选择codec
+		err = mtp.SelectCodec(conn)
+	} else {
+		ASSERT(mtp.Codec != nil)
+		err = mtp.Codec(conn)
+	}
+
+	if err != nil {
+		Log.Error(err)
+		return nil, err
+	}
+
+	return mtp.Message, nil
 }
 
 func OnWork(ctx *tcpnet.TcpContext, m interface{}) error {
+
+	sess := ctx.MustGet(service.SESSION).(*service.Session)
+	msg := m.(*mtproto.RawMessage)
+
+	tls := service.TLServiceInstance()
+	err := tls.TLMessageProcess(sess, msg)
+	if err != nil {
+		Log.Error(err)
+		return err
+	}
 
 	return nil
 }
 
 func OnClose(ctx *tcpnet.TcpContext) error {
+
+	sess := ctx.MustGet(service.SESSION).(*service.Session)
+	Log.Infof("connid = %v, sessid = %v will be closed", ctx.ConnID, sess.SessionID)
 
 	return nil
 }
