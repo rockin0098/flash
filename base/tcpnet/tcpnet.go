@@ -28,6 +28,10 @@ func (c *TcpContext) WriteFull(b []byte) {
 	c.writeChan <- b
 }
 
+func (c *TcpContext) Close() {
+	c.closeChan <- 1
+}
+
 func (c *TcpContext) Set(k interface{}, v interface{}) {
 	c.Params.Store(k, v)
 }
@@ -189,7 +193,7 @@ func (s *TcpServer) ConnectionHandler(ctx *TcpContext) {
 		}
 	})
 
-	grm.GoLoop("tcp_write", func() {
+	grm.Go("tcp_write", func() {
 		for {
 			var data interface{}
 			var ok bool
