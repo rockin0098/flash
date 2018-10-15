@@ -7,6 +7,7 @@ import (
 
 	"github.com/rockin0098/flash/base/datasource"
 	"github.com/rockin0098/flash/base/grmon"
+	"github.com/rockin0098/flash/base/tcpnet"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
 
@@ -41,9 +42,9 @@ func GateEntry() {
 	Log.Info("server init...")
 	ServerInit()
 
-	tcpserver := NewTcpServer(":5222")
-	grm := grmon.GetGRMon()
-	grm.Go("TcpServer", tcpserver.Run)
+	// tcpserver := NewTcpServer(":5222")
+	// grm := grmon.GetGRMon()
+	// grm.Go("TcpServer", tcpserver.Run)
 
 	// tcpserver2 := NewTcpServer(":8800")
 	// grm.Go("TcpServer2", tcpserver2.Run)
@@ -88,4 +89,42 @@ func ServerInit() {
 		serverConfig.DataSource,
 		new(model.AuthKey),
 	)
+}
+
+func ServerStart() {
+	newServerStart(":5222")
+}
+
+func newServerStart(addr string) {
+	server := tcpnet.NewTcpServer(addr)
+	server.MaxConnection = 100
+	server.MaxWorker = 100
+	server.MaxWriteChanLen = 8192
+	server.OnAccept = OnAccept
+	server.OnData = OnData
+	server.OnWork = OnWork
+	server.OnClose = OnClose
+
+	grm := grmon.GetGRMon()
+	grm.Go("TcpServer_"+addr, server.Run)
+}
+
+func OnAccept(ctx *tcpnet.TcpContext) error {
+
+	return nil
+}
+
+func OnData(ctx *tcpnet.TcpContext) (interface{}, error) {
+
+	return nil, nil
+}
+
+func OnWork(ctx *tcpnet.TcpContext, m interface{}) error {
+
+	return nil
+}
+
+func OnClose(ctx *tcpnet.TcpContext) error {
+
+	return nil
 }
