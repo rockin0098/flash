@@ -142,7 +142,7 @@ func (s *TLService) TL_help_getConfig_Process(sess *Session, msg *mtproto.Encryp
 		helpConfig.M_dc_options = append(helpConfig.M_dc_options, dcOption)
 	}
 
-	Log.Info("helpConfig = %v", FormatStruct(helpConfig))
+	Log.Infof("helpConfig = %v", FormatStruct(helpConfig))
 
 	err := sess.WriteFull(msg.AuthKeyID, 0, false, helpConfig)
 
