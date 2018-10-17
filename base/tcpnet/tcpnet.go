@@ -1,7 +1,6 @@
 package tcpnet
 
 import (
-	"encoding/hex"
 	"fmt"
 	"io"
 	"net"
@@ -228,7 +227,7 @@ func (s *TcpServer) ConnectionHandler(ctx *TcpContext) {
 			left := nlen
 			for left > 0 {
 				sentdata := databytes[nlen-left:]
-				Log.Debugf("length = %v, sentdata = %v", len(databytes), hex.EncodeToString(sentdata))
+				// Log.Debugf("length = %v, sentdata = %v", len(databytes), hex.EncodeToString(sentdata))
 				n, err := conn.Write(sentdata)
 				if err != nil {
 					Log.Error(err)

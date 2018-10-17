@@ -5,6 +5,7 @@ import (
 	"net"
 	"sync"
 
+	. "github.com/rockin0098/flash/base/global"
 	"github.com/rockin0098/flash/base/guid"
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/base/tcpnet"
@@ -85,7 +86,7 @@ type Session struct {
 	MTProto         *mtproto.MTProto
 
 	// runtime variables
-	AuthKayID      int64
+	AuthKeyID      int64
 	Salt           int64
 	FirstMessageID int64
 	NextSeqNo      uint32
@@ -96,7 +97,18 @@ func (s *Session) GetConnByID(connid int64) net.Conn {
 	return gm.Load(connid).(net.Conn)
 }
 
-func (s *Session) WriteFull(raw *mtproto.RawMessage) error {
+func (s *Session) WriteFull(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) error {
+
+	Log.Debugf("response - sessid = %v, client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
+		s.SessionID, s.ClientSessionID, authKeyID, tl, tl)
+
+	b := s.EncodeMessage(authKeyID, messageID, confirm, tl)
+	return s.WriteFull2(&mtproto.RawMessage{Payload: b})
+}
+
+func (s *Session) WriteFull2(raw *mtproto.RawMessage) error {
+
+	defer CatchPanicWarning()
 
 	b := raw.Payload
 	if b == nil || len(b) == 0 {

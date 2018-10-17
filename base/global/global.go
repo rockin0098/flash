@@ -15,7 +15,6 @@ import (
 	"time"
 
 	jsoniter "github.com/json-iterator/go"
-
 	. "github.com/rockin0098/flash/base/logger"
 )
 
@@ -45,6 +44,12 @@ func ASSERT(exp bool, info ...string) { // 接受一个字符串参数
 func CatchPanic() {
 	if err := recover(); err != nil {
 		Log.Errorf("panic !!! err = %v ", err)
+	}
+}
+
+func CatchPanicWarning() {
+	if err := recover(); err != nil {
+		Log.Warnf("panic !!! err = %v ", err)
 	}
 }
 

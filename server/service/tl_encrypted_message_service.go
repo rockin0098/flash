@@ -144,9 +144,7 @@ func (s *TLService) TL_help_getConfig_Process(sess *Session, msg *mtproto.Encryp
 
 	Log.Info("helpConfig = %v", FormatStruct(helpConfig))
 
-	err := sess.WriteFull(&mtproto.RawMessage{
-		Payload: sess.EncodeMessage(msg.AuthKeyID, 0, false, helpConfig),
-	})
+	err := sess.WriteFull(msg.AuthKeyID, 0, false, helpConfig)
 
 	return nil, err
 
@@ -190,9 +188,7 @@ func (s *TLService) TL_msg_container_Process(sess *Session, msg *mtproto.Encrypt
 		}
 
 		Log.Infof("sess.WriteDirectly resp = %v", res)
-		err = sess.WriteFull(&mtproto.RawMessage{
-			Payload: sess.EncodeMessage(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject)),
-		})
+		err = sess.WriteFull(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
 		if err != nil {
 			Log.Error(err)
 			continue
@@ -226,13 +222,23 @@ func (s *TLService) TL_message2_Process(sess *Session, msg *mtproto.EncryptedMes
 	}
 
 	Log.Infof("sess.WriteFull resp = %v", res)
-	err = sess.WriteFull(&mtproto.RawMessage{
-		Payload: sess.EncodeMessage(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject)),
-	})
+	err = sess.WriteFull(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
 	return nil, err
 }
 
 func (s *TLService) TL_auth_logOut_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
+
+	// tlobj := msg.TLObject
+	// tl := tlobj.(*mtproto.TL_ping)
+
+	tltrue := &mtproto.TL_boolTrue{}
+
+	return tltrue, nil
+}
+
+//TL_langpack_getLangPack
+func (s *TLService) TL_langpack_getLangPack_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	// tlobj := msg.TLObject
