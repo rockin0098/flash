@@ -1,4 +1,4 @@
-package old
+package service
 
 import (
 	"time"
@@ -6,11 +6,14 @@ import (
 	. "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/session"
 )
 
-func (s *LProtoService) TL_ping_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+const (
+	EXPIRE_TIMEOUT = 3600
+)
+
+func (s *TLService) TL_ping_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_ping)
@@ -23,8 +26,8 @@ func (s *LProtoService) TL_ping_Process(cltSess *session.ClientSession, msg *mtp
 	return pong, nil
 }
 
-func (s *LProtoService) TL_invokeWithLayer_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_invokeWithLayer_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_invokeWithLayer)
@@ -51,11 +54,11 @@ func (s *LProtoService) TL_invokeWithLayer_Process(cltSess *session.ClientSessio
 	msg2 := *msg
 	msg2.TLObject = initConn
 
-	return s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+	return s.TLEncryptedMessageProcess(sess, &msg2)
 }
 
-func (s *LProtoService) TL_initConnection_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_initConnection_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_initConnection)
@@ -67,11 +70,11 @@ func (s *LProtoService) TL_initConnection_Process(cltSess *session.ClientSession
 	msg2 := *msg
 	msg2.TLObject = tl.Get_query()
 
-	return s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+	return s.TLEncryptedMessageProcess(sess, &msg2)
 }
 
-func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_help_getConfig_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	timenow := int32(time.Now().Unix())
 
@@ -141,9 +144,11 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 
 	Log.Info("helpConfig = %v", FormatStruct(helpConfig))
 
-	cltSess.WriteDirectly(msg.AuthKeyID, 0, false, helpConfig)
+	err := sess.WriteFull(&mtproto.RawMessage{
+		Payload: sess.EncodeMessage(msg.AuthKeyID, 0, false, helpConfig),
+	})
 
-	return nil, nil
+	return nil, err
 
 	// return helpConfig, nil
 
@@ -157,8 +162,8 @@ func (s *LProtoService) TL_help_getConfig_Process(cltSess *session.ClientSession
 	// return rpc_result, nil
 }
 
-func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_msg_container_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	seqno := msg.SeqNo
 	if seqno%2 != 0 {
@@ -174,7 +179,7 @@ func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession,
 		msg2 := *msg
 		msg2.TLObject = m
 
-		res, err := s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+		res, err := s.TLEncryptedMessageProcess(sess, &msg2)
 		if err != nil {
 			Log.Error(err)
 			continue
@@ -184,16 +189,22 @@ func (s *LProtoService) TL_msg_container_Process(cltSess *session.ClientSession,
 			continue
 		}
 
-		Log.Infof("cltSess.WriteDirectly resp = %v", res)
-		cltSess.WriteDirectly(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
+		Log.Infof("sess.WriteDirectly resp = %v", res)
+		err = sess.WriteFull(&mtproto.RawMessage{
+			Payload: sess.EncodeMessage(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject)),
+		})
+		if err != nil {
+			Log.Error(err)
+			continue
+		}
 	}
 
 	return nil, nil
 }
 
 //message2 msg_id:long seqno:int bytes:int body:Object = Message; // parsed manually
-func (s *LProtoService) TL_message2_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_message2_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	Log.Infof("msg.TLObject = %v", msg.TLObject.(*mtproto.TL_message2))
 	tlmsg2 := msg.TLObject.(*mtproto.TL_message2)
@@ -204,7 +215,7 @@ func (s *LProtoService) TL_message2_Process(cltSess *session.ClientSession, msg 
 	msg2 := *msg
 	msg2.TLObject = tlmsg2.M_body
 
-	res, err := s.MTProtoEncryptedMessageProcess(cltSess, &msg2)
+	res, err := s.TLEncryptedMessageProcess(sess, &msg2)
 	if err != nil {
 		Log.Error(err)
 		return nil, nil
@@ -214,14 +225,15 @@ func (s *LProtoService) TL_message2_Process(cltSess *session.ClientSession, msg 
 		return nil, nil
 	}
 
-	Log.Infof("cltSess.WriteDirectly resp = %v", res)
-	cltSess.WriteDirectly(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject))
-
-	return nil, nil
+	Log.Infof("sess.WriteFull resp = %v", res)
+	err = sess.WriteFull(&mtproto.RawMessage{
+		Payload: sess.EncodeMessage(msg.AuthKeyID, msg.MessageID, false, res.(mtproto.TLObject)),
+	})
+	return nil, err
 }
 
-func (s *LProtoService) TL_auth_logOut_Process(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
-	Log.Infof("entering... client sessid = %v", cltSess.SessionID())
+func (s *TLService) TL_auth_logOut_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
 	// tlobj := msg.TLObject
 	// tl := tlobj.(*mtproto.TL_ping)

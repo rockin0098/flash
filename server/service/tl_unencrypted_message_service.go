@@ -1,4 +1,4 @@
-package old
+package service
 
 import (
 	"bytes"
@@ -11,15 +11,13 @@ import (
 	"time"
 
 	"github.com/rockin0098/flash/base/crypto"
-	// . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
-	"github.com/rockin0098/flash/server/session"
 )
 
-func (s *LProtoService) TL_req_pq_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
-	Log.Infof("entering... sessid = %v", sess.SessionID())
+func (s *TLService) TL_req_pq_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_req_pq)
@@ -31,13 +29,9 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, msg *mtproto.Un
 
 	Log.Infof("nonce = %v", hex.EncodeToString(nonce))
 
-	mtp := sess.MTProto()
-	mtpcryptor := mtp.Cryptor()
-	state := mtp.State()
-
-	// // for debugging
-	// tmpnonce, _ := hex.DecodeString("2d91ae9c85bbbd559fc7959341106a7d")
-	// // for debugging ===> end
+	mtp := sess.MTProto
+	mtpcryptor := mtp.Cryptor
+	state := mtp.State
 
 	resPQ := &mtproto.TL_resPQ{
 		M_nonce:                          nonce,
@@ -46,31 +40,22 @@ func (s *LProtoService) TL_req_pq_Process(sess *session.Session, msg *mtproto.Un
 		M_server_public_key_fingerprints: []int64{int64(mtpcryptor.Fingerprint)},
 	}
 
-	Log.Debugf("before sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
-
 	// sess 缓存 nonce
 	state.Nonce = resPQ.Get_nonce()
 	state.ServerNonce = resPQ.Get_server_nonce()
 
-	sess2 := session.GetSession(sess.SessionID())
-	mtp2 := sess2.MTProto()
-	state2 := mtp2.State()
-	Log.Debugf("after sessid = %v, mtp = %p, state = %+v", sess2.SessionID(), mtp2, state2)
-
 	return resPQ, nil
 }
 
-func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
-	Log.Infof("entering... sessid = %v", sess.SessionID())
+func (s *TLService) TL_req_DH_params_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_req_DH_params)
 
-	mtp := sess.MTProto()
-	state := mtp.State()
-	cryptor := mtp.Cryptor()
-
-	Log.Debugf("before2 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+	mtp := sess.MTProto
+	state := mtp.State
+	cryptor := mtp.Cryptor
 
 	if !bytes.Equal(tl.Get_nonce(), state.Nonce) {
 		Log.Warnf("nonce not match, tl.nonce = %v, state.nonce = %v",
@@ -140,8 +125,6 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, msg *mtp
 	state.A = crypto.GenerateNonce(256)
 	state.P = cryptor.DH2048_P
 
-	Log.Debugf("after2 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
-
 	bigIntA := new(big.Int).SetBytes(state.A)
 
 	// 服务端计算GA = g^a mod p
@@ -194,17 +177,15 @@ func (s *LProtoService) TL_req_DH_params_Process(sess *session.Session, msg *mtp
 	return server_DHParamsOk, nil
 }
 
-func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
-	Log.Infof("entering... sessid = %v", sess.SessionID())
+func (s *TLService) TL_set_client_DH_params_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
 	tl := tlobj.(*mtproto.TL_set_client_DH_params)
 
-	mtp := sess.MTProto()
-	state := mtp.State()
-	cryptor := mtp.Cryptor()
-
-	Log.Debugf("before3 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
+	mtp := sess.MTProto
+	state := mtp.State
+	cryptor := mtp.Cryptor
 
 	if !bytes.Equal(tl.Get_nonce(), state.Nonce) {
 		Log.Warnf("nonce not match, tl.nonce = %v, state.nonce = %v",
@@ -283,8 +264,6 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, m
 	state.AuthKeyID = authKeyID
 	state.AuthKey = authKey
 
-	Log.Debugf("after3 sessid = %v, mtp = %p, state = %+v", sess.SessionID(), mtp, state)
-
 	m := &model.AuthKey{
 		AuthID: authKeyID,
 		Body:   hex.EncodeToString(authKey), //base64.RawStdEncoding.EncodeToString(authKey),
@@ -293,7 +272,7 @@ func (s *LProtoService) TL_set_client_DH_params_Process(sess *session.Session, m
 	mm := model.GetModelManager()
 	err = mm.ModelAdd(m)
 	if err != nil {
-		Log.Error("save authkey failed, sessid=%v, err=%v", sess.SessionID(), err)
+		Log.Error("save authkey failed, sessid=%v, err=%v", sess.SessionID, err)
 		return nil, err
 	}
 

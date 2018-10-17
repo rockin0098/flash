@@ -6,14 +6,13 @@ import (
 	"time"
 
 	"github.com/rockin0098/flash/base/datasource"
+	. "github.com/rockin0098/flash/base/global"
 	"github.com/rockin0098/flash/base/grmon"
+	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/base/tcpnet"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
 	"github.com/rockin0098/flash/server/service"
-
-	. "github.com/rockin0098/flash/base/global"
-	. "github.com/rockin0098/flash/base/logger"
 )
 
 const (
@@ -43,15 +42,8 @@ func GateEntry() {
 	Log.Info("server init...")
 	ServerInit()
 
-	// tcpserver := NewTcpServer(":5222")
-	// grm := grmon.GetGRMon()
-	// grm.Go("TcpServer", tcpserver.Run)
-
-	// tcpserver2 := NewTcpServer(":8800")
-	// grm.Go("TcpServer2", tcpserver2.Run)
-
-	// tcpserver3 := NewTcpServer(":12345")
-	// grm.Go("TcpServer3", tcpserver3.Run)
+	Log.Info("server starting...")
+	ServerStart()
 
 	Log.Infof("keep main func here ... ...")
 	for {
@@ -107,7 +99,7 @@ func newServerStart(addr string) {
 	server.OnClose = OnClose
 
 	grm := grmon.GetGRMon()
-	grm.Go("TcpServer_"+addr, server.Run)
+	grm.Go("TcpServer_"+addr, func() { server.Run() })
 }
 
 func OnAccept(ctx *tcpnet.TcpContext) error {
@@ -127,6 +119,14 @@ func OnData(ctx *tcpnet.TcpContext) (interface{}, error) {
 	sess := ctx.MustGet(service.SESSION).(*service.Session)
 	mtp := sess.MTProto
 	var err error
+
+	first := make([]byte, 0)
+	n, err := conn.Read(first)
+	if err != nil {
+		Log.Warnf("read fist failed, n = %v, err = %v", n, err)
+		return nil, err
+	}
+
 	if ctx.PacketNum == 0 { // 第一次要选择codec
 		err = mtp.SelectCodec(conn)
 	} else {
@@ -161,6 +161,9 @@ func OnClose(ctx *tcpnet.TcpContext) error {
 
 	sess := ctx.MustGet(service.SESSION).(*service.Session)
 	Log.Infof("connid = %v, sessid = %v will be closed", ctx.ConnID, sess.SessionID)
+
+	ss := service.SessionServiceInstance()
+	ss.RemoveSession(sess.SessionID)
 
 	return nil
 }

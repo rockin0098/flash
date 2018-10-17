@@ -5,12 +5,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"io"
-
-	"github.com/rockin0098/flash/base/crypto"
-
-	// . "github.com/rockin0098/flash/base/global"
+	"github.com/rockin0098/flash/base/crypto" // . "github.com/rockin0098/flash/base/global"
 	. "github.com/rockin0098/flash/base/logger"
+	"io"
 )
 
 const (
@@ -67,9 +64,9 @@ type MTProto struct {
 	stream *AesCTR128Stream // 包含加解密处理
 
 	// runtime
-	salt            int64
-	nextSeqNo       uint32
-	clientSessionID int64
+	// salt            int64
+	// nextSeqNo       uint32
+	// clientSessionID int64
 }
 
 func NewMTProto(sessid string) *MTProto {
@@ -84,26 +81,26 @@ func NewMTProto(sessid string) *MTProto {
 	return mtp
 }
 
-func (s *MTProto) GenerateMessageSeqNo(increment bool) int32 {
-	value := s.nextSeqNo
-	if increment {
-		s.nextSeqNo++
-		return int32(value*2 + 1)
-	} else {
-		return int32(value * 2)
-	}
-}
+// func (s *MTProto) GenerateMessageSeqNo(increment bool) int32 {
+// 	value := s.nextSeqNo
+// 	if increment {
+// 		s.nextSeqNo++
+// 		return int32(value*2 + 1)
+// 	} else {
+// 		return int32(value * 2)
+// 	}
+// }
 
-func (s *MTProto) EncodeEncryptedMessage(authKeyID int64, authKey []byte, messageID int64, confirm bool, tl TLObject) []byte {
-	message := &EncryptedMessage{
-		Salt:            s.salt,
-		SeqNo:           s.GenerateMessageSeqNo(confirm),
-		MessageID:       messageID,
-		ClientSessionID: s.clientSessionID,
-		TLObject:        tl,
-	}
-	return message.Encode(authKeyID, authKey)
-}
+// func (s *MTProto) EncodeEncryptedMessage(authKeyID int64, authKey []byte, messageID int64, confirm bool, tl TLObject) []byte {
+// 	message := &EncryptedMessage{
+// 		Salt:            s.salt,
+// 		SeqNo:           s.GenerateMessageSeqNo(confirm),
+// 		MessageID:       messageID,
+// 		ClientSessionID: s.clientSessionID,
+// 		TLObject:        tl,
+// 	}
+// 	return message.Encode(authKeyID, authKey)
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -536,29 +533,29 @@ func (s *MTProto) DecodeMTProtoApp(reader io.Reader) error {
 	return nil
 }
 
-func (s *MTProto) Encode(b []byte) error { // mtproto proxy
+func (s *MTProto) Encode(raw *RawMessage) ([]byte, error) { // mtproto proxy
 
 	switch s.MTProtoMessageVersion {
 	case MTPROTO_ABRIDGED_VERSION:
-		return s.EncodeMTProtoAbriaged(b)
+		return s.EncodeMTProtoAbriaged(raw)
 	case MTPROTO_INTERMEDIATE_VERSION:
-		return s.EncodeMTProtoIntermidiate(b)
+		return s.EncodeMTProtoIntermidiate(raw)
 	case MTPROTO_FULL_VERSION:
-		return s.EncodeMTProtoFull(b)
+		return s.EncodeMTProtoFull(raw)
 	case MTPROTO_HTTP_PROXY_VERSION:
-		return s.EncodeMTProtoHttpProxy(b)
+		return s.EncodeMTProtoHttpProxy(raw)
 	case MTPROTO_APP_VERSION:
-		return s.EncodeMTProtoApp(b)
+		return s.EncodeMTProtoApp(raw)
 	default:
 		err := fmt.Errorf("unknown mtproto message version = %v", s.MTProtoMessageVersion)
 		Log.Error(err)
-		return err
+		return nil, err
 	}
 }
 
-func (s *MTProto) EncodeMTProtoAbriaged(b []byte) error {
+func (s *MTProto) EncodeMTProtoAbriaged(raw *RawMessage) ([]byte, error) {
 
-	return fmt.Errorf("have not implemented yet")
+	return nil, fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -586,12 +583,12 @@ func (s *MTProto) EncodeMTProtoAbriaged(b []byte) error {
 	// 	glog.Errorf("Send msg error: %s", err)
 	// }
 
-	return nil
+	return nil, nil
 }
 
-func (s *MTProto) EncodeMTProtoIntermidiate(b []byte) error {
+func (s *MTProto) EncodeMTProtoIntermidiate(raw *RawMessage) ([]byte, error) {
 
-	return fmt.Errorf("have not implemented yet")
+	return nil, fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -621,12 +618,12 @@ func (s *MTProto) EncodeMTProtoIntermidiate(b []byte) error {
 
 	// return err
 
-	return nil
+	return nil, nil
 }
 
-func (s *MTProto) EncodeMTProtoFull(b []byte) error {
+func (s *MTProto) EncodeMTProtoFull(raw *RawMessage) ([]byte, error) {
 
-	return fmt.Errorf("have not implemented yet")
+	return nil, fmt.Errorf("have not implemented yet")
 
 	// message, ok := msg.(*MTPRawMessage)
 	// if !ok {
@@ -661,12 +658,12 @@ func (s *MTProto) EncodeMTProtoFull(b []byte) error {
 	// 	glog.Errorf("Send msg error: %s", err)
 	// }
 
-	return nil
+	return nil, nil
 }
 
-func (s *MTProto) EncodeMTProtoHttpProxy(b []byte) error {
+func (s *MTProto) EncodeMTProtoHttpProxy(raw *RawMessage) ([]byte, error) {
 
-	return fmt.Errorf("have not implemented yet")
+	return nil, fmt.Errorf("have not implemented yet")
 
 	// // SendToHttpReply(msg, w)
 	// message, ok := msg.(*MTPRawMessage)
@@ -707,11 +704,13 @@ func (s *MTProto) EncodeMTProtoHttpProxy(b []byte) error {
 
 	// return err
 
-	return nil
+	return nil, nil
 }
 
-func (s *MTProto) EncodeMTProtoApp(b []byte) error {
+func (s *MTProto) EncodeMTProtoApp(raw *RawMessage) ([]byte, error) {
 	Log.Debug("entering...")
+
+	b := raw.Payload
 
 	sb := make([]byte, 4)
 	// minus padding
@@ -726,7 +725,7 @@ func (s *MTProto) EncodeMTProtoApp(b []byte) error {
 	b = append(sb, b...)
 	s.stream.Encrypt(b)
 
-	Log.Debugf("mtproto app write = %v", hex.EncodeToString(b))
+	Log.Debugf("mtproto app, length = %v, write = %v", len(b), hex.EncodeToString(b))
 
-	return nil
+	return b, nil
 }

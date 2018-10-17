@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"fmt"
 
 	. "github.com/rockin0098/flash/base/global"
@@ -10,8 +9,7 @@ import (
 	"github.com/rockin0098/flash/server/model"
 )
 
-type TLService struct {
-}
+type TLService struct{}
 
 var tlService = &TLService{}
 
@@ -31,7 +29,7 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			return err
 		}
 
-		res, err := s.MTProtoUnencryptedMessageProcess(sess, reqmsg)
+		res, err := s.TLUnencryptedMessageProcess(sess, reqmsg)
 		if err != nil {
 			// Log.Error(err)
 			Log.Warn(err)
@@ -43,9 +41,7 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			TLObject: res.(mtproto.TLObject),
 		}
 
-		resPayload := respmsg.Encode()
-
-		err = sess.WriteFull(resPayload)
+		err = sess.WriteFull(&mtproto.RawMessage{Payload: respmsg.Encode()})
 		if err != nil {
 			Log.Error(err)
 			return err
@@ -73,37 +69,39 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			return err
 		}
 
-		Log.Infof("Decode encrypted message, authid=%v, msgid=%v, salt=%v, seqno=%v, classType=%v", reqmsg.AuthKeyID, reqmsg.MessageID, reqmsg.Salt, reqmsg.SeqNo, reqmsg.TLObject)
+		Log.Infof("Decode encrypted message, authid=%v, msgid=%v, salt=%v, seqno=%v, classType=%v",
+			reqmsg.AuthKeyID, reqmsg.MessageID, reqmsg.Salt, reqmsg.SeqNo, reqmsg.TLObject)
 
 		// 记录 client session id
 		sess.ClientSessionID = reqmsg.ClientSessionID
 
-		badresp, ok := cltSess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
+		badresp, ok := sess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt)
 		if !ok {
 			Log.Warnf("check bad server salt. authid = %v, class type = %T", authid, reqmsg.TLObject)
-			payload := cltSess.EncodeMessage(authid, akey, 0, false, badresp)
-			return payload, errors.New("check bad server salt failed")
+			payload := sess.EncodeMessage(authid, 0, false, badresp)
+			return sess.WriteFull(&mtproto.RawMessage{Payload: payload})
 		}
 
-		res, err := s.MTProtoEncryptedMessageProcess(cltSess, reqmsg)
+		res, err := s.TLEncryptedMessageProcess(sess, reqmsg)
 		if err != nil {
 			// Log.Error(err)
 			Log.Warn(err)
-			return nil, err
+			return err
 		}
 
 		var resPayload []byte = nil
 		if res != nil {
-			resPayload = cltSess.EncodeMessage(authid, akey, reqmsg.MessageID, false, res.(mtproto.TLObject))
+			resPayload = sess.EncodeMessage(authid, reqmsg.MessageID, false, res.(mtproto.TLObject))
+			return sess.WriteFull(&mtproto.RawMessage{Payload: resPayload})
 		}
 
-		return resPayload, nil
+		return nil
 	}
 
 	return nil
 }
 
-func (s *TLService) MTProtoUnencryptedMessageProcess(sess *session.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+func (s *TLService) TLUnencryptedMessageProcess(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 
 	tlobj := msg.TLObject
 
@@ -120,7 +118,8 @@ func (s *TLService) MTProtoUnencryptedMessageProcess(sess *session.Session, msg 
 	case *mtproto.TL_set_client_DH_params:
 		res, err = s.TL_set_client_DH_params_Process(sess, msg)
 	default:
-		Log.Debugf("havent implemented yet, type = %T", tl)
+		Log.Debugf("havent implemented yet, TLType = %T", tl)
+		err = fmt.Errorf("havent implemented yet, TLType = %T", tl)
 	}
 
 	Log.Debugf("class type = %T, \nresp tlobj = %s", tlobj, res)
@@ -128,37 +127,38 @@ func (s *TLService) MTProtoUnencryptedMessageProcess(sess *session.Session, msg 
 	return res, err
 }
 
-func (s *TLService) MTProtoEncryptedMessageProcess(cltSess *session.ClientSession, msg *mtproto.EncryptedMessage) (interface{}, error) {
+func (s *TLService) TLEncryptedMessageProcess(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
 
 	tlobj := msg.TLObject
 
-	Log.Debugf("client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
-		cltSess.SessionID(), cltSess.AuthKeyID(), tlobj, tlobj)
+	Log.Debugf("sessid = %v, client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
+		sess.SessionID, sess.ClientSessionID, msg.AuthKeyID, tlobj, tlobj)
 
 	var res interface{}
 	var err error
 
 	switch tl := tlobj.(type) {
 	case *mtproto.TL_ping:
-		res, err = s.TL_ping_Process(cltSess, msg)
+		res, err = s.TL_ping_Process(sess, msg)
 	case *mtproto.TL_invokeWithLayer:
-		res, err = s.TL_invokeWithLayer_Process(cltSess, msg)
+		res, err = s.TL_invokeWithLayer_Process(sess, msg)
 	case *mtproto.TL_initConnection:
-		res, err = s.TL_initConnection_Process(cltSess, msg)
+		res, err = s.TL_initConnection_Process(sess, msg)
 	case *mtproto.TL_help_getConfig:
-		res, err = s.TL_help_getConfig_Process(cltSess, msg)
+		res, err = s.TL_help_getConfig_Process(sess, msg)
 	case *mtproto.TL_msg_container:
-		res, err = s.TL_msg_container_Process(cltSess, msg)
+		res, err = s.TL_msg_container_Process(sess, msg)
 	case *mtproto.TL_message2:
-		res, err = s.TL_message2_Process(cltSess, msg)
+		res, err = s.TL_message2_Process(sess, msg)
 	case *mtproto.TL_auth_logOut:
-		res, err = s.TL_auth_logOut_Process(cltSess, msg)
+		res, err = s.TL_auth_logOut_Process(sess, msg)
 	default:
-		Log.Debugf("havent implemented yet, type = %T", tl)
+		Log.Debugf("havent implemented yet, TLType = %T", tl)
+		err = fmt.Errorf("havent implemented yet, TLType = %T", tl)
 	}
 
 	Log.Debugf("client sessid = %v, authid = %v, class type = %T, \nresp tlobj = %v",
-		cltSess.SessionID(), cltSess.AuthKeyID(), res, res)
+		sess.SessionID, msg.AuthKeyID, res, res)
 
 	return res, err
 }

@@ -1,12 +1,15 @@
 package service
 
 import (
+	"fmt"
 	"net"
 	"sync"
 
 	"github.com/rockin0098/flash/base/guid"
+	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/base/tcpnet"
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 )
 
 func GenerateSessionID() string {
@@ -70,12 +73,22 @@ func (s *SessionService) CreateSession(connid int64) *Session {
 	return sess
 }
 
+func (s *SessionService) RemoveSession(sessid string) {
+	s.sessionManager.Remove(sessid)
+}
+
 type Session struct {
 	SessionID       string
 	ConnID          int64
 	TcpContext      *tcpnet.TcpContext
 	ClientSessionID int64
 	MTProto         *mtproto.MTProto
+
+	// runtime variables
+	AuthKayID      int64
+	Salt           int64
+	FirstMessageID int64
+	NextSeqNo      uint32
 }
 
 func (s *Session) GetConnByID(connid int64) net.Conn {
@@ -83,8 +96,76 @@ func (s *Session) GetConnByID(connid int64) net.Conn {
 	return gm.Load(connid).(net.Conn)
 }
 
-func (s *Session) WriteFull(b []byte) error {
+func (s *Session) WriteFull(raw *mtproto.RawMessage) error {
+
+	b := raw.Payload
+	if b == nil || len(b) == 0 {
+		return fmt.Errorf("invalid data to write, data = %v", b)
+	}
+
 	mtp := s.MTProto
-	err := mtp.Encode(b)
-	return err
+	data, err := mtp.Encode(raw)
+	if err != nil {
+		Log.Error(err)
+		return err
+	}
+
+	tcpctx := s.TcpContext
+	tcpctx.WriteFull(data)
+
+	return nil
+}
+
+func (s *Session) EncodeMessage(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) []byte {
+	mm := model.GetModelManager()
+	authKey := mm.GetAuthKeyValueByAuthID(authKeyID)
+	if authKey == nil {
+		Log.Error("authKeyID = %v not found", authKeyID)
+		return nil
+	}
+	message := &mtproto.EncryptedMessage{
+		Salt:            s.Salt,
+		SeqNo:           s.generateMessageSeqNo(confirm),
+		MessageID:       messageID,
+		ClientSessionID: s.ClientSessionID,
+		TLObject:        tl,
+	}
+	return message.Encode(authKeyID, authKey)
+}
+
+func (s *Session) generateMessageSeqNo(increment bool) int32 {
+	value := s.NextSeqNo
+	if increment {
+		s.NextSeqNo++
+		return int32(value*2 + 1)
+	} else {
+		return int32(value * 2)
+	}
+}
+
+//// Check Server Salt
+func (s *Session) CheckBadServerSalt(authid int64, msgId int64, seqNo int32, salt int64) (*mtproto.TL_bad_server_salt, bool) {
+	// Notice of Ignored Error Message
+	//
+	// Here, error_code can also take on the following values:
+	//  48: incorrect server salt (in this case,
+	//      the bad_server_salt response is received with the correct salt,
+	//      and the message is to be re-sent with it)
+	//
+
+	as := AuthServiceInstance()
+	if !as.CheckBySalt(authid, salt) {
+		salt, _ = as.GetOrInsertSalt(authid)
+		badServerSalt := &mtproto.TL_bad_server_salt{
+			M_bad_msg_id:      msgId,
+			M_error_code:      48,
+			M_bad_msg_seqno:   seqNo,
+			M_new_server_salt: salt,
+		}
+
+		// c.sendToClient(connID, md, 0, false, badServerSalt.To_BadMsgNotification())
+		return badServerSalt, false
+	}
+
+	return nil, true
 }

@@ -1,6 +1,7 @@
 package tcpnet
 
 import (
+	"encoding/hex"
 	"fmt"
 	"io"
 	"net"
@@ -160,6 +161,7 @@ func (s *TcpServer) ConnectionHandler(ctx *TcpContext) {
 	conn := ctx.Conn
 	writeChan := ctx.writeChan
 	closeChan := ctx.closeChan
+	remoteAddr := conn.RemoteAddr().String()
 
 	connClose := func(all bool) {
 		conn.Close()
@@ -177,7 +179,8 @@ func (s *TcpServer) ConnectionHandler(ctx *TcpContext) {
 		for {
 			msg, err := s.OnData(ctx)
 			if err != nil {
-				Log.Error(err)
+				Log.Warnf("err = %v, connid = %v, remoteAddr = %v will be closed",
+					err, connid, remoteAddr)
 				connClose(true)
 				return
 			}
@@ -225,7 +228,7 @@ func (s *TcpServer) ConnectionHandler(ctx *TcpContext) {
 			left := nlen
 			for left > 0 {
 				sentdata := databytes[nlen-left:]
-				// Log.Debugf("sentdata = %v", hex.EncodeToString(sentdata))
+				Log.Debugf("length = %v, sentdata = %v", len(databytes), hex.EncodeToString(sentdata))
 				n, err := conn.Write(sentdata)
 				if err != nil {
 					Log.Error(err)
