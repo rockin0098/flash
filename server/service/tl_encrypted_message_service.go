@@ -4,8 +4,8 @@ import (
 	"time"
 
 	. "github.com/rockin0098/flash/base/global"
-	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/flash/server/model"
 )
 
 const (
@@ -237,7 +237,7 @@ func (s *TLService) TL_auth_logOut_Process(sess *Session, msg *mtproto.Encrypted
 	return tltrue, nil
 }
 
-//TL_langpack_getLangPack
+// TL_langpack_getLangPack
 func (s *TLService) TL_langpack_getLangPack_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
 
@@ -247,4 +247,63 @@ func (s *TLService) TL_langpack_getLangPack_Process(sess *Session, msg *mtproto.
 	tltrue := &mtproto.TL_boolTrue{}
 
 	return tltrue, nil
+}
+
+// TL_help_getNearestDc
+func (s *TLService) TL_help_getNearestDc_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
+
+	dc := &mtproto.TL_nearestDc{
+		M_country:    "US",
+		M_this_dc:    2,
+		M_nearest_dc: 2,
+	}
+
+	return dc, nil
+}
+
+// TL_ping_delay_disconnect
+func (s *TLService) TL_ping_delay_disconnect_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
+
+	tlobj := msg.TLObject
+	tl := tlobj.(*mtproto.TL_ping_delay_disconnect)
+
+	delay := tl.M_disconnect_delay
+
+	time.Sleep(time.Duration(delay) * time.Second)
+
+	pong := &mtproto.TL_pong{
+		M_msg_id:  msg.MessageID,
+		M_ping_id: tl.Get_ping_id(),
+	}
+
+	return pong, nil
+}
+
+// TL_auth_checkPhone
+func (s *TLService) TL_auth_checkPhone_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
+
+	tlobj := msg.TLObject
+	tl := tlobj.(*mtproto.TL_auth_checkPhone)
+
+	// to do : check phone number format
+	phone := tl.Get_phone_number()
+
+	mm := model.GetModelManager()
+	registered := mm.CheckPhoneExists(phone)
+
+	checkedPhone := &mtproto.TL_auth_checkedPhone{
+		M_phone_registered: mtproto.ToBool(registered),
+	}
+
+	return checkedPhone, nil
+}
+
+// TL_msgs_state_req
+func (s *TLService) TL_msgs_state_req_Process(sess *Session, msg *mtproto.EncryptedMessage) (interface{}, error) {
+	Log.Infof("entering... sessid = %v, client sessid = %v", sess.SessionID, sess.ClientSessionID)
+
+	return nil, nil
 }

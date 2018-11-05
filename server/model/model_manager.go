@@ -43,3 +43,17 @@ func (s *ModelManager) GetAuthKeyValueByAuthID(authID int64) []byte {
 
 	return ak
 }
+
+func (s *ModelManager) CheckPhoneExists(phone string) bool {
+
+	db := datasource.DataSourceInstance().Master()
+
+	user := &User{}
+	err := db.Where("phone=?", phone).Find(user).Error
+	if err != nil {
+		Log.Error(err)
+		return false
+	}
+
+	return true
+}

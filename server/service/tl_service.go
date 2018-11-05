@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	. "github.com/rockin0098/flash/base/global"
-	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
 )
@@ -154,6 +153,14 @@ func (s *TLService) TLEncryptedMessageProcess(sess *Session, msg *mtproto.Encryp
 		res, err = s.TL_auth_logOut_Process(sess, msg)
 	case *mtproto.TL_langpack_getLangPack:
 		res, err = s.TL_langpack_getLangPack_Process(sess, msg)
+	case *mtproto.TL_help_getNearestDc:
+		res, err = s.TL_help_getNearestDc_Process(sess, msg)
+	case *mtproto.TL_ping_delay_disconnect:
+		res, err = s.TL_ping_delay_disconnect_Process(sess, msg)
+	case *mtproto.TL_auth_checkPhone:
+		res, err = s.TL_auth_checkPhone_Process(sess, msg)
+	case *mtproto.TL_msgs_state_req:
+		res, err = s.TL_msgs_state_req_Process(sess, msg)
 	default:
 		Log.Debugf("havent implemented yet, TLType = %T", tl)
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tl)

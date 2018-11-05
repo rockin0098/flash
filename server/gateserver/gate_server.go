@@ -81,6 +81,7 @@ func ServerInit() {
 	datasource.DataSourceInit(
 		serverConfig.DataSource,
 		new(model.AuthKey),
+		new(model.User),
 	)
 }
 
