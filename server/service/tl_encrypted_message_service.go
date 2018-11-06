@@ -42,17 +42,6 @@ func (s *TLService) TL_invokeWithLayer_Process(csess *ClientSession, msg *mtprot
 	// must be initConnection
 	initConn := query.(*mtproto.TL_initConnection)
 
-	// initConnection := &mtproto.TL_initConnection{
-	// 	M_api_id:           initConn.M_api_id,
-	// 	M_device_model:     initConn.M_device_model,
-	// 	M_system_version:   initConn.M_system_version,
-	// 	M_app_version:      initConn.M_app_version,
-	// 	M_system_lang_code: initConn.M_system_lang_code,
-	// 	M_lang_pack:        initConn.M_lang_pack,
-	// 	M_lang_code:        initConn.M_lang_code,
-	// 	M_query:            query,
-	// }
-
 	msg2 := *msg
 	msg2.TLObject = initConn
 
@@ -68,7 +57,6 @@ func (s *TLService) TL_initConnection_Process(csess *ClientSession, msg *mtproto
 	Log.Infof("tl.Query = %v", tl.Get_query().String())
 
 	// todo
-
 	msg2 := *msg
 	msg2.TLObject = tl.Get_query()
 
@@ -204,11 +192,13 @@ func (s *TLService) TL_auth_logOut_Process(csess *ClientSession, msg *mtproto.En
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	// tlobj := msg.TLObject
-	// tl := tlobj.(*mtproto.TL_ping)
+	// tl := tlobj.(*mtproto.TL_auth_logOut)
 
-	// tltrue := &mtproto.TL_boolTrue{}
+	tltrue := mtproto.ToBool(true)
 
-	return nil
+	err := csess.WriteFull(msg.AuthKeyID, 0, false, tltrue)
+
+	return err
 }
 
 // TL_langpack_getLangPack
@@ -216,9 +206,7 @@ func (s *TLService) TL_langpack_getLangPack_Process(csess *ClientSession, msg *m
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	// tlobj := msg.TLObject
-	// tl := tlobj.(*mtproto.TL_ping)
-
-	// tltrue := &mtproto.TL_boolTrue{}
+	// tl := tlobj.(*mtproto.TL_langpack_getLangPack)
 
 	return nil
 }
@@ -293,10 +281,6 @@ func (s *TLService) TL_msgs_ack_Process(csess *ClientSession, msg *mtproto.Encry
 	tl := tlobj.(*mtproto.TL_msgs_ack)
 
 	Log.Infof("TL_msgs_ack = %v", tl)
-
-	// for _, id := range tl.Get_msg_ids() {
-
-	// }
 
 	return nil
 }

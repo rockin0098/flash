@@ -10,6 +10,14 @@ import (
 	"github.com/rockin0098/flash/server/model"
 )
 
+// type TLMessageReplyTypeEnum int
+
+// const (
+// 	_ TLMessageReplyTypeEnum = iota
+// 	TLMessageReplyNewMessageID
+// 	TLMessageReplyZeroMessageID
+// )
+
 type TLService struct{}
 
 var tlService = &TLService{}
@@ -162,6 +170,19 @@ func (s *TLService) TLUnencryptedMessageProcess(sess *Session, msg *mtproto.Unen
 	return res, err
 }
 
+// func (s *TLService) TLMessageReplyType(tl mtproto.TLObject) TLMessageReplyTypeEnum {
+
+// 	switch tl.(type) {
+// 	case *mtproto.TL_ping,
+// 		*mtproto.TL_ping_delay_disconnect:
+
+// 		return TLMessageReplyNewMessageID
+
+// 	}
+
+// 	return TLMessageReplyZeroMessageID
+// }
+
 func (s *TLService) TLEncryptedMessageProcess(csess *ClientSession, msg *mtproto.EncryptedMessage) error {
 
 	tlobj := msg.TLObject
@@ -174,30 +195,32 @@ func (s *TLService) TLEncryptedMessageProcess(csess *ClientSession, msg *mtproto
 	switch tl := tlobj.(type) {
 	case *mtproto.TL_ping:
 		err = s.TL_ping_Process(csess, msg)
+	case *mtproto.TL_ping_delay_disconnect:
+		err = s.TL_ping_delay_disconnect_Process(csess, msg)
 	case *mtproto.TL_invokeWithLayer:
 		err = s.TL_invokeWithLayer_Process(csess, msg)
 	case *mtproto.TL_initConnection:
 		err = s.TL_initConnection_Process(csess, msg)
-	case *mtproto.TL_help_getConfig:
-		err = s.TL_help_getConfig_Process(csess, msg)
 	case *mtproto.TL_msg_container:
 		err = s.TL_msg_container_Process(csess, msg)
 	case *mtproto.TL_message2:
 		err = s.TL_message2_Process(csess, msg)
+	case *mtproto.TL_msgs_state_req:
+		err = s.TL_msgs_state_req_Process(csess, msg)
+	case *mtproto.TL_msgs_ack:
+		err = s.TL_msgs_ack_Process(csess, msg)
+	// rpc call
+	case *mtproto.TL_help_getConfig:
+		err = s.TL_help_getConfig_Process(csess, msg)
 	case *mtproto.TL_auth_logOut:
 		err = s.TL_auth_logOut_Process(csess, msg)
 	case *mtproto.TL_langpack_getLangPack:
 		err = s.TL_langpack_getLangPack_Process(csess, msg)
 	case *mtproto.TL_help_getNearestDc:
 		err = s.TL_help_getNearestDc_Process(csess, msg)
-	case *mtproto.TL_ping_delay_disconnect:
-		err = s.TL_ping_delay_disconnect_Process(csess, msg)
 	case *mtproto.TL_auth_checkPhone:
 		err = s.TL_auth_checkPhone_Process(csess, msg)
-	case *mtproto.TL_msgs_state_req:
-		err = s.TL_msgs_state_req_Process(csess, msg)
-	case *mtproto.TL_msgs_ack:
-		err = s.TL_msgs_ack_Process(csess, msg)
+
 	default:
 		Log.Debugf("havent implemented yet, TLType = %T", tl)
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tl)
