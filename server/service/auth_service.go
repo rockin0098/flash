@@ -34,7 +34,7 @@ func (s *AuthService) Store(authid int64, auth *Auth) {
 func (s *AuthService) Load(authid int64) (*Auth, bool) {
 	obj, ok := s.authStorage.Load(authid)
 	if !ok {
-		Log.Errorf("authid = [%v] does not exist", authid)
+		Log.Warnf("authid = [%v] does not exist", authid)
 		return nil, false
 	}
 
@@ -71,6 +71,9 @@ func (s *AuthService) CheckBySalt(authid int64, salt int64) bool {
 	}
 
 	salts := auth.Salts
+
+	Log.Infof("date = %v, salts = %v, salt = %v", date, salts, salt)
+
 	if len(salts) > 0 {
 		for _, v := range salts {
 			// old salt are still accepted for a further 300 seconds

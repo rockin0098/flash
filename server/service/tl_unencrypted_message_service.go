@@ -275,5 +275,12 @@ func (s *TLService) TL_set_client_DH_params_Process(sess *Session, msg *mtproto.
 		return nil, err
 	}
 
+	// 先缓存
+	as := AuthServiceInstance()
+	auth := &Auth{
+		AuthKeyID: authKeyID,
+	}
+	as.Store(authKeyID, auth)
+
 	return dhGenOk, nil
 }

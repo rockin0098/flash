@@ -3,6 +3,8 @@ package model
 import (
 	"encoding/hex"
 
+	"github.com/jinzhu/gorm"
+
 	"github.com/rockin0098/flash/base/datasource"
 	. "github.com/rockin0098/flash/base/logger"
 )
@@ -25,8 +27,13 @@ func (s *ModelManager) GetAuthKeyByAuthID(authID int64) *AuthKey {
 
 	auth := &AuthKey{}
 	err := db.Where("auth_id=?", authID).Find(auth).Error
-	if err != nil {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
 		return nil
 	}
 
@@ -35,6 +42,9 @@ func (s *ModelManager) GetAuthKeyByAuthID(authID int64) *AuthKey {
 
 func (s *ModelManager) GetAuthKeyValueByAuthID(authID int64) []byte {
 	auth := s.GetAuthKeyByAuthID(authID)
+	if auth == nil {
+		return nil
+	}
 	ak, err := hex.DecodeString(auth.Body)
 	if err != nil {
 		Log.Error(err)
@@ -50,8 +60,13 @@ func (s *ModelManager) CheckPhoneExists(phone string) bool {
 
 	user := &User{}
 	err := db.Where("phone=?", phone).Find(user).Error
-	if err != nil {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		Log.Error(err)
+		return false
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
 		return false
 	}
 
