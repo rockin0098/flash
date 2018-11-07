@@ -49,8 +49,11 @@ func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgId int64, seqNo
 	case *mtproto.TL_auth_signIn:
 		res, err = s.TL_auth_signIn_Process(csess, tlobj)
 	case *mtproto.TL_messages_getDialogs:
+		res, err = s.TL_messages_getDialogs_Process(csess, tlobj)
 	case *mtproto.TL_account_updateStatus:
+		res, err = s.TL_account_updateStatus_Process(csess, tlobj)
 	case *mtproto.TL_users_getFullUser:
+		res, err = s.TL_users_getFullUser_Process(csess, tlobj)
 	default:
 		Log.Debugf("havent implemented yet, TLType = %T", tlobj)
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tlobj)
@@ -332,4 +335,42 @@ func (s *TLService) TL_auth_signIn_Process(csess *ClientSession, object mtproto.
 	}
 
 	return authAuthorization, nil
+}
+
+// TL_messages_getDialogs
+func (s *TLService) TL_messages_getDialogs_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	// tlobj := object
+	// tl := tlobj.(*mtproto.TL_messages_getDialogs)
+
+	messageDialogs := &mtproto.TL_messages_dialogs{}
+
+	return messageDialogs, nil
+}
+
+// TL_account_updateStatus
+func (s *TLService) TL_account_updateStatus_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	// tlobj := object
+	// tl := tlobj.(*mtproto.TL_account_updateStatus)
+
+	// Log.Infof("TL_account_updateStatus = %+v", FormatStruct(tl))
+
+	return mtproto.ToBool(true), nil
+}
+
+// TL_users_getFullUser
+func (s *TLService) TL_users_getFullUser_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	// tlobj := object
+	// tl := tlobj.(*mtproto.TL_users_getFullUser)
+
+	// Log.Infof("TL_users_getFullUser = %+v", FormatStruct(tl))
+
+	fulluser := &mtproto.TL_userFull{}
+
+	return fulluser, nil
 }
