@@ -5,7 +5,6 @@ import (
 	"sync"
 	"time"
 
-	. "github.com/rockin0098/flash/base/logger"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
 )

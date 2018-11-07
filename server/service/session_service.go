@@ -1,6 +1,7 @@
 package service
 
 import (
+	"container/list"
 	"fmt"
 	"net"
 	"sync"
@@ -167,6 +168,7 @@ func (s *Session) WriteFull2(raw *mtproto.RawMessage) error {
 type ClientSession struct {
 	Sess            *Session // server session
 	ClientSessionID int64
+	Layer           int32
 	// client session data || runtime variables
 	AuthKeyID        int64
 	Salt             int64
@@ -174,7 +176,7 @@ type ClientSession struct {
 	NextSeqNo        uint32
 	CloseDate        int64
 	CloseSessionDate int64
-	ApiMessages      chan *NetworkApiMessage // *list.List
+	ApiMessages      *list.List
 	UniqueID         int64
 	ClientState      int
 	PendingMessages  []*PendingMessage
@@ -206,6 +208,43 @@ func (s *ClientSession) WriteFull(authKeyID int64, messageID int64, confirm bool
 	return s.Sess.WriteFull2(&mtproto.RawMessage{Payload: b})
 }
 
+func (s *ClientSession) SendPendingMessages() error {
+
+	pmsgs := s.PendingMessages
+
+	if len(pmsgs) == 0 {
+		Log.Debug("no PendingMessages to send")
+		return nil
+	}
+
+	if len(pmsgs) == 1 {
+		return s.WriteFull(s.AuthKeyID, pmsgs[0].MessageID, pmsgs[0].Confirm, pmsgs[0].TL)
+	} else {
+		msgContainer := &mtproto.TL_msg_container{
+			M_message2s: make([]*mtproto.TL_message2, 0, len(pmsgs)),
+		}
+
+		// var seqno int32
+		for _, m := range pmsgs {
+			msgId := m.MessageID
+			if msgId == 0 {
+				msgId = mtproto.GenerateMessageID()
+			}
+			message2 := &mtproto.TL_message2{
+				M_msg_id: msgId,
+				M_seqno:  s.generateMessageSeqNo(m.Confirm),
+				M_bytes:  int32(len(m.TL.Encode())),
+				M_body:   m.TL,
+			}
+			msgContainer.M_message2s = append(msgContainer.M_message2s, message2)
+		}
+
+		return s.WriteFull(s.AuthKeyID, 0, false, msgContainer)
+	}
+
+	return nil
+}
+
 func (s *ClientSession) EncodeMessage(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) []byte {
 	mm := model.GetModelManager()
 	authKey := mm.GetAuthKeyValueByAuthID(authKeyID)
@@ -231,10 +270,6 @@ func (s *ClientSession) generateMessageSeqNo(increment bool) int32 {
 	} else {
 		return int32(value * 2)
 	}
-}
-
-func (s *ClientSession) PushApiMessage(apimsg *NetworkApiMessage) {
-	s.ApiMessages <- apimsg
 }
 
 func (s *ClientSession) ClientSessionStart() {

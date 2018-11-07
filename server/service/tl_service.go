@@ -1,6 +1,8 @@
 package service
 
 import (
+	"container/list"
+	"encoding/hex"
 	"fmt"
 	"math/rand"
 	"time"
@@ -17,6 +19,10 @@ import (
 // 	TLMessageReplyNewMessageID
 // 	TLMessageReplyZeroMessageID
 // )
+
+type MessageListWrapper struct {
+	Messages []*mtproto.TL_message2
+}
 
 type TLService struct{}
 
@@ -94,7 +100,7 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 				FirstMessageID:   reqmsg.MessageID,
 				CloseDate:        time.Now().Unix() + kDefaultPingTimeout + kPingAddTimeout,
 				CloseSessionDate: 0,
-				ApiMessages:      make(chan *NetworkApiMessage, 1024),
+				ApiMessages:      list.New(),
 				UniqueID:         rand.Int63(),
 				ClientState:      kStateCreated,
 				PendingMessages:  []*PendingMessage{},
@@ -132,7 +138,11 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			return nil
 		}
 
-		err = s.TLEncryptedMessageProcess(csess, reqmsg)
+		var messages = &MessageListWrapper{[]*mtproto.TL_message2{}}
+		s.TLExtractMessageProcess(csess, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.TLObject, messages)
+		Log.Infof("message wrapper = %+v", messages)
+
+		err = s.TLMessageListWrapperProcess(csess, messages)
 		if err != nil {
 			Log.Warn(err)
 			return err
@@ -140,6 +150,249 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 
 		return nil
 	}
+
+	return nil
+}
+
+func (s *TLService) TLExtractMessageProcess(csess *ClientSession, msgid int64, seqNo int32, object mtproto.TLObject, messages *MessageListWrapper) {
+
+	switch object.(type) {
+	case *mtproto.TL_msg_container:
+		msgContainer, _ := object.(*mtproto.TL_msg_container)
+
+		// A container does not require an acknowledgment
+		if seqNo%2 != 0 {
+			Log.Error("A container does not require an acknowledgment.")
+			return
+		}
+
+		for _, m := range msgContainer.M_message2s {
+			if m.M_body == nil {
+				continue
+			}
+
+			// Check msgId
+			//
+			// A container is always generated after its entire contents; therefore,
+			// its sequence number is greater than or equal to the sequence numbers of the messages contained in it.
+			//
+			if m.M_seqno > seqNo {
+				Log.Errorf("sequence number is greater than or equal to the sequence numbers of the messages contained in it: %d", seqNo)
+				// TODO(@benqi): close client and add to banned??
+				continue
+			}
+
+			// may not carry other simple containers
+			if _, ok := m.M_body.(*mtproto.TL_msg_container); ok {
+				Log.Error("may not carry other simple containers")
+				// TODO(@benqi): close client and add to banned??
+				continue
+			}
+
+			s.TLExtractMessageProcess(csess, m.M_msg_id, m.M_seqno, m.M_body, messages)
+		}
+	case *mtproto.TL_gzip_packed:
+		gzipPacked, _ := object.(*mtproto.TL_gzip_packed)
+		Log.Info("processGzipPacked - request data: ", gzipPacked)
+
+		dc := mtproto.NewMTPDecodeBuffer(gzipPacked.M_packed_data)
+		o := dc.TLObject()
+		if o == nil {
+			Log.Errorf("Decode query error: %s", hex.EncodeToString(gzipPacked.M_packed_data))
+			return
+		}
+		s.TLExtractMessageProcess(csess, msgid, seqNo, o, messages)
+		// case *mtproto.TL_msg_copy:
+		// 	// not use in client
+		// 	Log.Error("android client not use msg_copy: ", object)
+	case *mtproto.TL_invokeWithLayer:
+		Log.Infof("TL_invokeWithLayer...  client sessid = %v", csess.ClientSessionID)
+
+		tlobj := object
+		tl := tlobj.(*mtproto.TL_invokeWithLayer)
+
+		layer := tl.Get_layer()
+		query := tl.Get_query()
+		csess.Layer = layer
+
+		Log.Debugf("invokeWithLayer layer = %v, query = %T, \nquery = %s", layer, query, query)
+
+		// must be initConnection
+		initConn := query.(*mtproto.TL_initConnection)
+
+		messages.Messages = append(messages.Messages, &mtproto.TL_message2{
+			M_msg_id: msgid,
+			M_seqno:  seqNo,
+			M_body:   initConn,
+		})
+	case *mtproto.TL_invokeAfterMsg:
+		// Log.Error("not implemented %T", object)
+		messages.Messages = append(messages.Messages, &mtproto.TL_message2{
+			M_msg_id: msgid,
+			M_seqno:  seqNo,
+			M_body:   object,
+		})
+	case *mtproto.TL_invokeAfterMsgs:
+		// Log.Error("not implemented %T", object)
+		messages.Messages = append(messages.Messages, &mtproto.TL_message2{
+			M_msg_id: msgid,
+			M_seqno:  seqNo,
+			M_body:   object,
+		})
+	case *mtproto.TL_invokeWithoutUpdates:
+		// Log.Error("not implemented %T", object)
+		messages.Messages = append(messages.Messages, &mtproto.TL_message2{
+			M_msg_id: msgid,
+			M_seqno:  seqNo,
+			M_body:   object,
+		})
+	default:
+		messages.Messages = append(messages.Messages, &mtproto.TL_message2{
+			M_msg_id: msgid,
+			M_seqno:  seqNo,
+			M_body:   object,
+		})
+	}
+
+	return
+}
+
+func (s *TLService) TLMessageListWrapperProcess(csess *ClientSession, msglist *MessageListWrapper) error {
+	var (
+		hasRpcRequest bool
+		hasHttpWait   bool
+		ok            bool
+	)
+
+	messages := msglist.Messages
+	c := csess
+
+	for _, message := range messages {
+		Log.Infof("message - %T", message)
+
+		if message.M_body == nil {
+			continue
+		}
+
+		var err error
+
+		switch message.M_body.(type) {
+		case *mtproto.TL_rpc_drop_answer: // 所有链接都有可能
+			rpcDropAnswer, _ := message.M_body.(*mtproto.TL_rpc_drop_answer)
+			err = s.TL_rpc_drop_answer_Process(csess, message.M_msg_id, message.M_seqno, rpcDropAnswer)
+		case *mtproto.TL_get_future_salts: // GENERIC
+			getFutureSalts, _ := message.M_body.(*mtproto.TL_get_future_salts)
+			err = s.TL_get_future_salts_Process(csess, message.M_msg_id, message.M_seqno, getFutureSalts)
+		case *mtproto.TL_http_wait: // 未知
+			// c.onHttpWait(connID, md, message.MsgId, message.Seqno, message.Object)
+			hasHttpWait = true
+			c.IsUpdates = true
+		case *mtproto.TL_ping: // android未用
+			ping, _ := message.M_body.(*mtproto.TL_ping)
+			err = s.TL_ping_Process(csess, message.M_msg_id, message.M_seqno, ping)
+		case *mtproto.TL_ping_delay_disconnect: // PUSH和GENERIC
+			ping, _ := message.M_body.(*mtproto.TL_ping_delay_disconnect)
+			err = s.TL_ping_delay_disconnect_Process(csess, message.M_msg_id, message.M_seqno, ping)
+		case *mtproto.TL_destroy_session: // GENERIC
+			destroySession, _ := message.M_body.(*mtproto.TL_destroy_session)
+			err = s.TL_destroy_session_Process(csess, message.M_msg_id, message.M_seqno, destroySession)
+		case *mtproto.TL_msgs_ack: // 所有链接都有可能
+			msgsAck, _ := message.M_body.(*mtproto.TL_msgs_ack)
+			err = s.TL_msgs_ack_Process(csess, message.M_msg_id, message.M_seqno, msgsAck)
+			// TODO(@benqi): check c.isUpdates
+		case *mtproto.TL_msgs_state_req: // android未用
+			err = s.TL_msgs_state_req_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_msgs_state_info: // android未用
+			err = s.TL_msgs_state_info_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_msgs_all_info: // android未用
+			err = s.TL_msgs_all_info_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_msg_resend_req: // 都有可能
+			err = s.TL_msg_resend_req_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_msg_detailed_info: // 都有可能
+			err = s.TL_msg_detailed_info_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_msg_new_detailed_info: // 都有可能
+			err = s.TL_msg_new_detailed_info_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_contest_saveDeveloperInfo: // 未知
+			err = s.TL_contest_saveDeveloperInfo_Process(csess, message.M_msg_id, message.M_seqno, message.M_body)
+		case *mtproto.TL_invokeAfterMsg:
+			invokeAfterMsg, _ := message.M_body.(*mtproto.TL_invokeAfterMsg)
+			err = s.TLRpcMessageProcess(csess, message.M_msg_id, message.M_seqno, invokeAfterMsg.Get_query())
+			if err == nil && !hasRpcRequest {
+				hasRpcRequest = ok
+			}
+		case *mtproto.TL_invokeAfterMsgs: // 未知
+			invokeAfterMsgs, _ := message.M_body.(*mtproto.TL_invokeAfterMsg)
+			err = s.TLRpcMessageProcess(csess, message.M_msg_id, message.M_seqno, invokeAfterMsgs.Get_query())
+			if err == nil && !hasRpcRequest {
+				hasRpcRequest = ok
+			}
+		case *mtproto.TL_initConnection:
+			initConnection, _ := message.M_body.(*mtproto.TL_initConnection)
+			err = s.TLRpcMessageProcess(csess, message.M_msg_id, message.M_seqno, initConnection.Get_query())
+			if err == nil && !hasRpcRequest {
+				hasRpcRequest = ok
+			}
+		case *mtproto.TL_invokeWithoutUpdates:
+			invokeWithoutUpdates, _ := message.M_body.(*mtproto.TL_invokeWithoutUpdates)
+			err = s.TLRpcMessageProcess(csess, message.M_msg_id, message.M_seqno, invokeWithoutUpdates.Get_query())
+			if err == nil && !hasRpcRequest {
+				hasRpcRequest = ok
+			}
+		default:
+			err = s.TLRpcMessageProcess(csess, message.M_msg_id, message.M_seqno, message.M_body)
+			if err == nil && !hasRpcRequest {
+				hasRpcRequest = ok
+			}
+		}
+
+		if err != nil {
+			Log.Errorf("object type = %T, err = %v", message.M_body, err)
+			return err
+		}
+	}
+
+	// send pending
+	c.SendPendingMessages()
+	c.PendingMessages = []*PendingMessage{}
+
+	// set user online
+	// if c.IsUpdates {
+	// 	c.manager.setUserOnline(c.sessionId, connID)
+	// }
+
+	// if connID.connType == mtproto.TRANSPORT_TCP {
+	// 	if c.isUpdates {
+	// 		c.manager.updatesSession.SubscribeUpdates(c, connID)
+	// 		// c.manager.setUserOnline(c.sessionId, connID)
+	// 		// c.manager.updatesSession.SubscribeUpdates(c, connID)
+	// 	}
+	// 	c.sendPendingMessagesToClient(connID, md, c.pendingMessages)
+	// 	c.pendingMessages = []*pendingMessage{}
+	// } else {
+	// 	if !hasRpcRequest {
+	// 		if len(c.pendingMessages) > 0 {
+	// 			c.sendPendingMessagesToClient(connID, md, c.pendingMessages)
+	// 			c.pendingMessages = []*pendingMessage{}
+	// 		} else {
+	// 			c.manager.updatesSession.SubscribeUpdates(c, connID)
+	// 			//if !hasHttpWait {
+	// 			//	// TODO(@benqi): close http
+	// 			//} else {
+	// 			//	// c.manager.setUserOnline(c.sessionId, connID)
+	// 			//	c.manager.updatesSession.SubscribeUpdates(c, connID)
+	// 			//}
+	// 		}
+	// 	} else {
+	// 		// wait
+	// 	}
+	// }
+
+	_ = hasHttpWait
+
+	// if len(c.rpcMessages) > 0 {
+	// 	c.manager.rpcQueue.Push(&rpcApiMessages{connID: connID, md: md, sessionId: c.sessionId, rpcMessages: c.rpcMessages})
+	// 	c.rpcMessages = []*networkApiMessage{}
+	// }
 
 	return nil
 }
@@ -182,52 +435,6 @@ func (s *TLService) TLUnencryptedMessageProcess(sess *Session, msg *mtproto.Unen
 
 // 	return TLMessageReplyZeroMessageID
 // }
-
-func (s *TLService) TLEncryptedMessageProcess(csess *ClientSession, msg *mtproto.EncryptedMessage) error {
-
-	tlobj := msg.TLObject
-
-	Log.Debugf("request - client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
-		csess.ClientSessionID, msg.AuthKeyID, tlobj, tlobj)
-
-	var err error
-
-	switch tl := tlobj.(type) {
-	case *mtproto.TL_ping:
-		err = s.TL_ping_Process(csess, msg)
-	case *mtproto.TL_ping_delay_disconnect:
-		err = s.TL_ping_delay_disconnect_Process(csess, msg)
-	case *mtproto.TL_invokeWithLayer:
-		err = s.TL_invokeWithLayer_Process(csess, msg)
-	case *mtproto.TL_initConnection:
-		err = s.TL_initConnection_Process(csess, msg)
-	case *mtproto.TL_msg_container:
-		err = s.TL_msg_container_Process(csess, msg)
-	case *mtproto.TL_message2:
-		err = s.TL_message2_Process(csess, msg)
-	case *mtproto.TL_msgs_state_req:
-		err = s.TL_msgs_state_req_Process(csess, msg)
-	case *mtproto.TL_msgs_ack:
-		err = s.TL_msgs_ack_Process(csess, msg)
-	// rpc call
-	case *mtproto.TL_help_getConfig:
-		err = s.TL_help_getConfig_Process(csess, msg)
-	case *mtproto.TL_auth_logOut:
-		err = s.TL_auth_logOut_Process(csess, msg)
-	case *mtproto.TL_langpack_getLangPack:
-		err = s.TL_langpack_getLangPack_Process(csess, msg)
-	case *mtproto.TL_help_getNearestDc:
-		err = s.TL_help_getNearestDc_Process(csess, msg)
-	case *mtproto.TL_auth_checkPhone:
-		err = s.TL_auth_checkPhone_Process(csess, msg)
-
-	default:
-		Log.Debugf("havent implemented yet, TLType = %T", tl)
-		err = fmt.Errorf("havent implemented yet, TLType = %T", tl)
-	}
-
-	return err
-}
 
 // 消息类型判断
 func (s *TLService) TLRpcUpdatesType(tl mtproto.TLObject) bool {

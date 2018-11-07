@@ -8,14 +8,17 @@ import (
 )
 
 const (
-	TL_CLASS_rpc_result    int32 = -212046591
 	TL_CLASS_message2      int32 = 1538843921
 	TL_CLASS_msg_container int32 = 1945237724
+	TL_CLASS_gzip_packed   int32 = 812830625
+	TL_CLASS_rpc_result    int32 = -212046591
 )
 
 func init() {
 	tlObjectClassMap[TL_CLASS_message2] = func() TLObject { return New_TL_message2() }
 	tlObjectClassMap[TL_CLASS_msg_container] = func() TLObject { return New_TL_msg_container() }
+	tlObjectClassMap[TL_CLASS_gzip_packed] = func() TLObject { return New_TL_gzip_packed() }
+	tlObjectClassMap[TL_CLASS_rpc_result] = func() TLObject { return New_TL_rpc_result() }
 }
 
 type TLObject interface {
