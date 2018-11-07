@@ -154,6 +154,18 @@ func (s *TLService) TL_destroy_session_Process(csess *ClientSession, msgId int64
 	return nil
 }
 
+// TL_destroy_auth_key
+func (s *TLService) TL_destroy_auth_key_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_destroy_auth_key) error {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	c := csess
+
+	destroyOK := &mtproto.TL_destroy_auth_key_ok{}
+	c.PendingMessages = append(c.PendingMessages, s.makePendingMessage(0, false, destroyOK))
+
+	return nil
+}
+
 func (s *TLService) TL_msgs_ack_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_msgs_ack) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 

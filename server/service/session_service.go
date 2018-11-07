@@ -199,12 +199,12 @@ type NetworkApiMessage struct {
 	RpcResult  mtproto.TLObject
 }
 
-func (s *ClientSession) WriteFull(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) error {
+func (s *ClientSession) WriteFull(messageID int64, confirm bool, tl mtproto.TLObject) error {
 
 	Log.Debugf("response -  client sessid = %v, authid = %v, class type = %T, \ntlobj = %v",
-		s.ClientSessionID, authKeyID, tl, tl)
+		s.ClientSessionID, s.AuthKeyID, tl, tl)
 
-	b := s.EncodeMessage(authKeyID, messageID, confirm, tl)
+	b := s.EncodeMessage(s.AuthKeyID, messageID, confirm, tl)
 	return s.Sess.WriteFull2(&mtproto.RawMessage{Payload: b})
 }
 
@@ -218,7 +218,7 @@ func (s *ClientSession) SendPendingMessages() error {
 	}
 
 	if len(pmsgs) == 1 {
-		return s.WriteFull(s.AuthKeyID, pmsgs[0].MessageID, pmsgs[0].Confirm, pmsgs[0].TL)
+		return s.WriteFull(pmsgs[0].MessageID, pmsgs[0].Confirm, pmsgs[0].TL)
 	} else {
 		msgContainer := &mtproto.TL_msg_container{
 			M_message2s: make([]*mtproto.TL_message2, 0, len(pmsgs)),
@@ -239,7 +239,7 @@ func (s *ClientSession) SendPendingMessages() error {
 			msgContainer.M_message2s = append(msgContainer.M_message2s, message2)
 		}
 
-		return s.WriteFull(s.AuthKeyID, 0, false, msgContainer)
+		return s.WriteFull(0, false, msgContainer)
 	}
 
 	return nil
@@ -286,7 +286,7 @@ func (s *ClientSession) ClientSessionStart() {
 }
 
 //// Check Server Salt
-func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int32, salt int64) bool {
+func (s *ClientSession) CheckBadServerSalt(msgId int64, seqNo int32, salt int64) bool {
 	// Notice of Ignored Error Message
 	//
 	// Here, error_code can also take on the following values:
@@ -295,6 +295,7 @@ func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int3
 	//      and the message is to be re-sent with it)
 	//
 
+	authid := s.AuthKeyID
 	as := AuthServiceInstance()
 	if !as.CheckBySalt(authid, salt) {
 		s.Salt, _ = as.GetOrInsertSalt(authid)
@@ -305,14 +306,14 @@ func (s *ClientSession) CheckBadServerSalt(authid int64, msgId int64, seqNo int3
 			M_new_server_salt: s.Salt,
 		}
 
-		s.WriteFull(authid, 0, false, badServerSalt)
+		s.WriteFull(0, false, badServerSalt)
 		return false
 	}
 
 	return true
 }
 
-func (s *ClientSession) CheckBadMsgNotification(authid int64, msgId int64, seqNo int32, isContainer bool) bool {
+func (s *ClientSession) CheckBadMsgNotification(msgId int64, seqNo int32, isContainer bool) bool {
 	// Notice of Ignored Error Message
 	//
 	// In certain cases, a server may notify a client that its incoming message was ignored for whatever reason.
@@ -438,7 +439,7 @@ func (s *ClientSession) CheckBadMsgNotification(authid int64, msgId int64, seqNo
 		}
 		// glog.Info("badMsgNotification - ", badMsgNotification)
 		// _ = badMsgNotification
-		s.WriteFull(authid, msgId, false, badMsgNotification)
+		s.WriteFull(msgId, false, badMsgNotification)
 		return false
 	}
 

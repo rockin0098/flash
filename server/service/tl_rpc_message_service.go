@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"time"
 
+	"github.com/rockin0098/flash/base/crypto"
 	. "github.com/rockin0098/flash/base/global"
 	"github.com/rockin0098/flash/proto/mtproto"
 	"github.com/rockin0098/flash/server/model"
@@ -41,7 +42,15 @@ func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgId int64, seqNo
 		res, err = s.TL_help_getNearestDc_Process(csess, tlobj)
 	case *mtproto.TL_auth_checkPhone:
 		res, err = s.TL_auth_checkPhone_Process(csess, tlobj)
-
+	case *mtproto.TL_auth_sendCode:
+		res, err = s.TL_auth_sendCode_Process(csess, tlobj)
+	case *mtproto.TL_auth_resendCode:
+		res, err = s.TL_auth_resendCode_Process(csess, tlobj)
+	case *mtproto.TL_auth_signIn:
+		res, err = s.TL_auth_signIn_Process(csess, tlobj)
+	case *mtproto.TL_messages_getDialogs:
+	case *mtproto.TL_account_updateStatus:
+	case *mtproto.TL_users_getFullUser:
 	default:
 		Log.Debugf("havent implemented yet, TLType = %T", tlobj)
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tlobj)
@@ -57,7 +66,7 @@ func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgId int64, seqNo
 		M_result:     res,
 	}
 
-	err = c.WriteFull(c.AuthKeyID, mtproto.GenerateMessageID(), true, reply)
+	err = c.WriteFull(mtproto.GenerateMessageID(), true, reply)
 
 	return err
 }
@@ -222,4 +231,105 @@ func (s *TLService) TL_auth_checkPhone_Process(csess *ClientSession, object mtpr
 	}
 
 	return checkedPhone, nil
+}
+
+// TL_auth_resendCode
+func (s *TLService) TL_auth_resendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	tlobj := object
+	tl := tlobj.(*mtproto.TL_auth_resendCode)
+
+	Log.Infof("TL_auth_resendCode = %+v", FormatStruct(tl))
+
+	phone := tl.Get_phone_number()
+
+	mm := model.GetModelManager()
+	registered := mm.CheckPhoneExists(phone)
+
+	Log.Infof("registered = %v", registered)
+
+	codeType := &mtproto.TL_auth_sentCodeTypeApp{
+		M_length: 5,
+	}
+	authSentCode := &mtproto.TL_auth_sentCode{
+		// M_phone_registered: mtproto.ToBool(registered),
+		M_type:            codeType,
+		M_phone_code_hash: crypto.GenerateStringNonce(16),
+		// M_next_type:       codeType,
+		M_timeout: 60,
+	}
+
+	if registered {
+		authSentCode.M_phone_registered = mtproto.ToBool(registered)
+	}
+
+	return authSentCode, nil
+}
+
+// TL_auth_sendCode
+func (s *TLService) TL_auth_sendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	tlobj := object
+	tl := tlobj.(*mtproto.TL_auth_sendCode)
+
+	Log.Infof("TL_auth_sendCode = %+v", FormatStruct(tl))
+
+	phone := tl.Get_phone_number()
+
+	mm := model.GetModelManager()
+	registered := mm.CheckPhoneExists(phone)
+
+	Log.Infof("registered = %v", registered)
+
+	codeType := &mtproto.TL_auth_sentCodeTypeApp{
+		M_length: 5,
+	}
+	authSentCode := &mtproto.TL_auth_sentCode{
+		// M_phone_registered: mtproto.ToBool(registered),
+		M_type:            codeType,
+		M_phone_code_hash: crypto.GenerateStringNonce(16),
+		// M_next_type:       codeType,
+		M_timeout: 60,
+	}
+
+	if registered {
+		authSentCode.M_phone_registered = mtproto.ToBool(registered)
+	}
+
+	return authSentCode, nil
+}
+
+// TL_auth_signIn
+func (s *TLService) TL_auth_signIn_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+
+	tlobj := object
+	tl := tlobj.(*mtproto.TL_auth_signIn)
+
+	Log.Infof("TL_auth_signIn = %+v", FormatStruct(tl))
+
+	userStatus := &mtproto.TL_userStatusOnline{
+		M_expires: int32(time.Now().Unix()) + 1800,
+	}
+
+	user := &mtproto.TL_user{
+		M_self:           mtproto.ToBool(true),
+		M_contact:        mtproto.ToBool(true),
+		M_mutual_contact: mtproto.ToBool(true),
+		M_id:             2,
+		M_access_hash:    66666666666666,
+		M_first_name:     "qqq",
+		M_last_name:      "aaa",
+		M_username:       "dadada",
+		M_phone:          "+8613333333333",
+		M_status:         userStatus,
+	}
+
+	authAuthorization := &mtproto.TL_auth_authorization{
+		M_user: user,
+	}
+
+	return authAuthorization, nil
 }

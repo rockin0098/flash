@@ -114,7 +114,7 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			csess.Sess = sess
 		}
 
-		if !csess.CheckBadServerSalt(authid, reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt) {
+		if !csess.CheckBadServerSalt(reqmsg.MessageID, reqmsg.SeqNo, reqmsg.Salt) {
 			Log.Warnf("check bad server salt. authid = %v, class type = %T", authid, reqmsg.TLObject)
 
 			if !ok || reqmsg.MessageID < csess.FirstMessageID {
@@ -126,14 +126,14 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 					M_server_salt:  csess.Salt,
 				}
 
-				csess.WriteFull(authid, mtproto.GenerateMessageID(), true, newSessionCreated)
+				csess.WriteFull(mtproto.GenerateMessageID(), true, newSessionCreated)
 			}
 
 			return nil
 		}
 
 		_, isContainer := reqmsg.TLObject.(*mtproto.TL_msg_container)
-		if !csess.CheckBadMsgNotification(authid, reqmsg.MessageID, reqmsg.SeqNo, isContainer) {
+		if !csess.CheckBadMsgNotification(reqmsg.MessageID, reqmsg.SeqNo, isContainer) {
 			Log.Warnf("check bad msg notification. authid = %v, class type = %T", authid, reqmsg.TLObject)
 			return nil
 		}
@@ -296,6 +296,9 @@ func (s *TLService) TLMessageListWrapperProcess(csess *ClientSession, msglist *M
 		case *mtproto.TL_destroy_session: // GENERIC
 			destroySession, _ := message.M_body.(*mtproto.TL_destroy_session)
 			err = s.TL_destroy_session_Process(csess, message.M_msg_id, message.M_seqno, destroySession)
+		case *mtproto.TL_destroy_auth_key:
+			destroyAuthKey, _ := message.M_body.(*mtproto.TL_destroy_auth_key)
+			err = s.TL_destroy_auth_key_Process(csess, message.M_msg_id, message.M_seqno, destroyAuthKey)
 		case *mtproto.TL_msgs_ack: // 所有链接都有可能
 			msgsAck, _ := message.M_body.(*mtproto.TL_msgs_ack)
 			err = s.TL_msgs_ack_Process(csess, message.M_msg_id, message.M_seqno, msgsAck)
