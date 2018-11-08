@@ -28,7 +28,7 @@ func (s *TLService) makePendingMessage(messageId int64, confirm bool, tl mtproto
 	return &PendingMessage{messageId, confirm, tl}
 }
 
-func (s *TLService) TL_rpc_drop_answer_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_rpc_drop_answer) error {
+func (s *TLService) TL_rpc_drop_answer_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_rpc_drop_answer) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	var answer mtproto.TLObject
@@ -64,18 +64,18 @@ func (s *TLService) TL_rpc_drop_answer_Process(csess *ClientSession, msgId int64
 		answer = aw
 	}
 
-	c.PendingMessages = append(c.PendingMessages, s.makePendingMessage(0, true, &mtproto.TL_rpc_result{M_req_msg_id: msgId, M_result: answer}))
+	c.PendingMessages = append(c.PendingMessages, s.makePendingMessage(0, true, &mtproto.TL_rpc_result{M_req_msg_id: msgid, M_result: answer}))
 
 	return nil
 }
 
-func (s *TLService) TL_get_future_salts_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_get_future_salts) error {
+func (s *TLService) TL_get_future_salts_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_get_future_salts) error {
 
 	c := csess
 	as := AuthServiceInstance()
 	salts, _ := as.GetOrInsertSaltList(c.AuthKeyID, int(request.M_num))
 	futureSalts := &mtproto.TL_future_salts{
-		M_req_msg_id: msgId,
+		M_req_msg_id: msgid,
 		M_now:        int32(time.Now().Unix()),
 	}
 
@@ -88,13 +88,13 @@ func (s *TLService) TL_get_future_salts_Process(csess *ClientSession, msgId int6
 	return nil
 }
 
-func (s *TLService) TL_ping_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_ping) error {
+func (s *TLService) TL_ping_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_ping) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	c := csess
 
 	pong := &mtproto.TL_pong{
-		M_msg_id:  msgId,
+		M_msg_id:  msgid,
 		M_ping_id: request.Get_ping_id(),
 	}
 
@@ -105,13 +105,13 @@ func (s *TLService) TL_ping_Process(csess *ClientSession, msgId int64, seqNo int
 }
 
 // TL_ping_delay_disconnect
-func (s *TLService) TL_ping_delay_disconnect_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_ping_delay_disconnect) error {
+func (s *TLService) TL_ping_delay_disconnect_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_ping_delay_disconnect) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	c := csess
 
 	pong := &mtproto.TL_pong{
-		M_msg_id:  msgId,
+		M_msg_id:  msgid,
 		M_ping_id: request.Get_ping_id(),
 	}
 
@@ -122,7 +122,7 @@ func (s *TLService) TL_ping_delay_disconnect_Process(csess *ClientSession, msgId
 }
 
 // TL_destroy_session
-func (s *TLService) TL_destroy_session_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_destroy_session) error {
+func (s *TLService) TL_destroy_session_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_destroy_session) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	c := csess
@@ -155,7 +155,7 @@ func (s *TLService) TL_destroy_session_Process(csess *ClientSession, msgId int64
 }
 
 // TL_destroy_auth_key
-func (s *TLService) TL_destroy_auth_key_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_destroy_auth_key) error {
+func (s *TLService) TL_destroy_auth_key_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_destroy_auth_key) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	c := csess
@@ -166,7 +166,7 @@ func (s *TLService) TL_destroy_auth_key_Process(csess *ClientSession, msgId int6
 	return nil
 }
 
-func (s *TLService) TL_msgs_ack_Process(csess *ClientSession, msgId int64, seqNo int32, request *mtproto.TL_msgs_ack) error {
+func (s *TLService) TL_msgs_ack_Process(csess *ClientSession, msgid int64, seqNo int32, request *mtproto.TL_msgs_ack) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	c := csess
@@ -184,43 +184,43 @@ func (s *TLService) TL_msgs_ack_Process(csess *ClientSession, msgId int64, seqNo
 	return nil
 }
 
-func (s *TLService) TL_msgs_state_req_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msgs_state_req_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_msgs_state_info_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msgs_state_info_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_msgs_all_info_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msgs_all_info_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_msg_resend_req_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msg_resend_req_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_msg_detailed_info_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msg_detailed_info_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_msg_new_detailed_info_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_msg_new_detailed_info_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil
 }
 
-func (s *TLService) TL_contest_saveDeveloperInfo_Process(csess *ClientSession, msgId int64, seqNo int32, request mtproto.TLObject) error {
+func (s *TLService) TL_contest_saveDeveloperInfo_Process(csess *ClientSession, msgid int64, seqNo int32, request mtproto.TLObject) error {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	return nil

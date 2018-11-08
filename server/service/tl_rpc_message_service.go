@@ -11,7 +11,7 @@ import (
 	"github.com/rockin0098/flash/server/model"
 )
 
-func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgId int64, seqNo int32, object mtproto.TLObject) error {
+func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgid int64, seqNo int32, object mtproto.TLObject) error {
 
 	tlobj := object
 	c := csess
@@ -85,7 +85,7 @@ func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgId int64, seqNo
 	}
 
 	reply := &mtproto.TL_rpc_result{
-		M_req_msg_id: msgId,
+		M_req_msg_id: msgid,
 		M_result:     res,
 	}
 
