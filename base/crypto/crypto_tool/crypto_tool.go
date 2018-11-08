@@ -1,0 +1,80 @@
+package main
+
+import (
+	"crypto/rsa"
+	"crypto/sha1"
+	"crypto/x509"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/pem"
+	"fmt"
+	"math/big"
+
+	"github.com/rockin0098/flash/proto/mtproto"
+)
+
+// rsa = crypto.NewRSACryptor()
+
+var pkcs1PemPrivateKey = []byte(`
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEA0NUJlRK/QEsukdNLXbFoip8SajmkzAdoMWF73zWeTKVNek7m
+cIRrNEEM9ZckaqxhgdWeUSL3SObkRxU9L3Pt/lEDZ/pi0sbYvjj9JWLLhZDYQHn/
+jeShyR/SrmwfPgUE6dyE2LqFWbRaMSJusGPidovS72zDeyaUQRIHfhJy23gLgH0A
+xq/kSWvH/m5SBbzWI8CNnrAB8iTOBc6viGXKEWB4ZF+4tqfwF2iV64J1H8NmCrn/
+4jh2dTSsIr884x39XbizM/jRcOnJ8fW1U1gYpwBCrI4RlCQQXLD3dUyIijIOLqMc
+CbjZ5+6NXosz0wkwUnr+aAAupKOtXiYP8bSp9QIDAQABAoIBAGrtunNXXxA3rsfC
+TiPSVDoui0pS67wAyuwGA1xeYwjR12MaBUp1s0LVUCJsWpw4WdEWJXNcGQx+FUME
+cAjdLm564uiZv4I3iQGVwqEi/h0M9n3FOgJYoDKQldrzx+eEwGhSnr8ueltdSpVA
+ETdGXc3feIlZwppLPbw31BhMr/0Jg+kxGOzLaaPyAXj/8yzYXzMaL9mkDwcWsYAd
+hfLObTRujsD0/pGaYtEK98JKoIT2aOckSdFu7sqg4hN2VNn78O/p3/0Lv+EIFaF6
+xAh8RrleCQ/seULbWyDo44GqIF4l+81YccPX4W94//9VqEs66/faLeLG2/HUT+wJ
+/FIenN0CgYEA/XsoVNMF9lO6amhqnvL9Jn34UZRr3qxNOgRAjTx9OHekvZyr+CD2
+mPELcWGdhNcx7MP4OFBUZIa/wMZgZp0iMnvuvg0YvwDrX/3cRJy7YySTfRvpbNTx
+jCoJCnWbKmV32ST8ZR7fTalA56rW6D3+USVUBbbk4OXz2INaYONXdOsCgYEA0uhL
+oXKgpFbHn41iDxX8oeGwMk6bEhOMJ71M0MugjX1bH+NvT2oWOHqQjgciLyPvbG7S
+bv5vfhK96A4Ov1LRGi9A1o+ZFDGbDRtJGec2gwo8HKXwTf9EWkh9Tt1V4f9reHlP
+75rZYrAhcvPbimn382jie2ORwiPXyRK3LMFWJJ8CgYEAjq15CS3yyDFe17BIe4m4
+lqcHVBwgD6mampJ0J0uqDFPEBfqfDb64L2RWlY5llLVwY533JPOKXT8/xemjr365
+FgOOYamLiU+iLVj+WByEmYyn/B7u6BSAle2/QwTpvxZ4PGDGNMEI3nTrlLsj1nu2
+n8RMJB9Le4/UDsX45FpzCtsCgYB3pOPSsK5EzB3ue0wXdsecJeXIhCMgPAqUOKUt
+BXcNDQH2sxTgHjSA0bbTe2R/DYmzH6Ms6BXjlUo6LE9dZePNUOUdUtTqScHFy6bK
+lQmtiM7VCaWq+ZaTCPBdHt6rmDQlYdxg9p0/iN9Q0NnISZkpcmSYzsFPOvoczQsw
+znTJzQKBgQCGFoorY7LNk8r8Qj+upooIcoVit8UzgWF+GsTijFaquks5dlRWojxQ
+83UOQFyIgU3T01irt9/kdAMhJr4vRcVS4Q7W2qLF2Rqs8LMrFltn4bLgFmCy91iK
+vLroX+XeEhzU3H6E6DNKXSysH+z9HLDdmM53WHu7/aGqjhhKEQqbPg==
+-----END RSA PRIVATE KEY-----
+`)
+
+func computeFingerprint(key *rsa.PrivateKey) uint64 {
+	// testPrivateKey
+	ebuf := mtproto.NewMTPEncodeBuffer(500)
+	n := key.N.Bytes()
+	e := new(big.Int).SetInt64(int64(key.E)).Bytes()
+
+	fmt.Printf("N: %d, E: %d\n", len(n), len(e))
+	ebuf.StringBytes(n)
+	ebuf.StringBytes(e)
+
+	fmt.Println(hex.EncodeToString(ebuf.GetBuffer()))
+
+	hash := sha1.Sum(ebuf.GetBuffer())
+	return binary.LittleEndian.Uint64(hash[12:20])
+}
+
+// fe000100bca2c43964f3b7d1e7dfff4a769fd174770487399df315de2d2a47208cda5d32c90f0f01849cb58d1fe2a9e1bc25ee72aed55a6ea312900ea5b48a60ca51fffff1688ccb17d411eee043d8397420074a8e8ba92bd3c8976481fdfe238f40e583b0bf8bb7c8031b4c41cbeb0f7bfd991ddcca3235fa3bd078b0eb318c5ae4e6a0e8583ae2a09a2b009ede1407cfa4e05fdb0ef7a215ee752ac913495b43ca4258da4c63c701f62f2bf96062b5cbe8b8b0c0be6b674d7eda921a03ce62a0a49058962018e2a03bdefeeee5421ea44f10815d2308e8712423ee6cff1d83efcf94b2d52b2c54e4276242d663d84332e2cf7194d2b35fc5decc4d0c1c46ba6d0a671703010001
+// FE000100BCA2C43964F3B7D1E7DFFF4A769FD174770487399DF315DE2D2A47208CDA5D32C90F0F01849CB58D1FE2A9E1BC25EE72AED55A6EA312900EA5B48A60CA51FFFFF1688CCB17D411EEE043D8397420074A8E8BA92BD3C8976481FDFE238F40E583B0BF8BB7C8031B4C41CBEB0F7BFD991DDCCA3235FA3BD078B0EB318C5AE4E6A0E8583AE2A09A2B009EDE1407CFA4E05FDB0EF7A215EE752AC913495B43CA4258DA4C63C701F62F2BF96062B5CBE8B8B0C0BE6B674D7EDA921A03CE62A0A49058962018E2A03BDEFEEEE5421EA44F10815D2308E8712423EE6CFF1D83EFCF94B2D52B2C54E4276242D663D84332E2CF7194D2B35FC5DECC4D0C1C46BA6D0A671703010001
+func main() {
+	block, _ := pem.Decode([]byte(pkcs1PemPrivateKey))
+	if block == nil {
+		panic("Invalid pemsKeyData: " + string(pkcs1PemPrivateKey))
+	}
+
+	key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	if err != nil {
+		panic("Failed to parse private key: " + err.Error())
+	}
+
+	// fingerprint uint64 = 12240908862933197005
+	// rsa := crypto.NewRSACryptor()
+	fmt.Println(computeFingerprint(key))
+}
