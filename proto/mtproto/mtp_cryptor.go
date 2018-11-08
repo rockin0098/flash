@@ -17,8 +17,8 @@ var (
 	// 这里直接使用了0xc3b42b026ce86b21
 	// 计算方法
 	// https://github.com/nebulaim/telegramd/blob/27362f60d2b8db1b6a51c8ab1c9a74b786124001/access/auth_key/testing/fingerprint.go
-	// fingerprint uint64 = 12240908862933197005
-	fingerprint uint64 = 1871186702420581553
+	fingerprint uint64 = 12240908862933197005
+	// fingerprint uint64 = 1871186702420581553 // new cert
 
 	// TODO(@benqi): 使用算法生成PQ
 	// 这里直接指定了PQ值: {0x17, 0xED, 0x48, 0x94, 0x1A, 0x08, 0xF9, 0x81}
