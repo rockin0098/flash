@@ -256,14 +256,14 @@ func (s *TLService) TL_auth_checkPhone_Process(csess *ClientSession, object mtpr
 	return checkedPhone, nil
 }
 
-// TL_auth_resendCode
-func (s *TLService) TL_auth_resendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+// TL_auth_sendCode
+func (s *TLService) TL_auth_sendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	tlobj := object
-	tl := tlobj.(*mtproto.TL_auth_resendCode)
+	tl := tlobj.(*mtproto.TL_auth_sendCode)
 
-	Log.Infof("TL_auth_resendCode = %+v", FormatStruct(tl))
+	Log.Infof("TL_auth_sendCode = %+v", FormatStruct(tl))
 
 	phone := tl.Get_phone_number()
 
@@ -290,14 +290,14 @@ func (s *TLService) TL_auth_resendCode_Process(csess *ClientSession, object mtpr
 	return authSentCode, nil
 }
 
-// TL_auth_sendCode
-func (s *TLService) TL_auth_sendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+// TL_auth_resendCode
+func (s *TLService) TL_auth_resendCode_Process(csess *ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	tlobj := object
-	tl := tlobj.(*mtproto.TL_auth_sendCode)
+	tl := tlobj.(*mtproto.TL_auth_resendCode)
 
-	Log.Infof("TL_auth_sendCode = %+v", FormatStruct(tl))
+	Log.Infof("TL_auth_resendCode = %+v", FormatStruct(tl))
 
 	phone := tl.Get_phone_number()
 
