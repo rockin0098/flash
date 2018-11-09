@@ -1,4 +1,4 @@
-package service
+package tlservice
 
 import (
 	"bytes"
@@ -13,9 +13,10 @@ import (
 	"github.com/rockin0098/meow/base/crypto"
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/model"
+	"github.com/rockin0098/meow/server/service"
 )
 
-func (s *TLService) TL_req_pq_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+func (s *TLService) TL_req_pq_Process(sess *service.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
@@ -46,7 +47,7 @@ func (s *TLService) TL_req_pq_Process(sess *Session, msg *mtproto.UnencryptedMes
 	return resPQ, nil
 }
 
-func (s *TLService) TL_req_DH_params_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+func (s *TLService) TL_req_DH_params_Process(sess *service.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
@@ -176,7 +177,7 @@ func (s *TLService) TL_req_DH_params_Process(sess *Session, msg *mtproto.Unencry
 	return server_DHParamsOk, nil
 }
 
-func (s *TLService) TL_set_client_DH_params_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+func (s *TLService) TL_set_client_DH_params_Process(sess *service.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 	Log.Infof("entering... sessid = %v", sess.SessionID)
 
 	tlobj := msg.TLObject
@@ -276,8 +277,8 @@ func (s *TLService) TL_set_client_DH_params_Process(sess *Session, msg *mtproto.
 	}
 
 	// 先缓存
-	as := AuthServiceInstance()
-	auth := &Auth{
+	as := service.AuthServiceInstance()
+	auth := &service.Auth{
 		AuthKeyID: authKeyID,
 	}
 	as.Store(authKeyID, auth)

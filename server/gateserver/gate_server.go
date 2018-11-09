@@ -13,6 +13,7 @@ import (
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
+	"github.com/rockin0098/meow/server/tlservice"
 )
 
 const (
@@ -148,7 +149,7 @@ func OnWork(ctx *tcpnet.TcpContext, m interface{}) error {
 	sess := ctx.MustGet(service.SESSION).(*service.Session)
 	msg := m.(*mtproto.RawMessage)
 
-	tls := service.TLServiceInstance()
+	tls := tlservice.TLServiceInstance()
 	err := tls.TLMessageProcess(sess, msg)
 	if err != nil {
 		Log.Error(err)

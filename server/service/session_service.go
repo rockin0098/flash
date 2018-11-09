@@ -15,17 +15,6 @@ import (
 	"github.com/rockin0098/meow/server/model"
 )
 
-const (
-	kDefaultPingTimeout = 30
-	kPingAddTimeout     = 15
-)
-
-const (
-	kStateCreated = iota
-	kStateOnline
-	kStateOffline
-)
-
 func GenerateSessionID() string {
 	return guid.GenerateStringUID()
 }

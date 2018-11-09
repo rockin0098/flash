@@ -1,4 +1,4 @@
-package service
+package tlservice
 
 type LangPack struct {
 	LangCode          string

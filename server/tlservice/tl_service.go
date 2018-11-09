@@ -1,4 +1,4 @@
-package service
+package tlservice
 
 import (
 	"container/list"
@@ -10,15 +10,8 @@ import (
 	. "github.com/rockin0098/meow/base/global"
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/model"
+	"github.com/rockin0098/meow/server/service"
 )
-
-// type TLMessageReplyTypeEnum int
-
-// const (
-// 	_ TLMessageReplyTypeEnum = iota
-// 	TLMessageReplyNewMessageID
-// 	TLMessageReplyZeroMessageID
-// )
 
 type MessageListWrapper struct {
 	Messages []*mtproto.TL_message2
@@ -32,7 +25,7 @@ func TLServiceInstance() *TLService {
 	return tlService
 }
 
-func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) error {
+func (s *TLService) TLMessageProcess(sess *service.Session, raw *mtproto.RawMessage) error {
 
 	Log.Info("entering...")
 
@@ -88,11 +81,11 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 			reqmsg.AuthKeyID, reqmsg.MessageID, reqmsg.Salt, reqmsg.SeqNo, reqmsg.TLObject)
 
 		clientSessionID := reqmsg.ClientSessionID
-		ss := SessionServiceInstance()
+		ss := service.SessionServiceInstance()
 		csess, ok := ss.LoadClientSession(clientSessionID)
 		if !ok {
 			// 记录  session id
-			csess = &ClientSession{
+			csess = &service.ClientSession{
 				Sess:             sess,
 				ClientSessionID:  clientSessionID,
 				AuthKeyID:        authid,
@@ -103,9 +96,9 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 				ApiMessages:      list.New(),
 				UniqueID:         rand.Int63(),
 				ClientState:      kStateCreated,
-				PendingMessages:  []*PendingMessage{},
+				PendingMessages:  []*service.PendingMessage{},
 				IsUpdates:        false,
-				RpcMessages:      []*NetworkApiMessage{},
+				RpcMessages:      []*service.NetworkApiMessage{},
 			}
 
 			ss.NewClientSession(clientSessionID, csess)
@@ -154,7 +147,7 @@ func (s *TLService) TLMessageProcess(sess *Session, raw *mtproto.RawMessage) err
 	return nil
 }
 
-func (s *TLService) TLExtractMessageProcess(csess *ClientSession, msgid int64, seqNo int32, object mtproto.TLObject, messages *MessageListWrapper) {
+func (s *TLService) TLExtractMessageProcess(csess *service.ClientSession, msgid int64, seqNo int32, object mtproto.TLObject, messages *MessageListWrapper) {
 
 	switch object.(type) {
 	case *mtproto.TL_msg_container:
@@ -257,7 +250,7 @@ func (s *TLService) TLExtractMessageProcess(csess *ClientSession, msgid int64, s
 	return
 }
 
-func (s *TLService) TLMessageListWrapperProcess(csess *ClientSession, msglist *MessageListWrapper) error {
+func (s *TLService) TLMessageListWrapperProcess(csess *service.ClientSession, msglist *MessageListWrapper) error {
 	var (
 		hasRpcRequest bool
 		hasHttpWait   bool
@@ -356,7 +349,7 @@ func (s *TLService) TLMessageListWrapperProcess(csess *ClientSession, msglist *M
 
 	// send pending
 	c.SendPendingMessages()
-	c.PendingMessages = []*PendingMessage{}
+	c.PendingMessages = []*service.PendingMessage{}
 
 	// set user online
 	// if c.IsUpdates {
@@ -400,7 +393,7 @@ func (s *TLService) TLMessageListWrapperProcess(csess *ClientSession, msglist *M
 	return nil
 }
 
-func (s *TLService) TLUnencryptedMessageProcess(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
+func (s *TLService) TLUnencryptedMessageProcess(sess *service.Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {
 
 	tlobj := msg.TLObject
 
