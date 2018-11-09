@@ -1,5 +1,0 @@
-[90m[2018-10-07 15:54:50.668][0m [32m INFO[0m logger init (logger.LogInit:logger.go:55)
-[90m[2018-10-07 15:54:50.669][0m [32m INFO[0m test starting... (service.TestMain:mtproto_message_test.go:13)
-[90m[2018-10-07 15:54:50.672][0m [32m INFO[0m n = 105 bytes sent (service.TestSend:mtproto_message_test.go:51)
-[90m[2018-10-07 15:54:50.675][0m [32m INFO[0m n = 85 bytes read (service.TestSend:mtproto_message_test.go:60)
-[90m[2018-10-07 15:54:55.676][0m [32m INFO[0m test ending... (service.TestMain:mtproto_message_test.go:15)
