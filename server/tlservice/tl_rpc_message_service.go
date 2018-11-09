@@ -47,6 +47,10 @@ func (s *TLService) TLRpcMessageProcess(csess *service.ClientSession, msgid int6
 		res, err = s.TL_auth_resendCode_Process(csess, tlobj)
 	case *mtproto.TL_auth_signIn:
 		res, err = s.TL_auth_signIn_Process(csess, tlobj)
+	case *mtproto.TL_auth_cancelCode:
+		res, err = s.TL_auth_cancelCode_Process(csess, tlobj)
+	case *mtproto.TL_auth_signUp:
+		res, err = s.TL_auth_signUp_Process(csess, tlobj)
 
 	// account
 	case *mtproto.TL_account_updateStatus:
@@ -76,23 +80,22 @@ func (s *TLService) TLRpcMessageProcess(csess *service.ClientSession, msgid int6
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tlobj)
 	}
 
-	var reply mtproto.TLObject
-
 	if err != nil {
-		Log.Errorf("object = %T, err = %v", tlobj, err)
+		Log.Warnf("object = %T, err = %v", tlobj, err)
 		rpcerr, ok := err.(*mtproto.TL_rpc_error) // rpc error
 		if ok && rpcerr.Get_error_code() != int32(mtproto.TLRpcErrorCodes_NOTRETURN_CLIENT) {
-			// err = c.WriteFull(mtproto.GenerateMessageID(), true, rpcerr)
-			reply = rpcerr
-			return err
+			res = rpcerr
 		} else {
+			Log.Errorf("object = %T, err = %v", tlobj, err)
 			return err
 		}
 	} else {
-		reply = &mtproto.TL_rpc_result{
-			M_req_msg_id: msgid,
-			M_result:     res,
-		}
+
+	}
+
+	reply := &mtproto.TL_rpc_result{
+		M_req_msg_id: msgid,
+		M_result:     res,
 	}
 
 	err = c.WriteFull(mtproto.GenerateMessageID(), true, reply)

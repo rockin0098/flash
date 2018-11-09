@@ -1,15 +1,17 @@
 package model
 
 import (
+	"encoding/hex"
 	"time"
 
 	"github.com/jinzhu/gorm"
+	"github.com/rockin0098/meow/base/crypto"
 	"github.com/rockin0098/meow/base/datasource"
 )
 
 type User struct {
 	Model
-	AccessHash     string `gorm:"size:256"`
+	AccessHash     int64  `gorm:""`
 	FirstName      string `gorm:"size:32"`
 	LastName       string `gorm:"size:32"`
 	UserName       string `gorm:"size:32"`
@@ -46,4 +48,70 @@ func (s *ModelManager) CheckPhoneExists(phone string) bool {
 	}
 
 	return true
+}
+
+func (s *ModelManager) GetUserByPhoneNumber(phone string) *User {
+
+	db := datasource.DataSourceInstance().Master()
+
+	user := &User{}
+	err := db.Where("phone=?", phone).Find(user).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
+		return nil
+	}
+
+	return user
+}
+
+func (s *ModelManager) CreateNewUser(user *User, authid int64) error {
+
+	db := datasource.DataSourceInstance().Master()
+
+	tx := db.Begin()
+
+	err := tx.Create(user).Error
+	if err != nil {
+		tx.Rollback()
+		Log.Error(err)
+		return err
+	}
+
+	au := &AuthUser{
+		AuthID: authid,
+		UserID: user.ID,
+	}
+
+	err = tx.Create(au).Error
+	if err != nil {
+		tx.Rollback()
+		Log.Error(err)
+		return err
+	}
+
+	password := &UserPassword{
+		UserID:     user.ID,
+		ServerSalt: hex.EncodeToString(crypto.GenerateNonce(8)),
+	}
+
+	err = tx.Create(password).Error
+	if err != nil {
+		tx.Rollback()
+		Log.Error(err)
+		return err
+	}
+
+	err = tx.Commit().Error
+	if err != nil {
+		tx.Rollback()
+		Log.Error(err)
+		return err
+	}
+
+	return nil
 }

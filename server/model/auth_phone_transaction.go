@@ -1,5 +1,10 @@
 package model
 
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/rockin0098/meow/base/datasource"
+)
+
 type AuthPhoneTransaction struct {
 	Model
 	AuthKeyID        int64  `gorm:""`
@@ -16,4 +21,22 @@ type AuthPhoneTransaction struct {
 	Attempts         int32  `gorm:""`
 	CreatedTime      int64  `gorm:""`
 	IsDeleted        int8   `gorm:""`
+}
+
+func (s *ModelManager) GetAuthPhoneTransactionByHash(hash string) *AuthPhoneTransaction {
+	db := datasource.DataSourceInstance().Master()
+
+	res := &AuthPhoneTransaction{}
+	err := db.Where("transaction_hash=?", hash).Find(res).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
+		return nil
+	}
+
+	return res
 }

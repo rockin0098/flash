@@ -1,7 +1,6 @@
 package tlservice
 
 import (
-	. "github.com/rockin0098/meow/base/global"
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
@@ -13,8 +12,6 @@ func (s *TLService) TL_auth_resendCode_Process(csess *service.ClientSession, obj
 
 	tlobj := object
 	tl := tlobj.(*mtproto.TL_auth_resendCode)
-
-	Log.Infof("TL_auth_resendCode = %+v", FormatStruct(tl))
 
 	phone := tl.Get_phone_number()
 
