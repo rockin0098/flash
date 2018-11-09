@@ -52,9 +52,7 @@ func (s *TLService) TL_auth_sendCode_Process(csess *service.ClientSession, objec
 
 	Log.Infof("registered = %v", registered)
 
-	// 调用短信服务发送短信, 并获取验证码
-	//
-
+	// TODO 调用短信服务发送短信, 并获取验证码
 	code := "66666"
 
 	authPhoneTransaction := &model.AuthPhoneTransaction{

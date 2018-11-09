@@ -1,6 +1,7 @@
 package mtproto
 
 import (
+	"fmt"
 	"io/ioutil"
 
 	. "github.com/rockin0098/meow/base/global"
@@ -50,6 +51,21 @@ func ToBool2(b bool) TLObject {
 	} else {
 		return nil
 	}
+}
+
+func FromBool(b TLObject) bool {
+	_, isTrue := b.(*TL_boolTrue)
+	if isTrue {
+		return true
+	}
+
+	_, isFalse := b.(*TL_boolTrue)
+	if isFalse {
+		return false
+	}
+
+	t := fmt.Sprintf("invalid TL type = %T", b)
+	panic(t)
 }
 
 func LoadConfig(file string) *TLConfig {

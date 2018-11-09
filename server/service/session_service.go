@@ -159,6 +159,7 @@ type ClientSession struct {
 	ClientSessionID int64
 	Layer           int32
 	// client session data || runtime variables
+	UserID           int64
 	AuthKeyID        int64
 	Salt             int64
 	FirstMessageID   int64
@@ -272,6 +273,20 @@ func (s *ClientSession) ClientSessionStart() {
 		// }
 	})
 
+}
+
+func (s *ClientSession) GetUserID() int64 {
+
+	if s.UserID == 0 {
+		mm := model.GetModelManager()
+		au := mm.GetAuthUserByAuthID(s.AuthKeyID)
+		ASSERT(au != nil)
+
+		s.UserID = au.UserID
+		return s.UserID
+	}
+
+	return s.UserID
 }
 
 //// Check Server Salt

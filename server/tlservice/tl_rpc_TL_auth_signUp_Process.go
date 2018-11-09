@@ -28,7 +28,7 @@ func (s *TLService) TL_auth_signUp_Process(csess *service.ClientSession, object 
 	if user != nil {
 		return nil, mtproto.NewRpcError2(mtproto.TLRpcErrorCodes_PHONE_NUMBER_OCCUPIED)
 	} else {
-		user := &model.User{
+		user = &model.User{
 			AccessHash:  rand.Int63(),
 			Phone:       phone,
 			FirstName:   tl.Get_first_name(),

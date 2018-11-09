@@ -115,3 +115,18 @@ func (s *ModelManager) CreateNewUser(user *User, authid int64) error {
 
 	return nil
 }
+
+func (s *ModelManager) GetUsersByIDList(ids []int64) []*User {
+
+	db := datasource.DataSourceInstance().Master()
+
+	var res []*User
+	err := db.Where("id in (?)", ids).Find(res).Error
+	if err != nil {
+		Log.Error(err)
+		return nil
+	}
+
+	return res
+
+}

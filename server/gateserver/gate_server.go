@@ -86,6 +86,9 @@ func ServerInit() {
 		new(model.AuthPhoneTransaction),
 		new(model.AuthUser),
 		new(model.UserPassword),
+		new(model.UserPresence),
+		new(model.UserContact),
+		new(model.UserDialog),
 	)
 }
 

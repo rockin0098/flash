@@ -12,6 +12,8 @@ func (s *TLService) TL_messages_getDialogs_Process(csess *service.ClientSession,
 	// tlobj := object
 	// tl := tlobj.(*mtproto.TL_messages_getDialogs)
 
+	// offsetID := tl.Get_offset_id()
+
 	messageDialogs := &mtproto.TL_messages_dialogs{}
 
 	return messageDialogs, nil
