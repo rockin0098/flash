@@ -83,6 +83,7 @@ func ServerInit() {
 		serverConfig.DataSource,
 		new(model.AuthKey),
 		new(model.User),
+		new(model.AuthPhoneTransaction),
 	)
 }
 

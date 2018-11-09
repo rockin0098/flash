@@ -24,6 +24,28 @@ func (s *TLService) TL_auth_sendCode_Process(csess *service.ClientSession, objec
 
 	Log.Infof("registered = %v", registered)
 
+	// 调用短信服务发送短信, 并获取验证码
+	// 
+
+	code := "66666"
+
+	authPhoneTransaction := &model.AuthPhoneTransaction{
+		AuthKeyID: csess.AuthKeyID,
+		PhoneNumber      : phone,
+		Code             : code,
+		CodeExpired      : int32(time.Now().Unix() + 15*60),
+		TransactionHash  : crypto.GenerateStringNonce(16),
+		SentCodeType     : kCodeType_App,
+		FlashCallPattern :
+		NextCodeType     :
+		State            :
+		ApiID            :
+		ApiHash          :
+		Attempts         :
+		CreatedTime      :
+		IsDeleted        :
+	}
+
 	codeType := &mtproto.TL_auth_sentCodeTypeApp{
 		M_length: 5,
 	}

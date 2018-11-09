@@ -4,22 +4,13 @@ import (
 	"encoding/hex"
 
 	"github.com/jinzhu/gorm"
-
 	"github.com/rockin0098/meow/base/datasource"
-	. "github.com/rockin0098/meow/base/logger"
 )
 
-type ModelManager struct{}
-
-var modelManager = &ModelManager{}
-
-func GetModelManager() *ModelManager {
-	return modelManager
-}
-
-func (s *ModelManager) ModelAdd(m interface{}) error {
-	db := datasource.DataSourceInstance().Master()
-	return db.Create(m).Error
+type AuthKey struct {
+	Model
+	AuthID int64  `gorm:""`
+	Body   string `gorm:"size:1024"`
 }
 
 func (s *ModelManager) GetAuthKeyByAuthID(authID int64) *AuthKey {
@@ -52,23 +43,4 @@ func (s *ModelManager) GetAuthKeyValueByAuthID(authID int64) []byte {
 	}
 
 	return ak
-}
-
-func (s *ModelManager) CheckPhoneExists(phone string) bool {
-
-	db := datasource.DataSourceInstance().Master()
-
-	user := &User{}
-	err := db.Where("phone=?", phone).Find(user).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		Log.Error(err)
-		return false
-	}
-
-	if err == gorm.ErrRecordNotFound {
-		Log.Warn(err)
-		return false
-	}
-
-	return true
 }
