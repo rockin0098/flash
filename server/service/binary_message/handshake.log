@@ -1,0 +1,238 @@
+➜  im-server git:(local) ✗ go run server/access/frontend/frontend.go
+read log config failed, err = open ./config/log.json: no such file or directory
+will use default log config
+[2018-10-07 18:12:41.605]  INFO logger init (logger.LogInit:logger.go:55)
+I1007 18:12:41.608541   40118 app_instance.go:58] instance initialize...
+I1007 18:12:41.609239   40118 server.go:98] load conf: {server_id: 1, server80: &{{frontend80 mtproto 0.0.0.0:8800} {frontend80 node1 127.0.0.1:10000 [http://127.0.0.1:2379] 2000000000 10000000000}}. server443: &{{frontend443 mtproto 0.0.0.0:12345} {frontend443 node1 127.0.0.1:10000 [http://127.0.0.1:2379] 2000000000 10000000000}}, server5222: &{{frontend5222 mtproto 0.0.0.0:5222} {frontend5222 node1 127.0.0.1:10000 [http://127.0.0.1:2379] 2000000000 10000000000}}, clients: &{[{handshake zproto [127.0.0.1:10005] [http://127.0.0.1:2379] random} {session zproto [127.0.0.1:10000] [http://127.0.0.1:2379] ketama}]}}
+&{0xc0000dfa00 /nebulaim/frontend5222/node1 {"Addr":"127.0.0.1:10000","Metadata":{}} 10000000000 0xc0000dd680 0x116e970}
+I1007 18:12:41.609618   40118 tcp_client_group_manager.go:57] NewTcpClientGroup group : map[]
+I1007 18:12:41.610129   40118 app_instance.go:67] instance run_loop...
+I1007 18:12:41.610141   40118 app_instance.go:71] wait quit...
+I1007 18:12:46.591212   40118 zproto_client.go:160] onNewClient - client: &{handshake 0xc0004ca3c0 true 10240 0xc0003154a0 127.0.0.1:10005 zproto 30000000000}, conn: {connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)}
+I1007 18:12:46.591381   40118 server.go:198] onNewClient - peer({connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)})
+I1007 18:12:46.591620   40118 zproto_client.go:286] onHandshakeRes: &{1 [234 148 121 146 250 49 35 100 136 197 107 25 115 91 100 220 122 232 236 23 188 250 53 77 229 117 70 175 68 102 6 245]}
+I1007 18:12:54.540804   40118 mtproto_server.go:95] onNewConnection 10.30.0.28:57934
+I1007 18:12:54.540865   40118 server.go:158] onServerNewConnection - {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, ctx: {&{{0 0} 256 0xc0000385b0 0xc00052c360 1  0}}}
+I1007 18:12:54.540938   40118 mtproto_server.go:95] onNewConnection 10.30.0.28:57931
+I1007 18:12:54.540950   40118 server.go:158] onServerNewConnection - {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}, ctx: {&{{0 0} 256 0xc000038620 0xc00052c390 1  0}}}
+I1007 18:12:54.540991   40118 mtproto_proxy_codec.go:229] eeeeee key iv
+key=e5a7daadc45b0e810922435eed6fcef20cbe04150c2412057664af28df937f10
+iv=aa5a96b4e60eb0a9e6fec7e759606a0c
+I1007 18:12:54.540998   40118 mtproto_proxy_codec.go:234] dddddd key iv
+key=0c6a6059e7c7fee6a9b00ee6b4965aaa107f93df28af64760512240c1504be0c
+iv=f2ce6fed5e432209810e5bc4addaa7e5
+I1007 18:12:54.541004   40118 mtproto_proxy_codec.go:239] before
+b_0_1=46
+b_1_3=2c8a8c
+b_4_60=b0553b060c6a6059e7c7fee6a9b00ee6b4965aaa107f93df28af64760512240c1504be0cf2ce6fed5e432209810e5bc4addaa7e555ff3f0f5fc0ad66
+I1007 18:12:54.543587   40118 mtproto_proxy_codec.go:249] after
+b_0_1=e6
+b_1_3=657b04
+b_4_60=25ad971ca4b469d92339b0e5f4f94609b4d2a75c8ced373c4f23af6241f00fec531a345dda03d9649d1ce321415fa8a3ce97cc18efefefefb0c8de5a
+I1007 18:12:54.543649   40118 mtproto_proxy_codec.go:255] after
+b_4_60[52]=ef
+b_4_60[53]=ef
+b_4_60[54]=ef
+b_4_60[55]=ef
+I1007 18:12:54.543658   40118 mtproto_proxy_codec.go:267] first_bytes_64: e6657b0425ad971ca4b469d92339b0e5f4f94609b4d2a75c8ced373c4f23af6241f00fec531a345dda03d9649d1ce321415fa8a3ce97cc18efefefefb0c8de5a
+I1007 18:12:54.543682   40118 mtproto_app_codec.go:182] read before encrypt p = 84
+I1007 18:12:54.543687   40118 mtproto_app_codec.go:185] read after encrypt p = 0a
+I1007 18:12:54.543691   40118 mtproto_app_codec.go:59] MTProtoAppCodec first_byte: 0a
+I1007 18:12:54.543696   40118 mtproto_app_codec.go:64] MTProtoAppCodec first_byte2: 0a
+I1007 18:12:54.543700   40118 mtproto_app_codec.go:68] size1: 40
+I1007 18:12:54.545346   40118 mtproto_app_codec.go:182] read before encrypt p = 34ab6af43d4070e40a8c57af4e2497b8c6ca97232e573f334519d222bab52150280ed2c548ecf3fe
+I1007 18:12:54.545392   40118 mtproto_app_codec.go:185] read after encrypt p = 0000000000000000f5e363ace70cee31140000007897466082b54b92df535a63a2b09df5c6d1e503
+[2018-10-07 18:12:54.545]  INFO message.Payload = 0000000000000000f5e363ace70cee31140000007897466082b54b92df535a63a2b09df5c6d1e503 (mtproto.(*MTProtoAppCodec).Receive:mtproto_app_codec.go:109)
+I1007 18:12:54.545652   40118 mtproto_server.go:103] onConnectionDataArrived 10.30.0.28:57931
+I1007 18:12:54.545664   40118 server.go:163] onServerMessageDataArrived - receive data: {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}, md: {server_id: 1, conn_id: 2, client_addr: %!d(string=10.30.0.28:57931), trace_id: 1048878828279042049, span_id: 1048878828279042048, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.545851   40118 server.go:164] onServerMessageDataArrived - raw message : 0000000000000000f5e363ace70cee31140000007897466082b54b92df535a63a2b09df5c6d1e503
+I1007 18:12:54.545860   40118 server.go:311] onServerUnencryptedRawMessage - receive data: {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=256) %!s(*zproto.ZProtoMetadata=&{1 2 10.30.0.28:57931 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{256 0 []}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 2, client_addr: %!d(string=10.30.0.28:57931), trace_id: 1048878828279042049, span_id: 1048878828279042048, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.545887   40118 server.go:329] SendMessage - handshake: {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 2 10.30.0.28:57931 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{513 0 []}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 2, client_addr: %!d(string=10.30.0.28:57931), trace_id: 1048878828279042049, span_id: 1048878828279042048, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.546212   40118 tcp_client_group_manager.go:160] tcp_client_group_manager SendData: {name: %s, conn: %s, msg: {%v}}handshake{connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)} &{0 0 0 {server_id: 1, conn_id: 2, client_addr: %!d(string=10.30.0.28:57931), trace_id: 1048878828283236353, span_id: 1048878828283236352, recveive_time: 1538907174, from: frontend} {payload_len: 68, payload: 01ff00000200000000000020010200000000000000000000280000000000000000000000f5e363ace70cee31140000007897466082b54b92df535a63a2b09df5c6d1e503}}
+I1007 18:12:54.551568   40118 mtproto_proxy_codec.go:229] eeeeee key iv
+key=e1668df4d5c80cece47943c61540c60f5dc569f420db620a8e12261369cc3c3f
+iv=7e9330ee37757f7090ac44f847200091
+I1007 18:12:54.551597   40118 mtproto_proxy_codec.go:234] dddddd key iv
+key=91002047f844ac90707f7537ee30937e3f3ccc691326128e0a62db20f469c55d
+iv=0fc64015c64379e4ec0cc8d5f48d66e1
+I1007 18:12:54.551605   40118 mtproto_proxy_codec.go:239] before
+b_0_1=fe
+b_1_3=920325
+b_4_60=9176812891002047f844ac90707f7537ee30937e3f3ccc691326128e0a62db20f469c55d0fc64015c64379e4ec0cc8d5f48d66e104c340cf8ea8cd54
+I1007 18:12:54.551613   40118 mtproto_proxy_codec.go:249] after
+b_0_1=d4
+b_1_3=433ea2
+b_4_60=688bd1387584726039dc591421a8ee82ed786ac3f8dda4849286484e11be6e3bab8cfe375cabf57fe88ce0ff98642d0edac9cf6cefefefef72800219
+I1007 18:12:54.551619   40118 mtproto_proxy_codec.go:255] after
+b_4_60[52]=ef
+b_4_60[53]=ef
+b_4_60[54]=ef
+b_4_60[55]=ef
+I1007 18:12:54.551626   40118 mtproto_proxy_codec.go:267] first_bytes_64: d4433ea2688bd1387584726039dc591421a8ee82ed786ac3f8dda4849286484e11be6e3bab8cfe375cabf57fe88ce0ff98642d0edac9cf6cefefefef72800219
+I1007 18:12:54.558291   40118 mtproto_app_codec.go:182] read before encrypt p = 9c
+I1007 18:12:54.558308   40118 mtproto_app_codec.go:185] read after encrypt p = 0a
+I1007 18:12:54.558314   40118 mtproto_app_codec.go:59] MTProtoAppCodec first_byte: 0a
+I1007 18:12:54.558319   40118 mtproto_app_codec.go:64] MTProtoAppCodec first_byte2: 0a
+I1007 18:12:54.558323   40118 mtproto_app_codec.go:68] size1: 40
+I1007 18:12:54.558328   40118 mtproto_app_codec.go:182] read before encrypt p = 1f4a058103654d08f8c889ba45951bc46c8750d15751dea79f33add268f99b7130aeb8909b6a1e6a
+I1007 18:12:54.558332   40118 mtproto_app_codec.go:185] read after encrypt p = 00000000000000000020408a26dcb95b1400000078974660a6a40a7d375bbc7cbbe02d2d8072ed85
+[2018-10-07 18:12:54.558]  INFO message.Payload = 00000000000000000020408a26dcb95b1400000078974660a6a40a7d375bbc7cbbe02d2d8072ed85 (mtproto.(*MTProtoAppCodec).Receive:mtproto_app_codec.go:109)
+I1007 18:12:54.564407   40118 mtproto_server.go:103] onConnectionDataArrived 10.30.0.28:57934
+I1007 18:12:54.564429   40118 server.go:163] onServerMessageDataArrived - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878828358733825, span_id: 1048878828358733824, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.564470   40118 server.go:164] onServerMessageDataArrived - raw message : 00000000000000000020408a26dcb95b1400000078974660a6a40a7d375bbc7cbbe02d2d8072ed85
+I1007 18:12:54.564476   40118 server.go:311] onServerUnencryptedRawMessage - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=256) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{256 0 []}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878828358733825, span_id: 1048878828358733824, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.564659   40118 server.go:329] SendMessage - handshake: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{513 0 []}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878828358733825, span_id: 1048878828358733824, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 40}}
+I1007 18:12:54.564701   40118 tcp_client_group_manager.go:160] tcp_client_group_manager SendData: {name: %s, conn: %s, msg: {%v}}handshake{connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)} &{0 0 0 {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878828358733827, span_id: 1048878828358733826, recveive_time: 1538907174, from: frontend} {payload_len: 68, payload: 01ff000003000000000000200102000000000000000000002800000000000000000000000020408a26dcb95b1400000078974660a6a40a7d375bbc7cbbe02d2d8072ed85}}
+I1007 18:12:54.565049   40118 server.go:230] onClientHandshakeMessage - handshake: peer({connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)}), state: {{state: 514, res_state: 1, ctx: 0a1082b54b92df535a63a2b09df5c6d1e503121074dd4ef1b7239da810bacd656320aeb9}}
+E1007 18:12:54.565217   40118 zproto_session.go:132]  handshake ======= stack = goroutine 13 [running]:
+runtime/debug.Stack(0x1a6e5e0, 0x195bf66, 0x195bf63)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoHandshakeMessage).String(0xc00052c690, 0x1c31578, 0xc0004123c0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_session.go:132 +0x34
+fmt.(*pp).handleMethods(0xc0004123c0, 0x73, 0x2771701)
+	/usr/local/go/src/fmt/print.go:603 +0x27c
+fmt.(*pp).printArg(0xc0004123c0, 0x1a7f4c0, 0xc00052c690, 0xc000000073)
+	/usr/local/go/src/fmt/print.go:686 +0x203
+fmt.(*pp).doPrintf(0xc0004123c0, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/usr/local/go/src/fmt/print.go:1003 +0x166
+fmt.Fprintf(0x1cfc980, 0xc0004f3550, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3, 0xc000033cd8, 0x146db0c, 0xc000125b80)
+	/usr/local/go/src/fmt/print.go:188 +0x72
+github.com/golang/glog.(*loggingT).printf(0x2753bc0, 0xc000000000, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:651 +0xc4
+github.com/golang/glog.Infof(0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:1073 +0x67
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).onClientHandshakeMessage(0xc00021f940, 0xc000490de0, 0xc000039030, 0xc00052c690, 0xc00052c690, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:253 +0x1fc
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).OnClientMessageArrived(0xc00021f940, 0xc000490de0, 0xc000039030, 0x1, 0x5bb9dc2621ab6281, 0x3, 0x1d00e80, 0xc00052c690, 0xc000033f20, 0x102bb01)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:206 +0xfb
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).onRawPayload(0xc0003154a0, 0xc000490de0, 0xc000039030, 0x1, 0x5bb9dc2621ab6281, 0xc000000003, 0xc00000d120, 0xc0004ca400, 0x1a66300)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:267 +0xe1
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).OnClientDataArrived(0xc0003154a0, 0xc000490de0, 0x1a66300, 0xc00052c660, 0x0, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:195 +0xdd
+gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).establishTcpConnection(0xc000490de0, 0xc0004ca3c0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:109 +0xa9
+created by gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).Serve
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:80 +0x14e
+
+I1007 18:12:54.565068   40118 server.go:253] onClientHandshakeMessage - sendToClient to: {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}, md: {server_id: 1, conn_id: 2, client_addr: %!d(string=), trace_id: 1048878828283236353, span_id: 1048878828283236352, recveive_time: 1538907174, from: }, handshake: {session_id: 2305843009213693954, state: {state: 514, res_state: 1, ctx: 0a1082b54b92df535a63a2b09df5c6d1e503121074dd4ef1b7239da810bacd656320aeb9}, mtp_raw_data_len: 84, mtp_raw_data: 0000000000000000a997a82126dcb95b400000006324160582b54b92df535a63a2b09df5c6d1e50374dd4ef1b7239da810bacd656320aeb90817ed48941a08f98100000015c4b51c01000000cd601077c171e0a9}}
+I1007 18:12:54.566085   40118 mtproto_app_codec.go:157]  ######## resp = 74bab4d5f6337a960e488e0ed35367edd16fba2f819ba6fb54196942f047edad2dd28f3f5bf220e82c9cdef614bd8cf87a150f744918bbfc9258bbf8fd4b147b1e50a16a4105b0c6568ebdc582d81d8c2ee6ba00f0
+I1007 18:12:54.566685   40118 server.go:230] onClientHandshakeMessage - handshake: peer({connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)}), state: {{state: 514, res_state: 1, ctx: 0a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee60}}
+E1007 18:12:54.566815   40118 zproto_session.go:132]  handshake ======= stack = goroutine 13 [running]:
+runtime/debug.Stack(0x120, 0x3, 0x40)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoHandshakeMessage).String(0xc00052e4b0, 0x1c31578, 0xc000412840)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_session.go:132 +0x34
+fmt.(*pp).handleMethods(0xc000412840, 0x73, 0x2771701)
+	/usr/local/go/src/fmt/print.go:603 +0x27c
+fmt.(*pp).printArg(0xc000412840, 0x1a7f4c0, 0xc00052e4b0, 0xc000000073)
+	/usr/local/go/src/fmt/print.go:686 +0x203
+fmt.(*pp).doPrintf(0xc000412840, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/usr/local/go/src/fmt/print.go:1003 +0x166
+fmt.Fprintf(0x1cfc980, 0xc000310fd0, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3, 0xc000033cd8, 0x146db0c, 0xc000125b80)
+	/usr/local/go/src/fmt/print.go:188 +0x72
+github.com/golang/glog.(*loggingT).printf(0x2753bc0, 0xc000000000, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:651 +0xc4
+github.com/golang/glog.Infof(0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:1073 +0x67
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).onClientHandshakeMessage(0xc00021f940, 0xc000490de0, 0xc00031ad90, 0xc00052e4b0, 0xc00052e4b0, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:253 +0x1fc
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).OnClientMessageArrived(0xc00021f940, 0xc000490de0, 0xc00031ad90, 0x1, 0x5bb9dc2621c04a11, 0x5, 0x1d00e80, 0xc00052e4b0, 0xc000033f20, 0x102bb01)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:206 +0xfb
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).onRawPayload(0xc0003154a0, 0xc000490de0, 0xc00031ad90, 0x1, 0x5bb9dc2621c04a11, 0xc000000005, 0xc000313d40, 0xc0004ca400, 0x1a66300)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:267 +0xe1
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).OnClientDataArrived(0xc0003154a0, 0xc000490de0, 0x1a66300, 0xc00052e480, 0x0, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:195 +0xdd
+gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).establishTcpConnection(0xc000490de0, 0xc0004ca3c0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:109 +0xa9
+created by gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).Serve
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:80 +0x14e
+
+I1007 18:12:54.566721   40118 server.go:253] onClientHandshakeMessage - sendToClient to: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: {server_id: 1, conn_id: 3, client_addr: %!d(string=), trace_id: 1048878828358733827, span_id: 1048878828358733826, recveive_time: 1538907174, from: }, handshake: {session_id: 2305843009213693955, state: {state: 514, res_state: 1, ctx: 0a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee60}, mtp_raw_data_len: 84, mtp_raw_data: 000000000000000069e8bf2126dcb95b4000000063241605a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee600817ed48941a08f98100000015c4b51c01000000cd601077c171e0a9}}
+I1007 18:12:54.568592   40118 mtproto_app_codec.go:157]  ######## resp = 78adeea4852932df59d0a1d25faade978e77764a6aa6718509f8c159ac615749541384bfd1c19f73f747eb494b67312a74e46860388888486ed02558ee2825c4659fca53b2b9e64a6745211638bcffcb1a83e49d0f
+I1007 18:12:54.570584   40118 mtproto_app_codec.go:182] read before encrypt p =
+I1007 18:12:54.570600   40118 server.go:191] onServerConnectionClosed - {peer: {connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}}
+E1007 18:12:54.570642   40118 tcp_server.go:190] conn {{connID: 2@frontend5222-(10.30.0.28:5222->10.30.0.28:57931)}} recv error: EOF
+I1007 18:12:54.766657   40118 mtproto_app_codec.go:182] read before encrypt p = d5
+I1007 18:12:54.766681   40118 mtproto_app_codec.go:185] read after encrypt p = 55
+I1007 18:12:54.766687   40118 mtproto_app_codec.go:59] MTProtoAppCodec first_byte: 55
+I1007 18:12:54.766691   40118 mtproto_app_codec.go:64] MTProtoAppCodec first_byte2: 55
+I1007 18:12:54.766695   40118 mtproto_app_codec.go:68] size1: 340
+I1007 18:12:54.766715   40118 mtproto_app_codec.go:182] read before encrypt p = edff86e3ad13c19224f6f045b9379fb8ec2cf427b34eb70ee0cd131e47dfd8da7bf22254b63cff089e4eba54f1a77e9b99c490d35de914d28577caa672512f21a36a2423027b86224811adb01479745b7f643a2357a4a7981d77a3d6f3f9fd674e605b66596cbca55b9c12b5fe670d1fcee74d818863b02ff16112ee7a1fec2f1ab104729194b7da5c25681b42d17c2f1d41ac2e80d4652c4c76d6c1e029de61036f597a10757f6e417de59db8b7e4f60ef69310150ccc577e1430fb23096a36f1679fccd46b6ac61680d0c4fb6909b5a8f15069117b4e7f54a5c9f8d5347690aa0ee474ef844d9562ae99e7def173a15d5185e54e8dd4a8bf01d54625b449b0222502d6698b155de180a71a82231b3774d4048e6f676805a787ad2ec437eddb62490aec7f5ab91d2b07470cd425c246d367b53d371d824e7d6b1129e14461d053e9e5c062b3e4e0eb65d73fc07b1a6c38b944a9
+I1007 18:12:54.766745   40118 mtproto_app_codec.go:185] read after encrypt p = 000000000000000000e824c426dcb95b40010000bee412d7a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee6004494c553b0000000453911073000000cd601077c171e0a9fe00010016c2539e29d847bc1ecf73902dc3de0867c87747cc546478fa10ff26e39dfbb0db550e05b58ebecc3be7c06d269af5e6cf2e8c534c09c6f0a96af10ebe6231361b48916cd4cb75bd7d5461d755a09be2b9170c07e6ce3745621a21b319cf063b33cac56e3c93a2875c175ccecc9f73388cd5604103bf54751eda5c464f2005b308d9d2beb449c262a1b54399cf57cf7eaf241d9178b5f3bc22d0a4562d300ccf98fd8f4665a0f848ffc89d8ce4ffb93b5c72973f8d8ce23ca365ba875fb2ea1530efa0bca44ed0e45d9c8dc120ddc503baa5c7d5dc192ee877b4d1fb82b2cb88b9f38fa688f3c68175027c8994ad3848ae9798c30bd2a884d2201e81fa3de287
+[2018-10-07 18:12:54.766]  INFO message.Payload = 000000000000000000e824c426dcb95b40010000bee412d7a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee6004494c553b0000000453911073000000cd601077c171e0a9fe00010016c2539e29d847bc1ecf73902dc3de0867c87747cc546478fa10ff26e39dfbb0db550e05b58ebecc3be7c06d269af5e6cf2e8c534c09c6f0a96af10ebe6231361b48916cd4cb75bd7d5461d755a09be2b9170c07e6ce3745621a21b319cf063b33cac56e3c93a2875c175ccecc9f73388cd5604103bf54751eda5c464f2005b308d9d2beb449c262a1b54399cf57cf7eaf241d9178b5f3bc22d0a4562d300ccf98fd8f4665a0f848ffc89d8ce4ffb93b5c72973f8d8ce23ca365ba875fb2ea1530efa0bca44ed0e45d9c8dc120ddc503baa5c7d5dc192ee877b4d1fb82b2cb88b9f38fa688f3c68175027c8994ad3848ae9798c30bd2a884d2201e81fa3de287 (mtproto.(*MTProtoAppCodec).Receive:mtproto_app_codec.go:109)
+I1007 18:12:54.766883   40118 mtproto_server.go:103] onConnectionDataArrived 10.30.0.28:57934
+I1007 18:12:54.766896   40118 server.go:163] onServerMessageDataArrived - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829205983233, span_id: 1048878829205983232, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 340}}
+I1007 18:12:54.766913   40118 server.go:164] onServerMessageDataArrived - raw message : 000000000000000000e824c426dcb95b40010000bee412d7a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee6004494c553b0000000453911073000000cd601077c171e0a9fe00010016c2539e29d847bc1ecf73902dc3de0867c87747cc546478fa10ff26e39dfbb0db550e05b58ebecc3be7c06d269af5e6cf2e8c534c09c6f0a96af10ebe6231361b48916cd4cb75bd7d5461d755a09be2b9170c07e6ce3745621a21b319cf063b33cac56e3c93a2875c175ccecc9f73388cd5604103bf54751eda5c464f2005b308d9d2beb449c262a1b54399cf57cf7eaf241d9178b5f3bc22d0a4562d300ccf98fd8f4665a0f848ffc89d8ce4ffb93b5c72973f8d8ce23ca365ba875fb2ea1530efa0bca44ed0e45d9c8dc120ddc503baa5c7d5dc192ee877b4d1fb82b2cb88b9f38fa688f3c68175027c8994ad3848ae9798c30bd2a884d2201e81fa3de287
+I1007 18:12:54.766991   40118 server.go:311] onServerUnencryptedRawMessage - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{514 1 [10 16 166 164 10 125 55 91 188 124 187 224 45 45 128 114 237 133 18 16 97 168 128 49 193 137 181 90 71 115 251 194 99 35 238 96]}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829205983233, span_id: 1048878829205983232, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 340}}
+I1007 18:12:54.767022   40118 server.go:329] SendMessage - handshake: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{514 1 [10 16 166 164 10 125 55 91 188 124 187 224 45 45 128 114 237 133 18 16 97 168 128 49 193 137 181 90 71 115 251 194 99 35 238 96]}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829205983233, span_id: 1048878829205983232, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 340}}
+I1007 18:12:54.767122   40118 tcp_client_group_manager.go:160] tcp_client_group_manager SendData: {name: %s, conn: %s, msg: {%v}}handshake{connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)} &{0 0 0 {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829210177537, span_id: 1048878829210177536, recveive_time: 1538907174, from: frontend} {payload_len: 404, payload: 01ff000003000000000000200202000001000000240000000a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee6054010000000000000000000000e824c426dcb95b40010000bee412d7a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee6004494c553b000000}}
+I1007 18:12:54.780575   40118 server.go:230] onClientHandshakeMessage - handshake: peer({connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)}), state: {{state: 517, res_state: 1, ctx: 0a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee601a20463652c0070461fb56bc61af928b13c77c7649bdcf770c7826fb22305b090f8622800290bf5ede7359bd7d2046113c8e08799d3c974af8818744eb7a31868ff22b7e3a69878cb6cf043cf6d3cc9665f98620899c8da344a2266589e38618e33d4d839869ed45116c203642559ace608f0a45c53e362aeaae34f75acb0de69ac2cfc67a204470797d67d255aa41979cc49239e3519776b1dcd1de9524a645ba6e4a0908f21d2a9be0b273a95fec5d724c65ab7c2cf010308bb3f91495a9d28e5485cb7d95ac929def8ac9691377043b781a42cba327aca667a14f262657cff921b0ab91ad975de8ca97d4c236fc1e852717693fb53837124afa32d644927d09751e30168ee3fe671cc5a2ef01834439db96f2b712837cd0262c4da3bb32431b103e909f2a8002c71caeb9c6b1c9048e6c522f70f13f73980d40238e3e21c14934d037563d930f48198a0aa7c14058229493d22530f4dbfa336f6e0ac925139543aed44cce7c3720fd51f69458705ac68cd4fe6b6b13abdc9746512969328454f18faf8c595f642477fe96bb2a941d5bcd1d4ac8cc49880708fa9b378e3c4f3a9060bee67cf9a4a4a695811051907e162753b56b0f6b410dba74d8a84b2a14b3144e0ef1284754fd17ed950d5965b4b9dd46582db1178d169c6bc465b0d6ff9ca3928fef5b9ae4e418fc15e83ebea0f87fa9ff5eed70050ded2849f47bf959d956850ce929851f0d8115f635b105ee2e4e15d04b2454bf6f4fadf034b10403119cd8e3b92fcc5b}}
+E1007 18:12:54.780738   40118 zproto_session.go:132]  handshake ======= stack = goroutine 13 [running]:
+runtime/debug.Stack(0x18f30b4, 0x1c2b97f, 0x500)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoHandshakeMessage).String(0xc0001d8360, 0x1c31578, 0xc0000f69c0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_session.go:132 +0x34
+fmt.(*pp).handleMethods(0xc0000f69c0, 0x73, 0x2771701)
+	/usr/local/go/src/fmt/print.go:603 +0x27c
+fmt.(*pp).printArg(0xc0000f69c0, 0x1a7f4c0, 0xc0001d8360, 0xc000000073)
+	/usr/local/go/src/fmt/print.go:686 +0x203
+fmt.(*pp).doPrintf(0xc0000f69c0, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/usr/local/go/src/fmt/print.go:1003 +0x166
+fmt.Fprintf(0x1cfc980, 0xc0004f2210, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3, 0xc000033cd8, 0x146db0c, 0xc000125b80)
+	/usr/local/go/src/fmt/print.go:188 +0x72
+github.com/golang/glog.(*loggingT).printf(0x2753bc0, 0xc000000000, 0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:651 +0xc4
+github.com/golang/glog.Infof(0x1c2ac4c, 0x4d, 0xc000033dd0, 0x3, 0x3)
+	/Users/dev/workspace/golang/gopath/src/github.com/golang/glog/glog.go:1073 +0x67
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).onClientHandshakeMessage(0xc00021f940, 0xc000490de0, 0xc000280150, 0xc0001d8360, 0xc0001d8360, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:253 +0x1fc
+gitlab.99safe.org/im/im-server/server/access/frontend/server.(*FrontendServer).OnClientMessageArrived(0xc00021f940, 0xc000490de0, 0xc000280150, 0x1, 0x5bb9dc262e847a51, 0x7, 0x1d00e80, 0xc0001d8360, 0xc000033f20, 0x102bb01)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/server/access/frontend/server/server.go:206 +0xfb
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).onRawPayload(0xc0003154a0, 0xc000490de0, 0xc000280150, 0x1, 0x5bb9dc262e847a51, 0xc000000007, 0xc0000ee120, 0xc0004ca400, 0x1a66300)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:267 +0xe1
+gitlab.99safe.org/im/im-server/proto/zproto.(*ZProtoClient).OnClientDataArrived(0xc0003154a0, 0xc000490de0, 0x1a66300, 0xc0001d8270, 0x0, 0x0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/proto/zproto/zproto_client.go:195 +0xdd
+gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).establishTcpConnection(0xc000490de0, 0xc0004ca3c0)
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:109 +0xa9
+created by gitlab.99safe.org/im/im-server/baselib/net2.(*TcpClient).Serve
+	/Users/dev/workspace/golang/gopath/src/gitlab.99safe.org/im/im-server/baselib/net2/tcp_client.go:80 +0x14e
+
+I1007 18:12:54.780661   40118 server.go:253] onClientHandshakeMessage - sendToClient to: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: {server_id: 1, conn_id: 3, client_addr: %!d(string=), trace_id: 1048878829210177537, span_id: 1048878829210177536, recveive_time: 1538907174, from: }, handshake: {session_id: 2305843009213693955, state: {state: 517, res_state: 1, ctx: 0a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee601a20463652c0070461fb56bc61af928b13c77c7649bdcf770c7826fb22305b090f8622800290bf5ede7359bd7d2046113c8e08799d3c974af8818744eb7a31868ff22b7e3a69878cb6cf043cf6d3cc9665f98620899c8da344a2266589e38618e33d4d839869ed45116c203642559ace608f0a45c53e362aeaae34f75acb0de69ac2cfc67a204470797d67d255aa41979cc49239e3519776b1dcd1de9524a645ba6e4a0908f21d2a9be0b273a95fec5d724c65ab7c2cf010308bb3f91495a9d28e5485cb7d95ac929def8ac9691377043b781a42cba327aca667a14f262657cff921b0ab91ad975de8ca97d4c236fc1e852717693fb53837124afa32d644927d09751e30168ee3fe671cc5a2ef01834439db96f2b712837cd0262c4da3bb32431b103e909f2a8002c71caeb9c6b1c9048e6c522f70f13f73980d40238e3e21c14934d037563d930f48198a0aa7c14058229493d22530f4dbfa336f6e0ac925139543aed44cce7c3720fd51f69458705ac68cd4fe6b6b13abdc9746512969328454f18faf8c595f642477fe96bb2a941d5bcd1d4ac8cc49880708fa9b378e3c4f3a9060bee67cf9a4a4a695811051907e162753b56b0f6b410dba74d8a84b2a14b3144e0ef1284754fd17ed950d5965b4b9dd46582db1178d169c6bc465b0d6ff9ca3928fef5b9ae4e418fc15e83ebea0f87fa9ff5eed70050ded2849f47bf959d956850ce929851f0d8115f635b105ee2e4e15d04b2454bf6f4fadf034b10403119cd8e3b92fcc5b}, mtp_raw_data_len: 652, mtp_raw_data: 0000000000000000a1d8802e26dcb95b780200005c07e8d0a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee60fe50020086764640d86b17bee08e58533a3b857ff264da72b345a34f9a8df3ad4fb99622c1f126322b44f006c746fad4f047925c32e91ab1f28ec1c50a20bf6334e5b3abbad2a6ce}}
+I1007 18:12:54.781008   40118 mtproto_app_codec.go:157]  ######## resp = f8a465f5b9458631f93adffbd03e2dec35957f70ab9ae5bddab9d8c1ba777266691a4b827e4f0f1d3a1cb43ab587301d9002e89b6ab71ad912d3e4c3a46004439d67e3928bb5e4f084792f799ceec6669d50e50f4d61e57804d6b553aa6e8e2e7c83d353947052cfabde57d1b580935ea6ddb19ac4e0bff2d83b75980ec225b86708f58eb9fdabb9d7ae4bf2801fedc016633ccb4225a797cdcced833dc9dcf34e6766ed5ac7b346b7f1bb4fa668ddb6df046f157cf207caad217c102464a7b24aa7dff04d7210b60e69dbfe90966420c8ef5f96e460a1e3409bf2d873f74c354d207011ffe8d6b23639452cef28ab5355f956d7700c4600d6e28910d52a625d2d60b7fd313e5c47a80ad041f2d82e22766efde1d81b171e76d30ed0988846f3d2ab2c9b23731e3843b05240f671d149e69c64274ac3c9b356ac164f2f9d5eeb0b0bc71289415790ec9cd9e52c57e6475fa32ff608d40d5b8d8b641f6ee5d1af7fc96e428e65f640078c8d4c5c7346b058b633d6ab9031e12fcf9803f6ae053454d26ee5d7ade339ed77d7dd4fdc5509d8b20a5a6e0158b2fcf35c0a2b8303b10fed8b01a437488d84e5f18803453c694ac9441fc62276266fc0a56c10fcaa1e3eecedb14cc1253c6b7c32346b3edff59d77261c4771f55ecd8b1e929d6a8cdd114a2fa34af9668dbd61fbe3ae0f2d257e1a0e1170166c7e8b6faac5cfa48c4c1564749b3df45fa596136dbdb80c380ee0f34d47174ee26c5c93a6d63eed1148dbae37ae9dca2ae6352cbc964c86f8bdc932690717a3d09b3e1845080c81b769163ee9e2553ecc404bef9dbcd52cf32608c438aaa70dd5dcd35905473cde3bb984f20265f7e2925c709a6c6f7712de11d80c90e5106d23320bf8298eef24a26a4082b76db2bc87e6c0c9b6cec6fe6a96
+I1007 18:12:54.845057   40118 mtproto_app_codec.go:182] read before encrypt p = 3f
+I1007 18:12:54.845080   40118 mtproto_app_codec.go:185] read after encrypt p = 63
+I1007 18:12:54.845086   40118 mtproto_app_codec.go:59] MTProtoAppCodec first_byte: 63
+I1007 18:12:54.845091   40118 mtproto_app_codec.go:64] MTProtoAppCodec first_byte2: 63
+I1007 18:12:54.845095   40118 mtproto_app_codec.go:68] size1: 396
+I1007 18:12:54.845114   40118 mtproto_app_codec.go:182] read before encrypt p = eecc64c95c1d0c36d7e96a725e751197f270b15cc7705223f20e6c7790500fc3f496c7eb049b007fc4441f96c9f2703bbb18efb4a9bcdf6dda4767958bc0f2b0123b313f9e0e74be010193a84768acdb852d001c3b9680776e5b7d123ce3698e5ce6ec05e9739d7d45e62e373bffac123432b57f91fb52fcb306d74bc87ba704fd5e2a4b1409fc7ed053ceba44ee55affbd107053ddfe13971fd86b64b39dc7932a295f333bd72f35a57ee9dfd7633873edc0c0e7164a67b27e65c47ac0138db6e7aebf4a36d93f0df95cc1036a7c08a18c40ac5fc97fc03675cd0559596c25babc0fbf953f1f56a8300f5cfbd5840f094281f68faab999831043c41d0b807eaec51619f96a4a6257447fcc754cc68f37a245478853c36467e948a55b811b25c8bcf6bcd2d7b04d114d95416a6d0254f5aa3c19161cc743a38bb3a8a05bb4741247810172589d470061fc68a25b17db42f68192d38fe0564532cd40a5e3a4d93126c025e6db2d748d934b70bd4de7f51f65f29a4f95d47462149adcd5110a86e780beeb3b37e29ae80f789fa
+I1007 18:12:54.845127   40118 mtproto_app_codec.go:185] read after encrypt p = 0000000000000000003095d726dcb95b780100001f5f04f5a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee60fe50010024448ad73867c2b934f4acc3f1d3793cb9dd400ab1c181c6672238ead0acb5e27c988d8599e2567f2febf857dbc29b5d9293fbfa9d877f5d54f9ece6a74d2483ac771fde15ebca1a797d95e6970cebc7616131e66e970dd335eb757b5d4076b5bebb9c0ea645374b13fce2e0528566d52127a0c2670bface4c342d1881562e37d2adc0c5107c97e5f504206705eda706e521dc65127bdd573b7d36edfa43bb6c6c6cdd1515925615ad99e7da05be8b99bda9a2167c1b88141bda0e088174bd4452a71dcc751ee4dfa727268035820981b1f902eaf879ed249847535fe49c6bf1ed35d0fd239f7b3b92f5e0bf031ea606dd11caad1c9946f7660640733476d36a5d6be3d5c3eeab6787a78525eff236f1cb2152a4d81ca0fcdb46e698a56f823d47585a90227c7089d5a6ca76282c2d5a56e608709bba83c90155c4a4f0b303c8475966717f1a8affa5cecc380a8df9dc
+[2018-10-07 18:12:54.845]  INFO message.Payload = 0000000000000000003095d726dcb95b780100001f5f04f5a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee60fe50010024448ad73867c2b934f4acc3f1d3793cb9dd400ab1c181c6672238ead0acb5e27c988d8599e2567f2febf857dbc29b5d9293fbfa9d877f5d54f9ece6a74d2483ac771fde15ebca1a797d95e6970cebc7616131e66e970dd335eb757b5d4076b5bebb9c0ea645374b13fce2e0528566d52127a0c2670bface4c342d1881562e37d2adc0c5107c97e5f504206705eda706e521dc65127bdd573b7d36edfa43bb6c6c6cdd1515925615ad99e7da05be8b99bda9a2167c1b88141bda0e088174bd4452a71dcc751ee4dfa727268035820981b1f902eaf879ed249847535fe49c6bf1ed35d0fd239f7b3b92f5e0bf031ea606dd11caad1c9946f7660640733476d36a5d6be3d5c3eeab6787a78525eff236f1cb2152a4d81ca0fcdb46e698a56f823d47585a90227c7089d5a6ca76282c2d5a56e608709bba83c90155c4a4f0b303c8475966717f1a8affa5cecc380a8df9dc (mtproto.(*MTProtoAppCodec).Receive:mtproto_app_codec.go:109)
+I1007 18:12:54.845339   40118 mtproto_server.go:103] onConnectionDataArrived 10.30.0.28:57934
+I1007 18:12:54.845353   40118 server.go:163] onServerMessageDataArrived - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829537333249, span_id: 1048878829537333248, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 396}}
+I1007 18:12:54.845370   40118 server.go:164] onServerMessageDataArrived - raw message : 0000000000000000003095d726dcb95b780100001f5f04f5a6a40a7d375bbc7cbbe02d2d8072ed8561a88031c189b55a4773fbc26323ee60fe50010024448ad73867c2b934f4acc3f1d3793cb9dd400ab1c181c6672238ead0acb5e27c988d8599e2567f2febf857dbc29b5d9293fbfa9d877f5d54f9ece6a74d2483ac771fde15ebca1a797d95e6970cebc7616131e66e970dd335eb757b5d4076b5bebb9c0ea645374b13fce2e0528566d52127a0c2670bface4c342d1881562e37d2adc0c5107c97e5f504206705eda706e521dc65127bdd573b7d36edfa43bb6c6c6cdd1515925615ad99e7da05be8b99bda9a2167c1b88141bda0e088174bd4452a71dcc751ee4dfa727268035820981b1f902eaf879ed249847535fe49c6bf1ed35d0fd239f7b3b92f5e0bf031ea606dd11caad1c9946f7660640733476d36a5d6be3d5c3eeab6787a78525eff236f1cb2152a4d81ca0fcdb46e698a56f823d47585a90227c7089d5a6ca76282c2d5a56e608709bba83c90155c4a4f0b303c8475966717f1a8affa5cecc380a8df9dc
+I1007 18:12:54.845439   40118 server.go:311] onServerUnencryptedRawMessage - receive data: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{517 1 [10 16 166 164 10 125 55 91 188 124 187 224 45 45 128 114 237 133 18 16 97 168 128 49 193 137 181 90 71 115 251 194 99 35 238 96 26 32 70 54 82 192 7 4 97 251 86 188 97 175 146 139 19 199 124 118 73 189 207 119 12 120 38 251 34 48 91 9 15 134 34 128 2 144 191 94 222 115 89 189 125 32 70 17 60 142 8 121 157 60 151 74 248 129 135 68 235 122 49 134 143 242 43 126 58 105 135 140 182 207 4 60 246 211 204 150 101 249 134 32 137 156 141 163 68 162 38 101 137 227 134 24 227 61 77 131 152 105 237 69 17 108 32 54 66 85 154 206 96 143 10 69 197 62 54 42 234 174 52 247 90 203 13 230 154 194 207 198 122 32 68 112 121 125 103 210 85 170 65 151 156 196 146 57 227 81 151 118 177 220 209 222 149 36 166 69 186 110 74 9 8 242 29 42 155 224 178 115 169 95 236 93 114 76 101 171 124 44 240 16 48 139 179 249 20 149 169 210 142 84 133 203 125 149 172 146 157 239 138 201 105 19 119 4 59 120 26 66 203 163 39 172 166 103 161 79 38 38 87 207 249 33 176 171 145 173 151 93 232 202 151 212 194 54 252 30 133 39 23 105 63 181 56 55 18 74 250 50 214 68 146 125 9 117 30 48 22 142 227 254 103 28 197 162 239 1 131 68 57 219 150 242 183 18 131 124 208 38 44 77 163 187 50 67 27 16 62 144 159 42 128 2 199 28 174 185 198 177 201 4 142 108 82 47 112 241 63 115 152 13 64 35 142 62 33 193 73 52 208 55 86 61 147 15 72 25 138 10 167 193 64 88 34 148 147 210 37 48 244 219 250 51 111 110 10 201 37 19 149 67 174 212 76 206 124 55 32 253 81 246 148 88 112 90 198 140 212 254 107 107 19 171 220 151 70 81 41 105 50 132 84 241 143 175 140 89 95 100 36 119 254 150 187 42 148 29 91 205 29 74 200 204 73 136 7 8 250 155 55 142 60 79 58 144 96 190 230 124 249 164 164 166 149 129 16 81 144 126 22 39 83 181 107 15 107 65 13 186 116 216 168 75 42 20 179 20 78 14 241 40 71 84 253 23 237 149 13 89 101 180 185 221 70 88 45 177 23 141 22 156 107 196 101 176 214 255 156 163 146 143 239 91 154 228 228 24 252 21 232 62 190 160 248 127 169 255 94 237 112 5 13 237 40 73 244 123 249 89 217 86 133 12 233 41 133 31 13 129 21 246 53 177 5 238 46 78 21 208 75 36 84 191 111 79 173 240 52 177 4 3 17 156 216 227 185 47 204 91]}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829537333249, span_id: 1048878829537333248, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 396}}
+I1007 18:12:54.845680   40118 server.go:329] SendMessage - handshake: {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}, md: &{{%!s(int32=0) %!s(uint32=0)} %!s(int=512) %!s(*zproto.ZProtoMetadata=&{1 3 10.30.0.28:57934 0 0 0 frontend map[] []}) %!s(*zproto.HandshakeState=&{517 1 [10 16 166 164 10 125 55 91 188 124 187 224 45 45 128 114 237 133 18 16 97 168 128 49 193 137 181 90 71 115 251 194 99 35 238 96 26 32 70 54 82 192 7 4 97 251 86 188 97 175 146 139 19 199 124 118 73 189 207 119 12 120 38 251 34 48 91 9 15 134 34 128 2 144 191 94 222 115 89 189 125 32 70 17 60 142 8 121 157 60 151 74 248 129 135 68 235 122 49 134 143 242 43 126 58 105 135 140 182 207 4 60 246 211 204 150 101 249 134 32 137 156 141 163 68 162 38 101 137 227 134 24 227 61 77 131 152 105 237 69 17 108 32 54 66 85 154 206 96 143 10 69 197 62 54 42 234 174 52 247 90 203 13 230 154 194 207 198 122 32 68 112 121 125 103 210 85 170 65 151 156 196 146 57 227 81 151 118 177 220 209 222 149 36 166 69 186 110 74 9 8 242 29 42 155 224 178 115 169 95 236 93 114 76 101 171 124 44 240 16 48 139 179 249 20 149 169 210 142 84 133 203 125 149 172 146 157 239 138 201 105 19 119 4 59 120 26 66 203 163 39 172 166 103 161 79 38 38 87 207 249 33 176 171 145 173 151 93 232 202 151 212 194 54 252 30 133 39 23 105 63 181 56 55 18 74 250 50 214 68 146 125 9 117 30 48 22 142 227 254 103 28 197 162 239 1 131 68 57 219 150 242 183 18 131 124 208 38 44 77 163 187 50 67 27 16 62 144 159 42 128 2 199 28 174 185 198 177 201 4 142 108 82 47 112 241 63 115 152 13 64 35 142 62 33 193 73 52 208 55 86 61 147 15 72 25 138 10 167 193 64 88 34 148 147 210 37 48 244 219 250 51 111 110 10 201 37 19 149 67 174 212 76 206 124 55 32 253 81 246 148 88 112 90 198 140 212 254 107 107 19 171 220 151 70 81 41 105 50 132 84 241 143 175 140 89 95 100 36 119 254 150 187 42 148 29 91 205 29 74 200 204 73 136 7 8 250 155 55 142 60 79 58 144 96 190 230 124 249 164 164 166 149 129 16 81 144 126 22 39 83 181 107 15 107 65 13 186 116 216 168 75 42 20 179 20 78 14 241 40 71 84 253 23 237 149 13 89 101 180 185 221 70 88 45 177 23 141 22 156 107 196 101 176 214 255 156 163 146 143 239 91 154 228 228 24 252 21 232 62 190 160 248 127 169 255 94 237 112 5 13 237 40 73 244 123 249 89 217 86 133 12 233 41 133 31 13 129 21 246 53 177 5 238 46 78 21 208 75 36 84 191 111 79 173 240 52 177 4 3 17 156 216 227 185 47 204 91]}) %!s(uint64=1)  %!s(int64=0)}, ctx: {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829537333249, span_id: 1048878829537333248, recveive_time: 1538907174, from: frontend}, msg: {conn_type: 1, auth_key_id: 0, quick_ack_id: 0, payload_len: 396}}
+I1007 18:12:54.845818   40118 tcp_client_group_manager.go:160] tcp_client_group_manager SendData: {name: %s, conn: %s, msg: {%v}}handshake{connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)} &{0 0 0 {server_id: 1, conn_id: 3, client_addr: %!d(string=10.30.0.28:57934), trace_id: 1048878829537333251, span_id: 1048878829537333250, recveive_time: 1538907174, from: frontend} {payload_len: 1012, payload: 01ff0000030000000000002005020000010000004c0200000a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee601a20463652c0070461fb56bc61af928b13c77c7649bdcf770c7826fb22305b090f8622800290bf5ede7359bd7d2046113c8e08799d3c974af8818744eb7a31868ff22b7e}}
+I1007 18:12:54.853847   40118 server.go:230] onClientHandshakeMessage - handshake: peer({connID: 1@handshake-(127.0.0.1:57928->127.0.0.1:10005)}), state: {{state: 520, res_state: 2, ctx: 0a10a6a40a7d375bbc7cbbe02d2d8072ed85121061a88031c189b55a4773fbc26323ee601a20463652c0070461fb56bc61af928b13c77c7649bdcf770c7826fb22305b090f8622800290bf5ede7359bd7d2046113c8e08799d3c974af8818744eb7a31868ff22b7e3a69878cb6cf043cf6d3cc9665f98620899c8da344a2266589e38618e33d4d839869ed45116c203642559ace608f0a45c53e362aeaae34f75acb0de69ac2cfc67a204470797d67d255aa41979cc49239e3519776b1dcd1de9524a645ba6e4a0908f21d2a9be0b273a95fec5d724c65ab7c2cf010308bb3f91495a9d28e5485cb7d95ac929def8ac9691377043b781a42cba327aca667a14f262657cff921b0ab91ad975de8ca97d4c236fc1e852717693fb53837124afa32d644927d09751e30168ee3fe671cc5a2ef01834439db96f2b712837cd0262c4da3bb32431b103e909f2a8002c71caeb9c6b1c9048e6c522f70f13f73980d40238e3e21c14934d037563d930f48198a0aa7c14058229493d22530f4dbfa336f6e0ac925139543aed44cce7c3720fd51f69458705ac68cd4fe6b6b13abdc9746512969328454f18faf8c595f642477fe96bb2a941d5bcd1d4ac8cc49880708fa9b378e3c4f3a9060bee67cf9a4a4a695811051907e162753b56b0f6b410dba74d8a84b2a14b3144e0ef1284754fd17ed950d5965b4b9dd46582db1178d169c6bc465b0d6ff9ca3928fef5b9ae4e418fc15e83ebea0f87fa9ff5eed70050ded2849f47bf959d956850ce929851f0d8115f635b105ee2e4e15d04b2454bf6f4fadf034b10403119cd8e3b92fcc5b}}
+W1007 18:12:54.853909   40118 server.go:244]  handshake.State.ResState error, connID = 2305843009213693955
+I1007 18:13:04.296919   40118 mtproto_app_codec.go:182] read before encrypt p =
+I1007 18:13:04.296945   40118 server.go:191] onServerConnectionClosed - {peer: {connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}}
+E1007 18:13:04.297102   40118 tcp_server.go:190] conn {{connID: 3@frontend5222-(10.30.0.28:5222->10.30.0.28:57934)}} recv error: EOF
+I1007 18:13:16.590500   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0001d6608}
+I1007 18:13:16.590555   40118 server.go:225] onClientTimer
+I1007 18:13:16.590895   40118 zproto_client.go:274] onPong: &{6609556078989645017 2837984107983970680}
+I1007 18:13:46.591471   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0001ad668}
+I1007 18:13:46.591524   40118 server.go:225] onClientTimer
+I1007 18:13:46.591866   40118 zproto_client.go:274] onPong: &{6609556207839678897 6818300137755923733}
+I1007 18:14:16.593889   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0006c2100}
+I1007 18:14:16.593973   40118 server.go:225] onClientTimer
+I1007 18:14:16.594192   40118 zproto_client.go:274] onPong: &{6609556336691090777 8408342625183436567}
+I1007 18:14:46.596770   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0007023d0}
+I1007 18:14:46.596836   40118 server.go:225] onClientTimer
+I1007 18:14:46.597325   40118 zproto_client.go:274] onPong: &{6609556465542994657 9113582466227363741}
+I1007 18:15:16.599397   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0001d6848}
+I1007 18:15:16.599475   40118 server.go:225] onClientTimer
+I1007 18:15:16.599685   40118 zproto_client.go:274] onPong: &{6609556594394631537 8227476459003133365}
+I1007 18:15:46.598778   40118 zproto_client.go:245] onClientTimer - sendPing: &{0 0 0 <nil> 0xc0001ad1f0}
+I1007 18:15:46.598855   40118 server.go:225] onClientTimer
+I1007 18:15:46.599166   40118 zproto_client.go:274] onPong: &{6609556723243041417 4091890976837624899}
