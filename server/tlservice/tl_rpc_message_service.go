@@ -76,14 +76,23 @@ func (s *TLService) TLRpcMessageProcess(csess *service.ClientSession, msgid int6
 		err = fmt.Errorf("havent implemented yet, TLType = %T", tlobj)
 	}
 
+	var reply mtproto.TLObject
+
 	if err != nil {
 		Log.Errorf("object = %T, err = %v", tlobj, err)
-		return err
-	}
-
-	reply := &mtproto.TL_rpc_result{
-		M_req_msg_id: msgid,
-		M_result:     res,
+		rpcerr, ok := err.(*mtproto.TL_rpc_error) // rpc error
+		if ok && rpcerr.Get_error_code() != int32(mtproto.TLRpcErrorCodes_NOTRETURN_CLIENT) {
+			// err = c.WriteFull(mtproto.GenerateMessageID(), true, rpcerr)
+			reply = rpcerr
+			return err
+		} else {
+			return err
+		}
+	} else {
+		reply = &mtproto.TL_rpc_result{
+			M_req_msg_id: msgid,
+			M_result:     res,
+		}
 	}
 
 	err = c.WriteFull(mtproto.GenerateMessageID(), true, reply)

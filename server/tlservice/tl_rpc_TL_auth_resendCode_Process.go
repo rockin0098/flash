@@ -1,7 +1,6 @@
 package tlservice
 
 import (
-	"github.com/rockin0098/meow/base/crypto"
 	. "github.com/rockin0098/meow/base/global"
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/model"
@@ -30,7 +29,7 @@ func (s *TLService) TL_auth_resendCode_Process(csess *service.ClientSession, obj
 	authSentCode := &mtproto.TL_auth_sentCode{
 		// M_phone_registered: mtproto.ToBool(registered),
 		M_type:            codeType,
-		M_phone_code_hash: crypto.GenerateStringNonce(16),
+		M_phone_code_hash: tl.Get_phone_code_hash(),
 		// M_next_type:       codeType,
 		M_timeout: 60,
 	}

@@ -17,6 +17,10 @@ func (s *TLService) TL_auth_signIn_Process(csess *service.ClientSession, object 
 
 	Log.Infof("TL_auth_signIn = %+v", FormatStruct(tl))
 
+	if tl.Get_phone_code() == "" {
+
+	}
+
 	userStatus := &mtproto.TL_userStatusOnline{
 		M_expires: int32(time.Now().Unix()) + 1800,
 	}
