@@ -3,7 +3,7 @@ package mtproto
 import (
 	"fmt"
 
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 //msg_container#73f1f8dc messages:vector<message> = MessageContainer; // parsed manually

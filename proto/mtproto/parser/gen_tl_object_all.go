@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"strings"
 
-	// . "github.com/rockin0098/flash/base/logger"
-	. "github.com/rockin0098/flash/base/global"
+	// . "github.com/rockin0098/meow/base/logger"
+	. "github.com/rockin0098/meow/base/global"
 )
 
 var m_class_id = "M_classID"

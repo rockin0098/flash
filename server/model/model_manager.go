@@ -5,8 +5,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/rockin0098/flash/base/datasource"
-	. "github.com/rockin0098/flash/base/logger"
+	"github.com/rockin0098/meow/base/datasource"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 type ModelManager struct{}

@@ -7,9 +7,9 @@ import (
 	"math/rand"
 	"time"
 
-	. "github.com/rockin0098/flash/base/global"
-	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/model"
+	. "github.com/rockin0098/meow/base/global"
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 )
 
 // type TLMessageReplyTypeEnum int

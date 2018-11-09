@@ -3,8 +3,8 @@ package mtproto
 import (
 	"io/ioutil"
 
-	. "github.com/rockin0098/flash/base/global"
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/global"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 const (

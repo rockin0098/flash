@@ -9,8 +9,8 @@ import (
 	"regexp"
 	"strings"
 
-	. "github.com/rockin0098/flash/base/global"
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/global"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 type EnumLineType int

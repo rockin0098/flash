@@ -5,14 +5,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/rockin0098/flash/base/datasource"
-	. "github.com/rockin0098/flash/base/global"
-	"github.com/rockin0098/flash/base/grmon"
-	. "github.com/rockin0098/flash/base/logger"
-	"github.com/rockin0098/flash/base/tcpnet"
-	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/model"
-	"github.com/rockin0098/flash/server/service"
+	"github.com/rockin0098/meow/base/datasource"
+	. "github.com/rockin0098/meow/base/global"
+	"github.com/rockin0098/meow/base/grmon"
+	. "github.com/rockin0098/meow/base/logger"
+	"github.com/rockin0098/meow/base/tcpnet"
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
+	"github.com/rockin0098/meow/server/service"
 )
 
 const (

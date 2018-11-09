@@ -15,7 +15,7 @@ import (
 	"time"
 
 	jsoniter "github.com/json-iterator/go"
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 const (

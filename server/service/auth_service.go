@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/model"
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 )
 
 const (

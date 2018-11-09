@@ -2,7 +2,7 @@ package mtproto
 
 import (
 	"fmt"
-	// . "github.com/rockin0098/flash/base/logger"
+	// . "github.com/rockin0098/meow/base/logger"
 )
 
 // rpc_result#f35c6d01 req_msg_id:long result:Object = RpcResult; // parsed manually

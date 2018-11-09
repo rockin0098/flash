@@ -3,7 +3,7 @@ package mtproto
 import (
 	"math/big"
 
-	"github.com/rockin0098/flash/base/crypto"
+	"github.com/rockin0098/meow/base/crypto"
 )
 
 const (

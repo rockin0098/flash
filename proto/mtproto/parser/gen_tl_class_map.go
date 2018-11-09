@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 	"io/ioutil"
-	// . "github.com/rockin0098/flash/base/logger"
+	// . "github.com/rockin0098/meow/base/logger"
 )
 
 var classmap_output_file = "tl.class.map.go"

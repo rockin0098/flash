@@ -5,7 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 type TSQLLogger struct{}

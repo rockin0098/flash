@@ -10,9 +10,9 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/rockin0098/flash/base/crypto"
-	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/model"
+	"github.com/rockin0098/meow/base/crypto"
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 )
 
 func (s *TLService) TL_req_pq_Process(sess *Session, msg *mtproto.UnencryptedMessage) (interface{}, error) {

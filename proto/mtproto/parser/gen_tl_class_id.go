@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-	// . "github.com/rockin0098/flash/base/logger"
+	// . "github.com/rockin0098/meow/base/logger"
 )
 
 var classid_output_file = "tl.class.id.go"

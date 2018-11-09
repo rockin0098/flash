@@ -8,8 +8,8 @@ import (
 	"io"
 	"time"
 
-	"github.com/rockin0098/flash/base/crypto"
-	. "github.com/rockin0098/flash/base/logger"
+	"github.com/rockin0098/meow/base/crypto"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 func GenerateMessageID() int64 {

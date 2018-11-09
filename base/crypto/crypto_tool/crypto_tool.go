@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/meow/proto/mtproto"
 )
 
 // rsa = crypto.NewRSACryptor()

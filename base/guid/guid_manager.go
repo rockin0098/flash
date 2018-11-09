@@ -3,7 +3,7 @@ package guid
 import (
 	"sync"
 
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 type GUIDManager struct {

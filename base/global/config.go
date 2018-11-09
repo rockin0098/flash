@@ -3,7 +3,7 @@ package global
 import (
 	"strings"
 
-	"github.com/rockin0098/flash/base/datasource"
+	"github.com/rockin0098/meow/base/datasource"
 )
 
 type ServerConfig struct {

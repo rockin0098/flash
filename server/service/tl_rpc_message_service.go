@@ -5,10 +5,10 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/rockin0098/flash/base/crypto"
-	. "github.com/rockin0098/flash/base/global"
-	"github.com/rockin0098/flash/proto/mtproto"
-	"github.com/rockin0098/flash/server/model"
+	"github.com/rockin0098/meow/base/crypto"
+	. "github.com/rockin0098/meow/base/global"
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 )
 
 func (s *TLService) TLRpcMessageProcess(csess *ClientSession, msgid int64, seqNo int32, object mtproto.TLObject) error {

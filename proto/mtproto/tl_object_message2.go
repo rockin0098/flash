@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	. "github.com/rockin0098/flash/base/logger"
+	. "github.com/rockin0098/meow/base/logger"
 )
 
 //message msg_id:long seqno:int bytes:int body:Object = Message; // parsed manually

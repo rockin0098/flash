@@ -1,7 +1,7 @@
 package lproto
 
 import (
-	"github.com/rockin0098/flash/proto/mtproto"
+	"github.com/rockin0098/meow/proto/mtproto"
 )
 
 // 内部节点通信协议

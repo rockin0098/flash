@@ -1,6 +1,6 @@
 package main
 
-import "github.com/rockin0098/flash/proto/mtproto/parser"
+import "github.com/rockin0098/meow/proto/mtproto/parser"
 
 func main() {
 	parser.ParserEntry()

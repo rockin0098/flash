@@ -1,4 +1,4 @@
-package service
+package tlrpc
 
 import "github.com/rockin0098/meow/base/logger"
 
