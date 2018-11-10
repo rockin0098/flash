@@ -2,11 +2,14 @@ package model
 
 import (
 	"encoding/hex"
+	"strconv"
 	"time"
 
 	"github.com/jinzhu/gorm"
 	"github.com/rockin0098/meow/base/crypto"
 	"github.com/rockin0098/meow/base/datasource"
+	. "github.com/rockin0098/meow/base/global"
+	"github.com/rockin0098/meow/proto/mtproto"
 )
 
 type User struct {
@@ -56,6 +59,25 @@ func (s *ModelManager) GetUserByPhoneNumber(phone string) *User {
 
 	user := &User{}
 	err := db.Where("phone=?", phone).Find(user).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
+		return nil
+	}
+
+	return user
+}
+
+func (s *ModelManager) GetUserByID(userid int64) *User {
+
+	db := datasource.DataSourceInstance().Master()
+
+	user := &User{}
+	err := db.Where("id=?", userid).Find(user).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		Log.Error(err)
 		return nil
@@ -129,4 +151,59 @@ func (s *ModelManager) GetUsersByIDList(ids []int64) []*User {
 
 	return res
 
+}
+
+func (s *ModelManager) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtproto.TLObject {
+
+	if len(ids) == 0 {
+		var os []mtproto.TLObject
+		return os
+	}
+
+	users := s.GetUsersByIDList(ids)
+	var tlusers []mtproto.TLObject
+	for _, u := range users {
+		tlu := makeTLUserByUser(selfid, u)
+		tlusers = append(tlusers, tlu)
+	}
+
+	return tlusers
+}
+
+func (s *ModelManager) GetUserStatus(userID int64) mtproto.TLObject {
+	now := time.Now().Unix()
+	up := s.GetUserPresenceByID(userID)
+	if up == nil {
+		return mtproto.New_TL_userStatusEmpty()
+	}
+
+	if now <= up.LastSeenAt+5*60 {
+		status := &mtproto.TL_userStatusOnline{
+			M_expires: int32(up.LastSeenAt + 5*30),
+		}
+		return status
+	} else {
+		status := &mtproto.TL_userStatusOffline{
+			M_was_online: int32(up.LastSeenAt),
+		}
+		return status
+	}
+}
+
+func (s *ModelManager) GetDefaultUserPhotoID(userID int64) int64 {
+
+	user := s.GetUserByID(userID)
+	if user == nil {
+		return 0
+	}
+
+	if len(user.Photos) == 0 {
+		return 0
+	}
+
+	// 暂时只存一个头像图片id
+	defaultid, err := strconv.ParseInt(user.Photos, 10, 64)
+	ASSERT(err == nil)
+
+	return defaultid
 }

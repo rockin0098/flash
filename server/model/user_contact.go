@@ -32,6 +32,20 @@ func (s *ModelManager) GetContactsByUserID(ownerUserID int64) []*UserContact {
 	return res
 }
 
+func (s *ModelManager) GetUserContact(ownerUserID int64, contactUserID int64) *UserContact {
+	db := datasource.DataSourceInstance().Master()
+
+	res := &UserContact{}
+	err := db.Where("owner_user_id=? and contact_user_id = ?", ownerUserID, contactUserID).
+		Find(res).Error
+	if err != nil {
+		Log.Warn(err)
+		return nil
+	}
+
+	return res
+}
+
 func (s *ModelManager) IsMyContact(myid int64, contactid int64) bool {
 	db := datasource.DataSourceInstance().Master()
 
@@ -48,4 +62,13 @@ func (s *ModelManager) IsMyContact(myid int64, contactid int64) bool {
 	}
 
 	return true
+}
+
+func (s *ModelManager) CheckContactAndMutualByUserID(selfID, contactID int64) (bool, bool) {
+	do := s.GetUserContact(selfID, contactID)
+	if do == nil {
+		return false, false
+	} else {
+		return true, do.Mutual == 1
+	}
 }

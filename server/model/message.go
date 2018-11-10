@@ -1,6 +1,9 @@
 package model
 
-import "github.com/rockin0098/meow/base/datasource"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/rockin0098/meow/base/datasource"
+)
 
 type Message struct {
 	Model
@@ -32,4 +35,38 @@ func (s *ModelManager) GetMessagesByIDList(userid int64, idlist []int32) []*Mess
 	}
 
 	return messages
+}
+
+func (s *ModelManager) GetChannelMessage(channelid int32, id int32) *Message {
+	db := datasource.DataSourceInstance().Master()
+
+	channelMsgBox := &ChannelMessageBox{}
+	err := db.Where("channel_id = ? and channel_message_box_id = ?", channelid, id).
+		Find(channelMsgBox).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
+		return nil
+	}
+
+	message := &Message{}
+
+	err = db.Where("message_id = ? and deleted = 0", channelMsgBox.MessageID).
+		Limit(1).
+		Find(message).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		Log.Error(err)
+		return nil
+	}
+
+	if err == gorm.ErrRecordNotFound {
+		Log.Warn(err)
+		return nil
+	}
+
+	return message
 }

@@ -90,6 +90,8 @@ func ServerInit() {
 		new(model.UserContact),
 		new(model.UserDialog),
 		new(model.Message),
+		new(model.Chat),
+		new(model.PhotoData),
 	)
 }
 

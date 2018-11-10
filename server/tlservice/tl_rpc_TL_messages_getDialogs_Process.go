@@ -13,7 +13,7 @@ import (
 type DialogItems struct {
 	MessageIDList       []int32
 	ChannelMessageIDMap map[int32]int32
-	UserIDList          []int32
+	UserIDList          []int64
 	ChatIDList          []int32
 	ChannelIDList       []int32
 }
@@ -37,31 +37,49 @@ func (s *TLService) TL_messages_getDialogs_Process(csess *service.ClientSession,
 	dialogs := mm.GetDialogsByOffsetID(userid, false, offsetID, limit)
 	tldialogs := model.DialogList_to_TL_dialogList(dialogs)
 	items := PickAllIDListByDialogs(tldialogs)
-	Log.Info(items)
+	mss := mm.GetMessagesByIDList(userid, items.MessageIDList)
+	tlmss := model.MessageList_to_TL_messageList(mss)
+	for k, v := range items.ChannelMessageIDMap {
+		m := mm.GetChannelMessage(k, v)
+		if m != nil {
+			tlmss = append(tlmss, model.Message_to_TL_message(m))
+		}
+	}
 
-	messageDialogs := &mtproto.TL_messages_dialogs{}
+	users := mm.GetUsersBySelfAndIDList(userid, items.UserIDList)
+	chats := mm.GetChatListBySelfAndIDList(userid, items.ChatIDList)
+	// todo : get channel chat
+
+	messageDialogs := &mtproto.TL_messages_dialogs{
+		M_dialogs:  tldialogs,
+		M_messages: tlmss,
+		M_users:    users,
+		M_chats:    chats,
+	}
 
 	return messageDialogs, nil
 }
 
-func PickAllIDListByDialogs(tldialogs []*mtproto.TL_dialog) (items *DialogItems) {
+func PickAllIDListByDialogs(tldialogs []mtproto.TLObject) (items *DialogItems) {
 	items = &DialogItems{}
 
-	for _, d := range tldialogs {
+	for _, td := range tldialogs {
+
+		d := td.(*mtproto.TL_dialog)
 
 		peer := d.Get_peer()
 
 		switch peer.(type) {
 		case *mtproto.TL_peerUser:
 			items.MessageIDList = append(items.MessageIDList, d.Get_top_message())
-			items.UserIDList = append(items.UserIDList, peer.(*mtproto.TL_peerUser).Get_user_id())
+			items.UserIDList = append(items.UserIDList, int64(peer.(*mtproto.TL_peerUser).Get_user_id()))
 		case *mtproto.TL_peerChat:
 			items.MessageIDList = append(items.MessageIDList, d.Get_top_message())
-			items.UserIDList = append(items.UserIDList, peer.(*mtproto.TL_peerChat).Get_chat_id())
+			items.UserIDList = append(items.UserIDList, int64(peer.(*mtproto.TL_peerChat).Get_chat_id()))
 		case *mtproto.TL_peerChannel:
 			p := peer.(*mtproto.TL_peerChannel)
 			items.ChannelMessageIDMap[p.Get_channel_id()] = d.Get_top_message()
-			items.UserIDList = append(items.UserIDList, p.Get_channel_id())
+			items.UserIDList = append(items.UserIDList, int64(p.Get_channel_id()))
 		default:
 			panic(fmt.Sprintf("invalid type = %T", d))
 		}
