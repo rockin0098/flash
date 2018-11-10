@@ -72,6 +72,10 @@ func (s *TLService) TLRpcMessageProcess(csess *service.ClientSession, msgid int6
 	case *mtproto.TL_messages_getPinnedDialogs:
 		res, err = s.TL_messages_getPinnedDialogs_Process(csess, tlobj)
 
+		// updates
+	case *mtproto.TL_updates_getState:
+		res, err = s.TL_updates_getState_Process(csess, tlobj)
+
 	// users
 	case *mtproto.TL_users_getFullUser:
 		res, err = s.TL_users_getFullUser_Process(csess, tlobj)
