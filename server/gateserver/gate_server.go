@@ -89,6 +89,7 @@ func ServerInit() {
 		new(model.UserPresence),
 		new(model.UserContact),
 		new(model.UserDialog),
+		new(model.Message),
 	)
 }
 

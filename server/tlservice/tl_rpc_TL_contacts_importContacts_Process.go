@@ -89,7 +89,7 @@ func (s *TLService) TL_contacts_importContacts_Process(csess *service.ClientSess
 			status := &mtproto.TL_userStatusOnline{
 				M_expires: int32(time.Now().Unix()) + 1800,
 			}
-			tluser := User_to_TL_user(u, status)
+			tluser := model.User_to_TL_user(u, status)
 			users = append(users, tluser)
 		}
 	}
