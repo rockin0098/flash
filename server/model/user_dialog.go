@@ -41,3 +41,19 @@ func (s *ModelManager) GetDialogsByOffsetID(userid int64, isPinned bool, offseti
 
 	return dialogs
 }
+
+func (s *ModelManager) GetPinnedDialogs(userid int64) []*UserDialog {
+	db := datasource.DataSourceInstance().Master()
+
+	var dialogs []*UserDialog
+
+	err := db.Where("user_id = ? and is_pinned = ? and is_pinned = 1 ").
+		Order("top_message desc").
+		Find(&dialogs).Error
+	if err != nil {
+		Log.Error(err)
+		return nil
+	}
+
+	return dialogs
+}

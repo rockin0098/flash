@@ -2,6 +2,7 @@ package tlservice
 
 import (
 	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
 )
 
@@ -10,11 +11,50 @@ func (s *TLService) TL_messages_getPinnedDialogs_Process(csess *service.ClientSe
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
 	// tlobj := object
-	// tl := tlobj.(*mtproto.TL_users_getFullUser)
+	// tl := tlobj.(*mtproto.TL_messages_getPinnedDialogs)
 
-	// Log.Infof("TL_users_getFullUser = %+v", FormatStruct(tl))
+	userid := csess.GetUserID()
 
-	fulluser := &mtproto.TL_userFull{}
+	mm := model.GetModelManager()
+	dialogs := mm.GetPinnedDialogs(userid)
+	tldialogs := model.DialogList_to_TL_dialogList(dialogs)
+	peerDialogs := mtproto.New_TL_messages_peerDialogs()
 
-	return fulluser, nil
+	messageIdList := []int32{}
+	userIdList := []int64{userid}
+	chatIdList := []int32{}
+
+	for _, tld := range tldialogs {
+		tldialog := tld.(*mtproto.TL_dialog)
+		messageIdList = append(messageIdList, tldialog.Get_top_message())
+		peer := tldialog.Get_peer()
+		if peer.ClassID() == mtproto.TL_CLASS_peerUser {
+			userIdList = append(userIdList, int64(peer.(*mtproto.TL_peerUser).Get_user_id()))
+		} else if peer.ClassID() == mtproto.TL_CLASS_peerChat {
+			chatIdList = append(chatIdList, peer.(*mtproto.TL_peerChat).Get_chat_id())
+		} else if peer.ClassID() == mtproto.TL_CLASS_peerChannel {
+			// do nothing
+		} else {
+			panic("invalid peer")
+		}
+
+		peerDialogs.M_dialogs = append(peerDialogs.M_dialogs, tldialog)
+	}
+
+	if len(messageIdList) > 0 {
+		messages := mm.GetMessagesByIDList(userid, messageIdList)
+		peerDialogs.M_messages = model.MessageList_to_TL_messageList(messages)
+	}
+
+	users := mm.GetUsersBySelfAndIDList(userid, userIdList)
+	peerDialogs.M_users = users
+
+	if len(chatIdList) > 0 {
+		peerDialogs.M_chats = mm.GetChatListBySelfAndIDList(userid, chatIdList)
+	}
+
+	// state 机制 未处理
+	peerDialogs.M_state = mtproto.New_TL_updates_state()
+
+	return peerDialogs, nil
 }
