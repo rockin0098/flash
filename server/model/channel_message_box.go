@@ -6,6 +6,6 @@ type ChannelMessageBox struct {
 	ChannelID           int32 `gorm:""`
 	ChannelMessageBoxID int32 `gorm:""`
 	MessageID           int64 `gorm:""`
-	Date                int32 `gorm:"date"`
-	Deleted             int8  `gorm:"deleted"`
+	Date                int32 `gorm:""`
+	Deleted             int8  `gorm:""`
 }

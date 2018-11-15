@@ -41,6 +41,9 @@ func (s *TLService) TL_auth_signUp_Process(csess *service.ClientSession, object 
 			Log.Error(err)
 			return nil, err
 		}
+
+		// set csess userid
+		csess.UserID = user.ID
 	}
 
 	userStatus := &mtproto.TL_userStatusOnline{

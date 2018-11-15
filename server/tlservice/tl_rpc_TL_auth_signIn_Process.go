@@ -38,6 +38,10 @@ func (s *TLService) TL_auth_signIn_Process(csess *service.ClientSession, object 
 	if user == nil {
 		return nil, mtproto.NewRpcError2(mtproto.TLRpcErrorCodes_PHONE_NUMBER_UNOCCUPIED)
 	} else {
+
+		// set csess userid
+		csess.UserID = user.ID
+
 		userStatus := &mtproto.TL_userStatusOnline{
 			M_expires: int32(time.Now().Unix()) + 1800,
 		}
