@@ -30,7 +30,11 @@ func (s *ModelManager) GetDialogsByOffsetID(userid int64, isPinned bool, offseti
 
 	var dialogs []*UserDialog
 
-	err := db.Where("user_id = ? and is_pinned = ? and top_message < ?").
+	if limit == 0 {
+		limit = 99999999
+	}
+
+	err := db.Where("user_id = ? and is_pinned = ? and top_message < ?", userid, isPinned, offsetid).
 		Order("top_message desc").
 		Limit(limit).
 		Find(&dialogs).Error
@@ -47,7 +51,7 @@ func (s *ModelManager) GetPinnedDialogs(userid int64) []*UserDialog {
 
 	var dialogs []*UserDialog
 
-	err := db.Where("user_id = ? and is_pinned = ? and is_pinned = 1 ").
+	err := db.Where("user_id = ? and is_pinned = 1 ", userid).
 		Order("top_message desc").
 		Find(&dialogs).Error
 	if err != nil {

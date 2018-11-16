@@ -31,7 +31,6 @@ type User struct {
 	Deleted        int64  `gorm:""`
 	DeletedReason  string `gorm:"size:256"`
 	BannedAt       time.Time
-	DeletedAt      time.Time
 }
 
 func (s *ModelManager) CheckPhoneExists(phone string) bool {
@@ -143,7 +142,7 @@ func (s *ModelManager) GetUsersByIDList(ids []int64) []*User {
 	db := datasource.DataSourceInstance().Master()
 
 	var res []*User
-	err := db.Where("id in (?)", ids).Find(res).Error
+	err := db.Where("id in (?)", ids).Find(&res).Error
 	if err != nil {
 		Log.Error(err)
 		return nil

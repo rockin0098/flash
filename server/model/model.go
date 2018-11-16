@@ -10,6 +10,7 @@ type Model struct {
 	ID        int64 `gorm:"AUTO_INCREMENT;primary_key"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt *time.Time
 }
 
 type ModelManager struct{}

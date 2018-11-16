@@ -1,20 +1,40 @@
 package tlservice
 
 import (
+	"time"
+
 	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
+)
+
+const (
+	seqUpdatesNgenId        = "seq_updates_ngen_"
+	ptsUpdatesNgenId        = "pts_updates_ngen_"
+	qtsUpdatesNgenId        = "qts_updates_ngen_"
+	channelPtsUpdatesNgenId = "channel_pts_updates_ngen_"
 )
 
 // TL_updates_getState
 func (s *TLService) TL_updates_getState_Process(csess *service.ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
-	// tlobj := object
-	// tl := tlobj.(*mtproto.TL_updates_getState)
+	pts := int32(1)
 
-	// Log.Infof("TL_users_getFullUser = %+v", FormatStruct(tl))
+	userid := csess.GetUserID()
+	mm := model.GetModelManager()
+	upts := mm.GetUserPtsUpdatesByID(userid)
+	if upts != nil {
+		pts = upts.Pts
+	}
 
-	fulluser := &mtproto.TL_userFull{}
+	state := &mtproto.TL_updates_state{
+		M_pts:          pts,
+		M_qts:          0,
+		M_seq:          -1,
+		M_date:         int32(time.Now().Unix()),
+		M_unread_count: 0,
+	}
 
-	return fulluser, nil
+	return state, nil
 }

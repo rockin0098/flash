@@ -1,5 +1,27 @@
 package model
 
+const (
+	kPhotoSizeOriginalType = "0" // client upload original photo
+	kPhotoSizeSmallType    = "s"
+	kPhotoSizeMediumType   = "m"
+	kPhotoSizeXLargeType   = "x"
+	kPhotoSizeYLargeType   = "y"
+	kPhotoSizeAType        = "a"
+	kPhotoSizeBType        = "b"
+	kPhotoSizeCType        = "c"
+
+	kPhotoSizeOriginalSize = 0 // client upload original photo
+	kPhotoSizeSmallSize    = 90
+	kPhotoSizeMediumSize   = 320
+	kPhotoSizeXLargeSize   = 800
+	kPhotoSizeYLargeSize   = 1280
+	kPhotoSizeASize        = 160
+	kPhotoSizeBSize        = 320
+	kPhotoSizeCSize        = 640
+
+	kPhotoSizeAIndex = 4
+)
+
 type PhotoData struct {
 	Model
 	PhotoID    int64  `gorm:""`

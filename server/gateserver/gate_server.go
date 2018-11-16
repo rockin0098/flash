@@ -92,6 +92,8 @@ func ServerInit() {
 		new(model.Message),
 		new(model.Chat),
 		new(model.PhotoData),
+		new(model.UserPtsUpdates),
+		new(model.UserQtsUpdates),
 	)
 }
 

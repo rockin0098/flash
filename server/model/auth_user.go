@@ -21,7 +21,6 @@ type AuthUser struct {
 	Ip            string `gorm:"size:64"`
 	Country       string `gorm:"size:64"`
 	Region        string `gorm:"size:64"`
-	DeletedAt     int64  `gorm:"deleted_at"`
 }
 
 func (s *ModelManager) GetAuthUserByAuthID(authID int64) *AuthUser {

@@ -23,7 +23,7 @@ func (s *ModelManager) GetContactsByUserID(ownerUserID int64) []*UserContact {
 	var res []*UserContact
 	err := db.Where("owner_user_id=? and is_deleted = 0", ownerUserID).
 		Order("contact_user_id asc").
-		Find(res).Error
+		Find(&res).Error
 	if err != nil {
 		Log.Error(err)
 		return nil
@@ -51,7 +51,7 @@ func (s *ModelManager) IsMyContact(myid int64, contactid int64) bool {
 
 	var res []*UserContact
 	err := db.Where("owner_user_id=? and contact_user_id=? and is_deleted = 0", myid, contactid).
-		Find(res).Error
+		Find(&res).Error
 	if err != nil {
 		Log.Error(err)
 		return false
