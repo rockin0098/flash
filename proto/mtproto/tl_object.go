@@ -54,14 +54,13 @@ func ToBool2(b bool) TLObject {
 }
 
 func FromBool(b TLObject) bool {
-	_, isTrue := b.(*TL_boolTrue)
-	if isTrue {
-		return true
+
+	if b.ClassID() == TL_CLASS_boolFalse {
+		return false
 	}
 
-	_, isFalse := b.(*TL_boolTrue)
-	if isFalse {
-		return false
+	if b.ClassID() == TL_CLASS_boolTrue {
+		return true
 	}
 
 	t := fmt.Sprintf("invalid TL type = %T", b)

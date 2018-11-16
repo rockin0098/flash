@@ -330,6 +330,9 @@ func (m *MTPDecodeBuffer) TLObject() TLObject {
 	tlo := NewTLObjectByClassID(classID)
 	if tlo == nil {
 		Log.Errorf("Can't find registed classID: %v", classID)
+		// debug
+		// os.Exit(-1)
+		// debug
 		return nil
 	}
 
