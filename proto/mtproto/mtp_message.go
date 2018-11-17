@@ -265,6 +265,8 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 		return err
 	}
 
+	Log.Debugf("decrypted message = %v", hex.EncodeToString(x))
+
 	dc := NewMTPDecodeBuffer(x)
 
 	m.Salt = dc.Long()            // salt

@@ -527,7 +527,7 @@ func (s *MTProto) DecodeMTProtoApp(reader io.Reader) error {
 	message := NewRawMessage(TRANSPORT_TCP, authKeyID, 0)
 	message.Decode(buf)
 
-	Log.Debugf("sessid = %v, message.Payload = %v", s.SessionID, hex.EncodeToString(message.Payload))
+	Log.Debugf("sessid = %v, authKeyID = %v, message.Payload = %v", s.SessionID, authKeyID, hex.EncodeToString(message.Payload))
 	s.Message = message
 
 	return nil

@@ -140,6 +140,28 @@ func OnData(ctx *tcpnet.TcpContext) (interface{}, error) {
 		return nil, err
 	}
 
+	// debug begin
+	// bts := make([]byte, 10*4096)
+	// n2, err := conn.Read(bts)
+	// if err != nil {
+	// 	Log.Errorf("debug read failed, err = %v", err)
+	// 	return nil, err
+	// }
+
+	// content := bts[:n2]
+	// Log.Infof("n2 = %v, packet content = %v", n2, hex.EncodeToString(content))
+
+	// buffer := bytes.NewBuffer(content)
+
+	// if ctx.PacketNum == 0 { // 第一次要选择codec
+	// 	err = mtp.SelectCodec(buffer)
+	// } else {
+	// 	ASSERT(mtp.Codec != nil)
+	// 	err = mtp.Codec(buffer)
+	// }
+
+	// debug end
+
 	if ctx.PacketNum == 0 { // 第一次要选择codec
 		err = mtp.SelectCodec(conn)
 	} else {

@@ -2,6 +2,7 @@ package mtproto
 
 import (
 	"encoding/binary"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"math"
@@ -336,7 +337,7 @@ func (m *MTPDecodeBuffer) TLObject() TLObject {
 		return nil
 	}
 
-	Log.Debugf("TLObject - classID: %x, classType: %T", uint32(classID), tlo)
+	Log.Debugf("TLObject - classID: %x, classType: %T, buffer = %v", uint32(classID), tlo, hex.EncodeToString(m.buffer[m.off:]))
 
 	tlo.Decode(m.buffer[m.off:])
 
