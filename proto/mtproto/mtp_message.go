@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/rockin0098/meow/base/crypto"
-	. "github.com/rockin0098/meow/base/logger"
 )
 
 func GenerateMessageID() int64 {
@@ -265,7 +264,7 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 		return err
 	}
 
-	Log.Debugf("decrypted message = %v", hex.EncodeToString(x))
+	Log.Debugf("decrypted message = \n%v", hex.EncodeToString(x))
 
 	dc := NewMTPDecodeBuffer(x)
 
@@ -284,7 +283,8 @@ func (m *EncryptedMessage) Decode(authKey []byte, b []byte) error {
 		// 	return fmt.Errorf("Message len: %d (need less than %d)", messagxeLen, dc.size-32)
 	}
 
-	// glog.Infof("salt: %d, sessionId: %d, messageId: %d, seqNo: %d, messageLen: %d", m.salt, m.SessionId, m.MessageId, m.SeqNo, messageLen)
+	// Log.Infof("salt: %d, sessionId: %d, messageId: %d, seqNo: %d, messageLen: %d, buffer = \n%v", m.Salt, m.ClientSessionID, m.MessageID, m.SeqNo, messageLen, hex.Dump(dc.buffer[dc.off:]))
+	Log.Infof("salt: %d, sessionId: %d, messageId: %d, seqNo: %d, messageLen: %d", m.Salt, m.ClientSessionID, m.MessageID, m.SeqNo, messageLen)
 	m.TLObject = dc.TLObject()
 	if m.TLObject == nil {
 		return fmt.Errorf("Decode object is nil")

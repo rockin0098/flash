@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 
 	. "github.com/rockin0098/meow/base/global"
-	. "github.com/rockin0098/meow/base/logger"
 )
 
 const (
