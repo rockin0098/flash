@@ -9,18 +9,6 @@ import (
 )
 
 const (
-	PEER_EMPTY   = 0
-	PEER_SELF    = 1
-	PEER_USER    = 2
-	PEER_CHAT    = 3
-	PEER_CHANNEL = 4
-	PEER_USERS   = 5
-	PEER_CHATS   = 6
-	PEER_ALL     = 7
-	PEER_UNKNOWN = -1
-)
-
-const (
 	MESSAGE_TYPE_UNKNOWN         = 0
 	MESSAGE_TYPE_MESSAGE_EMPTY   = 1
 	MESSAGE_TYPE_MESSAGE         = 2
