@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 
 	. "github.com/rockin0098/meow/base/global"
@@ -211,24 +210,4 @@ func Chat_to_TL_chat(chat *Chat, selfid int64) mtproto.TLObject {
 		tlchat.M_photo = mtproto.New_TL_photoEmpty()
 	}
 	return tlchat
-}
-
-func ToPeerByTypeAndID(peerType int8, peerID int32) (peer mtproto.TLObject) {
-	switch peerType {
-	case PEER_USER:
-		peer = &mtproto.TL_peerUser{
-			M_user_id: peerID,
-		}
-	case PEER_CHAT:
-		peer = &mtproto.TL_peerChat{
-			M_chat_id: peerID,
-		}
-	case PEER_CHANNEL:
-		peer = &mtproto.TL_peerChannel{
-			M_channel_id: peerID,
-		}
-	default:
-		panic(fmt.Sprintf("ToPeerByTypeAndID(%d, %d) error!", peerType, peerID))
-	}
-	return
 }
