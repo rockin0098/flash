@@ -21,7 +21,11 @@ type Message struct {
 	Deleted          int8   `gorm:""`
 }
 
-func (s *ModelManager) GetMessagesByIDList(userid int64, idlist []int32) []*Message {
+type MessageDao struct{}
+
+var messageDao = &MessageDao{}
+
+func (s *MessageDao) GetMessagesByIDList(userid int64, idlist []int32) []*Message {
 	db := datasource.DataSourceInstance().Master()
 
 	var messages []*Message
@@ -37,7 +41,7 @@ func (s *ModelManager) GetMessagesByIDList(userid int64, idlist []int32) []*Mess
 	return messages
 }
 
-func (s *ModelManager) GetChannelMessage(channelid int32, id int32) *Message {
+func (s *MessageDao) GetChannelMessage(channelid int32, id int32) *Message {
 	db := datasource.DataSourceInstance().Master()
 
 	channelMsgBox := &ChannelMessageBox{}

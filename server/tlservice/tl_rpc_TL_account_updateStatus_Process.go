@@ -31,8 +31,7 @@ func (s *TLService) TL_account_updateStatus_Process(csess *service.ClientSession
 			LastSeenIp:        "",
 		}
 
-		mm := model.GetModelManager()
-		err := mm.ModelAdd(up)
+		err := s.Dao.ModelAdd(up)
 		if err != nil {
 			Log.Error(err)
 			return nil, err

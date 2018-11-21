@@ -16,10 +16,12 @@ const (
 
 type AuthService struct {
 	authStorage *sync.Map
+	dao         *model.ModelDao
 }
 
 var authService = &AuthService{
 	authStorage: &sync.Map{},
+	dao:         model.GetModelDao(),
 }
 
 func AuthServiceInstance() *AuthService {
@@ -57,8 +59,7 @@ func (s *AuthService) CheckBySalt(authid int64, salt int64) bool {
 	// var salt int64 = 0
 	auth, ok := s.Load(authid)
 	if !ok {
-		mm := model.GetModelManager()
-		a := mm.GetAuthKeyByAuthID(authid)
+		a := s.dao.AuthKeyDao.GetAuthKeyByAuthID(authid)
 		if a == nil {
 			return false
 		}

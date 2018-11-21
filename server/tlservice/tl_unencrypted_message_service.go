@@ -269,8 +269,7 @@ func (s *TLService) TL_set_client_DH_params_Process(sess *service.Session, msg *
 		Body:   hex.EncodeToString(authKey), //base64.RawStdEncoding.EncodeToString(authKey),
 	}
 
-	mm := model.GetModelManager()
-	err = mm.ModelAdd(m)
+	err = s.Dao.ModelAdd(m)
 	if err != nil {
 		Log.Error("save authkey failed, sessid=%v, err=%v", sess.SessionID, err)
 		return nil, err

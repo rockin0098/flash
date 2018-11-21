@@ -25,7 +25,11 @@ type UserDialog struct {
 	Version             int64  `gorm:""`
 }
 
-func (s *ModelManager) GetDialogsByOffsetID(userid int64, isPinned bool, offsetid int32, limit int32) []*UserDialog {
+type UserDialogDao struct{}
+
+var userDialogDao = &UserDialogDao{}
+
+func (s *UserDialogDao) GetDialogsByOffsetID(userid int64, isPinned bool, offsetid int32, limit int32) []*UserDialog {
 	db := datasource.DataSourceInstance().Master()
 
 	var dialogs []*UserDialog
@@ -46,7 +50,7 @@ func (s *ModelManager) GetDialogsByOffsetID(userid int64, isPinned bool, offseti
 	return dialogs
 }
 
-func (s *ModelManager) GetPinnedDialogs(userid int64) []*UserDialog {
+func (s *UserDialogDao) GetPinnedDialogs(userid int64) []*UserDialog {
 	db := datasource.DataSourceInstance().Master()
 
 	var dialogs []*UserDialog

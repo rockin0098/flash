@@ -23,7 +23,11 @@ type AuthPhoneTransaction struct {
 	IsDeleted        int8   `gorm:""`
 }
 
-func (s *ModelManager) GetAuthPhoneTransactionByHash(hash string) *AuthPhoneTransaction {
+type AuthPhoneTransactionDao struct{}
+
+var authPhoneTransactionDao = &AuthPhoneTransactionDao{}
+
+func (s *AuthPhoneTransactionDao) GetAuthPhoneTransactionByHash(hash string) *AuthPhoneTransaction {
 	db := datasource.DataSourceInstance().Master()
 
 	res := &AuthPhoneTransaction{}

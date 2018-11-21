@@ -33,7 +33,11 @@ type User struct {
 	BannedAt       time.Time
 }
 
-func (s *ModelManager) CheckPhoneExists(phone string) bool {
+type UserDao struct{}
+
+var userDao = &UserDao{}
+
+func (s *UserDao) CheckPhoneExists(phone string) bool {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -52,7 +56,7 @@ func (s *ModelManager) CheckPhoneExists(phone string) bool {
 	return true
 }
 
-func (s *ModelManager) GetUserByPhoneNumber(phone string) *User {
+func (s *UserDao) GetUserByPhoneNumber(phone string) *User {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -71,7 +75,7 @@ func (s *ModelManager) GetUserByPhoneNumber(phone string) *User {
 	return user
 }
 
-func (s *ModelManager) GetUserByID(userid int64) *User {
+func (s *UserDao) GetUserByID(userid int64) *User {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -90,7 +94,7 @@ func (s *ModelManager) GetUserByID(userid int64) *User {
 	return user
 }
 
-func (s *ModelManager) CreateNewUser(user *User, authid int64) error {
+func (s *UserDao) CreateNewUser(user *User, authid int64) error {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -137,7 +141,7 @@ func (s *ModelManager) CreateNewUser(user *User, authid int64) error {
 	return nil
 }
 
-func (s *ModelManager) GetUsersByIDList(ids []int64) []*User {
+func (s *UserDao) GetUsersByIDList(ids []int64) []*User {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -152,7 +156,7 @@ func (s *ModelManager) GetUsersByIDList(ids []int64) []*User {
 
 }
 
-func (s *ModelManager) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtproto.TLObject {
+func (s *UserDao) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtproto.TLObject {
 
 	if len(ids) == 0 {
 		var os []mtproto.TLObject
@@ -169,9 +173,9 @@ func (s *ModelManager) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtpr
 	return tlusers
 }
 
-func (s *ModelManager) GetUserStatus(userID int64) mtproto.TLObject {
+func (s *UserDao) GetUserStatus(userID int64) mtproto.TLObject {
 	now := time.Now().Unix()
-	up := s.GetUserPresenceByID(userID)
+	up := userPresenceDao.GetUserPresenceByID(userID)
 	if up == nil {
 		return mtproto.New_TL_userStatusEmpty()
 	}
@@ -189,7 +193,7 @@ func (s *ModelManager) GetUserStatus(userID int64) mtproto.TLObject {
 	}
 }
 
-func (s *ModelManager) GetDefaultUserPhotoID(userID int64) int64 {
+func (s *UserDao) GetDefaultUserPhotoID(userID int64) int64 {
 
 	user := s.GetUserByID(userID)
 	if user == nil {

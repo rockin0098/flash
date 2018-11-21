@@ -17,8 +17,7 @@ func (s *TLService) TL_contacts_getContacts_Process(csess *service.ClientSession
 
 	userid := csess.GetUserID()
 
-	mm := model.GetModelManager()
-	contactList := mm.GetContactsByUserID(userid)
+	contactList := s.Dao.UserContactDao.GetContactsByUserID(userid)
 
 	var contacts mtproto.TLObject
 	if len(contactList) > 0 {
@@ -34,7 +33,7 @@ func (s *TLService) TL_contacts_getContacts_Process(csess *service.ClientSession
 			clist = append(clist, c2)
 		}
 		ids = append(ids, userid) // 加上自己
-		users := mm.GetUsersByIDList(ids)
+		users := s.Dao.UserDao.GetUsersByIDList(ids)
 		var tlusers []mtproto.TLObject
 		for _, u := range users {
 			status := &mtproto.TL_userStatusOnline{

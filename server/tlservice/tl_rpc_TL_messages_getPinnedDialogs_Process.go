@@ -15,8 +15,7 @@ func (s *TLService) TL_messages_getPinnedDialogs_Process(csess *service.ClientSe
 
 	userid := csess.GetUserID()
 
-	mm := model.GetModelManager()
-	dialogs := mm.GetPinnedDialogs(userid)
+	dialogs := s.Dao.UserDialogDao.GetPinnedDialogs(userid)
 	tldialogs := model.DialogList_to_TL_dialogList(dialogs)
 	peerDialogs := mtproto.New_TL_messages_peerDialogs()
 
@@ -42,15 +41,15 @@ func (s *TLService) TL_messages_getPinnedDialogs_Process(csess *service.ClientSe
 	}
 
 	if len(messageIdList) > 0 {
-		messages := mm.GetMessagesByIDList(userid, messageIdList)
+		messages := s.Dao.MessageDao.GetMessagesByIDList(userid, messageIdList)
 		peerDialogs.M_messages = model.MessageList_to_TL_messageList(messages)
 	}
 
-	users := mm.GetUsersBySelfAndIDList(userid, userIdList)
+	users := s.Dao.UserDao.GetUsersBySelfAndIDList(userid, userIdList)
 	peerDialogs.M_users = users
 
 	if len(chatIdList) > 0 {
-		peerDialogs.M_chats = mm.GetChatListBySelfAndIDList(userid, chatIdList)
+		peerDialogs.M_chats = s.Dao.ChatDao.GetChatListBySelfAndIDList(userid, chatIdList)
 	}
 
 	// state 机制 未处理

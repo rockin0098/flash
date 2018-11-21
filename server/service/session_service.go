@@ -172,6 +172,7 @@ type ClientSession struct {
 	PendingMessages  []*PendingMessage
 	IsUpdates        bool
 	RpcMessages      []*NetworkApiMessage
+	Dao              *model.ModelDao
 }
 
 type PendingMessage struct {
@@ -236,8 +237,7 @@ func (s *ClientSession) SendPendingMessages() error {
 }
 
 func (s *ClientSession) EncodeMessage(authKeyID int64, messageID int64, confirm bool, tl mtproto.TLObject) []byte {
-	mm := model.GetModelManager()
-	authKey := mm.GetAuthKeyValueByAuthID(authKeyID)
+	authKey := s.Dao.AuthKeyDao.GetAuthKeyValueByAuthID(authKeyID)
 	if authKey == nil {
 		Log.Error("authKeyID = %v not found", authKeyID)
 		return nil
@@ -278,8 +278,7 @@ func (s *ClientSession) ClientSessionStart() {
 func (s *ClientSession) GetUserID() int64 {
 
 	if s.UserID == 0 {
-		mm := model.GetModelManager()
-		au := mm.GetAuthUserByAuthID(s.AuthKeyID)
+		au := s.Dao.AuthUserDao.GetAuthUserByAuthID(s.AuthKeyID)
 		ASSERT(au != nil)
 
 		s.UserID = au.UserID

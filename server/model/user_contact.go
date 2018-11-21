@@ -17,7 +17,11 @@ type UserContact struct {
 	Date2            int32  `gorm:""`
 }
 
-func (s *ModelManager) GetContactsByUserID(ownerUserID int64) []*UserContact {
+type UserContactDao struct{}
+
+var userContactDao = &UserContactDao{}
+
+func (s *UserContactDao) GetContactsByUserID(ownerUserID int64) []*UserContact {
 	db := datasource.DataSourceInstance().Master()
 
 	var res []*UserContact
@@ -32,7 +36,7 @@ func (s *ModelManager) GetContactsByUserID(ownerUserID int64) []*UserContact {
 	return res
 }
 
-func (s *ModelManager) GetUserContact(ownerUserID int64, contactUserID int64) *UserContact {
+func (s *UserContactDao) GetUserContact(ownerUserID int64, contactUserID int64) *UserContact {
 	db := datasource.DataSourceInstance().Master()
 
 	res := &UserContact{}
@@ -46,7 +50,7 @@ func (s *ModelManager) GetUserContact(ownerUserID int64, contactUserID int64) *U
 	return res
 }
 
-func (s *ModelManager) IsMyContact(myid int64, contactid int64) bool {
+func (s *UserContactDao) IsMyContact(myid int64, contactid int64) bool {
 	db := datasource.DataSourceInstance().Master()
 
 	var res []*UserContact
@@ -64,7 +68,7 @@ func (s *ModelManager) IsMyContact(myid int64, contactid int64) bool {
 	return true
 }
 
-func (s *ModelManager) CheckContactAndMutualByUserID(selfID, contactID int64) (bool, bool) {
+func (s *UserContactDao) CheckContactAndMutualByUserID(selfID, contactID int64) (bool, bool) {
 	do := s.GetUserContact(selfID, contactID)
 	if do == nil {
 		return false, false

@@ -3,8 +3,6 @@ package tlservice
 import (
 	"time"
 
-	"github.com/rockin0098/meow/server/model"
-
 	. "github.com/rockin0098/meow/base/global"
 	"github.com/rockin0098/meow/proto/mtproto"
 	"github.com/rockin0098/meow/server/service"
@@ -27,14 +25,13 @@ func (s *TLService) TL_auth_signIn_Process(csess *service.ClientSession, object 
 	}
 
 	hash := tl.Get_phone_code_hash()
-	mm := model.GetModelManager()
-	pt := mm.GetAuthPhoneTransactionByHash(hash)
+	pt := s.Dao.AuthPhoneTransactionDao.GetAuthPhoneTransactionByHash(hash)
 	if pt == nil || pt.Code != tl.Get_phone_code() || pt.PhoneNumber != phone {
 		return nil, mtproto.NewRpcError(int32(mtproto.TLRpcErrorCodes_PHONE_CODE_INVALID), "code invalid")
 	}
 
 	var tluser mtproto.TLObject
-	user := mm.GetUserByPhoneNumber(phone)
+	user := s.Dao.UserDao.GetUserByPhoneNumber(phone)
 	if user == nil {
 		return nil, mtproto.NewRpcError2(mtproto.TLRpcErrorCodes_PHONE_NUMBER_UNOCCUPIED)
 	} else {

@@ -17,9 +17,13 @@ type MessageListWrapper struct {
 	Messages []*mtproto.TL_message2
 }
 
-type TLService struct{}
+type TLService struct {
+	Dao *model.ModelDao
+}
 
-var tlService = &TLService{}
+var tlService = &TLService{
+	Dao: model.GetModelDao(),
+}
 
 func TLServiceInstance() *TLService {
 	return tlService
@@ -62,8 +66,7 @@ func (s *TLService) TLMessageProcess(sess *service.Session, raw *mtproto.RawMess
 		Log.Debugf("client authKeyID = %v", raw.AuthKeyID)
 
 		authid := raw.AuthKeyID
-		mm := model.GetModelManager()
-		akey := mm.GetAuthKeyValueByAuthID(authid)
+		akey := s.Dao.AuthKeyDao.GetAuthKeyValueByAuthID(authid)
 		if akey == nil {
 			return fmt.Errorf("authkey not found by authid=%v", authid)
 		}
@@ -99,6 +102,7 @@ func (s *TLService) TLMessageProcess(sess *service.Session, raw *mtproto.RawMess
 				PendingMessages:  []*service.PendingMessage{},
 				IsUpdates:        false,
 				RpcMessages:      []*service.NetworkApiMessage{},
+				Dao:              model.GetModelDao(),
 			}
 
 			ss.NewClientSession(clientSessionID, csess)

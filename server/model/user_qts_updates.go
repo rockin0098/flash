@@ -8,3 +8,7 @@ type UserQtsUpdates struct {
 	UpdateData []byte `gorm:"type:longtext"`
 	Date2      int32  `gorm:""`
 }
+
+type UserQtsUpdatesDao struct{}
+
+var userQtsUpdatesDao = &UserQtsUpdatesDao{}

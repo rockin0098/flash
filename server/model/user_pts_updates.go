@@ -15,7 +15,11 @@ type UserPtsUpdates struct {
 	Date2      int32  `gorm:""`
 }
 
-func (s *ModelManager) GetUserPtsUpdatesByID(userID int64) *UserPtsUpdates {
+type UserPtsUpdatesDao struct{}
+
+var userPtsUpdatesDao = &UserPtsUpdatesDao{}
+
+func (s *UserPtsUpdatesDao) GetUserPtsUpdatesByID(userID int64) *UserPtsUpdates {
 	db := datasource.DataSourceInstance().Master()
 
 	up := &UserPtsUpdates{}

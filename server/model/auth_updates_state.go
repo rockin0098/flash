@@ -14,3 +14,7 @@ type AuthUpdatesState struct {
 	Date2     int32  `gorm:""`
 	DeletedAt string `gorm:"size:64"`
 }
+
+type AuthUpdatesStateDao struct{}
+
+var authUpdatesStateDao = &AuthUpdatesStateDao{}

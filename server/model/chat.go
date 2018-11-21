@@ -19,7 +19,11 @@ type Chat struct {
 	Date             int32  `gorm:""`
 }
 
-func (s *ModelManager) GetChatByID(id int64) *Chat {
+type ChatDao struct{}
+
+var chatDao = &ChatDao{}
+
+func (s *ChatDao) GetChatByID(id int64) *Chat {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -34,7 +38,7 @@ func (s *ModelManager) GetChatByID(id int64) *Chat {
 	return chat
 }
 
-func (s *ModelManager) GetChatListBySelfAndIDList(selfUserID int64, ids []int32) []mtproto.TLObject {
+func (s *ChatDao) GetChatListBySelfAndIDList(selfUserID int64, ids []int32) []mtproto.TLObject {
 
 	if len(ids) == 0 {
 		var os []mtproto.TLObject

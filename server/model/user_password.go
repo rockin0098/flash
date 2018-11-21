@@ -14,3 +14,7 @@ type UserPassword struct {
 	Attempts    int32  `gorm:""`
 	State       int8   `gorm:""`
 }
+
+type UserPasswordDao struct{}
+
+var userPasswordDao = &UserPasswordDao{}

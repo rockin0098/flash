@@ -69,14 +69,14 @@ func makeTLUserByUser(selfid int64, user *User) mtproto.TLObject {
 			mutualContact = true
 			phone = user.Phone
 		} else {
-			status = modelManager.GetUserStatus(user.ID)
-			contact, mutualContact = modelManager.CheckContactAndMutualByUserID(selfid, user.ID)
+			status = userDao.GetUserStatus(user.ID)
+			contact, mutualContact = userContactDao.CheckContactAndMutualByUserID(selfid, user.ID)
 			if contact {
 				phone = user.Phone
 			}
 		}
 
-		photoId := modelManager.GetDefaultUserPhotoID(user.ID)
+		photoId := userDao.GetDefaultUserPhotoID(user.ID)
 		if photoId == 0 {
 			photo = mtproto.New_TL_userProfilePhotoEmpty()
 		} else {

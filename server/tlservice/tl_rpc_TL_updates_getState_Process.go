@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/rockin0098/meow/proto/mtproto"
-	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
 )
 
@@ -22,8 +21,7 @@ func (s *TLService) TL_updates_getState_Process(csess *service.ClientSession, ob
 	pts := int32(1)
 
 	userid := csess.GetUserID()
-	mm := model.GetModelManager()
-	upts := mm.GetUserPtsUpdatesByID(userid)
+	upts := s.Dao.UserPtsUpdatesDao.GetUserPtsUpdatesByID(userid)
 	if upts != nil {
 		pts = upts.Pts
 	}

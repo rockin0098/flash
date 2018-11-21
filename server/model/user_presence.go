@@ -14,7 +14,11 @@ type UserPresence struct {
 	Version           int64  `gorm:""`
 }
 
-func (s *ModelManager) GetUserPresenceByID(userID int64) *UserPresence {
+type UserPresenceDao struct{}
+
+var userPresenceDao = &UserPresenceDao{}
+
+func (s *UserPresenceDao) GetUserPresenceByID(userID int64) *UserPresence {
 	db := datasource.DataSourceInstance().Master()
 
 	up := &UserPresence{}

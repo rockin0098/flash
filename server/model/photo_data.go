@@ -38,3 +38,7 @@ type PhotoData struct {
 	FileID     int64  `gorm:"file_id"`
 	State      int8   `gorm:"state"`
 }
+
+type PhotoDataDao struct{}
+
+var photoDataDao = &PhotoDataDao{}

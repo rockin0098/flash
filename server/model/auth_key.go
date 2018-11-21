@@ -13,7 +13,11 @@ type AuthKey struct {
 	Body   string `gorm:"size:1024"`
 }
 
-func (s *ModelManager) GetAuthKeyByAuthID(authID int64) *AuthKey {
+type AuthKeyDao struct{}
+
+var authKeyDao = &AuthKeyDao{}
+
+func (s *AuthKeyDao) GetAuthKeyByAuthID(authID int64) *AuthKey {
 	db := datasource.DataSourceInstance().Master()
 
 	auth := &AuthKey{}
@@ -31,7 +35,7 @@ func (s *ModelManager) GetAuthKeyByAuthID(authID int64) *AuthKey {
 	return auth
 }
 
-func (s *ModelManager) GetAuthKeyValueByAuthID(authID int64) []byte {
+func (s *AuthKeyDao) GetAuthKeyValueByAuthID(authID int64) []byte {
 	auth := s.GetAuthKeyByAuthID(authID)
 	if auth == nil {
 		return nil

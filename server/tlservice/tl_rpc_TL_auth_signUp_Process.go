@@ -23,8 +23,7 @@ func (s *TLService) TL_auth_signUp_Process(csess *service.ClientSession, object 
 	phone := tl.Get_phone_number()
 
 	var tluser mtproto.TLObject
-	mm := model.GetModelManager()
-	user := mm.GetUserByPhoneNumber(phone)
+	user := s.Dao.UserDao.GetUserByPhoneNumber(phone)
 	if user != nil {
 		return nil, mtproto.NewRpcError2(mtproto.TLRpcErrorCodes_PHONE_NUMBER_OCCUPIED)
 	} else {
@@ -36,7 +35,7 @@ func (s *TLService) TL_auth_signUp_Process(csess *service.ClientSession, object 
 			CountryCode: "UN",
 		}
 
-		err := mm.CreateNewUser(user, csess.AuthKeyID)
+		err := s.Dao.UserDao.CreateNewUser(user, csess.AuthKeyID)
 		if err != nil {
 			Log.Error(err)
 			return nil, err

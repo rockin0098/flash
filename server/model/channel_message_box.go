@@ -9,3 +9,7 @@ type ChannelMessageBox struct {
 	Date                int32 `gorm:""`
 	Deleted             int8  `gorm:""`
 }
+
+type ChannelMessageBoxDao struct{}
+
+var channelMessageBoxDao = &ChannelMessageBoxDao{}

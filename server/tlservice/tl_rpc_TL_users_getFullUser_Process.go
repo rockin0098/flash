@@ -40,8 +40,7 @@ func (s *TLService) TL_users_getFullUser_Process(csess *service.ClientSession, o
 	fulluser.Set_about("")
 	fulluser.Set_common_chats_count(0)
 
-	mm := model.GetModelManager()
-	user := mm.GetUserByID(userid)
+	user := s.Dao.UserDao.GetUserByID(userid)
 	state := mtproto.New_TL_userStatusOnline()
 	tluser := model.User_to_TL_user(user, state)
 

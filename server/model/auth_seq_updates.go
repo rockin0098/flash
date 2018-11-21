@@ -9,3 +9,7 @@ type AuthSeqUpdates struct {
 	UpdateData []byte `gorm:"type:longtext"`
 	Date2      int32  `gorm:""`
 }
+
+type AuthSeqUpdatesDao struct{}
+
+var authSeqUpdatesDao = &AuthSeqUpdatesDao{}

@@ -25,8 +25,6 @@ func (s *TLService) TL_contacts_importContacts_Process(csess *service.ClientSess
 		return nil, err
 	}
 
-	mm := model.GetModelManager()
-
 	var importedContacts mtproto.TLObject
 	var imported []mtproto.TLObject
 	var users []mtproto.TLObject
@@ -35,18 +33,18 @@ func (s *TLService) TL_contacts_importContacts_Process(csess *service.ClientSess
 
 		tlnc := nc.(*mtproto.TL_inputPhoneContact)
 		phone := tlnc.Get_phone()
-		u := mm.GetUserByPhoneNumber(phone)
+		u := s.Dao.UserDao.GetUserByPhoneNumber(phone)
 		if u == nil {
 			Log.Warnf("phone have not registered yet, phone = %v", phone)
 			continue
 		}
 
 		myid := csess.GetUserID()
-		mys := mm.GetUsersByIDList([]int64{myid})
+		mys := s.Dao.UserDao.GetUsersByIDList([]int64{myid})
 		ASSERT(len(mys) == 1)
 		my := mys[0]
 
-		if !mm.IsMyContact(myid, u.ID) {
+		if !s.Dao.UserContactDao.IsMyContact(myid, u.ID) {
 			now := int32(time.Now().Unix())
 			mycontact := &model.UserContact{
 				OwnerUserID:      myid,
@@ -68,12 +66,12 @@ func (s *TLService) TL_contacts_importContacts_Process(csess *service.ClientSess
 				Date2:            now,
 			}
 
-			err := mm.ModelAdd(mycontact)
+			err := s.Dao.ModelAdd(mycontact)
 			if err != nil {
 				Log.Error(err)
 				return nil, err
 			}
-			err = mm.ModelAdd(ucontact)
+			err = s.Dao.ModelAdd(ucontact)
 			if err != nil {
 				Log.Error(err)
 				return nil, err

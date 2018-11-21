@@ -2,7 +2,6 @@ package tlservice
 
 import (
 	"github.com/rockin0098/meow/proto/mtproto"
-	"github.com/rockin0098/meow/server/model"
 	"github.com/rockin0098/meow/server/service"
 )
 
@@ -15,8 +14,7 @@ func (s *TLService) TL_auth_resendCode_Process(csess *service.ClientSession, obj
 
 	phone := tl.Get_phone_number()
 
-	mm := model.GetModelManager()
-	registered := mm.CheckPhoneExists(phone)
+	registered := s.Dao.UserDao.CheckPhoneExists(phone)
 
 	Log.Infof("registered = %v", registered)
 

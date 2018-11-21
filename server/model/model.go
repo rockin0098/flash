@@ -13,15 +13,51 @@ type Model struct {
 	DeletedAt *time.Time
 }
 
-type ModelManager struct{}
-
-var modelManager = &ModelManager{}
-
-func GetModelManager() *ModelManager {
-	return modelManager
+type ModelDao struct {
+	AuthKeyDao              *AuthKeyDao
+	AuthPhoneTransactionDao *AuthPhoneTransactionDao
+	AuthSeqUpdatesDao       *AuthSeqUpdatesDao
+	AuthUpdatesStateDao     *AuthUpdatesStateDao
+	AuthUserDao             *AuthUserDao
+	ChannelMessageBoxDao    *ChannelMessageBoxDao
+	ChannelPtsUpdatesDao    *ChannelPtsUpdatesDao
+	ChatDao                 *ChatDao
+	MessageDao              *MessageDao
+	PhotoDataDao            *PhotoDataDao
+	UserContactDao          *UserContactDao
+	UserDialogDao           *UserDialogDao
+	UserPasswordDao         *UserPasswordDao
+	UserPresenceDao         *UserPresenceDao
+	UserPtsUpdatesDao       *UserPtsUpdatesDao
+	UserQtsUpdatesDao       *UserQtsUpdatesDao
+	UserDao                 *UserDao
 }
 
-func (s *ModelManager) ModelAdd(m interface{}) error {
+var modelDao = &ModelDao{
+	AuthKeyDao:              authKeyDao,
+	AuthPhoneTransactionDao: authPhoneTransactionDao,
+	AuthSeqUpdatesDao:       authSeqUpdatesDao,
+	AuthUpdatesStateDao:     authUpdatesStateDao,
+	AuthUserDao:             authUserDao,
+	ChannelMessageBoxDao:    channelMessageBoxDao,
+	ChannelPtsUpdatesDao:    channelPtsUpdatesDao,
+	ChatDao:                 chatDao,
+	MessageDao:              messageDao,
+	PhotoDataDao:            photoDataDao,
+	UserContactDao:          userContactDao,
+	UserDialogDao:           userDialogDao,
+	UserPasswordDao:         userPasswordDao,
+	UserPresenceDao:         userPresenceDao,
+	UserPtsUpdatesDao:       userPtsUpdatesDao,
+	UserQtsUpdatesDao:       userQtsUpdatesDao,
+	UserDao:                 userDao,
+}
+
+func GetModelDao() *ModelDao {
+	return modelDao
+}
+
+func (s *ModelDao) ModelAdd(m interface{}) error {
 	db := datasource.DataSourceInstance().Master()
 	return db.Create(m).Error
 }

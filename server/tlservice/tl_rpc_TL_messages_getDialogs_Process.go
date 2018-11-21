@@ -33,21 +33,20 @@ func (s *TLService) TL_messages_getDialogs_Process(csess *service.ClientSession,
 	userid := csess.GetUserID()
 	limit := tl.Get_limit()
 
-	mm := model.GetModelManager()
-	dialogs := mm.GetDialogsByOffsetID(userid, false, offsetID, limit)
+	dialogs := s.Dao.UserDialogDao.GetDialogsByOffsetID(userid, false, offsetID, limit)
 	tldialogs := model.DialogList_to_TL_dialogList(dialogs)
 	items := PickAllIDListByDialogs(tldialogs)
-	mss := mm.GetMessagesByIDList(userid, items.MessageIDList)
+	mss := s.Dao.MessageDao.GetMessagesByIDList(userid, items.MessageIDList)
 	tlmss := model.MessageList_to_TL_messageList(mss)
 	for k, v := range items.ChannelMessageIDMap {
-		m := mm.GetChannelMessage(k, v)
+		m := s.Dao.MessageDao.GetChannelMessage(k, v)
 		if m != nil {
 			tlmss = append(tlmss, model.Message_to_TL_message(m))
 		}
 	}
 
-	users := mm.GetUsersBySelfAndIDList(userid, items.UserIDList)
-	chats := mm.GetChatListBySelfAndIDList(userid, items.ChatIDList)
+	users := s.Dao.UserDao.GetUsersBySelfAndIDList(userid, items.UserIDList)
+	chats := s.Dao.ChatDao.GetChatListBySelfAndIDList(userid, items.ChatIDList)
 	// todo : get channel chat
 
 	messageDialogs := &mtproto.TL_messages_dialogs{

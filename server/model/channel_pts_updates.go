@@ -9,3 +9,7 @@ type ChannelPtsUpdates struct {
 	UpdateData string `gorm:"type:longtext"`
 	Date2      int32  `gorm:""`
 }
+
+type ChannelPtsUpdatesDao struct{}
+
+var channelPtsUpdatesDao = &ChannelPtsUpdatesDao{}

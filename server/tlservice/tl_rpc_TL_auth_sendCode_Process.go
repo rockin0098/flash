@@ -47,8 +47,7 @@ func (s *TLService) TL_auth_sendCode_Process(csess *service.ClientSession, objec
 
 	phone := tl.Get_phone_number()
 
-	mm := model.GetModelManager()
-	registered := mm.CheckPhoneExists(phone)
+	registered := s.Dao.UserDao.CheckPhoneExists(phone)
 
 	Log.Infof("registered = %v", registered)
 
@@ -70,7 +69,7 @@ func (s *TLService) TL_auth_sendCode_Process(csess *service.ClientSession, objec
 		CreatedTime:      time.Now().Unix(),
 	}
 
-	err := mm.ModelAdd(authPhoneTransaction)
+	err := s.Dao.ModelAdd(authPhoneTransaction)
 	if err != nil {
 		Log.Error(err)
 		return nil, err

@@ -23,7 +23,11 @@ type AuthUser struct {
 	Region        string `gorm:"size:64"`
 }
 
-func (s *ModelManager) GetAuthUserByAuthID(authID int64) *AuthUser {
+type AuthUserDao struct{}
+
+var authUserDao = &AuthUserDao{}
+
+func (s *AuthUserDao) GetAuthUserByAuthID(authID int64) *AuthUser {
 	db := datasource.DataSourceInstance().Master()
 
 	res := &AuthUser{}
