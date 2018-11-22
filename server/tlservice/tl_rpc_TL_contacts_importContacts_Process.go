@@ -40,7 +40,7 @@ func (s *TLService) TL_contacts_importContacts_Process(csess *service.ClientSess
 		}
 
 		myid := csess.GetUserID()
-		mys := s.Dao.UserDao.GetUsersByIDList([]int64{myid})
+		mys := s.Dao.UserDao.GetUsersByIDList([]int32{myid})
 		ASSERT(len(mys) == 1)
 		my := mys[0]
 

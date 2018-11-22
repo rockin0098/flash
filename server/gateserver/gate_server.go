@@ -94,6 +94,7 @@ func ServerInit() {
 		new(model.PhotoData),
 		new(model.UserPtsUpdates),
 		new(model.UserQtsUpdates),
+		new(model.MessageBox),
 	)
 }
 

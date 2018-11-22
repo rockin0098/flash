@@ -8,7 +8,7 @@ import (
 type AuthUser struct {
 	Model
 	AuthID        int64  `gorm:""`
-	UserID        int64  `gorm:""`
+	UserID        int32  `gorm:""`
 	Hash          int64  `gorm:""`
 	DeviceModel   string `gorm:"size:64"`
 	Platform      string `gorm:"size:64"`

@@ -29,7 +29,7 @@ type UserDialogDao struct{}
 
 var userDialogDao = &UserDialogDao{}
 
-func (s *UserDialogDao) GetDialogsByOffsetID(userid int64, isPinned bool, offsetid int32, limit int32) []*UserDialog {
+func (s *UserDialogDao) GetDialogsByOffsetID(userid int32, isPinned bool, offsetid int32, limit int32) []*UserDialog {
 	db := datasource.DataSourceInstance().Master()
 
 	var dialogs []*UserDialog
@@ -50,7 +50,7 @@ func (s *UserDialogDao) GetDialogsByOffsetID(userid int64, isPinned bool, offset
 	return dialogs
 }
 
-func (s *UserDialogDao) GetPinnedDialogs(userid int64) []*UserDialog {
+func (s *UserDialogDao) GetPinnedDialogs(userid int32) []*UserDialog {
 	db := datasource.DataSourceInstance().Master()
 
 	var dialogs []*UserDialog

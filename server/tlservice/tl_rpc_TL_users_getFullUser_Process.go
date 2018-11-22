@@ -19,14 +19,14 @@ func (s *TLService) TL_users_getFullUser_Process(csess *service.ClientSession, o
 
 	id := tl.Get_id()
 
-	var userid int64
+	var userid int32
 	// var accesshash int64
 
 	switch id.ClassID() {
 	case mtproto.TL_CLASS_inputUserSelf:
 		userid = csess.GetUserID()
 	case mtproto.TL_CLASS_inputUser:
-		userid = int64(id.(*mtproto.TL_inputUser).Get_user_id())
+		userid = (id.(*mtproto.TL_inputUser).Get_user_id())
 		// accesshash = id.(*mtproto.TL_inputUser).Get_access_hash()
 	default:
 		panic(fmt.Sprintf("class type = %T", id))

@@ -2,7 +2,7 @@ package model
 
 type UserPassword struct {
 	Model
-	UserID      int64  `gorm:""`
+	UserID      int32  `gorm:""`
 	ServerSalt  string `gorm:"size:64"`
 	Hash        string `gorm:"size:64"`
 	Salt        string `gorm:"size:64"`

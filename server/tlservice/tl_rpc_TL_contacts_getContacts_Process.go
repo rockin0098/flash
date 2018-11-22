@@ -23,7 +23,7 @@ func (s *TLService) TL_contacts_getContacts_Process(csess *service.ClientSession
 	if len(contactList) > 0 {
 
 		var clist []mtproto.TLObject
-		var ids []int64
+		var ids []int32
 		for _, c := range contactList {
 			ids = append(ids, c.ContactUserID)
 			c2 := &mtproto.TL_contact{

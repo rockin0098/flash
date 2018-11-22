@@ -13,7 +13,10 @@ import (
 )
 
 type User struct {
-	Model
+	ID             int32 `gorm:"AUTO_INCREMENT;primary_key"` // id 32bit
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      *time.Time
 	AccessHash     int64  `gorm:""`
 	FirstName      string `gorm:"size:32"`
 	LastName       string `gorm:"size:32"`
@@ -75,7 +78,7 @@ func (s *UserDao) GetUserByPhoneNumber(phone string) *User {
 	return user
 }
 
-func (s *UserDao) GetUserByID(userid int64) *User {
+func (s *UserDao) GetUserByID(userid int32) *User {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -141,7 +144,7 @@ func (s *UserDao) CreateNewUser(user *User, authid int64) error {
 	return nil
 }
 
-func (s *UserDao) GetUsersByIDList(ids []int64) []*User {
+func (s *UserDao) GetUsersByIDList(ids []int32) []*User {
 
 	db := datasource.DataSourceInstance().Master()
 
@@ -156,7 +159,7 @@ func (s *UserDao) GetUsersByIDList(ids []int64) []*User {
 
 }
 
-func (s *UserDao) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtproto.TLObject {
+func (s *UserDao) GetUsersBySelfAndIDList(selfid int32, ids []int32) []mtproto.TLObject {
 
 	if len(ids) == 0 {
 		var os []mtproto.TLObject
@@ -173,7 +176,7 @@ func (s *UserDao) GetUsersBySelfAndIDList(selfid int64, ids []int64) []mtproto.T
 	return tlusers
 }
 
-func (s *UserDao) GetUserStatus(userID int64) mtproto.TLObject {
+func (s *UserDao) GetUserStatus(userID int32) mtproto.TLObject {
 	now := time.Now().Unix()
 	up := userPresenceDao.GetUserPresenceByID(userID)
 	if up == nil {
@@ -193,7 +196,7 @@ func (s *UserDao) GetUserStatus(userID int64) mtproto.TLObject {
 	}
 }
 
-func (s *UserDao) GetDefaultUserPhotoID(userID int64) int64 {
+func (s *UserDao) GetDefaultUserPhotoID(userID int32) int64 {
 
 	user := s.GetUserByID(userID)
 	if user == nil {

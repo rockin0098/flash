@@ -7,7 +7,7 @@ import (
 
 type Chat struct {
 	Model
-	CreatorUserID    int64  `gorm:""`
+	CreatorUserID    int32  `gorm:""`
 	AccessHash       int64  `gorm:""`
 	RandomID         int64  `gorm:""`
 	ParticipantCount int32  `gorm:""`
@@ -38,7 +38,7 @@ func (s *ChatDao) GetChatByID(id int64) *Chat {
 	return chat
 }
 
-func (s *ChatDao) GetChatListBySelfAndIDList(selfUserID int64, ids []int32) []mtproto.TLObject {
+func (s *ChatDao) GetChatListBySelfAndIDList(selfUserID int32, ids []int32) []mtproto.TLObject {
 
 	if len(ids) == 0 {
 		var os []mtproto.TLObject

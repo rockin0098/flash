@@ -20,7 +20,7 @@ func (s *TLService) TL_messages_getPinnedDialogs_Process(csess *service.ClientSe
 	peerDialogs := mtproto.New_TL_messages_peerDialogs()
 
 	messageIdList := []int32{}
-	userIdList := []int64{userid}
+	userIdList := []int32{userid}
 	chatIdList := []int32{}
 
 	for _, tld := range tldialogs {
@@ -28,7 +28,7 @@ func (s *TLService) TL_messages_getPinnedDialogs_Process(csess *service.ClientSe
 		messageIdList = append(messageIdList, tldialog.Get_top_message())
 		peer := tldialog.Get_peer()
 		if peer.ClassID() == mtproto.TL_CLASS_peerUser {
-			userIdList = append(userIdList, int64(peer.(*mtproto.TL_peerUser).Get_user_id()))
+			userIdList = append(userIdList, int32(peer.(*mtproto.TL_peerUser).Get_user_id()))
 		} else if peer.ClassID() == mtproto.TL_CLASS_peerChat {
 			chatIdList = append(chatIdList, peer.(*mtproto.TL_peerChat).Get_chat_id())
 		} else if peer.ClassID() == mtproto.TL_CLASS_peerChannel {

@@ -159,7 +159,7 @@ type ClientSession struct {
 	ClientSessionID int64
 	Layer           int32
 	// client session data || runtime variables
-	UserID           int64
+	UserID           int32
 	AuthKeyID        int64
 	Salt             int64
 	FirstMessageID   int64
@@ -275,7 +275,7 @@ func (s *ClientSession) ClientSessionStart() {
 
 }
 
-func (s *ClientSession) GetUserID() int64 {
+func (s *ClientSession) GetUserID() int32 {
 
 	if s.UserID == 0 {
 		au := s.Dao.AuthUserDao.GetAuthUserByAuthID(s.AuthKeyID)

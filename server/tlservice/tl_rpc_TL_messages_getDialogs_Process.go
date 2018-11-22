@@ -13,7 +13,7 @@ import (
 type DialogItems struct {
 	MessageIDList       []int32
 	ChannelMessageIDMap map[int32]int32
-	UserIDList          []int64
+	UserIDList          []int32
 	ChatIDList          []int32
 	ChannelIDList       []int32
 }
@@ -71,14 +71,14 @@ func PickAllIDListByDialogs(tldialogs []mtproto.TLObject) (items *DialogItems) {
 		switch peer.(type) {
 		case *mtproto.TL_peerUser:
 			items.MessageIDList = append(items.MessageIDList, d.Get_top_message())
-			items.UserIDList = append(items.UserIDList, int64(peer.(*mtproto.TL_peerUser).Get_user_id()))
+			items.UserIDList = append(items.UserIDList, (peer.(*mtproto.TL_peerUser).Get_user_id()))
 		case *mtproto.TL_peerChat:
 			items.MessageIDList = append(items.MessageIDList, d.Get_top_message())
-			items.UserIDList = append(items.UserIDList, int64(peer.(*mtproto.TL_peerChat).Get_chat_id()))
+			items.UserIDList = append(items.UserIDList, (peer.(*mtproto.TL_peerChat).Get_chat_id()))
 		case *mtproto.TL_peerChannel:
 			p := peer.(*mtproto.TL_peerChannel)
 			items.ChannelMessageIDMap[p.Get_channel_id()] = d.Get_top_message()
-			items.UserIDList = append(items.UserIDList, int64(p.Get_channel_id()))
+			items.UserIDList = append(items.UserIDList, (p.Get_channel_id()))
 		default:
 			panic(fmt.Sprintf("invalid type = %T", d))
 		}

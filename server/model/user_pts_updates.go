@@ -19,7 +19,7 @@ type UserPtsUpdatesDao struct{}
 
 var userPtsUpdatesDao = &UserPtsUpdatesDao{}
 
-func (s *UserPtsUpdatesDao) GetUserPtsUpdatesByID(userID int64) *UserPtsUpdates {
+func (s *UserPtsUpdatesDao) GetUserPtsUpdatesByID(userID int32) *UserPtsUpdates {
 	db := datasource.DataSourceInstance().Master()
 
 	up := &UserPtsUpdates{}

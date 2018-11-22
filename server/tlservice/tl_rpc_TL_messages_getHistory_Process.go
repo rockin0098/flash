@@ -1,10 +1,5 @@
 package tlservice
 
-import (
-	"github.com/rockin0098/meow/proto/mtproto"
-	"github.com/rockin0098/meow/server/service"
-)
-
 const (
 	kLoadTypeBackward           = 0
 	kLoadTypeForward            = 1
@@ -44,89 +39,88 @@ func calcLoadHistoryType(isChannel bool, offsetId, offsetDate, addOffset, limit,
 	return kLoadTypeBackward
 }
 
-// func  loadHistoryMessage(loadType int, selfUserId int32, peer *base.PeerUtil, offsetId, offsetDate, addOffset, limit, maxId, minId int32) []*mtproto.Message {
+// func (s *TLService) loadHistoryMessage(loadType int, selfUserId int32, peer *base.PeerUtil, offsetId, offsetDate, addOffset, limit, maxId, minId int32) []*mtproto.TL_message {
 // 	messages := []*mtproto.Message{}
 
 // 	switch loadType {
 // 	case kLoadTypeLimit1:
 // 		// 1. Load dialog last messag
 // 		offsetId = math.MaxInt32
-// 		messages = s.MessageModel.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit)
+// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit)
 // 	case kLoadTypeBackward:
-// 		messages = s.MessageModel.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
+// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
 // 	case kLoadTypeFirstAroundDate:
 // 	case kLoadTypeFirstAroundMessage:
 // 		// LOAD_HISTORY_TYPE_FORWARD and LOAD_HISTORY_TYPE_BACKWARD
 // 		// 按升序排
-// 		messages1 := s.MessageModel.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
+// 		messages1 := s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
 // 		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
 // 			messages1[i], messages1[j] = messages1[j], messages1[i]
 // 		}
 // 		messages = append(messages, messages1...)
 // 		// 降序
-// 		messages2 := s.MessageModel.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit+addOffset)
+// 		messages2 := s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit+addOffset)
 // 		messages = append(messages, messages2...)
 // 	case kLoadTypeForward:
-// 		messages = s.MessageModel.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
+// 		messages = s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
 // 		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
 // 			messages[i], messages[j] = messages[j], messages[i]
 // 		}
 // 	case kLoadTypeFirstUnread:
-// 		messages = s.MessageModel.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
+// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
 // 	}
 
 // 	return messages
 // }
 
-// TL_messages_getPinnedDialogs
-func (s *TLService) TL_messages_getHistory_Process(csess *service.ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
-	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
+// // TL_messages_getPinnedDialogs
+// func (s *TLService) TL_messages_getHistory_Process(csess *service.ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
+// 	Log.Infof("entering... client sessid = %v", csess.ClientSessionID)
 
-	// tlobj := object
-	// tl := tlobj.(*mtproto.TL_messages_getHistory)
+// 	tlobj := object
+// 	tl := tlobj.(*mtproto.TL_messages_getHistory)
 
-	// peer := model.FromInputPeer(tl.Get_peer())
-	// if peer.PeerType = model.PEER_SELF {
-	// 	peer.PeerType = model.PEER_USER
-	// 	peer.PeerId = csess.GetUserID()
-	// }
+// 	peer := model.FromInputPeer(tl.Get_peer())
+// 	if peer.PeerType == model.PEER_SELF {
+// 		peer.PeerType = model.PEER_USER
+// 		peer.PeerId = csess.GetUserID()
+// 	}
 
-	// offsetid := tl.Get_offset_id()
-	// addoffset := tl.Get_add_offset()
-	// limit := tl.Get_limit()
+// 	offsetid := tl.Get_offset_id()
+// 	addoffset := tl.Get_add_offset()
+// 	limit := tl.Get_limit()
 
-	// var (
-	// 	isChannel = peer.PeerType == base.PEER_CHANNEL
-	// 	users     []*mtproto.User
-	// 	chats     []*mtproto.Chat
-	// )
+// 	var (
+// 		isChannel = peer.PeerType == base.PEER_CHANNEL
+// 		users     []*mtproto.User
+// 		chats     []*mtproto.Chat
+// 	)
 
-	// loadType := calcLoadHistoryType(isChannel, offsetId, request.GetOffsetDate(), addOffset, limit, request.GetMaxId(), request.GetMinId())
-	// messages := s.loadHistoryMessage(loadType, md.UserId, peer, offsetId, request.GetOffsetDate(), addOffset, limit, request.GetMaxId(), request.GetMinId())
+// 	loadType := calcLoadHistoryType(isChannel, offsetId, request.GetOffsetDate(), addOffset, limit, request.GetMaxId(), request.GetMinId())
+// 	messages := s.loadHistoryMessage(loadType, md.UserId, peer, offsetId, request.GetOffsetDate(), addOffset, limit, request.GetMaxId(), request.GetMinId())
 
-	// // messagesMessages.SetMessages(messages)
-	// userIdList, chatIdList, _ := message.PickAllIDListByMessages(messages)
-	// if len(userIdList) > 0 {
-	// 	users = s.UserModel.GetUsersBySelfAndIDList(md.UserId, userIdList)
-	// 	// messagesMessages.Data2.Users = users
-	// } else {
-	// 	users = []*mtproto.User{}
-	// }
+// 	// messagesMessages.SetMessages(messages)
+// 	userIdList, chatIdList, _ := message.PickAllIDListByMessages(messages)
+// 	if len(userIdList) > 0 {
+// 		users = s.UserModel.GetUsersBySelfAndIDList(md.UserId, userIdList)
+// 		// messagesMessages.Data2.Users = users
+// 	} else {
+// 		users = []*mtproto.User{}
+// 	}
 
-	// if len(chatIdList) > 0 {
-	// 	chats = s.ChatModel.GetChatListBySelfAndIDList(md.UserId, chatIdList)
-	// } else {
-	// 	chats = []*mtproto.Chat{}
-	// }
+// 	if len(chatIdList) > 0 {
+// 		chats = s.ChatModel.GetChatListBySelfAndIDList(md.UserId, chatIdList)
+// 	} else {
+// 		chats = []*mtproto.Chat{}
+// 	}
 
-	// // TODO(@benqi): Add channel's pts
-	// messagesSlice := &mtproto.TLMessagesMessages{Data2: &mtproto.Messages_Messages_Data{
-	// 	Messages: messages,
-	// 	Chats:    chats,
-	// 	Users:    users,
-	// }}
-	// messagesMessages = messagesSlice.To_Messages_Messages()
+// 	// TODO(@benqi): Add channel's pts
+// 	messagesSlice := &mtproto.TLMessagesMessages{Data2: &mtproto.Messages_Messages_Data{
+// 		Messages: messages,
+// 		Chats:    chats,
+// 		Users:    users,
+// 	}}
+// 	messagesMessages = messagesSlice.To_Messages_Messages()
 
-	// return messagesMessages, nil
-	return nil, nil
-}
+// 	return messagesMessages, nil
+// }

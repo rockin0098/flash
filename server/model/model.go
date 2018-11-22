@@ -31,6 +31,7 @@ type ModelDao struct {
 	UserPtsUpdatesDao       *UserPtsUpdatesDao
 	UserQtsUpdatesDao       *UserQtsUpdatesDao
 	UserDao                 *UserDao
+	MessageDataDao          *MessageDataDao
 }
 
 var modelDao = &ModelDao{
@@ -51,6 +52,7 @@ var modelDao = &ModelDao{
 	UserPtsUpdatesDao:       userPtsUpdatesDao,
 	UserQtsUpdatesDao:       userQtsUpdatesDao,
 	UserDao:                 userDao,
+	MessageDataDao:          messageDataDao,
 }
 
 func GetModelDao() *ModelDao {

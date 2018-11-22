@@ -7,25 +7,6 @@ import (
 	"github.com/rockin0098/meow/proto/mtproto"
 )
 
-const (
-	MESSAGE_TYPE_UNKNOWN         = 0
-	MESSAGE_TYPE_MESSAGE_EMPTY   = 1
-	MESSAGE_TYPE_MESSAGE         = 2
-	MESSAGE_TYPE_MESSAGE_SERVICE = 3
-)
-const (
-	MESSAGE_BOX_TYPE_INCOMING = 0
-	MESSAGE_BOX_TYPE_OUTGOING = 1
-)
-
-const (
-	PTS_UNKNOWN             = 0
-	PTS_MESSAGE_OUTBOX      = 1
-	PTS_MESSAGE_INBOX       = 2
-	PTS_READ_HISTORY_OUTBOX = 3
-	PTS_READ_HISTORY_INBOX  = 4
-)
-
 func User_to_TL_user(user *User, status mtproto.TLObject) *mtproto.TL_user {
 	tluser := &mtproto.TL_user{
 		M_self:           mtproto.ToBool(true),
@@ -51,7 +32,7 @@ func makeUserStatusOnline() *mtproto.TL_userStatusOnline {
 	return status
 }
 
-func makeTLUserByUser(selfid int64, user *User) mtproto.TLObject {
+func makeTLUserByUser(selfid int32, user *User) mtproto.TLObject {
 	if user == nil {
 		return nil
 	} else {
@@ -189,7 +170,7 @@ func MessageList_to_TL_messageList(messages []*Message) []mtproto.TLObject {
 	}
 }
 
-func Chat_to_TL_chat(chat *Chat, selfid int64) mtproto.TLObject {
+func Chat_to_TL_chat(chat *Chat, selfid int32) mtproto.TLObject {
 
 	tlchat := &mtproto.TL_chat{
 		M_creator:        mtproto.ToBool(chat.CreatorUserID == selfid),

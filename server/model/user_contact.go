@@ -6,8 +6,8 @@ import (
 
 type UserContact struct {
 	Model
-	OwnerUserID      int64  `gorm:""`
-	ContactUserID    int64  `gorm:""`
+	OwnerUserID      int32  `gorm:""`
+	ContactUserID    int32  `gorm:""`
 	ContactPhone     string `gorm:"size:64"`
 	ContactFirstName string `gorm:"size:64"`
 	ContactLastName  string `gorm:"size:64"`
@@ -21,7 +21,7 @@ type UserContactDao struct{}
 
 var userContactDao = &UserContactDao{}
 
-func (s *UserContactDao) GetContactsByUserID(ownerUserID int64) []*UserContact {
+func (s *UserContactDao) GetContactsByUserID(ownerUserID int32) []*UserContact {
 	db := datasource.DataSourceInstance().Master()
 
 	var res []*UserContact
@@ -36,7 +36,7 @@ func (s *UserContactDao) GetContactsByUserID(ownerUserID int64) []*UserContact {
 	return res
 }
 
-func (s *UserContactDao) GetUserContact(ownerUserID int64, contactUserID int64) *UserContact {
+func (s *UserContactDao) GetUserContact(ownerUserID int32, contactUserID int32) *UserContact {
 	db := datasource.DataSourceInstance().Master()
 
 	res := &UserContact{}
@@ -50,7 +50,7 @@ func (s *UserContactDao) GetUserContact(ownerUserID int64, contactUserID int64) 
 	return res
 }
 
-func (s *UserContactDao) IsMyContact(myid int64, contactid int64) bool {
+func (s *UserContactDao) IsMyContact(myid int32, contactid int32) bool {
 	db := datasource.DataSourceInstance().Master()
 
 	var res []*UserContact
@@ -68,7 +68,7 @@ func (s *UserContactDao) IsMyContact(myid int64, contactid int64) bool {
 	return true
 }
 
-func (s *UserContactDao) CheckContactAndMutualByUserID(selfID, contactID int64) (bool, bool) {
+func (s *UserContactDao) CheckContactAndMutualByUserID(selfID, contactID int32) (bool, bool) {
 	do := s.GetUserContact(selfID, contactID)
 	if do == nil {
 		return false, false

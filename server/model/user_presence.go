@@ -7,7 +7,7 @@ import (
 
 type UserPresence struct {
 	Model
-	UserID            int64  `gorm:""`
+	UserID            int32  `gorm:""`
 	LastSeenAt        int64  `gorm:""`
 	LastSeenAuthKeyId int64  `gorm:""`
 	LastSeenIp        string `gorm:"size:64"`
@@ -18,7 +18,7 @@ type UserPresenceDao struct{}
 
 var userPresenceDao = &UserPresenceDao{}
 
-func (s *UserPresenceDao) GetUserPresenceByID(userID int64) *UserPresence {
+func (s *UserPresenceDao) GetUserPresenceByID(userID int32) *UserPresence {
 	db := datasource.DataSourceInstance().Master()
 
 	up := &UserPresence{}
