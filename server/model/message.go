@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/rockin0098/meow/base/datasource"
+	"github.com/rockin0098/meow/proto/mtproto"
 )
 
 const (
@@ -141,97 +142,97 @@ func (s *MessageDao) SelectMessageList(dialog_id int64, idList []int32) []Messag
 	return values
 }
 
-// func (s *MessageDao) LoadBackwardHistoryMessages(userId int32, peerType, peerId int32, offset int32, limit int32) (messages []*mtproto.TL_message) {
-// 	// TODO(@benqi): chat and channel
+func (s *MessageDao) LoadBackwardHistoryMessages(userId int32, peerType, peerId int32, offset int32, limit int32) (messages []*mtproto.TL_message) {
+	// TODO(@benqi): chat and channel
 
-// 	did := makeDialogId(userId, peerType, peerId)
+	did := makeDialogId(userId, peerType, peerId)
 
-// 	switch peerType {
-// 	case PEER_USER, PEER_CHAT:
-// 		boxDOList := s.SelectBackwardByOffsetLimit(userId, did, offset, limit)
-// 		if len(boxDOList) == 0 {
-// 			messages = []*mtproto.TL_message{}
-// 			return
-// 		}
+	switch peerType {
+	case PEER_USER, PEER_CHAT:
+		boxDOList := s.SelectBackwardByOffsetLimit(userId, did, offset, limit)
+		if len(boxDOList) == 0 {
+			messages = []*mtproto.TL_message{}
+			return
+		}
 
-// 		dialogMessageIdList := make([]int32, 0, len(boxDOList))
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			dialogMessageIdList = append(dialogMessageIdList, boxDOList[i].DialogMessageID)
-// 		}
-// 		mDataDOList := s.SelectMessageList(did, dialogMessageIdList)
-// 		if len(mDataDOList) == 0 {
-// 			messages = []*mtproto.TL_message{}
+		dialogMessageIdList := make([]int32, 0, len(boxDOList))
+		for i := 0; i < len(boxDOList); i++ {
+			dialogMessageIdList = append(dialogMessageIdList, boxDOList[i].DialogMessageID)
+		}
+		mDataDOList := s.SelectMessageList(did, dialogMessageIdList)
+		if len(mDataDOList) == 0 {
+			messages = []*mtproto.TL_message{}
 
-// 			// TODO(@benqi): logo
-// 			return
-// 		}
+			// TODO(@benqi): logo
+			return
+		}
 
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			for j := 0; j < len(mDataDOList); j++ {
-// 				if boxDOList[i].DialogMessageID == mDataDOList[j].DialogMessageID {
-// 					box := m.makeMessageBoxByDO(&boxDOList[i], &mDataDOList[j])
-// 					messages = append(messages, box.ToMessage(userId))
-// 					break
-// 				}
-// 			}
-// 		}
+		for i := 0; i < len(boxDOList); i++ {
+			for j := 0; j < len(mDataDOList); j++ {
+				if boxDOList[i].DialogMessageID == mDataDOList[j].DialogMessageID {
+					box := m.makeMessageBoxByDO(&boxDOList[i], &mDataDOList[j])
+					messages = append(messages, box.ToMessage(userId))
+					break
+				}
+			}
+		}
 
-// 	case base.PEER_CHANNEL:
-// 		boxDOList := m.dao.ChannelMessagesDAO.SelectBackwardByOffsetLimit(peerId, offset, limit)
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			box := m.makeChannelMessageBoxByDO(&boxDOList[i])
-// 			messages = append(messages, box.ToMessage(userId))
-// 		}
-// 	default:
-// 		// TODO(@benqi): log
-// 	}
-// 	return
-// }
+	case base.PEER_CHANNEL:
+		boxDOList := m.dao.ChannelMessagesDAO.SelectBackwardByOffsetLimit(peerId, offset, limit)
+		for i := 0; i < len(boxDOList); i++ {
+			box := m.makeChannelMessageBoxByDO(&boxDOList[i])
+			messages = append(messages, box.ToMessage(userId))
+		}
+	default:
+		// TODO(@benqi): log
+	}
+	return
+}
 
-// func (m *MessageDao) LoadForwardHistoryMessages(userId int32, peerType, peerId int32, offset int32, limit int32) (messages []*mtproto.Message) {
-// 	did := makeDialogId(userId, peerType, peerId)
+func (m *MessageDao) LoadForwardHistoryMessages(userId int32, peerType, peerId int32, offset int32, limit int32) (messages []*mtproto.Message) {
+	did := makeDialogId(userId, peerType, peerId)
 
-// 	switch peerType {
-// 	case base.PEER_USER, base.PEER_CHAT:
-// 		boxDOList := m.dao.MessageBoxesDAO.SelectForwardByPeerOffsetLimit(userId, did, offset, limit)
-// 		if len(boxDOList) == 0 {
-// 			messages = []*mtproto.Message{}
-// 			return
-// 		}
+	switch peerType {
+	case base.PEER_USER, base.PEER_CHAT:
+		boxDOList := m.dao.MessageBoxesDAO.SelectForwardByPeerOffsetLimit(userId, did, offset, limit)
+		if len(boxDOList) == 0 {
+			messages = []*mtproto.Message{}
+			return
+		}
 
-// 		dialogMessageIdList := make([]int32, 0, len(boxDOList))
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			dialogMessageIdList = append(dialogMessageIdList, boxDOList[i].DialogMessageId)
-// 		}
-// 		mDataDOList := m.dao.MessageDatasDAO.SelectMessageList(did, dialogMessageIdList)
-// 		if len(mDataDOList) == 0 {
-// 			messages = []*mtproto.Message{}
+		dialogMessageIdList := make([]int32, 0, len(boxDOList))
+		for i := 0; i < len(boxDOList); i++ {
+			dialogMessageIdList = append(dialogMessageIdList, boxDOList[i].DialogMessageId)
+		}
+		mDataDOList := m.dao.MessageDatasDAO.SelectMessageList(did, dialogMessageIdList)
+		if len(mDataDOList) == 0 {
+			messages = []*mtproto.Message{}
 
-// 			// TODO(@benqi): log
-// 			return
-// 		}
+			// TODO(@benqi): log
+			return
+		}
 
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			for j := 0; j < len(mDataDOList); j++ {
-// 				if boxDOList[i].DialogMessageId == mDataDOList[j].DialogMessageId {
-// 					box := m.makeMessageBoxByDO(&boxDOList[i], &mDataDOList[j])
-// 					messages = append(messages, box.ToMessage(userId))
-// 					break
-// 				}
-// 			}
-// 		}
+		for i := 0; i < len(boxDOList); i++ {
+			for j := 0; j < len(mDataDOList); j++ {
+				if boxDOList[i].DialogMessageId == mDataDOList[j].DialogMessageId {
+					box := m.makeMessageBoxByDO(&boxDOList[i], &mDataDOList[j])
+					messages = append(messages, box.ToMessage(userId))
+					break
+				}
+			}
+		}
 
-// 	case base.PEER_CHANNEL:
-// 		boxDOList := m.dao.ChannelMessagesDAO.SelectForwardByOffsetLimit(peerId, offset, limit)
-// 		for i := 0; i < len(boxDOList); i++ {
-// 			box := m.makeChannelMessageBoxByDO(&boxDOList[i])
-// 			messages = append(messages, box.ToMessage(userId))
-// 		}
-// 	default:
-// 		// TODO(@benqi): log
-// 	}
-// 	return
-// }
+	case base.PEER_CHANNEL:
+		boxDOList := m.dao.ChannelMessagesDAO.SelectForwardByOffsetLimit(peerId, offset, limit)
+		for i := 0; i < len(boxDOList); i++ {
+			box := m.makeChannelMessageBoxByDO(&boxDOList[i])
+			messages = append(messages, box.ToMessage(userId))
+		}
+	default:
+		// TODO(@benqi): log
+	}
+	return
+}
 
 // func (m *MessageDao) GetUserMessagesByMessageIdList(userId int32, idList []int32) (messages []*mtproto.Message) {
 // 	if len(idList) == 0 {

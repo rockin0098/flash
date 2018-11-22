@@ -1,5 +1,12 @@
 package tlservice
 
+import (
+	"math"
+
+	"github.com/rockin0098/meow/proto/mtproto"
+	"github.com/rockin0098/meow/server/model"
+)
+
 const (
 	kLoadTypeBackward           = 0
 	kLoadTypeForward            = 1
@@ -39,39 +46,39 @@ func calcLoadHistoryType(isChannel bool, offsetId, offsetDate, addOffset, limit,
 	return kLoadTypeBackward
 }
 
-// func (s *TLService) loadHistoryMessage(loadType int, selfUserId int32, peer *base.PeerUtil, offsetId, offsetDate, addOffset, limit, maxId, minId int32) []*mtproto.TL_message {
-// 	messages := []*mtproto.Message{}
+func (s *TLService) loadHistoryMessage(loadType int, selfUserId int32, peer *model.PeerUtil, offsetId, offsetDate, addOffset, limit, maxId, minId int32) []*mtproto.TL_message {
+	messages := []*mtproto.TL_message{}
 
-// 	switch loadType {
-// 	case kLoadTypeLimit1:
-// 		// 1. Load dialog last messag
-// 		offsetId = math.MaxInt32
-// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit)
-// 	case kLoadTypeBackward:
-// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
-// 	case kLoadTypeFirstAroundDate:
-// 	case kLoadTypeFirstAroundMessage:
-// 		// LOAD_HISTORY_TYPE_FORWARD and LOAD_HISTORY_TYPE_BACKWARD
-// 		// 按升序排
-// 		messages1 := s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
-// 		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
-// 			messages1[i], messages1[j] = messages1[j], messages1[i]
-// 		}
-// 		messages = append(messages, messages1...)
-// 		// 降序
-// 		messages2 := s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit+addOffset)
-// 		messages = append(messages, messages2...)
-// 	case kLoadTypeForward:
-// 		messages = s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
-// 		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
-// 			messages[i], messages[j] = messages[j], messages[i]
-// 		}
-// 	case kLoadTypeFirstUnread:
-// 		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
-// 	}
+	switch loadType {
+	case kLoadTypeLimit1:
+		// 1. Load dialog last messag
+		offsetId = math.MaxInt32
+		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit)
+	case kLoadTypeBackward:
+		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
+	case kLoadTypeFirstAroundDate:
+	case kLoadTypeFirstAroundMessage:
+		// LOAD_HISTORY_TYPE_FORWARD and LOAD_HISTORY_TYPE_BACKWARD
+		// 按升序排
+		messages1 := s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
+		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
+			messages1[i], messages1[j] = messages1[j], messages1[i]
+		}
+		messages = append(messages, messages1...)
+		// 降序
+		messages2 := s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, limit+addOffset)
+		messages = append(messages, messages2...)
+	case kLoadTypeForward:
+		messages = s.Dao.MessageDao.LoadForwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, -addOffset)
+		for i, j := 0, len(messages)-1; i < j; i, j = i+1, j-1 {
+			messages[i], messages[j] = messages[j], messages[i]
+		}
+	case kLoadTypeFirstUnread:
+		messages = s.Dao.MessageDao.LoadBackwardHistoryMessages(selfUserId, peer.PeerType, peer.PeerId, offsetId, addOffset+limit)
+	}
 
-// 	return messages
-// }
+	return messages
+}
 
 // // TL_messages_getPinnedDialogs
 // func (s *TLService) TL_messages_getHistory_Process(csess *service.ClientSession, object mtproto.TLObject) (mtproto.TLObject, error) {
