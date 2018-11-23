@@ -23,7 +23,7 @@ func New_TL_rpc_result() *TL_rpc_result {
 }
 
 func (t *TL_rpc_result) String() string {
-	return fmt.Sprintf("New_TL_rpc_result")
+	return fmt.Sprintf("TL_rpc_result")
 }
 
 func (t *TL_rpc_result) Encode() []byte {
